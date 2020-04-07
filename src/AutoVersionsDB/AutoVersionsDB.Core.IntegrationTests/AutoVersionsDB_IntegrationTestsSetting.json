@@ -1,0 +1,17 @@
+﻿{
+  "SQLServer_ConnStr": "Persist Security Info=False;Initial Catalog=AutoVersionsDB.Tests;User ID=sa;Password=123456;Data Source=(local)\\SQLServer2017",
+  "SQLServer_ConnStrToMaster": "Persist Security Info=False;Initial Catalog=master;User ID=sa;Password=123456;Data Source=(local)\\SQLServer2017",
+  "DBBackupBaseFolder": "[CommonApplicationData]\\AutoVersionsDB.Core.IntegrationTests\\Backups",
+  "DevScriptsBaseFolderPath_Normal": "[AppPath]\\FilesForTests\\SqlServer\\DevScripts",
+  "DevScriptsBaseFolderPath_ChangedHistoryFiles_Incremental": "[AppPath]\\FilesForTests\\SqlServer\\DevScripts_ChangedHistoryFiles_Incremental",
+  "DevScriptsBaseFolderPath_ChangedHistoryFiles_Repeatable": "[AppPath]\\FilesForTests\\SqlServer\\DevScripts_ChangedHistoryFiles_Repeatable",
+  "DevScriptsBaseFolderPath_MissingFile": "[AppPath]\\FilesForTests\\SqlServer\\DevScripts_MissingFile",
+  "DevScriptsBaseFolderPath_ScriptError": "[AppPath]\\FilesForTests\\SqlServer\\DevScripts_ScriptError",
+  "DeployArtifact_FolderPath": "[AppPath]\\FilesForTests\\SqlServer\\Deploy",
+  "DeliveryArtifactFolderPath_Normal": "[AppPath]\\FilesForTests\\SqlServer\\Delivery",
+  "DeliveryArtifactFolderPath_ChangedHistoryFiles_Incremental": "[AppPath]\\FilesForTests\\SqlServer\\Delivery_ChangedHistoryFiles_Incremental",
+  "DeliveryArtifactFolderPath_ChangedHistoryFiles_Repeatable": "[AppPath]\\FilesForTests\\SqlServer\\Delivery_ChangedHistoryFiles_Repeatable",
+  "DeliveryArtifactFolderPath_MissingFileh": "[AppPath]\\FilesForTests\\SqlServer\\Delivery_MissingFile",
+  "DeliveryArtifactFolderPath_ScriptError": "[AppPath]\\FilesForTests\\SqlServer\\Delivery_ScriptError",
+  "DeliveryArtifactFolderPath_WithDevDummyDataFiles": "[AppPath]\\FilesForTests\\SqlServer\\Delivery_WithDevDummyDataFiles"
+}

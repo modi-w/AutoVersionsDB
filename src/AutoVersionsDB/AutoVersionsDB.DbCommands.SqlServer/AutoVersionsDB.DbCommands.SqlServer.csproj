@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="SystemScripts\DropAllDbObjects_SqlServer.sql" />
+    <None Remove="SystemScripts\RecreateDBVersionsSchema_SqlServer.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SystemScripts\DropAllDbObjects_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\RecreateDBVersionsSchema_SqlServer.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Contract\AutoVersionsDB.DbCommands.Contract.csproj" />
+  </ItemGroup>
+
+</Project>
