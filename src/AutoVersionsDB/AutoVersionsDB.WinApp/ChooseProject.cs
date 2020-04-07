@@ -47,8 +47,6 @@ namespace AutoVersionsDB.WinApp
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
 
                 this.Load += ChooseProject_Load;
-
-
             }
         }
 
@@ -63,7 +61,7 @@ namespace AutoVersionsDB.WinApp
 
         private void ChooseProject_Load(object sender, EventArgs e)
         {
-            flowLayoutPanel1.Width = this.Width;
+            //flowLayoutPanel1.Width = this.Width;
             RefreshProjectList();
         }
 
