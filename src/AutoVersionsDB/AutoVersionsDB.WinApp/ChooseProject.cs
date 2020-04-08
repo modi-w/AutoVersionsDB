@@ -20,7 +20,7 @@ namespace AutoVersionsDB.WinApp
 
         private AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
-        ////private double dummy
+        //private double dummy
 
 
         public ChooseProject()
