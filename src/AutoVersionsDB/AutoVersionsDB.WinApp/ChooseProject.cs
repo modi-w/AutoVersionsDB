@@ -52,10 +52,15 @@ namespace AutoVersionsDB.WinApp
 
         private void FlowLayoutPanel1_Resize(object sender, EventArgs e)
         {
+            setProjectItemsSize();
+        }
+
+        private void setProjectItemsSize()
+        {
             foreach (var childControl in flowLayoutPanel1.Controls)
             {
                 ProjectItem projectItem = childControl as ProjectItem;
-                projectItem.Width = flowLayoutPanel1.Width - 50;
+                projectItem.Width = flowLayoutPanel1.Width - 30;
             }
         }
 
@@ -109,14 +114,13 @@ namespace AutoVersionsDB.WinApp
                 foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
                 {
                     ProjectItem projectItem = new ProjectItem(projectConfigItem);
-                    projectItem.Width = flowLayoutPanel1.Width - 50;
-                  //  projectItem.Height = 75; 
-      //              projectItem.AutoSize = true;
-  //                  projectItem.Anchor = ((System.Windows.Forms.AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right));
                     projectItem.OnNavToProcess += ProjectItem_OnNavToProcess;
                     projectItem.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
                     flowLayoutPanel1.Controls.Add(projectItem);
                 }
+
+                setProjectItemsSize();
+
             }
         }
 

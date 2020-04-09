@@ -63,7 +63,7 @@
             this.panel2.Controls.Add(this.btnNewProject);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(987, 53);
+            this.panel2.Size = new System.Drawing.Size(967, 53);
             this.panel2.TabIndex = 33;
             // 
             // label8
@@ -91,7 +91,7 @@
             this.btnNewProject.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnNewProject.Image = global::AutoVersionsDB.WinApp.Properties.Resources.plus32_white;
             this.btnNewProject.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNewProject.Location = new System.Drawing.Point(875, 3);
+            this.btnNewProject.Location = new System.Drawing.Point(855, 3);
             this.btnNewProject.Name = "btnNewProject";
             this.btnNewProject.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnNewProject.Size = new System.Drawing.Size(106, 44);
