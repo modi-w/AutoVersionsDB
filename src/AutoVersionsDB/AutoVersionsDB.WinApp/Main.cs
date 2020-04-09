@@ -11,6 +11,12 @@ namespace AutoVersionsDB.WinApp
 
     public partial class Main : Form
     {
+        public new void SuspendLayout()
+        {
+            //Comment: In .net core, this method cause to layout to the window to be too big respect to its children controls.
+            //  And because that we cant set ignore to ths method to the auto generate code, we implement nothing.
+        }
+
 
 
         public Main()

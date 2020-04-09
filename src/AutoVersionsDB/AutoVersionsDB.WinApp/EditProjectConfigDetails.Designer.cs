@@ -437,6 +437,7 @@
             // 
             // btnNavToProcess
             // 
+            this.btnNavToProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNavToProcess.BackColor = System.Drawing.Color.Transparent;
             this.btnNavToProcess.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNavToProcess.FlatAppearance.BorderColor = System.Drawing.Color.Black;

@@ -41,7 +41,7 @@
             this.tbChooseProject.SuspendLayout();
             this.tbEditProjectConfig.SuspendLayout();
             this.tbDBVersionsMangement.SuspendLayout();
-    //        this.SuspendLayout();
+            this.SuspendLayout();
             // 
             // tabMainLayout
             // 
