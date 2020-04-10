@@ -102,6 +102,9 @@
       <Link>ProjectItem.Designer.cs</Link>
       <DependentUpon>ProjectItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Properties\Resources.Designer.cs">
+      <Link>Properties\Resources.Designer.cs</Link>
+    </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\TextInputWindow.cs">
       <Link>TextInputWindow.cs</Link>
       <SubType>Form</SubType>
@@ -140,18 +143,17 @@
       <Link>ProjectItem.resx</Link>
       <DependentUpon>ProjectItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Properties\Resources.resx">
+      <Link>Properties\Resources.resx</Link>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\TextInputWindow.resx">
       <Link>TextInputWindow.resx</Link>
       <DependentUpon>TextInputWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>

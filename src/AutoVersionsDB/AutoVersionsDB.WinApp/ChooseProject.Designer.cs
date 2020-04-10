@@ -61,9 +61,9 @@
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.tbSerchProject);
             this.panel2.Controls.Add(this.btnNewProject);
-            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Location = new System.Drawing.Point(8, 10);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(967, 53);
+            this.panel2.Size = new System.Drawing.Size(960, 53);
             this.panel2.TabIndex = 33;
             // 
             // label8
@@ -76,10 +76,12 @@
             // 
             // tbSerchProject
             // 
-            this.tbSerchProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.tbSerchProject.Location = new System.Drawing.Point(10, 7);
+            this.tbSerchProject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbSerchProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.tbSerchProject.Location = new System.Drawing.Point(10, 13);
             this.tbSerchProject.Name = "tbSerchProject";
-            this.tbSerchProject.Size = new System.Drawing.Size(399, 38);
+            this.tbSerchProject.Size = new System.Drawing.Size(832, 32);
             this.tbSerchProject.TabIndex = 31;
             this.tbSerchProject.TextChanged += new System.EventHandler(this.tbSerchProject_TextChanged);
             // 
@@ -87,14 +89,14 @@
             // 
             this.btnNewProject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNewProject.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnNewProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnNewProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNewProject.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnNewProject.Image = global::AutoVersionsDB.WinApp.Properties.Resources.plus32_white;
-            this.btnNewProject.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNewProject.Location = new System.Drawing.Point(855, 3);
+            this.btnNewProject.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnNewProject.Location = new System.Drawing.Point(860, 11);
             this.btnNewProject.Name = "btnNewProject";
             this.btnNewProject.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.btnNewProject.Size = new System.Drawing.Size(106, 44);
+            this.btnNewProject.Size = new System.Drawing.Size(94, 34);
             this.btnNewProject.TabIndex = 30;
             this.btnNewProject.Text = "New";
             this.btnNewProject.TextAlign = System.Drawing.ContentAlignment.TopRight;

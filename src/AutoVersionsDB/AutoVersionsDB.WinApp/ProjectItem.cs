@@ -19,19 +19,10 @@ namespace AutoVersionsDB.WinApp
 
         public event OnNavToProcessHandler OnNavToProcess;
         public event OnRefreshProjectListHandler OnRefreshProjectList;
-        
+        public event OnEditProjectHandler OnEditProject;
+
         public ProjectConfigItem ProjectConfig { get; private set; }
 
-        public new void SuspendLayout()
-        {
-            //Comment: In .net core, this method cause to layout to the window to be too big respect to its children controls.
-            //  And because that we cant set ignore to ths method to the auto generate code, we implement nothing.
-        }
-
-        public ProjectItem()
-        {
-
-        }
         public ProjectItem(ProjectConfigItem projectConfigItem)
         {
             InitializeComponent();
@@ -56,21 +47,29 @@ namespace AutoVersionsDB.WinApp
             OnNavToProcess?.Invoke(ProjectConfig);
         }
 
+        private void lblProcessLink_Click(object sender, EventArgs e)
+        {
+            OnNavToProcess?.Invoke(ProjectConfig);
+        }
+
+        private void lblEditProject_Click(object sender, EventArgs e)
+        {
+            OnEditProject?.Invoke(ProjectConfig);
+        }
+
         private void lblDeleteProject_Click(object sender, EventArgs e)
         {
-            string currProjectGuid = (sender as Label).Tag.ToString();
-
-            ProjectConfigItem currProjectConfig = _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList.Where(ee => ee.ProjectGuid == currProjectGuid).First();
-
-            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{currProjectConfig.ProjectName}'";
+            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.ProjectName}'";
             bool results = MessageBox.Show(this, warningMessage, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes;
 
             if (results)
             {
-                _autoVersionsDbAPI.ConfigProjectsManager.RemoveProjectConfig(currProjectGuid);
+                _autoVersionsDbAPI.ConfigProjectsManager.RemoveProjectConfig(ProjectConfig.ProjectGuid);
 
                 OnRefreshProjectList?.Invoke();
             }
         }
+
+      
     }
 }

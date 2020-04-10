@@ -13,7 +13,6 @@ using System.ComponentModel;
 
 namespace AutoVersionsDB.WinApp
 {
-    public delegate void OnEditProjectHandler(ProjectConfigItem projectConfigItem);
 
     public partial class DBVersionsMangement : UserControl
     {

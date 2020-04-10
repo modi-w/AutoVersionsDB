@@ -15,8 +15,8 @@ namespace AutoVersionsDB.WinApp
         private const string c_SearchPlaceHolderText = "Search Project...";
 
         public event EventHandler OnSetNewProject;
-
         public event OnNavToProcessHandler OnNavToProcess;
+        public event OnEditProjectHandler OnEditProject;
 
         private AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
@@ -46,8 +46,10 @@ namespace AutoVersionsDB.WinApp
 
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
 
-                this.Load += ChooseProject_Load;
             }
+           
+            this.Load += ChooseProject_Load;
+
         }
 
         private void FlowLayoutPanel1_Resize(object sender, EventArgs e)
@@ -116,12 +118,18 @@ namespace AutoVersionsDB.WinApp
                     ProjectItem projectItem = new ProjectItem(projectConfigItem);
                     projectItem.OnNavToProcess += ProjectItem_OnNavToProcess;
                     projectItem.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
+                    projectItem.OnEditProject += ProjectItem_OnEditProject;
                     flowLayoutPanel1.Controls.Add(projectItem);
                 }
 
                 setProjectItemsSize();
 
             }
+        }
+
+        private void ProjectItem_OnEditProject(ProjectConfigItem projectConfigItem)
+        {
+            OnEditProject?.Invoke(projectConfigItem);
         }
 
         private void ProjectItem_OnRefreshProjectList()

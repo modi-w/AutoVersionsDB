@@ -7,6 +7,7 @@ namespace AutoVersionsDB.WinApp
 {
     public delegate void OnNavToProcessHandler(ProjectConfigItem projectConfigItem);
     public delegate void OnRefreshProjectListHandler();
+    public delegate void OnEditProjectHandler(ProjectConfigItem projectConfigItem);
 
 
     public partial class Main : Form
@@ -29,12 +30,14 @@ namespace AutoVersionsDB.WinApp
 
             chooseProject1.OnSetNewProject += ChooseProject1_OnSetNewProject1;
             chooseProject1.OnNavToProcess += ChooseProject1_OnNavToProcess;
+            chooseProject1.OnEditProject += ChooseProject1_OnEditProject;
 
             editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
             dbVersionsMangement1.OnEditProject += DbVersionsMangement1_OnEditProject;
 
             lnkBtnChooseProject.Visible = false;
         }
+
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -55,6 +58,13 @@ namespace AutoVersionsDB.WinApp
             dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
 
             tabMainLayout.SelectTab(tbDBVersionsMangement);
+        }
+
+        private void ChooseProject1_OnEditProject(ProjectConfigItem projectConfigItem)
+        {
+            editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
+
+            tabMainLayout.SelectedTab = tbEditProjectConfig;
         }
 
         private void DbVersionsMangement1_OnEditProject(ProjectConfigItem projectConfigItem)
