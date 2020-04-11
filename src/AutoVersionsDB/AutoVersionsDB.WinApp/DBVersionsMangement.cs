@@ -50,6 +50,15 @@ namespace AutoVersionsDB.WinApp
             dgDevDummyDataScriptsFiles.AutoGenerateColumns = false;
             dgDevDummyDataScriptsFiles.SelectionChanged += dgDevDummyDataScriptsFiles_SelectionChanged;
 
+
+            changeButtonsPanelsLocation(pnlMainActions);
+            changeButtonsPanelsLocation(pnlMissingSystemTables);
+            changeButtonsPanelsLocation(pnlRestoreDbError);
+            changeButtonsPanelsLocation(pnlSyncToSpecificState);
+            changeButtonsPanelsLocation(pnlSetDBStateManually);
+
+            this.Controls.Remove(pnlActionButtons);
+
             //pnlSyncToSpecificState.Location = new Point(873, 14);
             //pnlMissingSystemTables.Location = new Point(600, 10);
             //pnlSetDBStateManually.Location = new Point(880, 24);
@@ -61,8 +70,16 @@ namespace AutoVersionsDB.WinApp
             }
 
             btnSetDBToSpecificState.Visible = false;
+            lblSetDBToSpecificState.Visible = false;
 
             setToolTips();
+        }
+
+        private void changeButtonsPanelsLocation(Panel panelToMove)
+        {
+            pnlActionButtons.Controls.Remove(panelToMove);
+            pnlHeader.Controls.Add(panelToMove);
+            panelToMove.Location = new Point(pnlHeader.Width - panelToMove.Width, 0);
         }
 
         private void setToolTips()
@@ -571,15 +588,28 @@ namespace AutoVersionsDB.WinApp
             {
                 btnRecreateDbFromScratchMain.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
             }));
+            lblRecreateDbFromScratchMain.BeginInvoke((MethodInvoker)(() =>
+            {
+                lblRecreateDbFromScratchMain.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+            }));
+
             btnDeploy.BeginInvoke((MethodInvoker)(() =>
             {
                 btnDeploy.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
             }));
+            lblDeploy.BeginInvoke((MethodInvoker)(() =>
+            {
+                lblDeploy.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+            }));
+
             btnRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
             {
                 btnRecreateDbFromScratch2.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
             }));
-
+            lblRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
+            {
+                lblRecreateDbFromScratch2.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+            }));
 
         }
 
@@ -782,6 +812,6 @@ namespace AutoVersionsDB.WinApp
 
         #endregion
 
-       
+
     }
 }

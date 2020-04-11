@@ -56,19 +56,19 @@
             this.btnCancelSyncSpecificState = new System.Windows.Forms.Button();
             this.label29 = new System.Windows.Forms.Label();
             this.btnApplySyncSpecificState = new System.Windows.Forms.Button();
-            this.panel5 = new System.Windows.Forms.Panel();
+            this.pnlHeader = new System.Windows.Forms.Panel();
             this.btnNavToEdit = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.pnlMissingSystemTables = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.btnVirtualExecution = new System.Windows.Forms.Button();
-            this.label28 = new System.Windows.Forms.Label();
+            this.lblRecreateDbFromScratch2 = new System.Windows.Forms.Label();
             this.btnRecreateDbFromScratch2 = new System.Windows.Forms.Button();
             this.pnlMainActions = new System.Windows.Forms.Panel();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
+            this.lblSetDBToSpecificState = new System.Windows.Forms.Label();
+            this.lblDeploy = new System.Windows.Forms.Label();
+            this.lblRecreateDbFromScratchMain = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.btnSetDBToSpecificState = new System.Windows.Forms.Button();
             this.btnDeploy = new System.Windows.Forms.Button();
@@ -117,7 +117,7 @@
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnlSyncToSpecificState.SuspendLayout();
-            this.panel5.SuspendLayout();
+            this.pnlHeader.SuspendLayout();
             this.pnlMissingSystemTables.SuspendLayout();
             this.pnlMainActions.SuspendLayout();
             this.pnlSetDBStateManually.SuspendLayout();
@@ -395,7 +395,7 @@
             this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label30.Location = new System.Drawing.Point(20, 51);
+            this.label30.Location = new System.Drawing.Point(20, 45);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(39, 13);
             this.label30.TabIndex = 86;
@@ -413,7 +413,7 @@
             this.btnCancelSyncSpecificState.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnCancelSyncSpecificState.Image = global::AutoVersionsDB.WinApp.Properties.Resources.CancelIcon;
             this.btnCancelSyncSpecificState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelSyncSpecificState.Location = new System.Drawing.Point(22, 12);
+            this.btnCancelSyncSpecificState.Location = new System.Drawing.Point(22, 6);
             this.btnCancelSyncSpecificState.Margin = new System.Windows.Forms.Padding(0);
             this.btnCancelSyncSpecificState.Name = "btnCancelSyncSpecificState";
             this.btnCancelSyncSpecificState.Size = new System.Drawing.Size(35, 39);
@@ -427,7 +427,7 @@
             this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label29.Location = new System.Drawing.Point(83, 51);
+            this.label29.Location = new System.Drawing.Point(83, 45);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(33, 13);
             this.label29.TabIndex = 84;
@@ -445,7 +445,7 @@
             this.btnApplySyncSpecificState.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnApplySyncSpecificState.Image = global::AutoVersionsDB.WinApp.Properties.Resources.ApplyIcon;
             this.btnApplySyncSpecificState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnApplySyncSpecificState.Location = new System.Drawing.Point(77, 12);
+            this.btnApplySyncSpecificState.Location = new System.Drawing.Point(77, 6);
             this.btnApplySyncSpecificState.Margin = new System.Windows.Forms.Padding(0);
             this.btnApplySyncSpecificState.Name = "btnApplySyncSpecificState";
             this.btnApplySyncSpecificState.Size = new System.Drawing.Size(44, 39);
@@ -454,20 +454,20 @@
             this.btnApplySyncSpecificState.UseVisualStyleBackColor = false;
             this.btnApplySyncSpecificState.Click += new System.EventHandler(this.btnApplySyncSpecificState_Click_1);
             // 
-            // panel5
+            // pnlHeader
             // 
-            this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel5.BackColor = System.Drawing.Color.White;
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.btnNavToEdit);
-            this.panel5.Controls.Add(this.btnRefresh);
-            this.panel5.Controls.Add(this.label8);
-            this.panel5.Controls.Add(this.lblProjectName);
-            this.panel5.Location = new System.Drawing.Point(15, 13);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(877, 67);
-            this.panel5.TabIndex = 63;
+            this.pnlHeader.BackColor = System.Drawing.Color.White;
+            this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHeader.Controls.Add(this.btnNavToEdit);
+            this.pnlHeader.Controls.Add(this.btnRefresh);
+            this.pnlHeader.Controls.Add(this.label8);
+            this.pnlHeader.Controls.Add(this.lblProjectName);
+            this.pnlHeader.Location = new System.Drawing.Point(15, 13);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(877, 67);
+            this.pnlHeader.TabIndex = 63;
             // 
             // btnNavToEdit
             // 
@@ -525,7 +525,7 @@
             this.pnlMissingSystemTables.BackColor = System.Drawing.Color.White;
             this.pnlMissingSystemTables.Controls.Add(this.label6);
             this.pnlMissingSystemTables.Controls.Add(this.btnVirtualExecution);
-            this.pnlMissingSystemTables.Controls.Add(this.label28);
+            this.pnlMissingSystemTables.Controls.Add(this.lblRecreateDbFromScratch2);
             this.pnlMissingSystemTables.Controls.Add(this.btnRecreateDbFromScratch2);
             this.pnlMissingSystemTables.Location = new System.Drawing.Point(397, 19);
             this.pnlMissingSystemTables.Name = "pnlMissingSystemTables";
@@ -537,7 +537,7 @@
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label6.Location = new System.Drawing.Point(99, 49);
+            this.label6.Location = new System.Drawing.Point(99, 43);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(85, 13);
             this.label6.TabIndex = 82;
@@ -555,7 +555,7 @@
             this.btnVirtualExecution.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnVirtualExecution.Image = global::AutoVersionsDB.WinApp.Properties.Resources.VirtualExecution2;
             this.btnVirtualExecution.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVirtualExecution.Location = new System.Drawing.Point(117, 10);
+            this.btnVirtualExecution.Location = new System.Drawing.Point(117, 4);
             this.btnVirtualExecution.Margin = new System.Windows.Forms.Padding(0);
             this.btnVirtualExecution.Name = "btnVirtualExecution";
             this.btnVirtualExecution.Size = new System.Drawing.Size(47, 39);
@@ -564,16 +564,16 @@
             this.btnVirtualExecution.UseVisualStyleBackColor = false;
             this.btnVirtualExecution.Click += new System.EventHandler(this.btnVirtualExecution_Click);
             // 
-            // label28
+            // lblRecreateDbFromScratch2
             // 
-            this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label28.Location = new System.Drawing.Point(22, 49);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(67, 13);
-            this.label28.TabIndex = 80;
-            this.label28.Text = "Recreate DB";
+            this.lblRecreateDbFromScratch2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblRecreateDbFromScratch2.AutoSize = true;
+            this.lblRecreateDbFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblRecreateDbFromScratch2.Location = new System.Drawing.Point(22, 43);
+            this.lblRecreateDbFromScratch2.Name = "lblRecreateDbFromScratch2";
+            this.lblRecreateDbFromScratch2.Size = new System.Drawing.Size(67, 13);
+            this.lblRecreateDbFromScratch2.TabIndex = 80;
+            this.lblRecreateDbFromScratch2.Text = "Recreate DB";
             // 
             // btnRecreateDbFromScratch2
             // 
@@ -587,7 +587,7 @@
             this.btnRecreateDbFromScratch2.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnRecreateDbFromScratch2.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RecreateDBFromScratchIcon;
             this.btnRecreateDbFromScratch2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecreateDbFromScratch2.Location = new System.Drawing.Point(30, 10);
+            this.btnRecreateDbFromScratch2.Location = new System.Drawing.Point(30, 4);
             this.btnRecreateDbFromScratch2.Margin = new System.Windows.Forms.Padding(0);
             this.btnRecreateDbFromScratch2.Name = "btnRecreateDbFromScratch2";
             this.btnRecreateDbFromScratch2.Size = new System.Drawing.Size(47, 39);
@@ -600,9 +600,9 @@
             // 
             this.pnlMainActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlMainActions.BackColor = System.Drawing.Color.White;
-            this.pnlMainActions.Controls.Add(this.label27);
-            this.pnlMainActions.Controls.Add(this.label26);
-            this.pnlMainActions.Controls.Add(this.label25);
+            this.pnlMainActions.Controls.Add(this.lblSetDBToSpecificState);
+            this.pnlMainActions.Controls.Add(this.lblDeploy);
+            this.pnlMainActions.Controls.Add(this.lblRecreateDbFromScratchMain);
             this.pnlMainActions.Controls.Add(this.label24);
             this.pnlMainActions.Controls.Add(this.btnSetDBToSpecificState);
             this.pnlMainActions.Controls.Add(this.btnDeploy);
@@ -613,45 +613,45 @@
             this.pnlMainActions.Size = new System.Drawing.Size(264, 71);
             this.pnlMainActions.TabIndex = 73;
             // 
-            // label27
+            // lblSetDBToSpecificState
             // 
-            this.label27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label27.Location = new System.Drawing.Point(17, 51);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(61, 13);
-            this.label27.TabIndex = 80;
-            this.label27.Text = "Force State";
+            this.lblSetDBToSpecificState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSetDBToSpecificState.AutoSize = true;
+            this.lblSetDBToSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblSetDBToSpecificState.Location = new System.Drawing.Point(17, 45);
+            this.lblSetDBToSpecificState.Name = "lblSetDBToSpecificState";
+            this.lblSetDBToSpecificState.Size = new System.Drawing.Size(61, 13);
+            this.lblSetDBToSpecificState.TabIndex = 80;
+            this.lblSetDBToSpecificState.Text = "Force State";
             // 
-            // label26
+            // lblDeploy
             // 
-            this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label26.Location = new System.Drawing.Point(83, 51);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(40, 13);
-            this.label26.TabIndex = 79;
-            this.label26.Text = "Deploy";
+            this.lblDeploy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDeploy.AutoSize = true;
+            this.lblDeploy.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblDeploy.Location = new System.Drawing.Point(83, 45);
+            this.lblDeploy.Name = "lblDeploy";
+            this.lblDeploy.Size = new System.Drawing.Size(40, 13);
+            this.lblDeploy.TabIndex = 79;
+            this.lblDeploy.Text = "Deploy";
             // 
-            // label25
+            // lblRecreateDbFromScratchMain
             // 
-            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label25.Location = new System.Drawing.Point(127, 51);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(67, 13);
-            this.label25.TabIndex = 78;
-            this.label25.Text = "Recreate DB";
+            this.lblRecreateDbFromScratchMain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblRecreateDbFromScratchMain.AutoSize = true;
+            this.lblRecreateDbFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblRecreateDbFromScratchMain.Location = new System.Drawing.Point(127, 45);
+            this.lblRecreateDbFromScratchMain.Name = "lblRecreateDbFromScratchMain";
+            this.lblRecreateDbFromScratchMain.Size = new System.Drawing.Size(67, 13);
+            this.lblRecreateDbFromScratchMain.TabIndex = 78;
+            this.lblRecreateDbFromScratchMain.Text = "Recreate DB";
             // 
             // label24
             // 
             this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold);
-            this.label24.Location = new System.Drawing.Point(205, 51);
+            this.label24.Location = new System.Drawing.Point(206, 45);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(55, 13);
             this.label24.TabIndex = 76;
@@ -669,7 +669,7 @@
             this.btnSetDBToSpecificState.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnSetDBToSpecificState.Image = global::AutoVersionsDB.WinApp.Properties.Resources.historyIcon;
             this.btnSetDBToSpecificState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSetDBToSpecificState.Location = new System.Drawing.Point(25, 12);
+            this.btnSetDBToSpecificState.Location = new System.Drawing.Point(25, 6);
             this.btnSetDBToSpecificState.Margin = new System.Windows.Forms.Padding(0);
             this.btnSetDBToSpecificState.Name = "btnSetDBToSpecificState";
             this.btnSetDBToSpecificState.Size = new System.Drawing.Size(42, 39);
@@ -690,7 +690,7 @@
             this.btnDeploy.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnDeploy.Image = global::AutoVersionsDB.WinApp.Properties.Resources.deployIcon;
             this.btnDeploy.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDeploy.Location = new System.Drawing.Point(82, 12);
+            this.btnDeploy.Location = new System.Drawing.Point(82, 6);
             this.btnDeploy.Margin = new System.Windows.Forms.Padding(0);
             this.btnDeploy.Name = "btnDeploy";
             this.btnDeploy.Size = new System.Drawing.Size(42, 39);
@@ -711,7 +711,7 @@
             this.btnRecreateDbFromScratchMain.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnRecreateDbFromScratchMain.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RecreateDBFromScratchIcon;
             this.btnRecreateDbFromScratchMain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecreateDbFromScratchMain.Location = new System.Drawing.Point(135, 12);
+            this.btnRecreateDbFromScratchMain.Location = new System.Drawing.Point(135, 6);
             this.btnRecreateDbFromScratchMain.Margin = new System.Windows.Forms.Padding(0);
             this.btnRecreateDbFromScratchMain.Name = "btnRecreateDbFromScratchMain";
             this.btnRecreateDbFromScratchMain.Size = new System.Drawing.Size(47, 39);
@@ -732,7 +732,7 @@
             this.btnRunSync.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnRunSync.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RunIcon;
             this.btnRunSync.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRunSync.Location = new System.Drawing.Point(208, 12);
+            this.btnRunSync.Location = new System.Drawing.Point(208, 6);
             this.btnRunSync.Margin = new System.Windows.Forms.Padding(0);
             this.btnRunSync.Name = "btnRunSync";
             this.btnRunSync.Size = new System.Drawing.Size(46, 39);
@@ -797,7 +797,7 @@
             this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label31.Location = new System.Drawing.Point(15, 51);
+            this.label31.Location = new System.Drawing.Point(15, 45);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(39, 13);
             this.label31.TabIndex = 90;
@@ -815,7 +815,7 @@
             this.btnCancelSetDBStateManually.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnCancelSetDBStateManually.Image = global::AutoVersionsDB.WinApp.Properties.Resources.CancelIcon;
             this.btnCancelSetDBStateManually.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelSetDBStateManually.Location = new System.Drawing.Point(17, 12);
+            this.btnCancelSetDBStateManually.Location = new System.Drawing.Point(17, 6);
             this.btnCancelSetDBStateManually.Margin = new System.Windows.Forms.Padding(0);
             this.btnCancelSetDBStateManually.Name = "btnCancelSetDBStateManually";
             this.btnCancelSetDBStateManually.Size = new System.Drawing.Size(35, 39);
@@ -829,7 +829,7 @@
             this.label32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label32.AutoSize = true;
             this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label32.Location = new System.Drawing.Point(78, 51);
+            this.label32.Location = new System.Drawing.Point(78, 45);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(33, 13);
             this.label32.TabIndex = 88;
@@ -847,7 +847,7 @@
             this.btnRunSetDBStateManally.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnRunSetDBStateManally.Image = global::AutoVersionsDB.WinApp.Properties.Resources.ApplyIcon;
             this.btnRunSetDBStateManally.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRunSetDBStateManally.Location = new System.Drawing.Point(72, 12);
+            this.btnRunSetDBStateManally.Location = new System.Drawing.Point(72, 6);
             this.btnRunSetDBStateManally.Margin = new System.Windows.Forms.Padding(0);
             this.btnRunSetDBStateManally.Name = "btnRunSetDBStateManally";
             this.btnRunSetDBStateManally.Size = new System.Drawing.Size(44, 39);
@@ -1259,7 +1259,7 @@
             this.pnlActionButtons.Controls.Add(this.pnlSyncToSpecificState);
             this.pnlActionButtons.Location = new System.Drawing.Point(15, 1160);
             this.pnlActionButtons.Name = "pnlActionButtons";
-            this.pnlActionButtons.Size = new System.Drawing.Size(877, 145);
+            this.pnlActionButtons.Size = new System.Drawing.Size(877, 127);
             this.pnlActionButtons.TabIndex = 75;
             // 
             // pnlRestoreDbError
@@ -1278,7 +1278,7 @@
             this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label34.Location = new System.Drawing.Point(21, 49);
+            this.label34.Location = new System.Drawing.Point(21, 43);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(79, 13);
             this.label34.TabIndex = 80;
@@ -1296,7 +1296,7 @@
             this.btnShowHistoricalBackups.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnShowHistoricalBackups.Image = global::AutoVersionsDB.WinApp.Properties.Resources.HistoricalBackups;
             this.btnShowHistoricalBackups.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnShowHistoricalBackups.Location = new System.Drawing.Point(39, 10);
+            this.btnShowHistoricalBackups.Location = new System.Drawing.Point(39, 4);
             this.btnShowHistoricalBackups.Margin = new System.Windows.Forms.Padding(0);
             this.btnShowHistoricalBackups.Name = "btnShowHistoricalBackups";
             this.btnShowHistoricalBackups.Size = new System.Drawing.Size(47, 39);
@@ -1315,7 +1315,7 @@
             this.Controls.Add(this.pnlDevDummyDataFiles);
             this.Controls.Add(this.pnlRepeatableFiles);
             this.Controls.Add(this.notificationsControl1);
-            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.panel1);
             this.Name = "DBVersionsMangement";
             this.Size = new System.Drawing.Size(916, 1535);
@@ -1326,7 +1326,7 @@
             this.panel2.PerformLayout();
             this.pnlSyncToSpecificState.ResumeLayout(false);
             this.pnlSyncToSpecificState.PerformLayout();
-            this.panel5.ResumeLayout(false);
+            this.pnlHeader.ResumeLayout(false);
             this.pnlMissingSystemTables.ResumeLayout(false);
             this.pnlMissingSystemTables.PerformLayout();
             this.pnlMainActions.ResumeLayout(false);
@@ -1357,7 +1357,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.DataGridView dgIncrementalScriptsFiles;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
@@ -1413,13 +1413,13 @@
         private System.Windows.Forms.Button btnRecreateDbFromScratchMain;
         private System.Windows.Forms.Button btnDeploy;
         private System.Windows.Forms.Button btnSetDBToSpecificState;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label lblSetDBToSpecificState;
+        private System.Windows.Forms.Label lblDeploy;
+        private System.Windows.Forms.Label lblRecreateDbFromScratchMain;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnVirtualExecution;
-        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label lblRecreateDbFromScratch2;
         private System.Windows.Forms.Button btnRecreateDbFromScratch2;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Button btnApplySyncSpecificState;
