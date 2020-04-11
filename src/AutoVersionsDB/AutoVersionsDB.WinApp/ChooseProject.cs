@@ -105,24 +105,29 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                List<ProjectConfigItem> filteredProjectList =
-                    _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList
-                    .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToLower().Contains(searchText.Trim().ToLower()))
-                    .OrderBy(e => e.ProjectName)
-                    .ToList();
-
-                flowLayoutPanel1.Controls.Clear();
-
-                foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
+                if (_autoVersionsDbAPI!= null
+                    && _autoVersionsDbAPI.ConfigProjectsManager != null)
                 {
-                    ProjectItem projectItem = new ProjectItem(projectConfigItem);
-                    projectItem.OnNavToProcess += ProjectItem_OnNavToProcess;
-                    projectItem.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
-                    projectItem.OnEditProject += ProjectItem_OnEditProject;
-                    flowLayoutPanel1.Controls.Add(projectItem);
+                    List<ProjectConfigItem> filteredProjectList =
+                        _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList
+                        .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToLower().Contains(searchText.Trim().ToLower()))
+                        .OrderBy(e => e.ProjectName)
+                        .ToList();
+
+                    flowLayoutPanel1.Controls.Clear();
+
+                    foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
+                    {
+                        ProjectItem projectItem = new ProjectItem(projectConfigItem);
+                        projectItem.OnNavToProcess += ProjectItem_OnNavToProcess;
+                        projectItem.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
+                        projectItem.OnEditProject += ProjectItem_OnEditProject;
+                        flowLayoutPanel1.Controls.Add(projectItem);
+                    }
+
+                    setProjectItemsSize();
                 }
 
-                setProjectItemsSize();
 
             }
         }

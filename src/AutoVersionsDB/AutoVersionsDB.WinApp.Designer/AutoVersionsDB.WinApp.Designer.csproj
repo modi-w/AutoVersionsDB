@@ -145,6 +145,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Properties\Resources.resx">
       <Link>Properties\Resources.resx</Link>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\TextInputWindow.resx">
       <Link>TextInputWindow.resx</Link>
@@ -231,6 +233,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\trashIcon32_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RunIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RecreateDBFromScratchIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

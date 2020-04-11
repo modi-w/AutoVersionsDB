@@ -124,8 +124,14 @@
   <data name="AddIcon321" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddIcon32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ApplyIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ApplyIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="backIcon_32_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\backIcon_32-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CancelIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CancelIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CheckedGreen32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CheckedGreen32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,6 +142,9 @@
   <data name="dbIcon_32_34" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dbIcon_32-34.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="deployIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\deployIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="EditIcon32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EditIcon32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -144,6 +153,12 @@
   </data>
   <data name="exitIcon32_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\exitIcon32-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HistoricalBackups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HistoricalBackups.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="historyIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\historyIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="info2_32_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\info2_32-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,13 +175,22 @@
   <data name="plus32_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus32_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RecreateDBFromScratchIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RecreateDBFromScratchIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Refresh_icon32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Refresh_icon32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RunIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RunIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="StopIcon_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StopIcon_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="trashIcon32_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\trashIcon32_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VirtualExecution2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\VirtualExecution2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

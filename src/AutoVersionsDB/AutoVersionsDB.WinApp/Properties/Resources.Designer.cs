@@ -83,9 +83,29 @@ namespace AutoVersionsDB.WinApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ApplyIcon {
+            get {
+                object obj = ResourceManager.GetObject("ApplyIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap backIcon_32_32 {
             get {
                 object obj = ResourceManager.GetObject("backIcon_32_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CancelIcon {
+            get {
+                object obj = ResourceManager.GetObject("CancelIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,6 +143,16 @@ namespace AutoVersionsDB.WinApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap deployIcon {
+            get {
+                object obj = ResourceManager.GetObject("deployIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap EditIcon32 {
             get {
                 object obj = ResourceManager.GetObject("EditIcon32", resourceCulture);
@@ -146,6 +176,26 @@ namespace AutoVersionsDB.WinApp.Properties {
         internal static System.Drawing.Bitmap exitIcon32_32 {
             get {
                 object obj = ResourceManager.GetObject("exitIcon32_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HistoricalBackups {
+            get {
+                object obj = ResourceManager.GetObject("HistoricalBackups", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap historyIcon {
+            get {
+                object obj = ResourceManager.GetObject("historyIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +253,29 @@ namespace AutoVersionsDB.WinApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RecreateDBFromScratchIcon {
+            get {
+                object obj = ResourceManager.GetObject("RecreateDBFromScratchIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Refresh_icon32 {
             get {
                 object obj = ResourceManager.GetObject("Refresh_icon32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RunIcon {
+            get {
+                object obj = ResourceManager.GetObject("RunIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -226,6 +296,16 @@ namespace AutoVersionsDB.WinApp.Properties {
         internal static System.Drawing.Bitmap trashIcon32_red {
             get {
                 object obj = ResourceManager.GetObject("trashIcon32_red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VirtualExecution2 {
+            get {
+                object obj = ResourceManager.GetObject("VirtualExecution2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

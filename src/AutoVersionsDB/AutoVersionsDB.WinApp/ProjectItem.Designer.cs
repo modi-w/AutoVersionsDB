@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.lblProjectName = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblProcessLink = new System.Windows.Forms.Label();
+            this.lblEditProject = new System.Windows.Forms.Label();
             this.lblDeleteProject = new System.Windows.Forms.Label();
             this.lblProjectIcon = new System.Windows.Forms.Label();
-            this.lblEditProject = new System.Windows.Forms.Label();
-            this.lblProcessLink = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblProjectName
@@ -46,11 +46,44 @@
             this.lblProjectName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblProjectName.Location = new System.Drawing.Point(63, 6);
             this.lblProjectName.Name = "lblProjectName";
-            this.lblProjectName.Size = new System.Drawing.Size(446, 56);
+            this.lblProjectName.Size = new System.Drawing.Size(457, 56);
             this.lblProjectName.TabIndex = 3;
             this.lblProjectName.Text = "Project 1";
             this.lblProjectName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblProjectName.Click += new System.EventHandler(this.lblProjectName_Click);
+            // 
+            // label8
+            // 
+            this.label8.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.label8.Location = new System.Drawing.Point(-1, -13);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(4, 95);
+            this.label8.TabIndex = 66;
+            // 
+            // lblProcessLink
+            // 
+            this.lblProcessLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblProcessLink.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblProcessLink.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Play32;
+            this.lblProcessLink.Location = new System.Drawing.Point(623, 8);
+            this.lblProcessLink.Margin = new System.Windows.Forms.Padding(0);
+            this.lblProcessLink.Name = "lblProcessLink";
+            this.lblProcessLink.Size = new System.Drawing.Size(43, 56);
+            this.lblProcessLink.TabIndex = 7;
+            this.lblProcessLink.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblProcessLink.Click += new System.EventHandler(this.lblProcessLink_Click);
+            // 
+            // lblEditProject
+            // 
+            this.lblEditProject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEditProject.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblEditProject.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
+            this.lblEditProject.Location = new System.Drawing.Point(573, 9);
+            this.lblEditProject.Margin = new System.Windows.Forms.Padding(0);
+            this.lblEditProject.Name = "lblEditProject";
+            this.lblEditProject.Size = new System.Drawing.Size(50, 53);
+            this.lblEditProject.TabIndex = 6;
+            this.lblEditProject.Click += new System.EventHandler(this.lblEditProject_Click);
             // 
             // lblDeleteProject
             // 
@@ -74,39 +107,6 @@
             this.lblProjectIcon.TabIndex = 4;
             this.lblProjectIcon.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lblProjectIcon.Click += new System.EventHandler(this.lblProjectIcon_Click);
-            // 
-            // lblEditProject
-            // 
-            this.lblEditProject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblEditProject.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblEditProject.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
-            this.lblEditProject.Location = new System.Drawing.Point(573, 9);
-            this.lblEditProject.Margin = new System.Windows.Forms.Padding(0);
-            this.lblEditProject.Name = "lblEditProject";
-            this.lblEditProject.Size = new System.Drawing.Size(50, 53);
-            this.lblEditProject.TabIndex = 6;
-            this.lblEditProject.Click += new System.EventHandler(this.lblEditProject_Click);
-            // 
-            // lblProcessLink
-            // 
-            this.lblProcessLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblProcessLink.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblProcessLink.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Play32;
-            this.lblProcessLink.Location = new System.Drawing.Point(623, 9);
-            this.lblProcessLink.Margin = new System.Windows.Forms.Padding(0);
-            this.lblProcessLink.Name = "lblProcessLink";
-            this.lblProcessLink.Size = new System.Drawing.Size(43, 56);
-            this.lblProcessLink.TabIndex = 7;
-            this.lblProcessLink.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lblProcessLink.Click += new System.EventHandler(this.lblProcessLink_Click);
-            // 
-            // label8
-            // 
-            this.label8.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.label8.Location = new System.Drawing.Point(-1, -13);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(4, 95);
-            this.label8.TabIndex = 66;
             // 
             // ProjectItem
             // 

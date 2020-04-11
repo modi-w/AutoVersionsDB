@@ -50,15 +50,38 @@ namespace AutoVersionsDB.WinApp
             dgDevDummyDataScriptsFiles.AutoGenerateColumns = false;
             dgDevDummyDataScriptsFiles.SelectionChanged += dgDevDummyDataScriptsFiles_SelectionChanged;
 
-            pnlSyncToSpecificState.Location = new Point(873, 14);
-            pnlMissingSystemTables.Location = new Point(600, 10);
-            pnlSetDBStateManually.Location = new Point(880, 24);
-            btnShowHistoricalBackups.Location = new Point(880, 24);
+            //pnlSyncToSpecificState.Location = new Point(873, 14);
+            //pnlMissingSystemTables.Location = new Point(600, 10);
+            //pnlSetDBStateManually.Location = new Point(880, 24);
+            //btnShowHistoricalBackups.Location = new Point(880, 24);
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
                 _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
             }
+
+            btnSetDBToSpecificState.Visible = false;
+
+            setToolTips();
+        }
+
+        private void setToolTips()
+        {
+            ToolTip tooltipControl = new ToolTip();
+
+            // Set up the delays for the ToolTip.
+            tooltipControl.AutoPopDelay = 5000;
+            tooltipControl.InitialDelay = 500;
+            tooltipControl.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            tooltipControl.ShowAlways = true;
+
+            // Set up the ToolTip text with the controls.
+            tooltipControl.SetToolTip(this.btnRefresh, "Refresh");
+            tooltipControl.SetToolTip(this.btnRunSync, "Sync the db with the missing scripts");
+            tooltipControl.SetToolTip(this.btnRecreateDbFromScratchMain, "Recreate DB From Scratch");
+            tooltipControl.SetToolTip(this.btnDeploy, "Create Deploy Package");
+            tooltipControl.SetToolTip(this.btnSetDBToSpecificState, "Set DB To Specific State");
         }
 
 
@@ -152,34 +175,22 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnShowHistoricalBackups_Click(object sender, EventArgs e)
+        private void btnShowHistoricalBackups_Click_1(object sender, EventArgs e)
         {
             Process.Start(_autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder);
         }
 
-
-        private void lnkBtnCancelSyncSpecificState_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void btnCancelSyncSpecificState_Click(object sender, EventArgs e)
         {
             setViewState(eDBVersionsMangementViewType.ReadyToRunSync);
+
         }
 
-        private void ctxItem_syncToSpecificState_Click(object sender, EventArgs e)
+        private void btnSetDBToSpecificState_Click(object sender, EventArgs e)
         {
             setViewState(eDBVersionsMangementViewType.ReadyToSyncToSpecificState);
         }
 
-        private void btnMoreOptions_Click(object sender, EventArgs e)
-        {
-            Point screenPoint = btnMoreOptions.PointToScreen(new Point(btnMoreOptions.Left, btnMoreOptions.Bottom));
-            if (screenPoint.Y + ctxmnuMoreOptions.Size.Height > Screen.PrimaryScreen.WorkingArea.Height)
-            {
-                ctxmnuMoreOptions.Show(btnMoreOptions, new Point(0, -ctxmnuMoreOptions.Size.Height));
-            }
-            else
-            {
-                ctxmnuMoreOptions.Show(btnMoreOptions, new Point(0, btnMoreOptions.Height));
-            }
-        }
 
 
         private void btnNavToEdit_Click(object sender, EventArgs e)
@@ -204,12 +215,11 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-
-
-        private void lnkBtnCancelSetDBStateManually_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void btnCancelSetDBStateManually_Click(object sender, EventArgs e)
         {
             setViewState(eDBVersionsMangementViewType.MissingSystemTables);
         }
+
 
         private void btnOpenIncrementalScriptsFolder_Click(object sender, EventArgs e)
         {
@@ -294,30 +304,30 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void deployToolStripMenuItem_Click(object sender, EventArgs e)
+
+
+
+        private bool checkIsTargetStateHistory()
         {
-            try
-            {
-                setViewState(eDBVersionsMangementViewType.InProcess);
-                notificationsControl1.BeforeStart();
+            bool isAllowRun = true;
 
-                _autoVersionsDbAPI.Deploy();
-
-                notificationsControl1.AfterComplete();
-                setViewState_AfterProcessComplete();
-            }
-            catch (Exception ex)
+            if (!_autoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(TargetStateScriptFileName))
             {
-                //LogManagerObj.AddExceptionMessageToLog(ex, "deployToolStripMenuItem_Click()");
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
+                isAllowRun = MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
             }
 
+            return isAllowRun;
         }
 
-        private void btnApplySyncSpecificState_Click(object sender, EventArgs e)
+        private void btnRecreateDbFromScratchMain_Click(object sender, EventArgs e)
         {
+            runRecreateDBFromScratch();
+        }
 
 
+        private void btnApplySyncSpecificState_Click_1(object sender, EventArgs e)
+        {
             if (checkIsTargetStateHistory())
             {
                 Task.Factory.StartNew(() =>
@@ -341,37 +351,37 @@ namespace AutoVersionsDB.WinApp
 
                 });
             }
-
         }
 
-        private bool checkIsTargetStateHistory()
-        {
-            bool isAllowRun = true;
 
-            if (!_autoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(TargetStateScriptFileName))
+        private void btnDeploy_Click(object sender, EventArgs e)
+        {
+            try
             {
-                string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
-                isAllowRun = MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+                setViewState(eDBVersionsMangementViewType.InProcess);
+                notificationsControl1.BeforeStart();
+
+                _autoVersionsDbAPI.Deploy();
+
+                notificationsControl1.AfterComplete();
+                setViewState_AfterProcessComplete();
             }
-
-            return isAllowRun;
+            catch (Exception ex)
+            {
+                //LogManagerObj.AddExceptionMessageToLog(ex, "deployToolStripMenuItem_Click()");
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void ctxItem_recreateDBFromScratch_Click(object sender, EventArgs e)
+        private void btnVirtualExecution_Click(object sender, EventArgs e)
+        {
+            setViewState(eDBVersionsMangementViewType.SetDBStateManually);
+        }
+
+        private void btnRecreateDbFromScratch2_Click_1(object sender, EventArgs e)
         {
             runRecreateDBFromScratch();
         }
-
-        private void btnRecreateDbFromScratch_Click(object sender, EventArgs e)
-        {
-            runRecreateDBFromScratch();
-        }
-
-        private void btnRecreateDbFromScratch2_Click(object sender, EventArgs e)
-        {
-            runRecreateDBFromScratch();
-        }
-
 
         private void runRecreateDBFromScratch()
         {
@@ -401,12 +411,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnSetDbStateManually_Click(object sender, EventArgs e)
-        {
-            setViewState(eDBVersionsMangementViewType.SetDBStateManually);
-        }
-
-        private void btnRunSetDBStateManally_Click(object sender, EventArgs e)
+        private void btnRunSetDBStateManally_Click_1(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -428,7 +433,6 @@ namespace AutoVersionsDB.WinApp
 
             });
         }
-
 
 
 
@@ -553,7 +557,7 @@ namespace AutoVersionsDB.WinApp
                     enanbleDisableForm(false);
                     setControlEnableOrDisable(btnShowHistoricalBackups, true);
 
-                    setControlHideOrVisible(btnShowHistoricalBackups, true);
+                    setControlHideOrVisible(pnlRestoreDbError, true);
                     setControlHideOrVisible(lblColorTargetState_Square, false);
                     setControlHideOrVisible(lblColorTargetState_Caption, false);
 
@@ -563,13 +567,17 @@ namespace AutoVersionsDB.WinApp
                     break;
             }
 
-            btnMoreOptions.BeginInvoke((MethodInvoker)(() =>
+            btnRecreateDbFromScratchMain.BeginInvoke((MethodInvoker)(() =>
             {
-                btnMoreOptions.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                btnRecreateDbFromScratchMain.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
             }));
-            btnRecreateDbFromScratch.BeginInvoke((MethodInvoker)(() =>
+            btnDeploy.BeginInvoke((MethodInvoker)(() =>
             {
-                btnRecreateDbFromScratch.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                btnDeploy.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+            }));
+            btnRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
+            {
+                btnRecreateDbFromScratch2.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
             }));
 
 
@@ -581,7 +589,7 @@ namespace AutoVersionsDB.WinApp
             setControlHideOrVisible(pnlSyncToSpecificState, false);
             setControlHideOrVisible(pnlMissingSystemTables, false);
             setControlHideOrVisible(pnlSetDBStateManually, false);
-            setControlHideOrVisible(btnShowHistoricalBackups, false);
+            setControlHideOrVisible(pnlRestoreDbError, false);
         }
 
         private void bindToUIElements(eDBVersionsMangementViewType dbVersionsMangementViewType)
@@ -769,8 +777,11 @@ namespace AutoVersionsDB.WinApp
 
 
 
+
+
+
         #endregion
 
-
+       
     }
 }
