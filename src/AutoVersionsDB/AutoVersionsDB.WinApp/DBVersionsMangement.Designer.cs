@@ -549,7 +549,7 @@
             this.btnVirtualExecution.BackColor = System.Drawing.Color.White;
             this.btnVirtualExecution.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnVirtualExecution.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnVirtualExecution.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnVirtualExecution.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnVirtualExecution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVirtualExecution.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.btnVirtualExecution.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -581,7 +581,7 @@
             this.btnRecreateDbFromScratch2.BackColor = System.Drawing.Color.White;
             this.btnRecreateDbFromScratch2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnRecreateDbFromScratch2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRecreateDbFromScratch2.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnRecreateDbFromScratch2.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnRecreateDbFromScratch2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRecreateDbFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.btnRecreateDbFromScratch2.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -650,10 +650,10 @@
             // 
             this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold);
-            this.label24.Location = new System.Drawing.Point(206, 45);
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.label24.Location = new System.Drawing.Point(204, 43);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(55, 13);
+            this.label24.Size = new System.Drawing.Size(60, 15);
             this.label24.TabIndex = 76;
             this.label24.Text = "Sync DB";
             // 
@@ -663,7 +663,7 @@
             this.btnSetDBToSpecificState.BackColor = System.Drawing.Color.White;
             this.btnSetDBToSpecificState.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnSetDBToSpecificState.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSetDBToSpecificState.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnSetDBToSpecificState.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnSetDBToSpecificState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSetDBToSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.btnSetDBToSpecificState.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -684,7 +684,7 @@
             this.btnDeploy.BackColor = System.Drawing.Color.White;
             this.btnDeploy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnDeploy.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDeploy.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnDeploy.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnDeploy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeploy.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.btnDeploy.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -705,7 +705,7 @@
             this.btnRecreateDbFromScratchMain.BackColor = System.Drawing.Color.White;
             this.btnRecreateDbFromScratchMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnRecreateDbFromScratchMain.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRecreateDbFromScratchMain.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnRecreateDbFromScratchMain.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnRecreateDbFromScratchMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRecreateDbFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.btnRecreateDbFromScratchMain.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -723,10 +723,10 @@
             // btnRunSync
             // 
             this.btnRunSync.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRunSync.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(253)))), ((int)(((byte)(232)))));
+            this.btnRunSync.BackColor = System.Drawing.Color.White;
             this.btnRunSync.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnRunSync.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRunSync.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnRunSync.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnRunSync.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRunSync.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.btnRunSync.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -735,7 +735,7 @@
             this.btnRunSync.Location = new System.Drawing.Point(208, 6);
             this.btnRunSync.Margin = new System.Windows.Forms.Padding(0);
             this.btnRunSync.Name = "btnRunSync";
-            this.btnRunSync.Size = new System.Drawing.Size(46, 39);
+            this.btnRunSync.Size = new System.Drawing.Size(43, 39);
             this.btnRunSync.TabIndex = 30;
             this.btnRunSync.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRunSync.UseVisualStyleBackColor = false;
@@ -1259,7 +1259,7 @@
             this.pnlActionButtons.Controls.Add(this.pnlSyncToSpecificState);
             this.pnlActionButtons.Location = new System.Drawing.Point(15, 1160);
             this.pnlActionButtons.Name = "pnlActionButtons";
-            this.pnlActionButtons.Size = new System.Drawing.Size(877, 127);
+            this.pnlActionButtons.Size = new System.Drawing.Size(877, 224);
             this.pnlActionButtons.TabIndex = 75;
             // 
             // pnlRestoreDbError
@@ -1290,7 +1290,7 @@
             this.btnShowHistoricalBackups.BackColor = System.Drawing.Color.White;
             this.btnShowHistoricalBackups.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnShowHistoricalBackups.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnShowHistoricalBackups.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.btnShowHistoricalBackups.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnShowHistoricalBackups.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnShowHistoricalBackups.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.btnShowHistoricalBackups.ForeColor = System.Drawing.Color.WhiteSmoke;

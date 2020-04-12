@@ -10,6 +10,7 @@ using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
 using System.ComponentModel;
+using AutoVersionsDB.WinApp.Utils;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -69,8 +70,10 @@ namespace AutoVersionsDB.WinApp
                 _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
             }
 
+//#if !DEBUG
             btnSetDBToSpecificState.Visible = false;
             lblSetDBToSpecificState.Visible = false;
+//#endif
 
             setToolTips();
         }
@@ -194,7 +197,7 @@ namespace AutoVersionsDB.WinApp
 
         private void btnShowHistoricalBackups_Click_1(object sender, EventArgs e)
         {
-            Process.Start(_autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder);
+            OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder);
         }
 
         private void btnCancelSyncSpecificState_Click(object sender, EventArgs e)
@@ -240,7 +243,7 @@ namespace AutoVersionsDB.WinApp
 
         private void btnOpenIncrementalScriptsFolder_Click(object sender, EventArgs e)
         {
-            Process.Start(_autoVersionsDbAPI.ProjectConfigItem.IncrementalScriptsFolderPath);
+            OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.IncrementalScriptsFolderPath);
         }
         private void btnCreateNewIncrementalScriptFile_Click(object sender, EventArgs e)
         {
@@ -252,13 +255,14 @@ namespace AutoVersionsDB.WinApp
                 string newFileFullPath = _autoVersionsDbAPI.CreateNewIncrementalScriptFile(textInputWindow.ResultText);
 
                 refreshAll();
-                Process.Start(newFileFullPath);
+
+                OsProcessUtils.StartOsProcess(newFileFullPath);
             }
         }
 
         private void btnOpenRepeatableScriptsFolder_Click(object sender, EventArgs e)
         {
-            Process.Start(_autoVersionsDbAPI.ProjectConfigItem.RepeatableScriptsFolderPath);
+            OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.RepeatableScriptsFolderPath);
         }
         private void btnCreateNewRepeatableScriptFile_Click(object sender, EventArgs e)
         {
@@ -269,14 +273,14 @@ namespace AutoVersionsDB.WinApp
             {
                 string newFileFullPath = _autoVersionsDbAPI.CreateNewRepeatableScriptFile(textInputWindow.ResultText);
                 refreshAll();
-                Process.Start(newFileFullPath);
+                OsProcessUtils.StartOsProcess(newFileFullPath);
             }
         }
 
 
         private void btnOpenDevDummyDataScriptsFolder_Click(object sender, EventArgs e)
         {
-            Process.Start(_autoVersionsDbAPI.ProjectConfigItem.DevDummyDataScriptsFolderPath);
+            OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DevDummyDataScriptsFolderPath);
         }
         private void btnCreateNewDevDummyDataScriptFile_Click(object sender, EventArgs e)
         {
@@ -287,7 +291,7 @@ namespace AutoVersionsDB.WinApp
             {
                 string newFileFullPath = _autoVersionsDbAPI.CreateNewDevDummyDataScriptFile(textInputWindow.ResultText);
                 refreshAll();
-                Process.Start(newFileFullPath);
+                OsProcessUtils.StartOsProcess(newFileFullPath);
             }
         }
         #endregion
@@ -382,6 +386,8 @@ namespace AutoVersionsDB.WinApp
 
                 notificationsControl1.AfterComplete();
                 setViewState_AfterProcessComplete();
+
+                OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DeployArtifactFolderPath);
             }
             catch (Exception ex)
             {

@@ -113,6 +113,9 @@
       <Link>TextInputWindow.Designer.cs</Link>
       <DependentUpon>TextInputWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\OsProcessUtils.cs">
+      <Link>Utils\OsProcessUtils.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ChooseProject.resx">
