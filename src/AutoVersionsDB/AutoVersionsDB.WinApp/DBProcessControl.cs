@@ -70,10 +70,10 @@ namespace AutoVersionsDB.WinApp
                 _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
             }
 
-//#if !DEBUG
+            //#if !DEBUG
             btnSetDBToSpecificState.Visible = false;
             lblSetDBToSpecificState.Visible = false;
-//#endif
+            //#endif
 
             setToolTips();
         }
@@ -205,8 +205,8 @@ namespace AutoVersionsDB.WinApp
 
         private void btnCancelSyncSpecificState_Click(object sender, EventArgs e)
         {
+            notificationsControl1.Clear();
             setViewState(eDBVersionsMangementViewType.ReadyToRunSync);
-
         }
 
         private void btnSetDBToSpecificState_Click(object sender, EventArgs e)
@@ -780,6 +780,9 @@ namespace AutoVersionsDB.WinApp
             setControlEnableOrDisable(btnRefresh, isEnable);
             setControlEnableOrDisable(dgIncrementalScriptsFiles, isEnable);
             setControlEnableOrDisable(btnShowHistoricalBackups, isEnable);
+            setControlEnableOrDisable(btnCreateNewIncrementalScriptFile, isEnable);
+            setControlEnableOrDisable(btnCreateNewRepeatableScriptFile, isEnable);
+            setControlEnableOrDisable(btnCreateNewDevDummyDataScriptFile, isEnable);
         }
 
         private void setControlEnableOrDisable(Control control, bool isEnable)
