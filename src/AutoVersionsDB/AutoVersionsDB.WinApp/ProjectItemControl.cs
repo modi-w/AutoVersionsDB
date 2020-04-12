@@ -12,7 +12,7 @@ using AutoVersionsDB.Core;
 
 namespace AutoVersionsDB.WinApp
 {
-    public partial class ProjectItem : UserControl
+    public partial class ProjectItemControl : UserControl
     {
         private AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
@@ -23,7 +23,7 @@ namespace AutoVersionsDB.WinApp
 
         public ProjectConfigItem ProjectConfig { get; private set; }
 
-        public ProjectItem(ProjectConfigItem projectConfigItem)
+        public ProjectItemControl(ProjectConfigItem projectConfigItem)
         {
             InitializeComponent();
 

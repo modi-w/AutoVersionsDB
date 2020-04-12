@@ -54,13 +54,13 @@
       <Link>ChooseProject.Designer.cs</Link>
       <DependentUpon>ChooseProject.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\DBVersionsMangement.cs">
-      <Link>DBVersionsMangement.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\DBProcessControl.cs">
+      <Link>DBProcessControl.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\DBVersionsMangement.Designer.cs">
-      <Link>DBVersionsMangement.Designer.cs</Link>
-      <DependentUpon>DBVersionsMangement.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\DBProcessControl.Designer.cs">
+      <Link>DBProcessControl.Designer.cs</Link>
+      <DependentUpon>DBProcessControl.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\EditProjectConfigDetails.cs">
       <Link>EditProjectConfigDetails.cs</Link>
@@ -94,13 +94,13 @@
       <Link>NotificationsControl.Designer.cs</Link>
       <DependentUpon>NotificationsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\ProjectItem.cs">
-      <Link>ProjectItem.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\ProjectItemControl.cs">
+      <Link>ProjectItemControl.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\ProjectItem.Designer.cs">
-      <Link>ProjectItem.Designer.cs</Link>
-      <DependentUpon>ProjectItem.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\ProjectItemControl.Designer.cs">
+      <Link>ProjectItemControl.Designer.cs</Link>
+      <DependentUpon>ProjectItemControl.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Properties\Resources.Designer.cs">
       <Link>Properties\Resources.Designer.cs</Link>
@@ -122,9 +122,9 @@
       <Link>ChooseProject.resx</Link>
       <DependentUpon>ChooseProject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\DBVersionsMangement.resx">
-      <Link>DBVersionsMangement.resx</Link>
-      <DependentUpon>DBVersionsMangement.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\DBProcessControl.resx">
+      <Link>DBProcessControl.resx</Link>
+      <DependentUpon>DBProcessControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\EditProjectConfigDetails.resx">
       <Link>EditProjectConfigDetails.resx</Link>
@@ -142,9 +142,9 @@
       <Link>NotificationsControl.resx</Link>
       <DependentUpon>NotificationsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ProjectItem.resx">
-      <Link>ProjectItem.resx</Link>
-      <DependentUpon>ProjectItem.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ProjectItemControl.resx">
+      <Link>ProjectItemControl.resx</Link>
+      <DependentUpon>ProjectItemControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Properties\Resources.resx">
       <Link>Properties\Resources.resx</Link>

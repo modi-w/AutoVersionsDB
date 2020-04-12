@@ -34,7 +34,7 @@
             this.tbEditProjectConfig = new System.Windows.Forms.TabPage();
             this.editProjectConfigDetails1 = new AutoVersionsDB.WinApp.EditProjectConfigDetails();
             this.tbDBVersionsMangement = new System.Windows.Forms.TabPage();
-            this.dbVersionsMangement1 = new AutoVersionsDB.WinApp.DBVersionsMangement();
+            this.dbVersionsMangement1 = new AutoVersionsDB.WinApp.DBProcessControl();
             this.lnkBtnChooseProject = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.tabMainLayout.SuspendLayout();
@@ -181,7 +181,7 @@
         private System.Windows.Forms.LinkLabel lnkBtnChooseProject;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage tbDBVersionsMangement;
-        private DBVersionsMangement dbVersionsMangement1;
+        private DBProcessControl dbVersionsMangement1;
     }
 }
 

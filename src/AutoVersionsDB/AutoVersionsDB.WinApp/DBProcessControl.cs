@@ -15,7 +15,7 @@ using AutoVersionsDB.WinApp.Utils;
 namespace AutoVersionsDB.WinApp
 {
 
-    public partial class DBVersionsMangement : UserControl
+    public partial class DBProcessControl : UserControl
     {
         public enum eDBVersionsMangementViewType
         {
@@ -38,7 +38,7 @@ namespace AutoVersionsDB.WinApp
         public string TargetStateScriptFileName { get; private set; }
 
 
-        public DBVersionsMangement()
+        public DBProcessControl()
         {
             InitializeComponent();
 
@@ -100,8 +100,11 @@ namespace AutoVersionsDB.WinApp
             tooltipControl.SetToolTip(this.btnRefresh, "Refresh");
             tooltipControl.SetToolTip(this.btnRunSync, "Sync the db with the missing scripts");
             tooltipControl.SetToolTip(this.btnRecreateDbFromScratchMain, "Recreate DB From Scratch");
+            tooltipControl.SetToolTip(this.btnRecreateDbFromScratch2, "Recreate DB From Scratch");
             tooltipControl.SetToolTip(this.btnDeploy, "Create Deploy Package");
             tooltipControl.SetToolTip(this.btnSetDBToSpecificState, "Set DB To Specific State");
+            tooltipControl.SetToolTip(this.btnVirtualExecution, "Set DB to specific state virtually. Use it if your DB is not empty but you never use our migration tool on it yet.");
+            tooltipControl.SetToolTip(this.btnShowHistoricalBackups, "Open the backup history folder.");
         }
 
 
@@ -408,7 +411,7 @@ namespace AutoVersionsDB.WinApp
 
         private void runRecreateDBFromScratch()
         {
-            string warningMessage = $"Are you sure?";
+            string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may loose Data. Are you sure?";
             if (MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 Task.Factory.StartNew(() =>

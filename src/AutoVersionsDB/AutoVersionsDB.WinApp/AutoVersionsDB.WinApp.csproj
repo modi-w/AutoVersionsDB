@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ProjectItem.cs">
+    <Compile Update="ProjectItemControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="ProjectItem.Designer.cs">
-      <DependentUpon>ProjectItem.cs</DependentUpon>
+    <Compile Update="ProjectItemControl.Designer.cs">
+      <DependentUpon>ProjectItemControl.cs</DependentUpon>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>

@@ -61,7 +61,7 @@ namespace AutoVersionsDB.WinApp
         {
             foreach (var childControl in flowLayoutPanel1.Controls)
             {
-                ProjectItem projectItem = childControl as ProjectItem;
+                ProjectItemControl projectItem = childControl as ProjectItemControl;
                 projectItem.Width = flowLayoutPanel1.Width - 30;
             }
         }
@@ -118,7 +118,7 @@ namespace AutoVersionsDB.WinApp
 
                     foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
                     {
-                        ProjectItem projectItem = new ProjectItem(projectConfigItem);
+                        ProjectItemControl projectItem = new ProjectItemControl(projectConfigItem);
                         projectItem.OnNavToProcess += ProjectItem_OnNavToProcess;
                         projectItem.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
                         projectItem.OnEditProject += ProjectItem_OnEditProject;

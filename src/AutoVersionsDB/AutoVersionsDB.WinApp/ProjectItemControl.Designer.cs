@@ -1,6 +1,6 @@
 ﻿namespace AutoVersionsDB.WinApp
 {
-    partial class ProjectItem
+    partial class ProjectItemControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -34,6 +34,9 @@
             this.lblEditProject = new System.Windows.Forms.Label();
             this.lblDeleteProject = new System.Windows.Forms.Label();
             this.lblProjectIcon = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblProjectName
@@ -65,7 +68,7 @@
             this.lblProcessLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProcessLink.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblProcessLink.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Play32;
-            this.lblProcessLink.Location = new System.Drawing.Point(623, 8);
+            this.lblProcessLink.Location = new System.Drawing.Point(622, 8);
             this.lblProcessLink.Margin = new System.Windows.Forms.Padding(0);
             this.lblProcessLink.Name = "lblProcessLink";
             this.lblProcessLink.Size = new System.Drawing.Size(43, 56);
@@ -78,7 +81,7 @@
             this.lblEditProject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEditProject.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblEditProject.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
-            this.lblEditProject.Location = new System.Drawing.Point(573, 9);
+            this.lblEditProject.Location = new System.Drawing.Point(566, 9);
             this.lblEditProject.Margin = new System.Windows.Forms.Padding(0);
             this.lblEditProject.Name = "lblEditProject";
             this.lblEditProject.Size = new System.Drawing.Size(50, 53);
@@ -108,21 +111,58 @@
             this.lblProjectIcon.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lblProjectIcon.Click += new System.EventHandler(this.lblProjectIcon_Click);
             // 
-            // ProjectItem
+            // label25
+            // 
+            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.label25.Location = new System.Drawing.Point(530, 49);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(38, 13);
+            this.label25.TabIndex = 84;
+            this.label25.Text = "Delete";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.label1.Location = new System.Drawing.Point(578, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(25, 13);
+            this.label1.TabIndex = 85;
+            this.label1.Text = "Edit";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.label2.Location = new System.Drawing.Point(611, 51);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.TabIndex = 86;
+            this.label2.Text = "DB Process";
+            // 
+            // ProjectItemControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label25);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblProcessLink);
             this.Controls.Add(this.lblEditProject);
             this.Controls.Add(this.lblDeleteProject);
             this.Controls.Add(this.lblProjectIcon);
             this.Controls.Add(this.lblProjectName);
-            this.Name = "ProjectItem";
+            this.Name = "ProjectItemControl";
             this.Size = new System.Drawing.Size(669, 69);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -134,5 +174,8 @@
         private System.Windows.Forms.Label lblEditProject;
         private System.Windows.Forms.Label lblProcessLink;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
