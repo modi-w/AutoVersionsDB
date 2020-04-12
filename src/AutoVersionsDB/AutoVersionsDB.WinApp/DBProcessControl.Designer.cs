@@ -139,6 +139,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProjectName.AutoEllipsis = true;
             this.lblProjectName.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblProjectName.ForeColor = System.Drawing.Color.DimGray;
             this.lblProjectName.Location = new System.Drawing.Point(98, 14);
             this.lblProjectName.Name = "lblProjectName";
             this.lblProjectName.Size = new System.Drawing.Size(458, 39);
@@ -454,7 +455,7 @@
             this.btnApplySyncSpecificState.TabIndex = 83;
             this.btnApplySyncSpecificState.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnApplySyncSpecificState.UseVisualStyleBackColor = false;
-            this.btnApplySyncSpecificState.Click += new System.EventHandler(this.btnApplySyncSpecificState_Click_1);
+            this.btnApplySyncSpecificState.Click += new System.EventHandler(this.btnApplySyncSpecificState_Click);
             // 
             // pnlHeader
             // 
@@ -618,7 +619,7 @@
             this.btnRecreateDbFromScratch2.TabIndex = 79;
             this.btnRecreateDbFromScratch2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRecreateDbFromScratch2.UseVisualStyleBackColor = false;
-            this.btnRecreateDbFromScratch2.Click += new System.EventHandler(this.btnRecreateDbFromScratch2_Click_1);
+            this.btnRecreateDbFromScratch2.Click += new System.EventHandler(this.btnRecreateDbFromScratch2_Click);
             // 
             // pnlMainActions
             // 
@@ -878,7 +879,7 @@
             this.btnRunSetDBStateManally.TabIndex = 87;
             this.btnRunSetDBStateManally.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRunSetDBStateManally.UseVisualStyleBackColor = false;
-            this.btnRunSetDBStateManally.Click += new System.EventHandler(this.btnRunSetDBStateManally_Click_1);
+            this.btnRunSetDBStateManally.Click += new System.EventHandler(this.btnRunSetDBStateManally_Click);
             // 
             // pnlRepeatableFiles
             // 
@@ -1327,7 +1328,7 @@
             this.btnShowHistoricalBackups.TabIndex = 79;
             this.btnShowHistoricalBackups.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnShowHistoricalBackups.UseVisualStyleBackColor = false;
-            this.btnShowHistoricalBackups.Click += new System.EventHandler(this.btnShowHistoricalBackups_Click_1);
+            this.btnShowHistoricalBackups.Click += new System.EventHandler(this.btnShowHistoricalBackups_Click);
             // 
             // DBProcessControl
             // 

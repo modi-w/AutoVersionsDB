@@ -156,15 +156,10 @@ namespace AutoVersionsDB.WinApp
             RefreshProjectList();
         }
 
+
         private void btnNewProject_Click(object sender, EventArgs e)
         {
             OnSetNewProject?.Invoke(sender, e);
         }
-
-    
-
-
-
-
     }
 }

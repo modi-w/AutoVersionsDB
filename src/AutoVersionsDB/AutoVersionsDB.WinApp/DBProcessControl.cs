@@ -198,7 +198,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnShowHistoricalBackups_Click_1(object sender, EventArgs e)
+        private void btnShowHistoricalBackups_Click(object sender, EventArgs e)
         {
             OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder);
         }
@@ -350,7 +350,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnApplySyncSpecificState_Click_1(object sender, EventArgs e)
+        private void btnApplySyncSpecificState_Click(object sender, EventArgs e)
         {
             if (checkIsTargetStateHistory())
             {
@@ -404,7 +404,7 @@ namespace AutoVersionsDB.WinApp
             setViewState(eDBVersionsMangementViewType.SetDBStateManually);
         }
 
-        private void btnRecreateDbFromScratch2_Click_1(object sender, EventArgs e)
+        private void btnRecreateDbFromScratch2_Click(object sender, EventArgs e)
         {
             runRecreateDBFromScratch();
         }
@@ -437,7 +437,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnRunSetDBStateManally_Click_1(object sender, EventArgs e)
+        private void btnRunSetDBStateManally_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {

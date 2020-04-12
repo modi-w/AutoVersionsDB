@@ -51,13 +51,11 @@
             this.label27 = new System.Windows.Forms.Label();
             this.lblDevDummyDataScriptsFolderPath = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.btnSave = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.tbConnectionTimeout = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.imgValid = new System.Windows.Forms.Label();
-            this.imgError = new System.Windows.Forms.Label();
-            this.btnNavToProcess = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.lblDbProcess = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
@@ -86,6 +84,10 @@
             this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsControl();
             this.pnlDevEnvDeplyFolder = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.imgValid = new System.Windows.Forms.Label();
+            this.imgError = new System.Windows.Forms.Label();
+            this.btnNavToProcess = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -362,21 +364,6 @@
             this.label29.TabIndex = 67;
             this.label29.Text = "Dev Dummy Data Scripts Folder Path:";
             // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.BackColor = System.Drawing.Color.DodgerBlue;
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.btnSave.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnSave.Location = new System.Drawing.Point(547, 12);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.btnSave.Size = new System.Drawing.Size(138, 44);
-            this.btnSave.TabIndex = 29;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // label13
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -405,11 +392,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.label28);
+            this.panel5.Controls.Add(this.btnSave);
+            this.panel5.Controls.Add(this.lblDbProcess);
             this.panel5.Controls.Add(this.imgValid);
             this.panel5.Controls.Add(this.imgError);
             this.panel5.Controls.Add(this.btnNavToProcess);
             this.panel5.Controls.Add(this.label15);
-            this.panel5.Controls.Add(this.btnSave);
             this.panel5.Controls.Add(this.label1);
             this.panel5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panel5.Location = new System.Drawing.Point(20, 12);
@@ -417,44 +406,27 @@
             this.panel5.Size = new System.Drawing.Size(747, 67);
             this.panel5.TabIndex = 64;
             // 
-            // imgValid
+            // label28
             // 
-            this.imgValid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.imgValid.Image = global::AutoVersionsDB.WinApp.Properties.Resources.CheckedGreen32;
-            this.imgValid.Location = new System.Drawing.Point(503, 15);
-            this.imgValid.Name = "imgValid";
-            this.imgValid.Size = new System.Drawing.Size(38, 40);
-            this.imgValid.TabIndex = 72;
+            this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(625, 50);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(44, 16);
+            this.label28.TabIndex = 89;
+            this.label28.Text = "Save";
             // 
-            // imgError
+            // lblDbProcess
             // 
-            this.imgError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.imgError.Image = global::AutoVersionsDB.WinApp.Properties.Resources.error2_32_32;
-            this.imgError.Location = new System.Drawing.Point(459, 15);
-            this.imgError.Name = "imgError";
-            this.imgError.Size = new System.Drawing.Size(38, 40);
-            this.imgError.TabIndex = 71;
-            // 
-            // btnNavToProcess
-            // 
-            this.btnNavToProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNavToProcess.BackColor = System.Drawing.Color.Transparent;
-            this.btnNavToProcess.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNavToProcess.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnNavToProcess.FlatAppearance.BorderSize = 0;
-            this.btnNavToProcess.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnNavToProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnNavToProcess.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnNavToProcess.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Play32;
-            this.btnNavToProcess.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnNavToProcess.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnNavToProcess.Location = new System.Drawing.Point(691, 15);
-            this.btnNavToProcess.Name = "btnNavToProcess";
-            this.btnNavToProcess.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.btnNavToProcess.Size = new System.Drawing.Size(38, 40);
-            this.btnNavToProcess.TabIndex = 68;
-            this.btnNavToProcess.UseVisualStyleBackColor = false;
-            this.btnNavToProcess.Click += new System.EventHandler(this.btnNavToProcess_Click);
+            this.lblDbProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDbProcess.AutoSize = true;
+            this.lblDbProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblDbProcess.Location = new System.Drawing.Point(680, 53);
+            this.lblDbProcess.Name = "lblDbProcess";
+            this.lblDbProcess.Size = new System.Drawing.Size(62, 13);
+            this.lblDbProcess.TabIndex = 87;
+            this.lblDbProcess.Text = "DB Process";
             // 
             // label15
             // 
@@ -797,6 +769,66 @@
             this.label26.Size = new System.Drawing.Size(4, 100);
             this.label26.TabIndex = 64;
             // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.BackColor = System.Drawing.Color.Transparent;
+            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSave.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnSave.Image = global::AutoVersionsDB.WinApp.Properties.Resources.SaveIcon;
+            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSave.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnSave.Location = new System.Drawing.Point(626, 12);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnSave.Size = new System.Drawing.Size(38, 40);
+            this.btnSave.TabIndex = 88;
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // imgValid
+            // 
+            this.imgValid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgValid.Image = global::AutoVersionsDB.WinApp.Properties.Resources.CheckedGreen32;
+            this.imgValid.Location = new System.Drawing.Point(581, 13);
+            this.imgValid.Name = "imgValid";
+            this.imgValid.Size = new System.Drawing.Size(38, 40);
+            this.imgValid.TabIndex = 72;
+            // 
+            // imgError
+            // 
+            this.imgError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgError.Image = global::AutoVersionsDB.WinApp.Properties.Resources.error2_32_32;
+            this.imgError.Location = new System.Drawing.Point(537, 13);
+            this.imgError.Name = "imgError";
+            this.imgError.Size = new System.Drawing.Size(38, 40);
+            this.imgError.TabIndex = 71;
+            // 
+            // btnNavToProcess
+            // 
+            this.btnNavToProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNavToProcess.BackColor = System.Drawing.Color.Transparent;
+            this.btnNavToProcess.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNavToProcess.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnNavToProcess.FlatAppearance.BorderSize = 0;
+            this.btnNavToProcess.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNavToProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnNavToProcess.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnNavToProcess.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Play32;
+            this.btnNavToProcess.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnNavToProcess.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnNavToProcess.Location = new System.Drawing.Point(691, 13);
+            this.btnNavToProcess.Name = "btnNavToProcess";
+            this.btnNavToProcess.Padding = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnNavToProcess.Size = new System.Drawing.Size(38, 40);
+            this.btnNavToProcess.TabIndex = 68;
+            this.btnNavToProcess.UseVisualStyleBackColor = false;
+            this.btnNavToProcess.Click += new System.EventHandler(this.btnNavToProcess_Click);
+            // 
             // EditProjectConfigDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -840,7 +872,6 @@
         private System.Windows.Forms.TextBox tbConnectionTimeout;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnNavToProcess;
@@ -893,5 +924,8 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label lblRepeatableScriptsFolderPath;
         private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label lblDbProcess;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Button btnSave;
     }
 }

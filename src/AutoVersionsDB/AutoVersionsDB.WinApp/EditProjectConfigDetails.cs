@@ -41,6 +41,7 @@ namespace AutoVersionsDB.WinApp
             errPrvProjectDetails.BlinkStyle = ErrorBlinkStyle.NeverBlink;
 
             btnNavToProcess.Visible = false;
+            lblDbProcess.Visible = false;
 
             imgError.Location = new Point(imgValid.Location.X, imgValid.Location.Y);
             pnlDelEnvFields.Location = new Point(pnlDevEnvFoldersFields.Location.X, pnlDevEnvFoldersFields.Location.Y);
@@ -77,7 +78,7 @@ namespace AutoVersionsDB.WinApp
 
             imgValid.Visible = !_autoVersionsDbAPI.HasError;
             btnNavToProcess.Visible = !_autoVersionsDbAPI.HasError;
-
+            lblDbProcess.Visible = !_autoVersionsDbAPI.HasError;
 
             return !_autoVersionsDbAPI.HasError;
         }
@@ -286,8 +287,5 @@ namespace AutoVersionsDB.WinApp
 
             btnSave.Enabled = true;
         }
-
-       
-      
     }
 }
