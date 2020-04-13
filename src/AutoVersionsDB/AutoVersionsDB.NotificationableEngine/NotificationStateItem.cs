@@ -217,7 +217,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
             if (isIncludeStepStage)
             {
-                outStr = string.Format("{3} {0:N0}% ({1}/{2})",
+                outStr = string.Format("{0:N0}% ({1}/{2}) {3}",
                                         Precents,
                                         StepNumber,
                                         NumOfSteps,
@@ -225,7 +225,7 @@ namespace AutoVersionsDB.NotificationableEngine
             }
             else
             {
-                outStr = string.Format("{1} {0:N0}%",
+                outStr = string.Format(" {0:N0}% {1}",
                                           Precents,
                                           StepName);
 

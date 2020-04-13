@@ -35,6 +35,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
         }
 
 
+        public void SetStepName(string stepName)
+        {
+            _stepName = stepName;
+        }
+
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
         {
             string currentScriptFilename = actionStepArgs.ScriptFile.Filename;
@@ -53,7 +58,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
             {
                 string currentScriptFilename = actionStepArgs.ScriptFile.Filename;
 
-                _stepName = currentScriptFilename;
+       //         _stepName = currentScriptFilename;
 
                 string sqlCommandStr = File.ReadAllText(actionStepArgs.ScriptFile.FileFullPath);
 

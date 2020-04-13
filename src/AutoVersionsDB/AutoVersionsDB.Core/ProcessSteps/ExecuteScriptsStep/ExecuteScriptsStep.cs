@@ -95,6 +95,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
 
         private void runScriptsFilesList(AutoVersionsDbProcessState processState, List<RuntimeScriptFileBase> scriptFilesList, string additionalStepInfo)
         {
+            _runSingleFileScriptStep.SetStepName(additionalStepInfo);
             using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(scriptFilesList.Count))
             {
                 foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
@@ -103,13 +104,13 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
                     {
                         ScriptFileInfoStepArgs scriptFileInfoStep = new ScriptFileInfoStepArgs(scriptFile);
 
-                        additionalStepInfo += " - " + scriptFile.Filename;
+                        string stepInfo = scriptFile.Filename;
                         if (_isVirtualExecution)
                         {
-                            additionalStepInfo += " - Ignore (virtual execution)";
+                            stepInfo += " - Ignore (virtual execution)";
                         }
 
-                        notificationWrapperExecuter.ExecuteStep(_runSingleFileScriptStep, additionalStepInfo, processState, scriptFileInfoStep);
+                        notificationWrapperExecuter.ExecuteStep(_runSingleFileScriptStep, stepInfo, processState, scriptFileInfoStep);
                     }
                 }
             }
