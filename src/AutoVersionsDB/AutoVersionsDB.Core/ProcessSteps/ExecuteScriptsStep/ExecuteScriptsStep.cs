@@ -14,7 +14,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
 
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
         private ScriptFilesComparersProvider _scriptFilesComparersProvider;
-        private ExecuteSingleFileScriptStep _runSingleFileScriptStep;
 
         private bool _isVirtualExecution;
 
@@ -25,7 +24,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             _scriptFilesComparersProvider = scriptFilesComparersProvider;
-            _runSingleFileScriptStep = runSingleFileScriptStep;
+            InternalNotificationableAction = runSingleFileScriptStep;
 
             _isVirtualExecution = isVirtualExecution;
         }
@@ -95,7 +94,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
 
         private void runScriptsFilesList(AutoVersionsDbProcessState processState, List<RuntimeScriptFileBase> scriptFilesList, string additionalStepInfo)
         {
-            _runSingleFileScriptStep.SetStepName(additionalStepInfo);
+            (InternalNotificationableAction as ExecuteSingleFileScriptStep).OverrideStepName(additionalStepInfo);
+           
             using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(scriptFilesList.Count))
             {
                 foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
@@ -110,7 +110,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
                             stepInfo += " - Ignore (virtual execution)";
                         }
 
-                        notificationWrapperExecuter.ExecuteStep(_runSingleFileScriptStep, stepInfo, processState, scriptFileInfoStep);
+                        notificationWrapperExecuter.ExecuteStep(InternalNotificationableAction, stepInfo, processState, scriptFileInfoStep);
                     }
                 }
             }

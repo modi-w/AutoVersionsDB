@@ -13,7 +13,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
         public override string StepName => _stepName;
 
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private ExecuteScriptBlockStep _executeScriptBlockStep;
 
 
         private IDBCommands _dbCommands;
@@ -27,7 +26,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
                                                 bool isVirtualExecution)
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
-            _executeScriptBlockStep = executeScriptBlockStep;
+            InternalNotificationableAction = executeScriptBlockStep;
             _dbCommands = dbCommands;
 
             _isVirtualExecution = isVirtualExecution;
@@ -35,15 +34,13 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
         }
 
 
-        public void SetStepName(string stepName)
+        public void OverrideStepName(string stepName)
         {
             _stepName = stepName;
         }
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
         {
-            string currentScriptFilename = actionStepArgs.ScriptFile.Filename;
-
             string sqlCommandStr = File.ReadAllText(actionStepArgs.ScriptFile.FileFullPath);
 
             int numOfScriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).Count();
@@ -51,15 +48,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
             return numOfScriptBlocks;
         }
 
-
         public override void Execute(AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
         {
             if (!_isVirtualExecution)
             {
-                string currentScriptFilename = actionStepArgs.ScriptFile.Filename;
-
-       //         _stepName = currentScriptFilename;
-
                 string sqlCommandStr = File.ReadAllText(actionStepArgs.ScriptFile.FileFullPath);
 
                 List<string> scriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).ToList();
@@ -72,7 +64,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
                         {
                             ScriptBlockStepArgs scriptBlockStepArgs = new ScriptBlockStepArgs(scriptBlockStr);
 
-                            notificationWrapperExecuter.ExecuteStep(_executeScriptBlockStep, null, processState, scriptBlockStepArgs);
+                            notificationWrapperExecuter.ExecuteStep(InternalNotificationableAction, null, processState, scriptBlockStepArgs);
                         }
                     }
                 }
@@ -82,6 +74,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep
 
         }
 
-
+        
     }
 }

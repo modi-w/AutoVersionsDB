@@ -11,7 +11,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.ValidationsStep
 
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
         private bool _shouldContinueWhenFindError;
-        private SingleValidationStep _singleValidationStep;
         private List<ValidatorBase> _validators;
 
         public ValidationsStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
@@ -21,7 +20,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ValidationsStep
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             _shouldContinueWhenFindError = shouldContinueWhenFindError;
-            _singleValidationStep = singleValidationStep;
+            InternalNotificationableAction = singleValidationStep;
             _validators = validators;
         }
 
@@ -42,7 +41,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ValidationsStep
                     {
                         ValidatorStepArgs validatorStepArgs = new ValidatorStepArgs(validator);
 
-                        notificationWrapperExecuter.ExecuteStep(_singleValidationStep, validator.ValidatorName, processState, validatorStepArgs);
+                        notificationWrapperExecuter.ExecuteStep(InternalNotificationableAction, validator.ValidatorName, processState, validatorStepArgs);
                     }
                 }
             }

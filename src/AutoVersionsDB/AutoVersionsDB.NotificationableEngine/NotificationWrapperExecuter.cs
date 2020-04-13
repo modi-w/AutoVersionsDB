@@ -44,12 +44,18 @@ namespace AutoVersionsDB.NotificationableEngine
                 int numOfInternalStep = step.GetNumOfInternalSteps(processState, actionStepArgs);
 
                 CurrentNotificationStateItem.StepStart(step.StepName, additionalStepInfo);
-                CallHandleNotificationStateChanged();
+                if (step.InternalNotificationableAction == null)
+                {
+                    CallHandleNotificationStateChanged();
+                }
 
                 step.Execute(processState, actionStepArgs);
 
                 CurrentNotificationStateItem.StepEnd();
-                CallHandleNotificationStateChanged();
+                if (step.InternalNotificationableAction == null)
+                {
+                    CallHandleNotificationStateChanged();
+                }
             }
             catch (NotificationEngineException ex)
             {
