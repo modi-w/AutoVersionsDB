@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\AutoVersionsDB.DbCommands.Contract\AutoVersionsDB.DbCommands.Contract.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.DbCommands.SqlServer\AutoVersionsDB.DbCommands.SqlServer.csproj" />

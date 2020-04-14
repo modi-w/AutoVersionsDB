@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="SystemScripts\DropAllDbObjects_SqlServer.sql" />
     <None Remove="SystemScripts\RecreateDBVersionsSchema_SqlServer.sql" />
