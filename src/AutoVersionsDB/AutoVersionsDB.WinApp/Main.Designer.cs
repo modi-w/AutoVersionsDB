@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabMainLayout = new System.Windows.Forms.TabControl();
             this.tbChooseProject = new System.Windows.Forms.TabPage();
             this.chooseProject1 = new AutoVersionsDB.WinApp.ChooseProject();
@@ -76,6 +77,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseProject1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chooseProject1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.chooseProject1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.chooseProject1.Location = new System.Drawing.Point(3, 3);
             this.chooseProject1.Name = "chooseProject1";
             this.chooseProject1.Size = new System.Drawing.Size(993, 554);
@@ -89,7 +91,7 @@
             this.tbEditProjectConfig.Location = new System.Drawing.Point(4, 22);
             this.tbEditProjectConfig.Name = "tbEditProjectConfig";
             this.tbEditProjectConfig.Padding = new System.Windows.Forms.Padding(3);
-            this.tbEditProjectConfig.Size = new System.Drawing.Size(1187, 563);
+            this.tbEditProjectConfig.Size = new System.Drawing.Size(996, 560);
             this.tbEditProjectConfig.TabIndex = 1;
             this.tbEditProjectConfig.Text = "Edit Project Config";
             // 
@@ -101,7 +103,7 @@
             this.editProjectConfigDetails1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editProjectConfigDetails1.Location = new System.Drawing.Point(3, 3);
             this.editProjectConfigDetails1.Name = "editProjectConfigDetails1";
-            this.editProjectConfigDetails1.Size = new System.Drawing.Size(1181, 557);
+            this.editProjectConfigDetails1.Size = new System.Drawing.Size(990, 554);
             this.editProjectConfigDetails1.TabIndex = 0;
             // 
             // tbDBVersionsMangement
@@ -112,7 +114,7 @@
             this.tbDBVersionsMangement.Location = new System.Drawing.Point(4, 22);
             this.tbDBVersionsMangement.Name = "tbDBVersionsMangement";
             this.tbDBVersionsMangement.Padding = new System.Windows.Forms.Padding(3);
-            this.tbDBVersionsMangement.Size = new System.Drawing.Size(1187, 563);
+            this.tbDBVersionsMangement.Size = new System.Drawing.Size(996, 560);
             this.tbDBVersionsMangement.TabIndex = 2;
             this.tbDBVersionsMangement.Text = "DB Versions Mangement";
             // 
@@ -123,14 +125,13 @@
             this.dbVersionsMangement1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dbVersionsMangement1.Location = new System.Drawing.Point(3, 3);
             this.dbVersionsMangement1.Name = "dbVersionsMangement1";
-            this.dbVersionsMangement1.Size = new System.Drawing.Size(1181, 557);
+            this.dbVersionsMangement1.Size = new System.Drawing.Size(990, 554);
             this.dbVersionsMangement1.TabIndex = 0;
             // 
             // lnkBtnChooseProject
             // 
             this.lnkBtnChooseProject.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lnkBtnChooseProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lnkBtnChooseProject.Image = global::AutoVersionsDB.WinApp.Properties.Resources.exitIcon32_32;
             this.lnkBtnChooseProject.Location = new System.Drawing.Point(10, 4);
             this.lnkBtnChooseProject.Name = "lnkBtnChooseProject";
             this.lnkBtnChooseProject.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -159,8 +160,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lnkBtnChooseProject);
             this.Controls.Add(this.tabMainLayout);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
-            this.ShowIcon = false;
             this.Text = "Auto Versions DB";
             this.tabMainLayout.ResumeLayout(false);
             this.tbChooseProject.ResumeLayout(false);

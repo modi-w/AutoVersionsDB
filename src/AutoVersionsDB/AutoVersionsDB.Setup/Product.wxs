@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define AutoVersionsDB.WinApp_TargetDir=$(var.AutoVersionsDB.WinApp.TargetDir)?>
+  <?define AutoVersionsDB.Core_TargetDir=$(var.AutoVersionsDB.Core.TargetDir)?>
+  <?define AutoVersionsDB.DbCommands.Contract_TargetDir=$(var.AutoVersionsDB.DbCommands.Contract.TargetDir)?>
+  <?define AutoVersionsDB.DbCommands.Integration_TargetDir=$(var.AutoVersionsDB.DbCommands.Integration.TargetDir)?>
+  <?define AutoVersionsDB.DbCommands.SqlServer_TargetDir=$(var.AutoVersionsDB.DbCommands.SqlServer.TargetDir)?>
+  <?define AutoVersionsDB.NotificationableEngine_TargetDir=$(var.AutoVersionsDB.NotificationableEngine.TargetDir)?>
+  <Product Id="67371133-4b99-439e-a516-31d47aa1bf31" Name="Auto Versions DB" Language="1033" Version="1.0.0.0" Manufacturer="Modi" UpgradeCode="81adba65-8556-4d25-826f-060af580e7ba">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <Icon Id="AppIcon.ico" SourceFile="$(var.ProjectDir)\AppIcon.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="AppIcon.ico" />
+
+    <UIRef Id="WixUI_Minimal"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\License.rtf"/>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+    <!--<Media Id='2' Cabinet='AutoVersionsDBInstall.cab' EmbedCab='yes'  />-->
+
+    <Feature Id="ProductFeature" Title="Auto Versions DB" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="ApplicationShortcutDesktop" />
+    </Feature>
+  </Product>
+
+
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Auto Versions DB" />
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Auto Versions DB" />
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+  </Fragment>
+
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="6b257cbc-2b05-4797-b035-995a842e7735">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+            Name="Auto Versions DB"
+            Description="Auto Versions DB"
+            Target="[#AutoVersionsDB.WinApp.exe]"
+            WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\AutoVersionsDB" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="ApplicationShortcutDesktop" Guid="f574a297-c87e-48b2-bb9f-174219ee1802">
+        <Shortcut Id="ApplicationDesktopShortcut"
+            Name="Auto Versions DB"
+            Description="Auto Versions DB"
+            Target="[#AutoVersionsDB.WinApp.exe]"
+            WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\AutoVersionsDB" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+  </Fragment>
+
+
+  <Fragment>
+
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <Component Id="ProductComponent">
+        <File Source="$(var.AutoVersionsDB.WinApp.TargetPath)" />
+      </Component>
+      <Component Id="AutoVersionsDB.WinApp.runtimeconfig.json" Guid="2abf7aa2-99df-427d-80ed-65aa44ce7095">
+        <File Id="AutoVersionsDB.WinApp.runtimeconfig.json" Name="AutoVersionsDB.WinApp.runtimeconfig.json" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.WinApp.runtimeconfig.json" />
+      </Component>
+      <!--<Component Id="AutoVersionsDB.WinApp.dll" Guid="3debc15e-5942-4ded-a2c4-b4be9c97f60f">
+        <File Id="AutoVersionsDB.WinApp.dll" Name="AutoVersionsDB.WinApp.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.WinApp.dll" />
+      </Component>-->
+      <Component Id="AutoVersionsDB.WinApp.exe" Guid="5c2f5881-acf9-4bd7-9988-2474e2feae4d">
+        <File Id="AutoVersionsDB.WinApp.exe" Name="AutoVersionsDB.WinApp.exe" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.WinApp.exe" />
+      </Component>
+      <Component Id="AutoVersionsDB.Core.dll" Guid="1b00a4d7-5ddd-4397-a1c0-c26ae9f77bc1">
+        <File Id="AutoVersionsDB.Core.dll" Name="AutoVersionsDB.Core.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.Core.dll" />
+      </Component>
+      <Component Id="AutoVersionsDB.DbCommands.Contract.dll" Guid="0d0724e0-0e23-44ab-8716-f532e7acec2e">
+        <File Id="AutoVersionsDB.DbCommands.Contract.dll" Name="AutoVersionsDB.DbCommands.Contract.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.DbCommands.Contract.dll" />
+      </Component>
+      <Component Id="AutoVersionsDB.NotificationableEngine.dll" Guid="e8e1f2ec-c4b6-4eb9-a3ba-5aa554c75e64">
+        <File Id="AutoVersionsDB.NotificationableEngine.dll" Name="AutoVersionsDB.NotificationableEngine.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.NotificationableEngine.dll" />
+      </Component>
+      <Component Id="Ninject.dll" Guid="43f56ab8-8eae-447e-bc78-51f0eb066658">
+        <File Id="Ninject.dll" Name="Ninject.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)Ninject.dll" />
+      </Component>
+      <Component Id="AutoVersionsDB.DbCommands.Integration.dll" Guid="05d1e64a-43fa-4d91-a4e2-f9a37a891243">
+        <File Id="AutoVersionsDB.DbCommands.Integration.dll" Name="AutoVersionsDB.DbCommands.Integration.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.DbCommands.Integration.dll" />
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="29cfcee3-faad-4b86-9d2a-cf4ca3ec6c54">
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="AutoVersionsDB.DbCommands.SqlServer.dll" Guid="0454d82e-e0e0-4882-b2a7-75277fca26f3">
+        <File Id="AutoVersionsDB.DbCommands.SqlServer.dll" Name="AutoVersionsDB.DbCommands.SqlServer.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.DbCommands.SqlServer.dll" />
+      </Component>
+      <Component Id="System.Data.SqlClient.dll" Guid="244de418-679c-4795-a367-6b146523f5d6">
+        <File Id="System.Data.SqlClient.dll" Name="System.Data.SqlClient.dll" Source="$(var.AutoVersionsDB.WinApp_TargetDir)System.Data.SqlClient.dll" />
+      </Component>
+      <Component Id="AutoVersionsDB.WinApp.pdb" Guid="e91acbb8-786b-428f-b81d-f08dbb0867d3">
+        <File Id="AutoVersionsDB.WinApp.pdb" Name="AutoVersionsDB.WinApp.pdb" Source="$(var.AutoVersionsDB.WinApp_TargetDir)AutoVersionsDB.WinApp.pdb" />
+      </Component>
+      <Component Id="AutoVersionsDB.Core.pdb" Guid="dbcc35bf-fac9-4645-87a8-d55e322a76d2">
+        <File Id="AutoVersionsDB.Core.pdb" Name="AutoVersionsDB.Core.pdb" Source="$(var.AutoVersionsDB.Core_TargetDir)AutoVersionsDB.Core.pdb" />
+      </Component>
+      <Component Id="AutoVersionsDB.DbCommands.Contract.pdb" Guid="acd40b81-d7b9-4abb-98c2-a1fd8f7e3ad9">
+        <File Id="AutoVersionsDB.DbCommands.Contract.pdb" Name="AutoVersionsDB.DbCommands.Contract.pdb" Source="$(var.AutoVersionsDB.DbCommands.Contract_TargetDir)AutoVersionsDB.DbCommands.Contract.pdb" />
+      </Component>
+      <Component Id="AutoVersionsDB.DbCommands.Integration.pdb" Guid="f1c70b49-556a-44b3-b666-143b0d2507fc">
+        <File Id="AutoVersionsDB.DbCommands.Integration.pdb" Name="AutoVersionsDB.DbCommands.Integration.pdb" Source="$(var.AutoVersionsDB.DbCommands.Integration_TargetDir)AutoVersionsDB.DbCommands.Integration.pdb" />
+      </Component>
+      <Component Id="AutoVersionsDB.DbCommands.SqlServer.pdb" Guid="844036f8-af3f-42dc-b411-dfa6290d7260">
+        <File Id="AutoVersionsDB.DbCommands.SqlServer.pdb" Name="AutoVersionsDB.DbCommands.SqlServer.pdb" Source="$(var.AutoVersionsDB.DbCommands.SqlServer_TargetDir)AutoVersionsDB.DbCommands.SqlServer.pdb" />
+      </Component>
+      <Component Id="AutoVersionsDB.NotificationableEngine.pdb" Guid="740ae417-1ae7-4cff-b7a1-c33414e081be">
+        <File Id="AutoVersionsDB.NotificationableEngine.pdb" Name="AutoVersionsDB.NotificationableEngine.pdb" Source="$(var.AutoVersionsDB.NotificationableEngine_TargetDir)AutoVersionsDB.NotificationableEngine.pdb" />
+      </Component>
+    </ComponentGroup>
+
+  </Fragment>
+
+</Wix>

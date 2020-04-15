@@ -1,2 +1,0 @@
-MainPackage=C:\Projects\AutoVersionsDB\Source\src\AutoVersionsDB\AutoVersionsDB.WinApp.Setup\bin\x86\Debug\AutoVersionsDB.WinApp.Setup_1.0.0.0_x86_Debug.msix
-SymbolPackage=C:\Projects\AutoVersionsDB\Source\src\AutoVersionsDB\AutoVersionsDB.WinApp.Setup\obj\x86\Debug\Symbols\AutoVersionsDB.WinApp.Setup_1.0.0.0_x86_Debug.appxsym

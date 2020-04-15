@@ -148,8 +148,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Properties\Resources.resx">
       <Link>Properties\Resources.resx</Link>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+      <DependentUpon>Resources.Designer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\TextInputWindow.resx">
       <Link>TextInputWindow.resx</Link>
