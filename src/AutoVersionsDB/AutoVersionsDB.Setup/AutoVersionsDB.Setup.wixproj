@@ -28,6 +28,7 @@
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ComponentsGenerated.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
@@ -36,72 +37,10 @@
     <Content Include="License.rtf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoVersionsDB.Core.IntegrationTests\AutoVersionsDB.Core.IntegrationTests.csproj">
-      <Name>AutoVersionsDB.Core.IntegrationTests</Name>
-      <Project>{5e57430c-f79b-4288-8a92-8b4cabbba8db}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj">
-      <Name>AutoVersionsDB.Core</Name>
-      <Project>{d8e93fe9-2eba-4a49-b713-899e45402aea}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Contract\AutoVersionsDB.DbCommands.Contract.csproj">
-      <Name>AutoVersionsDB.DbCommands.Contract</Name>
-      <Project>{9bcfe8fd-86ec-47b7-899b-bc327b6d210d}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Integration\AutoVersionsDB.DbCommands.Integration.csproj">
-      <Name>AutoVersionsDB.DbCommands.Integration</Name>
-      <Project>{3d0091e6-44eb-474b-a77d-53dc984f5e88}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.SqlServer\AutoVersionsDB.DbCommands.SqlServer.csproj">
-      <Name>AutoVersionsDB.DbCommands.SqlServer</Name>
-      <Project>{0edc0847-df19-43ba-9e03-d6e2f50eb669}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.NotificationableEngine\AutoVersionsDB.NotificationableEngine.csproj">
-      <Name>AutoVersionsDB.NotificationableEngine</Name>
-      <Project>{38cca5d1-3f7e-4282-8649-75990f1af1e8}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.WinApp.Designer\AutoVersionsDB.WinApp.Designer.csproj">
-      <Name>AutoVersionsDB.WinApp.Designer</Name>
-      <Project>{a6e3234c-900e-411f-a2e9-13730fc1d1cb}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj">
-      <Name>AutoVersionsDB.WinApp</Name>
-      <Project>{87827b64-cb67-4753-b1c3-78e3f3647703}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
     <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
@@ -113,17 +52,42 @@
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>copy "!(TargetPath)" "$(ProjectDir)..\..\..\packages\$(TargetName)($(PlatformName))$(TargetExt)" /Y /V</PostBuildEvent>
+    <PostBuildEvent></PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>dotnet publish $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.WinApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml</PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
-  <!--
-	To modify your build process, add your task inside one of the targets below and uncomment it.
-	Other similar extension points exist, see Wix.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
-	</Target>
-	-->
+  <Target Name="BeforeBuild">
+
+	<Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
+    <Exec Command="dotnet publish $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.WinApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml" />
+
+    <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+    </GetAssemblyIdentity>
+    <PropertyGroup>
+      <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
+    </PropertyGroup>
+    <!-- Harvest file components from publish folder -->
+    <HeatDirectory OutputFile="ComponentsGenerated.wxs" 
+				   DirectoryRefId="INSTALLFOLDER" 
+				   ComponentGroupName="PublishedComponents" 
+				   SuppressCom="true" 
+				   Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" 
+				   SuppressFragments="true" 
+				   SuppressRegistry="true" 
+				   SuppressRootDirectory="true" 
+				   AutoGenerateGuids="false" 
+				   GenerateGuidsNow="true" 
+				   ToolPath="$(WixToolPath)" 
+				   PreprocessorVariable="var.BasePath" />
+  </Target>
+  <Target Name="AfterBuild">
+	<GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+    </GetAssemblyIdentity>
+
+	<Exec Command="if not exist $(ProjectDir)..\..\..\packages mkdir $(ProjectDir)..\..\..\packages" />
+    <Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-%(AssemblyVersion.Version)-$(PlatformName)$(TargetExt)" />
+  </Target>
 </Project>

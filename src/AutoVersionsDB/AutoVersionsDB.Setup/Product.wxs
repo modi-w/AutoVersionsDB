@@ -18,7 +18,9 @@
   
   <?define AutoVersionsDB.WinApp_PublishDir=..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(var.Configuration)\win-$(var.Platform)?>
   
-  <Product Id="$(var.ProductId)" Name="$(var.ProductDisplayName)" Language="1033" Version="1.0.0.1" Manufacturer="Modi" 
+  <Product Id="$(var.ProductId)" Name="$(var.ProductDisplayName)" Language="1033" 
+           Version="$(var.BuildVersion)" 
+           Manufacturer="Modi" 
            UpgradeCode="$(var.ProductUpgradeCode)">
     
     <Package InstallerVersion="200"
@@ -40,7 +42,8 @@
     <!--<Media Id='2' Cabinet='AutoVersionsDBInstall.cab' EmbedCab='yes'  />-->
 
     <Feature Id="ProductFeature" Title="$(var.ProductDisplayName)" Level="1">
-      <ComponentGroupRef Id="ProductComponents" />
+      <!--<ComponentGroupRef Id="ProductComponents" />-->
+      <ComponentGroupRef Id="PublishedComponents" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="ApplicationShortcutDesktop" />
     </Feature>
@@ -67,8 +70,8 @@
         <Shortcut Id="ApplicationStartMenuShortcut"
             Name="$(var.ProductDisplayName)"
             Description="$(var.ProductDisplayName)"
-            Target="[#AutoVersionsDB.WinApp.exe]"
-            WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+            Target="[INSTALLFOLDER]\AutoVersionsDB.WinApp.exe"
+            WorkingDirectory="INSTALLFOLDER"/>
         <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="Software\AutoVersionsDB" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
@@ -79,8 +82,8 @@
         <Shortcut Id="ApplicationDesktopShortcut"
             Name="$(var.ProductDisplayName)"
             Description="$(var.ProductDisplayName)"
-            Target="[#AutoVersionsDB.WinApp.exe]"
-            WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+            Target="[INSTALLFOLDER]\AutoVersionsDB.WinApp.exe"
+            WorkingDirectory="INSTALLFOLDER"/>
         <RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="Software\AutoVersionsDB" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
@@ -91,13 +94,13 @@
 
   <Fragment>
 
-    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+    <!--<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">-->
       <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
       <!--<Component Win64="$(var.Win64)" Id="ProductComponent">
         <File Source="$(var.AutoVersionsDB.WinApp.TargetPath)" />
       </Component>-->
      
-      <Component Win64="$(var.Win64)" Id="AutoVersionsDB.WinApp.exe" Guid="e836466e-9c67-401c-9ea1-bf98fa390ea0">
+      <!--<Component Win64="$(var.Win64)" Id="AutoVersionsDB.WinApp.exe" Guid="e836466e-9c67-401c-9ea1-bf98fa390ea0">
         <File Id="AutoVersionsDB.WinApp.exe" 
               Name="AutoVersionsDB.WinApp.exe" 
               Source="$(var.AutoVersionsDB.WinApp_PublishDir)\AutoVersionsDB.WinApp.exe" />
@@ -107,9 +110,9 @@
         <File Id="AutoVersionsDB.WinApp.pdb"
               Name="AutoVersionsDB.WinApp.pdb"
               Source="$(var.AutoVersionsDB.WinApp_PublishDir)\AutoVersionsDB.WinApp.pdb" />
-      </Component>
+      </Component>-->
 
-    </ComponentGroup>
+    <!--</ComponentGroup>-->
 
   </Fragment>
 
