@@ -133,6 +133,7 @@
             this.lnkBtnChooseProject.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lnkBtnChooseProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.lnkBtnChooseProject.Location = new System.Drawing.Point(10, 4);
+            this.lnkBtnChooseProject.Image = global::AutoVersionsDB.WinApp.Properties.Resources.exitIcon32_32;
             this.lnkBtnChooseProject.Name = "lnkBtnChooseProject";
             this.lnkBtnChooseProject.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lnkBtnChooseProject.Size = new System.Drawing.Size(37, 27);
