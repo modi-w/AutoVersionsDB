@@ -18,7 +18,7 @@
   
   <?define AutoVersionsDB.WinApp_PublishDir=..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(var.Configuration)\win-$(var.Platform)?>
   
-  <Product Id="$(var.ProductId)" Name="$(var.ProductDisplayName)" Language="1033" 
+  <Product Id="*" Name="$(var.ProductDisplayName)" Language="1033" 
            Version="$(var.BuildVersion)" 
            Manufacturer="Modi" 
            UpgradeCode="$(var.ProductUpgradeCode)">
@@ -32,14 +32,17 @@
     <Property Id="ARPPRODUCTICON" Value="AppIcon.ico" />
 
     <Property Id="ARPURLINFOABOUT" Value="https://github.com/modi-w/AutoVersionsDB" />
-    
-    
+
+
     <UIRef Id="WixUI_Minimal"/>
     <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\License.rtf"/>
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of $(var.ProductDisplayName) is already installed." />
+    <MajorUpgrade Schedule="afterInstallInitialize"
+                  DowngradeErrorMessage="A later version of [ProductName] is already installed"
+                  AllowSameVersionUpgrades="yes" />
+    
     <MediaTemplate EmbedCab="yes" />
-    <!--<Media Id='2' Cabinet='AutoVersionsDBInstall.cab' EmbedCab='yes'  />-->
+    
 
     <Feature Id="ProductFeature" Title="$(var.ProductDisplayName)" Level="1">
       <!--<ComponentGroupRef Id="ProductComponents" />-->
@@ -47,6 +50,20 @@
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="ApplicationShortcutDesktop" />
     </Feature>
+
+    <!--<Property Id="PREVIOUSVERSIONSINSTALLED" Secure="yes" />
+
+    <Upgrade Id="25e67c1a-765b-44b5-b11f-2e4baaf7deb7">
+      <UpgradeVersion
+         Minimum="1.0.0.0" Maximum="99.0.0.0"
+         Property="PREVIOUSVERSIONSINSTALLED"
+         IncludeMinimum="yes" IncludeMaximum="no" />
+    </Upgrade>-->
+
+    <!--<InstallExecuteSequence>
+      <RemoveExistingProducts Before="InstallFinalize" />
+    </InstallExecuteSequence>-->
+
   </Product>
 
 

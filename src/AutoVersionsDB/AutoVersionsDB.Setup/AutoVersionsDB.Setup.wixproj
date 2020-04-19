@@ -57,9 +57,10 @@
   <PropertyGroup>
     <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
+  
   <Target Name="BeforeBuild">
 
-	<Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
+    <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
     <Exec Command="dotnet publish $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.WinApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml" />
 
     <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
@@ -69,25 +70,26 @@
       <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
     </PropertyGroup>
     <!-- Harvest file components from publish folder -->
-    <HeatDirectory OutputFile="ComponentsGenerated.wxs" 
-				   DirectoryRefId="INSTALLFOLDER" 
-				   ComponentGroupName="PublishedComponents" 
-				   SuppressCom="true" 
-				   Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" 
-				   SuppressFragments="true" 
-				   SuppressRegistry="true" 
-				   SuppressRootDirectory="true" 
-				   AutoGenerateGuids="false" 
-				   GenerateGuidsNow="true" 
-				   ToolPath="$(WixToolPath)" 
+    <HeatDirectory OutputFile="ComponentsGenerated.wxs"
+				   DirectoryRefId="INSTALLFOLDER"
+				   ComponentGroupName="PublishedComponents"
+				   SuppressCom="true"
+				   Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)"
+				   SuppressFragments="true"
+				   SuppressRegistry="true"
+				   SuppressRootDirectory="true"
+				   AutoGenerateGuids="false"
+				   GenerateGuidsNow="true"
+				   ToolPath="$(WixToolPath)"
 				   PreprocessorVariable="var.BasePath" />
   </Target>
+  
   <Target Name="AfterBuild">
-	<GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
+    <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
 
-	<Exec Command="if not exist $(ProjectDir)..\..\..\packages mkdir $(ProjectDir)..\..\..\packages" />
+    <Exec Command="if not exist $(ProjectDir)..\..\..\packages mkdir $(ProjectDir)..\..\..\packages" />
     <Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-%(AssemblyVersion.Version)-$(PlatformName)$(TargetExt)" />
   </Target>
 </Project>
