@@ -66,9 +66,11 @@
     <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
+    
     <PropertyGroup>
       <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
     </PropertyGroup>
+    
     <!-- Harvest file components from publish folder -->
     <HeatDirectory OutputFile="ComponentsGenerated.wxs"
 				   DirectoryRefId="INSTALLFOLDER"
