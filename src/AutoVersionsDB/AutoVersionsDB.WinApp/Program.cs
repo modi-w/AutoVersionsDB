@@ -11,7 +11,7 @@ namespace AutoVersionsDB.WinApp
         [STAThread]
         static void Main()
         {
-            Application.ThreadException += Application_ThreadException; ;
+            Application.ThreadException += Application_ThreadException;
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
