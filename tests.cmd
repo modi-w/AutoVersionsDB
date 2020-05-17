@@ -4,10 +4,10 @@ SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
 :: script global variables
 SET me=%~n0
 SET parent=%~dp0
-SET logFile=automationLogs\"%me%"_log_%DATE:~-4%-%DATE:~4,2%-%DATE:~7,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.log
-SET errorsLogFile=automationLogs\"%me%"_errorsLog_%DATE:~-4%-%DATE:~4,2%-%DATE:~7,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.log
+SET logFile=automationLogs\%me%_%DATE:~-4%-%DATE:~4,2%-%DATE:~7,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.log
+SET errorsLogFile=automationLogs\%me%_%DATE:~-4%-%DATE:~4,2%-%DATE:~7,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.errorsLog.log
 
-SET testsLogFileName=%parent%\automationLogs\tests_%DATE:~-4%-%DATE:~4,2%-%DATE:~7,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.results.xml
+SET testsLogFileName=%parent%\automationLogs\%me%_%DATE:~-4%-%DATE:~4,2%-%DATE:~7,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.results.trx
 SET testLogParams=trx;LogFileName=%testsLogFileName%
 
 
