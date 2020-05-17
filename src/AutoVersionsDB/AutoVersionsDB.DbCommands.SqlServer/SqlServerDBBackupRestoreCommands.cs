@@ -75,14 +75,15 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                     _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
                 }
 
-                sqlCmdStr2 = $"ALTER DATABASE [{dbName}] SET MULTI_USER ";
+                //Comment: we prefer to drop db and create again becauase if the db stuck on restore state we couldnt change it to MULTI_USER
+                //sqlCmdStr2 = $"ALTER DATABASE [{dbName}] SET MULTI_USER ";
+                //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+
+                sqlCmdStr2 = string.Format("DROP DATABASE [" + dbName + "]");
                 _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
 
-                //sqlCmdStr = string.Format("DROP DATABASE [" + dbName + "]");
-                //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
-
-                //sqlCmdStr = string.Format("CREATE DATABASE [" + dbName + "]");
-                //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
+                sqlCmdStr2 = string.Format("CREATE DATABASE [" + dbName + "]");
+                _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
             }
         }
 
