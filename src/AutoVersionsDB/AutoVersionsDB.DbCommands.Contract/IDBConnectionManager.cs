@@ -12,5 +12,8 @@ namespace AutoVersionsDB.DbCommands.Contract
 
         bool CheckConnection(out string outErrorMseeage);
 
+        string DataBaseName { get; }
+
+
     }
 }

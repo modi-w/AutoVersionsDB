@@ -181,12 +181,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void restoreDB(ProjectConfigItem projectConfig, string filename)
         {
-            using (IDBCommands dbCommands = _dbCommands_FactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (IDBConnectionManager dbConnectionManager = _dbCommands_FactoryProvider.CreateDBConnectionManager(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
 
                 using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommands_FactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
                 {
-                    dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbCommands.GetDataBaseName());
+                    dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbConnectionManager.DataBaseName);
                 }
             }
         }
