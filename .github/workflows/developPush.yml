@@ -12,17 +12,17 @@ jobs:
     runs-on: windows-latest
 
     steps:
-#    - uses: actions/checkout@v2
-#    - name: Setup .NET Core
-#      uses: actions/setup-dotnet@v1
-#      with:
-#        dotnet-version: 3.1.101
-#    - name: Install dependencies
-#      run: dotnet restore
-#    - name: Build AutoVersionsDB.Core
-#      run: dotnet build src\AutoVersionsDB\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj -c debug
-#    - name: Build AutoVersionsDB.WinApp
-#      run: dotnet build src\AutoVersionsDB\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -c debug
-    - name: Build 
-      run: build2.cmd
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build AutoVersionsDB.Core
+      run: dotnet build src\AutoVersionsDB\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj -c debug
+    - name: Build AutoVersionsDB.WinApp
+      run: dotnet build src\AutoVersionsDB\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -c debug
+#    - name: Build 
+#      run: build2.cmd
    
