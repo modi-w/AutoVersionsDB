@@ -1,4 +1,4 @@
-name: .NET Core
+name: develop push
 
 on:
   push:
@@ -24,5 +24,5 @@ jobs:
 #    - name: Build AutoVersionsDB.WinApp
 #      run: dotnet build src\AutoVersionsDB\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -c debug
     - name: Build 
-      run: build.cmd
+      run: build2.cmd
    
