@@ -128,7 +128,11 @@ namespace AutoVersionsDB.WinApp
         {
             TargetStateScriptFileName = null;
 
-            pnlDevDummyDataFiles.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+            pnlDevDummyDataFiles.BeginInvoke((MethodInvoker)(() =>
+            {
+                pnlDevDummyDataFiles.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+            }));
+
 
             hideAllActionPanels();
 
