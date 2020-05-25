@@ -7,8 +7,8 @@
             : base(scriptFolderPath)
         {
             DBTypeCode = "SqlServer";
-            ConnStr = AppGlobals.AppSetting.SQLServer_ConnStr;
-            ConnStrToMasterDB = AppGlobals.AppSetting.SQLServer_ConnStrToMaster;
+            ConnStr = IntegrationTestsSetting.SQLServer_ConnStr;
+            ConnStrToMasterDB = IntegrationTestsSetting.SQLServer_ConnStrToMaster;
         }
 
 

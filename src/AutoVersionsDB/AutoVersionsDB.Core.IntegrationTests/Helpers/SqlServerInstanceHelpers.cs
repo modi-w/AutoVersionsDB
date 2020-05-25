@@ -5,12 +5,6 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.Helpers
 {
-    //https://www.sqlshack.com/how-to-connect-and-use-microsoft-sql-server-express-localdb/
-    //https://knowledge-base.havit.eu/2018/09/04/sql-localdb-upgrade-to-2017-14-0-1000/
-    //https://stackoverflow.com/questions/57811000/patching-sql-server-localdb
-    //https://stackoverflow.com/questions/50234050/create-newest-version-of-sqllocaldb-but-version-mismatch
-
-    //https://www.google.com/search?ei=T5HLXrb7DNGLmwXOl5uwDQ&q=sqllocaldb+CREATE+FILE+encountered+operating+system+error+5%28Access+is+denied.%29+while+attempting+to+open+or+create+the+physical+file+&oq=sqllocaldb+CREATE+FILE+encountered+operating+system+error+5%28Access+is+denied.%29+while+attempting+to+open+or+create+the+physical+file+&gs_lcp=CgZwc3ktYWIQAzIECAAQRzIECAAQRzIECAAQRzIECAAQRzIECAAQRzIECAAQRzIECAAQRzIECAAQR1DjP1jhRmCQSGgAcAF4AIABAIgBAJIBAJgBAKABAaABAqoBB2d3cy13aXo&sclient=psy-ab&ved=0ahUKEwj23vuP287pAhXRxaYKHc7LBtYQ4dUDCAw&uact=5
     public class SqlServerInstanceHelpers
     {
         public static void SetupLocalDb()

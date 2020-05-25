@@ -62,7 +62,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             _autoVersionsDbAPI = _ninjectKernelContainer.Get<AutoVersionsDbAPI>();
 
-            string dbBackupFolderPath = FileSystemHelpers.ParsePathVaribles(AppGlobals.AppSetting.DBBackupBaseFolder); 
+            string dbBackupFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder); 
             if (!Directory.Exists(dbBackupFolderPath))
             {
                 Directory.CreateDirectory(dbBackupFolderPath);
@@ -84,49 +84,49 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_ValidScripts = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(AppGlobals.AppSetting.DevScriptsBaseFolderPath_Normal),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_ChangedHistoryFiles_Incremental = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(AppGlobals.AppSetting.DevScriptsBaseFolderPath_ChangedHistoryFiles_Incremental),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_ChangedHistoryFiles_Incremental),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_ChangedHistoryFiles_Repeatable = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(AppGlobals.AppSetting.DevScriptsBaseFolderPath_ChangedHistoryFiles_Repeatable),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_ChangedHistoryFiles_Repeatable),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_MissingFile = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(AppGlobals.AppSetting.DevScriptsBaseFolderPath_MissingFile),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_MissingFile),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_ScriptError = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(AppGlobals.AppSetting.DevScriptsBaseFolderPath_ScriptError),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_ScriptError),
         };
 
 
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_ValidScripts = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(AppGlobals.AppSetting.DeliveryArtifactFolderPath_Normal),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_Normal),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_ChangedHistoryFiles_Incremental = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(AppGlobals.AppSetting.DeliveryArtifactFolderPath_ChangedHistoryFiles_Incremental),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_ChangedHistoryFiles_Incremental),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_ChangedHistoryFiles_Repeatable = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(AppGlobals.AppSetting.DeliveryArtifactFolderPath_ChangedHistoryFiles_Repeatable),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_ChangedHistoryFiles_Repeatable),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_MissingFile = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(AppGlobals.AppSetting.DeliveryArtifactFolderPath_MissingFileh),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_MissingFileh),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_ScriptError = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(AppGlobals.AppSetting.DeliveryArtifactFolderPath_ScriptError),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_ScriptError),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_WithDevDummyDataFiles = new[]
 {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(AppGlobals.AppSetting.DeliveryArtifactFolderPath_WithDevDummyDataFiles),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_WithDevDummyDataFiles),
         };
 
         #endregion
