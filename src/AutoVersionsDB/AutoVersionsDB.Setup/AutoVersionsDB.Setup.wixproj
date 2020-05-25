@@ -60,6 +60,9 @@
   
   <Target Name="BeforeBuild">
 
+    <Exec Command="dotnet build $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj" />
+
+
     <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
     <Exec Command="dotnet publish $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.WinApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml" />
 

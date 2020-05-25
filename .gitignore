@@ -22,7 +22,6 @@ App_Data
 *.sln.docstates
 *.results.xml
 *.results.trx
-*.bak
 .vs
 .vscode
 .idea

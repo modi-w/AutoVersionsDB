@@ -9,13 +9,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
     public class AutoVersionsDbAPI_DeliveryEnv_NotAollowMethods_Tests : AutoVersionsDbAPI_TestsBase
     {
 
-        [Test]
-        public void TestTests()
-        {
-
-            Assert.That(1, Is.EqualTo(1));
-        }
-
+      
         [Test]
         public void SetDBToSpecificState__Should_NotAllow([ValueSource("ProjectConfigItemArray_DeliveryEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {

@@ -8,7 +8,7 @@ namespace AutoVersionsDB.DbCommands.Contract
     {
         void CreateDbBackup(string filename, string dbName);
 
-        void RestoreDbFromBackup(string filename, string dbName);
+        void RestoreDbFromBackup(string filename, string dbName, string dbFilesBasePath = null);
 
     }
 }
