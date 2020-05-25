@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.Helpers
         public static void SetupLocalDb()
         {
             // Use a ProcessStartInfo object to provide a simple solution to create a new LocalDbInstance
-            var _processInfo = new ProcessStartInfo("cmd.exe", "/c " + @"C:\Program Files\Microsoft SQL Server\130\Tools\Binn\SqlLocalDB.exe create localtestdb 14.0 -s")
+            var _processInfo = new ProcessStartInfo("cmd.exe", "/c " + @"C:\Program Files\Microsoft SQL Server\130\Tools\Binn\SqlLocalDB.exe create localtestdb 15.0 -s")
             {
                 CreateNoWindow = true,
                 UseShellExecute = false,
