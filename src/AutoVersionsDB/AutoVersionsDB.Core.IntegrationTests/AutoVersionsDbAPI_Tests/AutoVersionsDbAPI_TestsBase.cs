@@ -48,7 +48,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
             _devDummyDataScriptFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
 
-
+            SqlServerInstanceHelpers.SetupLocalDb();
 
             _fileChecksumManager = new FileChecksumManager();
 
@@ -186,7 +186,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommands_FactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
                 {
-                    dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbConnectionManager.DataBaseName);
+                    string dbTestsBaseLocation = Path.Combine(Utils.FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.BL.IntegrationTests", "TestsDBs");
+                    if (!Directory.Exists(dbTestsBaseLocation))
+                    {
+                        Directory.CreateDirectory(dbTestsBaseLocation);
+
+                    }
+
+                    dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbConnectionManager.DataBaseName, dbTestsBaseLocation);
                 }
             }
         }

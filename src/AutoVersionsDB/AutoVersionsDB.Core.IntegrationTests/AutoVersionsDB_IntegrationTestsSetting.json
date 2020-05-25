@@ -1,6 +1,8 @@
 ﻿{
-  "SQLServer_ConnStr": "Persist Security Info=False;Initial Catalog=AutoVersionsDB.Tests;User ID=sa;Password=123456;Data Source=(local)\\SQLServer2017",
-  "SQLServer_ConnStrToMaster": "Persist Security Info=False;Initial Catalog=master;User ID=sa;Password=123456;Data Source=(local)\\SQLServer2017",
+  //"SQLServer_ConnStr": "Persist Security Info=False;Initial Catalog=AutoVersionsDB.Tests;User ID=sa;Password=123456;Data Source=(local)\\SQL2017",
+  //"SQLServer_ConnStrToMaster": "Persist Security Info=False;Initial Catalog=master;User ID=sa;Password=123456;Data Source=(local)\\SQL2017",
+  "SQLServer_ConnStr": "Data Source=(localdb)\\localtestdb; Database=AutoVersionsDB.Tests; Trusted_Connection=True;",
+  "SQLServer_ConnStrToMaster": "Data Source=(localdb)\\localtestdb; Database=Master; Trusted_Connection=True;",
   "DBBackupBaseFolder": "[CommonApplicationData]\\AutoVersionsDB.Core.IntegrationTests\\Backups",
   "DevScriptsBaseFolderPath_Normal": "[AppPath]\\FilesForTests\\SqlServer\\DevScripts",
   "DevScriptsBaseFolderPath_ChangedHistoryFiles_Incremental": "[AppPath]\\FilesForTests\\SqlServer\\DevScripts_ChangedHistoryFiles_Incremental",
