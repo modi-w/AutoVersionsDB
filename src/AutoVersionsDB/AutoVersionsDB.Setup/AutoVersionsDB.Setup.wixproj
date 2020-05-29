@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props" Condition="Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -8,6 +9,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>AutoVersionsDBSetup</OutputName>
     <OutputType>Package</OutputType>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -35,6 +38,7 @@
     <Content Include="AppIcon.ico" />
     <Content Include="AutoVersionsDB.Setup.wax" />
     <Content Include="License.rtf" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">
@@ -52,49 +56,41 @@
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent></PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
-  
   <Target Name="BeforeBuild">
-
     <Exec Command="dotnet build $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj" />
-
-
     <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
     <Exec Command="dotnet publish $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.WinApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml" />
-
     <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
-    
     <PropertyGroup>
-      <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
+      <!-- <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants> -->
+	    <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
     </PropertyGroup>
-    
     <!-- Harvest file components from publish folder -->
-    <HeatDirectory OutputFile="ComponentsGenerated.wxs"
-				   DirectoryRefId="INSTALLFOLDER"
-				   ComponentGroupName="PublishedComponents"
-				   SuppressCom="true"
-				   Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)"
-				   SuppressFragments="true"
-				   SuppressRegistry="true"
-				   SuppressRootDirectory="true"
-				   AutoGenerateGuids="false"
-				   GenerateGuidsNow="true"
-				   ToolPath="$(WixToolPath)"
-				   PreprocessorVariable="var.BasePath" />
+    <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
   </Target>
-  
   <Target Name="AfterBuild">
     <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
-
     <Exec Command="if not exist $(ProjectDir)..\..\..\packages mkdir $(ProjectDir)..\..\..\packages" />
-    <Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-%(AssemblyVersion.Version)-$(PlatformName)$(TargetExt)" />
+    <!-- <Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-%(AssemblyVersion.Version)-$(PlatformName)$(TargetExt)" /> -->
+	<Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-$(GitVersion_SemVer)-$(PlatformName)$(TargetExt)" />
   </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props'))" />
+    <Error Condition="!Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets'))" />
+  </Target>
+  <Import Project="..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets')" />
 </Project>

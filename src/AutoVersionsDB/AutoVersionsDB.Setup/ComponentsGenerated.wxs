@@ -2,10 +2,10 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmpF7E90042B29BE4EB501C5BADFE974139" Guid="{86AF0B52-D873-4C82-8F3A-D13DCCE20748}">
+            <Component Id="cmpF7E90042B29BE4EB501C5BADFE974139" Guid="{7FDAC458-16FF-4E36-BCAB-ABDC13AE60DE}">
                 <File Id="fil14A16DE4871020374555E8E6A3BB7F42" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.WinApp.exe" />
             </Component>
-            <Component Id="cmp511008A99417D70CA71C649E39557E1A" Guid="{33C8845E-EA62-465E-A72A-00A70C497B7C}">
+            <Component Id="cmp511008A99417D70CA71C649E39557E1A" Guid="{34C79B7D-2A60-49A6-ABE0-319D11EF4BCC}">
                 <File Id="fil26A03CF9922F68ED7DDE8FC27E175B7C" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.WinApp.pdb" />
             </Component>
         </DirectoryRef>

@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core
 
         public static void SetKernelInstance(IKernel kernel)
         {
-            RegisterServices(kernel);
+            RegisterServices(kernel) ;
 
             KernelInstance = kernel;
         }
