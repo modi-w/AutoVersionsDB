@@ -21,7 +21,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         private object _openCloseSync = new object();
 
-        internal string DataBaseName
+        public string DataBaseName
         {
             get
             {

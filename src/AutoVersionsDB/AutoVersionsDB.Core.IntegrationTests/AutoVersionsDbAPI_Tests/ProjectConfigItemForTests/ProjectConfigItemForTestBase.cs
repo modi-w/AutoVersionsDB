@@ -11,10 +11,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectCo
         {
             this.ProjectGuid = Guid.NewGuid().ToString();
             this.ProjectName = "IntegrationTestProject";
-            this.DevScriptsBaseFolderPath = FileSystemHelpers.ParsePathVaribles(AppGlobals.AppSetting.DevScriptsBaseFolderPath_Normal);
-            this.DeployArtifactFolderPath = FileSystemHelpers.ParsePathVaribles(AppGlobals.AppSetting.DeployArtifact_FolderPath);
-            this.DeliveryArtifactFolderPath = FileSystemHelpers.ParsePathVaribles(AppGlobals.AppSetting.DevScriptsBaseFolderPath_Normal);
-            this.DBBackupBaseFolder = FileSystemHelpers.ParsePathVaribles(AppGlobals.AppSetting.DBBackupBaseFolder);
+            this.DevScriptsBaseFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+            this.DeployArtifactFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DeployArtifact_FolderPath);
+            this.DeliveryArtifactFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+            this.DBBackupBaseFolder = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
         }
 
         public override string ToString()

@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
@@ -55,23 +56,33 @@ namespace AutoVersionsDB.WinApp
 
         private void EditProjectConfigDetails1_OnNavToProcess(ProjectConfigItem projectConfigItem)
         {
-            dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
-
             tabMainLayout.SelectTab(tbDBVersionsMangement);
+
+            Task.Factory.StartNew(() => {
+
+                dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
+            });
         }
 
         private void ChooseProject1_OnEditProject(ProjectConfigItem projectConfigItem)
         {
-            editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
-
             tabMainLayout.SelectedTab = tbEditProjectConfig;
+        
+            Task.Factory.StartNew(() => {
+
+                editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
+            });
         }
+    
 
         private void DbVersionsMangement1_OnEditProject(ProjectConfigItem projectConfigItem)
         {
-            editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
-
             tabMainLayout.SelectedTab = tbEditProjectConfig;
+
+            Task.Factory.StartNew(() => {
+
+                editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
+            });
         }
 
 
@@ -100,9 +111,13 @@ namespace AutoVersionsDB.WinApp
 
         private void ChooseProject1_OnNavToProcess(ProjectConfigItem projectConfigItem)
         {
-            dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
-
             tabMainLayout.SelectTab(tbDBVersionsMangement);
+
+            Task.Factory.StartNew(() => {
+
+                dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
+            });
+
         }
 
         private void lnkBtnChooseProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -5,7 +5,7 @@ code_drop
 bin
 obj
 _ReSharper*
-/packages
+packages
 App_Data
 
 
@@ -21,7 +21,7 @@ App_Data
 *.log
 *.sln.docstates
 *.results.xml
-*.bak
+*.results.trx
 .vs
 .vscode
 .idea

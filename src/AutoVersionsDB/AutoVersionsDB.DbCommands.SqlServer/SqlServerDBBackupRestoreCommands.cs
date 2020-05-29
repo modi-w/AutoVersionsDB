@@ -26,17 +26,23 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         }
 
 
-        public void RestoreDbFromBackup(string filename, string dbName)
+        public void RestoreDbFromBackup(string filename, string dbName, string dbFilesBasePath = null)
         {
             //_sqlServerConnectionManager.Close();
             //_sqlServerConnectionManager.Open();
 
-            resolveDBInSingleUserMode(dbName);
+            resolveDBInSingleUserMode(dbName, dbFilesBasePath);
 
             string sqlCmdStr = $"ALTER DATABASE [{dbName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
             _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
 
-            sqlCmdStr = $"RESTORE DATABASE [{dbName}] FROM DISK='{filename}' WITH REPLACE;";
+            sqlCmdStr = $"RESTORE DATABASE [{dbName}] FROM DISK='{filename}' WITH REPLACE";// ;";
+            if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
+            {
+                sqlCmdStr += $@", MOVE '{dbName}' TO '{dbFilesBasePath}\{dbName}.mdf', ";
+                sqlCmdStr += $@" MOVE '{dbName}_log' TO '{dbFilesBasePath}\{dbName}.ldf';";
+            }
+
             _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
 
             //_sqlServerConnectionManager.Close();
@@ -49,7 +55,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             //_sqlServerConnectionManager.Close();
         }
 
-        private void resolveDBInSingleUserMode(string dbName)
+        private void resolveDBInSingleUserMode(string dbName, string dbFilesBasePath)
         {
             bool isDBInSigleUserMode = false;
 
@@ -70,19 +76,54 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
                 foreach (DataRow rowSession in sessionsTable.Rows)
                 {
-                    string seesionID = Convert.ToString(rowSession["request_session_id"]);
-                    sqlCmdStr2 = $"KILL {seesionID}";
-                    _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+                    int seesionID = Convert.ToInt32(rowSession["request_session_id"]);
+                    if (seesionID > 50)
+                    {
+                        sqlCmdStr2 = $"KILL {seesionID}";
+                        _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+                    }
                 }
 
-                sqlCmdStr2 = $"ALTER DATABASE [{dbName}] SET MULTI_USER ";
+                //Comment: we prefer to drop db and create again becauase if the db stuck on restore state we couldnt change it to MULTI_USER
+                //sqlCmdStr2 = $"ALTER DATABASE [{dbName}] SET MULTI_USER ";
+                //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+
+                sqlCmdStr2 = string.Format("DROP DATABASE [" + dbName + "]");
                 _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
 
-                //sqlCmdStr = string.Format("DROP DATABASE [" + dbName + "]");
-                //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
+                sqlCmdStr2 = string.Format("CREATE DATABASE [" + dbName + "]");
+                if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
+                {
+                    sqlCmdStr2 += " ON ";
+                    sqlCmdStr2 += $@" ( NAME = '{dbName}_dat', FILENAME = '{dbFilesBasePath}\{dbName}.mdf') ";
+                    sqlCmdStr2 += " LOG ON ";
+                    sqlCmdStr2 += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
+                }
+                _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+            }
+            else
+            {
+                sqlCmdStr2 = $"SELECT name FROM master.dbo.sysdatabases WHERE ('[' + name + ']' = '{dbName}' OR name = '{dbName}' )";
+                DataTable dtIsDBExsit = _sqlServerConnectionManager.GetSelectCommand(sqlCmdStr2);
 
-                //sqlCmdStr = string.Format("CREATE DATABASE [" + dbName + "]");
-                //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
+                if (dtIsDBExsit.Rows.Count == 0)
+                {
+                    //sqlCmdStr2 = @"DECLARE @dataFilePath NVARCHAR(MAX) = CAST(SERVERPROPERTY('InstanceDefaultDataPath') AS NVARCHAR) + FORMATMESSAGE('\%s.mdf', 'MASTER'); SELECT @dataFilePath ;";
+                    //DataTable DT = _sqlServerConnectionManager.GetSelectCommand(sqlCmdStr2);
+
+
+                    sqlCmdStr2 = $"CREATE DATABASE [{dbName}]";
+
+                    if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
+                    {
+                        sqlCmdStr2 += " ON ";
+                        sqlCmdStr2 += $@" ( NAME = '{dbName}_dat', FILENAME = '{dbFilesBasePath}\{dbName}.mdf') ";
+                        sqlCmdStr2 += " LOG ON ";
+                        sqlCmdStr2 += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
+                    }
+
+                    _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+                }
             }
         }
 

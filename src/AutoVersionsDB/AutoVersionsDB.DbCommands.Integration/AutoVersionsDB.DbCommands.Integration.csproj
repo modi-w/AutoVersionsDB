@@ -18,6 +18,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GitVersionTask" Version="5.3.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AutoVersionsDB.DbCommands.Contract\AutoVersionsDB.DbCommands.Contract.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.DbCommands.SqlServer\AutoVersionsDB.DbCommands.SqlServer.csproj" />
   </ItemGroup>

@@ -6,12 +6,12 @@ namespace AutoVersionsDB.WinApp
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// The main entry point for the application . 
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Application.ThreadException += Application_ThreadException; ;
+            Application.ThreadException += Application_ThreadException;
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 

@@ -1,0 +1,44 @@
+name: develop push
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.2
+      with:
+        versionSpec: '5.2.x'
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Fetch all history for all tags and branches
+      run: git fetch --prune --unshallow
+    - name: Use GitVersion
+      id: gitversion # step id used as reference for output values
+      uses: gittools/actions/gitversion/execute@v0.9.2
+    - run: |
+       echo "Major: ${{ steps.gitversion.outputs.major }}"
+       echo "Minor: ${{ steps.gitversion.outputs.minor }}"
+       echo "Patch: ${{ steps.gitversion.outputs.patch }}"
+      name: Output
+    - name: Install dependencies for AutoVersionsDB.Core
+      run: dotnet restore src\AutoVersionsDB\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj
+    - name: Build AutoVersionsDB.Core
+      run: dotnet build src\AutoVersionsDB\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj -c debug
+    - name: Install dependencies for AutoVersionsDB.WinApp
+      run: dotnet restore src\AutoVersionsDB\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj    
+    - name: Build AutoVersionsDB.WinApp
+      run: dotnet build src\AutoVersionsDB\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -c debug
+    #- name: Run Integration Tests
+    #  run: dotnet test src\AutoVersionsDB\AutoVersionsDB.Core.IntegrationTests\AutoVersionsDB.Core.IntegrationTests.csproj
+
