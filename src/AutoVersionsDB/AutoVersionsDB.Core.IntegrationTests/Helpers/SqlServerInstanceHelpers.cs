@@ -1,4 +1,6 @@
 ﻿using MartinCostello.SqlLocalDb;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,8 +26,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.Helpers
 
         private static string initSqlLocalDB()
         {
+            SqlLocalDbOptions sqlLocalDbOptions = new SqlLocalDbOptions()
+            {
+                NativeApiOverrideVersion = "14.0"
+            };
 
-            ISqlLocalDbApi localDB = new SqlLocalDbApi();
+
+            var services = new ServiceCollection().AddLogging((p) => p.AddConsole().SetMinimumLevel(LogLevel.Debug));
+            var loggerFactory = services.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
+            ISqlLocalDbApi localDB = new SqlLocalDbApi(sqlLocalDbOptions, loggerFactory);
             ISqlLocalDbInstanceInfo instance = localDB.GetOrCreateInstance(@"localtestdb");
 
             ISqlLocalDbInstanceManager manager = instance.Manage();
