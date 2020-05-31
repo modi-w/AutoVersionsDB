@@ -10,8 +10,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
         public const string  DBBackupBaseFolder  = @"[CommonApplicationData]\AutoVersionsDB.Core.IntegrationTests\Backups";
 
-        public const string  SQLServer_ConnStr  = @"Data Source=(localdb)\localtestdb; Database=AutoVersionsDB.Tests;";
-        public const string  SQLServer_ConnStrToMaster  = @"Data Source=(localdb)\localtestdb; Database=Master;";
+        //public const string  SQLServer_ConnStr  = @"Data Source=(localdb)\localtestdb; Database=AutoVersionsDB.Tests;";
+        //public const string  SQLServer_ConnStrToMaster  = @"Data Source=(localdb)\localtestdb; Database=Master;";
 
         public const string  DevScriptsBaseFolderPath_Normal  = @"[AppPath]\FilesForTests\SqlServer\DevScripts";
         public const string  DevScriptsBaseFolderPath_ChangedHistoryFiles_Incremental  = @"[AppPath]\FilesForTests\SqlServer\DevScripts_ChangedHistoryFiles_Incremental";

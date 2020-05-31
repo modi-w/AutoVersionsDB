@@ -48,8 +48,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
             _devDummyDataScriptFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
 
-            SqlServerInstanceHelpers.SetupLocalDb();
-
             _fileChecksumManager = new FileChecksumManager();
 
             _dbCommands_FactoryProvider = new DBCommands_FactoryProvider();

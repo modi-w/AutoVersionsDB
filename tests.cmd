@@ -10,6 +10,7 @@ SET errorsLogFile=automationLogs\%me%_%DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2%-%tim
 SET testsLogFileName=%parent%\automationLogs\%me%_%DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.results.trx
 SET testLogParams=trx;LogFileName=%testsLogFileName%
 
+if not exist automationLogs mkdir automationLogs
 
 :: init log file with datetime and input parameters
 ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Start -- %1 %2 %3 %4 %5 %6 %7 %8 %9  > "%logFile%"

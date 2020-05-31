@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MartinCostello.SqlLocalDb;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -7,29 +8,34 @@ namespace AutoVersionsDB.Core.IntegrationTests.Helpers
 {
     public class SqlServerInstanceHelpers
     {
-        public static void SetupLocalDb()
+        private static string _baseConnStr= null;
+        public static string BaseConnStr
         {
-            // Use a ProcessStartInfo object to provide a simple solution to create a new LocalDbInstance
-            var _processInfo = new ProcessStartInfo("cmd.exe", "/c " + "sqllocaldb.exe create localtestdb 14.0 -s")
+            get
             {
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true
-            };
+                if (_baseConnStr == null)
+                {
+                    _baseConnStr = initSqlLocalDB();
+                }
 
-            var _process = Process.Start(_processInfo);
-            _process.WaitForExit();
+                return _baseConnStr;
+            }
+        }
 
-            string _output = _process.StandardOutput.ReadToEnd();
-            string _error = _process.StandardError.ReadToEnd();
+        private static string initSqlLocalDB()
+        {
 
-            var _exitCode = _process.ExitCode;
+            ISqlLocalDbApi localDB = new SqlLocalDbApi();
+            ISqlLocalDbInstanceInfo instance = localDB.GetOrCreateInstance(@"localtestdb");
 
-            Console.WriteLine("output>>" + (String.IsNullOrEmpty(_output) ? "(none)" : _output));
-            Console.WriteLine("error>>" + (String.IsNullOrEmpty(_error) ? "(none)" : _error));
-            Console.WriteLine("ExitCode: " + _exitCode.ToString());
-            _process.Close();
+            ISqlLocalDbInstanceManager manager = instance.Manage();
+
+            if (!instance.IsRunning)
+            {
+                manager.Start();
+            }
+
+            return instance.GetConnectionString();
         }
     }
 }
