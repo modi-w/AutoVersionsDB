@@ -27,5 +27,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. iOS]
  - Version [e.g. 22]
 
-**Additional context**
-Add any other context about the problem here.
+**Action Items:**
+1. Action 1
+2. Action 2
+3. Action 3
