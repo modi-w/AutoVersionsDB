@@ -28,6 +28,10 @@ If applicable, add screenshots to help explain your problem.
  - Version [e.g. 22]
 
 **Action Items:**
-1. Action 1
-2. Action 2
-3. Action 3
+1. 
+2. 
+3. 
+
+
+**Updates**
+1.

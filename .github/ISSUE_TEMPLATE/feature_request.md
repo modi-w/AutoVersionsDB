@@ -14,6 +14,10 @@ A clear and concise description of what the problem is. Ex. I'm always frustrate
 A clear and concise description of what you want to happen.
 
 **Action Items:**
-1. Action 1
-2. Action 2
-3. Action 3
+1. 
+2. 
+3. 
+
+
+**Updates**
+1.
