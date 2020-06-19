@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             if (Directory.Exists(FolderPath))
             {
-                string[] arrAllScriptFiles = Directory.GetFiles(FolderPath, $"{_scriptFileTypeBase.Prefix}*.sql", SearchOption.AllDirectories);
+                string[] arrAllScriptFiles = Directory.GetFiles(FolderPath, $"{_scriptFileTypeBase.Prefix}*.sql", SearchOption.TopDirectoryOnly);
 
                 foreach (string fileFullPath in arrAllScriptFiles)
                 {

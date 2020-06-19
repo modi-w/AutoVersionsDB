@@ -9,6 +9,7 @@ using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.NotificationableEngine;
+using System.Threading.Tasks;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -349,17 +350,28 @@ namespace AutoVersionsDB.WinApp
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            btnSave.Enabled = false;
+
+            btnSave.BeginInvoke((MethodInvoker)(() =>
+            {
+                btnSave.Enabled = false;
+            }));
+
 
             bindFromUIElements();
 
-            validateAll();
-            //if (validateAll())
-            //{
-            _autoVersionsDbAPI.SaveProjectConfig();
-            //}
+            Task.Factory.StartNew(() =>
+            {
+                validateAll();
+                //if (validateAll())
+                //{
+                _autoVersionsDbAPI.SaveProjectConfig();
+                //}
 
-            btnSave.Enabled = true;
+                btnSave.BeginInvoke((MethodInvoker)(() =>
+                {
+                    btnSave.Enabled = true;
+                }));
+            });
         }
     }
 }
