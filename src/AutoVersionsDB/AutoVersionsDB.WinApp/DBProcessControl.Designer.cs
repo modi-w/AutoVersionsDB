@@ -1386,7 +1386,6 @@
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label lblColorTargetState_Caption;

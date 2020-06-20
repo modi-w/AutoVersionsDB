@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -42,7 +43,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
             {
                 DataRow lastExecutedCurrnetFileRow =
                             _dbExecutedFilesManager.ExecutedFilesList
-                            .LastOrDefault(row => Convert.ToString(row["Filename"]).Trim().ToLower() == scriptFileItem.Filename.Trim().ToLower());
+                            .LastOrDefault(row => Convert.ToString(row["Filename"]).Trim().ToLower(CultureInfo.CurrentCulture) == scriptFileItem.Filename.Trim().ToLower(CultureInfo.CurrentCulture));
 
                 if (lastExecutedCurrnetFileRow == null)
                 {

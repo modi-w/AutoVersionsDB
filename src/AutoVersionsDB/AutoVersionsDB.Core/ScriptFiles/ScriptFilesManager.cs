@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.Utils;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
         {
             loadScriptFilesList();
 
-            ScriptFilesDictionary = ScriptFilesList.ToDictionary(e => e.Filename.Trim().ToLower());
+            ScriptFilesDictionary = ScriptFilesList.ToDictionary(e => e.Filename.Trim().ToLower(CultureInfo.CurrentCulture));
         }
 
         protected void loadScriptFilesList()
@@ -75,7 +76,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             if (string.IsNullOrWhiteSpace(scriptName))
             {
-                throw new ArgumentNullException("scriptName");
+                throw new ArgumentNullException(nameof(scriptName));
             }
 
             newRuntimeScriptFile = _runtimeScriptFile_Factory.CreateNextNewScriptFileInstance(lastExecutedFileProperties,FolderPath, scriptName);

@@ -3,7 +3,7 @@ using System;
 
 namespace AutoVersionsDB.Core.Utils
 {
-    public class SerializationUtils
+    public static class SerializationUtils
     {
         public static string JsonSerialize<T>(T obj)
         {

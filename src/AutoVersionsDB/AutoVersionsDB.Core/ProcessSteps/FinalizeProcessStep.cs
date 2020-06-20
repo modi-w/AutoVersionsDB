@@ -69,7 +69,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             executionHistoryRow["ExecutionTypeName"] = ExecutionTypeName;
             executionHistoryRow["EndProcessDateTime"] = processState.EndProcessDateTime;
             executionHistoryRow["ProcessDurationInMs"] = processState.ProcessDurationInMs;
-            executionHistoryRow["NumOfScriptFiles"] = processState.ExecutedFiles.Count();
+            executionHistoryRow["NumOfScriptFiles"] = processState.ExecutedFiles.Count;
             executionHistoryRow["DBBackupFileFullPath"] = processState.DBBackupFileFullPath;
             executionHistoryRow["IsVirtualExecution"] = IsVirtualExecution;
 

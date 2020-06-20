@@ -13,7 +13,7 @@ using System.ComponentModel.Design;
 
 namespace AutoVersionsDB.Core.Utils
 {
-    public class FileSystemPathUtils
+    public static class FileSystemPathUtils
     {
 
         public static string AssemblyPath
