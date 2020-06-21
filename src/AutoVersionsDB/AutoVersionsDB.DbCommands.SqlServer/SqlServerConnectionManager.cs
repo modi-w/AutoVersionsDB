@@ -179,7 +179,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 //}
 
 
-                string currTableSelectSql = string.Format("Select * from {0}", currTableName);
+                string currTableSelectSql = $"Select * from {currTableName}";
 
                 SqlCommandBuilder currCommandBuilder = new SqlCommandBuilder(myDataAdapter);
 

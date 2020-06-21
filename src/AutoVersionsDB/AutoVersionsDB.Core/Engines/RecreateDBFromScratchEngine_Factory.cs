@@ -1,7 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.ProcessSteps;
-using AutoVersionsDB.Core.ProcessSteps.ExecuteScriptsStep;
-using AutoVersionsDB.Core.ProcessSteps.ValidationsStep;
+using AutoVersionsDB.Core.ProcessSteps.ExecuteScripts;
+using AutoVersionsDB.Core.ProcessSteps.Validations;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;

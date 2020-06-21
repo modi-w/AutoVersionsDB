@@ -26,7 +26,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
 
             string shouldBeFileFullPath = Path.Combine(_folderPath, fiFile.Name);
 
-            if (shouldBeFileFullPath.Trim().ToLower() != fileFullPath.Trim().ToLower())
+            if (shouldBeFileFullPath.Trim().ToUpperInvariant() != fileFullPath.Trim().ToUpperInvariant())
             {
                 throw new ArgumentException($"The argument path: '{fileFullPath}' is different from '{shouldBeFileFullPath}'");
             }

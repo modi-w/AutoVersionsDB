@@ -3,6 +3,7 @@ using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps
@@ -97,7 +98,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             }
 
 
-            int currDBScriptsExecutionHistoryID = Convert.ToInt32(executionHistoryRow["DBScriptsExecutionHistoryID"]);
+            int currDBScriptsExecutionHistoryID = Convert.ToInt32(executionHistoryRow["DBScriptsExecutionHistoryID"], CultureInfo.InvariantCulture);
 
             foreach (DataRow fileRow in dbScriptsExecutionHistoryFilesTable.Rows)
             {

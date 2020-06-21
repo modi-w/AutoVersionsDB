@@ -42,11 +42,11 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             DataSet dsExecutionHistory = new DataSet();
 
-            DataTable dbScriptsExecutionHistoryTable = _sqlServerConnectionManager.GetSelectCommand(string.Format("select * from {0} where 1=2", DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName));
+            DataTable dbScriptsExecutionHistoryTable = _sqlServerConnectionManager.GetSelectCommand($"select * from {DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName} where 1=2");
             dbScriptsExecutionHistoryTable.TableName = DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName;
             dsExecutionHistory.Tables.Add(dbScriptsExecutionHistoryTable);
 
-            DataTable dbScriptsExecutionHistoryFilesTable = _sqlServerConnectionManager.GetSelectCommand(string.Format("select * from {0} where 1=2", DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName));
+            DataTable dbScriptsExecutionHistoryFilesTable = _sqlServerConnectionManager.GetSelectCommand($"select * from {DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName} where 1=2");
             dbScriptsExecutionHistoryFilesTable.TableName = DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName;
             dsExecutionHistory.Tables.Add(dbScriptsExecutionHistoryFilesTable);
 
@@ -107,11 +107,11 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             bool outVal = false;
 
-            string sqlCommandStr = string.Format(
-                @"SELECT * 
+            string sqlCommandStr = 
+                $@"SELECT * 
                     FROM INFORMATION_SCHEMA.TABLES 
-                    WHERE TABLE_SCHEMA = '{0}' 
-                    AND  TABLE_NAME = '{1}'", schemaName.Trim('[').Trim(']'), tableName.Trim('[').Trim(']'));
+                    WHERE TABLE_SCHEMA = '{schemaName.Trim('[').Trim(']')}' 
+                    AND  TABLE_NAME = '{tableName.Trim('[').Trim(']')}'";
 
             DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10);
 
@@ -148,7 +148,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             DataTable outDt;
 
-            string selectCommand = string.Format("SELECT * FROM {0}", tableName);
+            string selectCommand = $"SELECT * FROM {tableName}";
             outDt = _sqlServerConnectionManager.GetSelectCommand(selectCommand);
 
             outDt.TableName = tableName;

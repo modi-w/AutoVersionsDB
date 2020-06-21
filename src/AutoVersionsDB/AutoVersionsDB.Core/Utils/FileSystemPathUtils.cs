@@ -59,19 +59,19 @@ namespace AutoVersionsDB.Core.Utils
 
         public static string ParsePathVaribles(string path)
         {
-            if (path.IndexOf("[AppPath]") > -1)
+            if (path.IndexOf("[AppPath]", StringComparison.Ordinal) > -1)
             {
                 return path.Replace("[AppPath]", AssemblyPath);
             }
-            else if (path.IndexOf("[Roaming]") > -1)
+            else if (path.IndexOf("[Roaming]", StringComparison.Ordinal) > -1)
             {
                 return path.Replace("[Roaming]", RoamingPath);
             }
-            else if (path.IndexOf("[LocalAppData]") > -1)
+            else if (path.IndexOf("[LocalAppData]", StringComparison.Ordinal) > -1)
             {
                 return path.Replace("[LocalAppData]", LocalAppDataPath);
             }
-            else if (path.IndexOf("[CommonApplicationData]") > -1)
+            else if (path.IndexOf("[CommonApplicationData]", StringComparison.Ordinal) > -1)
             {
                 return path.Replace("[CommonApplicationData]", CommonApplicationData);
             }

@@ -26,8 +26,8 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             {
                 if (!_sqlServerConnectionManager.IsDisposed)
                 {
-                    string sqlCommandStr = string.Format(
-                            @"SELECT 
+                    string sqlCommandStr = 
+                            $@"SELECT 
                                 DB_NAME(dbid) as DBName, 
                                 COUNT(dbid) as NumberOfConnections,
                                 loginame as LoginName
@@ -35,9 +35,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                                 sys.sysprocesses
                             WHERE 
                                 dbid > 0
-                                AND  DB_NAME(dbid) = '{0}'
+                                AND  DB_NAME(dbid) = '{dbName}'
                             GROUP BY 
-                                dbid, loginame", dbName);
+                                dbid, loginame";
 
 
                     DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10);
@@ -75,10 +75,10 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             {
                 if (!_sqlServerConnectionManager.IsDisposed)
                 {
-                    string sqlCommandStr = string.Format(
-                        @"SELECT session_id as SPID, command, a.text AS Query, start_time, percent_complete, dateadd(second,estimated_completion_time/1000, getdate()) as estimated_completion_time
+                    string sqlCommandStr = 
+                        $@"SELECT session_id as SPID, command, a.text AS Query, start_time, percent_complete, dateadd(second,estimated_completion_time/1000, getdate()) as estimated_completion_time
                     FROM sys.dm_exec_requests r CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) a
-                    WHERE r.command in ('{0}')", queryName);
+                    WHERE r.command in ('{queryName}')";
 
 
                     DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10);

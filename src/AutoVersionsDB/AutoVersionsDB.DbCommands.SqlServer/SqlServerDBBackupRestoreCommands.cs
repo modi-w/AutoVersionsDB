@@ -88,10 +88,10 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 //sqlCmdStr2 = $"ALTER DATABASE [{dbName}] SET MULTI_USER ";
                 //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
 
-                sqlCmdStr2 = string.Format("DROP DATABASE [" + dbName + "]");
+                sqlCmdStr2 = $"DROP DATABASE [{dbName}]";
                 _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
 
-                sqlCmdStr2 = string.Format("CREATE DATABASE [" + dbName + "]");
+                sqlCmdStr2 = $"CREATE DATABASE [{dbName}]";
                 if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
                 {
                     sqlCmdStr2 += " ON ";

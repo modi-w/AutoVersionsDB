@@ -40,7 +40,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
                         string exMessage;
                         if (!dbConnectionManager.CheckConnection(out exMessage))
                         {
-                            string errorMsg = string.Format("Could not connect to the Database with the Connection String: '{0}'. Error Message: '{1}' ", _connStr, exMessage);
+                            string errorMsg = $"Could not connect to the Database with the Connection String: '{_connStr}'. Error Message: '{exMessage}'";
                             return errorMsg;
                         }
                     }

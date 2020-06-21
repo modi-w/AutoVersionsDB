@@ -758,12 +758,12 @@ namespace AutoVersionsDB.WinApp
 
                 foreach (DataGridViewRow currGridRow in dgIncrementalScriptsFiles.Rows)
                 {
-                    currGridRow.Cells[0].Value = string.Format("{0}", currGridRow.Index + 1);
+                    currGridRow.Cells[0].Value = (currGridRow.Index + 1).ToString();
                     currGridRow.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                     RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
 
-                    if (currRowFileInfo.Filename.Trim().ToLower() == TargetStateScriptFileName.Trim().ToLower())
+                    if (currRowFileInfo.Filename.Trim().ToUpperInvariant() == TargetStateScriptFileName.Trim().ToUpperInvariant())
                     {
                         currGridRow.Cells[2].Style.BackColor = Color.Yellow;
                     }

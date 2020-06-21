@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core
 {
-    public class AutoVersionsDBSettings
+    public static class AutoVersionsDBSettings
     {
         private static string _autoVersionsDBBaseFolder => FileSystemPathUtils.ParsePathVaribles(@"[CommonApplicationData]\AutoVersionsDB");
        // private static string _settingsFilePath => Path.Combine(_autoVersionsDBBaseFolder, "AutoVersionsDB_Setting.txt");

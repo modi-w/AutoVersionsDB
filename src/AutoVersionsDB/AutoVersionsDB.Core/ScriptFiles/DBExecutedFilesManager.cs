@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -38,7 +39,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             if (lastRow != null)
             {
-                LastFileOfLastExecutedFilename = Convert.ToString(lastRow["Filename"]);
+                LastFileOfLastExecutedFilename = Convert.ToString(lastRow["Filename"], CultureInfo.InvariantCulture);
             }
 
         }
@@ -54,7 +55,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
                 _dbCommands.GetExecutedFilesFromDBByFileTypeCode(ScriptFileType.FileTypeCode)
                 .Rows
                 .Cast<DataRow>() //Instead of: .AsEnumerable()
-                .OrderBy(row => Convert.ToInt32(row["ID"]))
+                .OrderBy(row => Convert.ToInt32(row["ID"], CultureInfo.InvariantCulture))
                 .ToList();
             }
             else

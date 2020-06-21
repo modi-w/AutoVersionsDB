@@ -43,17 +43,17 @@ namespace AutoVersionsDB.Core.ScriptFiles
             {
                 DataRow lastExecutedCurrnetFileRow =
                             _dbExecutedFilesManager.ExecutedFilesList
-                            .LastOrDefault(row => Convert.ToString(row["Filename"]).Trim().ToLower(CultureInfo.CurrentCulture) == scriptFileItem.Filename.Trim().ToLower(CultureInfo.CurrentCulture));
+                            .LastOrDefault(row => Convert.ToString(row["Filename"], CultureInfo.InvariantCulture).Trim().ToUpperInvariant() == scriptFileItem.Filename.Trim().ToUpperInvariant());
 
                 if (lastExecutedCurrnetFileRow == null)
                 {
                     scriptFileItem.HashDiffType = eHashDiffType.NotExist;
                 }
-                else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"]) != scriptFileItem.ComputedHash)
+                else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"], CultureInfo.InvariantCulture) != scriptFileItem.ComputedHash)
                 {
                     scriptFileItem.HashDiffType = eHashDiffType.Different;
                 }
-                else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"]) == scriptFileItem.ComputedHash)
+                else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"], CultureInfo.InvariantCulture) == scriptFileItem.ComputedHash)
                 {
                     scriptFileItem.HashDiffType = eHashDiffType.Equal;
                 }
@@ -66,10 +66,10 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             foreach (DataRow dbExecutedFileRow in _dbExecutedFilesManager.ExecutedFilesList)
             {
-                string dbFilename = Convert.ToString(dbExecutedFileRow["Filename"]);
+                string dbFilename = Convert.ToString(dbExecutedFileRow["Filename"], CultureInfo.InvariantCulture);
 
                 RuntimeScriptFileBase fileSystemFile =
-                    AllFileSystemScriptFiles.FirstOrDefault(e => dbFilename.Trim().ToLower() == e.Filename.Trim().ToLower());
+                    AllFileSystemScriptFiles.FirstOrDefault(e => dbFilename.Trim().ToUpperInvariant() == e.Filename.Trim().ToUpperInvariant());
 
                 if (fileSystemFile == null)
                 {

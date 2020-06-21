@@ -35,13 +35,13 @@ namespace AutoVersionsDB.Core.Validations.DBStateValidators
             {
                 foreach (var scriptFileItem in _scriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles)
                 {
-                    if (scriptFileItem.Filename.Trim().ToLower() == _scriptFilesComparersProvider.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename.Trim().ToLower())
+                    if (scriptFileItem.Filename.Trim().ToUpperInvariant() == _scriptFilesComparersProvider.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename.Trim().ToUpperInvariant())
                     {
                         break;
                     }
                     else
                     {
-                        bool isFileNotExecuted = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.NotExistInDBButExistInFileSystem.Any(e => e.Filename.Trim().ToLower() == scriptFileItem.Filename.Trim().ToLower());
+                        bool isFileNotExecuted = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.NotExistInDBButExistInFileSystem.Any(e => e.Filename.Trim().ToUpperInvariant() == scriptFileItem.Filename.Trim().ToUpperInvariant());
 
                         if (isFileNotExecuted)
                         {

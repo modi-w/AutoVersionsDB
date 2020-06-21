@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessSteps.ValidationsStep;
+using AutoVersionsDB.Core.ProcessSteps.Validations;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;

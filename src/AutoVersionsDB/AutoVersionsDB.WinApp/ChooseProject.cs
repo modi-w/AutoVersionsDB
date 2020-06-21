@@ -110,7 +110,7 @@ namespace AutoVersionsDB.WinApp
                 {
                     List<ProjectConfigItem> filteredProjectList =
                         _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList
-                        .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToLower().Contains(searchText.Trim().ToLower()))
+                        .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
                         .OrderBy(e => e.ProjectName)
                         .ToList();
 

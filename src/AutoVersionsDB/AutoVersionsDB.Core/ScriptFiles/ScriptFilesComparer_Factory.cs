@@ -8,7 +8,6 @@ using AutoVersionsDB.DbCommands.Contract;
 namespace AutoVersionsDB.Core.ScriptFiles
 {
 
-
     public class ScriptFilesComparer_Factory
     {
         private FileChecksumManager _fileChecksumManager;

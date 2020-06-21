@@ -65,7 +65,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
-            string tempFolderForDeploy = Path.Combine(AutoVersionsDBSettings.TempFolderPath, $"Deploy_{_dbName}_{DateTime.Now.ToString("HH-mm-dd-fff")}");
+            string tempFolderForDeploy = Path.Combine(AutoVersionsDBSettings.TempFolderPath, $"Deploy_{_dbName}_{DateTime.Now:HH-mm-dd-fff}");
             if (!Directory.Exists(tempFolderForDeploy))
             {
                 Directory.CreateDirectory(tempFolderForDeploy);

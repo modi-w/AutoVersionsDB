@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -41,7 +42,7 @@ namespace AutoVersionsDB.Core.Utils
             // and format each one as a hexadecimal string.
             for (int i = 0; i < data.Length; i++)
             {
-                sBuilder.Append(data[i].ToString("x2"));
+                sBuilder.Append(data[i].ToString("x2", CultureInfo.InvariantCulture));
             }
 
             // Return the hexadecimal string.

@@ -6,6 +6,7 @@ using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using Ninject;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace AutoVersionsDB.Core.ProcessSteps
@@ -80,9 +81,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
-            string timeStampStr = string.Format("{0:yyyy-MM-dd-HH-mm-ss}", DateTime.Now);
+            string timeStampStr = DateTime.Now.ToString("{0:yyyy-MM-dd-HH-mm-ss}", CultureInfo.InvariantCulture);
 
-            string targetFileName = string.Format("bu_{0}_{1}.bak", _dbCommands.GetDataBaseName(), timeStampStr);
+            string targetFileName = $"bu_{ _dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
             string targetFileFullPath = Path.Combine(_dbBackupBaseFolderPath, targetFileName);
             FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
 

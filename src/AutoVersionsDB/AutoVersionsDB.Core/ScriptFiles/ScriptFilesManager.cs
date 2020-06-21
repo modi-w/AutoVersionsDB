@@ -38,7 +38,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
         {
             loadScriptFilesList();
 
-            ScriptFilesDictionary = ScriptFilesList.ToDictionary(e => e.Filename.Trim().ToLower(CultureInfo.CurrentCulture));
+            ScriptFilesDictionary = ScriptFilesList.ToDictionary(e => e.Filename.Trim().ToUpperInvariant());
         }
 
         protected void loadScriptFilesList()

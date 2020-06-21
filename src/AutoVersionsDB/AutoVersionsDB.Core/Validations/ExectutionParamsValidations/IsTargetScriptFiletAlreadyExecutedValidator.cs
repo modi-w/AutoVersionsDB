@@ -23,7 +23,7 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
             {
                 var isTargetFileExecuted =
                     _scriptFilesComparersProvider.IncrementalScriptFilesComparer.ExecutedFiles
-                        .Any(e => e.Filename.Trim().ToLower() == executionParam.TargetStateScriptFileName.Trim().ToLower());
+                        .Any(e => e.Filename.Trim().ToUpperInvariant() == executionParam.TargetStateScriptFileName.Trim().ToUpperInvariant());
 
                 if (isTargetFileExecuted)
                 {
