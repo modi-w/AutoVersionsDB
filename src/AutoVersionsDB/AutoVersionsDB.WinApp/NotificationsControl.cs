@@ -9,7 +9,7 @@ namespace AutoVersionsDB.WinApp
 {
     public partial class NotificationsControl : UserControl
     {
-        private AutoVersionsDbAPI _autoVersionsDbAPI = null;
+        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
 
         public NotificationsControl()
@@ -186,8 +186,10 @@ namespace AutoVersionsDB.WinApp
         {
             //if (NotifictionStatesHistoryManager != null)
             //{
-            MessageWindow messageWindow = new MessageWindow(_autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager);
-            messageWindow.ShowDialog();
+            using (MessageWindow messageWindow = new MessageWindow(_autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager))
+            {
+                messageWindow.ShowDialog();
+            }
             //  }
 
         }
@@ -227,6 +229,37 @@ namespace AutoVersionsDB.WinApp
             AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged -= _notifictionStatesHistoryManager_OnNotificationStateItemChanged;
         }
 
+
+        #region Dispose
+
+        // To detect redundant calls
+        private bool _disposed = false;
+
+        // Protected implementation of Dispose pattern.
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _autoVersionsDbAPI.Dispose();
+
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+
+            _disposed = true;
+            // Call base class implementation.
+            base.Dispose(disposing);
+        }
+
+        #endregion
 
     }
 }

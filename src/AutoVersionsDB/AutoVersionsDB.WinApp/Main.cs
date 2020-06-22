@@ -58,7 +58,7 @@ namespace AutoVersionsDB.WinApp
         {
             tabMainLayout.SelectTab(tbDBVersionsMangement);
 
-            Task.Factory.StartNew(() => {
+            Task.Run(() => {
 
                 dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
             });
@@ -68,7 +68,7 @@ namespace AutoVersionsDB.WinApp
         {
             tabMainLayout.SelectedTab = tbEditProjectConfig;
         
-            Task.Factory.StartNew(() => {
+            Task.Run(() => {
 
                 editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
             });
@@ -79,7 +79,7 @@ namespace AutoVersionsDB.WinApp
         {
             tabMainLayout.SelectedTab = tbEditProjectConfig;
 
-            Task.Factory.StartNew(() => {
+            Task.Run(() => {
 
                 editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
             });
@@ -96,8 +96,10 @@ namespace AutoVersionsDB.WinApp
         {
             Rectangle r = tabMainLayout.GetTabRect(tabMainLayout.TabPages.Count - 1);
             RectangleF rf = new RectangleF(r.X + r.Width, r.Y - 5, tabMainLayout.Width - (r.X + r.Width), r.Height + 5);
-            Brush b = new SolidBrush(Color.White);
-            e.Graphics.FillRectangle(b, rf);
+            using (Brush b = new SolidBrush(Color.White))
+            {
+                e.Graphics.FillRectangle(b, rf);
+            }
         }
 
         private void ChooseProject1_OnSetNewProject1(object sender, EventArgs e)
@@ -113,7 +115,7 @@ namespace AutoVersionsDB.WinApp
         {
             tabMainLayout.SelectTab(tbDBVersionsMangement);
 
-            Task.Factory.StartNew(() => {
+            Task.Run(() => {
 
                 dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
             });

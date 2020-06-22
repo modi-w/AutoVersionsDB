@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System;
@@ -11,9 +12,11 @@ namespace AutoVersionsDB.Core.ProcessSteps
                                                                     IDBCommands dbCommands, 
                                                                     bool isDevEnvironment)
         {
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+
             ResetDBStep resetDBStep =
-                new ResetDBStep(dbCommands,
-                                            isDevEnvironment);
+                new ResetDBStep(dbCommands,isDevEnvironment);
 
 
             autoVersionsDbEngine.AppendProcessStep(resetDBStep);

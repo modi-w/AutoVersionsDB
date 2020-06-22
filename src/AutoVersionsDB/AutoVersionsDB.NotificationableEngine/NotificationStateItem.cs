@@ -217,17 +217,11 @@ namespace AutoVersionsDB.NotificationableEngine
 
             if (isIncludeStepStage)
             {
-                outStr = string.Format("{0:N0}% ({1}/{2}) {3}",
-                                        Precents,
-                                        StepNumber,
-                                        NumOfSteps,
-                                        StepName);
+                outStr = $" {Precents:N0}% ({StepNumber}/{NumOfSteps}) {StepName}";
             }
             else
             {
-                outStr = string.Format(" {0:N0}% {1}",
-                                          Precents,
-                                          StepName);
+                outStr = $" {Precents:N0}% {StepName}";
 
             }
 
@@ -244,7 +238,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
             if (isIncludeTimestamp)
             {
-                outStr = string.Format("{0:HH:mm:ss.fff} >> {1}", SnapshotTimeStemp, outStr);
+                outStr = $"{SnapshotTimeStemp:HH:mm:ss.fff} >> {outStr}";
             }
 
             return outStr;

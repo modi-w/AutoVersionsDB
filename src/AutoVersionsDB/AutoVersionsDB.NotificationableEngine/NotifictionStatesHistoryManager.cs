@@ -74,7 +74,7 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
-        public string InstructionsMessage_StepName
+        public string InstructionsMessageStepName
         {
             get
             {
@@ -114,7 +114,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 NotificationStatesProcessHistory.Add(snapshotNotificationState);
             }
 
-            Task.Factory.StartNew(() =>
+            Task.Run(() =>
             {
                 OnNotificationStateItemChanged?.Invoke(snapshotNotificationState);
             });

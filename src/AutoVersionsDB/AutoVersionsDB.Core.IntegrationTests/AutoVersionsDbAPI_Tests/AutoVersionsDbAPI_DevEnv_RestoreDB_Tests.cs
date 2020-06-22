@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
+using AutoVersionsDB.Core.ProcessSteps;
 using AutoVersionsDB.DbCommands.Contract;
 using NUnit.Framework;
 using System;
@@ -29,7 +30,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            assertRestore(projectConfig, dbBackupFileFileFullPath);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath);
         }
 
         [Test]
@@ -48,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            assertRestore(projectConfig, dbBackupFileFileFullPath);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath);
         }
 
         [Test]
@@ -67,7 +68,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            assertRestore(projectConfig, dbBackupFileFileFullPath);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath);
         }
 
 
@@ -76,23 +77,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
 
-        protected void assertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest)
+        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest)
         {
             Assert.That(_autoVersionsDbAPI.HasError);
 
-            string restoreStepName = "Rollback (Restore) Database";
-
             bool isRestoreExecuted = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager
                 .NotificationStatesProcessHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
-                                                        && e.StepName.StartsWith(restoreStepName));
+                                                        && e.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 
             Assert.That(isRestoreExecuted, Is.EqualTo(true));
 
             string tempBackupFileToCompare = Path.Combine(FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder), $"TempBackupFileToCompare_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")}");
 
-            using (IDBCommands dbCommands = _dbCommands_FactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
-                using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommands_FactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
+                using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
                 {
                     dbBackupRestoreCommands.CreateDbBackup(tempBackupFileToCompare, dbCommands.GetDataBaseName());
                 }

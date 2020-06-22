@@ -1,8 +1,10 @@
 ﻿using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps
@@ -14,10 +16,14 @@ namespace AutoVersionsDB.Core.ProcessSteps
                                                             bool isVirtualExecution,
                                                             string executionTypeName)
         {
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+            executionTypeName.ThrowIfNull(nameof(executionTypeName));
+
             FinalizeProcessStep finalizeProcessStep =
                 new FinalizeProcessStep(dbCommands,
-                                                    isVirtualExecution,
-                                                    executionTypeName);
+                                        isVirtualExecution,
+                                        executionTypeName);
 
 
             autoVersionsDbEngine.AppendProcessStep(finalizeProcessStep);
@@ -54,10 +60,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
+            processState.ThrowIfNull(nameof(processState));
+
             DataSet dsExecutionHistory = _dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
-            DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName];
-            DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName];
+            DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
+            DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
 
             processState.EndProcessDateTime = DateTime.Now;
 
@@ -97,7 +105,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             }
 
 
-            int currDBScriptsExecutionHistoryID = Convert.ToInt32(executionHistoryRow["DBScriptsExecutionHistoryID"]);
+            int currDBScriptsExecutionHistoryID = Convert.ToInt32(executionHistoryRow["DBScriptsExecutionHistoryID"], CultureInfo.InvariantCulture);
 
             foreach (DataRow fileRow in dbScriptsExecutionHistoryFilesTable.Rows)
             {

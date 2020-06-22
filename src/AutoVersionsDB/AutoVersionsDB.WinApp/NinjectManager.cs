@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.WinApp.Utils;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -7,8 +8,9 @@ using System.Text;
 
 namespace AutoVersionsDB.WinApp
 {
-    public class NinjectManager
-    { /* https://github.com/ninject/Ninject.Web/blob/master/src/Ninject.Web/WebServiceBase.cs
+    public static class NinjectManager
+    { 
+        /* https://github.com/ninject/Ninject.Web/blob/master/src/Ninject.Web/WebServiceBase.cs
          * 
          * https://stackoverflow.com/questions/14127763/dependency-injection-in-winforms-using-ninject-and-entity-framework
          * https://gist.github.com/dkellycollins/9c3fecaedd830094d7f2
@@ -31,6 +33,8 @@ namespace AutoVersionsDB.WinApp
 
         private static void registerServices(IKernel kernel)
         {
+            kernel.ThrowIfNull(nameof(kernel));
+
         }
 
 
@@ -44,6 +48,8 @@ namespace AutoVersionsDB.WinApp
 
         private static void registerServicesForTests(IKernel kernel)
         {
+            kernel.ThrowIfNull(nameof(kernel));
+
             //TODO: register Mock services
 
         }

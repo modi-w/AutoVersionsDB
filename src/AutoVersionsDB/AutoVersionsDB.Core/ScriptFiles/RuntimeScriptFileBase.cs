@@ -26,7 +26,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
         public DateTime ExecutedDateTime { get; set; }
 
 
-        protected abstract void parsePropertiesByFileFullPath(string fileFullPath);
+        protected abstract void ParsePropertiesByFileFullPath(string fileFullPath);
 
         protected RuntimeScriptFileBase() { }
     }
@@ -34,36 +34,36 @@ namespace AutoVersionsDB.Core.ScriptFiles
     public abstract class RuntimeScriptFileBase<TScriptFileProperties> : RuntimeScriptFileBase
         where TScriptFileProperties : ScriptFilePropertiesBase
     {
-        protected string _folderPath;
+        protected string FolderPath { get; private set; }
 
         public ScriptFileTypeBase ScriptFileType { get; private set; }
 
-        public override ScriptFilePropertiesBase ScriptFileProperties => _scriptFileProperties;
-        protected TScriptFileProperties _scriptFileProperties { get; set; }
+        public override ScriptFilePropertiesBase ScriptFileProperties => ScriptFilePropertiesInternal;
+        protected TScriptFileProperties ScriptFilePropertiesInternal { get; set; }
 
-        public override string SortKey => _scriptFileProperties.SortKey;
+        public override string SortKey => ScriptFilePropertiesInternal.SortKey;
 
         public override string FileTypeCode => ScriptFileType.FileTypeCode;
 
-        public override string FileFullPath => Path.Combine(_folderPath, Filename);
+        public override string FileFullPath => Path.Combine(FolderPath, Filename);
 
 
         private RuntimeScriptFileBase(ScriptFileTypeBase scriptFileType, string folderPath)
         {
             ScriptFileType = scriptFileType;
-            _folderPath = folderPath;
+            FolderPath = folderPath;
         }
 
         public RuntimeScriptFileBase(ScriptFileTypeBase scriptFileType, string folderPath, TScriptFileProperties scriptFileProperties)
             : this(scriptFileType, folderPath)
         {
-            _scriptFileProperties = scriptFileProperties;
+            this.ScriptFilePropertiesInternal = scriptFileProperties;
         }
 
         public RuntimeScriptFileBase(ScriptFileTypeBase scriptFileType, string folderPath, string fileFullPath)
             : this(scriptFileType, folderPath)
         {
-            parsePropertiesByFileFullPath(fileFullPath);
+            ParsePropertiesByFileFullPath(fileFullPath);
         }
 
     }

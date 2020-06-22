@@ -21,22 +21,22 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
         {
             List<RuntimeScriptFileBase> pendingScriptFilesList = new List<RuntimeScriptFileBase>();
 
-            if (targetScriptFilename != EmptyDbStateRuntimeScriptFile.C_TargetScriptFileName_EmptyDBState)
+            if (targetScriptFilename != EmptyDbStateRuntimeScriptFile.TargetScriptFileNameEmptyDBState)
             {
-                RuntimeScriptFileBase prevExecutionLastScriptFile = createLasetExecutedFileItem();
+                RuntimeScriptFileBase prevExecutionLastScriptFile = CreateLasetExecutedFileItem();
 
                 RuntimeScriptFileBase targetScriptFile = null;
                 if (!string.IsNullOrWhiteSpace(targetScriptFilename))
                 {
-                    string targetFileFullPath = Path.Combine(_scriptFilesManager.FolderPath, targetScriptFilename);
-                    targetScriptFile = _scriptFilesManager.CreateRuntimeScriptFileInstanceByFilename(targetFileFullPath);
+                    string targetFileFullPath = Path.Combine(ScriptFilesManager.FolderPath, targetScriptFilename);
+                    targetScriptFile = ScriptFilesManager.CreateRuntimeScriptFileInstanceByFilename(targetFileFullPath);
                 }
 
 
                 foreach (RuntimeScriptFileBase scriptFileItem in AllFileSystemScriptFiles)
                 {
-                    if ((prevExecutionLastScriptFile == null || 0 < scriptFileItem.SortKey.CompareTo(prevExecutionLastScriptFile.SortKey))
-                        && (targetScriptFile == null || scriptFileItem.SortKey.CompareTo(targetScriptFile.SortKey) <= 0))
+                    if ((prevExecutionLastScriptFile == null || 0 < string.Compare(scriptFileItem.SortKey, prevExecutionLastScriptFile.SortKey, StringComparison.Ordinal))
+                        && (targetScriptFile == null || string.Compare(scriptFileItem.SortKey,targetScriptFile.SortKey,StringComparison.Ordinal) <= 0))
                     {
                         pendingScriptFilesList.Add(scriptFileItem);
                     }
@@ -47,7 +47,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
             return pendingScriptFilesList;
         }
 
-       
+
 
 
     }

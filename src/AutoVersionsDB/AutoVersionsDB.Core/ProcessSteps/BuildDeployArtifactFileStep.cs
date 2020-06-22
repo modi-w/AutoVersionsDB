@@ -4,6 +4,7 @@ using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.ScriptFiles.Repeatable;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.IO;
@@ -18,6 +19,13 @@ namespace AutoVersionsDB.Core.ProcessSteps
                                                         string dbName,
                                                         ProjectConfigItem projectConfig)
         {
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
+            dbName.ThrowIfNull(nameof(dbName));
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+
+
             BuildDeployArtifactFileStep buildDeployArtifactFileStep =
                 new BuildDeployArtifactFileStep(scriptFilesComparersProvider,
                                                             dbName,
@@ -65,7 +73,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
-            string tempFolderForDeploy = Path.Combine(AutoVersionsDBSettings.TempFolderPath, $"Deploy_{_dbName}_{DateTime.Now.ToString("HH-mm-dd-fff")}");
+            string tempFolderForDeploy = Path.Combine(AutoVersionsDBSettings.TempFolderPath, $"Deploy_{_dbName}_{DateTime.Now:HH-mm-dd-fff}");
             if (!Directory.Exists(tempFolderForDeploy))
             {
                 Directory.CreateDirectory(tempFolderForDeploy);
@@ -112,7 +120,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 Directory.CreateDirectory(_deployArtifactFolderPath);
             }
 
-            string targetFileFullPath = Path.Combine(_deployArtifactFolderPath, $"{_dbName}{ArtifactExtractor.C_ArtifactFilenameExtension}");
+            string targetFileFullPath = Path.Combine(_deployArtifactFolderPath, $"{_dbName}{ArtifactExtractor.ArtifactFilenameExtension}");
 
             if (File.Exists(targetFileFullPath))
             {

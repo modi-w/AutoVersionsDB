@@ -30,7 +30,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         private void assertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(ProjectConfigItemForTestBase projectConfig)
         {
-            string[] allArtifactFiles = Directory.GetFiles(projectConfig.DeployArtifactFolderPath, $"*{ArtifactExtractor.C_ArtifactFilenameExtension}", SearchOption.TopDirectoryOnly);
+            string[] allArtifactFiles = Directory.GetFiles(projectConfig.DeployArtifactFolderPath, $"*{ArtifactExtractor.ArtifactFilenameExtension}", SearchOption.TopDirectoryOnly);
 
             Assert.That(allArtifactFiles.Length, Is.EqualTo(1));
 
@@ -86,8 +86,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 FileInfo extractFileInfo = extractFolderFileInfosDictionary[devFolderFileInfo.Name];
 
-                string devFolderFileHash = _fileChecksumManager.GetMd5HashByFilePath(devFolderFileInfo.FullName);
-                string extractFolderFileHash = _fileChecksumManager.GetMd5HashByFilePath(extractFileInfo.FullName);
+                string devFolderFileHash = _fileChecksumManager.GetHashByFilePath(devFolderFileInfo.FullName);
+                string extractFolderFileHash = _fileChecksumManager.GetHashByFilePath(extractFileInfo.FullName);
 
                 Assert.That(devFolderFileHash, Is.EqualTo(devFolderFileHash));
             }

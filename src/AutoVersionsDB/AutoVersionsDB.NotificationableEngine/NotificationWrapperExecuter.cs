@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoVersionsDB.NotificationableEngine.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,11 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class NotificationWrapperExecuter : IDisposable
     {
-        private NotifictionStatesHistoryManager _notifictionStatesHistoryManager;
-        private NotificationStateItem _parentNotificationStateItem;
-        public NotificationStateItem CurrentNotificationStateItem;
+        private readonly NotifictionStatesHistoryManager _notifictionStatesHistoryManager;
+        private readonly NotificationStateItem _parentNotificationStateItem;
+        public NotificationStateItem CurrentNotificationStateItem { get; set; }
 
-        private double _minPrecentChangeToNotify;
+        private readonly double _minPrecentChangeToNotify;
 
         private double _prevNotifyPrecent;
 
@@ -36,6 +37,8 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public void ExecuteStep(NotificationableActionStepBase step, string additionalStepInfo, ProcessStateBase processState, ActionStepArgs actionStepArgs)
         {
+            step.ThrowIfNull(nameof(step));
+
             //Comment: we do not check here: if (!_notifictionStatesHistoryManager.HasError)
             //          because then the engine will not run the rollback process
 

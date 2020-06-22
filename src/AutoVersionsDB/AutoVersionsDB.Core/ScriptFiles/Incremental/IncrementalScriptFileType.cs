@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
     {
         public override string FileTypeCode => "Incremental";
 
-        public const string C_ScriptFile_DatePattern = "yyyy-MM-dd";
+        public const string ScriptFileDatePattern = "yyyy-MM-dd";
 
         public override string Prefix => "incScript";
 

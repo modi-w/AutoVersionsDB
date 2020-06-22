@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core;
+using AutoVersionsDB.WinApp.Utils;
 
 namespace AutoVersionsDB.WinApp
 {
     public partial class ProjectItemControl : UserControl
     {
-        private AutoVersionsDbAPI _autoVersionsDbAPI = null;
+        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
 
         public event OnNavToProcessHandler OnNavToProcess;
@@ -25,6 +26,8 @@ namespace AutoVersionsDB.WinApp
 
         public ProjectItemControl(ProjectConfigItem projectConfigItem)
         {
+            projectConfigItem.ThrowIfNull(nameof(projectConfigItem));
+
             InitializeComponent();
 
             ProjectConfig = projectConfigItem;
@@ -70,6 +73,37 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-      
+        #region Dispose
+
+        // To detect redundant calls
+        private bool _disposed = false;
+
+        // Protected implementation of Dispose pattern.
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _autoVersionsDbAPI.Dispose();
+
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+
+            _disposed = true;
+            // Call base class implementation.
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+
     }
 }

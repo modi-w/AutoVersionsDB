@@ -11,8 +11,8 @@ namespace AutoVersionsDB.Core.ArtifactFile
 {
     public class ArtifactExtractor : IDisposable
     {
-        public const string C_TempExtractArtifactFolderName = "TempExtractArtifactFiles";
-        public const string C_ArtifactFilenameExtension = ".avdb";
+        public const string TempExtractArtifactFolderName = "TempExtractArtifactFiles";
+        public const string ArtifactFilenameExtension = ".avdb";
 
         private ProjectConfigItem _projectConfigItem;
 
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.ArtifactFile
                 if (!string.IsNullOrWhiteSpace(_projectConfigItem.DeliveryArtifactFolderPath)
                     && Directory.Exists(_projectConfigItem.DeliveryArtifactFolderPath))
                 {
-                    string[] artifactFiles = Directory.GetFiles(_projectConfigItem.DeliveryArtifactFolderPath, $"*{ArtifactExtractor.C_ArtifactFilenameExtension}");
+                    string[] artifactFiles = Directory.GetFiles(_projectConfigItem.DeliveryArtifactFolderPath, $"*{ArtifactExtractor.ArtifactFilenameExtension}");
 
                     List<FileInfo> artifactFilesList = artifactFiles.Select(e => new FileInfo(e)).ToList();
 

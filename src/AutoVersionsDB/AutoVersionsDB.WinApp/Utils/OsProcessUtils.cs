@@ -5,16 +5,19 @@ using System.Text;
 
 namespace AutoVersionsDB.WinApp.Utils
 {
-    public class OsProcessUtils
+    public static class OsProcessUtils
     {
         public static void StartOsProcess(string filename)
         {
-            var osProcess = new Process();
-            osProcess.StartInfo = new ProcessStartInfo(filename)
+            using (var osProcess = new Process())
             {
-                UseShellExecute = true
-            };
-            osProcess.Start();
+                osProcess.StartInfo = new ProcessStartInfo(filename)
+                {
+                    UseShellExecute = true
+                };
+                osProcess.Start();
+            }
+
         }
     }
 }

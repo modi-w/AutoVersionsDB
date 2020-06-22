@@ -36,11 +36,11 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
-        public string InstructionsMessage_StepName
+        public string InstructionsMessageStepName
         {
             get
             {
-                return NotifictionStatesHistoryManager.InstructionsMessage_StepName;
+                return NotifictionStatesHistoryManager.InstructionsMessageStepName;
             }
         }
         

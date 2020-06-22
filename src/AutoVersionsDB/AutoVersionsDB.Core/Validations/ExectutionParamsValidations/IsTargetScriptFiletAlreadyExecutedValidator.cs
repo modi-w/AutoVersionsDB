@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.Utils;
 using System.Linq;
 
 namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
@@ -19,11 +20,13 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
 
         public override string Validate(AutoVersionsDBExecutionParams executionParam)
         {
+            executionParam.ThrowIfNull(nameof(executionParam));
+
             if (!string.IsNullOrWhiteSpace(executionParam.TargetStateScriptFileName))
             {
                 var isTargetFileExecuted =
                     _scriptFilesComparersProvider.IncrementalScriptFilesComparer.ExecutedFiles
-                        .Any(e => e.Filename.Trim().ToLower() == executionParam.TargetStateScriptFileName.Trim().ToLower());
+                        .Any(e => e.Filename.Trim().ToUpperInvariant() == executionParam.TargetStateScriptFileName.Trim().ToUpperInvariant());
 
                 if (isTargetFileExecuted)
                 {

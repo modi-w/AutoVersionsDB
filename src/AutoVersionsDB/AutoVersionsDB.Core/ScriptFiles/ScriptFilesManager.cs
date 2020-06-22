@@ -12,9 +12,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
     {
         private FileChecksumManager _fileChecksumManager;
         private ScriptFileTypeBase _scriptFileTypeBase;
-        private RuntimeScriptFile_FactoryBase _runtimeScriptFile_Factory { get; }
+        private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory { get; }
 
-        public List<RuntimeScriptFileBase> ScriptFilesList { get; protected set; }
+        public List<RuntimeScriptFileBase> ScriptFilesList { get; private set; }
         public Dictionary<string, RuntimeScriptFileBase> ScriptFilesDictionary { get; private set; }
 
 
@@ -22,12 +22,12 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public ScriptFilesManager(FileChecksumManager fileChecksumManager,
                                         ScriptFileTypeBase scriptFileTypeBase,
-                                        RuntimeScriptFile_FactoryBase runtimeScriptFile_Factory,
+                                        RuntimeScriptFileFactoryBase runtimeScriptFileFactory,
                                         string folderPath)
         {
             _fileChecksumManager = fileChecksumManager;
             _scriptFileTypeBase = scriptFileTypeBase;
-            _runtimeScriptFile_Factory = runtimeScriptFile_Factory;
+            _runtimeScriptFileFactory = runtimeScriptFileFactory;
             FolderPath = folderPath;
 
             Load();
@@ -36,12 +36,12 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public void Load()
         {
-            loadScriptFilesList();
+            LoadScriptFilesList();
 
-            ScriptFilesDictionary = ScriptFilesList.ToDictionary(e => e.Filename.Trim().ToLower(CultureInfo.CurrentCulture));
+            ScriptFilesDictionary = ScriptFilesList.ToDictionary(e => e.Filename.Trim().ToUpperInvariant());
         }
 
-        protected void loadScriptFilesList()
+        protected void LoadScriptFilesList()
         {
             List<RuntimeScriptFileBase> newScriptFilesList = new List<RuntimeScriptFileBase>();
 
@@ -51,9 +51,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
                 foreach (string fileFullPath in arrAllScriptFiles)
                 {
-                    RuntimeScriptFileBase currScriptFile = _runtimeScriptFile_Factory.CreateRuntimeScriptFileInstanceByFilename(FolderPath,fileFullPath);
+                    RuntimeScriptFileBase currScriptFile = _runtimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath,fileFullPath);
 
-                    string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fileFullPath);
+                    string computedFileHash = _fileChecksumManager.GetHashByFilePath(fileFullPath);
                     currScriptFile.ComputedHash = computedFileHash;
                     currScriptFile.ComputedHashDateTime = DateTime.Now;
 
@@ -67,7 +67,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string fileFullPath)
         {
-            return _runtimeScriptFile_Factory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
+            return _runtimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
         }
 
         public RuntimeScriptFileBase CreateNextNewScriptFile(ScriptFilePropertiesBase lastExecutedFileProperties, string scriptName)
@@ -79,7 +79,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
                 throw new ArgumentNullException(nameof(scriptName));
             }
 
-            newRuntimeScriptFile = _runtimeScriptFile_Factory.CreateNextNewScriptFileInstance(lastExecutedFileProperties,FolderPath, scriptName);
+            newRuntimeScriptFile = _runtimeScriptFileFactory.CreateNextNewScriptFileInstance(lastExecutedFileProperties,FolderPath, scriptName);
 
             Load();
 

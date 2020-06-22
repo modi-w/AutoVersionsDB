@@ -28,7 +28,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
         {
             IsActive = true;
 
-               Task.Factory.StartNew(() =>
+               Task.Run(() =>
                  {
                      try
                      {

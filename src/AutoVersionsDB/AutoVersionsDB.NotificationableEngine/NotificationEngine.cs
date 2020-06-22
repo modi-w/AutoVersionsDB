@@ -12,7 +12,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         List<NotificationableActionStepBase> ProcessSteps { get; }
         NotificationableActionStepBase RollbackStep { get; }
-        NotificationExecutersFactoryManager _notificationExecutersFactoryManager { get; }
+        NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; }
 
         void Run(ExecutionParams executionParams);
     }
@@ -29,9 +29,9 @@ namespace AutoVersionsDB.NotificationableEngine
     {
         public string EngineTypeName { get; protected set; }
 
-        public List<NotificationableActionStepBase> ProcessSteps { get; protected set; }
+        public List<NotificationableActionStepBase> ProcessSteps { get; private set; }
         public NotificationableActionStepBase RollbackStep { get; protected set; }
-        public NotificationExecutersFactoryManager _notificationExecutersFactoryManager { get; protected set; }
+        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; protected set; }
 
 
         public NotificationEngine(string engineTypeName,
@@ -43,7 +43,7 @@ namespace AutoVersionsDB.NotificationableEngine
             ProcessSteps = processSteps;
             RollbackStep = rollbackStep;
 
-            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
+            NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
         }
 
 
@@ -52,21 +52,23 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             int totalNumOfSteps = ProcessSteps.Count;
 
-            ProcessStateBase processState = new TProcessState();
-            processState.ExecutionParams = executionParams;
-
-            processState.StartProcessDateTime = DateTime.Now;
-
-
-            using (NotificationWrapperExecuter rootNotificationWrapperExecuter = _notificationExecutersFactoryManager.Reset(totalNumOfSteps))
+            ProcessStateBase processState = new TProcessState
             {
-                if (!_notificationExecutersFactoryManager.HasError)
+                ExecutionParams = executionParams,
+
+                StartProcessDateTime = DateTime.Now
+            };
+
+
+            using (NotificationWrapperExecuter rootNotificationWrapperExecuter = NotificationExecutersFactoryManager.Reset(totalNumOfSteps))
+            {
+                if (!NotificationExecutersFactoryManager.HasError)
                 {
                     foreach (NotificationableActionStepBase processStep in ProcessSteps)
                     {
                         rootNotificationWrapperExecuter.ExecuteStep(processStep, "", processState, null);
 
-                        if (_notificationExecutersFactoryManager.HasError)
+                        if (NotificationExecutersFactoryManager.HasError)
                         {
                             rollbackProcess(rootNotificationWrapperExecuter, processState, processStep.StepName);
                             break;
@@ -90,8 +92,8 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 if (processState.CanRollback)
                 {
-                    _notificationExecutersFactoryManager.ClearAllInternalProcessState();
-                    _notificationExecutersFactoryManager.RootNotificationStateItem.NumOfSteps++;
+                    NotificationExecutersFactoryManager.ClearAllInternalProcessState();
+                    NotificationExecutersFactoryManager.RootNotificationStateItem.NumOfSteps++;
                     currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, $"because error on {stepName}", processState, null);
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace AutoVersionsDB.Core.Engines
         }
 
 
-        public List<RuntimeScriptFileBase> ExecutedFiles { get; set; }
+        public List<RuntimeScriptFileBase> ExecutedFiles { get; private set; }
 
         public AutoVersionsDbProcessState()
         {
@@ -54,6 +55,8 @@ namespace AutoVersionsDB.Core.Engines
 
         public void AppendExecutedFile(RuntimeScriptFileBase runtimeScriptFile)
         {
+            runtimeScriptFile.ThrowIfNull(nameof(runtimeScriptFile));
+
             runtimeScriptFile.ExecutedDateTime = DateTime.Now;
 
             ExecutedFiles.Add(runtimeScriptFile);

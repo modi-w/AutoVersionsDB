@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.Validations
                     return errorMsg;
                 }
 
-                string[] artifactFiles = Directory.GetFiles(_deliveryArtifactFolderPath, $"*{ArtifactExtractor.C_ArtifactFilenameExtension}");
+                string[] artifactFiles = Directory.GetFiles(_deliveryArtifactFolderPath, $"*{ArtifactExtractor.ArtifactFilenameExtension}");
 
                 if (artifactFiles.Length == 0)
                 {
