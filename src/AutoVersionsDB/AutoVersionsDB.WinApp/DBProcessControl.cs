@@ -17,7 +17,7 @@ namespace AutoVersionsDB.WinApp
 
     public partial class DBProcessControl : UserControl
     {
-        public enum eDBVersionsMangementViewType
+        public enum DBVersionsMangementViewType
         {
             ReadyToRunSync,
             ReadyToSyncToSpecificState,
@@ -29,7 +29,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private AutoVersionsDbAPI _autoVersionsDbAPI = null;
+        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
 
 
@@ -75,7 +75,7 @@ namespace AutoVersionsDB.WinApp
             lblSetDBToSpecificState.Visible = true;
             //#endif
 
-            setToolTips();
+            SetToolTips();
         }
 
         private void changeButtonsPanelsLocation(Panel panelToMove)
@@ -85,16 +85,17 @@ namespace AutoVersionsDB.WinApp
             panelToMove.Location = new Point(pnlHeader.Width - panelToMove.Width, 0);
         }
 
-        private void setToolTips()
+        private void SetToolTips()
         {
-            ToolTip tooltipControl = new ToolTip();
-
-            // Set up the delays for the ToolTip.
-            tooltipControl.AutoPopDelay = 5000;
-            tooltipControl.InitialDelay = 500;
-            tooltipControl.ReshowDelay = 500;
-            // Force the ToolTip text to be displayed whether or not the form is active.
-            tooltipControl.ShowAlways = true;
+            ToolTip tooltipControl = new ToolTip
+            {
+                // Set up the delays for the ToolTip.
+                AutoPopDelay = 5000,
+                InitialDelay = 500,
+                ReshowDelay = 500,
+                // Force the ToolTip text to be displayed whether or not the form is active.
+                ShowAlways = true
+            };
 
             // Set up the ToolTip text with the controls.
             tooltipControl.SetToolTip(this.btnRefresh, "Refresh");
@@ -116,15 +117,15 @@ namespace AutoVersionsDB.WinApp
         {
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfigItem);
 
-            refreshAll();
+            RefreshAll();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            refreshAll();
+            RefreshAll();
         }
 
-        private void refreshAll()
+        private void RefreshAll()
         {
             TargetStateScriptFileName = null;
 
@@ -134,7 +135,7 @@ namespace AutoVersionsDB.WinApp
             }));
 
 
-            hideAllActionPanels();
+            HideAllActionPanels();
 
             notificationsControl1.PreparingMesage();
 
@@ -156,21 +157,21 @@ namespace AutoVersionsDB.WinApp
 
                         if (_autoVersionsDbAPI.ErrorCode == "SystemTables")
                         {
-                            setViewState(eDBVersionsMangementViewType.MissingSystemTables);
+                            SetViewState(DBVersionsMangementViewType.MissingSystemTables);
                         }
                         else if (_autoVersionsDbAPI.ErrorCode == "IsHistoryExecutedFilesChanged")
                         {
-                            setViewState(eDBVersionsMangementViewType.HistoryExecutedFilesChanged);
+                            SetViewState(DBVersionsMangementViewType.HistoryExecutedFilesChanged);
                         }
                         else
                         {
-                            setViewState(eDBVersionsMangementViewType.ReadyToRunSync);
+                            SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
                         }
                     }
                     else
                     {
                         notificationsControl1.Clear();
-                        setViewState(eDBVersionsMangementViewType.ReadyToRunSync);
+                        SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
                     }
 
                 }
@@ -210,12 +211,12 @@ namespace AutoVersionsDB.WinApp
         private void btnCancelSyncSpecificState_Click(object sender, EventArgs e)
         {
             notificationsControl1.Clear();
-            setViewState(eDBVersionsMangementViewType.ReadyToRunSync);
+            SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
         }
 
         private void btnSetDBToSpecificState_Click(object sender, EventArgs e)
         {
-            setViewState(eDBVersionsMangementViewType.ReadyToSyncToSpecificState);
+            SetViewState(DBVersionsMangementViewType.ReadyToSyncToSpecificState);
         }
 
 
@@ -237,14 +238,14 @@ namespace AutoVersionsDB.WinApp
 
                 TargetStateScriptFileName = currScriptFileInfo.Filename;
 
-                markUnMarkSelectedTargetInGrid();
+                MarkUnMarkSelectedTargetInGrid();
             }
 
         }
 
         private void btnCancelSetDBStateManually_Click(object sender, EventArgs e)
         {
-            setViewState(eDBVersionsMangementViewType.MissingSystemTables);
+            SetViewState(DBVersionsMangementViewType.MissingSystemTables);
         }
 
 
@@ -261,7 +262,7 @@ namespace AutoVersionsDB.WinApp
             {
                 string newFileFullPath = _autoVersionsDbAPI.CreateNewIncrementalScriptFile(textInputWindow.ResultText);
 
-                refreshAll();
+                RefreshAll();
 
                 OsProcessUtils.StartOsProcess(newFileFullPath);
             }
@@ -279,7 +280,7 @@ namespace AutoVersionsDB.WinApp
             if (textInputWindow.IsApply)
             {
                 string newFileFullPath = _autoVersionsDbAPI.CreateNewRepeatableScriptFile(textInputWindow.ResultText);
-                refreshAll();
+                RefreshAll();
                 OsProcessUtils.StartOsProcess(newFileFullPath);
             }
         }
@@ -297,7 +298,7 @@ namespace AutoVersionsDB.WinApp
             if (textInputWindow.IsApply)
             {
                 string newFileFullPath = _autoVersionsDbAPI.CreateNewDevDummyDataScriptFile(textInputWindow.ResultText);
-                refreshAll();
+                RefreshAll();
                 OsProcessUtils.StartOsProcess(newFileFullPath);
             }
         }
@@ -313,13 +314,13 @@ namespace AutoVersionsDB.WinApp
             {
                 try
                 {
-                    setViewState(eDBVersionsMangementViewType.InProcess);
+                    SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
                     _autoVersionsDbAPI.SyncDB();
 
                     notificationsControl1.AfterComplete();
-                    setViewState_AfterProcessComplete();
+                    SetViewState_AfterProcessComplete();
                 }
                 catch (Exception ex)
                 {
@@ -350,7 +351,7 @@ namespace AutoVersionsDB.WinApp
 
         private void btnRecreateDbFromScratchMain_Click(object sender, EventArgs e)
         {
-            runRecreateDBFromScratch();
+            RunRecreateDBFromScratch();
         }
 
 
@@ -362,13 +363,13 @@ namespace AutoVersionsDB.WinApp
                 {
                     try
                     {
-                        setViewState(eDBVersionsMangementViewType.InProcess);
+                        SetViewState(DBVersionsMangementViewType.InProcess);
                         notificationsControl1.BeforeStart();
 
                         _autoVersionsDbAPI.SetDBToSpecificState(TargetStateScriptFileName, true);
 
                         notificationsControl1.AfterComplete();
-                        setViewState_AfterProcessComplete();
+                        SetViewState_AfterProcessComplete();
 
                     }
                     catch (Exception ex)
@@ -386,13 +387,13 @@ namespace AutoVersionsDB.WinApp
         {
             try
             {
-                setViewState(eDBVersionsMangementViewType.InProcess);
+                SetViewState(DBVersionsMangementViewType.InProcess);
                 notificationsControl1.BeforeStart();
 
                 _autoVersionsDbAPI.Deploy();
 
                 notificationsControl1.AfterComplete();
-                setViewState_AfterProcessComplete();
+                SetViewState_AfterProcessComplete();
 
                 OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DeployArtifactFolderPath);
             }
@@ -405,15 +406,15 @@ namespace AutoVersionsDB.WinApp
 
         private void btnVirtualExecution_Click(object sender, EventArgs e)
         {
-            setViewState(eDBVersionsMangementViewType.SetDBStateManually);
+            SetViewState(DBVersionsMangementViewType.SetDBStateManually);
         }
 
         private void btnRecreateDbFromScratch2_Click(object sender, EventArgs e)
         {
-            runRecreateDBFromScratch();
+            RunRecreateDBFromScratch();
         }
 
-        private void runRecreateDBFromScratch()
+        private void RunRecreateDBFromScratch()
         {
             string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may loose Data. Are you sure?";
             if (MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
@@ -422,13 +423,13 @@ namespace AutoVersionsDB.WinApp
                 {
                     try
                     {
-                        setViewState(eDBVersionsMangementViewType.InProcess);
+                        SetViewState(DBVersionsMangementViewType.InProcess);
                         notificationsControl1.BeforeStart();
 
                         _autoVersionsDbAPI.RecreateDBFromScratch(TargetStateScriptFileName);
 
                         notificationsControl1.AfterComplete();
-                        setViewState_AfterProcessComplete();
+                        SetViewState_AfterProcessComplete();
                     }
                     catch (Exception ex)
                     {
@@ -447,13 +448,13 @@ namespace AutoVersionsDB.WinApp
             {
                 try
                 {
-                    setViewState(eDBVersionsMangementViewType.InProcess);
+                    SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
                     _autoVersionsDbAPI.SetDBStateByVirtualExecution(TargetStateScriptFileName);
 
                     notificationsControl1.AfterComplete();
-                    setViewState_AfterProcessComplete();
+                    SetViewState_AfterProcessComplete();
                 }
                 catch (Exception ex)
                 {
@@ -473,123 +474,119 @@ namespace AutoVersionsDB.WinApp
 
         #region Set View State
 
-        private void setViewState(eDBVersionsMangementViewType dbVersionsMangementViewType)
+        private void SetViewState(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
             bindToUIElements(dbVersionsMangementViewType);
 
-            hideAllActionPanels();
+            HideAllActionPanels();
 
-            setControlHideOrVisible(pnlRepeatableFiles, true);
+            SetControlHideOrVisible(pnlRepeatableFiles, true);
             if (_autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment)
             {
-                setControlHideOrVisible(pnlDevDummyDataFiles, true);
+                SetControlHideOrVisible(pnlDevDummyDataFiles, true);
             }
 
 
             switch (dbVersionsMangementViewType)
             {
-                case eDBVersionsMangementViewType.ReadyToRunSync:
+                case DBVersionsMangementViewType.ReadyToRunSync:
 
-                    setControlHideOrVisible(pnlMainActions, true);
-                    setControlHideOrVisible(lblColorTargetState_Square, false);
-                    setControlHideOrVisible(lblColorTargetState_Caption, false);
+                    SetControlHideOrVisible(pnlMainActions, true);
+                    SetControlHideOrVisible(lblColorTargetState_Square, false);
+                    SetControlHideOrVisible(lblColorTargetState_Caption, false);
 
 
 
                     dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
                     {
-                        List<RuntimeScriptFileBase> scriptFileList = dgIncrementalScriptsFiles.DataSource as List<RuntimeScriptFileBase>;
-
-                        if (scriptFileList != null
+                        if (dgIncrementalScriptsFiles.DataSource is List<RuntimeScriptFileBase> scriptFileList
                             && scriptFileList.Count > 0)
                         {
                             TargetStateScriptFileName = scriptFileList.Last().Filename;
                         }
                     }));
 
-                    enableDisableGridToSelectTargetState(false);
+                    EnableDisableGridToSelectTargetState(false);
 
-                    enanbleDisableForm(true);
+                    EnanbleDisableForm(true);
 
                     break;
 
-                case eDBVersionsMangementViewType.ReadyToSyncToSpecificState:
+                case DBVersionsMangementViewType.ReadyToSyncToSpecificState:
 
-                    setControlHideOrVisible(pnlSyncToSpecificState, true);
-                    setControlHideOrVisible(lblColorTargetState_Square, true);
-                    setControlHideOrVisible(lblColorTargetState_Caption, true);
+                    SetControlHideOrVisible(pnlSyncToSpecificState, true);
+                    SetControlHideOrVisible(lblColorTargetState_Square, true);
+                    SetControlHideOrVisible(lblColorTargetState_Caption, true);
 
-                    setControlHideOrVisible(pnlRepeatableFiles, false);
-                    setControlHideOrVisible(pnlDevDummyDataFiles, false);
+                    SetControlHideOrVisible(pnlRepeatableFiles, false);
+                    SetControlHideOrVisible(pnlDevDummyDataFiles, false);
 
 
                     notificationsControl1.SetAttentionMessage("Select the target Database State, and click on Apply");
 
-                    enableDisableGridToSelectTargetState(true);
+                    EnableDisableGridToSelectTargetState(true);
 
-                    enanbleDisableForm(true);
+                    EnanbleDisableForm(true);
 
 
                     break;
 
-                case eDBVersionsMangementViewType.MissingSystemTables:
-                case eDBVersionsMangementViewType.HistoryExecutedFilesChanged:
+                case DBVersionsMangementViewType.MissingSystemTables:
+                case DBVersionsMangementViewType.HistoryExecutedFilesChanged:
 
-                    setControlHideOrVisible(pnlMissingSystemTables, true);
-                    setControlHideOrVisible(lblColorTargetState_Square, false);
-                    setControlHideOrVisible(lblColorTargetState_Caption, false);
+                    SetControlHideOrVisible(pnlMissingSystemTables, true);
+                    SetControlHideOrVisible(lblColorTargetState_Square, false);
+                    SetControlHideOrVisible(lblColorTargetState_Caption, false);
 
                     dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
                     {
-                        List<RuntimeScriptFileBase> scriptFileList = dgIncrementalScriptsFiles.DataSource as List<RuntimeScriptFileBase>;
-
-                        if (scriptFileList != null
+                        if (dgIncrementalScriptsFiles.DataSource is List<RuntimeScriptFileBase> scriptFileList
                             && scriptFileList.Count > 0)
                         {
                             TargetStateScriptFileName = scriptFileList.Last().Filename;
                         }
                     }));
 
-                    enableDisableGridToSelectTargetState(false);
+                    EnableDisableGridToSelectTargetState(false);
 
-                    enanbleDisableForm(true);
+                    EnanbleDisableForm(true);
 
                     break;
 
 
 
 
-                case eDBVersionsMangementViewType.SetDBStateManually:
+                case DBVersionsMangementViewType.SetDBStateManually:
 
-                    setControlHideOrVisible(pnlSetDBStateManually, true);
-                    setControlHideOrVisible(lblColorTargetState_Square, true);
-                    setControlHideOrVisible(lblColorTargetState_Caption, true);
+                    SetControlHideOrVisible(pnlSetDBStateManually, true);
+                    SetControlHideOrVisible(lblColorTargetState_Square, true);
+                    SetControlHideOrVisible(lblColorTargetState_Caption, true);
 
-                    setControlHideOrVisible(pnlRepeatableFiles, false);
-                    setControlHideOrVisible(pnlDevDummyDataFiles, false);
+                    SetControlHideOrVisible(pnlRepeatableFiles, false);
+                    SetControlHideOrVisible(pnlDevDummyDataFiles, false);
 
                     notificationsControl1.SetAttentionMessage("Select the Target Database State to virtually mark, and click on Apply");
 
-                    enableDisableGridToSelectTargetState(true);
+                    EnableDisableGridToSelectTargetState(true);
 
-                    enanbleDisableForm(true);
-
-                    break;
-
-                case eDBVersionsMangementViewType.InProcess:
-
-                    enanbleDisableForm(false);
+                    EnanbleDisableForm(true);
 
                     break;
 
-                case eDBVersionsMangementViewType.RestoreDatabaseError:
+                case DBVersionsMangementViewType.InProcess:
 
-                    enanbleDisableForm(false);
-                    setControlEnableOrDisable(btnShowHistoricalBackups, true);
+                    EnanbleDisableForm(false);
 
-                    setControlHideOrVisible(pnlRestoreDbError, true);
-                    setControlHideOrVisible(lblColorTargetState_Square, false);
-                    setControlHideOrVisible(lblColorTargetState_Caption, false);
+                    break;
+
+                case DBVersionsMangementViewType.RestoreDatabaseError:
+
+                    EnanbleDisableForm(false);
+                    SetControlEnableOrDisable(btnShowHistoricalBackups, true);
+
+                    SetControlHideOrVisible(pnlRestoreDbError, true);
+                    SetControlHideOrVisible(lblColorTargetState_Square, false);
+                    SetControlHideOrVisible(lblColorTargetState_Caption, false);
 
                     break;
 
@@ -626,16 +623,16 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void hideAllActionPanels()
+        private void HideAllActionPanels()
         {
-            setControlHideOrVisible(pnlMainActions, false);
-            setControlHideOrVisible(pnlSyncToSpecificState, false);
-            setControlHideOrVisible(pnlMissingSystemTables, false);
-            setControlHideOrVisible(pnlSetDBStateManually, false);
-            setControlHideOrVisible(pnlRestoreDbError, false);
+            SetControlHideOrVisible(pnlMainActions, false);
+            SetControlHideOrVisible(pnlSyncToSpecificState, false);
+            SetControlHideOrVisible(pnlMissingSystemTables, false);
+            SetControlHideOrVisible(pnlSetDBStateManually, false);
+            SetControlHideOrVisible(pnlRestoreDbError, false);
         }
 
-        private void bindToUIElements(eDBVersionsMangementViewType dbVersionsMangementViewType)
+        private void bindToUIElements(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
 
             lblProjectName.BeginInvoke((MethodInvoker)(() =>
@@ -656,12 +653,12 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void bindIncrementalGrid(eDBVersionsMangementViewType dbVersionsMangementViewType)
+        private void bindIncrementalGrid(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
             List<RuntimeScriptFileBase> allIncrementalScriptFiles = _autoVersionsDbAPI.ScriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            if (dbVersionsMangementViewType == eDBVersionsMangementViewType.ReadyToSyncToSpecificState
-                || dbVersionsMangementViewType == eDBVersionsMangementViewType.SetDBStateManually)
+            if (dbVersionsMangementViewType == DBVersionsMangementViewType.ReadyToSyncToSpecificState
+                || dbVersionsMangementViewType == DBVersionsMangementViewType.SetDBStateManually)
             {
                 RuntimeScriptFileBase emptyDBTargetState = new EmptyDbStateRuntimeScriptFile();
                 allIncrementalScriptFiles.Insert(0, emptyDBTargetState);
@@ -705,29 +702,13 @@ namespace AutoVersionsDB.WinApp
 
                     RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
 
-                    switch (currRowFileInfo.HashDiffType)
+                    currGridRow.Cells[1].Style.BackColor = currRowFileInfo.HashDiffType switch
                     {
-                        case eHashDiffType.NotExist:
-
-                            currGridRow.Cells[1].Style.BackColor = Color.White;
-                            break;
-
-                        case eHashDiffType.Different:
-
-                            currGridRow.Cells[1].Style.BackColor = Color.LightSalmon;
-                            break;
-
-                        case eHashDiffType.Equal:
-
-                            currGridRow.Cells[1].Style.BackColor = Color.LightGreen;
-                            break;
-
-                        default:
-
-                            currGridRow.Cells[1].Style.BackColor = Color.White;
-                            break;
-                    }
-
+                        eHashDiffType.NotExist => Color.White,
+                        eHashDiffType.Different => Color.LightSalmon,
+                        eHashDiffType.Equal => Color.LightGreen,
+                        _ => Color.White,
+                    };
                 }
 
 
@@ -741,17 +722,17 @@ namespace AutoVersionsDB.WinApp
 
 
 
-        private void enableDisableGridToSelectTargetState(bool isEnable)
+        private void EnableDisableGridToSelectTargetState(bool isEnable)
         {
             dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
             {
                 dgIncrementalScriptsFiles.Columns[2].Visible = isEnable;
             }));
 
-            markUnMarkSelectedTargetInGrid();
+            MarkUnMarkSelectedTargetInGrid();
         }
 
-        private void markUnMarkSelectedTargetInGrid()
+        private void MarkUnMarkSelectedTargetInGrid()
         {
             dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
             {
@@ -776,20 +757,20 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void enanbleDisableForm(bool isEnable)
+        private void EnanbleDisableForm(bool isEnable)
         {
-            setControlEnableOrDisable(pnlMainActions, isEnable);
-            setControlEnableOrDisable(pnlMissingSystemTables, isEnable);
-            setControlEnableOrDisable(pnlSetDBStateManually, isEnable);
-            setControlEnableOrDisable(btnRefresh, isEnable);
-            setControlEnableOrDisable(dgIncrementalScriptsFiles, isEnable);
-            setControlEnableOrDisable(btnShowHistoricalBackups, isEnable);
-            setControlEnableOrDisable(btnCreateNewIncrementalScriptFile, isEnable);
-            setControlEnableOrDisable(btnCreateNewRepeatableScriptFile, isEnable);
-            setControlEnableOrDisable(btnCreateNewDevDummyDataScriptFile, isEnable);
+            SetControlEnableOrDisable(pnlMainActions, isEnable);
+            SetControlEnableOrDisable(pnlMissingSystemTables, isEnable);
+            SetControlEnableOrDisable(pnlSetDBStateManually, isEnable);
+            SetControlEnableOrDisable(btnRefresh, isEnable);
+            SetControlEnableOrDisable(dgIncrementalScriptsFiles, isEnable);
+            SetControlEnableOrDisable(btnShowHistoricalBackups, isEnable);
+            SetControlEnableOrDisable(btnCreateNewIncrementalScriptFile, isEnable);
+            SetControlEnableOrDisable(btnCreateNewRepeatableScriptFile, isEnable);
+            SetControlEnableOrDisable(btnCreateNewDevDummyDataScriptFile, isEnable);
         }
 
-        private void setControlEnableOrDisable(Control control, bool isEnable)
+        private void SetControlEnableOrDisable(Control control, bool isEnable)
         {
             control.BeginInvoke((MethodInvoker)(() =>
             {
@@ -797,7 +778,7 @@ namespace AutoVersionsDB.WinApp
             }));
         }
 
-        private void setControlHideOrVisible(Control control, bool isVisible)
+        private void SetControlHideOrVisible(Control control, bool isVisible)
         {
             control.BeginInvoke((MethodInvoker)(() =>
             {
@@ -805,17 +786,17 @@ namespace AutoVersionsDB.WinApp
             }));
         }
 
-        private void setViewState_AfterProcessComplete()
+        private void SetViewState_AfterProcessComplete()
         {
             if (_autoVersionsDbAPI.HasError
                 && !string.IsNullOrWhiteSpace(_autoVersionsDbAPI.InstructionsMessageStepName)
                 && _autoVersionsDbAPI.InstructionsMessageStepName.Contains("Rollback (Restore) Database"))
             {
-                setViewState(eDBVersionsMangementViewType.RestoreDatabaseError);
+                SetViewState(DBVersionsMangementViewType.RestoreDatabaseError);
             }
             else
             {
-                setViewState(eDBVersionsMangementViewType.ReadyToRunSync);
+                SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
             }
         }
 
