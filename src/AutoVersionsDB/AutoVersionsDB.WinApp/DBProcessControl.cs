@@ -71,8 +71,8 @@ namespace AutoVersionsDB.WinApp
             }
 
             //#if !DEBUG
-            btnSetDBToSpecificState.Visible = false;
-            lblSetDBToSpecificState.Visible = false;
+            btnSetDBToSpecificState.Visible = true;
+            lblSetDBToSpecificState.Visible = true;
             //#endif
 
             setToolTips();

@@ -11,13 +11,12 @@ namespace AutoVersionsDB.Core.Utils
 {
     public class FileChecksumManager : IDisposable
     {
-        //TODO: change maybe to sha512
 
-        private MD5 _hashEncryptor;
+        private SHA512 _hashEncryptor;
 
         public FileChecksumManager()
         {
-            _hashEncryptor = MD5.Create();
+            _hashEncryptor = SHA512.Create();
         }
 
 

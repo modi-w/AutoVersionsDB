@@ -450,7 +450,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 FileInfo fiScriptFile = incSctipFilesDictionary[filename];
 
-                string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
 
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -471,7 +471,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 FileInfo fiScriptFile = rptSctipFilesDictionary[filename];
 
-                string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
 
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -494,7 +494,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                     FileInfo fiScriptFile = dddSctipFilesDictionary[filename];
 
-                    string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fiScriptFile.FullName);
+                    string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
 
                     Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
                 }
@@ -601,7 +601,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
-                string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -618,7 +618,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
-                string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -635,7 +635,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
 
-                string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
 
                 if (fiScriptFile.Name == "rptScript_DataForLookupTable1.sql")
                 {
@@ -668,7 +668,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
-                string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -699,7 +699,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
 
-                string computedFileHash = _fileChecksumManager.GetMd5HashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
 
                 if (fiScriptFile.Name == "dddScript_DataForTransTable1.sql")
                 {
