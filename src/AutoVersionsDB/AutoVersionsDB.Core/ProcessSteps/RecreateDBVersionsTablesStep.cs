@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 
@@ -11,6 +12,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
                                                                     IDBCommands dbCommands,
                                                                     ScriptFilesComparersProvider scriptFilesComparersProvider)
         {
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
+
             RecreateDBVersionsTablesStep recreateDBVersionsTablesStep =
                 new RecreateDBVersionsTablesStep(dbCommands,
                                                             scriptFilesComparersProvider);

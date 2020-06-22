@@ -15,42 +15,42 @@ namespace AutoVersionsDB.Core
         public static readonly AutoVersionsDbAPI Instance =
             new AutoVersionsDbAPI(
                 NinjectUtils.KernelInstance.Get<ConfigProjectsManager>(),
-                NinjectUtils.KernelInstance.Get<ProjectConfigValidationEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<SystemTableExsitValidationEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<DBStateValidationEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<ArtifactFileValidationEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<SyncDBEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<RecreateDBFromScratchEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<CreateVirtualExecutionsEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<SyncDBToSpecificStateEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<DeployEngine_Factory>(),
-                NinjectUtils.KernelInstance.Get<ArtifactExtractor_Factory>(),
-                NinjectUtils.KernelInstance.Get<DBCommands_FactoryProvider>(),
-                NinjectUtils.KernelInstance.Get<ScriptFilesComparer_Factory>(),
+                NinjectUtils.KernelInstance.Get<ProjectConfigValidationEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<SystemTableExsitValidationEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<DBStateValidationEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<ArtifactFileValidationEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<SyncDBEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<RecreateDBFromScratchEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<CreateVirtualExecutionsEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<SyncDBToSpecificStateEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<DeployEngineFactory>(),
+                NinjectUtils.KernelInstance.Get<ArtifactExtractorFactory>(),
+                NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>(),
+                NinjectUtils.KernelInstance.Get<ScriptFilesComparerFactory>(),
                 NinjectUtils.KernelInstance.Get<NotificationExecutersFactoryManager>()
             );
 
-        private object _processSyncLockObj = new object();
+        private object _processSyncLock = new object();
 
 
-        private ProjectConfigValidationEngine_Factory _projectConfigValidationEngineFactory;
-        private SystemTableExsitValidationEngine_Factory _systemTableExsitValidationEngineFactory;
-        private DBStateValidationEngine_Factory _dbStateValidationEngineFactory;
-        private TargetStateScriptFileValidationEngine_Factory _notificationableEngine_TargetStateScriptFileValidation_Factory;
-        private ArtifactFileValidationEngine_Factory _artifactFileValidationEngineFactory;
-        private SyncDBEngine_Factory _syncDBEngineFactory;
-        private RecreateDBFromScratchEngine_Factory _recreateDBFromScratchEngineFactory;
-        private CreateVirtualExecutionsEngine_Factory _createVirtualExecutionsEngineFactory;
-        private SyncDBToSpecificStateEngine_Factory _setDBToSpecificStateFactory;
-        private DeployEngine_Factory _deployEngineStateFactory;
+        private ProjectConfigValidationEngineFactory _projectConfigValidationEngineFactory;
+        private SystemTableExsitValidationEngineFactory _systemTableExsitValidationEngineFactory;
+        private DBStateValidationEngineFactory _dbStateValidationEngineFactory;
+        private TargetStateScriptFileValidationEngineFactory _notificationableEngine_TargetStateScriptFileValidation_Factory;
+        private ArtifactFileValidationEngineFactory _artifactFileValidationEngineFactory;
+        private SyncDBEngineFactory _syncDBEngineFactory;
+        private RecreateDBFromScratchEngineFactory _recreateDBFromScratchEngineFactory;
+        private CreateVirtualExecutionsEngineFactory _createVirtualExecutionsEngineFactory;
+        private SyncDBToSpecificStateEngineFactory _setDBToSpecificStateFactory;
+        private DeployEngineFactory _deployEngineStateFactory;
 
-        private ArtifactExtractor_Factory _artifactExtractor_Factory;
+        private ArtifactExtractorFactory _artifactExtractorFactory;
 
-        private ScriptFilesComparer_Factory _scriptFilesComparer_Factory;
+        private ScriptFilesComparerFactory _scriptFilesComparerFactory;
 
 
-        public DBCommands_FactoryProvider DBCommandsFactoryProvider { get; private set; }
+        public DBCommandsFactoryProvider DBCommandsFactoryProvider { get; private set; }
         public ScriptFilesComparersProvider ScriptFilesComparersProvider { get; private set; }
         public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; private set; }
 
@@ -86,11 +86,11 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public string InstructionsMessage_StepName
+        public string InstructionsMessageStepName
         {
             get
             {
-                return NotificationExecutersFactoryManager.InstructionsMessage_StepName;
+                return NotificationExecutersFactoryManager.InstructionsMessageStepName;
             }
         }
 
@@ -99,19 +99,19 @@ namespace AutoVersionsDB.Core
 
 
         public AutoVersionsDbAPI(ConfigProjectsManager configProjectsManager,
-                                ProjectConfigValidationEngine_Factory projectConfigValidationEngineFactory,
-                                SystemTableExsitValidationEngine_Factory systemTableExsitValidationEngineFactory,
-                                DBStateValidationEngine_Factory dbStateValidationEngineFactory,
-                                TargetStateScriptFileValidationEngine_Factory notificationableEngine_TargetStateScriptFileValidation_Factory,
-                                ArtifactFileValidationEngine_Factory artifactFileValidationEngineFactory,
-                                SyncDBEngine_Factory syncDBEngineFactory,
-                                RecreateDBFromScratchEngine_Factory recreateDBFromScratchEngineFactory,
-                                CreateVirtualExecutionsEngine_Factory createVirtualExecutionsEngineFactory,
-                                SyncDBToSpecificStateEngine_Factory setDBToSpecificStateFactory,
-                                DeployEngine_Factory deployEngineStateFactory,
-                                ArtifactExtractor_Factory artifactExtractor_Factory,
-                                DBCommands_FactoryProvider dbCommandsFactoryProvider,
-                                ScriptFilesComparer_Factory scriptFilesComparer_Factory,
+                                ProjectConfigValidationEngineFactory projectConfigValidationEngineFactory,
+                                SystemTableExsitValidationEngineFactory systemTableExsitValidationEngineFactory,
+                                DBStateValidationEngineFactory dbStateValidationEngineFactory,
+                                TargetStateScriptFileValidationEngineFactory notificationableEngineTargetStateScriptFileValidationFactory,
+                                ArtifactFileValidationEngineFactory artifactFileValidationEngineFactory,
+                                SyncDBEngineFactory syncDBEngineFactory,
+                                RecreateDBFromScratchEngineFactory recreateDBFromScratchEngineFactory,
+                                CreateVirtualExecutionsEngineFactory createVirtualExecutionsEngineFactory,
+                                SyncDBToSpecificStateEngineFactory setDBToSpecificStateFactory,
+                                DeployEngineFactory deployEngineStateFactory,
+                                ArtifactExtractorFactory artifactExtractorFactory,
+                                DBCommandsFactoryProvider dbCommandsFactoryProvider,
+                                ScriptFilesComparerFactory scriptFilesComparerFactory,
                                 NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
             ConfigProjectsManager = configProjectsManager;
@@ -119,7 +119,7 @@ namespace AutoVersionsDB.Core
             _projectConfigValidationEngineFactory = projectConfigValidationEngineFactory;
             _systemTableExsitValidationEngineFactory = systemTableExsitValidationEngineFactory;
             _dbStateValidationEngineFactory = dbStateValidationEngineFactory;
-            _notificationableEngine_TargetStateScriptFileValidation_Factory = notificationableEngine_TargetStateScriptFileValidation_Factory;
+            _notificationableEngine_TargetStateScriptFileValidation_Factory = notificationableEngineTargetStateScriptFileValidationFactory;
             _artifactFileValidationEngineFactory = artifactFileValidationEngineFactory;
             _syncDBEngineFactory = syncDBEngineFactory;
             _recreateDBFromScratchEngineFactory = recreateDBFromScratchEngineFactory;
@@ -127,9 +127,9 @@ namespace AutoVersionsDB.Core
             _setDBToSpecificStateFactory = setDBToSpecificStateFactory;
             _deployEngineStateFactory = deployEngineStateFactory;
 
-            _artifactExtractor_Factory = artifactExtractor_Factory;
+            _artifactExtractorFactory = artifactExtractorFactory;
             DBCommandsFactoryProvider = dbCommandsFactoryProvider;
-            _scriptFilesComparer_Factory = scriptFilesComparer_Factory;
+            _scriptFilesComparerFactory = scriptFilesComparerFactory;
 
             NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
 
@@ -140,7 +140,7 @@ namespace AutoVersionsDB.Core
 
         public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 ProjectConfigItem = projectConfigItem;
 
@@ -150,7 +150,7 @@ namespace AutoVersionsDB.Core
 
         public void SaveProjectConfig()
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 ConfigProjectsManager.AddOrUpdateProjectConfig(ProjectConfigItem);
             }
@@ -167,7 +167,7 @@ namespace AutoVersionsDB.Core
 
             if (!HasError)
             {
-                _currentArtifactExtractor = _artifactExtractor_Factory.Create(ProjectConfigItem);
+                _currentArtifactExtractor = _artifactExtractorFactory.Create(ProjectConfigItem);
 
                 recreateScriptFilesComparersProvider();
             }
@@ -178,7 +178,7 @@ namespace AutoVersionsDB.Core
         {
             using (IDBCommands dbCommands = DBCommandsFactoryProvider.CreateDBCommand(ProjectConfigItem.DBTypeCode, ProjectConfigItem.ConnStr, ProjectConfigItem.DBCommandsTimeout))
             {
-                ScriptFilesComparersProvider = new ScriptFilesComparersProvider(_scriptFilesComparer_Factory, dbCommands, ProjectConfigItem);
+                ScriptFilesComparersProvider = new ScriptFilesComparersProvider(_scriptFilesComparerFactory, dbCommands, ProjectConfigItem);
             }
         }
 
@@ -190,7 +190,7 @@ namespace AutoVersionsDB.Core
 
         public void ValidateAll()
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 validateArtifactFile();
 
@@ -213,7 +213,7 @@ namespace AutoVersionsDB.Core
 
         public void ValidateProjectConfig()
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 AutoVersionsDbEngine engine = _projectConfigValidationEngineFactory.Create(ProjectConfigItem);
                 engine.Run(null);
@@ -223,7 +223,7 @@ namespace AutoVersionsDB.Core
 
         private void validateArtifactFile()
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 AutoVersionsDbEngine engine = _artifactFileValidationEngineFactory.Create(ProjectConfigItem);
                 engine.Run(null);
@@ -233,7 +233,7 @@ namespace AutoVersionsDB.Core
 
         private void validateSystemTableExist()
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 AutoVersionsDbEngine engine = _systemTableExsitValidationEngineFactory.Create(ProjectConfigItem);
                 engine.Run(null);
@@ -244,7 +244,7 @@ namespace AutoVersionsDB.Core
 
         private void validateDBState()
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 AutoVersionsDbEngine engine = _dbStateValidationEngineFactory.Create(ProjectConfigItem);
                 engine.Run(null);
@@ -254,7 +254,7 @@ namespace AutoVersionsDB.Core
 
         public bool ValdiateTargetStateAlreadyExecuted(string targetStateScriptFilename)
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 ExecutionParams executionParams = createTargetStepExectionParams(targetStateScriptFilename);
 
@@ -273,7 +273,7 @@ namespace AutoVersionsDB.Core
 
         public void SyncDB()
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 AutoVersionsDbEngine engine = _syncDBEngineFactory.Create(ProjectConfigItem);
                 engine.Run(null);
@@ -284,7 +284,7 @@ namespace AutoVersionsDB.Core
 
         public void SetDBToSpecificState(string targetStateScriptFilename, bool isIgnoreHistoryWarning)
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 if (isIgnoreHistoryWarning)
                 {
@@ -304,7 +304,7 @@ namespace AutoVersionsDB.Core
 
         public void RecreateDBFromScratch(string targetStateScriptFilename)
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 ExecutionParams executionParams = createTargetStepExectionParams(targetStateScriptFilename);
 
@@ -317,7 +317,7 @@ namespace AutoVersionsDB.Core
 
         public void SetDBStateByVirtualExecution(string targetStateScriptFilename)
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 ExecutionParams executionParams = createTargetStepExectionParams(targetStateScriptFilename);
 
@@ -347,7 +347,7 @@ namespace AutoVersionsDB.Core
 
         public void Deploy()
         {
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 AutoVersionsDbEngine engine = _deployEngineStateFactory.Create(ProjectConfigItem);
                 engine.Run(null);
@@ -366,7 +366,7 @@ namespace AutoVersionsDB.Core
         {
             RuntimeScriptFileBase scriptFileItem;
 
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 scriptFileItem = ScriptFilesComparersProvider.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
                 recreateScriptFilesComparersProvider();
@@ -379,7 +379,7 @@ namespace AutoVersionsDB.Core
         {
             RuntimeScriptFileBase scriptFileItem;
 
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 scriptFileItem = ScriptFilesComparersProvider.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
                 recreateScriptFilesComparersProvider();
@@ -397,7 +397,7 @@ namespace AutoVersionsDB.Core
 
             RuntimeScriptFileBase scriptFileItem;
 
-            lock (_processSyncLockObj)
+            lock (_processSyncLock)
             {
                 scriptFileItem = ScriptFilesComparersProvider.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
                 recreateScriptFilesComparersProvider();

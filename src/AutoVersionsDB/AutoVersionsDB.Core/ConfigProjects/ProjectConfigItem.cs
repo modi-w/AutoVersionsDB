@@ -41,7 +41,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 if (!string.IsNullOrWhiteSpace(DeliveryArtifactFolderPath))
                 {
-                    outStr = Path.Combine(this.DeliveryArtifactFolderPath, ArtifactExtractor.C_TempExtractArtifactFolderName);
+                    outStr = Path.Combine(this.DeliveryArtifactFolderPath, ArtifactExtractor.TempExtractArtifactFolderName);
                 }
 
                 return outStr;

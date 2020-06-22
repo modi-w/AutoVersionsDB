@@ -6,6 +6,7 @@ using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.Core.Utils;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -13,7 +14,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public static AutoVersionsDbEngine ProjectConfigValidation(this AutoVersionsDbEngine autoVersionsDbEngine, ProjectConfigItem projectConfig)
         {
-            ProjectConfigValidationStep_Factory projectConfigValidationSteFactory = NinjectUtils.KernelInstance.Get<ProjectConfigValidationStep_Factory>();
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            ProjectConfigValidationStepFactory projectConfigValidationSteFactory = NinjectUtils.KernelInstance.Get<ProjectConfigValidationStepFactory>();
 
             ValidationsStep projectConfigValidationStep = projectConfigValidationSteFactory.Create(projectConfig);
 
@@ -24,39 +28,41 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     }
 
 
-    public class ProjectConfigValidationStep_Factory
+    public class ProjectConfigValidationStepFactory
     {
 
 
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private DBCommands_FactoryProvider _dbCommands_FactoryProvider;
+        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
 
-        public ProjectConfigValidationStep_Factory(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                                            DBCommands_FactoryProvider dbCommands_FactoryProvider)
+        public ProjectConfigValidationStepFactory(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+                                                            DBCommandsFactoryProvider dbCommandsFactoryProvider)
 
 
 
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
 
-            _dbCommands_FactoryProvider = dbCommands_FactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
         public ValidationsStep Create(ProjectConfigItem projectConfig)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
             List<ValidatorBase> validators = new List<ValidatorBase>();
 
             ProjectNameValidator projectNameValidator = new ProjectNameValidator(projectConfig.ProjectName);
             validators.Add(projectNameValidator);
 
-            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBTypeCode, _dbCommands_FactoryProvider);
+            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
             validators.Add(dbTypeValidator);
 
-            ConnStrValidator connStrValidator = new ConnStrValidator(projectConfig.ConnStr, projectConfig.DBTypeCode, _dbCommands_FactoryProvider);
+            ConnStrValidator connStrValidator = new ConnStrValidator(projectConfig.ConnStr, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
             validators.Add(connStrValidator);
 
-            ConnStrValidator connStrToMasterDBValidator = new ConnStrValidator(projectConfig.ConnStrToMasterDB, projectConfig.DBTypeCode, _dbCommands_FactoryProvider);
+            ConnStrValidator connStrToMasterDBValidator = new ConnStrValidator(projectConfig.ConnStrToMasterDB, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
             validators.Add(connStrToMasterDBValidator);
 
             DBBackupFolderValidator dbBackupBaseFolderValidator = new DBBackupFolderValidator(projectConfig.DBBackupBaseFolder);

@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System.Collections.Generic;
@@ -41,6 +42,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
         {
+            processState.ThrowIfNull(nameof(processState));
+            actionStepArgs.ThrowIfNull(nameof(actionStepArgs));
+
+
             string sqlCommandStr = File.ReadAllText(actionStepArgs.ScriptFile.FileFullPath);
 
             int numOfScriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).Count();
@@ -50,6 +55,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         public override void Execute(AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
         {
+            processState.ThrowIfNull(nameof(processState));
+            actionStepArgs.ThrowIfNull(nameof(actionStepArgs));
+
+
             if (!_isVirtualExecution)
             {
                 string sqlCommandStr = File.ReadAllText(actionStepArgs.ScriptFile.FileFullPath);

@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.DbCommands.Integration;
+﻿using AutoVersionsDB.Core.Utils;
+using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using Ninject;
 
@@ -17,7 +18,9 @@ namespace AutoVersionsDB.Core
 
         public static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<DBCommands_FactoryProvider>().To<DBCommands_FactoryProvider>().InSingletonScope();
+            kernel.ThrowIfNull(nameof(kernel));
+
+            kernel.Bind<DBCommandsFactoryProvider>().To<DBCommandsFactoryProvider>().InSingletonScope();
 
 
             kernel.Bind<NotifictionStatesHistoryManager>().To<NotifictionStatesHistoryManager>().InSingletonScope();

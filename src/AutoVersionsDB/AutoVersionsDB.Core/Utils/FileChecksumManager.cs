@@ -13,26 +13,26 @@ namespace AutoVersionsDB.Core.Utils
     {
         //TODO: change maybe to sha512
 
-        private MD5 _md5Hash;
+        private MD5 _hashEncryptor;
 
         public FileChecksumManager()
         {
-            _md5Hash = MD5.Create();
+            _hashEncryptor = MD5.Create();
         }
 
 
-        public string GetMd5HashByFilePath(string fileFullPath)
+        public string GetHashByFilePath(string fileFullPath)
         {
             string fileContentStr = File.ReadAllText(fileFullPath);
-            return GetMd5Hash(fileContentStr);
+            return GetHash(fileContentStr);
         }
 
 
-        public string GetMd5Hash(string input)
+        public string GetHash(string input)
         {
 
             // Convert the input string to a byte array and compute the hash.
-            byte[] data = _md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            byte[] data = _hashEncryptor.ComputeHash(Encoding.UTF8.GetBytes(input));
 
             // Create a new Stringbuilder to collect the bytes
             // and create a string.
@@ -50,10 +50,10 @@ namespace AutoVersionsDB.Core.Utils
         }
 
         // Verify a hash against a string.
-        public bool VerifyMd5Hash(string input, string hash)
+        public bool VerifyHash(string input, string hash)
         {
             // Hash the input.
-            string hashOfInput = GetMd5Hash(input);
+            string hashOfInput = GetHash(input);
 
             // Create a StringComparer an compare the hashes.
             StringComparer comparer = StringComparer.OrdinalIgnoreCase;
@@ -88,7 +88,7 @@ namespace AutoVersionsDB.Core.Utils
             {
                 // free managed resources
 
-                _md5Hash.Dispose();
+                _hashEncryptor.Dispose();
             }
             // free native resources here if there are any
         }

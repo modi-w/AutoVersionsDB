@@ -13,15 +13,15 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 
         private string _connStr;
         private string _dbTypeCode;
-        private DBCommands_FactoryProvider _dbCommands_FactoryProvider;
+        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public ConnStrValidator(string connStr,
                                 string dbTypeCode,
-                                DBCommands_FactoryProvider dbCommands_FactoryProvider)
+                                DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
             _connStr = connStr;
             _dbTypeCode = dbTypeCode;
-            _dbCommands_FactoryProvider = dbCommands_FactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
         public override string Validate(AutoVersionsDBExecutionParams executionParam)
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             }
             else
             {
-                using (IDBConnectionManager dbConnectionManager = _dbCommands_FactoryProvider.CreateDBConnectionManager(_dbTypeCode, _connStr, 0))
+                using (IDBConnectionManager dbConnectionManager = _dbCommandsFactoryProvider.CreateDBConnectionManager(_dbTypeCode, _connStr, 0))
                 {
                     if (dbConnectionManager != null)
                     {

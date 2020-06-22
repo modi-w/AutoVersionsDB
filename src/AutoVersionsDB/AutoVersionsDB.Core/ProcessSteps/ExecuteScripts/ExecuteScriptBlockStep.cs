@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 
@@ -30,6 +31,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         public override void Execute(AutoVersionsDbProcessState processState, ScriptBlockStepArgs scriptBlockStepArgs)
         {
+            processState.ThrowIfNull(nameof(processState));
+            scriptBlockStepArgs.ThrowIfNull(nameof(scriptBlockStepArgs));
+
             if (!IsVirtualExecution)
             {
                 _dbCommands.ExecSQLCommandStr(scriptBlockStepArgs.ScriptBlockStr);

@@ -59,6 +59,8 @@ namespace AutoVersionsDB.Core.Utils
 
         public static string ParsePathVaribles(string path)
         {
+            path.ThrowIfNull(nameof(path));
+
             if (path.IndexOf("[AppPath]", StringComparison.Ordinal) > -1)
             {
                 return path.Replace("[AppPath]", AssemblyPath);

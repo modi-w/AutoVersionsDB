@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoVersionsDB.Core.Utils;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -7,7 +8,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
 {
     public class RepeatableRuntimeScriptFile : RuntimeScriptFileBase<RepeatableScriptFileProperties>
     {
-        public override string Filename => $"{ScriptFileType.Prefix}_{_scriptFileProperties.ScriptName}.sql";
+        public override string Filename => $"{ScriptFileType.Prefix}_{ScriptFilePropertiesInternal.ScriptName}.sql";
 
 
         public RepeatableRuntimeScriptFile(ScriptFileTypeBase scriptFileType, string folderPath, RepeatableScriptFileProperties repeatableScriptFileProperties)
@@ -20,11 +21,13 @@ namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
         {
         }
 
-        protected override void parsePropertiesByFileFullPath(string fileFullPath)
+        protected override void ParsePropertiesByFileFullPath(string fileFullPath)
         {
+            fileFullPath.ThrowIfNull(nameof(fileFullPath));
+
             FileInfo fiFile = new FileInfo(fileFullPath);
 
-            string shouldBeFileFullPath = Path.Combine(_folderPath, fiFile.Name);
+            string shouldBeFileFullPath = Path.Combine(FolderPath, fiFile.Name);
 
             if (shouldBeFileFullPath.Trim().ToUpperInvariant() != fileFullPath.Trim().ToUpperInvariant())
             {
@@ -49,7 +52,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
 
             string scriptName = string.Join("_", arrFilenameParts.Skip(1));
 
-            _scriptFileProperties = new RepeatableScriptFileProperties(scriptName);
+            ScriptFilePropertiesInternal = new RepeatableScriptFileProperties(scriptName);
 
         }
     }

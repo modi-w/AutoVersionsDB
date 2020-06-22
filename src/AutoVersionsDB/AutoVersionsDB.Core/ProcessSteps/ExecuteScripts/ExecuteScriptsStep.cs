@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.NotificationableEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +33,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
-            string targetStateScriptFileName = null;
-            if (processState.ExecutionParams != null)
-            {
-                targetStateScriptFileName = (processState.ExecutionParams as AutoVersionsDBExecutionParams).TargetStateScriptFileName;
-            }
+            processState.ThrowIfNull(nameof(processState));
 
-            int numOfFiles = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName).Count;
+
+            int numOfFiles = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.GetPendingFilesToExecute(null).Count;
             numOfFiles += _scriptFilesComparersProvider.RepeatableScriptFilesComparer.GetPendingFilesToExecute(null).Count;
 
             if (_scriptFilesComparersProvider.DevDummyDataScriptFilesComparer != null)
@@ -52,6 +50,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
+            processState.ThrowIfNull(nameof(processState));
+
             string targetStateScriptFileName = null;
             if (processState.ExecutionParams != null)
             {

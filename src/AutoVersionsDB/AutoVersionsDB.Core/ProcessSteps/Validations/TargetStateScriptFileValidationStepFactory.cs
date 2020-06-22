@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.Core.Validations.ExectutionParamsValidations;
 using AutoVersionsDB.NotificationableEngine;
@@ -12,7 +13,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public static AutoVersionsDbEngine TargetStateScriptFileValidation(this AutoVersionsDbEngine autoVersionsDbEngine, ScriptFilesComparersProvider scriptFilesComparersProvider)
         {
-            TargetStateScriptFileValidationStep_Factory targetStateScriptFileigValidationSteFactory = NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationStep_Factory>();
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
+
+            TargetStateScriptFileValidationStepFactory targetStateScriptFileigValidationSteFactory = NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationStepFactory>();
 
             ValidationsStep projectConfigValidationStep = targetStateScriptFileigValidationSteFactory.Create(scriptFilesComparersProvider);
 
@@ -22,11 +26,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
     }
 
-    public class TargetStateScriptFileValidationStep_Factory
+    public class TargetStateScriptFileValidationStepFactory
     {
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
 
-        public TargetStateScriptFileValidationStep_Factory(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
+        public TargetStateScriptFileValidationStepFactory(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoVersionsDB.Core.Utils;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -8,9 +9,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
 {
     public class IncrementalRuntimeScriptFile : RuntimeScriptFileBase<IncrementalScriptFileProperties>
     {
-        public const string C_ScriptFile_DatePattern = "yyyy-MM-dd";
-
-        public override string Filename => $"{ScriptFileType.Prefix}_{_scriptFileProperties.Date.ToString(IncrementalScriptFileProperties.C_ScriptFile_DatePattern,  CultureInfo.InvariantCulture)}.{_scriptFileProperties.Version:000}_{_scriptFileProperties.ScriptName}.sql";
+        public override string Filename => $"{ScriptFileType.Prefix}_{ScriptFilePropertiesInternal.Date.ToString(IncrementalScriptFileType.ScriptFileDatePattern,  CultureInfo.InvariantCulture)}.{ScriptFilePropertiesInternal.Version:000}_{ScriptFilePropertiesInternal.ScriptName}.sql";
 
 
         public IncrementalRuntimeScriptFile(ScriptFileTypeBase scriptFileType, string folderPath, IncrementalScriptFileProperties incrementalScriptFileProperties)
@@ -24,11 +23,13 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
         }
 
 
-        protected override void parsePropertiesByFileFullPath(string fileFullPath)
+        protected override void ParsePropertiesByFileFullPath(string fileFullPath)
         {
+            fileFullPath.ThrowIfNull(nameof(fileFullPath));
+
             FileInfo fiFile = new FileInfo(fileFullPath);
 
-            string shouldBeFileFullPath = Path.Combine(_folderPath, fiFile.Name);
+            string shouldBeFileFullPath = Path.Combine(FolderPath, fiFile.Name);
 
             if (shouldBeFileFullPath.Trim().ToUpperInvariant() != fileFullPath.Trim().ToUpperInvariant())
             {
@@ -61,9 +62,9 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
             string currDTFromFilenameStr = arrFileSortStr[0];
 
             DateTime tempDate_FromFilename;
-            if (!DateTime.TryParseExact(currDTFromFilenameStr, C_ScriptFile_DatePattern, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out tempDate_FromFilename))
+            if (!DateTime.TryParseExact(currDTFromFilenameStr, IncrementalScriptFileType.ScriptFileDatePattern, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out tempDate_FromFilename))
             {
-                string errorMessage = $"Filename not valid date script pattern: '{filename}'. Should be with pattern of '{C_ScriptFile_DatePattern}'";
+                string errorMessage = $"Filename not valid date script pattern: '{filename}'. Should be with pattern of '{ IncrementalScriptFileType.ScriptFileDatePattern}'";
                 throw new Exception(errorMessage);
             }
 
@@ -86,7 +87,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
             }
             int version = tempDateVersion_FromFilename;
 
-            _scriptFileProperties = new IncrementalScriptFileProperties(scriptName, date, version);
+            ScriptFilePropertiesInternal = new IncrementalScriptFileProperties(scriptName, date, version);
 
         }
     }

@@ -808,8 +808,8 @@ namespace AutoVersionsDB.WinApp
         private void setViewState_AfterProcessComplete()
         {
             if (_autoVersionsDbAPI.HasError
-                && !string.IsNullOrWhiteSpace(_autoVersionsDbAPI.InstructionsMessage_StepName)
-                && _autoVersionsDbAPI.InstructionsMessage_StepName.Contains("Rollback (Restore) Database"))
+                && !string.IsNullOrWhiteSpace(_autoVersionsDbAPI.InstructionsMessageStepName)
+                && _autoVersionsDbAPI.InstructionsMessageStepName.Contains("Rollback (Restore) Database"))
             {
                 setViewState(eDBVersionsMangementViewType.RestoreDatabaseError);
             }

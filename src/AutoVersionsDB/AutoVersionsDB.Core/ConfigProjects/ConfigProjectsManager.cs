@@ -12,8 +12,8 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
     public class ConfigProjectsManager
     {
-        public List<ProjectConfigItem> ProjectConfigsList { get; set; }
-        public Dictionary<string, ProjectConfigItem> DicProjectConfigItem { get; set; }
+        public List<ProjectConfigItem> ProjectConfigsList { get; private set; }
+        public Dictionary<string, ProjectConfigItem> DicProjectConfigItem { get; private set; }
 
         public ConfigProjectsManager()
         {
@@ -22,14 +22,16 @@ namespace AutoVersionsDB.Core.ConfigProjects
             loadAllProjectConfigs();
         }
 
-        public void AddOrUpdateProjectConfig(ProjectConfigItem projectConfigObj)
+        public void AddOrUpdateProjectConfig(ProjectConfigItem projectConfig)
         {
-            if (string.IsNullOrWhiteSpace(projectConfigObj.ProjectGuid))
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            if (string.IsNullOrWhiteSpace(projectConfig.ProjectGuid))
             {
-                projectConfigObj.ProjectGuid = Guid.NewGuid().ToString();
+                projectConfig.ProjectGuid = Guid.NewGuid().ToString();
             }
 
-            DicProjectConfigItem[projectConfigObj.ProjectGuid] = projectConfigObj;
+            DicProjectConfigItem[projectConfig.ProjectGuid] = projectConfig;
             saveProjectConfigsFile();
         }
 

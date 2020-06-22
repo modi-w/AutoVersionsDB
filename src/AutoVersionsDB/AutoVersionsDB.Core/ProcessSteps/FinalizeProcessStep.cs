@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System;
@@ -15,10 +16,14 @@ namespace AutoVersionsDB.Core.ProcessSteps
                                                             bool isVirtualExecution,
                                                             string executionTypeName)
         {
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+            executionTypeName.ThrowIfNull(nameof(executionTypeName));
+
             FinalizeProcessStep finalizeProcessStep =
                 new FinalizeProcessStep(dbCommands,
-                                                    isVirtualExecution,
-                                                    executionTypeName);
+                                        isVirtualExecution,
+                                        executionTypeName);
 
 
             autoVersionsDbEngine.AppendProcessStep(finalizeProcessStep);
@@ -55,6 +60,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
+            processState.ThrowIfNull(nameof(processState));
+
             DataSet dsExecutionHistory = _dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
             DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName];

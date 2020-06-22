@@ -258,31 +258,31 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             }
         }
 
-        private void onRowUpdate_SetIdentityFromDb(object sender, SqlRowUpdatedEventArgs argsObj)
+        private void onRowUpdate_SetIdentityFromDb(object sender, SqlRowUpdatedEventArgs args)
         {
-            if (argsObj.StatementType == StatementType.Insert)
+            if (args.StatementType == StatementType.Insert)
             {
 
 
 
                 // reads the identity value from the output parameter @ID
-                object newKeyValue = argsObj.Command.Parameters["@ID"].Value;
+                object newKeyValue = args.Command.Parameters["@ID"].Value;
 
 
 
                 // updates the identity column (autoincrement)
-                foreach (DataColumn currCol in argsObj.Row.Table.Columns)
+                foreach (DataColumn currCol in args.Row.Table.Columns)
                 {
                     if (currCol.AutoIncrement)
                     {
                         currCol.ReadOnly = false;
-                        argsObj.Row[currCol] = newKeyValue;
+                        args.Row[currCol] = newKeyValue;
                         currCol.ReadOnly = true;
                         break; // there can be only one identity column
                     }
                 }
 
-                argsObj.Row.AcceptChanges();
+                args.Row.AcceptChanges();
 
 
                 //logMessage = "onRowUpdate_SetIdentityFromDb --> End";

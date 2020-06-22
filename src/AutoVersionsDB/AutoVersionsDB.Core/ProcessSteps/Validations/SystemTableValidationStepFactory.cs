@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
@@ -11,7 +12,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public static AutoVersionsDbEngine SystemTableValidation(this AutoVersionsDbEngine autoVersionsDbEngine, IDBCommands dbCommands, bool isDevEnvironment)
         {
-            SystemTableValidationStep_Factory systemTableValidationSteFactory = NinjectUtils.KernelInstance.Get<SystemTableValidationStep_Factory>();
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+
+            SystemTableValidationStepFactory systemTableValidationSteFactory = NinjectUtils.KernelInstance.Get<SystemTableValidationStepFactory>();
 
             ValidationsStep projectConfigValidationStep = systemTableValidationSteFactory.Create(dbCommands, isDevEnvironment);
 
@@ -21,11 +25,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
     }
 
-    public class SystemTableValidationStep_Factory
+    public class SystemTableValidationStepFactory
     {
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
 
-        public SystemTableValidationStep_Factory(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
+        public SystemTableValidationStepFactory(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
         }

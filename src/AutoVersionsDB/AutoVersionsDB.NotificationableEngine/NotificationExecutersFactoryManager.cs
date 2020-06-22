@@ -36,7 +36,7 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
-        public string InstructionsMessage_StepName
+        public string InstructionsMessageStepName
         {
             get
             {

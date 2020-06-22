@@ -11,7 +11,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
     {
         public static AutoVersionsDbEngine ExecuteScripts(this AutoVersionsDbEngine autoVersionsDbEngine, IDBCommands dbCommands, bool isVirtualExecution, ScriptFilesComparersProvider scriptFilesComparersProvider)
         {
-            ExecuteScriptsStep_Factory ExecuteScriptsStepFactory = NinjectUtils.KernelInstance.Get<ExecuteScriptsStep_Factory>();
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+
+            ExecuteScriptsStepFactory ExecuteScriptsStepFactory = NinjectUtils.KernelInstance.Get<ExecuteScriptsStepFactory>();
 
             ExecuteScriptsStep projectConfigValidationStep = 
                 ExecuteScriptsStepFactory.Create(dbCommands, isVirtualExecution, scriptFilesComparersProvider);
@@ -22,13 +25,12 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         }
     }
 
-    public class ExecuteScriptsStep_Factory
+    public class ExecuteScriptsStepFactory
     {
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
 
 
-        public ExecuteScriptsStep_Factory(FileChecksumManager fileChecksumManager,
-                                                    NotificationExecutersFactoryManager notificationExecutersFactoryManager)
+        public ExecuteScriptsStepFactory(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
         }

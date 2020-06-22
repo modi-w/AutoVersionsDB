@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.Core.Validations.DBStateValidators;
 using AutoVersionsDB.DbCommands.Integration;
@@ -13,7 +14,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public static AutoVersionsDbEngine DBStateValidation(this AutoVersionsDbEngine autoVersionsDbEngine, ScriptFilesComparersProvider scriptFilesComparersProvider)
         {
-            DBStateValidationStep_Factory dbStateValidationSteFactory = NinjectUtils.KernelInstance.Get<DBStateValidationStep_Factory>();
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
+
+            DBStateValidationStepFactory dbStateValidationSteFactory = NinjectUtils.KernelInstance.Get<DBStateValidationStepFactory>();
 
             ValidationsStep projectConfigValidationStep = dbStateValidationSteFactory.Create(scriptFilesComparersProvider);
 
@@ -24,16 +28,13 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     }
 
 
-    public class DBStateValidationStep_Factory
+    public class DBStateValidationStepFactory
     {
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private DBCommands_FactoryProvider _dbCommands_FactoryProvider;
 
-        public DBStateValidationStep_Factory(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                                        DBCommands_FactoryProvider dbCommands_FactoryProvider)
+        public DBStateValidationStepFactory(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
-            _dbCommands_FactoryProvider = dbCommands_FactoryProvider;
         }
 
         public ValidationsStep Create(ScriptFilesComparersProvider scriptFilesComparersProvider)

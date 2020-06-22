@@ -10,12 +10,12 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
         private string _dbTypeCode;
-        private DBCommands_FactoryProvider _dbCommands_FactoryProvider;
+        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public DBTypeValidator(string dbTypeCode,
-                                DBCommands_FactoryProvider dbCommands_FactoryProvider)
+                                DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
-            _dbCommands_FactoryProvider = dbCommands_FactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
             _dbTypeCode = dbTypeCode;
         }
 
@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             }
             else
             {
-                if (!_dbCommands_FactoryProvider.DBCommands_FactoryDictionary.ContainsKey(_dbTypeCode))
+                if (!_dbCommandsFactoryProvider.DBCommandsFactoryDictionary.ContainsKey(_dbTypeCode))
                 {
                     string errorMsg = $"DB Type Code '{_dbTypeCode}' is not valid";
                     return errorMsg;

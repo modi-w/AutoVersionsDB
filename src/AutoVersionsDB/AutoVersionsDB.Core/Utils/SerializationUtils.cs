@@ -7,14 +7,14 @@ namespace AutoVersionsDB.Core.Utils
     {
         public static string JsonSerialize<T>(T obj)
         {
-            JsonSerializerSettings settongObj = new Newtonsoft.Json.JsonSerializerSettings()
+            JsonSerializerSettings setting = new Newtonsoft.Json.JsonSerializerSettings()
             {
                 DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
 
             };
 
-            return JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, settongObj);
+            return JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, setting);
         }
 
         public static T JsonDeserialize<T>(string str)

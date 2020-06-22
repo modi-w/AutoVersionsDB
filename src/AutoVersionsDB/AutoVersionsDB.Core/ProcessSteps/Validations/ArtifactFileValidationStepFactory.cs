@@ -4,6 +4,7 @@ using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.Core.Utils;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -11,7 +12,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public static AutoVersionsDbEngine ArtifactFileValidation(this AutoVersionsDbEngine autoVersionsDbEngine, ProjectConfigItem projectConfig)
         {
-            ArtifactFileValidationStep_Factory artifactFileValidationSteFactory = NinjectUtils.KernelInstance.Get<ArtifactFileValidationStep_Factory>();
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            ArtifactFileValidationStepFactory artifactFileValidationSteFactory = NinjectUtils.KernelInstance.Get<ArtifactFileValidationStepFactory>();
 
             ValidationsStep projectConfigValidationStep = artifactFileValidationSteFactory.Create(projectConfig);
 
@@ -22,17 +26,19 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     }
 
 
-    public class ArtifactFileValidationStep_Factory
+    public class ArtifactFileValidationStepFactory
     {
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
 
-        public ArtifactFileValidationStep_Factory(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
+        public ArtifactFileValidationStepFactory(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
         }
 
         public ValidationsStep Create(ProjectConfigItem projectConfig)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
             List<ValidatorBase> validators = new List<ValidatorBase>();
 
             ArtifactFileValidator artifactFileValidator = new ArtifactFileValidator(projectConfig.IsDevEnvironment, projectConfig.DeliveryArtifactFolderPath);

@@ -19,9 +19,15 @@ namespace AutoVersionsDB.Core.ProcessSteps
                                                         IDBQueryStatus dbQueryStatus,
                                                         string dbBackupBaseFolderPath)
         {
+            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+            dbBackupRestoreCommands.ThrowIfNull(nameof(dbBackupRestoreCommands));
+            dbQueryStatus.ThrowIfNull(nameof(dbQueryStatus));
+            dbBackupBaseFolderPath.ThrowIfNull(nameof(dbBackupBaseFolderPath));
+
             NotificationExecutersFactoryManager notificationExecutersFactoryManager = NinjectUtils.KernelInstance.Get<NotificationExecutersFactoryManager>();
 
-            DBProcessStatusNotifyer_Factory dbProcessStatusNotifyer_Factory = NinjectUtils.KernelInstance.Get<DBProcessStatusNotifyer_Factory>();
+            DBProcessStatusNotifyerFactory dbProcessStatusNotifyer_Factory = NinjectUtils.KernelInstance.Get<DBProcessStatusNotifyerFactory>();
 
             DBBackupStatusNotifyer dbBackupStatusNotifyer =
                 dbProcessStatusNotifyer_Factory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
@@ -62,6 +68,13 @@ namespace AutoVersionsDB.Core.ProcessSteps
                                             DBBackupStatusNotifyer dbBackupStatusNotifyer,
                                             string dbBackupBaseFolderPath)
         {
+            notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+            dbBackupRestoreCommands.ThrowIfNull(nameof(dbBackupRestoreCommands));
+            dbBackupStatusNotifyer.ThrowIfNull(nameof(dbBackupStatusNotifyer));
+            dbBackupBaseFolderPath.ThrowIfNull(nameof(dbBackupBaseFolderPath));
+
+
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             _dbCommands = dbCommands;
             _dbBackupRestoreCommands = dbBackupRestoreCommands;
@@ -81,6 +94,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
+            processState.ThrowIfNull(nameof(processState));
+
             string timeStampStr = DateTime.Now.ToString("{0:yyyy-MM-dd-HH-mm-ss}", CultureInfo.InvariantCulture);
 
             string targetFileName = $"bu_{ _dbCommands.GetDataBaseName()}_{timeStampStr}.bak";

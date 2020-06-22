@@ -16,7 +16,7 @@ namespace AutoVersionsDB.WinApp
 
     public partial class EditProjectConfigDetails : UserControl
     {
-        private List<IDBCommands_Factory> _dbCommands_FactoryList;
+        private List<IDBCommandsFactory> _dbCommandsFactoryList;
 
         public event OnNavToProcessHandler OnNavToProcess;
 
@@ -33,8 +33,8 @@ namespace AutoVersionsDB.WinApp
             {
                 _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
 
-                _dbCommands_FactoryList = _autoVersionsDbAPI.DBCommandsFactoryProvider.DBCommands_FactoryDictionary.Values.ToList();
-                cboConncectionType.DataSource = _dbCommands_FactoryList;
+                _dbCommandsFactoryList = _autoVersionsDbAPI.DBCommandsFactoryProvider.DBCommandsFactoryDictionary.Values.ToList();
+                cboConncectionType.DataSource = _dbCommandsFactoryList;
                 cboConncectionType.DisplayMember = "DBTypeName";
                 cboConncectionType.ValueMember = "DBTypeCode";
             }
@@ -193,7 +193,7 @@ namespace AutoVersionsDB.WinApp
 
             if (!string.IsNullOrWhiteSpace(_autoVersionsDbAPI.ProjectConfigItem.DBTypeCode))
             {
-                IDBCommands_Factory currSelectedItem = _dbCommands_FactoryList.FirstOrDefault(e => e.DBTypeCode == _autoVersionsDbAPI.ProjectConfigItem.DBTypeCode);
+                IDBCommandsFactory currSelectedItem = _dbCommandsFactoryList.FirstOrDefault(e => e.DBTypeCode == _autoVersionsDbAPI.ProjectConfigItem.DBTypeCode);
                 if (currSelectedItem != null)
                 {
                     cboConncectionType.BeginInvoke((MethodInvoker)(() =>

@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
         }
 
 
-        public virtual void Load()
+        public void Load()
         {
             loadExecutedFilesList();
 
