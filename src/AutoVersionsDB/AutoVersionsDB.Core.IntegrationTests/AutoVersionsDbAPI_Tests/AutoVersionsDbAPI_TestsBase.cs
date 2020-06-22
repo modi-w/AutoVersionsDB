@@ -428,7 +428,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
 
-            DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName);
+            DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
 
             if (!projectConfig.IsDevEnvironment)
             {
@@ -518,7 +518,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
-                DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName);
+                DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
 
                 List<DataRow> executedDBFileList = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().OrderBy(row => Convert.ToInt32(row["ID"])).ToList();
                 Assert.That(executedDBFileList.Count, Is.EqualTo(3));
@@ -536,7 +536,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             DataTable dbScriptsExecutionHistoryFilesTable;
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
-                dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName);
+                dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
             }
 
             if (!projectConfig.IsDevEnvironment)
@@ -565,7 +565,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             DataTable dbScriptsExecutionHistoryFilesTable;
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
-                dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName);
+                dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
             }
 
             if (!projectConfig.IsDevEnvironment)

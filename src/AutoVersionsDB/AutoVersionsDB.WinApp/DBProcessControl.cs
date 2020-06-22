@@ -11,6 +11,8 @@ using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
 using System.ComponentModel;
 using AutoVersionsDB.WinApp.Utils;
+using AutoVersionsDB.Core.ProcessSteps;
+using System.Globalization;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -71,8 +73,8 @@ namespace AutoVersionsDB.WinApp
             }
 
             //#if !DEBUG
-            btnSetDBToSpecificState.Visible = true;
-            lblSetDBToSpecificState.Visible = true;
+            btnSetDBToSpecificState.Visible = false;
+            lblSetDBToSpecificState.Visible = false;
             //#endif
 
             SetToolTips();
@@ -87,7 +89,7 @@ namespace AutoVersionsDB.WinApp
 
         private void SetToolTips()
         {
-            ToolTip tooltipControl = new ToolTip
+            using (ToolTip tooltipControl = new ToolTip
             {
                 // Set up the delays for the ToolTip.
                 AutoPopDelay = 5000,
@@ -95,17 +97,19 @@ namespace AutoVersionsDB.WinApp
                 ReshowDelay = 500,
                 // Force the ToolTip text to be displayed whether or not the form is active.
                 ShowAlways = true
-            };
+            })
+            {
+                // Set up the ToolTip text with the controls.
+                tooltipControl.SetToolTip(this.btnRefresh, "Refresh");
+                tooltipControl.SetToolTip(this.btnRunSync, "Sync the db with the missing scripts");
+                tooltipControl.SetToolTip(this.btnRecreateDbFromScratchMain, "Recreate DB From Scratch");
+                tooltipControl.SetToolTip(this.btnRecreateDbFromScratch2, "Recreate DB From Scratch");
+                tooltipControl.SetToolTip(this.btnDeploy, "Create Deploy Package");
+                tooltipControl.SetToolTip(this.btnSetDBToSpecificState, "Set DB To Specific State");
+                tooltipControl.SetToolTip(this.btnVirtualExecution, "Set DB to specific state virtually. Use it if your DB is not empty but you never use our migration tool on it yet.");
+                tooltipControl.SetToolTip(this.btnShowHistoricalBackups, "Open the backup history folder.");
+            }
 
-            // Set up the ToolTip text with the controls.
-            tooltipControl.SetToolTip(this.btnRefresh, "Refresh");
-            tooltipControl.SetToolTip(this.btnRunSync, "Sync the db with the missing scripts");
-            tooltipControl.SetToolTip(this.btnRecreateDbFromScratchMain, "Recreate DB From Scratch");
-            tooltipControl.SetToolTip(this.btnRecreateDbFromScratch2, "Recreate DB From Scratch");
-            tooltipControl.SetToolTip(this.btnDeploy, "Create Deploy Package");
-            tooltipControl.SetToolTip(this.btnSetDBToSpecificState, "Set DB To Specific State");
-            tooltipControl.SetToolTip(this.btnVirtualExecution, "Set DB to specific state virtually. Use it if your DB is not empty but you never use our migration tool on it yet.");
-            tooltipControl.SetToolTip(this.btnShowHistoricalBackups, "Open the backup history folder.");
         }
 
 
@@ -141,7 +145,7 @@ namespace AutoVersionsDB.WinApp
 
 
 
-            Task.Factory.StartNew(() =>
+            Task.Run(() =>
             {
                 _autoVersionsDbAPI.Refresh();
 
@@ -255,17 +259,20 @@ namespace AutoVersionsDB.WinApp
         }
         private void btnCreateNewIncrementalScriptFile_Click(object sender, EventArgs e)
         {
-            TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:");
-            textInputWindow.ShowDialog();
-
-            if (textInputWindow.IsApply)
+            using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
             {
-                string newFileFullPath = _autoVersionsDbAPI.CreateNewIncrementalScriptFile(textInputWindow.ResultText);
+                textInputWindow.ShowDialog();
 
-                RefreshAll();
+                if (textInputWindow.IsApply)
+                {
+                    string newFileFullPath = _autoVersionsDbAPI.CreateNewIncrementalScriptFile(textInputWindow.ResultText);
 
-                OsProcessUtils.StartOsProcess(newFileFullPath);
+                    RefreshAll();
+
+                    OsProcessUtils.StartOsProcess(newFileFullPath);
+                }
             }
+
         }
 
         private void btnOpenRepeatableScriptsFolder_Click(object sender, EventArgs e)
@@ -274,15 +281,18 @@ namespace AutoVersionsDB.WinApp
         }
         private void btnCreateNewRepeatableScriptFile_Click(object sender, EventArgs e)
         {
-            TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:");
-            textInputWindow.ShowDialog();
-
-            if (textInputWindow.IsApply)
+            using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
             {
-                string newFileFullPath = _autoVersionsDbAPI.CreateNewRepeatableScriptFile(textInputWindow.ResultText);
-                RefreshAll();
-                OsProcessUtils.StartOsProcess(newFileFullPath);
+                textInputWindow.ShowDialog();
+
+                if (textInputWindow.IsApply)
+                {
+                    string newFileFullPath = _autoVersionsDbAPI.CreateNewRepeatableScriptFile(textInputWindow.ResultText);
+                    RefreshAll();
+                    OsProcessUtils.StartOsProcess(newFileFullPath);
+                }
             }
+
         }
 
 
@@ -292,15 +302,18 @@ namespace AutoVersionsDB.WinApp
         }
         private void btnCreateNewDevDummyDataScriptFile_Click(object sender, EventArgs e)
         {
-            TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:");
-            textInputWindow.ShowDialog();
-
-            if (textInputWindow.IsApply)
+            using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
             {
-                string newFileFullPath = _autoVersionsDbAPI.CreateNewDevDummyDataScriptFile(textInputWindow.ResultText);
-                RefreshAll();
-                OsProcessUtils.StartOsProcess(newFileFullPath);
+                textInputWindow.ShowDialog();
+
+                if (textInputWindow.IsApply)
+                {
+                    string newFileFullPath = _autoVersionsDbAPI.CreateNewDevDummyDataScriptFile(textInputWindow.ResultText);
+                    RefreshAll();
+                    OsProcessUtils.StartOsProcess(newFileFullPath);
+                }
             }
+
         }
         #endregion
 
@@ -310,7 +323,7 @@ namespace AutoVersionsDB.WinApp
 
         private void btnRunSync_Click(object sender, EventArgs e)
         {
-            Task.Factory.StartNew(() =>
+            Task.Run(() =>
             {
                 try
                 {
@@ -359,7 +372,7 @@ namespace AutoVersionsDB.WinApp
         {
             if (checkIsTargetStateHistory())
             {
-                Task.Factory.StartNew(() =>
+                Task.Run(() =>
                 {
                     try
                     {
@@ -419,7 +432,7 @@ namespace AutoVersionsDB.WinApp
             string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may loose Data. Are you sure?";
             if (MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
-                Task.Factory.StartNew(() =>
+                Task.Run(() =>
                 {
                     try
                     {
@@ -444,7 +457,7 @@ namespace AutoVersionsDB.WinApp
 
         private void btnRunSetDBStateManally_Click(object sender, EventArgs e)
         {
-            Task.Factory.StartNew(() =>
+            Task.Run(() =>
             {
                 try
                 {
@@ -739,7 +752,7 @@ namespace AutoVersionsDB.WinApp
 
                 foreach (DataGridViewRow currGridRow in dgIncrementalScriptsFiles.Rows)
                 {
-                    currGridRow.Cells[0].Value = (currGridRow.Index + 1).ToString();
+                    currGridRow.Cells[0].Value = (currGridRow.Index + 1).ToString(CultureInfo.InvariantCulture);
                     currGridRow.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                     RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
@@ -790,7 +803,7 @@ namespace AutoVersionsDB.WinApp
         {
             if (_autoVersionsDbAPI.HasError
                 && !string.IsNullOrWhiteSpace(_autoVersionsDbAPI.InstructionsMessageStepName)
-                && _autoVersionsDbAPI.InstructionsMessageStepName.Contains("Rollback (Restore) Database"))
+                && string.CompareOrdinal(_autoVersionsDbAPI.InstructionsMessageStepName, RestoreDatabaseStep.StepNameStr) == 0)
             {
                 SetViewState(DBVersionsMangementViewType.RestoreDatabaseError);
             }
@@ -809,6 +822,37 @@ namespace AutoVersionsDB.WinApp
 
         #endregion
 
+
+        #region Dispose
+
+        // To detect redundant calls
+        private bool _disposed = false;
+
+        // Protected implementation of Dispose pattern.
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _autoVersionsDbAPI.Dispose();
+
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+
+            _disposed = true;
+            // Call base class implementation.
+            base.Dispose(disposing);
+        }
+
+        #endregion
 
     }
 }

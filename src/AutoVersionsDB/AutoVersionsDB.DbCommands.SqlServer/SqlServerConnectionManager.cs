@@ -115,15 +115,16 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
             foreach (string currScriptStr in splitedCommandStr)
             {
-                SqlDataAdapter myDataAdapter = createDataAdapter(CommandType.Text, currScriptStr);
-
-                try
+                using (SqlDataAdapter myDataAdapter = createDataAdapter(CommandType.Text, currScriptStr))
                 {
-                    myDataAdapter.SelectCommand.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Error Message: '{ex.Message}', Script: {currScriptStr}", ex);
+                    try
+                    {
+                        myDataAdapter.SelectCommand.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Error Message: '{ex.Message}', Script: {currScriptStr}", ex);
+                    }
                 }
             }
 
@@ -167,62 +168,65 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 string currTableName = dataTable.TableName;
 
 
-                SqlDataAdapter myDataAdapter = new SqlDataAdapter();
+                using (SqlDataAdapter myDataAdapter = new SqlDataAdapter())
+                {
+                    myDataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-                myDataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                    myDataAdapter.RowUpdated += new SqlRowUpdatedEventHandler(onRowUpdate_SetIdentityFromDb);
 
-                myDataAdapter.RowUpdated += new SqlRowUpdatedEventHandler(onRowUpdate_SetIdentityFromDb);
-
-                //if (_timeout > 0)
-                //{
-                //    myDataAdapter.SelectCommand.CommandTimeout = _timeout;
-                //}
-
-
-                string currTableSelectSql = $"Select * from {currTableName}";
-
-                SqlCommandBuilder currCommandBuilder = new SqlCommandBuilder(myDataAdapter);
-
-                myDataAdapter.SelectCommand = new SqlCommand(currTableSelectSql, _sqlDbConnection);
-                myDataAdapter.UpdateCommand = currCommandBuilder.GetUpdateCommand();
-                myDataAdapter.DeleteCommand = currCommandBuilder.GetDeleteCommand();
-
-                // now we modify the INSERT command, first we clone it and then modify
-                SqlCommand cmd = currCommandBuilder.GetInsertCommand().Clone();
-
-                // adds the call to SCOPE_IDENTITY
-                cmd.CommandText += " SET @ID = SCOPE_IDENTITY()";
-
-                //log
+                    //if (_timeout > 0)
+                    //{
+                    //    myDataAdapter.SelectCommand.CommandTimeout = _timeout;
+                    //}
 
 
-                // the SET command writes to an output parameter "@ID"
-                SqlParameter parm = new SqlParameter();
-                parm.Direction = ParameterDirection.Output;
-                //parm.Size = 4;
-                parm.SqlDbType = SqlDbType.Int;
-                parm.ParameterName = "@ID";
-                // parm.DbType = DbType.Int32;
+                    string currTableSelectSql = $"Select * from {currTableName}";
 
-                // adds parameter to command
-                cmd.Parameters.Add(parm);
+                    SqlCommandBuilder currCommandBuilder = new SqlCommandBuilder(myDataAdapter);
 
-                // adds our customized insert command to DataAdapter
-                myDataAdapter.InsertCommand = cmd;
+                    myDataAdapter.SelectCommand = new SqlCommand(currTableSelectSql, _sqlDbConnection);
+                    myDataAdapter.UpdateCommand = currCommandBuilder.GetUpdateCommand();
+                    myDataAdapter.DeleteCommand = currCommandBuilder.GetDeleteCommand();
 
-                //string commandObjStr = getCommandObjAsStr(myDataAdapter.InsertCommand);
-                //OnLogMessage(string.Format(" before call resolveNewRowsIDsConfilctWithDb: {0}", commandObjStr));
+                    // now we modify the INSERT command, first we clone it and then modify
+                    SqlCommand cmd = currCommandBuilder.GetInsertCommand().Clone();
 
+                    // adds the call to SCOPE_IDENTITY
+                    cmd.CommandText += " SET @ID = SCOPE_IDENTITY()";
 
-                resolveNewRowsIDsConfilctWithDb(dataTable);
-
-                //             OnLogMessage("UpdateDataTableWithUpdateIdentityOnInsert - before call update");
+                    //log
 
 
-                outVal = myDataAdapter.Update(dataTable);
+                    // the SET command writes to an output parameter "@ID"
+                    SqlParameter parm = new SqlParameter();
+                    parm.Direction = ParameterDirection.Output;
+                    //parm.Size = 4;
+                    parm.SqlDbType = SqlDbType.Int;
+                    parm.ParameterName = "@ID";
+                    // parm.DbType = DbType.Int32;
+
+                    // adds parameter to command
+                    cmd.Parameters.Add(parm);
+
+                    // adds our customized insert command to DataAdapter
+                    myDataAdapter.InsertCommand = cmd;
+
+                    //string commandObjStr = getCommandObjAsStr(myDataAdapter.InsertCommand);
+                    //OnLogMessage(string.Format(" before call resolveNewRowsIDsConfilctWithDb: {0}", commandObjStr));
 
 
-                currCommandBuilder.Dispose();
+                    resolveNewRowsIDsConfilctWithDb(dataTable);
+
+                    //             OnLogMessage("UpdateDataTableWithUpdateIdentityOnInsert - before call update");
+
+
+                    outVal = myDataAdapter.Update(dataTable);
+
+
+                    currCommandBuilder.Dispose();
+                }
+
+
             }
 
 
@@ -298,9 +302,10 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             DataTable outDt = new DataTable();
 
-            SqlDataAdapter myDataAdapter = createDataAdapter(CommandType.Text, sqlSelectCmd, overrideTimeout);
-
-            myDataAdapter.Fill(outDt);
+            using (SqlDataAdapter myDataAdapter = createDataAdapter(CommandType.Text, sqlSelectCmd, overrideTimeout))
+            {
+                myDataAdapter.Fill(outDt);
+            }
 
             return outDt;
         }

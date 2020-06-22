@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
+using AutoVersionsDB.Core.ProcessSteps;
 using AutoVersionsDB.DbCommands.Contract;
 using NUnit.Framework;
 using System;
@@ -41,11 +42,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             Assert.That(_autoVersionsDbAPI.HasError);
 
-            string restoreStepName = "Rollback (Restore) Database";
-
             bool isRestoreExecuted = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager
                 .NotificationStatesProcessHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
-                                                        && e.StepName.StartsWith(restoreStepName));
+                                                        && e.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 
             Assert.That(isRestoreExecuted, Is.EqualTo(true));
 

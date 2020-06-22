@@ -3,16 +3,16 @@ namespace AutoVersionsDB.DbCommands.Contract
 {
     public static class DBCommandsConsts
     {
-        public const string C_DB_SchemaName = "AutoVersionsDB";
+        public const string DbSchemaName = "AutoVersionsDB";
 
-        public const string C_DBScriptsExecutionHistory_TableName = "DBScriptsExecutionHistory";
-        public static string C_DBScriptsExecutionHistory_FullTableName = $"{C_DB_SchemaName}.{C_DBScriptsExecutionHistory_TableName}";
+        public const string DbScriptsExecutionHistoryTableName = "DBScriptsExecutionHistory";
+        public static string DbScriptsExecutionHistoryFullTableName = $"{DbSchemaName}.{DbScriptsExecutionHistoryTableName}";
 
-        public const string C_DBScriptsExecutionHistoryFiles_TableName = "DBScriptsExecutionHistoryFiles";
-        public static string C_DBScriptsExecutionHistoryFiles_FullTableName = $"{C_DB_SchemaName}.{C_DBScriptsExecutionHistoryFiles_TableName}";
+        public const string DbScriptsExecutionHistoryFilesTableName = "DBScriptsExecutionHistoryFiles";
+        public static string DbScriptsExecutionHistoryFilesFullTableName = $"{DbSchemaName}.{DbScriptsExecutionHistoryFilesTableName}";
 
 
-        public const int C_DBLongProcessGetStatusIntervalInMs = 800;
+        public const int DbLongProcessGetStatusIntervalInMs = 800;
 
     }
 }

@@ -66,8 +66,8 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         private bool isSystemTablesExist()
         {
-            return _dbCommands.CheckIfTableExist(DBCommandsConsts.C_DB_SchemaName, DBCommandsConsts.C_DBScriptsExecutionHistory_TableName)
-                     && _dbCommands.CheckIfTableExist(DBCommandsConsts.C_DB_SchemaName, DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_TableName);
+            return _dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName)
+                     && _dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName);
         }
     }
 }

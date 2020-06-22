@@ -17,7 +17,7 @@ namespace AutoVersionsDB.DbCommands.Integration
 
         public DBProcessStatusNotifyerBase Create(Type notifyerType, IDBQueryStatus dbQueryStatus)
         {
-            DBProcessStatusNotifyerBase dbNotifyer = Activator.CreateInstance(notifyerType, dbQueryStatus, DBCommandsConsts.C_DBLongProcessGetStatusIntervalInMs) as DBProcessStatusNotifyerBase;
+            DBProcessStatusNotifyerBase dbNotifyer = Activator.CreateInstance(notifyerType, dbQueryStatus, DBCommandsConsts.DbLongProcessGetStatusIntervalInMs) as DBProcessStatusNotifyerBase;
 
             return dbNotifyer;
         }

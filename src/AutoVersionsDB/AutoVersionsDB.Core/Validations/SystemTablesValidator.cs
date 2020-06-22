@@ -35,22 +35,22 @@ namespace AutoVersionsDB.Core.Validations
 
         public override string Validate(AutoVersionsDBExecutionParams executionParam)
         {
-            if (!_dbCommands.CheckIfTableExist(DBCommandsConsts.C_DB_SchemaName, DBCommandsConsts.C_DBScriptsExecutionHistory_TableName))
+            if (!_dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName))
             {
-                string errorMsg = $"The table '{DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName}' is not exist in the db";
+                string errorMsg = $"The table '{DBCommandsConsts.DbScriptsExecutionHistoryFullTableName}' is not exist in the db";
                 return errorMsg;
             }
 
-            if (!_dbCommands.CheckIfTableExist(DBCommandsConsts.C_DB_SchemaName, DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_TableName))
+            if (!_dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName))
             {
-                string errorMsg = $"The table '{DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_TableName}' is not exist in the db";
+                string errorMsg = $"The table '{DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName}' is not exist in the db";
                 return errorMsg;
             }
 
 
             DataSet systemTablesSetFromDB = _dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
-            DataTable scriptsExecutionHistoryTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName];
+            DataTable scriptsExecutionHistoryTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
 
             using (DataTable scriptsExecutionHistoryTableFromStructure = createScriptsExecutionHistoryTableStructure())
             {
@@ -58,7 +58,7 @@ namespace AutoVersionsDB.Core.Validations
                 {
                     if (!scriptsExecutionHistoryTableFromDB.Columns.Contains(colFromStruct.ColumnName))
                     {
-                        string errorMsg = $"The table '{DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName}' is missing the column '{colFromStruct}'";
+                        string errorMsg = $"The table '{DBCommandsConsts.DbScriptsExecutionHistoryFullTableName}' is missing the column '{colFromStruct}'";
                         return errorMsg;
                     }
                     else
@@ -66,7 +66,7 @@ namespace AutoVersionsDB.Core.Validations
                         DataColumn colFromDB = scriptsExecutionHistoryTableFromDB.Columns[colFromStruct.ColumnName];
                         if (colFromDB.DataType != colFromStruct.DataType)
                         {
-                            string errorMsg = $"The column '{colFromStruct.ColumnName}' has the type '{colFromDB.DataType}' instead of '{colFromStruct.DataType}', in the table {DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName}";
+                            string errorMsg = $"The column '{colFromStruct.ColumnName}' has the type '{colFromDB.DataType}' instead of '{colFromStruct.DataType}', in the table {DBCommandsConsts.DbScriptsExecutionHistoryFullTableName}";
                             return errorMsg;
                         }
                     }
@@ -75,7 +75,7 @@ namespace AutoVersionsDB.Core.Validations
             }
 
 
-            DataTable scriptsExecutionHistoryFilesTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName];
+            DataTable scriptsExecutionHistoryFilesTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
 
             using (DataTable scriptsExecutionHistoryFilesTableFromStructure = CreateScriptsExecutionHistoryFilesTableStructure())
             {
@@ -83,7 +83,7 @@ namespace AutoVersionsDB.Core.Validations
                 {
                     if (!scriptsExecutionHistoryFilesTableFromDB.Columns.Contains(colFromStruct.ColumnName))
                     {
-                        string errorMsg = $"The table '{DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName}' is missing the column '{colFromStruct}'";
+                        string errorMsg = $"The table '{DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName}' is missing the column '{colFromStruct}'";
                         return errorMsg;
                     }
                     else
@@ -91,7 +91,7 @@ namespace AutoVersionsDB.Core.Validations
                         DataColumn colFromDB = scriptsExecutionHistoryFilesTableFromStructure.Columns[colFromStruct.ColumnName];
                         if (colFromDB.DataType != colFromStruct.DataType)
                         {
-                            string errorMsg = $"The column '{colFromStruct.ColumnName}' has the type '{colFromDB.DataType}' instead of '{colFromStruct.DataType}', in the table {DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName}";
+                            string errorMsg = $"The column '{colFromStruct.ColumnName}' has the type '{colFromDB.DataType}' instead of '{colFromStruct.DataType}', in the table {DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName}";
                             return errorMsg;
                         }
                     }

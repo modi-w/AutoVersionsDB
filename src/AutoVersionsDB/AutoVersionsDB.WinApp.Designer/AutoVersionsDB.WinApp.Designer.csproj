@@ -9,7 +9,7 @@
     <RootNamespace>AutoVersionsDB.WinApp</RootNamespace>
     <AssemblyName>AutoVersionsDB.WinApp.Designer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-	<LangVersion>8.0</LangVersion> 
+    <LangVersion>8.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -113,6 +113,9 @@
     <Compile Include="..\AutoVersionsDB.WinApp\TextInputWindow.Designer.cs">
       <Link>TextInputWindow.Designer.cs</Link>
       <DependentUpon>TextInputWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\ExceptionsUtils.cs">
+      <Link>Utils\ExceptionsUtils.cs</Link>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Utils\OsProcessUtils.cs">
       <Link>Utils\OsProcessUtils.cs</Link>

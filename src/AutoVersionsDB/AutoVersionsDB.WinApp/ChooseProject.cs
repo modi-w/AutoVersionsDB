@@ -18,7 +18,7 @@ namespace AutoVersionsDB.WinApp
         public event OnNavToProcessHandler OnNavToProcess;
         public event OnEditProjectHandler OnEditProject;
 
-        private AutoVersionsDbAPI _autoVersionsDbAPI = null;
+        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
         //private double dummy
 
@@ -161,5 +161,38 @@ namespace AutoVersionsDB.WinApp
         {
             OnSetNewProject?.Invoke(sender, e);
         }
+
+
+        #region Dispose
+
+        // To detect redundant calls
+        private bool _disposed = false;
+
+        // Protected implementation of Dispose pattern.
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _autoVersionsDbAPI.Dispose();
+
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+
+            _disposed = true;
+            // Call base class implementation.
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
     }
 }

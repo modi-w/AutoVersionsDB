@@ -40,7 +40,7 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             get
             {
-                return NotifictionStatesHistoryManager.InstructionsMessage_StepName;
+                return NotifictionStatesHistoryManager.InstructionsMessageStepName;
             }
         }
         

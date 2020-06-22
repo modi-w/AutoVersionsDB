@@ -10,18 +10,19 @@ using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.NotificationableEngine;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace AutoVersionsDB.WinApp
 {
 
     public partial class EditProjectConfigDetails : UserControl
     {
-        private List<IDBCommandsFactory> _dbCommandsFactoryList;
+        private readonly List<IDBCommandsFactory> _dbCommandsFactoryList;
 
         public event OnNavToProcessHandler OnNavToProcess;
 
 
-        private AutoVersionsDbAPI _autoVersionsDbAPI = null;
+        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
 
 
@@ -252,7 +253,7 @@ namespace AutoVersionsDB.WinApp
             {
                 tbConnectionTimeout.BeginInvoke((MethodInvoker)(() =>
                 {
-                    tbConnectionTimeout.Text = _autoVersionsDbAPI.ProjectConfigItem.DBCommandsTimeout.ToString();
+                    tbConnectionTimeout.Text = _autoVersionsDbAPI.ProjectConfigItem.DBCommandsTimeout.ToString(CultureInfo.InvariantCulture);
                 }));
             }
 
@@ -301,7 +302,7 @@ namespace AutoVersionsDB.WinApp
         private void bindFromUIElements()
         {
             _autoVersionsDbAPI.ProjectConfigItem.ProjectName = tbProjectName.Text;
-            _autoVersionsDbAPI.ProjectConfigItem.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue);
+            _autoVersionsDbAPI.ProjectConfigItem.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
             _autoVersionsDbAPI.ProjectConfigItem.ConnStr = tbConnStr.Text;
             _autoVersionsDbAPI.ProjectConfigItem.ConnStrToMasterDB = tbConnStrToMasterDB.Text;
             _autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder = tbDBBackupFolder.Text;
@@ -310,8 +311,7 @@ namespace AutoVersionsDB.WinApp
 
             //    AutoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment = chkAllowDropDB.Checked;
 
-            int parsedInt;
-            if (int.TryParse(tbConnectionTimeout.Text, out parsedInt)
+            if (int.TryParse(tbConnectionTimeout.Text, out int parsedInt)
                 && parsedInt > 0)
             {
                 _autoVersionsDbAPI.ProjectConfigItem.DBCommandsTimeout = parsedInt;
@@ -359,7 +359,7 @@ namespace AutoVersionsDB.WinApp
 
             bindFromUIElements();
 
-            Task.Factory.StartNew(() =>
+            Task.Run(() =>
             {
                 validateAll();
                 //if (validateAll())
@@ -373,5 +373,40 @@ namespace AutoVersionsDB.WinApp
                 }));
             });
         }
+
+
+        #region Dispose
+
+        // To detect redundant calls
+        private bool _disposed = false;
+
+        // Protected implementation of Dispose pattern.
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                // Dispose managed state (managed objects).
+                _autoVersionsDbAPI.Dispose();
+
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            
+
+
+            _disposed = true;
+            // Call base class implementation.
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
     }
 }

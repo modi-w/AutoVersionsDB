@@ -1,6 +1,8 @@
 ﻿using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.SqlServer.Utils;
 using System;
 using System.Data;
+using System.Globalization;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
@@ -12,6 +14,8 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public SqlServerDBQueryStatus(SqlServerConnectionManager sqlServerConnectionManager)
         {
+            sqlServerConnectionManager.ThrowIfNull(nameof(sqlServerConnectionManager));
+
             _sqlServerConnectionManager = sqlServerConnectionManager;
 
             _sqlServerConnectionManager.Open();
@@ -26,7 +30,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             {
                 if (!_sqlServerConnectionManager.IsDisposed)
                 {
-                    string sqlCommandStr = 
+                    string sqlCommandStr =
                             $@"SELECT 
                                 DB_NAME(dbid) as DBName, 
                                 COUNT(dbid) as NumberOfConnections,
@@ -40,13 +44,16 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                                 dbid, loginame";
 
 
-                    DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10);
-
-                    if (resultsTable.Rows.Count > 0)
+                    using (DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10))
                     {
-                        DataRow statusRow = resultsTable.Rows[0];
-                        outVal = Convert.ToInt32(statusRow["NumberOfConnections"]);
+                        if (resultsTable.Rows.Count > 0)
+                        {
+                            DataRow statusRow = resultsTable.Rows[0];
+                            outVal = Convert.ToInt32(statusRow["NumberOfConnections"], CultureInfo.InvariantCulture);
+                        }
                     }
+
+
                 }
             }
 
@@ -75,18 +82,19 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             {
                 if (!_sqlServerConnectionManager.IsDisposed)
                 {
-                    string sqlCommandStr = 
+                    string sqlCommandStr =
                         $@"SELECT session_id as SPID, command, a.text AS Query, start_time, percent_complete, dateadd(second,estimated_completion_time/1000, getdate()) as estimated_completion_time
                     FROM sys.dm_exec_requests r CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) a
                     WHERE r.command in ('{queryName}')";
 
 
-                    DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10);
-
-                    if (resultsTable.Rows.Count > 0)
+                    using (DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10))
                     {
-                        DataRow statusRow = resultsTable.Rows[0];
-                        outVal = Convert.ToDouble(statusRow["percent_complete"]);
+                        if (resultsTable.Rows.Count > 0)
+                        {
+                            DataRow statusRow = resultsTable.Rows[0];
+                            outVal = Convert.ToDouble(statusRow["percent_complete"], CultureInfo.InvariantCulture);
+                        }
                     }
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.WinApp.Utils;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -12,6 +13,9 @@ namespace AutoVersionsDB.WinApp
 
         public MessageWindow(NotifictionStatesHistoryManager notifictionStatesHistoryManager)
         {
+            notifictionStatesHistoryManager.ThrowIfNull(nameof(notifictionStatesHistoryManager));
+
+
             InitializeComponent();
 
             NotifictionStatesHistoryManager = notifictionStatesHistoryManager;

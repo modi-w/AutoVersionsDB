@@ -64,8 +64,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
             DataSet dsExecutionHistory = _dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
-            DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName];
-            DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.C_DBScriptsExecutionHistoryFiles_FullTableName];
+            DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
+            DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
 
             processState.EndProcessDateTime = DateTime.Now;
 

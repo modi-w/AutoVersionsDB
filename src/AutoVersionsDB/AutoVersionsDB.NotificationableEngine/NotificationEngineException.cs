@@ -11,6 +11,18 @@ namespace AutoVersionsDB.NotificationableEngine
         public string ErrorCode { get; private set; }
         public string InstructionsMessage { get; private set; }
 
+
+        public NotificationEngineException()
+        {
+        }
+        public NotificationEngineException(string message) : base(message)
+        {
+        }
+        public NotificationEngineException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+
         public NotificationEngineException(string errorCode, string message, string instructionsMessage)
          : base(message)
         {
@@ -24,5 +36,7 @@ namespace AutoVersionsDB.NotificationableEngine
             ErrorCode = errorCode;
             InstructionsMessage = instructionsMessage;
         }
+
+
     }
 }

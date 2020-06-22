@@ -43,7 +43,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
     public class RestoreDatabaseStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
     {
-        public override string StepName => "Rollback (Restore) Database";
+        public const string StepNameStr = "Rollback (Restore) Database";
+
+        public override string StepName => StepNameStr;
 
 
 

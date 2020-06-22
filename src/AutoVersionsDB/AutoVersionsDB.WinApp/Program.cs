@@ -22,8 +22,10 @@ namespace AutoVersionsDB.WinApp
             NinjectManager.CreateKernel();
 
 
-
-            Application.Run(new Main());
+            using(var mainWindows = new Main())
+            {
+                Application.Run(mainWindows);
+            }
         }
 
 
