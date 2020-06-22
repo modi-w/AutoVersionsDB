@@ -7,7 +7,7 @@ namespace AutoVersionsDB.DbCommands.Integration
 {
     public class DBCommandsFactoryProvider
     {
-        public Dictionary<string, IDBCommandsFactory> DBCommandsFactoryDictionary { get; set; }
+        public Dictionary<string, IDBCommandsFactory> DBCommandsFactoryDictionary { get; private set; }
 
         public DBCommandsFactoryProvider()
         {
@@ -24,9 +24,8 @@ namespace AutoVersionsDB.DbCommands.Integration
         {
             IDBConnectionManager dbConnectionManager = null;
 
-            IDBCommandsFactory dbCommands_Factory;
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
-                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out dbCommands_Factory))
+                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
                 dbConnectionManager = dbCommands_Factory.CreateDBConnectionManager(connectionString, timeout);
             }
@@ -39,9 +38,8 @@ namespace AutoVersionsDB.DbCommands.Integration
         {
             IDBCommands dbCommands = null;
 
-            IDBCommandsFactory dbCommands_Factory;
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
-                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out dbCommands_Factory))
+                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
                 dbCommands = dbCommands_Factory.CreateDBCommands(connectionString, timeout);
             }
@@ -53,9 +51,8 @@ namespace AutoVersionsDB.DbCommands.Integration
         {
             IDBBackupRestoreCommands dbBackupRestoreCommands = null;
 
-            IDBCommandsFactory dbCommands_Factory;
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
-                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out dbCommands_Factory))
+                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
                 dbBackupRestoreCommands = dbCommands_Factory.CreateBackupRestoreCommands(connectionString, timeout);
             }
@@ -67,9 +64,8 @@ namespace AutoVersionsDB.DbCommands.Integration
         {
             IDBQueryStatus dbQueryStatus = null;
 
-            IDBCommandsFactory dbCommands_Factory;
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
-                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out dbCommands_Factory))
+                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
                 dbQueryStatus = dbCommands_Factory.CreateDBQueryStatus(connectionString, 0);
             }

@@ -10,8 +10,8 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBCommands : IDBCommands
     {
-        private SqlServerConnectionManager _sqlServerConnectionManager;
-        private EmbeddedResourcesManager _embeddedResourcesManager;
+        private readonly SqlServerConnectionManager _sqlServerConnectionManager;
+        private readonly EmbeddedResourcesManager _embeddedResourcesManager;
 
 
 
@@ -170,16 +170,13 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public DataTable GetAllDBSchemaExceptDBVersionSchema()
         {
-            DataTable dbSchemaExceptDBVersionTable = null;
-
             string sqlCmdStr = $"   SELECT QUOTENAME(tbSchemas.name) AS SchemaName, QUOTENAME(tbObjects.name) AS ObjectName " +
                                    $"   FROM sys.objects AS tbObjects " +
                                    $"       JOIN sys.schemas tbSchemas ON tbSchemas.schema_id = tbObjects.schema_id " +
                                    $"   WHERE tbSchemas.name <> '{DBCommandsConsts.DbSchemaName}'" +
                                    $"       AND (TYPE='U' OR TYPE='TF' OR TYPE='SF' OR TYPE='AF' OR TYPE='P')";
 
-            dbSchemaExceptDBVersionTable = _sqlServerConnectionManager.GetSelectCommand(sqlCmdStr);
-
+            DataTable dbSchemaExceptDBVersionTable = _sqlServerConnectionManager.GetSelectCommand(sqlCmdStr);
             return dbSchemaExceptDBVersionTable;
         }
 

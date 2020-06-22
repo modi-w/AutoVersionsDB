@@ -52,12 +52,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
     {
         public override string StepName => "Create Backup";
 
-        private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private IDBCommands _dbCommands;
-        private IDBBackupRestoreCommands _dbBackupRestoreCommands;
-        private DBBackupStatusNotifyer _dbBackupStatusNotifyer;
+        private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
+        private readonly IDBCommands _dbCommands;
+        private readonly IDBBackupRestoreCommands _dbBackupRestoreCommands;
+        private readonly DBBackupStatusNotifyer _dbBackupStatusNotifyer;
 
-        private string _dbBackupBaseFolderPath;
+        private readonly string _dbBackupBaseFolderPath;
 
 
         private NotificationWrapperExecuter _tempNotificationWrapperExecuter;

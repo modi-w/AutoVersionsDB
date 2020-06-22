@@ -49,10 +49,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private IDBCommands _dbCommands;
-        private IDBBackupRestoreCommands _dbBackupRestoreCommands;
-        private DBRestoreStatusNotifyer _dbRestoreStatusNotifyer;
+        private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
+        private readonly IDBCommands _dbCommands;
+        private readonly IDBBackupRestoreCommands _dbBackupRestoreCommands;
+        private readonly DBRestoreStatusNotifyer _dbRestoreStatusNotifyer;
 
         private NotificationWrapperExecuter _tempNotificationWrapperExecuter;
 

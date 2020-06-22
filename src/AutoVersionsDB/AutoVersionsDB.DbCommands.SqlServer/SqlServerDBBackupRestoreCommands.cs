@@ -8,7 +8,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBBackupRestoreCommands : IDBBackupRestoreCommands
     {
-        private SqlServerConnectionManager _sqlServerConnectionManager;
+        private readonly SqlServerConnectionManager _sqlServerConnectionManager;
 
 
 

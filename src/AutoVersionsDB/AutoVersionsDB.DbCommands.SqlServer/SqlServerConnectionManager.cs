@@ -10,7 +10,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerConnectionManager : IDBConnectionManager
     {
-        private SqlConnection _sqlDbConnection;
+        private readonly SqlConnection _sqlDbConnection;
 
         public bool IsDisposed { get; private set; }
 
@@ -19,7 +19,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         public string ConnectionString { get; private set; }
 
 
-        private object _openCloseSync = new object();
+        private readonly object _openCloseSync = new object();
 
         public string DataBaseName
         {
@@ -84,9 +84,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public bool CheckConnection(out string outErrorMseeage)
         {
-            bool outVal = false;
             outErrorMseeage = "";
 
+            bool outVal;
             try
             {
                 this.Open();
@@ -198,11 +198,13 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
                     // the SET command writes to an output parameter "@ID"
-                    SqlParameter parm = new SqlParameter();
-                    parm.Direction = ParameterDirection.Output;
-                    //parm.Size = 4;
-                    parm.SqlDbType = SqlDbType.Int;
-                    parm.ParameterName = "@ID";
+                    SqlParameter parm = new SqlParameter
+                    {
+                        Direction = ParameterDirection.Output,
+                        //parm.Size = 4;
+                        SqlDbType = SqlDbType.Int,
+                        ParameterName = "@ID"
+                    };
                     // parm.DbType = DbType.Int32;
 
                     // adds parameter to command
@@ -320,8 +322,10 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         private SqlDataAdapter createDataAdapter(CommandType commandType, string commandText, Dictionary<string, object> paramsDic, int overrideTimeout = 0)
         {
 
-            SqlDataAdapter myDataAdapter = new SqlDataAdapter();
-            myDataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+            SqlDataAdapter myDataAdapter = new SqlDataAdapter
+            {
+                MissingSchemaAction = MissingSchemaAction.AddWithKey
+            };
 
             SqlCommand cmd = createSqlCommand(commandType, commandText, overrideTimeout);
 
@@ -329,8 +333,10 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             {
                 foreach (KeyValuePair<string, object> currParamKeyValue in paramsDic)
                 {
-                    SqlParameter currParam = new SqlParameter();
-                    currParam.ParameterName = currParamKeyValue.Key;
+                    SqlParameter currParam = new SqlParameter
+                    {
+                        ParameterName = currParamKeyValue.Key
+                    };
                     System.ComponentModel.TypeConverter tc = System.ComponentModel.TypeDescriptor.GetConverter(currParam.DbType);
 
                     currParam.Value = currParamKeyValue.Value;
@@ -351,10 +357,12 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         }
         private SqlCommand createSqlCommand(CommandType commandType, string commandText, int overrideTimeout)
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = _sqlDbConnection;
-            cmd.CommandType = commandType;
-            cmd.CommandText = commandText;
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = _sqlDbConnection,
+                CommandType = commandType,
+                CommandText = commandText
+            };
 
             if (overrideTimeout > 0)
             {

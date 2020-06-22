@@ -61,8 +61,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
 
             string currDTFromFilenameStr = arrFileSortStr[0];
 
-            DateTime tempDate_FromFilename;
-            if (!DateTime.TryParseExact(currDTFromFilenameStr, IncrementalScriptFileType.ScriptFileDatePattern, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out tempDate_FromFilename))
+            if (!DateTime.TryParseExact(currDTFromFilenameStr, IncrementalScriptFileType.ScriptFileDatePattern, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime tempDate_FromFilename))
             {
                 string errorMessage = $"Filename not valid date script pattern: '{filename}'. Should be with pattern of '{ IncrementalScriptFileType.ScriptFileDatePattern}'";
                 throw new Exception(errorMessage);
@@ -79,8 +78,7 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
 
             string currDayVersionFromFilenameStr = arrFileSortStr[1];
 
-            int tempDateVersion_FromFilename;
-            if (!int.TryParse(currDayVersionFromFilenameStr, out tempDateVersion_FromFilename))
+            if (!int.TryParse(currDayVersionFromFilenameStr, out int tempDateVersion_FromFilename))
             {
                 string errorMessage = $"Filename not valid for script pattern: '{filename}', the version is not an integer number";
                 throw new Exception(errorMessage);

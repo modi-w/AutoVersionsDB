@@ -29,7 +29,7 @@ namespace AutoVersionsDB.NotificationableEngine
     {
         public string EngineTypeName { get; protected set; }
 
-        public List<NotificationableActionStepBase> ProcessSteps { get; protected set; }
+        public List<NotificationableActionStepBase> ProcessSteps { get; private set; }
         public NotificationableActionStepBase RollbackStep { get; protected set; }
         public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; protected set; }
 
@@ -52,10 +52,12 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             int totalNumOfSteps = ProcessSteps.Count;
 
-            ProcessStateBase processState = new TProcessState();
-            processState.ExecutionParams = executionParams;
+            ProcessStateBase processState = new TProcessState
+            {
+                ExecutionParams = executionParams,
 
-            processState.StartProcessDateTime = DateTime.Now;
+                StartProcessDateTime = DateTime.Now
+            };
 
 
             using (NotificationWrapperExecuter rootNotificationWrapperExecuter = NotificationExecutersFactoryManager.Reset(totalNumOfSteps))
