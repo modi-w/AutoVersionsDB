@@ -21,10 +21,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
             NotificationExecutersFactoryManager notificationExecutersFactoryManager = NinjectUtils.KernelInstance.Get<NotificationExecutersFactoryManager>();
 
-            DBProcessStatusNotifyerFactory dbProcessStatusNotifyer_Factory = NinjectUtils.KernelInstance.Get<DBProcessStatusNotifyerFactory>();
-
             DBRestoreStatusNotifyer dbRestoreStatusNotifyer =
-                dbProcessStatusNotifyer_Factory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus) as DBRestoreStatusNotifyer;
+                DBProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus) as DBRestoreStatusNotifyer;
 
 
             RestoreDatabaseStep restoreDatabaseStep =
@@ -70,7 +68,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbBackupRestoreCommands = dbBackupRestoreCommands;
             _dbRestoreStatusNotifyer = dbRestoreStatusNotifyer;
 
-            _dbRestoreStatusNotifyer.OnDBProcessStatus += _dbRestoreStatusNotifyer_OnDBProcessStatus;
+            _dbRestoreStatusNotifyer.OnDBProcessStatus += DBRestoreStatusNotifyer_OnDBProcessStatus;
         }
 
 
@@ -107,7 +105,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             }
         }
 
-        private void _dbRestoreStatusNotifyer_OnDBProcessStatus(double precent)
+        private void DBRestoreStatusNotifyer_OnDBProcessStatus(double precent)
         {
             if (_tempNotificationWrapperExecuter.CurrentNotificationStateItem != null)
             {

@@ -8,14 +8,9 @@ namespace AutoVersionsDB.DbCommands.Integration
     /// <summary>
     /// We need that the DBCommand will be with diffrent instance because this should run in prallel to another db process
     /// </summary>
-    public class DBProcessStatusNotifyerFactory
+    public static class DBProcessStatusNotifyerFactory
     {
-
-        public DBProcessStatusNotifyerFactory()
-        {
-        }
-
-        public DBProcessStatusNotifyerBase Create(Type notifyerType, IDBQueryStatus dbQueryStatus)
+        public static DBProcessStatusNotifyerBase Create(Type notifyerType, IDBQueryStatus dbQueryStatus)
         {
             DBProcessStatusNotifyerBase dbNotifyer = Activator.CreateInstance(notifyerType, dbQueryStatus, DBCommandsConsts.DbLongProcessGetStatusIntervalInMs) as DBProcessStatusNotifyerBase;
 

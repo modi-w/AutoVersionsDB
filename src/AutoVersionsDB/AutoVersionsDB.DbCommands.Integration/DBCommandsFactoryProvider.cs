@@ -11,7 +11,7 @@ namespace AutoVersionsDB.DbCommands.Integration
 
         public DBCommandsFactoryProvider()
         {
-            populateFactoriesDictionary();
+            PopulateFactoriesDictionary();
         }
 
 
@@ -76,12 +76,11 @@ namespace AutoVersionsDB.DbCommands.Integration
 
 
 
-        private void populateFactoriesDictionary()
+        private void PopulateFactoriesDictionary()
         {
             DBCommandsFactoryDictionary = new Dictionary<string, IDBCommandsFactory>();
 
-            EmbeddedResourcesManager embeddedResourcesManager = new EmbeddedResourcesManager();
-            SqlServerDBCommandsFactory sqlServerDBCommands_Factory = new SqlServerDBCommandsFactory(embeddedResourcesManager);
+            SqlServerDBCommandsFactory sqlServerDBCommands_Factory = new SqlServerDBCommandsFactory();
             DBCommandsFactoryDictionary.Add(sqlServerDBCommands_Factory.DBTypeCode, sqlServerDBCommands_Factory);
 
         }

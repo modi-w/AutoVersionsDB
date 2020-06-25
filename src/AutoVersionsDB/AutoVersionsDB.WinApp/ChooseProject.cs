@@ -54,10 +54,10 @@ namespace AutoVersionsDB.WinApp
 
         private void FlowLayoutPanel1_Resize(object sender, EventArgs e)
         {
-            setProjectItemsSize();
+            SetProjectItemsSize();
         }
 
-        private void setProjectItemsSize()
+        private void SetProjectItemsSize()
         {
             foreach (var childControl in flowLayoutPanel1.Controls)
             {
@@ -90,6 +90,7 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
         public void RefreshProjectList()
         {
             string searchText = "";
@@ -125,7 +126,7 @@ namespace AutoVersionsDB.WinApp
                         flowLayoutPanel1.Controls.Add(projectItem);
                     }
 
-                    setProjectItemsSize();
+                    SetProjectItemsSize();
                 }
 
 
@@ -151,13 +152,13 @@ namespace AutoVersionsDB.WinApp
 
     
 
-        private void tbSerchProject_TextChanged(object sender, EventArgs e)
+        private void TbSerchProject_TextChanged(object sender, EventArgs e)
         {
             RefreshProjectList();
         }
 
 
-        private void btnNewProject_Click(object sender, EventArgs e)
+        private void BtnNewProject_Click(object sender, EventArgs e)
         {
             OnSetNewProject?.Invoke(sender, e);
         }

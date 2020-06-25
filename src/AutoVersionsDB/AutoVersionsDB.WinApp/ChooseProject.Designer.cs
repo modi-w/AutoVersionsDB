@@ -96,7 +96,7 @@
             this.tbSerchProject.Name = "tbSerchProject";
             this.tbSerchProject.Size = new System.Drawing.Size(689, 32);
             this.tbSerchProject.TabIndex = 31;
-            this.tbSerchProject.TextChanged += new System.EventHandler(this.tbSerchProject_TextChanged);
+            this.tbSerchProject.TextChanged += new System.EventHandler(this.TbSerchProject_TextChanged);
             // 
             // btnNewProject
             // 
@@ -117,7 +117,7 @@
             this.btnNewProject.TabIndex = 81;
             this.btnNewProject.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnNewProject.UseVisualStyleBackColor = false;
-            this.btnNewProject.Click += new System.EventHandler(this.btnNewProject_Click);
+            this.btnNewProject.Click += new System.EventHandler(this.BtnNewProject_Click);
             // 
             // ChooseProject
             // 

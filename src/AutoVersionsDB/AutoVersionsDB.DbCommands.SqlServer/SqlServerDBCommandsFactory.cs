@@ -5,8 +5,6 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBCommandsFactory : IDBCommandsFactory
     {
-        private EmbeddedResourcesManager _embeddedResourcesManager;
-
         public string DBTypeCode
         {
             get
@@ -22,11 +20,6 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             }
         }
 
-        public SqlServerDBCommandsFactory(EmbeddedResourcesManager embeddedResourcesManager)
-        {
-            _embeddedResourcesManager = embeddedResourcesManager;
-        }
-
         public IDBConnectionManager CreateDBConnectionManager(string connectionString, int timeout)
         {
             SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
@@ -38,7 +31,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         public IDBCommands CreateDBCommands(string connectionString, int timeout)
         {
             SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
-            SqlServerDBCommands sqlServerDBCommands = new SqlServerDBCommands(sqlServerConnectionManager, _embeddedResourcesManager);
+            SqlServerDBCommands sqlServerDBCommands = new SqlServerDBCommands(sqlServerConnectionManager);
 
             return sqlServerDBCommands;
         }

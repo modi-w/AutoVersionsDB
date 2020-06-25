@@ -56,25 +56,25 @@ namespace AutoVersionsDB.WinApp
         {
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfigItem);
 
-            bindToUIElements();
+            BindToUIElements();
 
-            validateAll();
+            ValidateAll();
         }
 
 
         #region Validation
 
-        private bool validateAll()
+        private bool ValidateAll()
         {
             notificationsControl1.Clear();
 
-            clearUIElementsErrors();
+            ClearUIElementsErrors();
 
             _autoVersionsDbAPI.ValidateProjectConfig();
 
             notificationsControl1.AfterComplete();
 
-            setErrorsToUiElements();
+            SetErrorsToUiElements();
 
             imgError.BeginInvoke((MethodInvoker)(() =>
             {
@@ -97,7 +97,7 @@ namespace AutoVersionsDB.WinApp
             return !_autoVersionsDbAPI.HasError;
         }
 
-        private void setErrorsToUiElements()
+        private void SetErrorsToUiElements()
         {
             if (_autoVersionsDbAPI.NotificationExecutersFactoryManager.HasError)
             {
@@ -109,47 +109,47 @@ namespace AutoVersionsDB.WinApp
                     {
                         case "ProjectName":
 
-                            setErrorInErrorProvider(tbProjectName, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbProjectName, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "DBTypeCode":
 
-                            setErrorInErrorProvider(cboConncectionType, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(cboConncectionType, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "ConnStr":
 
-                            setErrorInErrorProvider(tbConnStr, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbConnStr, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "ConnStrToMasterDB":
 
-                            setErrorInErrorProvider(tbConnStrToMasterDB, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbConnStrToMasterDB, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "DBBackupFolderPath":
 
-                            setErrorInErrorProvider(tbDBBackupFolder, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbDBBackupFolder, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "DeliveryArtifactFolderPath":
 
-                            setErrorInErrorProvider(tbDeliveryArtifactFolderPath, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbDeliveryArtifactFolderPath, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "DeployArtifactFolderPath":
 
-                            setErrorInErrorProvider(tbDeployArtifactFolderPath, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbDeployArtifactFolderPath, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "ScriptsFolderPath":
 
-                            setErrorInErrorProvider(tbDevScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbDevScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "InitStateFilePath":
 
-                            setErrorInErrorProvider(lbllncrementalScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(lbllncrementalScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
                             break;
 
 
@@ -158,19 +158,19 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void clearUIElementsErrors()
+        private void ClearUIElementsErrors()
         {
-            setErrorInErrorProvider(tbProjectName, null);
-            setErrorInErrorProvider(cboConncectionType, null);
-            setErrorInErrorProvider(tbConnStr, null);
-            setErrorInErrorProvider(tbConnStrToMasterDB, null);
-            setErrorInErrorProvider(tbDBBackupFolder, null);
-            setErrorInErrorProvider(tbDevScriptsFolderPath, null);
-            setErrorInErrorProvider(lbllncrementalScriptsFolderPath, null);
+            SetErrorInErrorProvider(tbProjectName, null);
+            SetErrorInErrorProvider(cboConncectionType, null);
+            SetErrorInErrorProvider(tbConnStr, null);
+            SetErrorInErrorProvider(tbConnStrToMasterDB, null);
+            SetErrorInErrorProvider(tbDBBackupFolder, null);
+            SetErrorInErrorProvider(tbDevScriptsFolderPath, null);
+            SetErrorInErrorProvider(lbllncrementalScriptsFolderPath, null);
         }
 
 
-        private void setErrorInErrorProvider(Control control, string message)
+        private void SetErrorInErrorProvider(Control control, string message)
         {
             control.BeginInvoke((MethodInvoker)(() =>
             {
@@ -185,7 +185,7 @@ namespace AutoVersionsDB.WinApp
 
         #region Binding To UIElements
 
-        private void bindToUIElements()
+        private void BindToUIElements()
         {
             cboConncectionType.BeginInvoke((MethodInvoker)(() =>
             {
@@ -257,13 +257,13 @@ namespace AutoVersionsDB.WinApp
                 }));
             }
 
-            bindScriptsPathLabels();
+            BindScriptsPathLabels();
 
-            resolveShowDevEnvAndDelEnvFileds();
+            ResolveShowDevEnvAndDelEnvFileds();
         }
 
 
-        private void resolveShowDevEnvAndDelEnvFileds()
+        private void ResolveShowDevEnvAndDelEnvFileds()
         {
             pnlDevEnvFoldersFields.BeginInvoke((MethodInvoker)(() =>
             {
@@ -279,7 +279,7 @@ namespace AutoVersionsDB.WinApp
             }));
         }
 
-        private void bindScriptsPathLabels()
+        private void BindScriptsPathLabels()
         {
             lbllncrementalScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
@@ -299,7 +299,7 @@ namespace AutoVersionsDB.WinApp
 
         #region Binding To UIElements
 
-        private void bindFromUIElements()
+        private void BindFromUIElements()
         {
             _autoVersionsDbAPI.ProjectConfigItem.ProjectName = tbProjectName.Text;
             _autoVersionsDbAPI.ProjectConfigItem.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
@@ -326,29 +326,29 @@ namespace AutoVersionsDB.WinApp
 
         #endregion
 
-        private void rbDevEnv_CheckedChanged(object sender, EventArgs e)
+        private void RbDevEnv_CheckedChanged(object sender, EventArgs e)
         {
-            resolveShowDevEnvAndDelEnvFileds();
+            ResolveShowDevEnvAndDelEnvFileds();
         }
 
-        private void rbDelEnv_CheckedChanged(object sender, EventArgs e)
+        private void RbDelEnv_CheckedChanged(object sender, EventArgs e)
         {
-            resolveShowDevEnvAndDelEnvFileds();
+            ResolveShowDevEnvAndDelEnvFileds();
         }
 
 
-        private void tbScriptsRootFolderPath_TextChanged(object sender, EventArgs e)
+        private void TbScriptsRootFolderPath_TextChanged(object sender, EventArgs e)
         {
             _autoVersionsDbAPI.ProjectConfigItem.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
-            bindScriptsPathLabels();
+            BindScriptsPathLabels();
         }
 
-        private void btnNavToProcess_Click(object sender, EventArgs e)
+        private void BtnNavToProcess_Click(object sender, EventArgs e)
         {
             OnNavToProcess?.Invoke(_autoVersionsDbAPI.ProjectConfigItem);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
 
             btnSave.BeginInvoke((MethodInvoker)(() =>
@@ -357,11 +357,11 @@ namespace AutoVersionsDB.WinApp
             }));
 
 
-            bindFromUIElements();
+            BindFromUIElements();
 
             Task.Run(() =>
             {
-                validateAll();
+                ValidateAll();
                 //if (validateAll())
                 //{
                 _autoVersionsDbAPI.SaveProjectConfig();

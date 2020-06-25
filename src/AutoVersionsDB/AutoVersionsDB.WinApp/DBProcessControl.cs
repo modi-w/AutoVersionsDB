@@ -45,20 +45,20 @@ namespace AutoVersionsDB.WinApp
             InitializeComponent();
 
             dgIncrementalScriptsFiles.AutoGenerateColumns = false;
-            dgIncrementalScriptsFiles.SelectionChanged += dgIncrementalScriptsFiles_SelectionChanged;
+            dgIncrementalScriptsFiles.SelectionChanged += DgIncrementalScriptsFiles_SelectionChanged;
 
             dgRepeatableScriptsFiles.AutoGenerateColumns = false;
-            dgRepeatableScriptsFiles.SelectionChanged += dgRepeatableScriptsFiles_SelectionChanged;
+            dgRepeatableScriptsFiles.SelectionChanged += DgRepeatableScriptsFiles_SelectionChanged;
 
             dgDevDummyDataScriptsFiles.AutoGenerateColumns = false;
-            dgDevDummyDataScriptsFiles.SelectionChanged += dgDevDummyDataScriptsFiles_SelectionChanged;
+            dgDevDummyDataScriptsFiles.SelectionChanged += DgDevDummyDataScriptsFiles_SelectionChanged;
 
 
-            changeButtonsPanelsLocation(pnlMainActions);
-            changeButtonsPanelsLocation(pnlMissingSystemTables);
-            changeButtonsPanelsLocation(pnlRestoreDbError);
-            changeButtonsPanelsLocation(pnlSyncToSpecificState);
-            changeButtonsPanelsLocation(pnlSetDBStateManually);
+            ChangeButtonsPanelsLocation(pnlMainActions);
+            ChangeButtonsPanelsLocation(pnlMissingSystemTables);
+            ChangeButtonsPanelsLocation(pnlRestoreDbError);
+            ChangeButtonsPanelsLocation(pnlSyncToSpecificState);
+            ChangeButtonsPanelsLocation(pnlSetDBStateManually);
 
             this.Controls.Remove(pnlActionButtons);
 
@@ -80,7 +80,7 @@ namespace AutoVersionsDB.WinApp
             SetToolTips();
         }
 
-        private void changeButtonsPanelsLocation(Panel panelToMove)
+        private void ChangeButtonsPanelsLocation(Panel panelToMove)
         {
             pnlActionButtons.Controls.Remove(panelToMove);
             pnlHeader.Controls.Add(panelToMove);
@@ -124,7 +124,7 @@ namespace AutoVersionsDB.WinApp
             RefreshAll();
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void BtnRefresh_Click(object sender, EventArgs e)
         {
             RefreshAll();
         }
@@ -193,45 +193,45 @@ namespace AutoVersionsDB.WinApp
 
         #region UI Commands
 
-        private void dgIncrementalScriptsFiles_SelectionChanged(object sender, EventArgs e)
+        private void DgIncrementalScriptsFiles_SelectionChanged(object sender, EventArgs e)
         {
             dgIncrementalScriptsFiles.ClearSelection();
         }
-        private void dgRepeatableScriptsFiles_SelectionChanged(object sender, EventArgs e)
+        private void DgRepeatableScriptsFiles_SelectionChanged(object sender, EventArgs e)
         {
             dgRepeatableScriptsFiles.ClearSelection();
         }
-        private void dgDevDummyDataScriptsFiles_SelectionChanged(object sender, EventArgs e)
+        private void DgDevDummyDataScriptsFiles_SelectionChanged(object sender, EventArgs e)
         {
             dgDevDummyDataScriptsFiles.ClearSelection();
         }
 
 
-        private void btnShowHistoricalBackups_Click(object sender, EventArgs e)
+        private void BtnShowHistoricalBackups_Click(object sender, EventArgs e)
         {
             OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder);
         }
 
-        private void btnCancelSyncSpecificState_Click(object sender, EventArgs e)
+        private void BtnCancelSyncSpecificState_Click(object sender, EventArgs e)
         {
             notificationsControl1.Clear();
             SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
         }
 
-        private void btnSetDBToSpecificState_Click(object sender, EventArgs e)
+        private void BtnSetDBToSpecificState_Click(object sender, EventArgs e)
         {
             SetViewState(DBVersionsMangementViewType.ReadyToSyncToSpecificState);
         }
 
 
 
-        private void btnNavToEdit_Click(object sender, EventArgs e)
+        private void BtnNavToEdit_Click(object sender, EventArgs e)
         {
             OnEditProject?.Invoke(_autoVersionsDbAPI.ProjectConfigItem);
         }
 
 
-        private void dgScriptFiles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DgScriptFiles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
 
@@ -247,17 +247,17 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void btnCancelSetDBStateManually_Click(object sender, EventArgs e)
+        private void BtnCancelSetDBStateManually_Click(object sender, EventArgs e)
         {
             SetViewState(DBVersionsMangementViewType.MissingSystemTables);
         }
 
 
-        private void btnOpenIncrementalScriptsFolder_Click(object sender, EventArgs e)
+        private void BtnOpenIncrementalScriptsFolder_Click(object sender, EventArgs e)
         {
             OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.IncrementalScriptsFolderPath);
         }
-        private void btnCreateNewIncrementalScriptFile_Click(object sender, EventArgs e)
+        private void BtnCreateNewIncrementalScriptFile_Click(object sender, EventArgs e)
         {
             using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
             {
@@ -275,11 +275,11 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void btnOpenRepeatableScriptsFolder_Click(object sender, EventArgs e)
+        private void BtnOpenRepeatableScriptsFolder_Click(object sender, EventArgs e)
         {
             OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.RepeatableScriptsFolderPath);
         }
-        private void btnCreateNewRepeatableScriptFile_Click(object sender, EventArgs e)
+        private void BtnCreateNewRepeatableScriptFile_Click(object sender, EventArgs e)
         {
             using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
             {
@@ -296,11 +296,11 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnOpenDevDummyDataScriptsFolder_Click(object sender, EventArgs e)
+        private void BtnOpenDevDummyDataScriptsFolder_Click(object sender, EventArgs e)
         {
             OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DevDummyDataScriptsFolderPath);
         }
-        private void btnCreateNewDevDummyDataScriptFile_Click(object sender, EventArgs e)
+        private void BtnCreateNewDevDummyDataScriptFile_Click(object sender, EventArgs e)
         {
             using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
             {
@@ -321,7 +321,7 @@ namespace AutoVersionsDB.WinApp
 
         #region Run Process
 
-        private void btnRunSync_Click(object sender, EventArgs e)
+        private void BtnRunSync_Click(object sender, EventArgs e)
         {
             Task.Run(() =>
             {
@@ -349,7 +349,7 @@ namespace AutoVersionsDB.WinApp
 
 
 
-        private bool checkIsTargetStateHistory()
+        private bool CheckIsTargetStateHistory()
         {
             bool isAllowRun = true;
 
@@ -362,15 +362,15 @@ namespace AutoVersionsDB.WinApp
             return isAllowRun;
         }
 
-        private void btnRecreateDbFromScratchMain_Click(object sender, EventArgs e)
+        private void BtnRecreateDbFromScratchMain_Click(object sender, EventArgs e)
         {
             RunRecreateDBFromScratch();
         }
 
 
-        private void btnApplySyncSpecificState_Click(object sender, EventArgs e)
+        private void BtnApplySyncSpecificState_Click(object sender, EventArgs e)
         {
-            if (checkIsTargetStateHistory())
+            if (CheckIsTargetStateHistory())
             {
                 Task.Run(() =>
                 {
@@ -396,7 +396,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnDeploy_Click(object sender, EventArgs e)
+        private void BtnDeploy_Click(object sender, EventArgs e)
         {
             try
             {
@@ -417,12 +417,12 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void btnVirtualExecution_Click(object sender, EventArgs e)
+        private void BtnVirtualExecution_Click(object sender, EventArgs e)
         {
             SetViewState(DBVersionsMangementViewType.SetDBStateManually);
         }
 
-        private void btnRecreateDbFromScratch2_Click(object sender, EventArgs e)
+        private void BtnRecreateDbFromScratch2_Click(object sender, EventArgs e)
         {
             RunRecreateDBFromScratch();
         }
@@ -455,7 +455,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnRunSetDBStateManally_Click(object sender, EventArgs e)
+        private void BtnRunSetDBStateManally_Click(object sender, EventArgs e)
         {
             Task.Run(() =>
             {
@@ -489,7 +489,7 @@ namespace AutoVersionsDB.WinApp
 
         private void SetViewState(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
-            bindToUIElements(dbVersionsMangementViewType);
+            BindToUIElements(dbVersionsMangementViewType);
 
             HideAllActionPanels();
 
@@ -645,7 +645,7 @@ namespace AutoVersionsDB.WinApp
             SetControlHideOrVisible(pnlRestoreDbError, false);
         }
 
-        private void bindToUIElements(DBVersionsMangementViewType dbVersionsMangementViewType)
+        private void BindToUIElements(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
 
             lblProjectName.BeginInvoke((MethodInvoker)(() =>
@@ -658,15 +658,15 @@ namespace AutoVersionsDB.WinApp
                 || _autoVersionsDbAPI.ErrorCode == "IsHistoryExecutedFilesChanged"
                 || _autoVersionsDbAPI.ErrorCode == "SystemTables")
             {
-                bindIncrementalGrid(dbVersionsMangementViewType);
-                bindRepeatableGrid();
-                bindDevDummyDataGrid();
+                BindIncrementalGrid(dbVersionsMangementViewType);
+                BindRepeatableGrid();
+                BindDevDummyDataGrid();
             }
 
         }
 
 
-        private void bindIncrementalGrid(DBVersionsMangementViewType dbVersionsMangementViewType)
+        private void BindIncrementalGrid(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
             List<RuntimeScriptFileBase> allIncrementalScriptFiles = _autoVersionsDbAPI.ScriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
@@ -677,29 +677,29 @@ namespace AutoVersionsDB.WinApp
                 allIncrementalScriptFiles.Insert(0, emptyDBTargetState);
             }
 
-            bindGridDataSource(dgIncrementalScriptsFiles, allIncrementalScriptFiles);
+            BindGridDataSource(dgIncrementalScriptsFiles, allIncrementalScriptFiles);
         }
 
-        private void bindRepeatableGrid()
+        private void BindRepeatableGrid()
         {
             List<RuntimeScriptFileBase> allRepeatableScriptFiles = _autoVersionsDbAPI.ScriptFilesComparersProvider.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            bindGridDataSource(dgRepeatableScriptsFiles, allRepeatableScriptFiles);
+            BindGridDataSource(dgRepeatableScriptsFiles, allRepeatableScriptFiles);
         }
 
-        private void bindDevDummyDataGrid()
+        private void BindDevDummyDataGrid()
         {
             if (_autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment)
             {
                 List<RuntimeScriptFileBase> allDevDummyDataScriptFiles = _autoVersionsDbAPI.ScriptFilesComparersProvider.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-                bindGridDataSource(dgDevDummyDataScriptsFiles, allDevDummyDataScriptFiles);
+                BindGridDataSource(dgDevDummyDataScriptsFiles, allDevDummyDataScriptFiles);
             }
 
         }
 
 
-        private void bindGridDataSource(DataGridView dataGridView, List<RuntimeScriptFileBase> scriptFilesList)
+        private static void BindGridDataSource(DataGridView dataGridView, List<RuntimeScriptFileBase> scriptFilesList)
         {
 
             dataGridView.BeginInvoke((MethodInvoker)(() =>
@@ -783,7 +783,7 @@ namespace AutoVersionsDB.WinApp
             SetControlEnableOrDisable(btnCreateNewDevDummyDataScriptFile, isEnable);
         }
 
-        private void SetControlEnableOrDisable(Control control, bool isEnable)
+        private static void SetControlEnableOrDisable(Control control, bool isEnable)
         {
             control.BeginInvoke((MethodInvoker)(() =>
             {
@@ -791,7 +791,7 @@ namespace AutoVersionsDB.WinApp
             }));
         }
 
-        private void SetControlHideOrVisible(Control control, bool isVisible)
+        private static void SetControlHideOrVisible(Control control, bool isVisible)
         {
             control.BeginInvoke((MethodInvoker)(() =>
             {

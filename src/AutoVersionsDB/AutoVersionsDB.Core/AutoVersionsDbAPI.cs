@@ -25,29 +25,26 @@ namespace AutoVersionsDB.Core
                 NinjectUtils.KernelInstance.Get<CreateVirtualExecutionsEngineFactory>(),
                 NinjectUtils.KernelInstance.Get<SyncDBToSpecificStateEngineFactory>(),
                 NinjectUtils.KernelInstance.Get<DeployEngineFactory>(),
-                NinjectUtils.KernelInstance.Get<ArtifactExtractorFactory>(),
                 NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>(),
                 NinjectUtils.KernelInstance.Get<ScriptFilesComparerFactory>(),
                 NinjectUtils.KernelInstance.Get<NotificationExecutersFactoryManager>()
             );
 
-        private object _processSyncLock = new object();
+        private readonly object _processSyncLock = new object();
 
 
-        private ProjectConfigValidationEngineFactory _projectConfigValidationEngineFactory;
-        private SystemTableExsitValidationEngineFactory _systemTableExsitValidationEngineFactory;
-        private DBStateValidationEngineFactory _dbStateValidationEngineFactory;
-        private TargetStateScriptFileValidationEngineFactory _notificationableEngine_TargetStateScriptFileValidation_Factory;
-        private ArtifactFileValidationEngineFactory _artifactFileValidationEngineFactory;
-        private SyncDBEngineFactory _syncDBEngineFactory;
-        private RecreateDBFromScratchEngineFactory _recreateDBFromScratchEngineFactory;
-        private CreateVirtualExecutionsEngineFactory _createVirtualExecutionsEngineFactory;
-        private SyncDBToSpecificStateEngineFactory _setDBToSpecificStateFactory;
-        private DeployEngineFactory _deployEngineStateFactory;
+        private readonly ProjectConfigValidationEngineFactory _projectConfigValidationEngineFactory;
+        private readonly SystemTableExsitValidationEngineFactory _systemTableExsitValidationEngineFactory;
+        private readonly DBStateValidationEngineFactory _dbStateValidationEngineFactory;
+        private readonly TargetStateScriptFileValidationEngineFactory _notificationableEngine_TargetStateScriptFileValidation_Factory;
+        private readonly ArtifactFileValidationEngineFactory _artifactFileValidationEngineFactory;
+        private readonly SyncDBEngineFactory _syncDBEngineFactory;
+        private readonly RecreateDBFromScratchEngineFactory _recreateDBFromScratchEngineFactory;
+        private readonly CreateVirtualExecutionsEngineFactory _createVirtualExecutionsEngineFactory;
+        private readonly SyncDBToSpecificStateEngineFactory _setDBToSpecificStateFactory;
+        private readonly DeployEngineFactory _deployEngineStateFactory;
 
-        private ArtifactExtractorFactory _artifactExtractorFactory;
-
-        private ScriptFilesComparerFactory _scriptFilesComparerFactory;
+        private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
 
 
         public DBCommandsFactoryProvider DBCommandsFactoryProvider { get; private set; }
@@ -109,7 +106,6 @@ namespace AutoVersionsDB.Core
                                 CreateVirtualExecutionsEngineFactory createVirtualExecutionsEngineFactory,
                                 SyncDBToSpecificStateEngineFactory setDBToSpecificStateFactory,
                                 DeployEngineFactory deployEngineStateFactory,
-                                ArtifactExtractorFactory artifactExtractorFactory,
                                 DBCommandsFactoryProvider dbCommandsFactoryProvider,
                                 ScriptFilesComparerFactory scriptFilesComparerFactory,
                                 NotificationExecutersFactoryManager notificationExecutersFactoryManager)
@@ -127,7 +123,6 @@ namespace AutoVersionsDB.Core
             _setDBToSpecificStateFactory = setDBToSpecificStateFactory;
             _deployEngineStateFactory = deployEngineStateFactory;
 
-            _artifactExtractorFactory = artifactExtractorFactory;
             DBCommandsFactoryProvider = dbCommandsFactoryProvider;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
 
@@ -167,14 +162,14 @@ namespace AutoVersionsDB.Core
 
             if (!HasError)
             {
-                _currentArtifactExtractor = _artifactExtractorFactory.Create(ProjectConfigItem);
+                _currentArtifactExtractor = ArtifactExtractorFactory.Create(ProjectConfigItem);
 
-                recreateScriptFilesComparersProvider();
+                RecreateScriptFilesComparersProvider();
             }
         }
 
 
-        private void recreateScriptFilesComparersProvider()
+        private void RecreateScriptFilesComparersProvider()
         {
             using (IDBCommands dbCommands = DBCommandsFactoryProvider.CreateDBCommand(ProjectConfigItem.DBTypeCode, ProjectConfigItem.ConnStr, ProjectConfigItem.DBCommandsTimeout))
             {
@@ -192,7 +187,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                validateArtifactFile();
+                ValidateArtifactFile();
 
                 if (!HasError)
                 {
@@ -200,11 +195,11 @@ namespace AutoVersionsDB.Core
 
                     if (!HasError)
                     {
-                        validateSystemTableExist();
+                        ValidateSystemTableExist();
 
                         if (!HasError)
                         {
-                            validateDBState();
+                            ValidateDBState();
                         }
                     }
                 }
@@ -221,7 +216,7 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        private void validateArtifactFile()
+        private void ValidateArtifactFile()
         {
             lock (_processSyncLock)
             {
@@ -231,7 +226,7 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        private void validateSystemTableExist()
+        private void ValidateSystemTableExist()
         {
             lock (_processSyncLock)
             {
@@ -242,7 +237,7 @@ namespace AutoVersionsDB.Core
         }
 
 
-        private void validateDBState()
+        private void ValidateDBState()
         {
             lock (_processSyncLock)
             {
@@ -256,7 +251,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                ExecutionParams executionParams = createTargetStepExectionParams(targetStateScriptFilename);
+                ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
 
                 AutoVersionsDbEngine engine = _notificationableEngine_TargetStateScriptFileValidation_Factory.Create(ProjectConfigItem);
                 engine.Run(executionParams);
@@ -278,7 +273,7 @@ namespace AutoVersionsDB.Core
                 AutoVersionsDbEngine engine = _syncDBEngineFactory.Create(ProjectConfigItem);
                 engine.Run(null);
                 _syncDBEngineFactory.ReleaseEngine(engine);
-                recreateScriptFilesComparersProvider();
+                RecreateScriptFilesComparersProvider();
             }
         }
 
@@ -292,13 +287,13 @@ namespace AutoVersionsDB.Core
                 }
                 else
                 {
-                    ExecutionParams executionParams = createTargetStepExectionParams(targetStateScriptFilename);
+                    ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
 
                     AutoVersionsDbEngine engine = _setDBToSpecificStateFactory.Create(ProjectConfigItem);
                     engine.Run(executionParams);
                     _setDBToSpecificStateFactory.ReleaseEngine(engine);
                 }
-                recreateScriptFilesComparersProvider();
+                RecreateScriptFilesComparersProvider();
             }
         }
 
@@ -306,12 +301,12 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                ExecutionParams executionParams = createTargetStepExectionParams(targetStateScriptFilename);
+                ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
 
                 AutoVersionsDbEngine engine = _recreateDBFromScratchEngineFactory.Create(ProjectConfigItem);
                 engine.Run(executionParams);
                 _recreateDBFromScratchEngineFactory.ReleaseEngine(engine);
-                recreateScriptFilesComparersProvider();
+                RecreateScriptFilesComparersProvider();
             }
         }
 
@@ -319,18 +314,18 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                ExecutionParams executionParams = createTargetStepExectionParams(targetStateScriptFilename);
+                ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
 
                 AutoVersionsDbEngine engine = _createVirtualExecutionsEngineFactory.Create(ProjectConfigItem);
                 engine.Run(executionParams);
                 _createVirtualExecutionsEngineFactory.ReleaseEngine(engine);
-                recreateScriptFilesComparersProvider();
+                RecreateScriptFilesComparersProvider();
             }
         }
 
 
 
-        private ExecutionParams createTargetStepExectionParams(string targetStateScriptFilename)
+        private static ExecutionParams CreateTargetStepExectionParams(string targetStateScriptFilename)
         {
             AutoVersionsDBExecutionParams targetStateScriptExecutionParam = new AutoVersionsDBExecutionParams()
             {
@@ -369,7 +364,7 @@ namespace AutoVersionsDB.Core
             lock (_processSyncLock)
             {
                 scriptFileItem = ScriptFilesComparersProvider.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-                recreateScriptFilesComparersProvider();
+                RecreateScriptFilesComparersProvider();
             }
 
             return scriptFileItem.FileFullPath;
@@ -382,7 +377,7 @@ namespace AutoVersionsDB.Core
             lock (_processSyncLock)
             {
                 scriptFileItem = ScriptFilesComparersProvider.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-                recreateScriptFilesComparersProvider();
+                RecreateScriptFilesComparersProvider();
             }
 
             return scriptFileItem.FileFullPath;
@@ -400,7 +395,7 @@ namespace AutoVersionsDB.Core
             lock (_processSyncLock)
             {
                 scriptFileItem = ScriptFilesComparersProvider.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-                recreateScriptFilesComparersProvider();
+                RecreateScriptFilesComparersProvider();
             }
 
             return scriptFileItem.FileFullPath;

@@ -218,7 +218,7 @@
             this.tbDevScriptsFolderPath.Name = "tbDevScriptsFolderPath";
             this.tbDevScriptsFolderPath.Size = new System.Drawing.Size(716, 29);
             this.tbDevScriptsFolderPath.TabIndex = 21;
-            this.tbDevScriptsFolderPath.TextChanged += new System.EventHandler(this.tbScriptsRootFolderPath_TextChanged);
+            this.tbDevScriptsFolderPath.TextChanged += new System.EventHandler(this.TbScriptsRootFolderPath_TextChanged);
             // 
             // label6
             // 
@@ -585,7 +585,7 @@
             this.rbDelEnv.TabStop = true;
             this.rbDelEnv.Text = "Delivery Enviroment";
             this.rbDelEnv.UseVisualStyleBackColor = true;
-            this.rbDelEnv.CheckedChanged += new System.EventHandler(this.rbDelEnv_CheckedChanged);
+            this.rbDelEnv.CheckedChanged += new System.EventHandler(this.RbDelEnv_CheckedChanged);
             // 
             // rbDevEnv
             // 
@@ -598,7 +598,7 @@
             this.rbDevEnv.TabStop = true;
             this.rbDevEnv.Text = "Development Enviroment";
             this.rbDevEnv.UseVisualStyleBackColor = true;
-            this.rbDevEnv.CheckedChanged += new System.EventHandler(this.rbDevEnv_CheckedChanged);
+            this.rbDevEnv.CheckedChanged += new System.EventHandler(this.RbDevEnv_CheckedChanged);
             // 
             // label18
             // 
@@ -788,7 +788,7 @@
             this.btnSave.Size = new System.Drawing.Size(38, 40);
             this.btnSave.TabIndex = 88;
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // imgValid
             // 
@@ -827,7 +827,7 @@
             this.btnNavToProcess.Size = new System.Drawing.Size(38, 40);
             this.btnNavToProcess.TabIndex = 68;
             this.btnNavToProcess.UseVisualStyleBackColor = false;
-            this.btnNavToProcess.Click += new System.EventHandler(this.btnNavToProcess_Click);
+            this.btnNavToProcess.Click += new System.EventHandler(this.BtnNavToProcess_Click);
             // 
             // EditProjectConfigDetails
             // 

@@ -111,11 +111,11 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         internal void ExecSQLCommandStr(string commandStr)
         {
-            List<string> splitedCommandStr = splitSqlStatements(commandStr).ToList();
+            List<string> splitedCommandStr = SplitSqlStatements(commandStr).ToList();
 
             foreach (string currScriptStr in splitedCommandStr)
             {
-                using (SqlDataAdapter myDataAdapter = createDataAdapter(CommandType.Text, currScriptStr))
+                using (SqlDataAdapter myDataAdapter = CreateDataAdapter(CommandType.Text, currScriptStr))
                 {
                     try
                     {
@@ -132,7 +132,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
-        private IEnumerable<string> splitSqlStatements(string sqlScript)
+        private static IEnumerable<string> SplitSqlStatements(string sqlScript)
         {
             // Split by "GO" statements
             var statements = Regex.Split(
@@ -148,9 +148,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 .Select(x => x.Trim(' ', '\r', '\n'));
         }
 
-
-
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         internal int UpdateDataTableWithUpdateIdentityOnInsert(DataTable dataTable)
         {
             //Comment: dont work here with get changes and merge becase the UpdateIdentityOnInsert duplicate the inserted DataRows
@@ -172,7 +170,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 {
                     myDataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-                    myDataAdapter.RowUpdated += new SqlRowUpdatedEventHandler(onRowUpdate_SetIdentityFromDb);
+                    myDataAdapter.RowUpdated += new SqlRowUpdatedEventHandler(OnRowUpdate_SetIdentityFromDb);
 
                     //if (_timeout > 0)
                     //{
@@ -217,7 +215,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                     //OnLogMessage(string.Format(" before call resolveNewRowsIDsConfilctWithDb: {0}", commandObjStr));
 
 
-                    resolveNewRowsIDsConfilctWithDb(dataTable);
+                    ResolveNewRowsIDsConfilctWithDb(dataTable);
 
                     //             OnLogMessage("UpdateDataTableWithUpdateIdentityOnInsert - before call update");
 
@@ -238,7 +236,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             return outVal;
         }
 
-        private void resolveNewRowsIDsConfilctWithDb(DataTable dataTable)
+        private static void ResolveNewRowsIDsConfilctWithDb(DataTable dataTable)
         {
             int currNewRowsKey = -1;
             foreach (DataRow rowItem in dataTable.Rows)
@@ -264,7 +262,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             }
         }
 
-        private void onRowUpdate_SetIdentityFromDb(object sender, SqlRowUpdatedEventArgs args)
+        private void OnRowUpdate_SetIdentityFromDb(object sender, SqlRowUpdatedEventArgs args)
         {
             if (args.StatementType == StatementType.Insert)
             {
@@ -304,7 +302,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             DataTable outDt = new DataTable();
 
-            using (SqlDataAdapter myDataAdapter = createDataAdapter(CommandType.Text, sqlSelectCmd, overrideTimeout))
+            using (SqlDataAdapter myDataAdapter = CreateDataAdapter(CommandType.Text, sqlSelectCmd, overrideTimeout))
             {
                 myDataAdapter.Fill(outDt);
             }
@@ -315,11 +313,11 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
-        private SqlDataAdapter createDataAdapter(CommandType commandType, string commandText, int overrideTimeout = 0)
+        private SqlDataAdapter CreateDataAdapter(CommandType commandType, string commandText, int overrideTimeout = 0)
         {
-            return createDataAdapter(commandType, commandText, new Dictionary<string, object>(), overrideTimeout);
+            return CreateDataAdapter(commandType, commandText, new Dictionary<string, object>(), overrideTimeout);
         }
-        private SqlDataAdapter createDataAdapter(CommandType commandType, string commandText, Dictionary<string, object> paramsDic, int overrideTimeout = 0)
+        private SqlDataAdapter CreateDataAdapter(CommandType commandType, string commandText, Dictionary<string, object> paramsDic, int overrideTimeout = 0)
         {
 
             SqlDataAdapter myDataAdapter = new SqlDataAdapter
@@ -327,7 +325,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 MissingSchemaAction = MissingSchemaAction.AddWithKey
             };
 
-            SqlCommand cmd = createSqlCommand(commandType, commandText, overrideTimeout);
+            SqlCommand cmd = CreateSqlCommand(commandType, commandText, overrideTimeout);
 
             if (paramsDic.Count > 0)
             {
@@ -355,7 +353,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             myDataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
             return myDataAdapter;
         }
-        private SqlCommand createSqlCommand(CommandType commandType, string commandText, int overrideTimeout)
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
+        private SqlCommand CreateSqlCommand(CommandType commandType, string commandText, int overrideTimeout)
         {
             SqlCommand cmd = new SqlCommand
             {

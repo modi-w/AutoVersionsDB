@@ -138,8 +138,8 @@
             this.lnkBtnChooseProject.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lnkBtnChooseProject.Size = new System.Drawing.Size(37, 27);
             this.lnkBtnChooseProject.TabIndex = 2;
-            this.lnkBtnChooseProject.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkBtnChooseProject_LinkClicked);
-            this.lnkBtnChooseProject.Click += new System.EventHandler(this.lnkBtnChooseProject_Click);
+            this.lnkBtnChooseProject.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkBtnChooseProject_LinkClicked);
+            this.lnkBtnChooseProject.Click += new System.EventHandler(this.LnkBtnChooseProject_Click);
             // 
             // label1
             // 

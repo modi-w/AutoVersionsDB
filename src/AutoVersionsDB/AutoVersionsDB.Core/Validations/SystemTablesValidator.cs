@@ -24,8 +24,8 @@ namespace AutoVersionsDB.Core.Validations
             }
         }
 
-        private IDBCommands _dbCommands;
-        private bool _isDevEnvironment;
+        private readonly IDBCommands _dbCommands;
+        private readonly bool _isDevEnvironment;
 
         public SystemTablesValidator(IDBCommands dbCommands, bool isDevEnvironment)
         {
@@ -52,7 +52,7 @@ namespace AutoVersionsDB.Core.Validations
 
             DataTable scriptsExecutionHistoryTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
 
-            using (DataTable scriptsExecutionHistoryTableFromStructure = createScriptsExecutionHistoryTableStructure())
+            using (DataTable scriptsExecutionHistoryTableFromStructure = CreateScriptsExecutionHistoryTableStructure())
             {
                 foreach (DataColumn colFromStruct in scriptsExecutionHistoryTableFromStructure.Columns)
                 {
@@ -110,7 +110,7 @@ namespace AutoVersionsDB.Core.Validations
 
 
 
-        private DataTable createScriptsExecutionHistoryTableStructure()
+        private static DataTable CreateScriptsExecutionHistoryTableStructure()
         {
             DataTable tableResults = new DataTable();
 
@@ -126,7 +126,7 @@ namespace AutoVersionsDB.Core.Validations
             return tableResults;
         }
 
-        private DataTable CreateScriptsExecutionHistoryFilesTableStructure()
+        private static DataTable CreateScriptsExecutionHistoryFilesTableStructure()
         {
             DataTable tableResults = new DataTable();
 

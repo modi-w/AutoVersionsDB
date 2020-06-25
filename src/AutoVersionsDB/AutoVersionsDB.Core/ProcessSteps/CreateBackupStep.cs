@@ -27,10 +27,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
             NotificationExecutersFactoryManager notificationExecutersFactoryManager = NinjectUtils.KernelInstance.Get<NotificationExecutersFactoryManager>();
 
-            DBProcessStatusNotifyerFactory dbProcessStatusNotifyer_Factory = NinjectUtils.KernelInstance.Get<DBProcessStatusNotifyerFactory>();
-
             DBBackupStatusNotifyer dbBackupStatusNotifyer =
-                dbProcessStatusNotifyer_Factory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
+                DBProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
 
 
             CreateBackupStep createBackupStep =
@@ -81,7 +79,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbBackupStatusNotifyer = dbBackupStatusNotifyer;
             _dbBackupBaseFolderPath = dbBackupBaseFolderPath;
 
-            _dbBackupStatusNotifyer.OnDBProcessStatus += _dbBackupStatusNotifyer_OnDBProcessStatus;
+            _dbBackupStatusNotifyer.OnDBProcessStatus += DBBackupStatusNotifyer_OnDBProcessStatus;
         }
 
 
@@ -117,7 +115,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             processState.DBBackupFileFullPath = targetFileFullPath;
         }
 
-        private void _dbBackupStatusNotifyer_OnDBProcessStatus(double precent)
+        private void DBBackupStatusNotifyer_OnDBProcessStatus(double precent)
         {
             if (_tempNotificationWrapperExecuter.CurrentNotificationStateItem!= null)
             {

@@ -11,18 +11,14 @@ namespace AutoVersionsDB.DbCommands.SqlServer
     public class SqlServerDBCommands : IDBCommands
     {
         private readonly SqlServerConnectionManager _sqlServerConnectionManager;
-        private readonly EmbeddedResourcesManager _embeddedResourcesManager;
 
 
 
-        public SqlServerDBCommands(SqlServerConnectionManager sqlServerConnectionManager,
-                                    EmbeddedResourcesManager embeddedResourcesManager)
+        public SqlServerDBCommands(SqlServerConnectionManager sqlServerConnectionManager)
         {
             sqlServerConnectionManager.ThrowIfNull(nameof(sqlServerConnectionManager));
-            embeddedResourcesManager.ThrowIfNull(nameof(embeddedResourcesManager));
 
             _sqlServerConnectionManager = sqlServerConnectionManager;
-            _embeddedResourcesManager = embeddedResourcesManager;
 
             _sqlServerConnectionManager.Open();
         }
@@ -184,7 +180,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         public void RecreateDBVersionsTables()
         {
             string recreateDBVersionsSchema =
-                _embeddedResourcesManager.GetEmbeddedResourceFile("AutoVersionsDB.DbCommands.SqlServer.SystemScripts.RecreateDBVersionsSchema_SqlServer.sql");
+                EmbeddedResourcesManager.GetEmbeddedResourceFile("AutoVersionsDB.DbCommands.SqlServer.SystemScripts.RecreateDBVersionsSchema_SqlServer.sql");
 
             ExecSQLCommandStr(recreateDBVersionsSchema);
         }
@@ -194,7 +190,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         public void DropAllDB()
         {
             string recreateDBVersionsSchema =
-                _embeddedResourcesManager.GetEmbeddedResourceFile("AutoVersionsDB.DbCommands.SqlServer.SystemScripts.DropAllDbObjects_SqlServer.sql");
+                EmbeddedResourcesManager.GetEmbeddedResourceFile("AutoVersionsDB.DbCommands.SqlServer.SystemScripts.DropAllDbObjects_SqlServer.sql");
 
             ExecSQLCommandStr(recreateDBVersionsSchema);
 

@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace AutoVersionsDB.DbCommands.SqlServer.Utils
 {
-    public class EmbeddedResourcesManager
+    public static class EmbeddedResourcesManager
     {
-        public string GetEmbeddedResourceFile(string filePathInTheDLL)
+        public static string GetEmbeddedResourceFile(string filePathInTheDLL)
         {
             string result;
             //https://stackoverflow.com/questions/3314140/how-to-read-embedded-resource-text-file

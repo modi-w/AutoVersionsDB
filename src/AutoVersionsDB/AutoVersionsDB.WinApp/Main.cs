@@ -13,6 +13,7 @@ namespace AutoVersionsDB.WinApp
 
     public partial class Main : Form
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
         public new void SuspendLayout()
         {
             //Comment: In .net core, this method cause to layout to the window to be too big respect to its children controls.
@@ -122,13 +123,13 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void lnkBtnChooseProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LnkBtnChooseProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
 
         }
 
-        private void lnkBtnChooseProject_Click(object sender, EventArgs e)
+        private void LnkBtnChooseProject_Click(object sender, EventArgs e)
         {
             tabMainLayout.SelectedTab = tbChooseProject;
         }

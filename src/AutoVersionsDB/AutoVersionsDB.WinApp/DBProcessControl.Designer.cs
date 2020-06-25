@@ -202,7 +202,7 @@
             this.dgIncrementalScriptsFiles.ShowRowErrors = false;
             this.dgIncrementalScriptsFiles.Size = new System.Drawing.Size(832, 249);
             this.dgIncrementalScriptsFiles.TabIndex = 47;
-            this.dgIncrementalScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgScriptFiles_CellContentClick);
+            this.dgIncrementalScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgScriptFiles_CellContentClick);
             // 
             // rowNumber
             // 
@@ -272,7 +272,7 @@
             this.btnOpenIncrementalScriptsFolder.Size = new System.Drawing.Size(38, 40);
             this.btnOpenIncrementalScriptsFolder.TabIndex = 72;
             this.btnOpenIncrementalScriptsFolder.UseVisualStyleBackColor = false;
-            this.btnOpenIncrementalScriptsFolder.Click += new System.EventHandler(this.btnOpenIncrementalScriptsFolder_Click);
+            this.btnOpenIncrementalScriptsFolder.Click += new System.EventHandler(this.BtnOpenIncrementalScriptsFolder_Click);
             // 
             // panel2
             // 
@@ -368,7 +368,7 @@
             this.btnCreateNewIncrementalScriptFile.Size = new System.Drawing.Size(38, 40);
             this.btnCreateNewIncrementalScriptFile.TabIndex = 70;
             this.btnCreateNewIncrementalScriptFile.UseVisualStyleBackColor = false;
-            this.btnCreateNewIncrementalScriptFile.Click += new System.EventHandler(this.btnCreateNewIncrementalScriptFile_Click);
+            this.btnCreateNewIncrementalScriptFile.Click += new System.EventHandler(this.BtnCreateNewIncrementalScriptFile_Click);
             // 
             // label5
             // 
@@ -423,7 +423,7 @@
             this.btnCancelSyncSpecificState.TabIndex = 85;
             this.btnCancelSyncSpecificState.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnCancelSyncSpecificState.UseVisualStyleBackColor = false;
-            this.btnCancelSyncSpecificState.Click += new System.EventHandler(this.btnCancelSyncSpecificState_Click);
+            this.btnCancelSyncSpecificState.Click += new System.EventHandler(this.BtnCancelSyncSpecificState_Click);
             // 
             // label29
             // 
@@ -455,7 +455,7 @@
             this.btnApplySyncSpecificState.TabIndex = 83;
             this.btnApplySyncSpecificState.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnApplySyncSpecificState.UseVisualStyleBackColor = false;
-            this.btnApplySyncSpecificState.Click += new System.EventHandler(this.btnApplySyncSpecificState_Click);
+            this.btnApplySyncSpecificState.Click += new System.EventHandler(this.BtnApplySyncSpecificState_Click);
             // 
             // pnlHeader
             // 
@@ -512,7 +512,7 @@
             this.btnNavToEdit.Size = new System.Drawing.Size(38, 40);
             this.btnNavToEdit.TabIndex = 68;
             this.btnNavToEdit.UseVisualStyleBackColor = false;
-            this.btnNavToEdit.Click += new System.EventHandler(this.btnNavToEdit_Click);
+            this.btnNavToEdit.Click += new System.EventHandler(this.BtnNavToEdit_Click);
             // 
             // btnRefresh
             // 
@@ -532,7 +532,7 @@
             this.btnRefresh.Size = new System.Drawing.Size(38, 40);
             this.btnRefresh.TabIndex = 66;
             this.btnRefresh.UseVisualStyleBackColor = false;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            this.btnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
             // 
             // label8
             // 
@@ -587,7 +587,7 @@
             this.btnVirtualExecution.TabIndex = 81;
             this.btnVirtualExecution.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnVirtualExecution.UseVisualStyleBackColor = false;
-            this.btnVirtualExecution.Click += new System.EventHandler(this.btnVirtualExecution_Click);
+            this.btnVirtualExecution.Click += new System.EventHandler(this.BtnVirtualExecution_Click);
             // 
             // lblRecreateDbFromScratch2
             // 
@@ -619,7 +619,7 @@
             this.btnRecreateDbFromScratch2.TabIndex = 79;
             this.btnRecreateDbFromScratch2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRecreateDbFromScratch2.UseVisualStyleBackColor = false;
-            this.btnRecreateDbFromScratch2.Click += new System.EventHandler(this.btnRecreateDbFromScratch2_Click);
+            this.btnRecreateDbFromScratch2.Click += new System.EventHandler(this.BtnRecreateDbFromScratch2_Click);
             // 
             // pnlMainActions
             // 
@@ -701,7 +701,7 @@
             this.btnSetDBToSpecificState.TabIndex = 77;
             this.btnSetDBToSpecificState.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnSetDBToSpecificState.UseVisualStyleBackColor = false;
-            this.btnSetDBToSpecificState.Click += new System.EventHandler(this.btnSetDBToSpecificState_Click);
+            this.btnSetDBToSpecificState.Click += new System.EventHandler(this.BtnSetDBToSpecificState_Click);
             // 
             // btnDeploy
             // 
@@ -722,7 +722,7 @@
             this.btnDeploy.TabIndex = 76;
             this.btnDeploy.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnDeploy.UseVisualStyleBackColor = false;
-            this.btnDeploy.Click += new System.EventHandler(this.btnDeploy_Click);
+            this.btnDeploy.Click += new System.EventHandler(this.BtnDeploy_Click);
             // 
             // btnRecreateDbFromScratchMain
             // 
@@ -743,7 +743,7 @@
             this.btnRecreateDbFromScratchMain.TabIndex = 75;
             this.btnRecreateDbFromScratchMain.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRecreateDbFromScratchMain.UseVisualStyleBackColor = false;
-            this.btnRecreateDbFromScratchMain.Click += new System.EventHandler(this.btnRecreateDbFromScratchMain_Click);
+            this.btnRecreateDbFromScratchMain.Click += new System.EventHandler(this.BtnRecreateDbFromScratchMain_Click);
             // 
             // btnRunSync
             // 
@@ -764,7 +764,7 @@
             this.btnRunSync.TabIndex = 30;
             this.btnRunSync.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRunSync.UseVisualStyleBackColor = false;
-            this.btnRunSync.Click += new System.EventHandler(this.btnRunSync_Click);
+            this.btnRunSync.Click += new System.EventHandler(this.BtnRunSync_Click);
             // 
             // notificationsControl1
             // 
@@ -847,7 +847,7 @@
             this.btnCancelSetDBStateManually.TabIndex = 89;
             this.btnCancelSetDBStateManually.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnCancelSetDBStateManually.UseVisualStyleBackColor = false;
-            this.btnCancelSetDBStateManually.Click += new System.EventHandler(this.btnCancelSetDBStateManually_Click);
+            this.btnCancelSetDBStateManually.Click += new System.EventHandler(this.BtnCancelSetDBStateManually_Click);
             // 
             // label32
             // 
@@ -879,7 +879,7 @@
             this.btnRunSetDBStateManally.TabIndex = 87;
             this.btnRunSetDBStateManally.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRunSetDBStateManally.UseVisualStyleBackColor = false;
-            this.btnRunSetDBStateManally.Click += new System.EventHandler(this.btnRunSetDBStateManally_Click);
+            this.btnRunSetDBStateManally.Click += new System.EventHandler(this.BtnRunSetDBStateManally_Click);
             // 
             // pnlRepeatableFiles
             // 
@@ -917,7 +917,7 @@
             this.btnOpenRepeatableScriptsFolder.Size = new System.Drawing.Size(38, 40);
             this.btnOpenRepeatableScriptsFolder.TabIndex = 72;
             this.btnOpenRepeatableScriptsFolder.UseVisualStyleBackColor = false;
-            this.btnOpenRepeatableScriptsFolder.Click += new System.EventHandler(this.btnOpenRepeatableScriptsFolder_Click);
+            this.btnOpenRepeatableScriptsFolder.Click += new System.EventHandler(this.BtnOpenRepeatableScriptsFolder_Click);
             // 
             // panel4
             // 
@@ -989,7 +989,7 @@
             this.btnCreateNewRepeatableScriptFile.Size = new System.Drawing.Size(38, 40);
             this.btnCreateNewRepeatableScriptFile.TabIndex = 70;
             this.btnCreateNewRepeatableScriptFile.UseVisualStyleBackColor = false;
-            this.btnCreateNewRepeatableScriptFile.Click += new System.EventHandler(this.btnCreateNewRepeatableScriptFile_Click);
+            this.btnCreateNewRepeatableScriptFile.Click += new System.EventHandler(this.BtnCreateNewRepeatableScriptFile_Click);
             // 
             // label18
             // 
@@ -1112,7 +1112,7 @@
             this.btnOpenDevDummyDataScriptsFolder.Size = new System.Drawing.Size(38, 40);
             this.btnOpenDevDummyDataScriptsFolder.TabIndex = 72;
             this.btnOpenDevDummyDataScriptsFolder.UseVisualStyleBackColor = false;
-            this.btnOpenDevDummyDataScriptsFolder.Click += new System.EventHandler(this.btnOpenDevDummyDataScriptsFolder_Click);
+            this.btnOpenDevDummyDataScriptsFolder.Click += new System.EventHandler(this.BtnOpenDevDummyDataScriptsFolder_Click);
             // 
             // panel7
             // 
@@ -1184,7 +1184,7 @@
             this.btnCreateNewDevDummyDataScriptFile.Size = new System.Drawing.Size(38, 40);
             this.btnCreateNewDevDummyDataScriptFile.TabIndex = 70;
             this.btnCreateNewDevDummyDataScriptFile.UseVisualStyleBackColor = false;
-            this.btnCreateNewDevDummyDataScriptFile.Click += new System.EventHandler(this.btnCreateNewDevDummyDataScriptFile_Click);
+            this.btnCreateNewDevDummyDataScriptFile.Click += new System.EventHandler(this.BtnCreateNewDevDummyDataScriptFile_Click);
             // 
             // label22
             // 
@@ -1328,7 +1328,7 @@
             this.btnShowHistoricalBackups.TabIndex = 79;
             this.btnShowHistoricalBackups.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnShowHistoricalBackups.UseVisualStyleBackColor = false;
-            this.btnShowHistoricalBackups.Click += new System.EventHandler(this.btnShowHistoricalBackups_Click);
+            this.btnShowHistoricalBackups.Click += new System.EventHandler(this.BtnShowHistoricalBackups_Click);
             // 
             // DBProcessControl
             // 
