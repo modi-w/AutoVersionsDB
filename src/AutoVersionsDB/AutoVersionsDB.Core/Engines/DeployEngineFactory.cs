@@ -21,6 +21,10 @@ namespace AutoVersionsDB.Core.Engines
                                         ScriptFilesComparerFactory scriptFilesComparerFactory,
                                         NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
+            notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
+
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;

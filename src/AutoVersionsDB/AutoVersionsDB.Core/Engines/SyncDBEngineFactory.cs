@@ -20,8 +20,8 @@ namespace AutoVersionsDB.Core.Engines
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
 
         public SyncDBEngineFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                                        ScriptFilesComparerFactory scriptFilesComparerFactory,
-                                                        NotificationExecutersFactoryManager notificationExecutersFactoryManager)
+                                    ScriptFilesComparerFactory scriptFilesComparerFactory,
+                                    NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
