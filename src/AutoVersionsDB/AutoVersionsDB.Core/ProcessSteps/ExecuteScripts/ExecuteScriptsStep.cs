@@ -1,35 +1,55 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
+using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteScriptsStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public class ExecuteScriptsStep : AutoVersionsDbStep
     {
         public override string StepName => $"Run Scripts";
 
 
-
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
+        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private ScriptFilesComparerFactory _scriptFilesComparerFactory;
+
+        private IDBCommands _dbCommands;
         private ScriptFilesComparersProvider _scriptFilesComparersProvider;
 
-        private bool _isVirtualExecution;
 
         public ExecuteScriptsStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                        ScriptFilesComparersProvider scriptFilesComparersProvider,
-                                        ExecuteSingleFileScriptStep runSingleFileScriptStep,
-                                        bool isVirtualExecution)
+                                    DBCommandsFactoryProvider dbCommandsFactoryProvider,
+                                    ScriptFilesComparerFactory scriptFilesComparerFactory,
+                                    ExecuteSingleFileScriptStep executeSingleFileScriptStep)
         {
-            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
-            InternalNotificationableAction = runSingleFileScriptStep;
+            notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
 
-            _isVirtualExecution = isVirtualExecution;
+            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _scriptFilesComparerFactory = scriptFilesComparerFactory;
+
+            InternalNotificationableAction = executeSingleFileScriptStep;
         }
 
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+            _scriptFilesComparersProvider = new ScriptFilesComparersProvider(_scriptFilesComparerFactory, _dbCommands, projectConfig);
+
+            (InternalNotificationableAction as ExecuteSingleFileScriptStep).SetDBCommands(_dbCommands);
+        }
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
@@ -51,6 +71,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
             processState.ThrowIfNull(nameof(processState));
+
 
             string targetStateScriptFileName = null;
             if (processState.ExecutionParams != null)
@@ -95,7 +116,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         private void runScriptsFilesList(AutoVersionsDbProcessState processState, List<RuntimeScriptFileBase> scriptFilesList, string additionalStepInfo)
         {
             (InternalNotificationableAction as ExecuteSingleFileScriptStep).OverrideStepName(additionalStepInfo);
-           
+
+           bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
+
             using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(scriptFilesList.Count))
             {
                 foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
@@ -105,7 +128,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                         ScriptFileInfoStepArgs scriptFileInfoStep = new ScriptFileInfoStepArgs(scriptFile);
 
                         string stepInfo = scriptFile.Filename;
-                        if (_isVirtualExecution)
+                        if (isVirtualExecution)
                         {
                             stepInfo += " - Ignore (virtual execution)";
                         }

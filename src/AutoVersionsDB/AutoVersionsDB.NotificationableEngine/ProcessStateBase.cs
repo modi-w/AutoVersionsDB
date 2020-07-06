@@ -9,6 +9,8 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public abstract class ProcessStateBase
     {
+        public Dictionary<string, string> EngineMetaData { get; set; }
+
         public ExecutionParams ExecutionParams { get; set; }
 
         public DateTime? StartProcessDateTime { get; set; }

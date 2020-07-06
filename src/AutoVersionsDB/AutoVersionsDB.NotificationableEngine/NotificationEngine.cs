@@ -10,6 +10,8 @@ namespace AutoVersionsDB.NotificationableEngine
     {
         string EngineTypeName { get; }
 
+        Dictionary<string, string> EngineMetaData { get; }
+
         List<NotificationableActionStepBase> ProcessSteps { get; }
         NotificationableActionStepBase RollbackStep { get; }
         NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; }
@@ -28,6 +30,7 @@ namespace AutoVersionsDB.NotificationableEngine
         where TProcessState : ProcessStateBase, new()
     {
         public string EngineTypeName { get; protected set; }
+        public Dictionary<string, string> EngineMetaData { get; }
 
         public List<NotificationableActionStepBase> ProcessSteps { get; private set; }
         public NotificationableActionStepBase RollbackStep { get; protected set; }
@@ -44,6 +47,8 @@ namespace AutoVersionsDB.NotificationableEngine
             RollbackStep = rollbackStep;
 
             NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
+
+            EngineMetaData["EngineTypeName"] = EngineTypeName;
         }
 
 
@@ -58,6 +63,8 @@ namespace AutoVersionsDB.NotificationableEngine
 
                 StartProcessDateTime = DateTime.Now
             };
+
+            processState.EngineMetaData = EngineMetaData;
 
 
             using (NotificationWrapperExecuter rootNotificationWrapperExecuter = NotificationExecutersFactoryManager.Reset(totalNumOfSteps))
@@ -137,6 +144,7 @@ namespace AutoVersionsDB.NotificationableEngine
         public void SetEngineTypeName(string engineTypeName)
         {
             EngineTypeName = engineTypeName;
+            EngineMetaData["EngineTypeName"] = EngineTypeName;
         }
 
 

@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
         private IDBCommands _dbCommands;
 
         private string _dbName;
-      
+
         private string _incrementalScriptsFolderPath;
         private string _repeatableScriptsFolderPath;
 
@@ -146,10 +146,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
             _disposed = true;
         }
+
+        #endregion
+
     }
-
-
-    #endregion
-
-}
 }

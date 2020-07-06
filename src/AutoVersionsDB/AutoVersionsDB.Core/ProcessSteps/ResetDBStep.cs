@@ -1,45 +1,39 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public static class ResetDBStepFluent
-    {
-        public static AutoVersionsDbEngine ResetDB(this AutoVersionsDbEngine autoVersionsDbEngine,
-                                                                    IDBCommands dbCommands, 
-                                                                    bool isDevEnvironment)
-        {
-            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
-            dbCommands.ThrowIfNull(nameof(dbCommands));
 
-            ResetDBStep resetDBStep =
-                new ResetDBStep(dbCommands,isDevEnvironment);
-
-
-            autoVersionsDbEngine.AppendProcessStep(resetDBStep);
-
-            return autoVersionsDbEngine;
-        }
-    }
-
-    public class ResetDBStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public class ResetDBStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => "Resolve Reset Database";
 
+        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
         private IDBCommands _dbCommands;
 
         private bool _isDevEnvironment;
 
 
-        public ResetDBStep(IDBCommands dbCommands, bool isDevEnvironment)
+        public ResetDBStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
-            _dbCommands = dbCommands;
-            _isDevEnvironment = isDevEnvironment;
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+            _isDevEnvironment = projectConfig.IsDevEnvironment;
+        }
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
@@ -62,6 +56,40 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~ResetDBStep() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_dbCommands != null)
+                {
+                    _dbCommands.Dispose();
+                }
+
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
 
     }
 }

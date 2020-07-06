@@ -13,7 +13,7 @@ using System.IO;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    
+
     public class CreateBackupStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => "Create Backup";
@@ -140,14 +140,22 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 {
                     _dbBackupStatusNotifyer.OnDBProcessStatus -= DBBackupStatusNotifyer_OnDBProcessStatus;
                 }
+
+                if (_tempNotificationWrapperExecuter != null)
+                {
+                    _tempNotificationWrapperExecuter.Dispose();
+                }
+
             }
 
             _disposed = true;
         }
+
+        #endregion
+
     }
 
 
-    #endregion
 
-}
+
 }

@@ -1,47 +1,42 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
+using System;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public static class RecreateDBVersionsTablesStepFluent
-    {
-        public static AutoVersionsDbEngine RecreateDBVersionsTables(this AutoVersionsDbEngine autoVersionsDbEngine,
-                                                                    IDBCommands dbCommands,
-                                                                    ScriptFilesComparersProvider scriptFilesComparersProvider)
-        {
-            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
-            dbCommands.ThrowIfNull(nameof(dbCommands));
-            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
 
-            RecreateDBVersionsTablesStep recreateDBVersionsTablesStep =
-                new RecreateDBVersionsTablesStep(dbCommands,
-                                                            scriptFilesComparersProvider);
-
-
-            autoVersionsDbEngine.AppendProcessStep(recreateDBVersionsTablesStep);
-
-            return autoVersionsDbEngine;
-        }
-    }
-
-
-    public class RecreateDBVersionsTablesStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public class RecreateDBVersionsTablesStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => "Recreate System Tables";
+
+        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private ScriptFilesComparerFactory _scriptFilesComparerFactory;
 
         private IDBCommands _dbCommands;
         private ScriptFilesComparersProvider _scriptFilesComparersProvider;
 
-        public RecreateDBVersionsTablesStep(IDBCommands dbCommands,
-                                                        ScriptFilesComparersProvider scriptFilesComparersProvider)
+        public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+                                        ScriptFilesComparerFactory scriptFilesComparerFactory)
         {
-            _dbCommands = dbCommands;
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
+
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _scriptFilesComparerFactory = scriptFilesComparerFactory;
         }
 
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+            _scriptFilesComparersProvider = new ScriptFilesComparersProvider(_scriptFilesComparerFactory, _dbCommands, projectConfig);
+        }
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
@@ -54,5 +49,40 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _scriptFilesComparersProvider.Reload();
         }
 
+
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~RecreateDBVersionsTablesStep() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_dbCommands != null)
+                {
+                    _dbCommands.Dispose();
+                }
+
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
     }
 }
