@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
-            using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(_validators.Count))
+            using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(Validators.Count))
             {
                 foreach (ValidatorBase validator in Validators)
                 {

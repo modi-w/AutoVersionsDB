@@ -10,10 +10,10 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class SystemTableValidationStep : ValidationsStep, IDisposable
+    public class SystemTableValidationStep : ValidationsStep
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-       
+
         private IDBCommands _dbCommands;
 
         protected override bool ShouldContinueWhenFindError => false;
@@ -42,17 +42,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
         private bool _disposed = false;
 
-        ~SystemTableValidationStep() => Dispose(false);
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (_disposed)
             {
@@ -69,6 +59,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
             }
 
             _disposed = true;
+
+            base.Dispose(disposing);
         }
 
         #endregion

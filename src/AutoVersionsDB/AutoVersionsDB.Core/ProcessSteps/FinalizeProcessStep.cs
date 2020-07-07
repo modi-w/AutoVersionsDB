@@ -11,8 +11,6 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-          
-
     public class FinalizeProcessStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => "Finalize Process";

@@ -147,7 +147,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         private bool _disposed = false;
 
-        ~CreateBackupStep() => Dispose(false);
+        ~ExecuteScriptsStep() => Dispose(false);
 
         // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()

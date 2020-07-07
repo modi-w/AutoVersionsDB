@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class DBStateValidationStep : ValidationsStep, IDisposable
+    public class DBStateValidationStep : ValidationsStep
     {
         private ScriptFilesComparersProvider _scriptFilesComparersProvider;
 
