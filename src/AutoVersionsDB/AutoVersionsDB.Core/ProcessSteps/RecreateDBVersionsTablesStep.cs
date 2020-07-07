@@ -15,27 +15,29 @@ namespace AutoVersionsDB.Core.ProcessSteps
         public override string StepName => "Recreate System Tables";
 
         private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private ScriptFilesComparerFactory _scriptFilesComparerFactory;
-
-        private IDBCommands _dbCommands;
         private ScriptFilesComparersProvider _scriptFilesComparersProvider;
 
+        private IDBCommands _dbCommands;
+
+
         public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                        ScriptFilesComparerFactory scriptFilesComparerFactory)
+                                            ScriptFilesComparersProvider scriptFilesComparersProvider)
         {
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
-            scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
+            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
 
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
-            _scriptFilesComparerFactory = scriptFilesComparerFactory;
+            _scriptFilesComparersProvider = scriptFilesComparersProvider;
         }
 
         public override void Prepare(ProjectConfigItem projectConfig)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
+            _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
+            _scriptFilesComparersProvider.Reload();
+
             _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
-            _scriptFilesComparersProvider = new ScriptFilesComparersProvider(_scriptFilesComparerFactory, _dbCommands, projectConfig);
         }
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
@@ -46,7 +48,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
             _dbCommands.RecreateDBVersionsTables();
-            _scriptFilesComparersProvider.Reload();
+            
+            //_scriptFilesComparersProvider.Reload();
         }
 
 

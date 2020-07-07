@@ -12,31 +12,30 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteScriptsStep : AutoVersionsDbStep
+    public class ExecuteScriptsStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => $"Run Scripts";
 
 
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
         private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private ScriptFilesComparerFactory _scriptFilesComparerFactory;
+        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
 
         private IDBCommands _dbCommands;
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
 
 
         public ExecuteScriptsStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
                                     DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                    ScriptFilesComparerFactory scriptFilesComparerFactory,
+                                    ScriptFilesComparersProvider scriptFilesComparersProvider,
                                     ExecuteSingleFileScriptStep executeSingleFileScriptStep)
         {
             notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
-            scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
+            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
 
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
-            _scriptFilesComparerFactory = scriptFilesComparerFactory;
+            _scriptFilesComparersProvider = scriptFilesComparersProvider;
 
             InternalNotificationableAction = executeSingleFileScriptStep;
         }
@@ -45,9 +44,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
-            _scriptFilesComparersProvider = new ScriptFilesComparersProvider(_scriptFilesComparerFactory, _dbCommands, projectConfig);
+            _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
+            _scriptFilesComparersProvider.Reload();
 
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+            
             (InternalNotificationableAction as ExecuteSingleFileScriptStep).SetDBCommands(_dbCommands);
         }
 
@@ -139,5 +140,43 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             }
 
         }
+
+
+
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~CreateBackupStep() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_dbCommands != null)
+                {
+                    _dbCommands.Dispose();
+                }
+
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
+
     }
 }

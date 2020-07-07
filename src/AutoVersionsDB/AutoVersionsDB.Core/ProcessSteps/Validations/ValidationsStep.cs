@@ -1,32 +1,46 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
+using System;
 using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class ValidationsStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public abstract class ValidationsStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => "Validation";
 
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private bool _shouldContinueWhenFindError;
-        private List<ValidatorBase> _validators;
+     
+        protected abstract bool ShouldContinueWhenFindError { get; }
+        protected List<ValidatorBase> Validators { get; }
 
         public ValidationsStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                        bool shouldContinueWhenFindError,
-                                        SingleValidationStep singleValidationStep,
-                                        List<ValidatorBase> validators)
+                                        SingleValidationStep singleValidationStep)
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
-            _shouldContinueWhenFindError = shouldContinueWhenFindError;
             InternalNotificationableAction = singleValidationStep;
-            _validators = validators;
+            
+            Validators = new List<ValidatorBase>();
         }
+
+
+
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            SetValidators(projectConfig);
+        }
+
+        protected abstract void SetValidators(ProjectConfigItem projectConfig);
+
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
-            return _validators.Count;
+            return Validators.Count;
         }
 
 
@@ -34,9 +48,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         {
             using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(_validators.Count))
             {
-                foreach (ValidatorBase validator in _validators)
+                foreach (ValidatorBase validator in Validators)
                 {
-                    if (_shouldContinueWhenFindError
+                    if (ShouldContinueWhenFindError
                         || !_notificationExecutersFactoryManager.HasError)
                     {
                         ValidatorStepArgs validatorStepArgs = new ValidatorStepArgs(validator);
@@ -46,5 +60,42 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
                 }
             }
         }
+
+
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~ValidationsStep() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+
+                foreach (IDisposable validatorItem in Validators)
+                {
+                    validatorItem.Dispose();
+                }
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
+
     }
 }

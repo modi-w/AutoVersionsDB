@@ -1,16 +1,21 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class SingleValidationStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ValidatorStepArgs>
+    public class SingleValidationStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ProjectConfigItem, ValidatorStepArgs>
     {
         public override string StepName => "Validate";
 
 
 
         public SingleValidationStep()
+        {
+        }
+
+        public override void Prepare(ProjectConfigItem projectConfig)
         {
         }
 
