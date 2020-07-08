@@ -11,26 +11,25 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class DBStateValidationStep : ValidationsStep
     {
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
+        private ScriptFilesComparersManager _scriptFilesComparersManager;
 
         protected override bool ShouldContinueWhenFindError => false;
 
         public DBStateValidationStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
                                             SingleValidationStep singleValidationStep,
-                                            ScriptFilesComparersProvider scriptFilesComparersProvider)
+                                            ScriptFilesComparersManager scriptFilesComparersManager)
             : base(notificationExecutersFactoryManager, singleValidationStep)
         {
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
+            _scriptFilesComparersManager = scriptFilesComparersManager;
         }
 
         protected override void SetValidators(ProjectConfigItem projectConfig)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-       //     _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
-            _scriptFilesComparersProvider.Reload(projectConfig);
+            ScriptFilesComparersProvider scriptFilesComparersProvider = _scriptFilesComparersManager.GetScriptFilesComparersProvider(projectConfig.ProjectGuid);
 
-            IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator = new IsHistoryExecutedFilesChangedValidator(_scriptFilesComparersProvider);
+            IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator = new IsHistoryExecutedFilesChangedValidator(scriptFilesComparersProvider);
             Validators.Add(isHistoryExecutedFilesChangedValidator);
         }
 

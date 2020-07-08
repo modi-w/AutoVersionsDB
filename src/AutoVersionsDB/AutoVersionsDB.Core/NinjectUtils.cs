@@ -26,7 +26,8 @@ namespace AutoVersionsDB.Core
 
             kernel.Bind<NotifictionStatesHistoryManager>().To<NotifictionStatesHistoryManager>().InSingletonScope();
             kernel.Bind<NotificationExecutersFactoryManager>().To<NotificationExecutersFactoryManager>().InSingletonScope();
-
+            kernel.Bind<ScriptFilesComparersManager>().To<ScriptFilesComparersManager>().InSingletonScope();
+            
         }
     }
 }

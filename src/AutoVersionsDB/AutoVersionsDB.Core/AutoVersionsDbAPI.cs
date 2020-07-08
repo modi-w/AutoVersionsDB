@@ -17,16 +17,24 @@ namespace AutoVersionsDB.Core
 
         private readonly object _processSyncLock = new object();
 
-
-
-        public DBCommandsFactoryProvider DBCommandsFactoryProvider { get; private set; }
-        public ScriptFilesComparersProvider ScriptFilesComparersProvider { get; private set; }
-        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; private set; }
-
-        public ProjectConfigItem ProjectConfigItem { get; private set; }
         private ArtifactExtractor _currentArtifactExtractor;
 
-        public ConfigProjectsManager ConfigProjectsManager { get; private set; }
+
+        public DBCommandsFactoryProvider DBCommandsFactoryProvider { get; }
+        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get;  }
+
+        public ProjectConfigItem ProjectConfigItem { get; private set; }
+       
+        public ConfigProjectsManager ConfigProjectsManager { get; }
+
+        public ScriptFilesComparersManager ScriptFilesComparersManager { get; }
+        public ScriptFilesComparersProvider CurrentScriptFilesComparersProvider
+        {
+            get
+            {
+                return ScriptFilesComparersManager.GetScriptFilesComparersProvider(ProjectConfigItem.ProjectGuid);
+            }
+        }
 
 
 
@@ -69,13 +77,13 @@ namespace AutoVersionsDB.Core
 
         public AutoVersionsDbAPI(ConfigProjectsManager configProjectsManager,
                                 DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                ScriptFilesComparersProvider scriptFilesComparersProvider,
+                                ScriptFilesComparersManager scriptFilesComparersManager,
                                 NotificationExecutersFactoryManager notificationExecutersFactoryManager)
         {
             ConfigProjectsManager = configProjectsManager;
 
             DBCommandsFactoryProvider = dbCommandsFactoryProvider;
-            ScriptFilesComparersProvider = scriptFilesComparersProvider;
+            ScriptFilesComparersManager = scriptFilesComparersManager;
 
             NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
 
@@ -122,8 +130,7 @@ namespace AutoVersionsDB.Core
 
         private void RecreateScriptFilesComparersProvider()
         {
-         //   ScriptFilesComparersProvider.SetProjectConfig(ProjectConfigItem);
-            ScriptFilesComparersProvider.Reload(ProjectConfigItem);
+            ScriptFilesComparersManager.Load(ProjectConfigItem);
         }
 
 
@@ -336,7 +343,7 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                scriptFileItem = ScriptFilesComparersProvider.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                scriptFileItem = CurrentScriptFilesComparersProvider.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
                 RecreateScriptFilesComparersProvider();
             }
 
@@ -349,7 +356,7 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                scriptFileItem = ScriptFilesComparersProvider.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                scriptFileItem = CurrentScriptFilesComparersProvider.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
                 RecreateScriptFilesComparersProvider();
             }
 
@@ -367,7 +374,7 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                scriptFileItem = ScriptFilesComparersProvider.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                scriptFileItem = CurrentScriptFilesComparersProvider.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
                 RecreateScriptFilesComparersProvider();
             }
 
@@ -379,22 +386,27 @@ namespace AutoVersionsDB.Core
 
 
 
-
-
         #region IDisposable
+
+        private bool _disposed = false;
+
+        ~AutoVersionsDbAPI() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        ~AutoVersionsDbAPI()
-        {
-            Dispose(false);
-        }
-
+        // Protected implementation of Dispose pattern.
         protected virtual void Dispose(bool disposing)
         {
+            if (_disposed)
+            {
+                return;
+            }
+
             if (disposing)
             {
                 if (_currentArtifactExtractor != null)
@@ -402,10 +414,19 @@ namespace AutoVersionsDB.Core
                     _currentArtifactExtractor.Dispose();
                     _currentArtifactExtractor = null;
                 }
+
+                if (ScriptFilesComparersManager != null)
+                {
+                    ScriptFilesComparersManager.Dispose();
+                }
+
             }
+
+            _disposed = true;
         }
 
         #endregion
+
 
     }
 }

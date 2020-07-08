@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
     public class ScriptFilesComparersProvider : IDisposable
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private ScriptFilesComparerFactory _scriptFilesComparerFactory;
+        private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
 
         private ProjectConfigItem _projectConfig;
 
@@ -23,34 +23,25 @@ namespace AutoVersionsDB.Core.ScriptFiles
         public ScriptFilesComparerBase DevDummyDataScriptFilesComparer { get; private set; }
 
         public ScriptFilesComparersProvider(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                            ScriptFilesComparerFactory scriptFilesComparerFactory)
+                                            ScriptFilesComparerFactory scriptFilesComparerFactory,
+                                            ProjectConfigItem projectConfig)
         {
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
-        }
-
-
-        //public void SetProjectConfig(ProjectConfigItem projectConfig)
-        //{
-        //    projectConfig.ThrowIfNull(nameof(projectConfig));
-
-        //    _projectConfig = projectConfig;
-        //    Reload();
-        //}
-
-        public void Reload(ProjectConfigItem projectConfig)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
 
             _projectConfig = projectConfig;
 
-            if (_dbCommands != null)
-            {
-                _dbCommands.Dispose();
-            }
-
             _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_projectConfig.DBTypeCode, _projectConfig.ConnStr, _projectConfig.DBCommandsTimeout);
+        }
 
+
+
+        public void Reload()
+        {
             IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(_dbCommands, _projectConfig.IncrementalScriptsFolderPath);
             RepeatableScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<RepeatableScriptFileType>(_dbCommands, _projectConfig.RepeatableScriptsFolderPath);
 

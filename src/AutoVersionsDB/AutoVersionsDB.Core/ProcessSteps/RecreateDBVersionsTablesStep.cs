@@ -15,27 +15,26 @@ namespace AutoVersionsDB.Core.ProcessSteps
         public override string StepName => "Recreate System Tables";
 
         private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
+        private ScriptFilesComparersManager _scriptFilesComparersManager;
 
+        private ProjectConfigItem _projectConfig;
         private IDBCommands _dbCommands;
 
-
         public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                            ScriptFilesComparersProvider scriptFilesComparersProvider)
+                                            ScriptFilesComparersManager scriptFilesComparersManager)
         {
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
-            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
+            scriptFilesComparersManager.ThrowIfNull(nameof(scriptFilesComparersManager));
 
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
+            _scriptFilesComparersManager = scriptFilesComparersManager;
         }
 
         public override void Prepare(ProjectConfigItem projectConfig)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            //_scriptFilesComparersProvider.SetProjectConfig(projectConfig);
-            _scriptFilesComparersProvider.Reload(projectConfig);
+           
+            _projectConfig = projectConfig;
 
             _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
         }
@@ -48,8 +47,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
         public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
             _dbCommands.RecreateDBVersionsTables();
-            
-            //_scriptFilesComparersProvider.Reload();
+
+            ScriptFilesComparersProvider scriptFilesComparersProvider = _scriptFilesComparersManager.GetScriptFilesComparersProvider(_projectConfig.ProjectGuid);
+            scriptFilesComparersProvider.Reload();
         }
 
 

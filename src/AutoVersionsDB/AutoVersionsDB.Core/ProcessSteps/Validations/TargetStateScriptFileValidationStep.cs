@@ -11,30 +11,28 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class TargetStateScriptFileValidationStep : ValidationsStep
     {
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
+        private ScriptFilesComparersManager _scriptFilesComparersManager;
 
         protected override bool ShouldContinueWhenFindError => true;
 
         public TargetStateScriptFileValidationStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
                                                     SingleValidationStep singleValidationStep,
-                                                    ScriptFilesComparersProvider scriptFilesComparersProvider)
+                                                    ScriptFilesComparersManager scriptFilesComparersManager)
             : base(notificationExecutersFactoryManager, singleValidationStep)
         {
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
-
+            _scriptFilesComparersManager = scriptFilesComparersManager;
         }
 
         protected override void SetValidators(ProjectConfigItem projectConfig)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-        //    _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
-            _scriptFilesComparersProvider.Reload(projectConfig);
+            ScriptFilesComparersProvider scriptFilesComparersProvider = _scriptFilesComparersManager.GetScriptFilesComparersProvider(projectConfig.ProjectGuid);
 
-            TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(_scriptFilesComparersProvider);
+            TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(scriptFilesComparersProvider);
             Validators.Add(targetStateScriptFileExistValidator);
-            
-            IsTargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new IsTargetScriptFiletAlreadyExecutedValidator(_scriptFilesComparersProvider);
+
+            IsTargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new IsTargetScriptFiletAlreadyExecutedValidator(scriptFilesComparersProvider);
             Validators.Add(isTargetScriptFiletAlreadyExecutedValidator);
 
         }
