@@ -28,7 +28,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
+        //    _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
+            _scriptFilesComparersProvider.Reload(projectConfig);
 
             TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(_scriptFilesComparersProvider);
             Validators.Add(targetStateScriptFileExistValidator);

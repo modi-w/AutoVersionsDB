@@ -122,8 +122,8 @@ namespace AutoVersionsDB.Core
 
         private void RecreateScriptFilesComparersProvider()
         {
-            ScriptFilesComparersProvider.SetProjectConfig(ProjectConfigItem);
-            ScriptFilesComparersProvider.Reload();
+         //   ScriptFilesComparersProvider.SetProjectConfig(ProjectConfigItem);
+            ScriptFilesComparersProvider.Reload(ProjectConfigItem);
         }
 
 

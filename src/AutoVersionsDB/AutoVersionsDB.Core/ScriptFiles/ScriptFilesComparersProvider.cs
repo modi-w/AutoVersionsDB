@@ -30,15 +30,20 @@ namespace AutoVersionsDB.Core.ScriptFiles
         }
 
 
-        public void SetProjectConfig(ProjectConfigItem projectConfig)
+        //public void SetProjectConfig(ProjectConfigItem projectConfig)
+        //{
+        //    projectConfig.ThrowIfNull(nameof(projectConfig));
+
+        //    _projectConfig = projectConfig;
+        //    Reload();
+        //}
+
+        public void Reload(ProjectConfigItem projectConfig)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
             _projectConfig = projectConfig;
-        }
 
-        public void Reload()
-        {
             if (_dbCommands != null)
             {
                 _dbCommands.Dispose();

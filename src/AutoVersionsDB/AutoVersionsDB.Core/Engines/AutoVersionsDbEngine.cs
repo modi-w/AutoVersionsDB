@@ -25,6 +25,7 @@ namespace AutoVersionsDB.Core.Engines
                                     NotificationableActionStepBase rollbackStep)
             : base(notificationExecutersFactoryManager, rollbackStep)
         {
+            IsVirtualExecution = false;
         }
 
 

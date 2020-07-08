@@ -29,7 +29,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public override void Prepare(NotificationableEngineConfig notificationableEngineConfig)
         {
-            this.Prepare(notificationableEngineConfig);
+            this.Prepare(notificationableEngineConfig as TNotificationableEngineConfig);
         }
         public abstract void Prepare(TNotificationableEngineConfig notificationableEngineConfig);
 

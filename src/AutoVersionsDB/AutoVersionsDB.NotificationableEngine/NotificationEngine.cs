@@ -43,11 +43,17 @@ namespace AutoVersionsDB.NotificationableEngine
 
             NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
 
+            EngineMetaData = new Dictionary<string, string>();
             EngineMetaData["EngineTypeName"] = EngineTypeName;
         }
 
         public void Prepare(NotificationableEngineConfig notificationableEngineConfig)
         {
+            if (RollbackStep != null)
+            {
+                RollbackStep.Prepare(notificationableEngineConfig);
+            }
+
             foreach (NotificationableActionStepBase processStep in ProcessSteps)
             {
                 processStep.Prepare(notificationableEngineConfig);

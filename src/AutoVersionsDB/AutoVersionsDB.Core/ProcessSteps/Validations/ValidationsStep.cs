@@ -5,6 +5,7 @@ using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -86,7 +87,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
             if (disposing)
             {
 
-                foreach (IDisposable validatorItem in Validators)
+                foreach (IDisposable validatorItem in Validators.Where(e=>e is IDisposable))
                 {
                     validatorItem.Dispose();
                 }

@@ -27,7 +27,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
+       //     _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
+            _scriptFilesComparersProvider.Reload(projectConfig);
 
             IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator = new IsHistoryExecutedFilesChangedValidator(_scriptFilesComparersProvider);
             Validators.Add(isHistoryExecutedFilesChangedValidator);

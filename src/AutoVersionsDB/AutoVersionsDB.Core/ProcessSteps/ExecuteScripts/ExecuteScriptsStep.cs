@@ -44,8 +44,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            _scriptFilesComparersProvider.SetProjectConfig(projectConfig);
-            _scriptFilesComparersProvider.Reload();
+            //_scriptFilesComparersProvider.SetProjectConfig(projectConfig);
+            _scriptFilesComparersProvider.Reload(projectConfig);
 
             _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
             
