@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
 
 
@@ -6,6 +7,7 @@ namespace AutoVersionsDB.Core.Engines
 {
     public abstract class AutoVersionsDbEngine : NotificationEngine<AutoVersionsDbProcessState, AutoVersionsDBExecutionParams, ProjectConfigItem>
     {
+
         private bool _isVirtualExecution { get; set; }
         public bool IsVirtualExecution
         {
@@ -26,7 +28,9 @@ namespace AutoVersionsDB.Core.Engines
             : base(notificationExecutersFactoryManager, rollbackStep)
         {
             IsVirtualExecution = false;
+
         }
+
 
 
     }

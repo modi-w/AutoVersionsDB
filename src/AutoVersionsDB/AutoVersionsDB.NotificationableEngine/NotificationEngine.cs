@@ -33,6 +33,8 @@ namespace AutoVersionsDB.NotificationableEngine
         public NotificationableActionStepBase RollbackStep { get; }
         public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; }
 
+        public event EventHandler<PrepareEngineEventArgs> Preparing;
+        public event EventHandler<PrepareEngineEventArgs> Prepared;
 
         public NotificationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
                                     NotificationableActionStepBase rollbackStep)
@@ -49,6 +51,8 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public void Prepare(NotificationableEngineConfig notificationableEngineConfig)
         {
+            raisePreparing(notificationableEngineConfig);
+
             if (RollbackStep != null)
             {
                 RollbackStep.Prepare(notificationableEngineConfig);
@@ -58,6 +62,26 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 processStep.Prepare(notificationableEngineConfig);
             }
+
+            raisePrepared(notificationableEngineConfig);
+        }
+
+        private void raisePreparing(NotificationableEngineConfig NotificationableEngineConfig)
+        {
+            OnPreparing(new PrepareEngineEventArgs(NotificationableEngineConfig));
+        }
+        protected virtual void OnPreparing(PrepareEngineEventArgs e)
+        {
+            this.Preparing?.Invoke(this, e);
+        }
+
+        private void raisePrepared(NotificationableEngineConfig NotificationableEngineConfig)
+        {
+            OnPrepared(new PrepareEngineEventArgs(NotificationableEngineConfig));
+        }
+        protected virtual void OnPrepared(PrepareEngineEventArgs e)
+        {
+            this.Prepared?.Invoke(this, e);
         }
 
 
@@ -178,6 +202,8 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             base.Prepare(notificationableEngineConfig);
         }
+
+
 
         public void Run(TExecutionParams executionParams)
         {
