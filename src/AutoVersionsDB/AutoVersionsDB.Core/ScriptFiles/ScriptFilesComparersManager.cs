@@ -70,10 +70,10 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             if (disposing)
             {
-                foreach (var sriptFilesComparerProvider in ScriptFilesComparersProviders.Values)
-                {
-                    sriptFilesComparerProvider.Dispose();
-                }
+                //foreach (var sriptFilesComparerProvider in ScriptFilesComparersProviders.Values)
+                //{
+                //    sriptFilesComparerProvider.Dispose();
+                //}
             }
 
             _disposed = true;

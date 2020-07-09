@@ -22,6 +22,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Act
             _autoVersionsDbAPI.SetDBStateByVirtualExecution(c_targetStateFile_MiddleState);
 
+
             //Assert
             assertProccessErrors();
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);

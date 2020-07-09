@@ -91,6 +91,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _autoVersionsDbAPI.SetDBToSpecificState(c_targetStateFile_MiddleState, false);
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
             Assert.That(_autoVersionsDbAPI.ErrorCode == "IsTargetScriptFiletAlreadyExecuted");
         }

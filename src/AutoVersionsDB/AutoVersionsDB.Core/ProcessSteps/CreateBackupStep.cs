@@ -24,6 +24,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
         private IDBCommands _dbCommands;
+        private IDBQueryStatus _dbQueryStatus;
         private IDBBackupRestoreCommands _dbBackupRestoreCommands;
         private DBBackupStatusNotifyer _dbBackupStatusNotifyer;
 
@@ -50,11 +51,11 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
             _dbBackupBaseFolderPath = projectConfig.DBBackupBaseFolder;
 
-            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout); 
-            _dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout); 
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+            _dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout);
 
-            IDBQueryStatus dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
-            _dbBackupStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
+            _dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
+            _dbBackupStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), _dbQueryStatus) as DBBackupStatusNotifyer;
 
             _dbBackupStatusNotifyer.OnDBProcessStatus += DBBackupStatusNotifyer_OnDBProcessStatus;
         }
@@ -140,6 +141,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 {
                     _dbBackupStatusNotifyer.OnDBProcessStatus -= DBBackupStatusNotifyer_OnDBProcessStatus;
                 }
+
+                if (_dbQueryStatus != null)
+                {
+                    _dbQueryStatus.Dispose();
+                }
+                
 
                 if (_tempNotificationWrapperExecuter != null)
                 {

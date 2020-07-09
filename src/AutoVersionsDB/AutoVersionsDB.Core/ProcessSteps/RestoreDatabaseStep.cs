@@ -23,6 +23,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         private IDBCommands _dbCommands;
+        private IDBQueryStatus _dbQueryStatus;
         private IDBBackupRestoreCommands _dbBackupRestoreCommands;
         private DBRestoreStatusNotifyer _dbRestoreStatusNotifyer;
 
@@ -47,8 +48,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
             _dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout);
 
-            IDBQueryStatus dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
-            _dbRestoreStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus) as DBRestoreStatusNotifyer;
+            _dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
+            _dbRestoreStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), _dbQueryStatus) as DBRestoreStatusNotifyer;
 
             _dbRestoreStatusNotifyer.OnDBProcessStatus += DBRestoreStatusNotifyer_OnDBProcessStatus;
         }
@@ -132,6 +133,11 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 if (_dbRestoreStatusNotifyer != null)
                 {
                     _dbRestoreStatusNotifyer.OnDBProcessStatus -= DBRestoreStatusNotifyer_OnDBProcessStatus;
+                }
+
+                if (_dbQueryStatus != null)
+                {
+                    _dbQueryStatus.Dispose();
                 }
 
                 if (_tempNotificationWrapperExecuter != null)

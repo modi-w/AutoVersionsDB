@@ -19,6 +19,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 IsDevEnvironment = false
             };
 
+
             //Arrange
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
 
@@ -74,8 +75,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Assert
-            assertProccessErrors();
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+            assertProccessErrors();
         }
 
 
@@ -87,12 +88,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DeliveryEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
+        
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+
 
             //Act
             _autoVersionsDbAPI.ValidateAll();
 
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
             Assert.That(_autoVersionsDbAPI.ErrorCode == "IsHistoryExecutedFilesChanged");
         }
@@ -106,11 +111,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DeliveryEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+
             //Act
             _autoVersionsDbAPI.ValidateAll();
 
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
             Assert.That(_autoVersionsDbAPI.ErrorCode == "IsHistoryExecutedFilesChanged");
         }
@@ -124,12 +132,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_MissingSystemTables.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+
 
             //Act
             _autoVersionsDbAPI.ValidateAll();
 
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
             Assert.That(_autoVersionsDbAPI.ErrorCode == "SystemTables");
         }
@@ -145,12 +156,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             projectConfig.DeliveryArtifactFolderPath += "_NotExistFolderSuffix";
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
 
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
             _autoVersionsDbAPI.ValidateAll();
 
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
             Assert.That(_autoVersionsDbAPI.ErrorCode == "ArtifactFile");
         }

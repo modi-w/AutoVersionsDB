@@ -31,7 +31,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public List<NotificationableActionStepBase> ProcessSteps { get; }
         public NotificationableActionStepBase RollbackStep { get; }
-        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get;  }
+        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; }
 
 
         public NotificationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
@@ -139,7 +139,15 @@ namespace AutoVersionsDB.NotificationableEngine
             if (disposing)
             {
 
-                foreach (IDisposable processStep in ProcessSteps)
+                if (RollbackStep != null)
+                {
+                    if (RollbackStep is IDisposable)
+                    {
+                        (RollbackStep as IDisposable).Dispose();
+                    }
+                }
+
+                foreach (IDisposable processStep in ProcessSteps.Where(e=> e is IDisposable))
                 {
                     processStep.Dispose();
                 }
@@ -157,7 +165,7 @@ namespace AutoVersionsDB.NotificationableEngine
     public abstract class NotificationEngine<TProcessState, TExecutionParams, TNotificationableEngineConfig> : NotificationEngine<TProcessState>
         where TProcessState : ProcessStateBase, new()
         where TExecutionParams : ExecutionParams
-        where TNotificationableEngineConfig: NotificationableEngineConfig
+        where TNotificationableEngineConfig : NotificationableEngineConfig
     {
 
         public NotificationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
@@ -166,7 +174,7 @@ namespace AutoVersionsDB.NotificationableEngine
         {
         }
 
-        public void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
+        public virtual void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
         {
             base.Prepare(notificationableEngineConfig);
         }
