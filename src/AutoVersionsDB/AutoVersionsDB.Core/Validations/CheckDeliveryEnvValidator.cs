@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.Validations
 
         public override string ErrorInstructionsMessage => "Could not run this command on Delivery Environment";
 
-        private bool _isDevEnvironment;
+        private readonly bool _isDevEnvironment;
 
         public CheckDeliveryEnvValidator(bool isDevEnvironment)
         {

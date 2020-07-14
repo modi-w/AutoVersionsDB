@@ -1,4 +1,6 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
@@ -11,73 +13,49 @@ using System.IO;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public static class CreateBackupStepFluent
-    {
-        public static AutoVersionsDbEngine CreateBackup(this AutoVersionsDbEngine autoVersionsDbEngine,
-                                                        IDBCommands dbCommands,
-                                                        IDBBackupRestoreCommands dbBackupRestoreCommands,
-                                                        IDBQueryStatus dbQueryStatus,
-                                                        string dbBackupBaseFolderPath)
-        {
-            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
-            dbCommands.ThrowIfNull(nameof(dbCommands));
-            dbBackupRestoreCommands.ThrowIfNull(nameof(dbBackupRestoreCommands));
-            dbQueryStatus.ThrowIfNull(nameof(dbQueryStatus));
-            dbBackupBaseFolderPath.ThrowIfNull(nameof(dbBackupBaseFolderPath));
 
-            NotificationExecutersFactoryManager notificationExecutersFactoryManager = NinjectUtils.KernelInstance.Get<NotificationExecutersFactoryManager>();
-
-            DBBackupStatusNotifyer dbBackupStatusNotifyer =
-                DBProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
-
-
-            CreateBackupStep createBackupStep =
-                new CreateBackupStep(notificationExecutersFactoryManager,
-                                                dbCommands,
-                                                dbBackupRestoreCommands,
-                                                dbBackupStatusNotifyer,
-                                                dbBackupBaseFolderPath);
-
-
-            autoVersionsDbEngine.AppendProcessStep(createBackupStep);
-
-            return autoVersionsDbEngine;
-        }
-    }
-
-
-    public class CreateBackupStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public class CreateBackupStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => "Create Backup";
 
         private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private readonly IDBCommands _dbCommands;
-        private readonly IDBBackupRestoreCommands _dbBackupRestoreCommands;
-        private readonly DBBackupStatusNotifyer _dbBackupStatusNotifyer;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        private readonly string _dbBackupBaseFolderPath;
+
+
+        private IDBCommands _dbCommands;
+        private IDBQueryStatus _dbQueryStatus;
+        private IDBBackupRestoreCommands _dbBackupRestoreCommands;
+        private DBBackupStatusNotifyer _dbBackupStatusNotifyer;
+
+        private string _dbBackupBaseFolderPath;
 
 
         private NotificationWrapperExecuter _tempNotificationWrapperExecuter;
 
         public CreateBackupStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                            IDBCommands dbCommands,
-                                            IDBBackupRestoreCommands dbBackupRestoreCommands,
-                                            DBBackupStatusNotifyer dbBackupStatusNotifyer,
-                                            string dbBackupBaseFolderPath)
+                                DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
             notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
-            dbCommands.ThrowIfNull(nameof(dbCommands));
-            dbBackupRestoreCommands.ThrowIfNull(nameof(dbBackupRestoreCommands));
-            dbBackupStatusNotifyer.ThrowIfNull(nameof(dbBackupStatusNotifyer));
-            dbBackupBaseFolderPath.ThrowIfNull(nameof(dbBackupBaseFolderPath));
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
 
 
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
-            _dbCommands = dbCommands;
-            _dbBackupRestoreCommands = dbBackupRestoreCommands;
-            _dbBackupStatusNotifyer = dbBackupStatusNotifyer;
-            _dbBackupBaseFolderPath = dbBackupBaseFolderPath;
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+
+        }
+
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            _dbBackupBaseFolderPath = projectConfig.DBBackupBaseFolder;
+
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+            _dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout);
+
+            _dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
+            _dbBackupStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), _dbQueryStatus) as DBBackupStatusNotifyer;
 
             _dbBackupStatusNotifyer.OnDBProcessStatus += DBBackupStatusNotifyer_OnDBProcessStatus;
         }
@@ -117,7 +95,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         private void DBBackupStatusNotifyer_OnDBProcessStatus(double precent)
         {
-            if (_tempNotificationWrapperExecuter.CurrentNotificationStateItem!= null)
+            if (_tempNotificationWrapperExecuter.CurrentNotificationStateItem != null)
             {
                 _tempNotificationWrapperExecuter.CurrentNotificationStateItem.StepsProgressByValue(Convert.ToInt32(precent));
                 _tempNotificationWrapperExecuter.CallHandleNotificationStateChanged();
@@ -125,5 +103,66 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
+
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~CreateBackupStep() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_dbCommands != null)
+                {
+                    _dbCommands.Dispose();
+                }
+
+                if (_dbBackupRestoreCommands != null)
+                {
+                    _dbBackupRestoreCommands.Dispose();
+                }
+
+                if (_dbBackupStatusNotifyer != null)
+                {
+                    _dbBackupStatusNotifyer.OnDBProcessStatus -= DBBackupStatusNotifyer_OnDBProcessStatus;
+                }
+
+                if (_dbQueryStatus != null)
+                {
+                    _dbQueryStatus.Dispose();
+                }
+                
+
+                if (_tempNotificationWrapperExecuter != null)
+                {
+                    _tempNotificationWrapperExecuter.Dispose();
+                }
+
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
+
     }
+
+
+
+
 }

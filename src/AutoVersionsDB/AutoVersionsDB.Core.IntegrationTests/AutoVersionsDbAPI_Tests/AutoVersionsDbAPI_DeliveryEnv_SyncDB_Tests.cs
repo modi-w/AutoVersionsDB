@@ -13,12 +13,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         [Test]
         public void DBStateInMiddle___ShouldBeInFinalState_ShouldNotRunDevDummyData([ValueSource("ProjectConfigItemArray_DeliveryEnv_WithDevDummyDataFiles")] ProjectConfigItemForTestBase projectConfig)
         {
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+
             //Arrange
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
-            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
 
             //Act

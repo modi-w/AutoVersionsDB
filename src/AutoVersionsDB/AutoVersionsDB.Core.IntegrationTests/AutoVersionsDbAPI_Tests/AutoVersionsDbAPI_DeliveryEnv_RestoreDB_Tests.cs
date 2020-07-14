@@ -31,6 +31,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             AssertRestore(projectConfig, dbBackupFileFileFullPath);
+
         }
 
         //Comment: SetDBToSpecificState cannot run on delivery environment

@@ -1,6 +1,8 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Data;
@@ -9,49 +11,29 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public static class FinalizeProcessStepFluent
-    {
-        public static AutoVersionsDbEngine FinalizeProcess(this AutoVersionsDbEngine autoVersionsDbEngine,
-                                                            IDBCommands dbCommands,
-                                                            bool isVirtualExecution,
-                                                            string executionTypeName)
-        {
-            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
-            dbCommands.ThrowIfNull(nameof(dbCommands));
-            executionTypeName.ThrowIfNull(nameof(executionTypeName));
-
-            FinalizeProcessStep finalizeProcessStep =
-                new FinalizeProcessStep(dbCommands,
-                                        isVirtualExecution,
-                                        executionTypeName);
-
-
-            autoVersionsDbEngine.AppendProcessStep(finalizeProcessStep);
-
-            return autoVersionsDbEngine;
-        }
-    }
-
-
-    public class FinalizeProcessStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public class FinalizeProcessStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => "Finalize Process";
 
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
         private IDBCommands _dbCommands;
 
-        public bool IsVirtualExecution { get; private set; }
-        public string ExecutionTypeName { get; private set; }
 
 
-        public FinalizeProcessStep(IDBCommands dbCommands, 
-                                            bool isVirtualExecution,
-                                            string executionTypeName)
+        public FinalizeProcessStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
-            _dbCommands = dbCommands;
-            IsVirtualExecution = isVirtualExecution;
-            ExecutionTypeName = executionTypeName;
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+
+        }
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
@@ -74,12 +56,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
             executionHistoryRow["DBScriptsExecutionHistoryID"] = 0;
 
             executionHistoryRow["StartProcessDateTime"] = processState.StartProcessDateTime;
-            executionHistoryRow["ExecutionTypeName"] = ExecutionTypeName;
+            executionHistoryRow["ExecutionTypeName"] = processState.EngineMetaData["EngineTypeName"];
             executionHistoryRow["EndProcessDateTime"] = processState.EndProcessDateTime;
             executionHistoryRow["ProcessDurationInMs"] = processState.ProcessDurationInMs;
             executionHistoryRow["NumOfScriptFiles"] = processState.ExecutedFiles.Count;
             executionHistoryRow["DBBackupFileFullPath"] = processState.DBBackupFileFullPath;
-            executionHistoryRow["IsVirtualExecution"] = IsVirtualExecution;
+            executionHistoryRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
 
             dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
             _dbCommands.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
@@ -94,10 +76,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 newFileRow["Filename"] = executedFiles.Filename;
                 newFileRow["FileFullPath"] = executedFiles.FileFullPath;
                 newFileRow["ScriptFileType"] = executedFiles.FileTypeCode;
-                newFileRow["IsVirtualExecution"] = IsVirtualExecution;
+                newFileRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture); 
                 newFileRow["ComputedFileHash"] = executedFiles.ComputedHash;
                 newFileRow["ComputedFileHashDateTime"] = executedFiles.ComputedHashDateTime;
-                
+
 
 
 
@@ -118,6 +100,44 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~FinalizeProcessStep() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_dbCommands != null)
+                {
+                    _dbCommands.Dispose();
+                }
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
 
     }
+
+
+
+
+
 }

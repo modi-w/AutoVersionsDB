@@ -1,14 +1,17 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteSingleFileScriptStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ScriptFileInfoStepArgs>
+    public class ExecuteSingleFileScriptStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ProjectConfigItem, ScriptFileInfoStepArgs>
     {
         private string _stepName;
         public override string StepName => _stepName;
@@ -18,20 +21,13 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         private IDBCommands _dbCommands;
 
-        private bool _isVirtualExecution;
 
 
         public ExecuteSingleFileScriptStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                                ExecuteScriptBlockStep executeScriptBlockStep,
-                                                IDBCommands dbCommands,
-                                                bool isVirtualExecution)
+                                                ExecuteScriptBlockStep executeScriptBlockStep)
         {
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             InternalNotificationableAction = executeScriptBlockStep;
-            _dbCommands = dbCommands;
-
-            _isVirtualExecution = isVirtualExecution;
-
         }
 
 
@@ -39,6 +35,20 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         {
             _stepName = stepName;
         }
+
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+        }
+
+        public void SetDBCommands(IDBCommands dbCommands)
+        {
+            dbCommands.ThrowIfNull(nameof(dbCommands));
+
+            _dbCommands = dbCommands;
+
+            (InternalNotificationableAction as ExecuteScriptBlockStep).SetDBCommands(_dbCommands);
+        }
+
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
         {
@@ -58,8 +68,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             processState.ThrowIfNull(nameof(processState));
             actionStepArgs.ThrowIfNull(nameof(actionStepArgs));
 
+            bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
 
-            if (!_isVirtualExecution)
+            if (!isVirtualExecution)
             {
                 string sqlCommandStr = File.ReadAllText(actionStepArgs.ScriptFile.FileFullPath);
 

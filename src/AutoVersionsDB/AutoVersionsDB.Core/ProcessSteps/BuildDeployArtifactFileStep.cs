@@ -5,6 +5,8 @@ using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.ScriptFiles.Repeatable;
 using AutoVersionsDB.Core.Utils;
+using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.IO;
@@ -12,57 +14,38 @@ using System.IO.Compression;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public static class BuildDeployArtifactFileStepFluent
-    {
-        public static AutoVersionsDbEngine BuildDeployArtifactFile(this AutoVersionsDbEngine autoVersionsDbEngine,
-                                                        ScriptFilesComparersProvider scriptFilesComparersProvider,
-                                                        string dbName,
-                                                        ProjectConfigItem projectConfig)
-        {
-            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
-            scriptFilesComparersProvider.ThrowIfNull(nameof(scriptFilesComparersProvider));
-            dbName.ThrowIfNull(nameof(dbName));
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-
-
-            BuildDeployArtifactFileStep buildDeployArtifactFileStep =
-                new BuildDeployArtifactFileStep(scriptFilesComparersProvider,
-                                                            dbName,
-                                                            projectConfig.IncrementalScriptsFolderPath,
-                                                            projectConfig.RepeatableScriptsFolderPath,
-                                                            projectConfig.DeployArtifactFolderPath);
-
-
-            autoVersionsDbEngine.AppendProcessStep(buildDeployArtifactFileStep);
-
-            return autoVersionsDbEngine;
-        }
-    }
-
-
-    public class BuildDeployArtifactFileStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public class BuildDeployArtifactFileStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => "Build Deploy Artifact File";
 
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private IDBCommands _dbCommands;
+
         private string _dbName;
+
         private string _incrementalScriptsFolderPath;
         private string _repeatableScriptsFolderPath;
 
         private string _deployArtifactFolderPath;
 
-        public BuildDeployArtifactFileStep(ScriptFilesComparersProvider scriptFilesComparersProvider,
-                                                        string dbName,
-                                                        string incrementalScriptsFolderPath,
-                                                        string repeatableScriptsFolderPath,
-                                                        string deployArtifactFolderPath)
+        public BuildDeployArtifactFileStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
-            _dbName = dbName;
-            _incrementalScriptsFolderPath = incrementalScriptsFolderPath;
-            _repeatableScriptsFolderPath = repeatableScriptsFolderPath;
-            _deployArtifactFolderPath = deployArtifactFolderPath;
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+
+        }
+
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+
+            _dbName = _dbCommands.GetDataBaseName();
+            _incrementalScriptsFolderPath = projectConfig.IncrementalScriptsFolderPath;
+            _repeatableScriptsFolderPath = projectConfig.RepeatableScriptsFolderPath;
+            _deployArtifactFolderPath = projectConfig.DeployArtifactFolderPath;
         }
 
 
@@ -129,5 +112,42 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
             ZipFile.CreateFromDirectory(tempFolderForDeploy, targetFileFullPath);
         }
+
+
+
+
+
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~BuildDeployArtifactFileStep() => Dispose(false);
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_dbCommands != null)
+                {
+                    _dbCommands.Dispose();
+                }
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
+
     }
 }

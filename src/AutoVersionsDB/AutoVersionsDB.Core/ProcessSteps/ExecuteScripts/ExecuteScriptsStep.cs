@@ -1,47 +1,70 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
+using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteScriptsStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public class ExecuteScriptsStep : AutoVersionsDbStep, IDisposable
     {
         public override string StepName => $"Run Scripts";
 
 
-
         private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
+        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private ScriptFilesComparersManager _scriptFilesComparersManager;
 
-        private bool _isVirtualExecution;
+        private ProjectConfigItem _projectConfig;
+        private IDBCommands _dbCommands;
+
 
         public ExecuteScriptsStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                        ScriptFilesComparersProvider scriptFilesComparersProvider,
-                                        ExecuteSingleFileScriptStep runSingleFileScriptStep,
-                                        bool isVirtualExecution)
+                                    DBCommandsFactoryProvider dbCommandsFactoryProvider,
+                                    ScriptFilesComparersManager scriptFilesComparersManager,
+                                    ExecuteSingleFileScriptStep executeSingleFileScriptStep)
         {
-            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
-            InternalNotificationableAction = runSingleFileScriptStep;
+            notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            scriptFilesComparersManager.ThrowIfNull(nameof(scriptFilesComparersManager));
 
-            _isVirtualExecution = isVirtualExecution;
+            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _scriptFilesComparersManager = scriptFilesComparersManager;
+
+            InternalNotificationableAction = executeSingleFileScriptStep;
         }
 
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+           
+            _projectConfig = projectConfig;
+
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+
+            (InternalNotificationableAction as ExecuteSingleFileScriptStep).SetDBCommands(_dbCommands);
+        }
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
             processState.ThrowIfNull(nameof(processState));
 
+            ScriptFilesComparersProvider scriptFilesComparersProvider = _scriptFilesComparersManager.GetScriptFilesComparersProvider(_projectConfig.ProjectGuid);
 
-            int numOfFiles = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.GetPendingFilesToExecute(null).Count;
-            numOfFiles += _scriptFilesComparersProvider.RepeatableScriptFilesComparer.GetPendingFilesToExecute(null).Count;
 
-            if (_scriptFilesComparersProvider.DevDummyDataScriptFilesComparer != null)
+            int numOfFiles = scriptFilesComparersProvider.IncrementalScriptFilesComparer.GetPendingFilesToExecute(null).Count;
+            numOfFiles += scriptFilesComparersProvider.RepeatableScriptFilesComparer.GetPendingFilesToExecute(null).Count;
+
+            if (scriptFilesComparersProvider.DevDummyDataScriptFilesComparer != null)
             {
-                numOfFiles += _scriptFilesComparersProvider.DevDummyDataScriptFilesComparer.GetPendingFilesToExecute(null).Count;
+                numOfFiles += scriptFilesComparersProvider.DevDummyDataScriptFilesComparer.GetPendingFilesToExecute(null).Count;
             }
 
             return numOfFiles;
@@ -52,13 +75,15 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         {
             processState.ThrowIfNull(nameof(processState));
 
+            ScriptFilesComparersProvider scriptFilesComparersProvider = _scriptFilesComparersManager.GetScriptFilesComparersProvider(_projectConfig.ProjectGuid);
+
             string targetStateScriptFileName = null;
             if (processState.ExecutionParams != null)
             {
                 targetStateScriptFileName = (processState.ExecutionParams as AutoVersionsDBExecutionParams).TargetStateScriptFileName;
             }
 
-            List<RuntimeScriptFileBase> incScriptFilesToExecute = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
+            List<RuntimeScriptFileBase> incScriptFilesToExecute = scriptFilesComparersProvider.IncrementalScriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
             runScriptsFilesList(processState, incScriptFilesToExecute, "Incremental");
 
             string lastIncStriptFilename = getLastIncFilename();
@@ -66,12 +91,12 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             if (string.IsNullOrWhiteSpace(targetStateScriptFileName)
                 || lastIncStriptFilename.Trim().ToUpperInvariant() == targetStateScriptFileName.Trim().ToUpperInvariant())
             {
-                List<RuntimeScriptFileBase> rptScriptFilesToExecute = _scriptFilesComparersProvider.RepeatableScriptFilesComparer.GetPendingFilesToExecute(null);
+                List<RuntimeScriptFileBase> rptScriptFilesToExecute = scriptFilesComparersProvider.RepeatableScriptFilesComparer.GetPendingFilesToExecute(null);
                 runScriptsFilesList(processState, rptScriptFilesToExecute, "Repeatable");
 
-                if (_scriptFilesComparersProvider.DevDummyDataScriptFilesComparer != null)
+                if (scriptFilesComparersProvider.DevDummyDataScriptFilesComparer != null)
                 {
-                    List<RuntimeScriptFileBase> dddScriptFilesToExecute = _scriptFilesComparersProvider.DevDummyDataScriptFilesComparer.GetPendingFilesToExecute(null);
+                    List<RuntimeScriptFileBase> dddScriptFilesToExecute = scriptFilesComparersProvider.DevDummyDataScriptFilesComparer.GetPendingFilesToExecute(null);
                     runScriptsFilesList(processState, dddScriptFilesToExecute, "DevDummyData");
                 }
             }
@@ -83,7 +108,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         {
             string lastIncStriptFilename = "";
 
-            RuntimeScriptFileBase lastIncScriptFiles = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.LastOrDefault();
+            ScriptFilesComparersProvider scriptFilesComparersProvider = _scriptFilesComparersManager.GetScriptFilesComparersProvider(_projectConfig.ProjectGuid);
+
+            RuntimeScriptFileBase lastIncScriptFiles = scriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.LastOrDefault();
             if (lastIncScriptFiles != null)
             {
                 lastIncStriptFilename = lastIncScriptFiles.Filename;
@@ -95,7 +122,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         private void runScriptsFilesList(AutoVersionsDbProcessState processState, List<RuntimeScriptFileBase> scriptFilesList, string additionalStepInfo)
         {
             (InternalNotificationableAction as ExecuteSingleFileScriptStep).OverrideStepName(additionalStepInfo);
-           
+
+            bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
+
             using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(scriptFilesList.Count))
             {
                 foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
@@ -105,7 +134,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                         ScriptFileInfoStepArgs scriptFileInfoStep = new ScriptFileInfoStepArgs(scriptFile);
 
                         string stepInfo = scriptFile.Filename;
-                        if (_isVirtualExecution)
+                        if (isVirtualExecution)
                         {
                             stepInfo += " - Ignore (virtual execution)";
                         }
@@ -116,5 +145,43 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             }
 
         }
+
+
+
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~ExecuteScriptsStep() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_dbCommands != null)
+                {
+                    _dbCommands.Dispose();
+                }
+
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
+
     }
 }

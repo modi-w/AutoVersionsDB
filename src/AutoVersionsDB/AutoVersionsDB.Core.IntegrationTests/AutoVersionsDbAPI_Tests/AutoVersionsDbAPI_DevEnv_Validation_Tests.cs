@@ -54,8 +54,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Assert
-            assertProccessErrors();
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+            assertProccessErrors();
         }
 
 
@@ -75,8 +75,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Assert
-            assertProccessErrors();
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+            assertProccessErrors();
         }
 
 
@@ -88,12 +88,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
+       
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
             _autoVersionsDbAPI.ValidateAll();
 
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
             Assert.That(_autoVersionsDbAPI.ErrorCode == "IsHistoryExecutedFilesChanged");
         }
@@ -106,12 +109,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
+         
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
             _autoVersionsDbAPI.ValidateAll();
 
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
             Assert.That(_autoVersionsDbAPI.ErrorCode == "IsHistoryExecutedFilesChanged");
         }
@@ -125,12 +131,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_MissingSystemTables.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
             _autoVersionsDbAPI.ValidateAll();
 
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
             Assert.That(_autoVersionsDbAPI.ErrorCode == "SystemTables");
         }
@@ -152,8 +160,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Assert
-            assertProccessErrors();
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+            assertProccessErrors();
         }
 
         [Test]
@@ -163,6 +171,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
+       
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
 
             //Act
@@ -170,6 +180,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Assert
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(_autoVersionsDbAPI.HasError);
         }
 

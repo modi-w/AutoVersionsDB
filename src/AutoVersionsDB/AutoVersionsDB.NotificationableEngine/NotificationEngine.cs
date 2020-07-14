@@ -1,64 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public interface INotificationEngine
+    public interface INotificationEngine : IDisposable
     {
         string EngineTypeName { get; }
+
+        Dictionary<string, string> EngineMetaData { get; }
 
         List<NotificationableActionStepBase> ProcessSteps { get; }
         NotificationableActionStepBase RollbackStep { get; }
         NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; }
 
+        void Prepare(NotificationableEngineConfig notificationableEngineConfig);
+
         void Run(ExecutionParams executionParams);
     }
 
-    public interface IFluentNotificationEngine : INotificationEngine
-    {
-        void SetEngineTypeName(string engineTypeName);
-        void AppendProcessStep(NotificationableActionStepBase processSteps);
-        void SetRollbackStep(NotificationableActionStepBase rollbackStep);
-    }
 
-    public class NotificationEngine<TProcessState> : INotificationEngine
+    public abstract class NotificationEngine<TProcessState> : INotificationEngine
         where TProcessState : ProcessStateBase, new()
     {
-        public string EngineTypeName { get; protected set; }
+        public abstract string EngineTypeName { get; }
+        public Dictionary<string, string> EngineMetaData { get; }
 
-        public List<NotificationableActionStepBase> ProcessSteps { get; private set; }
-        public NotificationableActionStepBase RollbackStep { get; protected set; }
-        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; protected set; }
+        public List<NotificationableActionStepBase> ProcessSteps { get; }
+        public NotificationableActionStepBase RollbackStep { get; }
+        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; }
 
+        public event EventHandler<PrepareEngineEventArgs> Preparing;
+        public event EventHandler<PrepareEngineEventArgs> Prepared;
 
-        public NotificationEngine(string engineTypeName,
-                                    List<NotificationableActionStepBase> processSteps,
-                                    NotificationableActionStepBase rollbackStep,
-                                    NotificationExecutersFactoryManager notificationExecutersFactoryManager)
+        public NotificationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+                                    NotificationableActionStepBase rollbackStep)
         {
-            EngineTypeName = engineTypeName;
-            ProcessSteps = processSteps;
             RollbackStep = rollbackStep;
 
+            ProcessSteps = new List<NotificationableActionStepBase>();
+
             NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
+
+            EngineMetaData = new Dictionary<string, string>
+            {
+                ["EngineTypeName"] = EngineTypeName
+            };
         }
 
+        public void Prepare(NotificationableEngineConfig notificationableEngineConfig)
+        {
+            RaisePreparing(notificationableEngineConfig);
+
+            if (RollbackStep != null)
+            {
+                RollbackStep.Prepare(notificationableEngineConfig);
+            }
+
+            foreach (NotificationableActionStepBase processStep in ProcessSteps)
+            {
+                processStep.Prepare(notificationableEngineConfig);
+            }
+
+            RaisePrepared(notificationableEngineConfig);
+        }
+
+        private void RaisePreparing(NotificationableEngineConfig NotificationableEngineConfig)
+        {
+            OnPreparing(new PrepareEngineEventArgs(NotificationableEngineConfig));
+        }
+        protected virtual void OnPreparing(PrepareEngineEventArgs e)
+        {
+            this.Preparing?.Invoke(this, e);
+        }
+
+        private void RaisePrepared(NotificationableEngineConfig NotificationableEngineConfig)
+        {
+            OnPrepared(new PrepareEngineEventArgs(NotificationableEngineConfig));
+        }
+        protected virtual void OnPrepared(PrepareEngineEventArgs e)
+        {
+            this.Prepared?.Invoke(this, e);
+        }
 
 
         public void Run(ExecutionParams executionParams)
         {
             int totalNumOfSteps = ProcessSteps.Count;
 
-            ProcessStateBase processState = new TProcessState
+            ProcessStateBase processState = new TProcessState()
             {
                 ExecutionParams = executionParams,
 
                 StartProcessDateTime = DateTime.Now
             };
 
+            processState.SetEngineMetaData(this.EngineMetaData);
 
             using (NotificationWrapperExecuter rootNotificationWrapperExecuter = NotificationExecutersFactoryManager.Reset(totalNumOfSteps))
             {
@@ -70,7 +110,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
                         if (NotificationExecutersFactoryManager.HasError)
                         {
-                            rollbackProcess(rootNotificationWrapperExecuter, processState, processStep.StepName);
+                            RollbackProcess(rootNotificationWrapperExecuter, processState, processStep.StepName);
                             break;
                         }
                     }
@@ -86,7 +126,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        private void rollbackProcess(NotificationWrapperExecuter currentNotificationWrapperExecuter, ProcessStateBase processState, string stepName)
+        private void RollbackProcess(NotificationWrapperExecuter currentNotificationWrapperExecuter, ProcessStateBase processState, string stepName)
         {
             if (RollbackStep != null)
             {
@@ -100,21 +140,71 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~NotificationEngine() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+
+                if (RollbackStep != null)
+                {
+                    if (RollbackStep is IDisposable)
+                    {
+                        (RollbackStep as IDisposable).Dispose();
+                    }
+                }
+
+                foreach (IDisposable processStep in ProcessSteps.Where(e=> e is IDisposable))
+                {
+                    processStep.Dispose();
+                }
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
+
+
     }
 
 
-    public class NotificationEngine<TProcessState, TExecutionParams> : NotificationEngine<TProcessState>
+    public abstract class NotificationEngine<TProcessState, TExecutionParams, TNotificationableEngineConfig> : NotificationEngine<TProcessState>
         where TProcessState : ProcessStateBase, new()
         where TExecutionParams : ExecutionParams
+        where TNotificationableEngineConfig : NotificationableEngineConfig
     {
 
-        public NotificationEngine(string engineTypeName,
-                                    List<NotificationableActionStepBase> processSteps,
-                                    NotificationableActionStepBase rollbackStep,
-                                    NotificationExecutersFactoryManager notificationExecutersFactoryManager)
-            : base(engineTypeName, processSteps, rollbackStep, notificationExecutersFactoryManager)
+        public NotificationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+                                    NotificationableActionStepBase rollbackStep)
+            : base(notificationExecutersFactoryManager, rollbackStep)
         {
         }
+
+        public virtual void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
+        {
+            base.Prepare(notificationableEngineConfig);
+        }
+
+
 
         public void Run(TExecutionParams executionParams)
         {
@@ -122,64 +212,6 @@ namespace AutoVersionsDB.NotificationableEngine
         }
     }
 
-    public class FluentNotificationEngineBase<TProcessState, TExecutionParams> : NotificationEngine<TProcessState, TExecutionParams>, IFluentNotificationEngine
-        where TProcessState : ProcessStateBase, new()
-        where TExecutionParams : ExecutionParams
-    {
-
-        public FluentNotificationEngineBase(NotificationExecutersFactoryManager notificationExecutersFactoryManager)
-            : base("", new List<NotificationableActionStepBase>(), null, notificationExecutersFactoryManager)
-        {
-
-        }
-
-
-        public void SetEngineTypeName(string engineTypeName)
-        {
-            EngineTypeName = engineTypeName;
-        }
-
-
-        public void AppendProcessStep(NotificationableActionStepBase processStep)
-        {
-            ProcessSteps.Add(processStep);
-        }
-
-        public void SetRollbackStep(NotificationableActionStepBase rollbackStep)
-        {
-            RollbackStep = rollbackStep;
-        }
-
-    }
-
-
-    public static class FluentNotificationEngineMethods
-    {
-        public static TFluentNotificationEngine EngineTypeName<TFluentNotificationEngine>(this TFluentNotificationEngine notificationEngine, string engineTypeName)
-                 where TFluentNotificationEngine : IFluentNotificationEngine
-        {
-            notificationEngine.SetEngineTypeName(engineTypeName);
-
-            return notificationEngine;
-        }
-
-        public static TFluentNotificationEngine ProcessStep<TFluentNotificationEngine>(this TFluentNotificationEngine notificationEngine, NotificationableActionStepBase processStep)
-                where TFluentNotificationEngine : IFluentNotificationEngine
-        {
-            notificationEngine.AppendProcessStep(processStep);
-
-            return notificationEngine;
-        }
-
-        public static TFluentNotificationEngine RollbackStep<TFluentNotificationEngine>(this TFluentNotificationEngine notificationEngine, NotificationableActionStepBase rollbackStep)
-            where TFluentNotificationEngine : IFluentNotificationEngine
-        {
-            notificationEngine.SetRollbackStep(rollbackStep);
-
-            return notificationEngine;
-        }
-
-    }
 }
 
 

@@ -35,13 +35,13 @@ namespace AutoVersionsDB.Core.ScriptFiles
             this.ScriptFilesManager = scriptFilesManager;
             this.DbExecutedFilesManager = dbExecutedFilesManager;
 
-            setIsHashDifferentFlag();
+            SetIsHashDifferentFlag();
 
-            createNotExistInFileSystemButExistInDB(scriptFilesManager);
+            CreateNotExistInFileSystemButExistInDB(scriptFilesManager);
         }
 
 
-        private void setIsHashDifferentFlag()
+        private void SetIsHashDifferentFlag()
         {
             foreach (RuntimeScriptFileBase scriptFileItem in AllFileSystemScriptFiles)
             {
@@ -64,7 +64,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
             }
         }
 
-        private void createNotExistInFileSystemButExistInDB(ScriptFilesManager scriptFilesManager)
+        private void CreateNotExistInFileSystemButExistInDB(ScriptFilesManager scriptFilesManager)
         {
             NotExistInFileSystemButExistInDB = new List<RuntimeScriptFileBase>();
 

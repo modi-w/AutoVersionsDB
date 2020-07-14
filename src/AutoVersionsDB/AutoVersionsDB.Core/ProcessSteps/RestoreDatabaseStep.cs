@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
@@ -9,37 +10,8 @@ using System;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public static class RestoreDatabaseStepFluent
-    {
-        public static AutoVersionsDbEngine RestoreDatabase(this AutoVersionsDbEngine autoVersionsDbEngine,
-                                                        IDBCommands dbCommands,
-                                                        IDBBackupRestoreCommands dbBackupRestoreCommands,
-                                                        IDBQueryStatus dbQueryStatus)
-        {
-            autoVersionsDbEngine.ThrowIfNull(nameof(autoVersionsDbEngine));
-            dbQueryStatus.ThrowIfNull(nameof(dbQueryStatus));
 
-            NotificationExecutersFactoryManager notificationExecutersFactoryManager = NinjectUtils.KernelInstance.Get<NotificationExecutersFactoryManager>();
-
-            DBRestoreStatusNotifyer dbRestoreStatusNotifyer =
-                DBProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus) as DBRestoreStatusNotifyer;
-
-
-            RestoreDatabaseStep restoreDatabaseStep =
-                new RestoreDatabaseStep(notificationExecutersFactoryManager,
-                                                            dbCommands,
-                                                            dbBackupRestoreCommands,
-                                                            dbRestoreStatusNotifyer);
-
-
-            autoVersionsDbEngine.SetRollbackStep(restoreDatabaseStep);
-
-            return autoVersionsDbEngine;
-        }
-    }
-
-
-    public class RestoreDatabaseStep : NotificationableActionStepBase<AutoVersionsDbProcessState>
+    public class RestoreDatabaseStep : AutoVersionsDbStep, IDisposable
     {
         public const string StepNameStr = "Rollback (Restore) Database";
 
@@ -48,29 +20,39 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
         private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-        private readonly IDBCommands _dbCommands;
-        private readonly IDBBackupRestoreCommands _dbBackupRestoreCommands;
-        private readonly DBRestoreStatusNotifyer _dbRestoreStatusNotifyer;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+
+        private IDBCommands _dbCommands;
+        private IDBQueryStatus _dbQueryStatus;
+        private IDBBackupRestoreCommands _dbBackupRestoreCommands;
+        private DBRestoreStatusNotifyer _dbRestoreStatusNotifyer;
 
         private NotificationWrapperExecuter _tempNotificationWrapperExecuter;
 
 
         public RestoreDatabaseStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                            IDBCommands dbCommands,
-                                            IDBBackupRestoreCommands dbBackupRestoreCommands,
-                                            DBRestoreStatusNotifyer dbRestoreStatusNotifyer)
+                                    DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
-            dbRestoreStatusNotifyer.ThrowIfNull(nameof(dbRestoreStatusNotifyer));
-
+            notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
+            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
 
             _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
-            _dbCommands = dbCommands;
-            _dbBackupRestoreCommands = dbBackupRestoreCommands;
-            _dbRestoreStatusNotifyer = dbRestoreStatusNotifyer;
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+        }
+
+
+        public override void Prepare(ProjectConfigItem projectConfig)
+        {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
+            _dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout);
+
+            _dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
+            _dbRestoreStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), _dbQueryStatus) as DBRestoreStatusNotifyer;
 
             _dbRestoreStatusNotifyer.OnDBProcessStatus += DBRestoreStatusNotifyer_OnDBProcessStatus;
         }
-
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
@@ -113,6 +95,62 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 _tempNotificationWrapperExecuter.CallHandleNotificationStateChanged();
             }
         }
+
+
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~RestoreDatabaseStep() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_dbCommands != null)
+                {
+                    _dbCommands.Dispose();
+                }
+
+                if (_dbBackupRestoreCommands != null)
+                {
+                    _dbBackupRestoreCommands.Dispose();
+                }
+
+                if (_dbRestoreStatusNotifyer != null)
+                {
+                    _dbRestoreStatusNotifyer.OnDBProcessStatus -= DBRestoreStatusNotifyer_OnDBProcessStatus;
+                }
+
+                if (_dbQueryStatus != null)
+                {
+                    _dbQueryStatus.Dispose();
+                }
+
+                if (_tempNotificationWrapperExecuter != null)
+                {
+                    _tempNotificationWrapperExecuter.Dispose();
+                }
+
+            }
+
+            _disposed = true;
+        }
+
+        #endregion
 
 
     }

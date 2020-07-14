@@ -8,9 +8,6 @@ namespace AutoVersionsDB.Core.Engines
 {
     public class AutoVersionsDbProcessState : ProcessStateBase
     {
-       // public bool IsResetDBFlag { get; set; }
-
-        //  public string TargetStateScriptFileName { get; set; }
 
         public string DBBackupFileFullPath { get; set; }
 

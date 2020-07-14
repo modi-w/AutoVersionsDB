@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.Utils;
+﻿using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using Ninject;
@@ -25,6 +26,7 @@ namespace AutoVersionsDB.Core
 
             kernel.Bind<NotifictionStatesHistoryManager>().To<NotifictionStatesHistoryManager>().InSingletonScope();
             kernel.Bind<NotificationExecutersFactoryManager>().To<NotificationExecutersFactoryManager>().InSingletonScope();
+            kernel.Bind<ScriptFilesComparersManager>().To<ScriptFilesComparersManager>().InSingletonScope();
             
         }
     }
