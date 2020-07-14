@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace AutoVersionsDB.Core.Engines
 {
     public abstract class AutoVersionsDbScriptsEngine : AutoVersionsDbEngine
     {
-        private ScriptFilesComparersManager _scriptFilesComparersManager;
+        private readonly ScriptFilesComparersManager _scriptFilesComparersManager;
 
         public AutoVersionsDbScriptsEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
                                             NotificationableActionStepBase rollbackStep,
@@ -21,6 +22,8 @@ namespace AutoVersionsDB.Core.Engines
 
         protected override void OnPrepared(PrepareEngineEventArgs e)
         {
+            e.ThrowIfNull(nameof(e));
+
             ProjectConfigItem projectConfig = e.EngineConfig as ProjectConfigItem;
 
             _scriptFilesComparersManager.Load(projectConfig);

@@ -45,13 +45,15 @@ namespace AutoVersionsDB.NotificationableEngine
 
             NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
 
-            EngineMetaData = new Dictionary<string, string>();
-            EngineMetaData["EngineTypeName"] = EngineTypeName;
+            EngineMetaData = new Dictionary<string, string>
+            {
+                ["EngineTypeName"] = EngineTypeName
+            };
         }
 
         public void Prepare(NotificationableEngineConfig notificationableEngineConfig)
         {
-            raisePreparing(notificationableEngineConfig);
+            RaisePreparing(notificationableEngineConfig);
 
             if (RollbackStep != null)
             {
@@ -63,10 +65,10 @@ namespace AutoVersionsDB.NotificationableEngine
                 processStep.Prepare(notificationableEngineConfig);
             }
 
-            raisePrepared(notificationableEngineConfig);
+            RaisePrepared(notificationableEngineConfig);
         }
 
-        private void raisePreparing(NotificationableEngineConfig NotificationableEngineConfig)
+        private void RaisePreparing(NotificationableEngineConfig NotificationableEngineConfig)
         {
             OnPreparing(new PrepareEngineEventArgs(NotificationableEngineConfig));
         }
@@ -75,7 +77,7 @@ namespace AutoVersionsDB.NotificationableEngine
             this.Preparing?.Invoke(this, e);
         }
 
-        private void raisePrepared(NotificationableEngineConfig NotificationableEngineConfig)
+        private void RaisePrepared(NotificationableEngineConfig NotificationableEngineConfig)
         {
             OnPrepared(new PrepareEngineEventArgs(NotificationableEngineConfig));
         }
@@ -89,15 +91,14 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             int totalNumOfSteps = ProcessSteps.Count;
 
-            ProcessStateBase processState = new TProcessState
+            ProcessStateBase processState = new TProcessState()
             {
                 ExecutionParams = executionParams,
 
                 StartProcessDateTime = DateTime.Now
             };
 
-            processState.EngineMetaData = EngineMetaData;
-
+            processState.SetEngineMetaData(this.EngineMetaData);
 
             using (NotificationWrapperExecuter rootNotificationWrapperExecuter = NotificationExecutersFactoryManager.Reset(totalNumOfSteps))
             {
@@ -109,7 +110,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
                         if (NotificationExecutersFactoryManager.HasError)
                         {
-                            rollbackProcess(rootNotificationWrapperExecuter, processState, processStep.StepName);
+                            RollbackProcess(rootNotificationWrapperExecuter, processState, processStep.StepName);
                             break;
                         }
                     }
@@ -125,7 +126,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        private void rollbackProcess(NotificationWrapperExecuter currentNotificationWrapperExecuter, ProcessStateBase processState, string stepName)
+        private void RollbackProcess(NotificationWrapperExecuter currentNotificationWrapperExecuter, ProcessStateBase processState, string stepName)
         {
             if (RollbackStep != null)
             {

@@ -47,7 +47,6 @@ namespace AutoVersionsDB.Core.Engines
         public AutoVersionsDbProcessState()
         {
             ExecutedFiles = new List<RuntimeScriptFileBase>();
-            EngineMetaData = new Dictionary<string, string>();
         }
 
 

@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
     {
         public override string StepName => "Finalize Process";
 
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
         private IDBCommands _dbCommands;
 
 

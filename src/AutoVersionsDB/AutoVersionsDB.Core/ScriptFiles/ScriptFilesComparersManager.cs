@@ -31,8 +31,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            ScriptFilesComparersProvider scriptFilesComparersProvider;
-            if (!ScriptFilesComparersProviders.TryGetValue(projectConfig.ProjectGuid, out scriptFilesComparersProvider))
+            if (!ScriptFilesComparersProviders.TryGetValue(projectConfig.ProjectGuid, out ScriptFilesComparersProvider scriptFilesComparersProvider))
             {
                 scriptFilesComparersProvider = new ScriptFilesComparersProvider(_dbCommandsFactoryProvider, _scriptFilesComparerFactory, projectConfig);
                 ScriptFilesComparersProviders.Add(projectConfig.ProjectGuid, scriptFilesComparersProvider);

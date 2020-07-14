@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
     {
         public override string StepName => "Build Deploy Artifact File";
 
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
         private IDBCommands _dbCommands;
 
         private string _dbName;
