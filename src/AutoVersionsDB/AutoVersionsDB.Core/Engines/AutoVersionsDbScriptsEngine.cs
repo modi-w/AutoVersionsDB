@@ -20,7 +20,7 @@ namespace AutoVersionsDB.Core.Engines
             _scriptFilesComparersManager = scriptFilesComparersManager;
         }
 
-        protected override void OnPrepared(PrepareEngineEventArgs e)
+        protected override void OnPreparing(PrepareEngineEventArgs e)
         {
             e.ThrowIfNull(nameof(e));
 
@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.Engines
 
             _scriptFilesComparersManager.Load(projectConfig);
 
-            base.OnPrepared(e);
+            base.OnPreparing(e);
         }
     } 
 }
