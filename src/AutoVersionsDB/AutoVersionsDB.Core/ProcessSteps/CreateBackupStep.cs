@@ -72,7 +72,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
         {
             processState.ThrowIfNull(nameof(processState));
 
-            string timeStampStr = DateTime.Now.ToString("{0:yyyy-MM-dd-HH-mm-ss}", CultureInfo.InvariantCulture);
+            string timeStampStr = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.InvariantCulture);
 
             string targetFileName = $"bu_{ _dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
             string targetFileFullPath = Path.Combine(_dbBackupBaseFolderPath, targetFileName);
