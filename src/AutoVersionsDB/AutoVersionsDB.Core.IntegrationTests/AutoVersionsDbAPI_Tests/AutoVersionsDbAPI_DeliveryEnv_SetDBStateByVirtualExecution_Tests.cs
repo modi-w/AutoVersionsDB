@@ -5,8 +5,32 @@ using System.IO;
 
 namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 {
+
     public class AutoVersionsDbAPI_DeliveryEnv_SetDBStateByVirtualExecution_Tests : AutoVersionsDbAPI_TestsBase
     {
+        [Test]
+        public void DBStateInEmptyState_NoSystemTables_And_SetDBToMiddleState__Should_StillBeInEmptyState_ButMarkVirtuallyAsInMiddleState([ValueSource("ProjectConfigItemArray_DeliveryEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
+        {
+            //Arrange
+            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
+            string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_EmptyDB.bak");
+            restoreDB(projectConfig, dbBackupFileFileFullPath);
+
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+
+
+            //Act
+            _autoVersionsDbAPI.SetDBStateByVirtualExecution(c_targetStateFile_MiddleState);
+
+
+            //Assert
+            assertProccessErrors();
+            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+            assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
+            assertDbInEmptyStateExceptSystemTables(projectConfig);
+            assertThatAllFilesInTheDbExistWithTheSameHashInTheFolder(projectConfig);
+            assertThatDbExecutedFilesAreInMiddleState(projectConfig);
+        }
 
         [Test]
         public void DBStateInEmptyState_And_SetDBToMiddleState__Should_StillBeInEmptyState_ButMarkVirtuallyAsInMiddleState([ValueSource("ProjectConfigItemArray_DeliveryEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)

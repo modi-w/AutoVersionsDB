@@ -25,6 +25,8 @@
     <DefineConstants>Debug</DefineConstants>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>False</SuppressValidation>
+    <SuppressIces>ICE61</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
@@ -72,7 +74,7 @@
     </GetAssemblyIdentity>
     <PropertyGroup>
       <!-- <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants> -->
-	    <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
+      <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
     </PropertyGroup>
     <!-- Harvest file components from publish folder -->
     <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
@@ -83,7 +85,7 @@
     </GetAssemblyIdentity>
     <Exec Command="if not exist $(ProjectDir)..\..\..\packages mkdir $(ProjectDir)..\..\..\packages" />
     <!-- <Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-%(AssemblyVersion.Version)-$(PlatformName)$(TargetExt)" /> -->
-	<Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-$(GitVersion_SemVer)-$(PlatformName)$(TargetExt)" />
+    <Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-$(GitVersion_SemVer)-$(PlatformName)$(TargetExt)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

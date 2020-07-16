@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.Engines
     public abstract class AutoVersionsDbEngine : NotificationEngine<AutoVersionsDbProcessState, AutoVersionsDBExecutionParams, ProjectConfigItem>
     {
 
-        private bool _isVirtualExecution { get; set; }
+        private bool _isVirtualExecution;
         public bool IsVirtualExecution
         {
             get

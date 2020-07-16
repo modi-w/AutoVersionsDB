@@ -19,12 +19,14 @@ namespace AutoVersionsDB.Core.Engines
                                                 ScriptFilesComparersManager scriptFilesComparersManager,
                                                 ProjectConfigValidationStep projectConfigValidationStep,
                                                 CreateBackupStep createBackupStep,
+                                                RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
                                                 ExecuteScriptsStep executeScriptsStep,
                                                 FinalizeProcessStep finalizeProcessStep)
             : base(notificationExecutersFactoryManager, rollbackStep, scriptFilesComparersManager)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(createBackupStep);
+            ProcessSteps.Add(recreateDBVersionsTablesStep);
             ProcessSteps.Add(executeScriptsStep);
             ProcessSteps.Add(finalizeProcessStep);
 
