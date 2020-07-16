@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.Engines
 {
     public class DeployEngine : AutoVersionsDbScriptsEngine
     {
-        public override string EngineTypeName => "Deploy";
+        public override string EngineTypeName =>  "Deploy";
 
 
         public DeployEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
