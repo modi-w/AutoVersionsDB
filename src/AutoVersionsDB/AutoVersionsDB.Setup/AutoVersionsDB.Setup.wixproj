@@ -64,7 +64,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <Target Name="BeforeBuild">
-    <Exec Command="dotnet build $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj" />
+    <Exec Command="dotnet build $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj /p:Platform=$(Platform)" />
     <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
     <Exec Command="dotnet publish $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.WinApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml" />
     <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
