@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public override string StepName => "Validation";
 
-        private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
+        private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
      
         protected abstract bool ShouldContinueWhenFindError { get; }
         protected List<ValidatorBase> Validators { get; }

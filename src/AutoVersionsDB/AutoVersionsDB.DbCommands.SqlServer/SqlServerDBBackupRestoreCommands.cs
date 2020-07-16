@@ -35,7 +35,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             //_sqlServerConnectionManager.Close();
             //_sqlServerConnectionManager.Open();
 
-            resolveDBInSingleUserMode(dbName, dbFilesBasePath);
+            ResolveDBInSingleUserMode(dbName, dbFilesBasePath);
 
             string sqlCmdStr = $"ALTER DATABASE [{dbName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
             _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
@@ -59,7 +59,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             //_sqlServerConnectionManager.Close();
         }
 
-        private void resolveDBInSingleUserMode(string dbName, string dbFilesBasePath)
+        private void ResolveDBInSingleUserMode(string dbName, string dbFilesBasePath)
         {
             bool isDBInSigleUserMode = false;
 

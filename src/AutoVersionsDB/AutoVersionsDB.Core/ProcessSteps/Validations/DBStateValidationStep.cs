@@ -11,7 +11,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class DBStateValidationStep : ValidationsStep
     {
-        private ScriptFilesComparersManager _scriptFilesComparersManager;
+        private readonly ScriptFilesComparersManager _scriptFilesComparersManager;
 
         protected override bool ShouldContinueWhenFindError => false;
 
