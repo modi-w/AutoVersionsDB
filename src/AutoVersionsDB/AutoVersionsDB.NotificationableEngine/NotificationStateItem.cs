@@ -213,7 +213,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public string ToString(NotificationStateItem parentStateItem,bool isIncludeTimestamp, bool isIncludeStepStage)
         {
-            string outStr = "";
+            string outStr;
 
             string stepStageStr = "";
             if (isIncludeStepStage)

@@ -20,16 +20,16 @@ namespace AutoVersionsDB.WinApp
             {
                 _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
 
-                AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged += _notifictionStatesHistoryManager_OnNotificationStateItemChanged;
+                AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged += NotifictionStatesHistoryManager_OnNotificationStateItemChanged;
 
                 this.Disposed += NotificationsControl_Disposed;
             }
 
         }
 
-        private void _notifictionStatesHistoryManager_OnNotificationStateItemChanged(NotificationStateItem notificationStateItem)
+        private void NotifictionStatesHistoryManager_OnNotificationStateItemChanged(NotificationStateItem notificationStateItem)
         {
-            resolveColorAndImageByErrorStatus(true);
+            ResolveColorAndImageByErrorStatus(true);
 
             lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
             {
@@ -136,7 +136,7 @@ namespace AutoVersionsDB.WinApp
         {
             System.Threading.Thread.Sleep(500);
 
-            resolveColorAndImageByErrorStatus(false);
+            ResolveColorAndImageByErrorStatus(false);
 
             if (!string.IsNullOrWhiteSpace(_autoVersionsDbAPI.InstructionsMessage))
             {
@@ -155,7 +155,7 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void resolveColorAndImageByErrorStatus(bool isInProcess)
+        private void ResolveColorAndImageByErrorStatus(bool isInProcess)
         {
             if (isInProcess)
             {
@@ -201,12 +201,12 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void pbStatus_Click(object sender, EventArgs e)
+        private void PbStatus_Click(object sender, EventArgs e)
         {
-            showMessageWindow();
+            ShowMessageWindow();
         }
 
-        private void showMessageWindow()
+        private void ShowMessageWindow()
         {
             //if (NotifictionStatesHistoryManager != null)
             //{
@@ -237,20 +237,20 @@ namespace AutoVersionsDB.WinApp
 
         //}
 
-        private void lblPrecents_Click(object sender, EventArgs e)
+        private void LblPrecents_Click(object sender, EventArgs e)
         {
-            showMessageWindow();
+            ShowMessageWindow();
         }
 
-        private void lblProcessStatusMessage_Click(object sender, EventArgs e)
+        private void LblProcessStatusMessage_Click(object sender, EventArgs e)
         {
-            showMessageWindow();
+            ShowMessageWindow();
         }
 
 
         private void NotificationsControl_Disposed(object sender, EventArgs e)
         {
-            AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged -= _notifictionStatesHistoryManager_OnNotificationStateItemChanged;
+            AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged -= NotifictionStatesHistoryManager_OnNotificationStateItemChanged;
         }
 
 

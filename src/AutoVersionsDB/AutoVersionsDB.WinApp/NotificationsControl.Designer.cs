@@ -65,7 +65,7 @@
             this.lblProcessStatusMessage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblProcessStatusMessage.ForeColor = System.Drawing.Color.DimGray;
             this.lblProcessStatusMessage.Name = "lblProcessStatusMessage";
-            this.lblProcessStatusMessage.Click += new System.EventHandler(this.lblProcessStatusMessage_Click);
+            this.lblProcessStatusMessage.Click += new System.EventHandler(this.LblProcessStatusMessage_Click);
             // 
             // pbStatus
             // 
@@ -73,7 +73,7 @@
             resources.ApplyResources(this.pbStatus, "pbStatus");
             this.pbStatus.Name = "pbStatus";
             this.pbStatus.TabStop = false;
-            this.pbStatus.Click += new System.EventHandler(this.pbStatus_Click);
+            this.pbStatus.Click += new System.EventHandler(this.PbStatus_Click);
             // 
             // NotificationsControl
             // 
