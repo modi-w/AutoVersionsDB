@@ -136,7 +136,7 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 foreach (var notificationState in NotificationStatesProcessHistory)
                 {
-                    sbStrResults.AppendLine(notificationState.ToString(true, true));
+                    sbStrResults.AppendLine(notificationState.ToString(null,true, true));
                 }
             }
 
@@ -152,7 +152,7 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 foreach (var notificationState in NotificationStatesProcessHistory.Where(e => e.HasError))
                 {
-                    sbStrResults.AppendLine(notificationState.ToString(true, true));
+                    sbStrResults.AppendLine(notificationState.ToString(null, true, true));
                 }
             }
 

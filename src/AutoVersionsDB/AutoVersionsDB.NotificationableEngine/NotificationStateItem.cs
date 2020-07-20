@@ -208,28 +208,50 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public override string ToString()
         {
-            return ToString(false, false);
+            return ToString(null,false, false);
         }
 
-        public string ToString(bool isIncludeTimestamp, bool isIncludeStepStage)
+        public string ToString(NotificationStateItem parentStateItem,bool isIncludeTimestamp, bool isIncludeStepStage)
         {
             string outStr = "";
 
+            string stepStageStr = "";
             if (isIncludeStepStage)
             {
-                outStr = $"{StepName} {Precents:N0}% ({StepNumber}/{NumOfSteps})";
+                stepStageStr = $" ({StepNumber}/{NumOfSteps})";
+            }
+
+            if (parentStateItem == null)
+            {
+                outStr = $"Process {Precents:N0}%{stepStageStr} -> {StepName}";
             }
             else
             {
-                outStr = $"{StepName} {Precents:N0}%";
-
+                outStr = $"{Precents:N0}%{stepStageStr} -> {StepName}";
             }
-
 
             if (InternalNotificationStateItem != null)
             {
-                outStr = $"{outStr} -> {InternalNotificationStateItem.ToString(false, isIncludeStepStage)}";
+                outStr = $"{outStr} {InternalNotificationStateItem.ToString(this, false, isIncludeStepStage)}";
             }
+
+
+
+            //if (isIncludeStepStage)
+            //{
+            //    outStr = $"{StepName} {Precents:N0}% ({StepNumber}/{NumOfSteps})";
+            //}
+            //else
+            //{
+            //    outStr = $"{StepName} {Precents:N0}%";
+
+            //}
+
+
+            //if (InternalNotificationStateItem != null)
+            //{
+            //    outStr = $"{outStr} -> {InternalNotificationStateItem.ToString(this,false, isIncludeStepStage)}";
+            //}
 
             if (HasError)
             {
