@@ -217,11 +217,11 @@ namespace AutoVersionsDB.NotificationableEngine
 
             if (isIncludeStepStage)
             {
-                outStr = $" {Precents:N0}% ({StepNumber}/{NumOfSteps}) {StepName}";
+                outStr = $"{StepName} {Precents:N0}% ({StepNumber}/{NumOfSteps})";
             }
             else
             {
-                outStr = $" {Precents:N0}% {StepName}";
+                outStr = $"{StepName} {Precents:N0}%";
 
             }
 

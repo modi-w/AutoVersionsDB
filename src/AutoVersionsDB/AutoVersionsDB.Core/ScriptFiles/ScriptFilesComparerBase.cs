@@ -37,7 +37,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             SetIsHashDifferentFlag();
 
-            CreateNotExistInFileSystemButExistInDB(scriptFilesManager);
+            CreateFileExistInDBButNotExistInSystemList(scriptFilesManager);
         }
 
 
@@ -64,7 +64,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
             }
         }
 
-        private void CreateNotExistInFileSystemButExistInDB(ScriptFilesManager scriptFilesManager)
+        private void CreateFileExistInDBButNotExistInSystemList(ScriptFilesManager scriptFilesManager)
         {
             NotExistInFileSystemButExistInDB = new List<RuntimeScriptFileBase>();
 

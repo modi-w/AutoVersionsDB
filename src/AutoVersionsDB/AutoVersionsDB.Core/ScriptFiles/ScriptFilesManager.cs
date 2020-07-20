@@ -10,9 +10,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
 {
     public class ScriptFilesManager
     {
-        private FileChecksumManager _fileChecksumManager;
-        private ScriptFileTypeBase _scriptFileTypeBase;
-        private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory { get; }
+        private readonly FileChecksumManager _fileChecksumManager;
+        private readonly ScriptFileTypeBase _scriptFileTypeBase;
+        private readonly RuntimeScriptFileFactoryBase _runtimeScriptFileFactory;
 
         public List<RuntimeScriptFileBase> ScriptFilesList { get; private set; }
         public Dictionary<string, RuntimeScriptFileBase> ScriptFilesDictionary { get; private set; }
