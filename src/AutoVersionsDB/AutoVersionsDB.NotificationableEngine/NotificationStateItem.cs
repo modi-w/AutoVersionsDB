@@ -196,7 +196,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public void StepError(string errorCode,string errorMessage, string instructionsMessage)
+        public void StepError(string errorCode, string errorMessage, string instructionsMessage)
         {
             this.ErrorCode = errorCode;
             this.ErrorMesage = errorMessage;
@@ -208,10 +208,10 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public override string ToString()
         {
-            return ToString(null,false, false);
+            return ToString(false, false);
         }
 
-        public string ToString(NotificationStateItem parentStateItem,bool isIncludeTimestamp, bool isIncludeStepStage)
+        public string ToString(bool isIncludeTimestamp, bool isIncludeStepStage)
         {
             string outStr;
 
@@ -221,18 +221,18 @@ namespace AutoVersionsDB.NotificationableEngine
                 stepStageStr = $" ({StepNumber}/{NumOfSteps})";
             }
 
-            if (parentStateItem == null)
-            {
-                outStr = $"Process {Precents:N0}%{stepStageStr} -> {StepName}";
-            }
-            else
-            {
-                outStr = $"{Precents:N0}%{stepStageStr} -> {StepName}";
-            }
+            //if (parentStateItem == null)
+            //{
+            //    outStr = $"Process {Precents:N0}%{stepStageStr} -> {StepName}";
+            //}
+            //else
+            //{
+            outStr = $"{Precents:N0}%{stepStageStr} -> {StepName}";
+            //    }
 
             if (InternalNotificationStateItem != null)
             {
-                outStr = $"{outStr} {InternalNotificationStateItem.ToString(this, false, isIncludeStepStage)}";
+                outStr = $"{outStr} {InternalNotificationStateItem.ToString(false, isIncludeStepStage)}";
             }
 
 
