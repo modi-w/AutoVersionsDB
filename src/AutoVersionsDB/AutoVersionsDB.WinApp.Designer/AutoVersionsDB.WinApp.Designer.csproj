@@ -152,7 +152,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Properties\Resources.resx">
       <Link>Properties\Resources.resx</Link>
-      <DependentUpon>Resources.Designer.cs</DependentUpon>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -250,6 +249,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RecreateDBFromScratchIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\AppIcon.ico" />
+    <Content Include="Resources\AppIcon.png" />
+    <Content Include="Resources\AppIcon_32.png" />
+    <Content Include="Resources\ApplyIcon.png" />
+    <Content Include="Resources\CancelIcon.png" />
+    <Content Include="Resources\deployIcon.png" />
+    <Content Include="Resources\HistoricalBackups.png" />
+    <Content Include="Resources\historyIcon.png" />
+    <Content Include="Resources\plus32.png" />
+    <Content Include="Resources\SaveIcon.png" />
+    <Content Include="Resources\VirtualExecution2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

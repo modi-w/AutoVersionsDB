@@ -29,7 +29,7 @@ namespace AutoVersionsDB.WinApp
 
         private void _notifictionStatesHistoryManager_OnNotificationStateItemChanged(NotificationStateItem notificationStateItem)
         {
-            resolveColorAndImageByErrorStatus();
+            resolveColorAndImageByErrorStatus(true);
 
             lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
             {
@@ -59,10 +59,12 @@ namespace AutoVersionsDB.WinApp
 
         public void Clear()
         {
-            imgBtnStatus.BeginInvoke((MethodInvoker)(() =>
+            System.Threading.Thread.Sleep(500);
+
+            pbStatus.BeginInvoke((MethodInvoker)(() =>
             {
-                imgBtnStatus.Visible = false;
-                imgBtnStatus.Cursor = Cursors.Default;
+                pbStatus.Visible = false;
+                pbStatus.Cursor = Cursors.Default;
 
                 //      resolveMessageLocation();
             }));
@@ -85,10 +87,10 @@ namespace AutoVersionsDB.WinApp
 
         public void PreparingMesage()
         {
-            imgBtnStatus.BeginInvoke((MethodInvoker)(() =>
+            pbStatus.BeginInvoke((MethodInvoker)(() =>
             {
-                imgBtnStatus.Visible = false;
-                imgBtnStatus.Cursor = Cursors.Default;
+                pbStatus.Visible = false;
+                pbStatus.Cursor = Cursors.Default;
 
                 //          resolveMessageLocation();
             }));
@@ -106,11 +108,19 @@ namespace AutoVersionsDB.WinApp
 
         public void BeforeStart()
         {
-            imgBtnStatus.BeginInvoke((MethodInvoker)(() =>
+            //pbStatus.BeginInvoke((MethodInvoker)(() =>
+            //{
+            //    pbStatus.Visible = false;
+            //    //   resolveMessageLocation();
+            //}));
+
+            pbStatus.BeginInvoke((MethodInvoker)(() =>
             {
-                imgBtnStatus.Visible = false;
-                //   resolveMessageLocation();
+                pbStatus.Cursor = Cursors.Hand;
+                pbStatus.Visible = true;
+                pbStatus.Image = Properties.Resources.Spinner3_32;
             }));
+
 
             lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
             {
@@ -124,7 +134,9 @@ namespace AutoVersionsDB.WinApp
 
         public void AfterComplete()
         {
-            resolveColorAndImageByErrorStatus();
+            System.Threading.Thread.Sleep(500);
+
+            resolveColorAndImageByErrorStatus(false);
 
             if (!string.IsNullOrWhiteSpace(_autoVersionsDbAPI.InstructionsMessage))
             {
@@ -143,16 +155,35 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void resolveColorAndImageByErrorStatus()
+        private void resolveColorAndImageByErrorStatus(bool isInProcess)
         {
+            if (isInProcess)
+            {
+            }
+            else
+            {
+                if (_autoVersionsDbAPI.HasError)
+                {
+                    pbStatus.BeginInvoke((MethodInvoker)(() =>
+                    {
+                        pbStatus.Cursor = Cursors.Hand;
+                        pbStatus.Visible = true;
+                        pbStatus.Image = Properties.Resources.StopIcon_32;
+                    }));
+                }
+                else
+                {
+                    pbStatus.BeginInvoke((MethodInvoker)(() =>
+                    {
+                        pbStatus.Visible = true;
+                        pbStatus.Image = Properties.Resources.info2_32_32;
+                        pbStatus.Cursor = Cursors.Hand;
+                    }));
+                }
+            }
+
             if (_autoVersionsDbAPI.HasError)
             {
-                imgBtnStatus.BeginInvoke((MethodInvoker)(() =>
-                {
-                    imgBtnStatus.Cursor = Cursors.Hand;
-                    imgBtnStatus.Visible = true;
-                    imgBtnStatus.Image = Properties.Resources.error2_32_32;
-                }));
 
                 lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
                 {
@@ -162,13 +193,6 @@ namespace AutoVersionsDB.WinApp
             }
             else
             {
-                imgBtnStatus.BeginInvoke((MethodInvoker)(() =>
-                {
-                    imgBtnStatus.Visible = true;
-                    imgBtnStatus.Image = Properties.Resources.info2_32_32;
-                    imgBtnStatus.Cursor = Cursors.Hand;
-                }));
-
                 lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
                 {
                     lblProcessStatusMessage.ForeColor = Color.Black;
@@ -177,7 +201,7 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void imgBtnStatus_Click(object sender, EventArgs e)
+        private void pbStatus_Click(object sender, EventArgs e)
         {
             showMessageWindow();
         }
@@ -198,7 +222,7 @@ namespace AutoVersionsDB.WinApp
         //{
         //    lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
         //    {
-        //        if (imgBtnStatus.Visible)
+        //        if (pbStatus.Visible)
         //        {
 
         //            lblProcessStatusMessage.Location = new Point(120, 17);

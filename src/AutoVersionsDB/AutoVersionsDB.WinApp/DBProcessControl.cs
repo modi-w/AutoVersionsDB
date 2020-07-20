@@ -147,6 +147,8 @@ namespace AutoVersionsDB.WinApp
 
             Task.Run(() =>
             {
+                notificationsControl1.BeforeStart();
+
                 _autoVersionsDbAPI.Refresh();
 
                 //      bindToUIElements();
