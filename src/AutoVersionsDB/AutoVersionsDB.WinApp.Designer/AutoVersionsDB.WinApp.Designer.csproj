@@ -261,6 +261,7 @@
     <Content Include="Resources\historyIcon.png" />
     <Content Include="Resources\plus32.png" />
     <Content Include="Resources\SaveIcon.png" />
+    <Content Include="Resources\Spinner3_32.gif" />
     <Content Include="Resources\VirtualExecution2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

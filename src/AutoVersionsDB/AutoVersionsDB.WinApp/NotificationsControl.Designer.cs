@@ -30,9 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationsControl));
             this.panel7 = new System.Windows.Forms.Panel();
-            //this.imgBtnStatus = new System.Windows.Forms.Button();
-            this.lblProcessStatusMessage = new System.Windows.Forms.Label();
             this.pbStatus = new System.Windows.Forms.PictureBox();
+            this.lblProcessStatusMessage = new System.Windows.Forms.Label();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbStatus)).BeginInit();
             this.SuspendLayout();
@@ -42,21 +41,17 @@
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.pbStatus);
-            //this.panel7.Controls.Add(this.imgBtnStatus);
             this.panel7.Controls.Add(this.lblProcessStatusMessage);
             resources.ApplyResources(this.panel7, "panel7");
             this.panel7.Name = "panel7";
             // 
-            // imgBtnStatus
+            // pbStatus
             // 
-            //this.imgBtnStatus.BackColor = System.Drawing.Color.Transparent;
-            //this.imgBtnStatus.Cursor = System.Windows.Forms.Cursors.Hand;
-            //this.imgBtnStatus.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            //this.imgBtnStatus.FlatAppearance.BorderSize = 0;
-            //resources.ApplyResources(this.imgBtnStatus, "imgBtnStatus");
-            //this.imgBtnStatus.ForeColor = System.Drawing.Color.DarkRed;
-            //this.imgBtnStatus.Name = "imgBtnStatus";
-            //this.imgBtnStatus.UseVisualStyleBackColor = false;
+            this.pbStatus.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Spinner3_32;
+            resources.ApplyResources(this.pbStatus, "pbStatus");
+            this.pbStatus.Name = "pbStatus";
+            this.pbStatus.TabStop = false;
+            this.pbStatus.Click += new System.EventHandler(this.PbStatus_Click);
             // 
             // lblProcessStatusMessage
             // 
@@ -66,14 +61,6 @@
             this.lblProcessStatusMessage.ForeColor = System.Drawing.Color.DimGray;
             this.lblProcessStatusMessage.Name = "lblProcessStatusMessage";
             this.lblProcessStatusMessage.Click += new System.EventHandler(this.LblProcessStatusMessage_Click);
-            // 
-            // pbStatus
-            // 
-            this.pbStatus.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Spinner3_32;
-            resources.ApplyResources(this.pbStatus, "pbStatus");
-            this.pbStatus.Name = "pbStatus";
-            this.pbStatus.TabStop = false;
-            this.pbStatus.Click += new System.EventHandler(this.PbStatus_Click);
             // 
             // NotificationsControl
             // 

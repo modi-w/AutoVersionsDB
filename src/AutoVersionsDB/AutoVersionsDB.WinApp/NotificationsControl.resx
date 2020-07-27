@@ -147,42 +147,6 @@
   <data name="&gt;&gt;pbStatus.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="imgBtnStatus.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="imgBtnStatus.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 12pt, style=Bold</value>
-  </data>
-  <data name="imgBtnStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="imgBtnStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 12</value>
-  </data>
-  <data name="imgBtnStatus.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="imgBtnStatus.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 6</value>
-  </data>
-  <data name="imgBtnStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>51, 46</value>
-  </data>
-  <data name="imgBtnStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
-  </data>
-  <data name="&gt;&gt;imgBtnStatus.Name" xml:space="preserve">
-    <value>imgBtnStatus</value>
-  </data>
-  <data name="&gt;&gt;imgBtnStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;imgBtnStatus.Parent" xml:space="preserve">
-    <value>panel7</value>
-  </data>
-  <data name="&gt;&gt;imgBtnStatus.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="lblProcessStatusMessage.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -193,7 +157,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblProcessStatusMessage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 21</value>
+    <value>72, 18</value>
   </data>
   <data name="lblProcessStatusMessage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -220,7 +184,7 @@
     <value>panel7</value>
   </data>
   <data name="&gt;&gt;lblProcessStatusMessage.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="panel7.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
