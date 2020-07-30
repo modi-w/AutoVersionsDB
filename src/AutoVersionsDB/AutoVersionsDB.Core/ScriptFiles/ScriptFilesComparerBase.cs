@@ -98,13 +98,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
         {
             RuntimeScriptFileBase lasetExecutedFileItem = CreateLasetExecutedFileItem();
 
-            ScriptFilePropertiesBase lastExecutedFileProperties = null;
-            if (lasetExecutedFileItem != null)
-            {
-                lastExecutedFileProperties = lasetExecutedFileItem.ScriptFileProperties;
-            }
-
-            return ScriptFilesManager.CreateNextNewScriptFile(lastExecutedFileProperties, scriptName);
+            return ScriptFilesManager.CreateNextRuntimeScriptFileInstance(scriptName, lasetExecutedFileItem);
         }
 
 

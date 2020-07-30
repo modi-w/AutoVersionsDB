@@ -6,24 +6,40 @@ using System.Text.RegularExpressions;
 
 namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
 {
-    public class RepeatableRuntimeScriptFile : RuntimeScriptFileBase<RepeatableScriptFileProperties>
+    public class RepeatableRuntimeScriptFile : RuntimeScriptFileBase
     {
-        public override string Filename => $"{ScriptFileType.Prefix}_{ScriptFilePropertiesInternal.ScriptName}.sql";
-
-
-        public RepeatableRuntimeScriptFile(ScriptFileTypeBase scriptFileType, string folderPath, RepeatableScriptFileProperties repeatableScriptFileProperties)
-            : base(scriptFileType, folderPath, repeatableScriptFileProperties)
+        public override ScriptFileTypeBase ScriptFileType
         {
+            get
+            {
+                return ScriptFileTypeBase.Create<RepeatableScriptFileType>();
+            }
         }
 
-        public RepeatableRuntimeScriptFile(ScriptFileTypeBase scriptFileType, string folderPath, string fileFullPath)
-            : base(scriptFileType, folderPath, fileFullPath)
+        public override string SortKey => ScriptName;
+        public override string FolderPath { get; protected set; }
+
+        public override string Filename => $"{ScriptFileType.Prefix}_{ScriptName}.sql";
+
+
+        protected RepeatableRuntimeScriptFile() { }
+
+        public static RepeatableRuntimeScriptFile CreateByScriptName(string folderPath, string scriptName)
         {
+            return new RepeatableRuntimeScriptFile()
+            {
+                FolderPath = folderPath,
+                ScriptName = scriptName
+            };
         }
 
-        protected override void ParsePropertiesByFileFullPath(string fileFullPath)
+        public RepeatableRuntimeScriptFile(string folderPath, string fileFullPath)
         {
             fileFullPath.ThrowIfNull(nameof(fileFullPath));
+            folderPath.ThrowIfNull(nameof(folderPath));
+
+            FolderPath = folderPath;
+
 
             FileInfo fiFile = new FileInfo(fileFullPath);
 
@@ -50,10 +66,10 @@ namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
 
             string[] arrFilenameParts = Regex.Split(filenameWithoutExtension, "_");
 
-            string scriptName = string.Join("_", arrFilenameParts.Skip(1));
-
-            ScriptFilePropertiesInternal = new RepeatableScriptFileProperties(scriptName);
+            ScriptName = string.Join("_", arrFilenameParts.Skip(1));
 
         }
+
+
     }
 }

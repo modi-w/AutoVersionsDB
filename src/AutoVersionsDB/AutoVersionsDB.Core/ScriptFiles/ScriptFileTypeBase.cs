@@ -8,6 +8,8 @@
             return new TScriptFileType();
         }
 
+        public abstract RuntimeScriptFileFactoryBase RuntimeScriptFileFactory { get; }
+
 
 
         public abstract string FileTypeCode { get; }
@@ -18,7 +20,6 @@
 
         public abstract string Prefix { get; }
         public string RelativeFolderName => FileTypeCode;
-
 
 
 

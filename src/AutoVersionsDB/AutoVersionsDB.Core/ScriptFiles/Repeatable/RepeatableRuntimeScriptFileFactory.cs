@@ -7,21 +7,17 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
 {
-    public class RepeatableRuntimeScriptFileFactory : RuntimeScriptFileFactoryBase
+    public class RepeatableRuntimeScriptFileFactory : RuntimeScriptFileFactoryBase<RepeatableRuntimeScriptFile>
     {
 
-
-        public override RuntimeScriptFileBase CreateNextNewScriptFileInstance(ScriptFilePropertiesBase lastExecutedFileProperties, string folderPath, string scriptName)
+        public override RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string folderPath, string scriptName, RepeatableRuntimeScriptFile prevRuntimeScriptFile)
         {
-            RepeatableScriptFileProperties scriptFileProperties = new RepeatableScriptFileProperties(scriptName);
-            RuntimeScriptFileBase newRuntimeScriptFile = new RepeatableRuntimeScriptFile(ScriptFileTypeBase.Create<RepeatableScriptFileType>(), folderPath, scriptFileProperties);
-
-            return newRuntimeScriptFile;
+            return RepeatableRuntimeScriptFile.CreateByScriptName(folderPath, scriptName);
         }
 
         public override RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string folderPath, string fileFullPath)
         {
-            return new RepeatableRuntimeScriptFile(ScriptFileTypeBase.Create<RepeatableScriptFileType>(),folderPath, fileFullPath);
+            return new RepeatableRuntimeScriptFile(folderPath, fileFullPath);
         }
 
     }

@@ -75,12 +75,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 newFileRow["ExecutedDateTime"] = DateTime.Now;
                 newFileRow["Filename"] = executedFiles.Filename;
                 newFileRow["FileFullPath"] = executedFiles.FileFullPath;
-                newFileRow["ScriptFileType"] = executedFiles.FileTypeCode;
+                newFileRow["ScriptFileType"] = executedFiles.ScriptFileType.FileTypeCode;
                 newFileRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture); 
                 newFileRow["ComputedFileHash"] = executedFiles.ComputedHash;
                 newFileRow["ComputedFileHashDateTime"] = executedFiles.ComputedHashDateTime;
-
-
 
 
                 dbScriptsExecutionHistoryFilesTable.Rows.Add(newFileRow);

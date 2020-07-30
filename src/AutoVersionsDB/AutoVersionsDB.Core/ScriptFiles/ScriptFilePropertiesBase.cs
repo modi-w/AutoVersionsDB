@@ -7,15 +7,26 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.Core.ScriptFiles
 {
-    public abstract class ScriptFilePropertiesBase
-    {
-        public abstract string SortKey { get; }
+    //public abstract class ScriptFilePropertiesBase
+    //{
+    //    public abstract ScriptFileTypeBase ScriptFileType { get; }
 
-        public string ScriptName { get; private set; }
+    //    public abstract string SortKey { get; }
 
-        public ScriptFilePropertiesBase(string scriptName)
-        {
-            ScriptName = scriptName;
-        }
-    }
+    //    public string ScriptName { get; protected set; }
+
+
+
+
+    //    protected ScriptFilePropertiesBase(string scriptName)
+    //    {
+    //        ScriptName = scriptName;
+    //    }
+
+
+    //    protected ScriptFilePropertiesBase()
+    //    {
+
+    //    }
+    //}
 }
