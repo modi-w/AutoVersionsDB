@@ -10,6 +10,20 @@ namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
 {
     public class RepeatableScriptFileType : ScriptFileTypeBase
     {
+        private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory;
+        public override RuntimeScriptFileFactoryBase RuntimeScriptFileFactory
+        {
+            get
+            {
+                if (_runtimeScriptFileFactory == null)
+                {
+                    _runtimeScriptFileFactory = new RepeatableRuntimeScriptFileFactory();
+                }
+
+                return _runtimeScriptFileFactory;
+            }
+        }
+
         public override string FileTypeCode => "Repeatable";
 
         public override string Prefix => "rptScript";
@@ -17,5 +31,6 @@ namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
         public override string FilenamePattern => Prefix + "_[ScriptName].sql";
 
         public override string RegexFilenamePattern => "^" + Prefix + "_" + "[a-zA-Z_0-9]{1,}.sql$";
+
     }
 }

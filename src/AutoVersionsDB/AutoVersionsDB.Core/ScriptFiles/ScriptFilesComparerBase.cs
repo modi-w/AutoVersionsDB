@@ -26,6 +26,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public List<RuntimeScriptFileBase> NotExistInFileSystemButExistInDB { get; private set; }
 
+        public RuntimeScriptFileBase LastScriptFile => AllFileSystemScriptFiles.LastOrDefault();
+
+
         public ScriptFilesComparerBase(ScriptFilesManager scriptFilesManager,
                                         DBExecutedFilesManager dbExecutedFilesManager)
         {
@@ -96,15 +99,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public RuntimeScriptFileBase CreateNextNewScriptFile(string scriptName)
         {
-            RuntimeScriptFileBase lasetExecutedFileItem = CreateLasetExecutedFileItem();
-
-            ScriptFilePropertiesBase lastExecutedFileProperties = null;
-            if (lasetExecutedFileItem != null)
-            {
-                lastExecutedFileProperties = lasetExecutedFileItem.ScriptFileProperties;
-            }
-
-            return ScriptFilesManager.CreateNextNewScriptFile(lastExecutedFileProperties, scriptName);
+            return ScriptFilesManager.CreateNextRuntimeScriptFileInstance(scriptName, LastScriptFile);
         }
 
 

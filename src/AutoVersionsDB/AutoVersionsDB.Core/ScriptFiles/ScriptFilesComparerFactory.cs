@@ -30,25 +30,25 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
 
         public ScriptFilesComparerBase CreateScriptFilesComparer<TScriptFileType>(IDBCommands dbCommands, string folderPath)
-            where TScriptFileType : ScriptFileTypeBase, new ()
+            where TScriptFileType : ScriptFileTypeBase, new()
         {
             DBExecutedFilesManager dbExecutedFilesManager = new DBExecutedFilesManager(dbCommands, ScriptFileTypeBase.Create<TScriptFileType>());
 
             ScriptFilesComparerBase scriptFilesComparer = null;
 
-            if(typeof(TScriptFileType) ==typeof(IncrementalScriptFileType))
+            if (typeof(TScriptFileType) == typeof(IncrementalScriptFileType))
             {
-                ScriptFilesManager sriptFilesManager = new ScriptFilesManager(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), _incrementalRuntimeScriptFileFactory, folderPath);
+                ScriptFilesManager sriptFilesManager = new ScriptFilesManager(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
                 scriptFilesComparer = new IncrementalScriptFilesComparer(sriptFilesManager, dbExecutedFilesManager);
             }
             else if (typeof(TScriptFileType) == typeof(RepeatableScriptFileType))
             {
-                ScriptFilesManager sriptFilesManager = new ScriptFilesManager(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), _repeatableRuntimeScriptFileFactory, folderPath);
+                ScriptFilesManager sriptFilesManager = new ScriptFilesManager(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
                 scriptFilesComparer = new RepeatableScriptFilesComparer(sriptFilesManager, dbExecutedFilesManager);
             }
             else if (typeof(TScriptFileType) == typeof(DevDummyDataScriptFileType))
             {
-                ScriptFilesManager sriptFilesManager = new ScriptFilesManager(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), _devDummyDataruntimeScriptFileFactory, folderPath);
+                ScriptFilesManager sriptFilesManager = new ScriptFilesManager(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
                 scriptFilesComparer = new DevDummyDataScriptFilesComparer(sriptFilesManager, dbExecutedFilesManager);
             }
 

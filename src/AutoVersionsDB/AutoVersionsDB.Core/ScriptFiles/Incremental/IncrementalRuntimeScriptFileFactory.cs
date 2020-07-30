@@ -2,34 +2,29 @@
 
 namespace AutoVersionsDB.Core.ScriptFiles.Incremental
 {
-    public class IncrementalRuntimeScriptFileFactory : RuntimeScriptFileFactoryBase
+    public class IncrementalRuntimeScriptFileFactory : RuntimeScriptFileFactoryBase<IncrementalRuntimeScriptFile>
     {
-        public IncrementalRuntimeScriptFileFactory()
-        {
-        }
 
-        public override RuntimeScriptFileBase CreateNextNewScriptFileInstance(ScriptFilePropertiesBase lastExecutedFileProperties, string folderPath, string scriptName)
+
+        public override RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string folderPath, string scriptName, IncrementalRuntimeScriptFile prevRuntimeScriptFile)
         {
             int nextFileVersion = 1;
+            DateTime nextFileDate = DateTime.Today;
 
-            IncrementalScriptFileProperties incrementalScriptFileProperties = lastExecutedFileProperties as IncrementalScriptFileProperties;
-
-
-            if (incrementalScriptFileProperties != null
-                && incrementalScriptFileProperties.Date == DateTime.Today)
+            if (prevRuntimeScriptFile != null)
             {
-                nextFileVersion = incrementalScriptFileProperties.Version + 1;
+                if (prevRuntimeScriptFile.Date == nextFileDate)
+                {
+                    nextFileVersion = prevRuntimeScriptFile.Version + 1;
+                }
             }
 
-            IncrementalScriptFileProperties scriptFileProperties = new IncrementalScriptFileProperties(scriptName, DateTime.Today, nextFileVersion);
-            RuntimeScriptFileBase newRuntimeScriptFile = new IncrementalRuntimeScriptFile(ScriptFileTypeBase.Create<IncrementalScriptFileType>(), folderPath, scriptFileProperties);
-
-            return newRuntimeScriptFile;
+            return new IncrementalRuntimeScriptFile(folderPath, scriptName, nextFileDate, nextFileVersion);
         }
 
         public override RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string folderPath, string fileFullPath)
         {
-            return new IncrementalRuntimeScriptFile(ScriptFileTypeBase.Create<IncrementalScriptFileType>(), folderPath, fileFullPath);
+            return new IncrementalRuntimeScriptFile(folderPath, fileFullPath);
         }
 
     }

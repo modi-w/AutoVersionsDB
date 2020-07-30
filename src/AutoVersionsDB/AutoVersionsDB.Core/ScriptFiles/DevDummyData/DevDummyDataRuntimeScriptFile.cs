@@ -11,16 +11,30 @@ namespace AutoVersionsDB.Core.ScriptFiles.DevDummyData
 {
     public class DevDummyDataRuntimeScriptFile : RepeatableRuntimeScriptFile
     {
+        public override ScriptFileTypeBase ScriptFileType
+        {
+            get
+            {
+                return ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
+            }
+        }
+        protected DevDummyDataRuntimeScriptFile() { }
 
-        public DevDummyDataRuntimeScriptFile(ScriptFileTypeBase scriptFileType, string folderPath, RepeatableScriptFileProperties repeatableScriptFileProperties)
-            : base(scriptFileType, folderPath, repeatableScriptFileProperties)
+        public static new DevDummyDataRuntimeScriptFile CreateByScriptName(string folderPath, string scriptName)
+        {
+            return new DevDummyDataRuntimeScriptFile()
+            {
+                FolderPath = folderPath,
+                ScriptName = scriptName
+            };
+        }
+
+        public DevDummyDataRuntimeScriptFile(string folderPath, string fileFullPath)
+          : base(folderPath, fileFullPath)
         {
         }
 
-        public DevDummyDataRuntimeScriptFile(ScriptFileTypeBase scriptFileType, string folderPath, string fileFullPath)
-            : base(scriptFileType, folderPath, fileFullPath)
-        {
-        }
+
 
     }
 }
