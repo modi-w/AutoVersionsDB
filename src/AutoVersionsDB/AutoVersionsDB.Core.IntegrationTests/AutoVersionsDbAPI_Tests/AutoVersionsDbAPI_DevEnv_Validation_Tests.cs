@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
     public class AutoVersionsDbAPI_DevEnv_Validation_Tests : AutoVersionsDbAPI_TestsBase
     {
         [Test]
-        public void DeliveryEnv_ProjectConfigValidate_NotValid()
+        public void DevEnv_ProjectConfigValidate_NotValid()
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {

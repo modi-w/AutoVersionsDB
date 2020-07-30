@@ -53,7 +53,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
                 foreach (string fileFullPath in arrAllScriptFiles)
                 {
-                    RuntimeScriptFileBase currScriptFile = _scriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath,fileFullPath);
+                    RuntimeScriptFileBase currScriptFile = _scriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
 
                     string computedFileHash = _fileChecksumManager.GetHashByFilePath(fileFullPath);
                     currScriptFile.ComputedHash = computedFileHash;
@@ -74,9 +74,18 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile)
         {
-            return _scriptFileType.RuntimeScriptFileFactory.CreateNextRuntimeScriptFileInstance(FolderPath, scriptName, prevRuntimeScriptFile);
+            scriptName.ThrowIfNull(nameof(scriptName));
+
+            RuntimeScriptFileBase newRuntimeScriptFile = _scriptFileType.RuntimeScriptFileFactory.CreateNextRuntimeScriptFileInstance(FolderPath, scriptName, prevRuntimeScriptFile);
+
+            File.AppendAllText(newRuntimeScriptFile.FileFullPath, "", Encoding.UTF8);
+
+            Load();
+
+
+            return newRuntimeScriptFile;
         }
-       
+
 
 
     }
