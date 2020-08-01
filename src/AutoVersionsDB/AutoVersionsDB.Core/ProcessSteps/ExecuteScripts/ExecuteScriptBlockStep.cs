@@ -38,7 +38,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         }
 
 
-        public override void Execute(AutoVersionsDbProcessState processState, ScriptBlockStepArgs scriptBlockStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ScriptBlockStepArgs scriptBlockStepArgs)
         {
             processState.ThrowIfNull(nameof(processState));
             scriptBlockStepArgs.ThrowIfNull(nameof(scriptBlockStepArgs));

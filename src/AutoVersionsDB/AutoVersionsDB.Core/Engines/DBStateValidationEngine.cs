@@ -12,10 +12,10 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "DB State Validation";
 
 
-        public DBStateValidationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public DBStateValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                         ScriptFilesComparersManager scriptFilesComparersManager,
                                         DBStateValidationStep dbStateValidationStep)
-            : base(notificationExecutersFactoryManager, null, scriptFilesComparersManager)
+            : base(notificationExecutersProviderFactory, null, scriptFilesComparersManager)
         {
             ProcessSteps.Add(dbStateValidationStep);
         }

@@ -43,7 +43,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             Assert.That(_autoVersionsDbAPI.HasError);
 
-            bool isRestoreExecuted = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager
+            bool isRestoreExecuted = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistory
                 .NotificationStatesProcessHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
                                                         && e.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 

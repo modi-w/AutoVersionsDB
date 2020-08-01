@@ -9,7 +9,7 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class NotificationWrapperExecuter : IDisposable
     {
-        private readonly NotifictionStatesHistoryManager _notifictionStatesHistoryManager;
+        private readonly NotificationExecutersProvider _notificationExecutersProvider;
         private readonly NotificationStateItem _parentNotificationStateItem;
         public NotificationStateItem CurrentNotificationStateItem { get; set; }
 
@@ -17,12 +17,12 @@ namespace AutoVersionsDB.NotificationableEngine
 
         private double _prevNotifyPrecent;
 
-        public NotificationWrapperExecuter(NotifictionStatesHistoryManager notifictionStatesHistoryManager,
+        public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
                                             NotificationStateItem parentNotificationStateItem,
                                             int numOfStep,
                                             double minPrecentChangeToNotify = 1)
         {
-            _notifictionStatesHistoryManager = notifictionStatesHistoryManager;
+            _notificationExecutersProvider = notificationExecutersProvider;
             _parentNotificationStateItem = parentNotificationStateItem;
             _minPrecentChangeToNotify = minPrecentChangeToNotify;
 
@@ -52,7 +52,7 @@ namespace AutoVersionsDB.NotificationableEngine
                     CallHandleNotificationStateChanged();
                 }
 
-                step.Execute(processState, actionStepArgs);
+                step.Execute(_notificationExecutersProvider, processState, actionStepArgs);
 
                 CurrentNotificationStateItem.StepEnd();
                 if (step.InternalNotificationableAction == null)
@@ -63,13 +63,13 @@ namespace AutoVersionsDB.NotificationableEngine
             catch (NotificationEngineException ex)
             {
                 CurrentNotificationStateItem.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage);
-                _notifictionStatesHistoryManager.HandleNotificationStateChanged();
+                _notificationExecutersProvider.NotifictionStatesHistory.HandleNotificationStateChanged();
 
             }
             catch (Exception ex)
             {
                 CurrentNotificationStateItem.StepError(step.StepName, ex.Message, "Error occurred during the process.");
-                _notifictionStatesHistoryManager.HandleNotificationStateChanged();
+                _notificationExecutersProvider.NotifictionStatesHistory.HandleNotificationStateChanged();
 
             }
 
@@ -81,7 +81,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 || CurrentNotificationStateItem.Precents - _prevNotifyPrecent > _minPrecentChangeToNotify)
             {
                 _prevNotifyPrecent = CurrentNotificationStateItem.Precents;
-                _notifictionStatesHistoryManager.HandleNotificationStateChanged();
+                _notificationExecutersProvider.NotifictionStatesHistory.HandleNotificationStateChanged();
             }
         }
 
@@ -123,11 +123,11 @@ namespace AutoVersionsDB.NotificationableEngine
         where TProcessState : ProcessStateBase
     {
 
-        public NotificationWrapperExecuter(NotifictionStatesHistoryManager notifictionStatesHistoryManager,
+        public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
                                             NotificationStateItem parentNotificationStateItem,
                                             int numOfStep,
                                             double minPrecentChangeToNotify = 1)
-            : base(notifictionStatesHistoryManager, parentNotificationStateItem, numOfStep, minPrecentChangeToNotify)
+            : base(notificationExecutersProvider, parentNotificationStateItem, numOfStep, minPrecentChangeToNotify)
         {
         }
 

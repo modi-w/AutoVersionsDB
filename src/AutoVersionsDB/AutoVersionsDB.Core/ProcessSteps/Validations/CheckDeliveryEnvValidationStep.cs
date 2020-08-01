@@ -12,9 +12,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         protected override bool ShouldContinueWhenFindError => false;
 
-        public CheckDeliveryEnvValidationStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                    SingleValidationStep singleValidationStep)
-            : base(notificationExecutersFactoryManager, singleValidationStep)
+        public CheckDeliveryEnvValidationStep(SingleValidationStep singleValidationStep)
+            : base(singleValidationStep)
         {
         }
 

@@ -16,17 +16,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         private string _stepName;
         public override string StepName => _stepName;
 
-        private NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-
-
         private IDBCommands _dbCommands;
 
 
-
-        public ExecuteSingleFileScriptStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                                ExecuteScriptBlockStep executeScriptBlockStep)
+        public ExecuteSingleFileScriptStep(ExecuteScriptBlockStep executeScriptBlockStep)
         {
-            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             InternalNotificationableAction = executeScriptBlockStep;
         }
 
@@ -63,7 +57,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             return numOfScriptBlocks;
         }
 
-        public override void Execute(AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
         {
             processState.ThrowIfNull(nameof(processState));
             actionStepArgs.ThrowIfNull(nameof(actionStepArgs));
@@ -76,11 +70,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
                 List<string> scriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).ToList();
 
-                using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(scriptBlocks.Count))
+                using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(scriptBlocks.Count))
                 {
                     foreach (string scriptBlockStr in scriptBlocks)
                     {
-                        if (!_notificationExecutersFactoryManager.HasError)
+                        if (!notificationExecutersProvider.NotifictionStatesHistory.HasError)
                         {
                             ScriptBlockStepArgs scriptBlockStepArgs = new ScriptBlockStepArgs(scriptBlockStr);
 

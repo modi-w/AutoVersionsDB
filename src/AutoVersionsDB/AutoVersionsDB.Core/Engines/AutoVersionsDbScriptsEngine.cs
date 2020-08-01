@@ -12,10 +12,10 @@ namespace AutoVersionsDB.Core.Engines
     {
         private readonly ScriptFilesComparersManager _scriptFilesComparersManager;
 
-        public AutoVersionsDbScriptsEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public AutoVersionsDbScriptsEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                             NotificationableActionStepBase rollbackStep,
                                             ScriptFilesComparersManager scriptFilesComparersManager)
-            : base(notificationExecutersFactoryManager, rollbackStep)
+            : base(notificationExecutersProviderFactory, rollbackStep)
         {
             _scriptFilesComparersManager = scriptFilesComparersManager;
         }

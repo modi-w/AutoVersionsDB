@@ -9,9 +9,9 @@ namespace AutoVersionsDB.WinApp
     public partial class MessageWindow : Form
     {
 
-        public NotifictionStatesHistoryManager NotifictionStatesHistoryManager { get; private set; }
+        public NotifictionStatesHistory NotifictionStatesHistoryManager { get; private set; }
 
-        public MessageWindow(NotifictionStatesHistoryManager notifictionStatesHistoryManager)
+        public MessageWindow(NotifictionStatesHistory notifictionStatesHistoryManager)
         {
             notifictionStatesHistoryManager.ThrowIfNull(nameof(notifictionStatesHistoryManager));
 

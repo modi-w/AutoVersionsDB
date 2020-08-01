@@ -101,7 +101,7 @@ namespace AutoVersionsDB.WinApp
         {
             if (_autoVersionsDbAPI.NotificationExecutersFactoryManager.HasError)
             {
-                List<NotificationStateItem> errorStates = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.NotificationStatesProcessHistory.Where(e => e.HasError).ToList();
+                List<NotificationStateItem> errorStates = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistory.NotificationStatesProcessHistory.Where(e => e.HasError).ToList();
 
                 foreach (NotificationStateItem errorStateItem in errorStates)
                 {

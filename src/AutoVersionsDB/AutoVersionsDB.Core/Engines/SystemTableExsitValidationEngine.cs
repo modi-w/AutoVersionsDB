@@ -11,9 +11,9 @@ namespace AutoVersionsDB.Core.Engines
     {
         public override string EngineTypeName => "System Table Exsit Validation";
 
-        public SystemTableExsitValidationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public SystemTableExsitValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                                 SystemTableValidationStep systemTableValidationStep)
-            : base(notificationExecutersFactoryManager, null)
+            : base(notificationExecutersProviderFactory, null)
         {
             ProcessSteps.Add(systemTableValidationStep);
         }

@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Recreate DB From Scratch";
 
 
-        public RecreateDBFromScratchEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public RecreateDBFromScratchEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                             RestoreDatabaseStep rollbackStep,
                                             ScriptFilesComparersManager scriptFilesComparersManager,
                                             ProjectConfigValidationStep projectConfigValidationStep,
@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.Engines
                                             RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
                                             ExecuteScriptsStep executeScriptsStep,
                                             FinalizeProcessStep finalizeProcessStep)
-            : base(notificationExecutersFactoryManager, rollbackStep, scriptFilesComparersManager)
+            : base(notificationExecutersProviderFactory, rollbackStep, scriptFilesComparersManager)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(checkDeliveryEnvValidationStep);

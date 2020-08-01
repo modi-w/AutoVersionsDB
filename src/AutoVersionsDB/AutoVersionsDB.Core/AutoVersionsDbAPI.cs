@@ -21,10 +21,10 @@ namespace AutoVersionsDB.Core
 
 
         public DBCommandsFactoryProvider DBCommandsFactoryProvider { get; }
-        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get;  }
+        public NotificationExecutersProvider NotificationExecutersFactoryManager { get; }
 
         public ProjectConfigItem ProjectConfigItem { get; private set; }
-       
+
         public ConfigProjectsManager ConfigProjectsManager { get; }
 
         public ScriptFilesComparersManager ScriptFilesComparersManager { get; }
@@ -40,36 +40,36 @@ namespace AutoVersionsDB.Core
 
 
 
-        public bool HasError
-        {
-            get
-            {
-                return NotificationExecutersFactoryManager.HasError;
-            }
-        }
-        public string ErrorCode
-        {
-            get
-            {
-                return NotificationExecutersFactoryManager.ErrorCode;
-            }
-        }
+        //public bool HasError
+        //{
+        //    get
+        //    {
+        //        return NotificationExecutersFactoryManager.HasError;
+        //    }
+        //}
+        //public string ErrorCode
+        //{
+        //    get
+        //    {
+        //        return NotificationExecutersFactoryManager.ErrorCode;
+        //    }
+        //}
 
-        public string InstructionsMessage
-        {
-            get
-            {
-                return NotificationExecutersFactoryManager.InstructionsMessage;
-            }
-        }
+        //public string InstructionsMessage
+        //{
+        //    get
+        //    {
+        //        return NotificationExecutersFactoryManager.InstructionsMessage;
+        //    }
+        //}
 
-        public string InstructionsMessageStepName
-        {
-            get
-            {
-                return NotificationExecutersFactoryManager.InstructionsMessageStepName;
-            }
-        }
+        //public string InstructionsMessageStepName
+        //{
+        //    get
+        //    {
+        //        return NotificationExecutersFactoryManager.InstructionsMessageStepName;
+        //    }
+        //}
 
 
 
@@ -78,7 +78,7 @@ namespace AutoVersionsDB.Core
         public AutoVersionsDbAPI(ConfigProjectsManager configProjectsManager,
                                 DBCommandsFactoryProvider dbCommandsFactoryProvider,
                                 ScriptFilesComparersManager scriptFilesComparersManager,
-                                NotificationExecutersFactoryManager notificationExecutersFactoryManager)
+                                NotificationExecutersProvider notificationExecutersFactoryManager)
         {
             ConfigProjectsManager = configProjectsManager;
 
@@ -110,21 +110,25 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public void Refresh()
+        public NotifictionStatesHistory Refresh()
         {
+            NotifictionStatesHistory processResult;
+
             if (_currentArtifactExtractor != null)
             {
                 _currentArtifactExtractor.Dispose();
             }
 
-            ValidateProjectConfig();
+            processResult = ValidateProjectConfig();
 
-            if (!HasError)
+            if (!processResult.HasError)
             {
                 _currentArtifactExtractor = ArtifactExtractorFactory.Create(ProjectConfigItem);
 
                 RecreateScriptFilesComparersProvider();
             }
+
+            return processResult;
         }
 
 
@@ -139,80 +143,102 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
-        public void ValidateAll()
+        public NotifictionStatesHistory ValidateAll()
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
-                ValidateArtifactFile();
+                processResult = ValidateArtifactFile();
 
-                if (!HasError)
+                if (!processResult.HasError)
                 {
-                    ValidateProjectConfig();
+                    processResult = ValidateProjectConfig();
 
-                    if (!HasError)
+                    if (!processResult.HasError)
                     {
-                        ValidateSystemTableExist();
+                        processResult = ValidateSystemTableExist();
 
-                        if (!HasError)
+                        if (!processResult.HasError)
                         {
-                            ValidateDBState();
+                            processResult = ValidateDBState();
                         }
                     }
                 }
             }
+
+            return processResult;
         }
 
-        public void ValidateProjectConfig()
+        public NotifictionStatesHistory ValidateProjectConfig()
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ProjectConfigValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processResult = engine.Run(null);
                 }
-           }
+            }
+
+            return processResult;
         }
 
-        private void ValidateArtifactFile()
+        private NotifictionStatesHistory ValidateArtifactFile()
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ArtifactFileValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processResult = engine.Run(null);
                 }
             }
+
+            return processResult;
         }
 
-        private void ValidateSystemTableExist()
+        private NotifictionStatesHistory ValidateSystemTableExist()
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SystemTableExsitValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processResult = engine.Run(null);
                 }
             }
+
+            return processResult;
         }
 
 
-        private void ValidateDBState()
+        private NotifictionStatesHistory ValidateDBState()
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DBStateValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processResult = engine.Run(null);
                 }
             }
+
+            return processResult;
         }
 
         public bool ValdiateTargetStateAlreadyExecuted(string targetStateScriptFilename)
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
@@ -220,11 +246,11 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(executionParams);
+                    processResult = engine.Run(executionParams);
                 }
             }
 
-            return !NotificationExecutersFactoryManager.HasError;
+            return !processResult.HasError;
         }
 
         #endregion
@@ -232,27 +258,33 @@ namespace AutoVersionsDB.Core
 
         #region Run Change Db State
 
-        public void SyncDB()
+        public NotifictionStatesHistory SyncDB()
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processResult = engine.Run(null);
                 }
 
                 RecreateScriptFilesComparersProvider();
             }
+
+            return processResult;
         }
 
-        public void SetDBToSpecificState(string targetStateScriptFilename, bool isIgnoreHistoryWarning)
+        public NotifictionStatesHistory SetDBToSpecificState(string targetStateScriptFilename, bool isIgnoreHistoryWarning)
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 if (isIgnoreHistoryWarning)
                 {
-                    RecreateDBFromScratch(targetStateScriptFilename);
+                    processResult = RecreateDBFromScratch(targetStateScriptFilename);
                 }
                 else
                 {
@@ -261,16 +293,20 @@ namespace AutoVersionsDB.Core
                     using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBToSpecificStateEngine>())
                     {
                         engine.Prepare(ProjectConfigItem);
-                        engine.Run(executionParams);
+                        processResult = engine.Run(executionParams);
                     }
                 }
 
                 RecreateScriptFilesComparersProvider();
             }
+
+            return processResult;
         }
 
-        public void RecreateDBFromScratch(string targetStateScriptFilename)
+        public NotifictionStatesHistory RecreateDBFromScratch(string targetStateScriptFilename)
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
@@ -278,15 +314,19 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<RecreateDBFromScratchEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(executionParams);
+                    processResult = engine.Run(executionParams);
                 }
 
                 RecreateScriptFilesComparersProvider();
             }
+
+            return processResult;
         }
 
-        public void SetDBStateByVirtualExecution(string targetStateScriptFilename)
+        public NotifictionStatesHistory SetDBStateByVirtualExecution(string targetStateScriptFilename)
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
@@ -294,11 +334,13 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<CreateVirtualExecutionsEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(executionParams);
+                    processResult = engine.Run(executionParams);
                 }
 
                 RecreateScriptFilesComparersProvider();
             }
+
+            return processResult;
         }
 
 
@@ -318,16 +360,20 @@ namespace AutoVersionsDB.Core
 
         #region Deploy
 
-        public void Deploy()
+        public NotifictionStatesHistory Deploy()
         {
+            NotifictionStatesHistory processResult;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DeployEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processResult= engine.Run(null);
                 }
             }
+
+            return processResult;
         }
 
         #endregion

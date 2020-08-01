@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Sync DB";
 
 
-        public SyncDBEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public SyncDBEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                             RestoreDatabaseStep rollbackStep,
                             ScriptFilesComparersManager scriptFilesComparersManager,
                             ProjectConfigValidationStep projectConfigValidationStep,
@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.Engines
                             CreateBackupStep createBackupStep,
                             ExecuteScriptsStep executeScriptsStep,
                             FinalizeProcessStep finalizeProcessStep)
-            :base(notificationExecutersFactoryManager, rollbackStep, scriptFilesComparersManager)
+            :base(notificationExecutersProviderFactory, rollbackStep, scriptFilesComparersManager)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(artifactFileValidationStep);

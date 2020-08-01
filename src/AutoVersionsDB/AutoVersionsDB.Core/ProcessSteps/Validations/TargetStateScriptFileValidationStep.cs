@@ -15,10 +15,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
         protected override bool ShouldContinueWhenFindError => true;
 
-        public TargetStateScriptFileValidationStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                                    SingleValidationStep singleValidationStep,
+        public TargetStateScriptFileValidationStep(SingleValidationStep singleValidationStep,
                                                     ScriptFilesComparersManager scriptFilesComparersManager)
-            : base(notificationExecutersFactoryManager, singleValidationStep)
+            : base(singleValidationStep)
         {
             _scriptFilesComparersManager = scriptFilesComparersManager;
         }

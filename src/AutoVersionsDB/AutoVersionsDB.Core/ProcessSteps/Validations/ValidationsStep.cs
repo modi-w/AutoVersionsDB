@@ -13,15 +13,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public override string StepName => "Validation";
 
-        private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-     
         protected abstract bool ShouldContinueWhenFindError { get; }
         protected List<ValidatorBase> Validators { get; }
 
-        public ValidationsStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                        SingleValidationStep singleValidationStep)
+        public ValidationsStep(SingleValidationStep singleValidationStep)
         {
-            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             InternalNotificationableAction = singleValidationStep;
             
             Validators = new List<ValidatorBase>();
@@ -45,14 +41,14 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
-            using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(Validators.Count))
+            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(Validators.Count))
             {
                 foreach (ValidatorBase validator in Validators)
                 {
                     if (ShouldContinueWhenFindError
-                        || !_notificationExecutersFactoryManager.HasError)
+                        || !notificationExecutersProvider.NotifictionStatesHistory.HasError)
                     {
                         ValidatorStepArgs validatorStepArgs = new ValidatorStepArgs(validator);
 

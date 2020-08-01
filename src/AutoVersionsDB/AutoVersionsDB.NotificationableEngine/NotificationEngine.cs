@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoVersionsDB.NotificationableEngine.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,40 +16,43 @@ namespace AutoVersionsDB.NotificationableEngine
 
         List<NotificationableActionStepBase> ProcessSteps { get; }
         NotificationableActionStepBase RollbackStep { get; }
-        NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; }
 
         void Prepare(NotificationableEngineConfig notificationableEngineConfig);
 
-        void Run(ExecutionParams executionParams);
+        NotifictionStatesHistory Run(ExecutionParams executionParams);
     }
 
 
     public abstract class NotificationEngine<TProcessState> : INotificationEngine
         where TProcessState : ProcessStateBase, new()
     {
+        private NotificationExecutersProviderFactory _notificationExecutersProviderFactory;
+
         public abstract string EngineTypeName { get; }
         public Dictionary<string, string> EngineMetaData { get; }
 
         public List<NotificationableActionStepBase> ProcessSteps { get; }
         public NotificationableActionStepBase RollbackStep { get; }
-        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get; }
 
         public event EventHandler<PrepareEngineEventArgs> Preparing;
         public event EventHandler<PrepareEngineEventArgs> Prepared;
 
-        public NotificationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public NotificationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                     NotificationableActionStepBase rollbackStep)
         {
+            notificationExecutersProviderFactory.ThrowIfNull(nameof(notificationExecutersProviderFactory));
+
             RollbackStep = rollbackStep;
 
             ProcessSteps = new List<NotificationableActionStepBase>();
 
-            NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
+            _notificationExecutersProviderFactory = notificationExecutersProviderFactory;
 
             EngineMetaData = new Dictionary<string, string>
             {
                 ["EngineTypeName"] = EngineTypeName
             };
+
         }
 
         public void Prepare(NotificationableEngineConfig notificationableEngineConfig)
@@ -87,7 +91,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public void Run(ExecutionParams executionParams)
+        public NotifictionStatesHistory Run(ExecutionParams executionParams)
         {
             int totalNumOfSteps = ProcessSteps.Count;
 
@@ -100,17 +104,19 @@ namespace AutoVersionsDB.NotificationableEngine
 
             processState.SetEngineMetaData(this.EngineMetaData);
 
-            using (NotificationWrapperExecuter rootNotificationWrapperExecuter = NotificationExecutersFactoryManager.Reset(totalNumOfSteps))
+            NotificationExecutersProvider notificationExecutersProvider = _notificationExecutersProviderFactory.Create();
+
+            using (NotificationWrapperExecuter rootNotificationWrapperExecuter = notificationExecutersProvider.Reset(totalNumOfSteps))
             {
-                if (!NotificationExecutersFactoryManager.HasError)
+                if (!notificationExecutersProvider.NotifictionStatesHistory.HasError)
                 {
                     foreach (NotificationableActionStepBase processStep in ProcessSteps)
                     {
                         rootNotificationWrapperExecuter.ExecuteStep(processStep, "", processState, null);
 
-                        if (NotificationExecutersFactoryManager.HasError)
+                        if (notificationExecutersProvider.NotifictionStatesHistory.HasError)
                         {
-                            RollbackProcess(rootNotificationWrapperExecuter, processState, processStep.StepName);
+                            RollbackProcess(notificationExecutersProvider, rootNotificationWrapperExecuter, processState, processStep.StepName);
                             break;
                         }
                     }
@@ -122,18 +128,20 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 processState.EndProcessDateTime = DateTime.Now;
             }
+
+            return notificationExecutersProvider.NotifictionStatesHistory;
         }
 
 
 
-        private void RollbackProcess(NotificationWrapperExecuter currentNotificationWrapperExecuter, ProcessStateBase processState, string stepName)
+        private void RollbackProcess(NotificationExecutersProvider notificationExecutersProvider, NotificationWrapperExecuter currentNotificationWrapperExecuter, ProcessStateBase processState, string stepName)
         {
             if (RollbackStep != null)
             {
                 if (processState.CanRollback)
                 {
-                    NotificationExecutersFactoryManager.ClearAllInternalProcessState();
-                    NotificationExecutersFactoryManager.RootNotificationStateItem.NumOfSteps++;
+                    notificationExecutersProvider.ClearAllInternalProcessState();
+                    notificationExecutersProvider.RootNotificationStateItem.NumOfSteps++;
                     currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, $"because error on {stepName}", processState, null);
                 }
             }
@@ -172,7 +180,7 @@ namespace AutoVersionsDB.NotificationableEngine
                     }
                 }
 
-                foreach (IDisposable processStep in ProcessSteps.Where(e=> e is IDisposable))
+                foreach (IDisposable processStep in ProcessSteps.Where(e => e is IDisposable))
                 {
                     processStep.Dispose();
                 }
@@ -193,9 +201,9 @@ namespace AutoVersionsDB.NotificationableEngine
         where TNotificationableEngineConfig : NotificationableEngineConfig
     {
 
-        public NotificationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public NotificationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                     NotificationableActionStepBase rollbackStep)
-            : base(notificationExecutersFactoryManager, rollbackStep)
+            : base(notificationExecutersProviderFactory, rollbackStep)
         {
         }
 
@@ -206,9 +214,9 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        public void Run(TExecutionParams executionParams)
+        public NotifictionStatesHistory Run(TExecutionParams executionParams)
         {
-            base.Run(executionParams);
+            return base.Run(executionParams);
         }
     }
 

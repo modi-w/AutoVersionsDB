@@ -20,7 +20,7 @@ namespace AutoVersionsDB.WinApp
             {
                 _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
 
-                AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged += NotifictionStatesHistoryManager_OnNotificationStateItemChanged;
+                AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistory.OnNotificationStateItemChanged += NotifictionStatesHistoryManager_OnNotificationStateItemChanged;
 
                 this.Disposed += NotificationsControl_Disposed;
             }
@@ -210,7 +210,7 @@ namespace AutoVersionsDB.WinApp
         {
             //if (NotifictionStatesHistoryManager != null)
             //{
-            using (MessageWindow messageWindow = new MessageWindow(_autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager))
+            using (MessageWindow messageWindow = new MessageWindow(_autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistory))
             {
                 messageWindow.ShowDialog();
             }
@@ -250,7 +250,7 @@ namespace AutoVersionsDB.WinApp
 
         private void NotificationsControl_Disposed(object sender, EventArgs e)
         {
-            AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged -= NotifictionStatesHistoryManager_OnNotificationStateItemChanged;
+            AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistory.OnNotificationStateItemChanged -= NotifictionStatesHistoryManager_OnNotificationStateItemChanged;
         }
 
 

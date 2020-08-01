@@ -12,9 +12,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         protected override bool ShouldContinueWhenFindError => false;
 
-        public ArtifactFileValidationStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                            SingleValidationStep singleValidationStep)
-            : base(notificationExecutersFactoryManager, singleValidationStep)
+        public ArtifactFileValidationStep(SingleValidationStep singleValidationStep)
+            : base(singleValidationStep)
         {
         }
 

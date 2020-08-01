@@ -40,7 +40,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             return 1;
         }
 
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
             processState.ThrowIfNull(nameof(processState));
 

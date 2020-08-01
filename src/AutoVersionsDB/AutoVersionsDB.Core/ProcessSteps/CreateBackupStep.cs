@@ -18,7 +18,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
     {
         public override string StepName => "Create Backup";
 
-        private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
 
@@ -33,14 +32,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         private NotificationWrapperExecuter _tempNotificationWrapperExecuter;
 
-        public CreateBackupStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public CreateBackupStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
-            notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
 
-
-            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
 
         }
@@ -68,7 +63,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
             processState.ThrowIfNull(nameof(processState));
 
@@ -78,7 +73,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             string targetFileFullPath = Path.Combine(_dbBackupBaseFolderPath, targetFileName);
             FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
 
-            using (_tempNotificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(100))
+            using (_tempNotificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
             {
                 _tempNotificationWrapperExecuter.CurrentNotificationStateItem.StepStart("Backup process", "");
 

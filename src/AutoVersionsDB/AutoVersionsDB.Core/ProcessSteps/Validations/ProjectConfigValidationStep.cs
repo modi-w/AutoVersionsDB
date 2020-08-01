@@ -16,10 +16,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         protected override bool ShouldContinueWhenFindError => true;
 
 
-        public ProjectConfigValidationStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                            SingleValidationStep singleValidationStep,
+        public ProjectConfigValidationStep(SingleValidationStep singleValidationStep,
                                             DBCommandsFactoryProvider dbCommandsFactoryProvider)
-         : base(notificationExecutersFactoryManager, singleValidationStep)
+         : base(singleValidationStep)
         {
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }

@@ -18,10 +18,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
         protected override bool ShouldContinueWhenFindError => false;
 
-        public SystemTableValidationStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                            SingleValidationStep singleValidationStep,
+        public SystemTableValidationStep(SingleValidationStep singleValidationStep,
                                             DBCommandsFactoryProvider dbCommandsFactoryProvider)
-         : base(notificationExecutersFactoryManager, singleValidationStep)
+         : base(singleValidationStep)
         {
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider ?? throw new ArgumentNullException(nameof(dbCommandsFactoryProvider));
         }

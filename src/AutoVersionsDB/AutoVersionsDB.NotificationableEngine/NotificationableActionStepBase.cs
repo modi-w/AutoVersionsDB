@@ -16,7 +16,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public abstract int GetNumOfInternalSteps(ProcessStateBase processState, ActionStepArgs actionStepArgs);
 
-        public abstract void Execute(ProcessStateBase processState, ActionStepArgs actionStepArgs);
+        public abstract void Execute(NotificationExecutersProvider notificationExecutersProvider, ProcessStateBase processState, ActionStepArgs actionStepArgs);
 
     }
 
@@ -41,12 +41,12 @@ namespace AutoVersionsDB.NotificationableEngine
         public abstract int GetNumOfInternalSteps(TProcessState processState, ActionStepArgs actionStepArgs);
 
 
-        public override void Execute(ProcessStateBase processState, ActionStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, ProcessStateBase processState, ActionStepArgs actionStepArgs)
         {
-            Execute(processState as TProcessState, actionStepArgs);
+            Execute(notificationExecutersProvider, processState as TProcessState, actionStepArgs);
         }
 
-        public abstract void Execute(TProcessState processState, ActionStepArgs actionStepArgs);
+        public abstract void Execute(NotificationExecutersProvider notificationExecutersProvider, TProcessState processState, ActionStepArgs actionStepArgs);
     }
 
     public abstract class NotificationableActionStepBase<TProcessState, TNotificationableEngineConfig, TActionStepArgs> : NotificationableActionStepBase<TProcessState, TNotificationableEngineConfig>
@@ -66,11 +66,11 @@ namespace AutoVersionsDB.NotificationableEngine
         public abstract int GetNumOfInternalSteps(TProcessState processState, TActionStepArgs actionStepArgs);
 
 
-        public override void Execute(TProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, TProcessState processState, ActionStepArgs actionStepArgs)
         {
-            Execute(processState as TProcessState, actionStepArgs as TActionStepArgs);
+            Execute(notificationExecutersProvider, processState as TProcessState, actionStepArgs as TActionStepArgs);
         }
 
-        public abstract void Execute(TProcessState processState, TActionStepArgs actionStepArgs);
+        public abstract void Execute(NotificationExecutersProvider notificationExecutersProvider, TProcessState processState, TActionStepArgs actionStepArgs);
     }
 }

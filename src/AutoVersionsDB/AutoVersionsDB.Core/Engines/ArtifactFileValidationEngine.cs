@@ -12,9 +12,9 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Artifact File Validation";
 
 
-        public ArtifactFileValidationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public ArtifactFileValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                             ArtifactFileValidationStep artifactFileValidationStep)
-            : base(notificationExecutersFactoryManager, null)
+            : base(notificationExecutersProviderFactory, null)
         {
             ProcessSteps.Add(artifactFileValidationStep);
         }

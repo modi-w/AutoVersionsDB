@@ -54,7 +54,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             return 1;
         }
 
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
             string tempFolderForDeploy = Path.Combine(AutoVersionsDBSettings.TempFolderPath, $"Deploy_{_dbName}_{DateTime.Now:HH-mm-dd-fff}");
             if (!Directory.Exists(tempFolderForDeploy))

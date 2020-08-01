@@ -134,7 +134,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             if (_autoVersionsDbAPI.HasError)
             {
-                throw new Exception(_autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.GetOnlyErrorsHistoryAsString());
+                throw new Exception(_autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistory.GetOnlyErrorsHistoryAsString());
             }
         }
 

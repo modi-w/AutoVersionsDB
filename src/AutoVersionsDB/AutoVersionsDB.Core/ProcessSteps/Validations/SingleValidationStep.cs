@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
             return 1;
         }
 
-        public override void Execute(AutoVersionsDbProcessState processState, ValidatorStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ValidatorStepArgs actionStepArgs)
         {
             processState.ThrowIfNull(nameof(processState));
             actionStepArgs.ThrowIfNull(nameof(actionStepArgs));

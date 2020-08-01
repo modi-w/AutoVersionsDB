@@ -18,8 +18,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
         public override string StepName => StepNameStr;
 
 
-
-        private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         private IDBCommands _dbCommands;
@@ -30,13 +28,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
         private NotificationWrapperExecuter _tempNotificationWrapperExecuter;
 
 
-        public RestoreDatabaseStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                    DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public RestoreDatabaseStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
-            notificationExecutersFactoryManager.ThrowIfNull(nameof(notificationExecutersFactoryManager));
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
 
-            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
@@ -61,12 +56,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
         {
             processState.ThrowIfNull(nameof(processState));
 
 
-            using (_tempNotificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(100))
+            using (_tempNotificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
             {
                 _tempNotificationWrapperExecuter.CurrentNotificationStateItem.StepStart("Restore process", "");
 
