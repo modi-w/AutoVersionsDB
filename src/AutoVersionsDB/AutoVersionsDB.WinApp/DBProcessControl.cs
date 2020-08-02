@@ -332,7 +332,7 @@ namespace AutoVersionsDB.WinApp
                     SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
-                    _autoVersionsDbAPI.SyncDB();
+                    _autoVersionsDbAPI.SyncDB(notificationsControl1.OnNotificationStateChanged);
 
                     notificationsControl1.AfterComplete();
                     SetViewState_AfterProcessComplete();
@@ -355,7 +355,7 @@ namespace AutoVersionsDB.WinApp
         {
             bool isAllowRun = true;
 
-            if (!_autoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(TargetStateScriptFileName))
+            if (!_autoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged))
             {
                 string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
                 isAllowRun = MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;

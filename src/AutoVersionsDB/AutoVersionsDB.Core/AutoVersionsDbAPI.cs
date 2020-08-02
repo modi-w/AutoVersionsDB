@@ -92,13 +92,13 @@ namespace AutoVersionsDB.Core
 
         #region Config
 
-        public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
+        public void SetProjectConfigItem(ProjectConfigItem projectConfigItem, Action<NotificationStateItem> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
                 ProjectConfigItem = projectConfigItem;
 
-                Refresh();
+                Refresh(onNotificationStateChanged);
             }
         }
 
@@ -110,7 +110,7 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public NotifictionStatesHistory Refresh()
+        public NotifictionStatesHistory Refresh(Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -119,7 +119,7 @@ namespace AutoVersionsDB.Core
                 _currentArtifactExtractor.Dispose();
             }
 
-            processResult = ValidateProjectConfig();
+            processResult = ValidateProjectConfig(onNotificationStateChanged);
 
             if (!processResult.HasError)
             {
@@ -143,25 +143,25 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
-        public NotifictionStatesHistory ValidateAll()
+        public NotifictionStatesHistory ValidateAll(Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
             lock (_processSyncLock)
             {
-                processResult = ValidateArtifactFile();
+                processResult = ValidateArtifactFile(onNotificationStateChanged);
 
                 if (!processResult.HasError)
                 {
-                    processResult = ValidateProjectConfig();
+                    processResult = ValidateProjectConfig(onNotificationStateChanged);
 
                     if (!processResult.HasError)
                     {
-                        processResult = ValidateSystemTableExist();
+                        processResult = ValidateSystemTableExist(onNotificationStateChanged);
 
                         if (!processResult.HasError)
                         {
-                            processResult = ValidateDBState();
+                            processResult = ValidateDBState(onNotificationStateChanged);
                         }
                     }
                 }
@@ -170,7 +170,7 @@ namespace AutoVersionsDB.Core
             return processResult;
         }
 
-        public NotifictionStatesHistory ValidateProjectConfig()
+        public NotifictionStatesHistory ValidateProjectConfig(Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -179,14 +179,14 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ProjectConfigValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult = engine.Run(null);
+                    processResult = engine.Run(null, onNotificationStateChanged);
                 }
             }
 
             return processResult;
         }
 
-        private NotifictionStatesHistory ValidateArtifactFile()
+        private NotifictionStatesHistory ValidateArtifactFile(Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -195,14 +195,14 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ArtifactFileValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult = engine.Run(null);
+                    processResult = engine.Run(null, onNotificationStateChanged);
                 }
             }
 
             return processResult;
         }
 
-        private NotifictionStatesHistory ValidateSystemTableExist()
+        private NotifictionStatesHistory ValidateSystemTableExist(Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -211,7 +211,7 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SystemTableExsitValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult = engine.Run(null);
+                    processResult = engine.Run(null, onNotificationStateChanged);
                 }
             }
 
@@ -219,7 +219,7 @@ namespace AutoVersionsDB.Core
         }
 
 
-        private NotifictionStatesHistory ValidateDBState()
+        private NotifictionStatesHistory ValidateDBState(Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -228,14 +228,14 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DBStateValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult = engine.Run(null);
+                    processResult = engine.Run(null, onNotificationStateChanged);
                 }
             }
 
             return processResult;
         }
 
-        public bool ValdiateTargetStateAlreadyExecuted(string targetStateScriptFilename)
+        public bool ValdiateTargetStateAlreadyExecuted(string targetStateScriptFilename, Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -246,7 +246,7 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult = engine.Run(executionParams);
+                    processResult = engine.Run(executionParams, onNotificationStateChanged);
                 }
             }
 
@@ -258,7 +258,7 @@ namespace AutoVersionsDB.Core
 
         #region Run Change Db State
 
-        public NotifictionStatesHistory SyncDB()
+        public NotifictionStatesHistory SyncDB(Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -267,7 +267,7 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult = engine.Run(null);
+                    processResult = engine.Run(null, onNotificationStateChanged);
                 }
 
                 RecreateScriptFilesComparersProvider();
@@ -276,7 +276,7 @@ namespace AutoVersionsDB.Core
             return processResult;
         }
 
-        public NotifictionStatesHistory SetDBToSpecificState(string targetStateScriptFilename, bool isIgnoreHistoryWarning)
+        public NotifictionStatesHistory SetDBToSpecificState(string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -284,7 +284,7 @@ namespace AutoVersionsDB.Core
             {
                 if (isIgnoreHistoryWarning)
                 {
-                    processResult = RecreateDBFromScratch(targetStateScriptFilename);
+                    processResult = RecreateDBFromScratch(targetStateScriptFilename, onNotificationStateChanged);
                 }
                 else
                 {
@@ -293,7 +293,7 @@ namespace AutoVersionsDB.Core
                     using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBToSpecificStateEngine>())
                     {
                         engine.Prepare(ProjectConfigItem);
-                        processResult = engine.Run(executionParams);
+                        processResult = engine.Run(executionParams, onNotificationStateChanged);
                     }
                 }
 
@@ -303,7 +303,7 @@ namespace AutoVersionsDB.Core
             return processResult;
         }
 
-        public NotifictionStatesHistory RecreateDBFromScratch(string targetStateScriptFilename)
+        public NotifictionStatesHistory RecreateDBFromScratch(string targetStateScriptFilename, Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -314,7 +314,7 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<RecreateDBFromScratchEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult = engine.Run(executionParams);
+                    processResult = engine.Run(executionParams, onNotificationStateChanged);
                 }
 
                 RecreateScriptFilesComparersProvider();
@@ -323,7 +323,7 @@ namespace AutoVersionsDB.Core
             return processResult;
         }
 
-        public NotifictionStatesHistory SetDBStateByVirtualExecution(string targetStateScriptFilename)
+        public NotifictionStatesHistory SetDBStateByVirtualExecution(string targetStateScriptFilename, Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -334,7 +334,7 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<CreateVirtualExecutionsEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult = engine.Run(executionParams);
+                    processResult = engine.Run(executionParams, onNotificationStateChanged);
                 }
 
                 RecreateScriptFilesComparersProvider();
@@ -360,7 +360,7 @@ namespace AutoVersionsDB.Core
 
         #region Deploy
 
-        public NotifictionStatesHistory Deploy()
+        public NotifictionStatesHistory Deploy(Action<NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStatesHistory processResult;
 
@@ -369,7 +369,7 @@ namespace AutoVersionsDB.Core
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DeployEngine>())
                 {
                     engine.Prepare(ProjectConfigItem);
-                    processResult= engine.Run(null);
+                    processResult= engine.Run(null, onNotificationStateChanged);
                 }
             }
 

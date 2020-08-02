@@ -27,7 +27,7 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void NotifictionStatesHistoryManager_OnNotificationStateItemChanged(NotificationStateItem notificationStateItem)
+        public void OnNotificationStateChanged(NotificationStateItem notificationStateItem)
         {
             ResolveColorAndImageByErrorStatus(true);
 

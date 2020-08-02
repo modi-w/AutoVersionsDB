@@ -19,7 +19,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         void Prepare(NotificationableEngineConfig notificationableEngineConfig);
 
-        NotifictionStatesHistory Run(ExecutionParams executionParams);
+        NotifictionStatesHistory Run(ExecutionParams executionParams, Action<NotificationStateItem> onNotificationStateChanged);
     }
 
 
@@ -91,7 +91,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public NotifictionStatesHistory Run(ExecutionParams executionParams)
+        public NotifictionStatesHistory Run(ExecutionParams executionParams, Action<NotificationStateItem> onNotificationStateChanged)
         {
             int totalNumOfSteps = ProcessSteps.Count;
 
@@ -104,7 +104,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
             processState.SetEngineMetaData(this.EngineMetaData);
 
-            NotificationExecutersProvider notificationExecutersProvider = _notificationExecutersProviderFactory.Create();
+            NotificationExecutersProvider notificationExecutersProvider = _notificationExecutersProviderFactory.Create(onNotificationStateChanged);
 
             using (NotificationWrapperExecuter rootNotificationWrapperExecuter = notificationExecutersProvider.Reset(totalNumOfSteps))
             {
@@ -214,9 +214,9 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        public NotifictionStatesHistory Run(TExecutionParams executionParams)
+        public NotifictionStatesHistory Run(TExecutionParams executionParams, Action<NotificationStateItem> onNotificationStateChanged)
         {
-            return base.Run(executionParams);
+            return base.Run(executionParams, onNotificationStateChanged);
         }
     }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public delegate void OnNotificationStateItemChangedEventHandler(NotificationStateItem notificationStateItem);
+    //public delegate void OnNotificationStateItemChangedEventHandler(NotificationStateItem notificationStateItem);
 
     public class NotifictionStatesHistory
     {
@@ -15,7 +15,9 @@ namespace AutoVersionsDB.NotificationableEngine
         public NotificationStateItem RootNotificationStateItem { get; private set; }
 
 
-        public event OnNotificationStateItemChangedEventHandler OnNotificationStateItemChanged;
+        private Action<NotificationStateItem> _onNotificationStateChanged;
+
+       // public event OnNotificationStateItemChangedEventHandler OnNotificationStateItemChanged;
 
 
 
@@ -92,8 +94,9 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public NotifictionStatesHistory()
+        public NotifictionStatesHistory(Action<NotificationStateItem> onNotificationStateChanged)
         {
+            _onNotificationStateChanged = onNotificationStateChanged;
         }
 
         public void Reset(NotificationStateItem rootNotificationStateItem)
@@ -116,7 +119,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
             Task.Run(() =>
             {
-                OnNotificationStateItemChanged?.Invoke(snapshotNotificationState);
+                _onNotificationStateChanged?.Invoke(snapshotNotificationState);
             });
         }
 
