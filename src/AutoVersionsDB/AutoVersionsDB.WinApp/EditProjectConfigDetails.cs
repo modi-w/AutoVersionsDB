@@ -17,12 +17,11 @@ namespace AutoVersionsDB.WinApp
 
     public partial class EditProjectConfigDetails : UserControl
     {
-        private readonly List<IDBCommandsFactory> _dbCommandsFactoryList;
+        private readonly List<DBType> _dbTypesList;
+       
+        private ProjectConfigItem _projectConfigItem;
 
         public event OnNavToProcessHandler OnNavToProcess;
-
-
-        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
 
 
@@ -32,10 +31,8 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
-
-                _dbCommandsFactoryList = _autoVersionsDbAPI.DBCommandsFactoryProvider.DBCommandsFactoryDictionary.Values.ToList();
-                cboConncectionType.DataSource = _dbCommandsFactoryList;
+                _dbTypesList = AutoVersionsDbAPI.GetDbTypesList();
+                cboConncectionType.DataSource = _dbTypesList;
                 cboConncectionType.DisplayMember = "DBTypeName";
                 cboConncectionType.ValueMember = "DBTypeCode";
             }
@@ -54,7 +51,7 @@ namespace AutoVersionsDB.WinApp
 
         public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
         {
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfigItem);
+            _projectConfigItem = projectConfigItem;
 
             BindToUIElements();
 
@@ -70,38 +67,38 @@ namespace AutoVersionsDB.WinApp
 
             ClearUIElementsErrors();
 
-            _autoVersionsDbAPI.ValidateProjectConfig();
+            ProcessStateResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectConfigItem,notificationsControl1.OnNotificationStateChanged);
 
             notificationsControl1.AfterComplete();
 
-            SetErrorsToUiElements();
+            SetErrorsToUiElements(processResults);
 
             imgError.BeginInvoke((MethodInvoker)(() =>
             {
-                imgError.Visible = _autoVersionsDbAPI.HasError;
+                imgError.Visible = processResults.HasError;
             }));
 
             imgValid.BeginInvoke((MethodInvoker)(() =>
             {
-                imgValid.Visible = !_autoVersionsDbAPI.HasError;
+                imgValid.Visible = !processResults.HasError;
             }));
             btnNavToProcess.BeginInvoke((MethodInvoker)(() =>
             {
-                btnNavToProcess.Visible = !_autoVersionsDbAPI.HasError;
+                btnNavToProcess.Visible = !processResults.HasError;
             }));
             lblDbProcess.BeginInvoke((MethodInvoker)(() =>
             {
-                lblDbProcess.Visible = !_autoVersionsDbAPI.HasError;
+                lblDbProcess.Visible = !processResults.HasError;
             }));
 
-            return !_autoVersionsDbAPI.HasError;
+            return !processResults.HasError;
         }
 
-        private void SetErrorsToUiElements()
+        private void SetErrorsToUiElements(ProcessStateResults processResults)
         {
-            if (_autoVersionsDbAPI.NotificationExecutersFactoryManager.HasError)
+            if (processResults.HasError)
             {
-                List<NotificationStateItem> errorStates = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistory.NotificationStatesProcessHistory.Where(e => e.HasError).ToList();
+                List<NotificationStateItem> errorStates = processResults.StatesHistory.Where(e => e.HasError).ToList();
 
                 foreach (NotificationStateItem errorStateItem in errorStates)
                 {
@@ -192,9 +189,9 @@ namespace AutoVersionsDB.WinApp
                 cboConncectionType.SelectedIndex = -1;
             }));
 
-            if (!string.IsNullOrWhiteSpace(_autoVersionsDbAPI.ProjectConfigItem.DBTypeCode))
+            if (!string.IsNullOrWhiteSpace(_projectConfigItem.DBTypeCode))
             {
-                IDBCommandsFactory currSelectedItem = _dbCommandsFactoryList.FirstOrDefault(e => e.DBTypeCode == _autoVersionsDbAPI.ProjectConfigItem.DBTypeCode);
+                DBType currSelectedItem = _dbTypesList.FirstOrDefault(e => e.Code == _projectConfigItem.DBTypeCode);
                 if (currSelectedItem != null)
                 {
                     cboConncectionType.BeginInvoke((MethodInvoker)(() =>
@@ -206,54 +203,54 @@ namespace AutoVersionsDB.WinApp
 
             tbProjectName.BeginInvoke((MethodInvoker)(() =>
             {
-                tbProjectName.Text = _autoVersionsDbAPI.ProjectConfigItem.ProjectName;
+                tbProjectName.Text = _projectConfigItem.ProjectName;
             }));
             lblProjectGuid.BeginInvoke((MethodInvoker)(() =>
             {
-                lblProjectGuid.Text = _autoVersionsDbAPI.ProjectConfigItem.ProjectGuid;
+                lblProjectGuid.Text = _projectConfigItem.ProjectGuid;
             }));
             tbConnStr.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStr.Text = _autoVersionsDbAPI.ProjectConfigItem.ConnStr;
+                tbConnStr.Text = _projectConfigItem.ConnStr;
             }));
             tbConnStrToMasterDB.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStrToMasterDB.Text = _autoVersionsDbAPI.ProjectConfigItem.ConnStrToMasterDB;
+                tbConnStrToMasterDB.Text = _projectConfigItem.ConnStrToMasterDB;
             }));
             tbDBBackupFolder.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDBBackupFolder.Text = _autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder;
+                tbDBBackupFolder.Text = _projectConfigItem.DBBackupBaseFolder;
             }));
 
             tbDevScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDevScriptsFolderPath.Text = _autoVersionsDbAPI.ProjectConfigItem.DevScriptsBaseFolderPath;
+                tbDevScriptsFolderPath.Text = _projectConfigItem.DevScriptsBaseFolderPath;
             }));
             tbDeployArtifactFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDeployArtifactFolderPath.Text = _autoVersionsDbAPI.ProjectConfigItem.DeployArtifactFolderPath;
+                tbDeployArtifactFolderPath.Text = _projectConfigItem.DeployArtifactFolderPath;
             }));
             tbDeliveryArtifactFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDeliveryArtifactFolderPath.Text = _autoVersionsDbAPI.ProjectConfigItem.DeliveryArtifactFolderPath;
+                tbDeliveryArtifactFolderPath.Text = _projectConfigItem.DeliveryArtifactFolderPath;
             }));
 
 
             rbDevEnv.BeginInvoke((MethodInvoker)(() =>
             {
-                rbDevEnv.Checked = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                rbDevEnv.Checked = _projectConfigItem.IsDevEnvironment;
             }));
             rbDelEnv.BeginInvoke((MethodInvoker)(() =>
             {
-                rbDelEnv.Checked = !_autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                rbDelEnv.Checked = !_projectConfigItem.IsDevEnvironment;
             }));
 
 
-            if (_autoVersionsDbAPI.ProjectConfigItem.DBCommandsTimeout > 0)
+            if (_projectConfigItem.DBCommandsTimeout > 0)
             {
                 tbConnectionTimeout.BeginInvoke((MethodInvoker)(() =>
                 {
-                    tbConnectionTimeout.Text = _autoVersionsDbAPI.ProjectConfigItem.DBCommandsTimeout.ToString(CultureInfo.InvariantCulture);
+                    tbConnectionTimeout.Text = _projectConfigItem.DBCommandsTimeout.ToString(CultureInfo.InvariantCulture);
                 }));
             }
 
@@ -283,15 +280,15 @@ namespace AutoVersionsDB.WinApp
         {
             lbllncrementalScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                lbllncrementalScriptsFolderPath.Text = _autoVersionsDbAPI.ProjectConfigItem.IncrementalScriptsFolderPath;
+                lbllncrementalScriptsFolderPath.Text = _projectConfigItem.IncrementalScriptsFolderPath;
             }));
             lblRepeatableScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                lblRepeatableScriptsFolderPath.Text = _autoVersionsDbAPI.ProjectConfigItem.RepeatableScriptsFolderPath;
+                lblRepeatableScriptsFolderPath.Text = _projectConfigItem.RepeatableScriptsFolderPath;
             }));
             lblDevDummyDataScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                lblDevDummyDataScriptsFolderPath.Text = _autoVersionsDbAPI.ProjectConfigItem.DevDummyDataScriptsFolderPath;
+                lblDevDummyDataScriptsFolderPath.Text = _projectConfigItem.DevDummyDataScriptsFolderPath;
             }));
         }
 
@@ -301,25 +298,25 @@ namespace AutoVersionsDB.WinApp
 
         private void BindFromUIElements()
         {
-            _autoVersionsDbAPI.ProjectConfigItem.ProjectName = tbProjectName.Text;
-            _autoVersionsDbAPI.ProjectConfigItem.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
-            _autoVersionsDbAPI.ProjectConfigItem.ConnStr = tbConnStr.Text;
-            _autoVersionsDbAPI.ProjectConfigItem.ConnStrToMasterDB = tbConnStrToMasterDB.Text;
-            _autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder = tbDBBackupFolder.Text;
+            _projectConfigItem.ProjectName = tbProjectName.Text;
+            _projectConfigItem.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
+            _projectConfigItem.ConnStr = tbConnStr.Text;
+            _projectConfigItem.ConnStrToMasterDB = tbConnStrToMasterDB.Text;
+            _projectConfigItem.DBBackupBaseFolder = tbDBBackupFolder.Text;
 
-            _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment = rbDevEnv.Checked;
+            _projectConfigItem.IsDevEnvironment = rbDevEnv.Checked;
 
-            //    AutoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment = chkAllowDropDB.Checked;
+            //    _projectConfigItem.IsDevEnvironment = chkAllowDropDB.Checked;
 
             if (int.TryParse(tbConnectionTimeout.Text, out int parsedInt)
                 && parsedInt > 0)
             {
-                _autoVersionsDbAPI.ProjectConfigItem.DBCommandsTimeout = parsedInt;
+                _projectConfigItem.DBCommandsTimeout = parsedInt;
             }
 
-            _autoVersionsDbAPI.ProjectConfigItem.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
-            _autoVersionsDbAPI.ProjectConfigItem.DeployArtifactFolderPath = tbDeployArtifactFolderPath.Text;
-            _autoVersionsDbAPI.ProjectConfigItem.DeliveryArtifactFolderPath = tbDeliveryArtifactFolderPath.Text;
+            _projectConfigItem.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
+            _projectConfigItem.DeployArtifactFolderPath = tbDeployArtifactFolderPath.Text;
+            _projectConfigItem.DeliveryArtifactFolderPath = tbDeliveryArtifactFolderPath.Text;
         }
 
 
@@ -339,13 +336,13 @@ namespace AutoVersionsDB.WinApp
 
         private void TbScriptsRootFolderPath_TextChanged(object sender, EventArgs e)
         {
-            _autoVersionsDbAPI.ProjectConfigItem.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
+            _projectConfigItem.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
             BindScriptsPathLabels();
         }
 
         private void BtnNavToProcess_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(_autoVersionsDbAPI.ProjectConfigItem);
+            OnNavToProcess?.Invoke(_projectConfigItem);
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -364,7 +361,7 @@ namespace AutoVersionsDB.WinApp
                 ValidateAll();
                 //if (validateAll())
                 //{
-                _autoVersionsDbAPI.SaveProjectConfig();
+                AutoVersionsDbAPI.SaveProjectConfig(_projectConfigItem);
                 //}
 
                 btnSave.BeginInvoke((MethodInvoker)(() =>
@@ -391,7 +388,6 @@ namespace AutoVersionsDB.WinApp
             if (disposing)
             {
                 // Dispose managed state (managed objects).
-                _autoVersionsDbAPI.Dispose();
 
                 if (components != null)
                 {

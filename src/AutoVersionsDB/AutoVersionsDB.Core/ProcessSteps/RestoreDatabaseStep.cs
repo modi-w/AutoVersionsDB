@@ -25,8 +25,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
         private IDBBackupRestoreCommands _dbBackupRestoreCommands;
         private DBRestoreStatusNotifyer _dbRestoreStatusNotifyer;
 
-        private NotificationWrapperExecuter _tempNotificationWrapperExecuter;
-
 
         public RestoreDatabaseStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
@@ -46,7 +44,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
             _dbRestoreStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), _dbQueryStatus) as DBRestoreStatusNotifyer;
 
-            _dbRestoreStatusNotifyer.OnDBProcessStatus += DBRestoreStatusNotifyer_OnDBProcessStatus;
         }
 
         public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
@@ -61,11 +58,18 @@ namespace AutoVersionsDB.Core.ProcessSteps
             processState.ThrowIfNull(nameof(processState));
 
 
-            using (_tempNotificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
+            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
             {
-                _tempNotificationWrapperExecuter.CurrentNotificationStateItem.StepStart("Restore process", "");
+                notificationWrapperExecuter.SetStepStartManually("Restore process", "");
 
-                _dbRestoreStatusNotifyer.Start();
+                _dbRestoreStatusNotifyer.Start((precents) =>
+                {
+
+                    if (notificationWrapperExecuter.CurrentNotificationStateItem != null)
+                    {
+                        notificationWrapperExecuter.ForceStepProgress(Convert.ToInt32(precents));
+                    }
+                });
 
                 try
                 {
@@ -82,14 +86,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             }
         }
 
-        private void DBRestoreStatusNotifyer_OnDBProcessStatus(double precent)
-        {
-            if (_tempNotificationWrapperExecuter.CurrentNotificationStateItem != null)
-            {
-                _tempNotificationWrapperExecuter.CurrentNotificationStateItem.StepsProgressByValue(Convert.ToInt32(precent));
-                _tempNotificationWrapperExecuter.CallHandleNotificationStateChanged();
-            }
-        }
+     
 
 
         #region IDisposable
@@ -125,20 +122,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     _dbBackupRestoreCommands.Dispose();
                 }
 
-                if (_dbRestoreStatusNotifyer != null)
-                {
-                    _dbRestoreStatusNotifyer.OnDBProcessStatus -= DBRestoreStatusNotifyer_OnDBProcessStatus;
-                }
 
                 if (_dbQueryStatus != null)
                 {
                     _dbQueryStatus.Dispose();
                 }
 
-                if (_tempNotificationWrapperExecuter != null)
-                {
-                    _tempNotificationWrapperExecuter.Dispose();
-                }
 
             }
 

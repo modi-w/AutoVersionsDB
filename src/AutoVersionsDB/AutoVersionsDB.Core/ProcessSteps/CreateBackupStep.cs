@@ -30,8 +30,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
         private string _dbBackupBaseFolderPath;
 
 
-        private NotificationWrapperExecuter _tempNotificationWrapperExecuter;
-
         public CreateBackupStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
@@ -52,7 +50,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
             _dbBackupStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), _dbQueryStatus) as DBBackupStatusNotifyer;
 
-            _dbBackupStatusNotifyer.OnDBProcessStatus += DBBackupStatusNotifyer_OnDBProcessStatus;
+            //_dbBackupStatusNotifyer.OnDBProcessStatus += DBBackupStatusNotifyer_OnDBProcessStatus;
         }
 
 
@@ -73,11 +71,19 @@ namespace AutoVersionsDB.Core.ProcessSteps
             string targetFileFullPath = Path.Combine(_dbBackupBaseFolderPath, targetFileName);
             FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
 
-            using (_tempNotificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
+            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
             {
-                _tempNotificationWrapperExecuter.CurrentNotificationStateItem.StepStart("Backup process", "");
+                notificationWrapperExecuter.SetStepStartManually("Backup process", "");
 
-                _dbBackupStatusNotifyer.Start();
+                _dbBackupStatusNotifyer.Start(
+                    (precents) =>
+                    {
+
+                        if (notificationWrapperExecuter.CurrentNotificationStateItem != null)
+                        {
+                            notificationWrapperExecuter.ForceStepProgress(Convert.ToInt32(precents));
+                        }
+                    });
 
                 _dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, _dbCommands.GetDataBaseName());
 
@@ -88,14 +94,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             processState.DBBackupFileFullPath = targetFileFullPath;
         }
 
-        private void DBBackupStatusNotifyer_OnDBProcessStatus(double precent)
-        {
-            if (_tempNotificationWrapperExecuter.CurrentNotificationStateItem != null)
-            {
-                _tempNotificationWrapperExecuter.CurrentNotificationStateItem.StepsProgressByValue(Convert.ToInt32(precent));
-                _tempNotificationWrapperExecuter.CallHandleNotificationStateChanged();
-            }
-        }
+
 
 
 
@@ -132,21 +131,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     _dbBackupRestoreCommands.Dispose();
                 }
 
-                if (_dbBackupStatusNotifyer != null)
-                {
-                    _dbBackupStatusNotifyer.OnDBProcessStatus -= DBBackupStatusNotifyer_OnDBProcessStatus;
-                }
-
                 if (_dbQueryStatus != null)
                 {
                     _dbQueryStatus.Dispose();
                 }
-                
 
-                if (_tempNotificationWrapperExecuter != null)
-                {
-                    _tempNotificationWrapperExecuter.Dispose();
-                }
+
 
             }
 

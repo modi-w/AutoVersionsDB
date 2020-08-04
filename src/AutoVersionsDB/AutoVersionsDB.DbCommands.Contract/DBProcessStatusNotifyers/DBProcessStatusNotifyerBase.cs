@@ -4,15 +4,11 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
 {
-    public delegate void OnDBProcessStatusEventHandler(double precent);
-
     public abstract class DBProcessStatusNotifyerBase
     {
         public int IntervalInMs { get; private set; }
 
         public bool IsActive { get; private set; }
-
-        public event OnDBProcessStatusEventHandler OnDBProcessStatus;
 
         public DBProcessStatusNotifyerBase(int intervalInMs)
         {
@@ -24,7 +20,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
         public abstract double GetStatusPrecents();
 
 
-        public void Start()
+        public void Start(Action<double> onProgress)
         {
             IsActive = true;
 
@@ -32,7 +28,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
                  {
                      try
                      {
-                         run();
+                         run(onProgress);
                      }
                      catch (ThreadAbortException threadAbortEx)
                      {
@@ -54,7 +50,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
 
 
 
-        private void run()
+        private void run(Action<double> onProgress)
         {
             Thread.Sleep(IntervalInMs);
 
@@ -64,7 +60,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
 
                 double currentPrecentStatus = GetStatusPrecents();
 
-                OnDBProcessStatus?.Invoke(currentPrecentStatus);
+                onProgress?.Invoke(currentPrecentStatus);
             }
         }
     }

@@ -2,12 +2,13 @@
 using AutoVersionsDB.DbCommands.SqlServer;
 using AutoVersionsDB.DbCommands.SqlServer.Utils;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AutoVersionsDB.DbCommands.Integration
 {
     public class DBCommandsFactoryProvider
     {
-        public Dictionary<string, IDBCommandsFactory> DBCommandsFactoryDictionary { get; private set; }
+        private Dictionary<string, IDBCommandsFactory> _dbCommandsFactoryDictionary;
 
         public DBCommandsFactoryProvider()
         {
@@ -15,17 +16,32 @@ namespace AutoVersionsDB.DbCommands.Integration
         }
 
 
-        public IDBCommandsFactory GetDBCommandsFactoryByDBTypeCode(string dbTypeCode)
+        public List<DBType> GetDbTypesList()
         {
-            return DBCommandsFactoryDictionary[dbTypeCode];
+
+            return _dbCommandsFactoryDictionary
+                .Values
+                .Select(e => e.DBType)
+                .ToList();
         }
+
+        //public IDBCommandsFactory GetDBCommandsFactoryByDBTypeCode(string dbTypeCode)
+        //{
+        //    return _dbCommandsFactoryDictionary[dbTypeCode];
+        //}
+
+        public bool ContainDbType(string dbTypeCode)
+        {
+            return _dbCommandsFactoryDictionary.ContainsKey(dbTypeCode);
+        }
+
 
         public IDBConnectionManager CreateDBConnectionManager(string dbTypeCode, string connectionString, int timeout)
         {
             IDBConnectionManager dbConnectionManager = null;
 
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
-                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
+                && _dbCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
                 dbConnectionManager = dbCommands_Factory.CreateDBConnectionManager(connectionString, timeout);
             }
@@ -39,7 +55,7 @@ namespace AutoVersionsDB.DbCommands.Integration
             IDBCommands dbCommands = null;
 
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
-                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
+                && _dbCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
                 dbCommands = dbCommands_Factory.CreateDBCommands(connectionString, timeout);
             }
@@ -52,7 +68,7 @@ namespace AutoVersionsDB.DbCommands.Integration
             IDBBackupRestoreCommands dbBackupRestoreCommands = null;
 
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
-                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
+                && _dbCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
                 dbBackupRestoreCommands = dbCommands_Factory.CreateBackupRestoreCommands(connectionString, timeout);
             }
@@ -65,7 +81,7 @@ namespace AutoVersionsDB.DbCommands.Integration
             IDBQueryStatus dbQueryStatus = null;
 
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
-                && DBCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
+                && _dbCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
                 dbQueryStatus = dbCommands_Factory.CreateDBQueryStatus(connectionString, 0);
             }
@@ -78,10 +94,10 @@ namespace AutoVersionsDB.DbCommands.Integration
 
         private void PopulateFactoriesDictionary()
         {
-            DBCommandsFactoryDictionary = new Dictionary<string, IDBCommandsFactory>();
+            _dbCommandsFactoryDictionary = new Dictionary<string, IDBCommandsFactory>();
 
             SqlServerDBCommandsFactory sqlServerDBCommands_Factory = new SqlServerDBCommandsFactory();
-            DBCommandsFactoryDictionary.Add(sqlServerDBCommands_Factory.DBTypeCode, sqlServerDBCommands_Factory);
+            _dbCommandsFactoryDictionary.Add(sqlServerDBCommands_Factory.DBType.Code, sqlServerDBCommands_Factory);
 
         }
 

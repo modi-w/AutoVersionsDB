@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ScriptFiles;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
@@ -22,9 +23,9 @@ namespace AutoVersionsDB.Core
             kernel.ThrowIfNull(nameof(kernel));
 
             kernel.Bind<DBCommandsFactoryProvider>().To<DBCommandsFactoryProvider>().InSingletonScope();
-
-
+            kernel.Bind<ConfigProjectsManager>().To<ConfigProjectsManager>().InSingletonScope();
             kernel.Bind<ScriptFilesComparersManager>().To<ScriptFilesComparersManager>().InSingletonScope();
+            kernel.Bind<NotificationExecutersProviderFactory>().To<NotificationExecutersProviderFactory>().InSingletonScope();
             
         }
     }

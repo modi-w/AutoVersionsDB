@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             }
             else
             {
-                if (!_dbCommandsFactoryProvider.DBCommandsFactoryDictionary.ContainsKey(_dbTypeCode))
+                if (!_dbCommandsFactoryProvider.ContainDbType(_dbTypeCode))
                 {
                     string errorMsg = $"DB Type Code '{_dbTypeCode}' is not valid";
                     return errorMsg;

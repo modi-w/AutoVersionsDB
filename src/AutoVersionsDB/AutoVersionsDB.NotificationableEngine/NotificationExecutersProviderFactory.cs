@@ -11,11 +11,11 @@ namespace AutoVersionsDB.NotificationableEngine
 
         }
 
-        public NotificationExecutersProvider Create(Action<NotificationStateItem> onNotificationStateChanged)
+        public NotificationExecutersProvider Create(Action<ProcessStateResults, NotificationStateItem> onNotificationStateChanged)
         {
-            NotifictionStatesHistory notifictionStatesHistory = new NotifictionStatesHistory(onNotificationStateChanged);
+            NotifictionStateChangeHandler notifictionStateChangeHandler = new NotifictionStateChangeHandler(onNotificationStateChanged);
 
-            NotificationExecutersProvider notificationExecutersProvider = new NotificationExecutersProvider(notifictionStatesHistory);
+            NotificationExecutersProvider notificationExecutersProvider = new NotificationExecutersProvider(notifictionStateChangeHandler);
 
             return notificationExecutersProvider;
         }

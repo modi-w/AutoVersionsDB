@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System.IO;
 
@@ -11,7 +12,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DBStateInMiddle_And_SetDBToFinalState([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -19,10 +19,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SetDBToSpecificState(c_targetStateFile_FinalState, false);
+            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig, c_targetStateFile_FinalState, false, null);
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processResult);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInFinalState_DevEnv(projectConfig);
@@ -34,7 +34,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void NextScriptHasVersionHigherThenTheLastFileVersion_NotSameDay__Should_SetDBToFinalState([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -42,10 +41,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SetDBToSpecificState(c_targetStateFile_FinalState, false);
+            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig, c_targetStateFile_FinalState, false, null);
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processResult);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInFinalState_DevEnv(projectConfig);
@@ -57,7 +56,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DBStateIsEmpty_And_SetDBToSpecificPoint_InTheFuture_NotFinalState([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_AfterRunInitStateScript.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -65,10 +63,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SetDBToSpecificState(c_targetStateFile_MiddleState, false);
+            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig, c_targetStateFile_MiddleState, false, null);
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processResult);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInMiddleState(projectConfig);
@@ -80,7 +78,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void TargetScriptInHistory_IgnoreHistoryWarningIsFalse__ShouldHasTargetHistoryError([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -88,19 +85,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SetDBToSpecificState(c_targetStateFile_MiddleState, false);
+            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig, c_targetStateFile_MiddleState, false, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(_autoVersionsDbAPI.HasError);
-            Assert.That(_autoVersionsDbAPI.ErrorCode == "IsTargetScriptFiletAlreadyExecuted");
+            Assert.That(processResult.HasError);
+            Assert.That(processResult.ErrorCode == "IsTargetScriptFiletAlreadyExecuted");
         }
 
         [Test]
         public void TargetScriptInHistory_IgnoreHistoryWarningIsTrue__ShouldExecuteWithNoErrors([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -108,10 +104,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SetDBToSpecificState(c_targetStateFile_MiddleState, true);
+            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig, c_targetStateFile_MiddleState, true, null);
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processResult);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInMiddleState(projectConfig);

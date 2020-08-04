@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
+using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -15,15 +16,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void Deploy([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
 
 
             //Act
-            _autoVersionsDbAPI.Deploy();
+            ProcessStateResults processResult = AutoVersionsDbAPI.Deploy(projectConfig, null);
 
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processResult);
             assertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(projectConfig);
 
         }

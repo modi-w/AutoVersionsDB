@@ -15,9 +15,6 @@ namespace AutoVersionsDB.WinApp
 {
     public partial class ProjectItemControl : UserControl
     {
-        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
-
-
         public event OnNavToProcessHandler OnNavToProcess;
         public event OnRefreshProjectListHandler OnRefreshProjectList;
         public event OnEditProjectHandler OnEditProject;
@@ -34,10 +31,6 @@ namespace AutoVersionsDB.WinApp
 
             lblProjectName.Text = ProjectConfig.ProjectName;
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
-            }
         }
 
         private void lblProjectName_Click(object sender, EventArgs e)
@@ -67,7 +60,7 @@ namespace AutoVersionsDB.WinApp
 
             if (results)
             {
-                _autoVersionsDbAPI.ConfigProjectsManager.RemoveProjectConfig(ProjectConfig.ProjectGuid);
+                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.ProjectGuid);
 
                 OnRefreshProjectList?.Invoke();
             }
@@ -89,7 +82,6 @@ namespace AutoVersionsDB.WinApp
             if (disposing)
             {
                 // Dispose managed state (managed objects).
-                _autoVersionsDbAPI.Dispose();
 
                 if (components != null)
                 {

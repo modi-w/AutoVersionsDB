@@ -10,58 +10,29 @@ namespace AutoVersionsDB.NotificationableEngine
     {
         public NotificationStateItem RootNotificationStateItem { get; private set; }
 
-        public NotifictionStatesHistory NotifictionStatesHistory { get; private set; }
-        //public bool HasError
-        //{
-        //    get
-        //    {
-        //        return NotifictionStatesHistoryManager.HasError;
-        //    }
-        //}
-
-        //public string ErrorCode
-        //{
-        //    get
-        //    {
-        //        return NotifictionStatesHistoryManager.ErrorCode;
-        //    }
-        //}
-
-
-        //public string InstructionsMessage
-        //{
-        //    get
-        //    {
-        //        return NotifictionStatesHistoryManager.InstructionsMessage;
-        //    }
-        //}
-
-        //public string InstructionsMessageStepName
-        //{
-        //    get
-        //    {
-        //        return NotifictionStatesHistoryManager.InstructionsMessageStepName;
-        //    }
-        //}
-
-
-
-
-
-        public NotificationExecutersProvider(NotifictionStatesHistory notifictionStatesHistoryManager)
+        public NotifictionStateChangeHandler NotifictionStateChangeHandler { get; private set; }
+        public ProcessStateResults NotifictionStatesHistory
         {
-            NotifictionStatesHistory = notifictionStatesHistoryManager;
+            get
+            {
+                return NotifictionStateChangeHandler.NotifictionStatesHistory;
+            }
         }
+
+
+
+        public NotificationExecutersProvider(NotifictionStateChangeHandler notifictionStateChangeHandler)
+        {
+            NotifictionStateChangeHandler = notifictionStateChangeHandler;
+        }
+
 
         public NotificationWrapperExecuter Reset(int numOfSteps)
         {
             var rootNotificationWrapperExecuter = CreateNotificationWrapperExecuter(numOfSteps);
             RootNotificationStateItem = rootNotificationWrapperExecuter.CurrentNotificationStateItem;
 
-            NotifictionStatesHistory.Reset(RootNotificationStateItem);
-
-
-            NotifictionStatesHistory.HandleNotificationStateChanged();
+            NotifictionStateChangeHandler.Reset(RootNotificationStateItem);
 
             return rootNotificationWrapperExecuter;
         }

@@ -13,18 +13,13 @@ namespace AutoVersionsDB.NotificationableEngine
         private readonly NotificationStateItem _parentNotificationStateItem;
         public NotificationStateItem CurrentNotificationStateItem { get; set; }
 
-        private readonly double _minPrecentChangeToNotify;
-
-        private double _prevNotifyPrecent;
 
         public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
                                             NotificationStateItem parentNotificationStateItem,
-                                            int numOfStep,
-                                            double minPrecentChangeToNotify = 1)
+                                            int numOfStep)
         {
             _notificationExecutersProvider = notificationExecutersProvider;
             _parentNotificationStateItem = parentNotificationStateItem;
-            _minPrecentChangeToNotify = minPrecentChangeToNotify;
 
             CurrentNotificationStateItem = new NotificationStateItem(numOfStep);
 
@@ -46,45 +41,37 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 int numOfInternalStep = step.GetNumOfInternalSteps(processState, actionStepArgs);
 
-                CurrentNotificationStateItem.StepStart(step.StepName, additionalStepInfo);
-                if (step.InternalNotificationableAction == null)
-                {
-                    CallHandleNotificationStateChanged();
-                }
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, step.StepName, additionalStepInfo, step.HasInternalStep);
 
                 step.Execute(_notificationExecutersProvider, processState, actionStepArgs);
 
-                CurrentNotificationStateItem.StepEnd();
-                if (step.InternalNotificationableAction == null)
-                {
-                    CallHandleNotificationStateChanged();
-                }
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepEnd(CurrentNotificationStateItem, step.HasInternalStep);
+
             }
             catch (NotificationEngineException ex)
             {
-                CurrentNotificationStateItem.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage);
-                _notificationExecutersProvider.NotifictionStatesHistory.HandleNotificationStateChanged();
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepError(CurrentNotificationStateItem, ex.ErrorCode, ex.Message, ex.InstructionsMessage);
 
             }
             catch (Exception ex)
             {
-                CurrentNotificationStateItem.StepError(step.StepName, ex.Message, "Error occurred during the process.");
-                _notificationExecutersProvider.NotifictionStatesHistory.HandleNotificationStateChanged();
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepError(CurrentNotificationStateItem, step.StepName, ex.Message, "Error occurred during the process.");
 
             }
 
         }
 
-        public void CallHandleNotificationStateChanged()
+
+        public void SetStepStartManually(string stepName, string additionalStepInfo)
         {
-            if (_prevNotifyPrecent == 0
-                || CurrentNotificationStateItem.Precents - _prevNotifyPrecent > _minPrecentChangeToNotify)
-            {
-                _prevNotifyPrecent = CurrentNotificationStateItem.Precents;
-                _notificationExecutersProvider.NotifictionStatesHistory.HandleNotificationStateChanged();
-            }
+            _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, stepName, additionalStepInfo, false);
         }
 
+
+        public void ForceStepProgress(int stepNumber)
+        {
+            _notificationExecutersProvider.NotifictionStateChangeHandler.ForceStepProgress(CurrentNotificationStateItem, stepNumber);
+        }
 
 
         #region IDisposable
@@ -125,9 +112,8 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
                                             NotificationStateItem parentNotificationStateItem,
-                                            int numOfStep,
-                                            double minPrecentChangeToNotify = 1)
-            : base(notificationExecutersProvider, parentNotificationStateItem, numOfStep, minPrecentChangeToNotify)
+                                            int numOfStep)
+            : base(notificationExecutersProvider, parentNotificationStateItem, numOfStep)
         {
         }
 

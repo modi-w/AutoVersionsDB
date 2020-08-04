@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class NotificationStateItem
     {
+        private readonly double _minPrecentChangeToNotify = 1;
+
+
         public NotificationStateItem Clone()
         {
             NotificationStateItem outItem = this.MemberwiseClone() as NotificationStateItem;
@@ -24,6 +28,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public int NumOfSteps { get; set; }
         public string StepName { get; set; }
+
         public int StepNumber { get; set; }
         public double Precents
         {
@@ -39,6 +44,17 @@ namespace AutoVersionsDB.NotificationableEngine
                 return results;
             }
         }
+
+        internal double LastNotifyPrecents { get; set; }
+        internal bool IsPrecentsAboveMin
+        {
+            get
+            {
+                return LastNotifyPrecents == 0
+                    || (Precents - LastNotifyPrecents) > _minPrecentChangeToNotify;
+            }
+        }
+
 
         public string LowLevelStepName
         {
@@ -148,61 +164,16 @@ namespace AutoVersionsDB.NotificationableEngine
         public NotificationStateItem InternalNotificationStateItem { get; set; }
 
 
-        //public bool HasStepName(string stepName)
-        //{
-        //    if (CurrentStepName == stepName)
-        //    {
-        //        return true;
-        //    }
-        //    else if (InternalNotificationStateItem != null)
-        //    {
-        //        return InternalNotificationStateItem.HasStepName(stepName);
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
 
 
-        public NotificationStateItem(int numOfSteps)
+        internal NotificationStateItem(int numOfSteps)
         {
             NumOfSteps = numOfSteps;
         }
 
 
-        public void StepStart(string stepName, string additionalStepInfo)
-        {
-            this.StepName = stepName;
 
-            if (!string.IsNullOrWhiteSpace(additionalStepInfo))
-            {
-                this.StepName = $"{this.StepName} - {additionalStepInfo}";
-            }
-
-            InternalNotificationStateItem = null;
-        }
-
-        public void StepEnd()
-        {
-            this.StepNumber++;
-
-        }
-
-        public void StepsProgressByValue(int forceSecondaryProcessStepNumber)
-        {
-            this.StepNumber = forceSecondaryProcessStepNumber;
-
-        }
-
-
-        public void StepError(string errorCode, string errorMessage, string instructionsMessage)
-        {
-            this.ErrorCode = errorCode;
-            this.ErrorMesage = errorMessage;
-            this.InstructionsMessage = instructionsMessage;
-        }
-
+      
 
 
 

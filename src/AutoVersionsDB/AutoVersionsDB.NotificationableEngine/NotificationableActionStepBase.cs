@@ -11,6 +11,14 @@ namespace AutoVersionsDB.NotificationableEngine
         public abstract string StepName { get; }
 
         public NotificationableActionStepBase InternalNotificationableAction { get; protected set; }
+        public bool HasInternalStep
+        {
+            get
+            {
+                return InternalNotificationableAction != null;
+            }
+        }
+
 
         public abstract void Prepare(NotificationableEngineConfig notificationableEngineConfig);
 

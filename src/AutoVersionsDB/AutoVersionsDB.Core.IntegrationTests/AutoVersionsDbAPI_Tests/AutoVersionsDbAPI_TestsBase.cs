@@ -8,6 +8,7 @@ using AutoVersionsDB.Core.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.ScriptFiles.Repeatable;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.NotificationableEngine;
 using Ninject;
 using NUnit.Framework;
 using System;
@@ -30,7 +31,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         protected ScriptFileTypeBase _devDummyDataScriptFileType;
 
         protected StandardKernel _ninjectKernelContainer;
-        protected AutoVersionsDbAPI _autoVersionsDbAPI;
 
         protected DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
@@ -58,9 +58,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         [SetUp]
         public void Init()
         {
-            _autoVersionsDbAPI = _ninjectKernelContainer.Get<AutoVersionsDbAPI>();
-
-            string dbBackupFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder); 
+            string dbBackupFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
             if (!Directory.Exists(dbBackupFolderPath))
             {
                 Directory.CreateDirectory(dbBackupFolderPath);
@@ -130,11 +128,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         #endregion
 
 
-        protected void assertProccessErrors()
+        protected void assertProccessErrors(ProcessStateResults processResults)
         {
-            if (_autoVersionsDbAPI.HasError)
+            if (processResults.HasError)
             {
-                throw new Exception(_autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistory.GetOnlyErrorsHistoryAsString());
+                throw new Exception(processResults.GetOnlyErrorsHistoryAsString());
             }
         }
 
@@ -195,6 +193,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 }
             }
         }
+
+
+        protected static void RemoveArtifactTempFolder(ProjectConfigItemForTestBase projectConfig)
+        {
+            if (Directory.Exists(projectConfig.DeliveryExtractedFilesArtifactFolder))
+            {
+                Directory.Delete(projectConfig.DeliveryExtractedFilesArtifactFolder, true);
+            }
+        }
+
 
 
 

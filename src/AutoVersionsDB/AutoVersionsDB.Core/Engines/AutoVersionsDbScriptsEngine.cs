@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Core.ArtifactFile;
+using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.NotificationableEngine;
@@ -11,6 +12,8 @@ namespace AutoVersionsDB.Core.Engines
     public abstract class AutoVersionsDbScriptsEngine : AutoVersionsDbEngine
     {
         private readonly ScriptFilesComparersManager _scriptFilesComparersManager;
+        private ArtifactExtractor _artifactExtractor;
+
 
         public AutoVersionsDbScriptsEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                             NotificationableActionStepBase rollbackStep,
@@ -26,9 +29,36 @@ namespace AutoVersionsDB.Core.Engines
 
             ProjectConfigItem projectConfig = e.EngineConfig as ProjectConfigItem;
 
+            _artifactExtractor = new ArtifactExtractor(projectConfig);
+
             _scriptFilesComparersManager.Load(projectConfig);
 
             base.OnPreparing(e);
         }
-    } 
+
+
+
+        private bool _disposed = false;
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (_artifactExtractor != null)
+                {
+                    _artifactExtractor.Dispose();
+                }
+            }
+
+            _disposed = true;
+            // Call base class implementation.
+            base.Dispose(disposing);
+        }
+
+       
+    }
 }

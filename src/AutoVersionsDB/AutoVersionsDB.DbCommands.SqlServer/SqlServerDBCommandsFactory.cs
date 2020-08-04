@@ -5,20 +5,15 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBCommandsFactory : IDBCommandsFactory
     {
-        public string DBTypeCode
+        public DBType DBType
         {
             get
             {
-                return "SqlServer";
+                return new DBType("SqlServer", "Sql Server");
             }
         }
-        public string DBTypeName
-        {
-            get
-            {
-                return "Sql Server";
-            }
-        }
+
+   
 
         public IDBConnectionManager CreateDBConnectionManager(string connectionString, int timeout)
         {

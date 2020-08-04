@@ -3,6 +3,7 @@ using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfig
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using AutoVersionsDB.Core.ProcessSteps;
 using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -18,19 +19,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void RestoreDB_SyncDB([ValueSource("ProjectConfigItemArray_DeliveryEnv_ScriptError")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
+            RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
-
             //Act
-            _autoVersionsDbAPI.SyncDB();
+            ProcessStateResults processResult = AutoVersionsDbAPI.SyncDB(projectConfig, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResult);
 
         }
 
@@ -39,12 +39,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
 
-        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest)
+        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest, ProcessStateResults processResult)
         {
-            Assert.That(_autoVersionsDbAPI.HasError);
+            Assert.That(processResult.HasError);
 
-            bool isRestoreExecuted = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistory
-                .NotificationStatesProcessHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
+            bool isRestoreExecuted = 
+                processResult
+                .StatesHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
                                                         && e.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 
             Assert.That(isRestoreExecuted, Is.EqualTo(true));
