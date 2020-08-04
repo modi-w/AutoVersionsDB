@@ -33,8 +33,8 @@ namespace AutoVersionsDB.WinApp
             {
                 _dbTypesList = AutoVersionsDbAPI.GetDbTypesList();
                 cboConncectionType.DataSource = _dbTypesList;
-                cboConncectionType.DisplayMember = "DBTypeName";
-                cboConncectionType.ValueMember = "DBTypeCode";
+                cboConncectionType.DisplayMember = "Name";
+                cboConncectionType.ValueMember = "Code";
             }
 
             errPrvProjectDetails.BlinkStyle = ErrorBlinkStyle.NeverBlink;
