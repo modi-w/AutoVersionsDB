@@ -26,12 +26,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessStateResults processResult = AutoVersionsDbAPI.SyncDB(projectConfig, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResult);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
         }
 
         [Test]
@@ -45,12 +45,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig, c_targetStateFile_FinalState, false, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig, c_targetStateFile_FinalState, false, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResult);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
         }
 
         [Test]
@@ -64,11 +64,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessStateResults processResult = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig, null, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig, null, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResult);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
         }
 
 
@@ -77,12 +77,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
 
-        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest, ProcessStateResults processResult)
+        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest, ProcessTrace processTrace)
         {
-            Assert.That(processResult.HasError);
+            Assert.That(processTrace.HasError);
 
             bool isRestoreExecuted =
-                processResult
+                processTrace
                 .StatesHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
                                                         && e.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 

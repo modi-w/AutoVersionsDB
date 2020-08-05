@@ -9,15 +9,15 @@ namespace AutoVersionsDB.NotificationableEngine
     {
 
 
-        private Action<ProcessStateResults, NotificationStateItem> _onNotificationStateChanged;
+        private Action<ProcessTrace, NotificationStateItem> _onNotificationStateChanged;
 
 
-        public ProcessStateResults NotifictionStatesHistory { get; private set; }
+        public ProcessTrace NotifictionStatesHistory { get; private set; }
 
         public NotificationStateItem RootNotificationStateItem { get; private set; }
 
 
-        internal NotifictionStateChangeHandler(Action<ProcessStateResults, NotificationStateItem> onNotificationStateChanged)
+        internal NotifictionStateChangeHandler(Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             _onNotificationStateChanged = onNotificationStateChanged;
         }
@@ -25,7 +25,7 @@ namespace AutoVersionsDB.NotificationableEngine
         internal void Reset(NotificationStateItem rootNotificationStateItem)
         {
             RootNotificationStateItem = rootNotificationStateItem;
-            NotifictionStatesHistory = new ProcessStateResults();
+            NotifictionStatesHistory = new ProcessTrace();
             
             riseNotificationStateChanged();
         }

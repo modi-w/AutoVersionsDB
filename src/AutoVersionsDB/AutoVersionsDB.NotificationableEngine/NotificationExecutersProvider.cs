@@ -11,7 +11,7 @@ namespace AutoVersionsDB.NotificationableEngine
         public NotificationStateItem RootNotificationStateItem { get; private set; }
 
         public NotifictionStateChangeHandler NotifictionStateChangeHandler { get; private set; }
-        public ProcessStateResults NotifictionStatesHistory
+        public ProcessTrace NotifictionStatesHistory
         {
             get
             {

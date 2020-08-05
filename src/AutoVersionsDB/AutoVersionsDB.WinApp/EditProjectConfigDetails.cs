@@ -67,7 +67,7 @@ namespace AutoVersionsDB.WinApp
 
             ClearUIElementsErrors();
 
-            ProcessStateResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectConfigItem,notificationsControl1.OnNotificationStateChanged);
+            ProcessTrace processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectConfigItem,notificationsControl1.OnNotificationStateChanged);
 
             notificationsControl1.AfterComplete();
 
@@ -94,7 +94,7 @@ namespace AutoVersionsDB.WinApp
             return !processResults.HasError;
         }
 
-        private void SetErrorsToUiElements(ProcessStateResults processResults)
+        private void SetErrorsToUiElements(ProcessTrace processResults)
         {
             if (processResults.HasError)
             {

@@ -21,11 +21,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig, c_targetStateFile_MiddleState, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig, c_targetStateFile_MiddleState, null);
 
 
             //Assert
-            assertProccessErrors(processResult);
+            assertProccessErrors(processTrace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInEmptyStateExceptSystemTables(projectConfig);
@@ -45,11 +45,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig, c_targetStateFile_MiddleState, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig, c_targetStateFile_MiddleState, null);
 
 
             //Assert
-            assertProccessErrors(processResult);
+            assertProccessErrors(processTrace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInEmptyStateExceptSystemTables(projectConfig);
@@ -69,10 +69,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessStateResults processResult = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig, c_targetStateFile_FinalState, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig, c_targetStateFile_FinalState, null);
 
             //Assert
-            assertProccessErrors(processResult);
+            assertProccessErrors(processTrace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInMiddleState(projectConfig);

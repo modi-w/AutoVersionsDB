@@ -11,7 +11,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         }
 
-        public NotificationExecutersProvider Create(Action<ProcessStateResults, NotificationStateItem> onNotificationStateChanged)
+        public NotificationExecutersProvider Create(Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             NotifictionStateChangeHandler notifictionStateChangeHandler = new NotifictionStateChangeHandler(onNotificationStateChanged);
 

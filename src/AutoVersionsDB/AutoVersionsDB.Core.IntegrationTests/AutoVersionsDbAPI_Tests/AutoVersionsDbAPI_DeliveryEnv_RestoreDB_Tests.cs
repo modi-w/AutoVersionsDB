@@ -26,11 +26,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
-            ProcessStateResults processResult = AutoVersionsDbAPI.SyncDB(projectConfig, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResult);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
 
         }
 
@@ -39,12 +39,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
 
-        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest, ProcessStateResults processResult)
+        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest, ProcessTrace processTrace)
         {
-            Assert.That(processResult.HasError);
+            Assert.That(processTrace.HasError);
 
             bool isRestoreExecuted = 
-                processResult
+                processTrace
                 .StatesHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
                                                         && e.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 

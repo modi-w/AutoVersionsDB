@@ -19,11 +19,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessStateResults processResult = AutoVersionsDbAPI.Deploy(projectConfig, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.Deploy(projectConfig, null);
 
 
             //Assert
-            assertProccessErrors(processResult);
+            assertProccessErrors(processTrace);
             assertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(projectConfig);
 
         }

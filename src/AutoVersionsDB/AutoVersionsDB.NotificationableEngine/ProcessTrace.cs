@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public class ProcessStateResults
+    public class ProcessTrace
     {
 
         public List<NotificationStateItem> StatesHistory { get; }
@@ -85,7 +85,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        internal ProcessStateResults() {
+        internal ProcessTrace() {
 
             StatesHistory = new List<NotificationStateItem>();
         }

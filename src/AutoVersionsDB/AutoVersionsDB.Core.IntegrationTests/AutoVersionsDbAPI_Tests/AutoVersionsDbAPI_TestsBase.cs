@@ -128,7 +128,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         #endregion
 
 
-        protected void assertProccessErrors(ProcessStateResults processResults)
+        protected void assertProccessErrors(ProcessTrace processResults)
         {
             if (processResults.HasError)
             {

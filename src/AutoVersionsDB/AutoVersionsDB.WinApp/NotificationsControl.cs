@@ -9,7 +9,7 @@ namespace AutoVersionsDB.WinApp
 {
     public partial class NotificationsControl : UserControl
     {
-        public ProcessStateResults _processState;
+        public ProcessTrace _processState;
 
         public NotificationsControl()
         {
@@ -17,7 +17,7 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        public void OnNotificationStateChanged(ProcessStateResults processState, NotificationStateItem notificationStateItem)
+        public void OnNotificationStateChanged(ProcessTrace processState, NotificationStateItem notificationStateItem)
         {
             _processState = processState;
 
@@ -198,7 +198,7 @@ namespace AutoVersionsDB.WinApp
             ShowMessageWindow(_processState);
         }
 
-        private void ShowMessageWindow(ProcessStateResults processResults)
+        private void ShowMessageWindow(ProcessTrace processResults)
         {
             //if (NotifictionStatesHistoryManager != null)
             //{
