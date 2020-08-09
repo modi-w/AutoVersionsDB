@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
-    public delegate void OnNavToProcessHandler(ProjectConfigItem projectConfigItem);
+    public delegate void OnNavToProcessHandler(ProjectConfig projectConfigItem);
     public delegate void OnRefreshProjectListHandler();
-    public delegate void OnEditProjectHandler(ProjectConfigItem projectConfigItem);
+    public delegate void OnEditProjectHandler(ProjectConfig projectConfigItem);
 
 
     public partial class Main : Form
@@ -55,7 +55,7 @@ namespace AutoVersionsDB.WinApp
      //       tabMainLayout.Width = this.Width - 50;
         }
 
-        private void EditProjectConfigDetails1_OnNavToProcess(ProjectConfigItem projectConfigItem)
+        private void EditProjectConfigDetails1_OnNavToProcess(ProjectConfig projectConfigItem)
         {
             tabMainLayout.SelectTab(tbDBVersionsMangement);
 
@@ -65,7 +65,7 @@ namespace AutoVersionsDB.WinApp
             });
         }
 
-        private void ChooseProject1_OnEditProject(ProjectConfigItem projectConfigItem)
+        private void ChooseProject1_OnEditProject(ProjectConfig projectConfigItem)
         {
             tabMainLayout.SelectedTab = tbEditProjectConfig;
         
@@ -76,7 +76,7 @@ namespace AutoVersionsDB.WinApp
         }
     
 
-        private void DbVersionsMangement1_OnEditProject(ProjectConfigItem projectConfigItem)
+        private void DbVersionsMangement1_OnEditProject(ProjectConfig projectConfigItem)
         {
             tabMainLayout.SelectedTab = tbEditProjectConfig;
 
@@ -105,14 +105,14 @@ namespace AutoVersionsDB.WinApp
 
         private void ChooseProject1_OnSetNewProject1(object sender, EventArgs e)
         {
-            ProjectConfigItem newProjectConfig = new ProjectConfigItem();
+            ProjectConfig newProjectConfig = new ProjectConfig();
             editProjectConfigDetails1.SetProjectConfigItem(newProjectConfig);
 
             tabMainLayout.SelectedTab = tbEditProjectConfig;
         }
 
 
-        private void ChooseProject1_OnNavToProcess(ProjectConfigItem projectConfigItem)
+        private void ChooseProject1_OnNavToProcess(ProjectConfig projectConfigItem)
         {
             tabMainLayout.SelectTab(tbDBVersionsMangement);
 

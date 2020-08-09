@@ -8,46 +8,40 @@ using System.Globalization;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteScriptBlockStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ProjectConfigItem, ScriptBlockStepArgs>
+    public class ExecuteScriptBlockStep : AutoVersionsDbStep
     {
         public override string StepName => "Execute Script Block";
+        public override bool HasInternalStep => false;
 
         private IDBCommands _dbCommands;
 
+        private string _scriptBlockToExecute;
 
-
-        public ExecuteScriptBlockStep()
-        {
-        }
-
-        public override void Prepare(ProjectConfigItem projectConfig)
-        {
-        }
-
-        public void SetDBCommands(IDBCommands dbCommands)
+        public ExecuteScriptBlockStep(IDBCommands dbCommands, string scriptBlockToExecute)
         {
             dbCommands.ThrowIfNull(nameof(dbCommands));
 
             _dbCommands = dbCommands;
+            _scriptBlockToExecute = scriptBlockToExecute;
         }
 
 
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ScriptBlockStepArgs actionStepArgs)
+
+        public override int GetNumOfInternalSteps(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             return 1;
         }
 
 
-        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ScriptBlockStepArgs scriptBlockStepArgs)
+        public override void Execute(ProjectConfig projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
-            scriptBlockStepArgs.ThrowIfNull(nameof(scriptBlockStepArgs));
 
             bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
 
             if (!isVirtualExecution)
             {
-                _dbCommands.ExecSQLCommandStr(scriptBlockStepArgs.ScriptBlockStr);
+                _dbCommands.ExecSQLCommandStr(_scriptBlockToExecute);
             }
         }
 

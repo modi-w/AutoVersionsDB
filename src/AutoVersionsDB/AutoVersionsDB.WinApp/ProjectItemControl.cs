@@ -19,9 +19,9 @@ namespace AutoVersionsDB.WinApp
         public event OnRefreshProjectListHandler OnRefreshProjectList;
         public event OnEditProjectHandler OnEditProject;
 
-        public ProjectConfigItem ProjectConfig { get; private set; }
+        public ProjectConfig ProjectConfig { get; private set; }
 
-        public ProjectItemControl(ProjectConfigItem projectConfigItem)
+        public ProjectItemControl(ProjectConfig projectConfigItem)
         {
             projectConfigItem.ThrowIfNull(nameof(projectConfigItem));
 

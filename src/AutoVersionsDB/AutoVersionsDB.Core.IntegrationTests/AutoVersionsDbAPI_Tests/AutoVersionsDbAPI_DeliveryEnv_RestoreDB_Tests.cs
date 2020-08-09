@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
 
-        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest, ProcessTrace processTrace)
+        protected void AssertRestore(ProjectConfig projectConfig, string orginalDBBackupFilePathForTheTest, ProcessTrace processTrace)
         {
             Assert.That(processTrace.HasError);
 

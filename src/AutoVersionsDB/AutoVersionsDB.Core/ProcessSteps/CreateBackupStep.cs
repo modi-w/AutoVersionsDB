@@ -14,136 +14,80 @@ using System.IO;
 namespace AutoVersionsDB.Core.ProcessSteps
 {
 
-    public class CreateBackupStep : AutoVersionsDbStep, IDisposable
+    public class CreateBackupStep : AutoVersionsDbStep
     {
         public override string StepName => "Create Backup";
+        public override bool HasInternalStep => false;
 
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBProcessStatusNotifyerFactory _dbProcessStatusNotifyerFactory;
 
 
-
-        private IDBCommands _dbCommands;
-        private IDBQueryStatus _dbQueryStatus;
-        private IDBBackupRestoreCommands _dbBackupRestoreCommands;
-        private DBBackupStatusNotifyer _dbBackupStatusNotifyer;
-
-        private string _dbBackupBaseFolderPath;
-
-
-        public CreateBackupStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public CreateBackupStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+                                DBProcessStatusNotifyerFactory dbProcessStatusNotifyerFactory)
         {
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
 
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
-
-        }
-
-        public override void Prepare(ProjectConfigItem projectConfig)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            _dbBackupBaseFolderPath = projectConfig.DBBackupBaseFolder;
-
-            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
-            _dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout);
-
-            _dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
-            _dbBackupStatusNotifyer = DBProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), _dbQueryStatus) as DBBackupStatusNotifyer;
-
-            //_dbBackupStatusNotifyer.OnDBProcessStatus += DBBackupStatusNotifyer_OnDBProcessStatus;
+            _dbProcessStatusNotifyerFactory = dbProcessStatusNotifyerFactory;
         }
 
 
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+
+        public override int GetNumOfInternalSteps(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             return 1;
         }
 
 
 
-        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(ProjectConfig projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
 
             string timeStampStr = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.InvariantCulture);
 
-            string targetFileName = $"bu_{ _dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
-            string targetFileFullPath = Path.Combine(_dbBackupBaseFolderPath, targetFileName);
-            FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
-
-            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {
-                notificationWrapperExecuter.SetStepStartManually("Backup process", "");
 
-                _dbBackupStatusNotifyer.Start(
-                    (precents) =>
+                string targetFileName = $"bu_{ dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
+                string targetFileFullPath = Path.Combine(projectConfig.DBBackupBaseFolder, targetFileName);
+                FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
+
+                using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
+                {
+                    notificationWrapperExecuter.SetStepStartManually("Backup process");
+
+                    using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
                     {
+                        DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
 
-                        if (notificationWrapperExecuter.CurrentNotificationStateItem != null)
+
+                        dbBackupStatusNotifyer.Start(
+                        (precents) =>
                         {
-                            notificationWrapperExecuter.ForceStepProgress(Convert.ToInt32(precents));
+                            if (notificationWrapperExecuter.CurrentNotificationStateItem != null)
+                            {
+                                notificationWrapperExecuter.ForceStepProgress(Convert.ToInt32(precents));
+                            }
+                        });
+
+                        using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
+                        {
+                            dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
                         }
-                    });
 
-                _dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, _dbCommands.GetDataBaseName());
 
-                _dbBackupStatusNotifyer.Stop();
+                        dbBackupStatusNotifyer.Stop();
+                    }
+                }
+
+                processState.DBBackupFileFullPath = targetFileFullPath;
             }
 
-
-            processState.DBBackupFileFullPath = targetFileFullPath;
         }
 
 
-
-
-
-        #region IDisposable
-
-        private bool _disposed = false;
-
-        ~CreateBackupStep() => Dispose(false);
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (_dbCommands != null)
-                {
-                    _dbCommands.Dispose();
-                }
-
-                if (_dbBackupRestoreCommands != null)
-                {
-                    _dbBackupRestoreCommands.Dispose();
-                }
-
-                if (_dbQueryStatus != null)
-                {
-                    _dbQueryStatus.Dispose();
-                }
-
-
-
-            }
-
-            _disposed = true;
-        }
-
-        #endregion
 
     }
 

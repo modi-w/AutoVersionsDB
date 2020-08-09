@@ -21,13 +21,15 @@ namespace AutoVersionsDB.Core
 
 
         private static DBCommandsFactoryProvider _dbCommandsFactoryProvider = NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>();
-        private static NotificationExecutersProviderFactory _notificationExecutersProviderFactory= NinjectUtils.KernelInstance.Get<NotificationExecutersProviderFactory>();
+        //private static NotificationExecutersProviderFactory _notificationExecutersProviderFactory= NinjectUtils.KernelInstance.Get<NotificationExecutersProviderFactory>();
 
         //public ProjectConfigItem ProjectConfigItem { get; private set; }
 
         private static ConfigProjectsManager _configProjectsManager= NinjectUtils.KernelInstance.Get<ConfigProjectsManager>();
 
-        private static ScriptFilesComparersManager _scriptFilesComparersManager = NinjectUtils.KernelInstance.Get<ScriptFilesComparersManager>();
+        private static ScriptFilesStateFactory _scriptFilesStateFactory = NinjectUtils.KernelInstance.Get<ScriptFilesStateFactory>();
+
+        //    private static ScriptFilesComparersManager _scriptFilesComparersManager = NinjectUtils.KernelInstance.Get<ScriptFilesComparersManager>();
         //public ScriptFilesComparersProvider CurrentScriptFilesComparersProvider
         //{
         //    get
@@ -73,7 +75,7 @@ namespace AutoVersionsDB.Core
 
 
 
-        public static List<ProjectConfigItem> GetProjectsList()
+        public static List<ProjectConfig> GetProjectsList()
         {
             return _configProjectsManager.ProjectConfigsList;
         }
@@ -98,7 +100,7 @@ namespace AutoVersionsDB.Core
         //    }
         //}
 
-        public static void SaveProjectConfig(ProjectConfigItem projectConfigItem)
+        public static void SaveProjectConfig(ProjectConfig projectConfigItem)
         {
             lock (_processSyncLock)
             {
@@ -151,7 +153,7 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
-        public static ProcessTrace ValidateAll(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace ValidateAll(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -178,7 +180,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace ValidateProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace ValidateProjectConfig(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -186,15 +188,14 @@ namespace AutoVersionsDB.Core
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ProjectConfigValidationEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(null, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
 
             return processTrace;
         }
 
-        private static ProcessTrace ValidateArtifactFile(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateArtifactFile(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -202,15 +203,14 @@ namespace AutoVersionsDB.Core
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ArtifactFileValidationEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(null, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
 
             return processTrace;
         }
 
-        private static ProcessTrace ValidateSystemTableExist(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateSystemTableExist(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -218,8 +218,7 @@ namespace AutoVersionsDB.Core
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SystemTableExsitValidationEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(null, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
 
@@ -227,7 +226,7 @@ namespace AutoVersionsDB.Core
         }
 
 
-        private static ProcessTrace ValidateDBState(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateDBState(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -235,15 +234,14 @@ namespace AutoVersionsDB.Core
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DBStateValidationEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(null, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
 
             return processTrace;
         }
 
-        public static bool ValdiateTargetStateAlreadyExecuted(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static bool ValdiateTargetStateAlreadyExecuted(ProjectConfig projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -253,8 +251,7 @@ namespace AutoVersionsDB.Core
 
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(executionParams, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                 }
             }
 
@@ -266,7 +263,7 @@ namespace AutoVersionsDB.Core
 
         #region Run Change Db State
 
-        public static ProcessTrace SyncDB(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SyncDB(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -274,8 +271,7 @@ namespace AutoVersionsDB.Core
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(null, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
 
  //               RecreateScriptFilesComparersProvider();
@@ -284,7 +280,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace SetDBToSpecificState(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SetDBToSpecificState(ProjectConfig projectConfigItem, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -300,8 +296,7 @@ namespace AutoVersionsDB.Core
 
                     using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBToSpecificStateEngine>())
                     {
-                        engine.Prepare(projectConfigItem);
-                        processTrace = engine.Run(executionParams, onNotificationStateChanged);
+                        processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                     }
                 }
 
@@ -311,7 +306,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace RecreateDBFromScratch(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace RecreateDBFromScratch(ProjectConfig projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -321,8 +316,7 @@ namespace AutoVersionsDB.Core
 
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<RecreateDBFromScratchEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(executionParams, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                 }
 
     //            RecreateScriptFilesComparersProvider();
@@ -331,7 +325,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace SetDBStateByVirtualExecution(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SetDBStateByVirtualExecution(ProjectConfig projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -341,8 +335,7 @@ namespace AutoVersionsDB.Core
 
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<CreateVirtualExecutionsEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(executionParams, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                 }
 
   //              RecreateScriptFilesComparersProvider();
@@ -368,7 +361,7 @@ namespace AutoVersionsDB.Core
 
         #region Deploy
 
-        public static ProcessTrace Deploy(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace Deploy(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -376,8 +369,7 @@ namespace AutoVersionsDB.Core
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DeployEngine>())
                 {
-                    engine.Prepare(projectConfigItem);
-                    processTrace = engine.Run(null, onNotificationStateChanged);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
 
@@ -390,47 +382,46 @@ namespace AutoVersionsDB.Core
 
         #region Scripts
 
-        public static ScriptFilesComparersProvider CreateScriptFilesState(ProjectConfigItem projectConfigItem)
+        public static ScriptFilesState CreateScriptFilesState(ProjectConfig projectConfigItem)
         {
-            _scriptFilesComparersManager.Load(projectConfigItem);
-
-            ScriptFilesComparersProvider scriptFilesComparersProvider;
+            ScriptFilesState scriptFilesState;
 
             using (ArtifactExtractor _currentArtifactExtractor = ArtifactExtractorFactory.Create(projectConfigItem))
             {
-                scriptFilesComparersProvider = _scriptFilesComparersManager.GetScriptFilesComparersProvider(projectConfigItem.ProjectGuid);
+                scriptFilesState = _scriptFilesStateFactory.Create();
+                scriptFilesState.Reload(projectConfigItem);
             }
 
-            return scriptFilesComparersProvider;
+            return scriptFilesState;
         }
 
-        public static string CreateNewIncrementalScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
+        public static string CreateNewIncrementalScriptFile(ProjectConfig projectConfigItem, string scriptName)
         {
             RuntimeScriptFileBase scriptFileItem;
 
             lock (_processSyncLock)
             {
-                ScriptFilesComparersProvider scriptFilesComparersProvider = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
-                scriptFileItem = scriptFilesComparersProvider.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
+                scriptFileItem = scriptFilesState.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
             }
 
             return scriptFileItem.FileFullPath;
         }
 
-        public static string CreateNewRepeatableScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
+        public static string CreateNewRepeatableScriptFile(ProjectConfig projectConfigItem, string scriptName)
         {
             RuntimeScriptFileBase scriptFileItem;
 
             lock (_processSyncLock)
             {
-                ScriptFilesComparersProvider scriptFilesComparersProvider = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
-                scriptFileItem = scriptFilesComparersProvider.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
+                scriptFileItem = scriptFilesState.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
             }
 
             return scriptFileItem.FileFullPath;
         }
 
-        public static string CreateNewDevDummyDataScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
+        public static string CreateNewDevDummyDataScriptFile(ProjectConfig projectConfigItem, string scriptName)
         {
             if (!projectConfigItem.IsDevEnvironment)
             {
@@ -441,8 +432,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                ScriptFilesComparersProvider scriptFilesComparersProvider = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
-                scriptFileItem = scriptFilesComparersProvider.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
+                scriptFileItem = scriptFilesState.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
             }
 
             return scriptFileItem.FileFullPath;

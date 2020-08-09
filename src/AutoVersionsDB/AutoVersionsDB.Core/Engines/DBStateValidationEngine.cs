@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ProcessSteps.Validations;
+﻿using AutoVersionsDB.Core.ProcessSteps;
+using AutoVersionsDB.Core.ProcessSteps.Validations;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
 using System;
@@ -13,10 +14,11 @@ namespace AutoVersionsDB.Core.Engines
 
 
         public DBStateValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                        ScriptFilesComparersManager scriptFilesComparersManager,
-                                        DBStateValidationStep dbStateValidationStep)
-            : base(notificationExecutersProviderFactory, null, scriptFilesComparersManager)
+                                        CreateScriptFilesStateStep createScriptFilesStateStep,
+                                        ValidationsStep<DBStateValidationsFactory> dbStateValidationStep)
+            : base(notificationExecutersProviderFactory, null)
         {
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(dbStateValidationStep);
         }
     }

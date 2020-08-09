@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
@@ -8,22 +9,19 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class CheckDeliveryEnvValidationStep : ValidationsStep
+    public class CheckDeliveryEnvValidationsFactory : ValidationsFactory
     {
-        protected override bool ShouldContinueWhenFindError => false;
 
-        public CheckDeliveryEnvValidationStep(SingleValidationStep singleValidationStep)
-            : base(singleValidationStep)
-        {
-        }
-
-        protected override void SetValidators(ProjectConfigItem projectConfig)
+        public override List<ValidatorBase> Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            CheckDeliveryEnvValidator checkDeliveryEnvValidator = new CheckDeliveryEnvValidator(projectConfig.IsDevEnvironment);
-            Validators.Add(checkDeliveryEnvValidator);
+            List<ValidatorBase> validators = new List<ValidatorBase>();
 
+            CheckDeliveryEnvValidator checkDeliveryEnvValidator = new CheckDeliveryEnvValidator(projectConfig.IsDevEnvironment);
+            validators.Add(checkDeliveryEnvValidator);
+
+            return validators;
         }
 
 

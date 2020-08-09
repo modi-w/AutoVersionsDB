@@ -20,8 +20,8 @@ namespace AutoVersionsDB.WinApp
 
     public partial class DBProcessControl : UserControl
     {
-        private ProjectConfigItem _projectConfigItem;
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
+        private ProjectConfig _projectConfigItem;
+        private ScriptFilesState _scriptFilesState;
 
         public enum DBVersionsMangementViewType
         {
@@ -114,7 +114,7 @@ namespace AutoVersionsDB.WinApp
 
         #region Refresh
 
-        public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
+        public void SetProjectConfigItem(ProjectConfig projectConfigItem)
         {
             _projectConfigItem = projectConfigItem;
 
@@ -350,7 +350,7 @@ namespace AutoVersionsDB.WinApp
 
         private void refreshScriptFilesState()
         {
-            _scriptFilesComparersProvider = AutoVersionsDbAPI.CreateScriptFilesState(_projectConfigItem);
+            _scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(_projectConfigItem);
         }
 
         private bool CheckIsTargetStateHistory()
@@ -662,7 +662,7 @@ namespace AutoVersionsDB.WinApp
             }));
 
 
-            if (_scriptFilesComparersProvider != null)
+            if (_scriptFilesState != null)
             {
                 BindIncrementalGrid(dbVersionsMangementViewType);
                 BindRepeatableGrid();
@@ -674,7 +674,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BindIncrementalGrid(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
-            List<RuntimeScriptFileBase> allIncrementalScriptFiles = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            List<RuntimeScriptFileBase> allIncrementalScriptFiles = _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
             if (dbVersionsMangementViewType == DBVersionsMangementViewType.ReadyToSyncToSpecificState
                 || dbVersionsMangementViewType == DBVersionsMangementViewType.SetDBStateManually)
@@ -688,7 +688,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BindRepeatableGrid()
         {
-            List<RuntimeScriptFileBase> allRepeatableScriptFiles = _scriptFilesComparersProvider.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            List<RuntimeScriptFileBase> allRepeatableScriptFiles = _scriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
             BindGridDataSource(dgRepeatableScriptsFiles, allRepeatableScriptFiles);
         }
@@ -697,7 +697,7 @@ namespace AutoVersionsDB.WinApp
         {
             if (_projectConfigItem.IsDevEnvironment)
             {
-                List<RuntimeScriptFileBase> allDevDummyDataScriptFiles = _scriptFilesComparersProvider.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                List<RuntimeScriptFileBase> allDevDummyDataScriptFiles = _scriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
                 BindGridDataSource(dgDevDummyDataScriptsFiles, allDevDummyDataScriptFiles);
             }

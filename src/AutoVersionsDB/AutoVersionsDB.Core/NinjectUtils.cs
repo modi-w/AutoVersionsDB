@@ -24,8 +24,6 @@ namespace AutoVersionsDB.Core
 
             kernel.Bind<DBCommandsFactoryProvider>().To<DBCommandsFactoryProvider>().InSingletonScope();
             kernel.Bind<ConfigProjectsManager>().To<ConfigProjectsManager>().InSingletonScope();
-            kernel.Bind<ScriptFilesComparersManager>().To<ScriptFilesComparersManager>().InSingletonScope();
-            kernel.Bind<NotificationExecutersProviderFactory>().To<NotificationExecutersProviderFactory>().InSingletonScope();
             
         }
     }

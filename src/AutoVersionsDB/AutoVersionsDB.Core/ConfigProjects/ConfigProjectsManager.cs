@@ -12,17 +12,17 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
     public class ConfigProjectsManager
     {
-        public List<ProjectConfigItem> ProjectConfigsList { get; private set; }
-        public Dictionary<string, ProjectConfigItem> DicProjectConfigItem { get; private set; }
+        public List<ProjectConfig> ProjectConfigsList { get; private set; }
+        public Dictionary<string, ProjectConfig> DicProjectConfigItem { get; private set; }
 
         public ConfigProjectsManager()
         {
-            DicProjectConfigItem = new Dictionary<string, ProjectConfigItem>();
+            DicProjectConfigItem = new Dictionary<string, ProjectConfig>();
 
             loadAllProjectConfigs();
         }
 
-        public void AddOrUpdateProjectConfig(ProjectConfigItem projectConfig)
+        public void AddOrUpdateProjectConfig(ProjectConfig projectConfig)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
@@ -58,7 +58,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         private void loadAllProjectConfigs()
         {
-            DicProjectConfigItem = new Dictionary<string, ProjectConfigItem>();
+            DicProjectConfigItem = new Dictionary<string, ProjectConfig>();
 
             string configProjectsFilePath = FileSystemPathUtils.ParsePathVaribles(AutoVersionsDBSettings.ConfigProjectsFilePath);
 
@@ -66,11 +66,11 @@ namespace AutoVersionsDB.Core.ConfigProjects
             {
                 string projectConfigsListStr = File.ReadAllText(configProjectsFilePath);
 
-                ProjectConfigsList = SerializationUtils.JsonDeserialize<List<ProjectConfigItem>>(projectConfigsListStr);
+                ProjectConfigsList = SerializationUtils.JsonDeserialize<List<ProjectConfig>>(projectConfigsListStr);
             }
             else
             {
-                ProjectConfigsList = new List<ProjectConfigItem>();
+                ProjectConfigsList = new List<ProjectConfig>();
             }
 
             ProjectConfigsList.OrderBy(e => e.ProjectName).ToList();

@@ -11,7 +11,7 @@ namespace AutoVersionsDB.Core.ArtifactFile
 {
     public static class ArtifactExtractorFactory
     {
-        public static ArtifactExtractor Create(ProjectConfigItem projectConfigItem)
+        public static ArtifactExtractor Create(ProjectConfig projectConfigItem)
         {
             ArtifactExtractor newArtifactExtractor = new ArtifactExtractor(projectConfigItem);
 

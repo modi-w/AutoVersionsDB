@@ -17,9 +17,9 @@ namespace AutoVersionsDB.NotificationableEngine
         List<NotificationableActionStepBase> ProcessSteps { get; }
         NotificationableActionStepBase RollbackStep { get; }
 
-        void Prepare(NotificationableEngineConfig notificationableEngineConfig);
+        //void Prepare(NotificationableEngineConfig notificationableEngineConfig);
 
-        ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged);
+        ProcessTrace Run(NotificationableEngineConfig notificationableEngineConfig, ExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged);
     }
 
 
@@ -34,8 +34,8 @@ namespace AutoVersionsDB.NotificationableEngine
         public List<NotificationableActionStepBase> ProcessSteps { get; }
         public NotificationableActionStepBase RollbackStep { get; }
 
-        public event EventHandler<PrepareEngineEventArgs> Preparing;
-        public event EventHandler<PrepareEngineEventArgs> Prepared;
+        //public event EventHandler<PrepareEngineEventArgs> Preparing;
+        public event EventHandler<InitiateEngineEventArgs> Initiated;
 
         public NotificationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                     NotificationableActionStepBase rollbackStep)
@@ -55,43 +55,43 @@ namespace AutoVersionsDB.NotificationableEngine
 
         }
 
-        public void Prepare(NotificationableEngineConfig notificationableEngineConfig)
+        //public void Prepare(NotificationableEngineConfig notificationableEngineConfig)
+        //{
+        //    RaisePreparing(notificationableEngineConfig);
+
+        //    if (RollbackStep != null)
+        //    {
+        //        RollbackStep.Prepare(notificationableEngineConfig);
+        //    }
+
+        //    foreach (NotificationableActionStepBase processStep in ProcessSteps)
+        //    {
+        //        processStep.Prepare(notificationableEngineConfig);
+        //    }
+
+        //    RaisePrepared(notificationableEngineConfig);
+        //}
+
+        //private void RaisePreparing(NotificationableEngineConfig NotificationableEngineConfig)
+        //{
+        //    OnPreparing(new PrepareEngineEventArgs(NotificationableEngineConfig));
+        //}
+        //protected virtual void OnPreparing(PrepareEngineEventArgs e)
+        //{
+        //    this.Preparing?.Invoke(this, e);
+        //}
+
+        private void RaiseInitiated(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processStateBase)
         {
-            RaisePreparing(notificationableEngineConfig);
-
-            if (RollbackStep != null)
-            {
-                RollbackStep.Prepare(notificationableEngineConfig);
-            }
-
-            foreach (NotificationableActionStepBase processStep in ProcessSteps)
-            {
-                processStep.Prepare(notificationableEngineConfig);
-            }
-
-            RaisePrepared(notificationableEngineConfig);
+            OnInitiated(new InitiateEngineEventArgs(notificationableEngineConfig, processStateBase));
+        }
+        protected virtual void OnInitiated(InitiateEngineEventArgs e)
+        {
+            this.Initiated?.Invoke(this, e);
         }
 
-        private void RaisePreparing(NotificationableEngineConfig NotificationableEngineConfig)
-        {
-            OnPreparing(new PrepareEngineEventArgs(NotificationableEngineConfig));
-        }
-        protected virtual void OnPreparing(PrepareEngineEventArgs e)
-        {
-            this.Preparing?.Invoke(this, e);
-        }
 
-        private void RaisePrepared(NotificationableEngineConfig NotificationableEngineConfig)
-        {
-            OnPrepared(new PrepareEngineEventArgs(NotificationableEngineConfig));
-        }
-        protected virtual void OnPrepared(PrepareEngineEventArgs e)
-        {
-            this.Prepared?.Invoke(this, e);
-        }
-
-
-        public ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public ProcessTrace Run(NotificationableEngineConfig notificationableEngineConfig, ExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             int totalNumOfSteps = ProcessSteps.Count;
 
@@ -104,6 +104,9 @@ namespace AutoVersionsDB.NotificationableEngine
 
             processState.SetEngineMetaData(this.EngineMetaData);
 
+            RaiseInitiated(notificationableEngineConfig, processState);
+
+
             NotificationExecutersProvider notificationExecutersProvider = _notificationExecutersProviderFactory.Create(onNotificationStateChanged);
 
             using (NotificationWrapperExecuter rootNotificationWrapperExecuter = notificationExecutersProvider.Reset(totalNumOfSteps))
@@ -112,11 +115,11 @@ namespace AutoVersionsDB.NotificationableEngine
                 {
                     foreach (NotificationableActionStepBase processStep in ProcessSteps)
                     {
-                        rootNotificationWrapperExecuter.ExecuteStep(processStep, "", processState, null);
+                        rootNotificationWrapperExecuter.ExecuteStep(processStep, notificationableEngineConfig, processState);
 
                         if (notificationExecutersProvider.NotifictionStatesHistory.HasError)
                         {
-                            RollbackProcess(notificationExecutersProvider, rootNotificationWrapperExecuter, processState, processStep.StepName);
+                            RollbackProcess(notificationExecutersProvider, rootNotificationWrapperExecuter, notificationableEngineConfig, processState);
                             break;
                         }
                     }
@@ -134,7 +137,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        private void RollbackProcess(NotificationExecutersProvider notificationExecutersProvider, NotificationWrapperExecuter currentNotificationWrapperExecuter, ProcessStateBase processState, string stepName)
+        private void RollbackProcess(NotificationExecutersProvider notificationExecutersProvider, NotificationWrapperExecuter currentNotificationWrapperExecuter, NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
         {
             if (RollbackStep != null)
             {
@@ -142,7 +145,8 @@ namespace AutoVersionsDB.NotificationableEngine
                 {
                     notificationExecutersProvider.ClearAllInternalProcessState();
                     notificationExecutersProvider.RootNotificationStateItem.NumOfSteps++;
-                    currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, $"because error on {stepName}", processState, null);
+                    //currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, $"because error on {stepName}", processState, null);
+                    currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, notificationableEngineConfig, processState);
                 }
             }
         }
@@ -207,16 +211,16 @@ namespace AutoVersionsDB.NotificationableEngine
         {
         }
 
-        public virtual void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
+        //public virtual void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
+        //{
+        //    base.Prepare(notificationableEngineConfig);
+        //}
+
+
+
+        public ProcessTrace Run(TNotificationableEngineConfig notificationableEngineConfig, TExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
-            base.Prepare(notificationableEngineConfig);
-        }
-
-
-
-        public ProcessTrace Run(TExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
-        {
-            return base.Run(executionParams, onNotificationStateChanged);
+            return base.Run(notificationableEngineConfig as NotificationableEngineConfig, executionParams, onNotificationStateChanged);
         }
     }
 

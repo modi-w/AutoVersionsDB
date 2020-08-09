@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ProcessSteps.Validations;
+﻿using AutoVersionsDB.Core.ProcessSteps;
+using AutoVersionsDB.Core.ProcessSteps.Validations;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
 using System;
@@ -12,9 +13,11 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "System Table Exsit Validation";
 
         public SystemTableExsitValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                                SystemTableValidationStep systemTableValidationStep)
+                                                CreateScriptFilesStateStep createScriptFilesStateStep,
+                                                ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep)
             : base(notificationExecutersProviderFactory, null)
         {
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(systemTableValidationStep);
         }
     }

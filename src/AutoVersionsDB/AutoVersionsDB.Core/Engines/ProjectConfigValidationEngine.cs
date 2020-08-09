@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.Engines
 
 
         public ProjectConfigValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                            ProjectConfigValidationStep projectConfigValidationStep)
+                                            ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep)
             : base(notificationExecutersProviderFactory, null)
         {
             ProcessSteps.Add(projectConfigValidationStep);

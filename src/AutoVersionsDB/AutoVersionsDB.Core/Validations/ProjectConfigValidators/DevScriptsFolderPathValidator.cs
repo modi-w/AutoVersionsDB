@@ -10,9 +10,9 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
-        private ProjectConfigItem _projectConfigItem;
+        private ProjectConfig _projectConfigItem;
 
-        public DevScriptsBaseFolderPathValidator(ProjectConfigItem projectConfig)
+        public DevScriptsBaseFolderPathValidator(ProjectConfig projectConfig)
         {
             _projectConfigItem = projectConfig;
         }

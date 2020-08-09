@@ -4,7 +4,7 @@ using System;
 
 namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests
 {
-    public abstract class ProjectConfigItemForTestBase : ProjectConfigItem
+    public abstract class ProjectConfigItemForTestBase : ProjectConfig
     {
 
         public ProjectConfigItemForTestBase()

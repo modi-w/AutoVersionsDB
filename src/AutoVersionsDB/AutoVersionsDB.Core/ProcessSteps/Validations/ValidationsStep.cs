@@ -9,50 +9,48 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public abstract class ValidationsStep : AutoVersionsDbStep, IDisposable
+    public class ValidationsStep : AutoVersionsDbStep, IDisposable
     {
-        public override string StepName => "Validation";
+        private ValidationsFactory _validationsFactory;
+        private SingleValidationStepFactory _singleValidationStepFactory;
 
-        protected abstract bool ShouldContinueWhenFindError { get; }
+        public override string StepName => "Validation";
+        public override bool HasInternalStep => true;
+
+        protected bool ShouldContinueWhenFindError { get; }
         protected List<ValidatorBase> Validators { get; }
 
-        public ValidationsStep(SingleValidationStep singleValidationStep)
+        public ValidationsStep(SingleValidationStepFactory singleValidationStepFactory, ValidationsFactory validationsFactory)
         {
-            InternalNotificationableAction = singleValidationStep;
-            
+            _validationsFactory = validationsFactory;
+
+            _singleValidationStepFactory = singleValidationStepFactory;
+
             Validators = new List<ValidatorBase>();
         }
 
 
 
-        public override void Prepare(ProjectConfigItem projectConfig)
+        public override int GetNumOfInternalSteps(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            SetValidators(projectConfig);
-        }
-
-        protected abstract void SetValidators(ProjectConfigItem projectConfig);
-
-
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
-        {
-            return Validators.Count;
+            return _validationsFactory.Create(projectConfig, processState).Count;
         }
 
 
-        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(ProjectConfig projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
             using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(Validators.Count))
             {
-                foreach (ValidatorBase validator in Validators)
+                List<ValidatorBase> validators = _validationsFactory.Create(projectConfig, processState);
+
+                foreach (ValidatorBase validator in validators)
                 {
                     if (ShouldContinueWhenFindError
                         || !notificationExecutersProvider.NotifictionStatesHistory.HasError)
                     {
-                        ValidatorStepArgs validatorStepArgs = new ValidatorStepArgs(validator);
+                        SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
 
-                        notificationWrapperExecuter.ExecuteStep(InternalNotificationableAction, validator.ValidatorName, processState, validatorStepArgs);
+                        notificationWrapperExecuter.ExecuteStep(singleValidationStep, projectConfig, processState);
                     }
                 }
             }
@@ -83,7 +81,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
             if (disposing)
             {
 
-                foreach (IDisposable validatorItem in Validators.Where(e=>e is IDisposable))
+                foreach (IDisposable validatorItem in Validators.Where(e => e is IDisposable))
                 {
                     validatorItem.Dispose();
                 }
@@ -93,6 +91,20 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
         #endregion
+
+    }
+
+
+    public class ValidationsStep<TValidationsFactory> : ValidationsStep
+        where TValidationsFactory : ValidationsFactory
+    {
+
+
+        public ValidationsStep(SingleValidationStepFactory singleValidationStepFactory, TValidationsFactory validationsFactory)
+            : base(singleValidationStepFactory, validationsFactory)
+        {
+
+        }
 
     }
 }

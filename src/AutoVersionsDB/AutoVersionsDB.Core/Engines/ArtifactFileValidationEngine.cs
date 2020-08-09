@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.Engines
 
 
         public ArtifactFileValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                            ArtifactFileValidationStep artifactFileValidationStep)
+                                            ValidationsStep<ArtifactFileValidationsFactory> artifactFileValidationStep)
             : base(notificationExecutersProviderFactory, null)
         {
             ProcessSteps.Add(artifactFileValidationStep);

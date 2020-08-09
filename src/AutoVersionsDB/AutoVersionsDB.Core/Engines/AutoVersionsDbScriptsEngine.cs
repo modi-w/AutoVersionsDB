@@ -11,29 +11,24 @@ namespace AutoVersionsDB.Core.Engines
 {
     public abstract class AutoVersionsDbScriptsEngine : AutoVersionsDbEngine
     {
-        private readonly ScriptFilesComparersManager _scriptFilesComparersManager;
         private ArtifactExtractor _artifactExtractor;
 
 
         public AutoVersionsDbScriptsEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                            NotificationableActionStepBase rollbackStep,
-                                            ScriptFilesComparersManager scriptFilesComparersManager)
+                                            NotificationableActionStepBase rollbackStep)
             : base(notificationExecutersProviderFactory, rollbackStep)
         {
-            _scriptFilesComparersManager = scriptFilesComparersManager;
         }
 
-        protected override void OnPreparing(PrepareEngineEventArgs e)
+        protected override void OnInitiated(InitiateEngineEventArgs e)
         {
             e.ThrowIfNull(nameof(e));
 
-            ProjectConfigItem projectConfig = e.EngineConfig as ProjectConfigItem;
+            ProjectConfig projectConfig = e.EngineConfig as ProjectConfig;
 
             _artifactExtractor = new ArtifactExtractor(projectConfig);
 
-            _scriptFilesComparersManager.Load(projectConfig);
-
-            base.OnPreparing(e);
+            base.OnInitiated(e);
         }
 
 

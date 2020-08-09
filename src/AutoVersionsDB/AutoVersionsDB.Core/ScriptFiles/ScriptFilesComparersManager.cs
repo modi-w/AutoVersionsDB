@@ -1,84 +1,84 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Utils;
-using AutoVersionsDB.DbCommands.Integration;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using AutoVersionsDB.Core.ConfigProjects;
+//using AutoVersionsDB.Core.Utils;
+//using AutoVersionsDB.DbCommands.Integration;
+//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace AutoVersionsDB.Core.ScriptFiles
-{
-    public class ScriptFilesComparersManager : IDisposable
-    {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
+//namespace AutoVersionsDB.Core.ScriptFiles
+//{
+//    public class ScriptFilesComparersManager : IDisposable
+//    {
+//        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+//        private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
 
-        public Dictionary<string, ScriptFilesComparersProvider> ScriptFilesComparersProviders { get; }
-
-
-        public ScriptFilesComparersManager(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                            ScriptFilesComparerFactory scriptFilesComparerFactory)
-        {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
-            scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
-
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
-            _scriptFilesComparerFactory = scriptFilesComparerFactory;
-
-            ScriptFilesComparersProviders = new Dictionary<string, ScriptFilesComparersProvider>();
-        }
-
-        public void Load(ProjectConfigItem projectConfig)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            if (!ScriptFilesComparersProviders.TryGetValue(projectConfig.ProjectGuid, out ScriptFilesComparersProvider scriptFilesComparersProvider))
-            {
-                scriptFilesComparersProvider = new ScriptFilesComparersProvider(_dbCommandsFactoryProvider, _scriptFilesComparerFactory, projectConfig);
-                ScriptFilesComparersProviders.Add(projectConfig.ProjectGuid, scriptFilesComparersProvider);
-            }
-
-            scriptFilesComparersProvider.Reload();
-        }
-
-        public ScriptFilesComparersProvider GetScriptFilesComparersProvider(string projectGuid)
-        {
-            return ScriptFilesComparersProviders[projectGuid];
-        }
+//        public Dictionary<string, ScriptFilesState> ScriptFilesComparersProviders { get; }
 
 
+//        public ScriptFilesComparersManager(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+//                                            ScriptFilesComparerFactory scriptFilesComparerFactory)
+//        {
+//            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+//            scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
+
+//            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+//            _scriptFilesComparerFactory = scriptFilesComparerFactory;
+
+//            ScriptFilesComparersProviders = new Dictionary<string, ScriptFilesState>();
+//        }
+
+//        public void Load(ProjectConfigItem projectConfig)
+//        {
+//            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+//            if (!ScriptFilesComparersProviders.TryGetValue(projectConfig.ProjectGuid, out ScriptFilesState processTrace))
+//            {
+//                processTrace = new ScriptFilesState(_dbCommandsFactoryProvider, _scriptFilesComparerFactory, projectConfig);
+//                ScriptFilesComparersProviders.Add(projectConfig.ProjectGuid, processTrace);
+//            }
+
+//            processTrace.Reload();
+//        }
+
+//        public ScriptFilesState GetScriptFilesState(string projectGuid)
+//        {
+//            return ScriptFilesComparersProviders[projectGuid];
+//        }
 
 
-        #region IDisposable
 
-        private bool _disposed = false;
 
-        ~ScriptFilesComparersManager() => Dispose(false);
+//        #region IDisposable
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+//        private bool _disposed = false;
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
+//        ~ScriptFilesComparersManager() => Dispose(false);
 
-            if (disposing)
-            {
-                //foreach (var sriptFilesComparerProvider in ScriptFilesComparersProviders.Values)
-                //{
-                //    sriptFilesComparerProvider.Dispose();
-                //}
-            }
+//        public void Dispose()
+//        {
+//            Dispose(true);
+//            GC.SuppressFinalize(this);
+//        }
 
-            _disposed = true;
-        }
+//        protected virtual void Dispose(bool disposing)
+//        {
+//            if (_disposed)
+//            {
+//                return;
+//            }
 
-        #endregion
+//            if (disposing)
+//            {
+//                //foreach (var sriptFilesComparerProvider in ScriptFilesComparersProviders.Values)
+//                //{
+//                //    sriptFilesComparerProvider.Dispose();
+//                //}
+//            }
 
-    }
-}
+//            _disposed = true;
+//        }
+
+//        #endregion
+
+//    }
+//}

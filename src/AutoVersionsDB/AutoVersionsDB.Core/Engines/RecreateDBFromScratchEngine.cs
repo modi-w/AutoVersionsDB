@@ -16,18 +16,19 @@ namespace AutoVersionsDB.Core.Engines
 
         public RecreateDBFromScratchEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                             RestoreDatabaseStep rollbackStep,
-                                            ScriptFilesComparersManager scriptFilesComparersManager,
-                                            ProjectConfigValidationStep projectConfigValidationStep,
-                                            CheckDeliveryEnvValidationStep checkDeliveryEnvValidationStep,
+                                            ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+                                            ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
+                                            CreateScriptFilesStateStep createScriptFilesStateStep,
                                             CreateBackupStep createBackupStep,
                                             ResetDBStep resetDBStep,
                                             RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
                                             ExecuteScriptsStep executeScriptsStep,
                                             FinalizeProcessStep finalizeProcessStep)
-            : base(notificationExecutersProviderFactory, rollbackStep, scriptFilesComparersManager)
+            : base(notificationExecutersProviderFactory, rollbackStep)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(checkDeliveryEnvValidationStep);
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(createBackupStep);
             ProcessSteps.Add(resetDBStep);
             ProcessSteps.Add(recreateDBVersionsTablesStep);

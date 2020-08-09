@@ -1,40 +1,43 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
+using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class SingleValidationStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ProjectConfigItem, ValidatorStepArgs>
+    public class SingleValidationStep : AutoVersionsDbStep
     {
-        public override string StepName => "Validate";
+        private ValidatorBase _validator;
+
+
+        public override string StepName => _validator.ValidatorName;
+        public override bool HasInternalStep => false;
 
 
 
-        public SingleValidationStep()
+        public SingleValidationStep(ValidatorBase validator)
         {
+            _validator = validator;
+
         }
 
-        public override void Prepare(ProjectConfigItem projectConfig)
-        {
-        }
 
 
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ValidatorStepArgs actionStepArgs)
+        public override int GetNumOfInternalSteps(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             return 1;
         }
 
-        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ValidatorStepArgs actionStepArgs)
+        public override void Execute(ProjectConfig projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
-            actionStepArgs.ThrowIfNull(nameof(actionStepArgs));
 
-            string errorMsg = actionStepArgs.Validator.Validate(processState.ExecutionParams as AutoVersionsDBExecutionParams);
+            string errorMsg = _validator.Validate(processState.ExecutionParams as AutoVersionsDBExecutionParams);
 
             if (!string.IsNullOrWhiteSpace(errorMsg))
             {
-                throw new NotificationEngineException(actionStepArgs.Validator.ValidatorName, errorMsg, actionStepArgs.Validator.ErrorInstructionsMessage);
+                throw new NotificationEngineException(_validator.ValidatorName, errorMsg, _validator.ErrorInstructionsMessage);
             }
         }
 

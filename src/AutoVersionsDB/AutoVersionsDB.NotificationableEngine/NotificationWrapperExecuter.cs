@@ -30,7 +30,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public void ExecuteStep(NotificationableActionStepBase step, string additionalStepInfo, ProcessStateBase processState, ActionStepArgs actionStepArgs)
+        public void ExecuteStep(NotificationableActionStepBase step, NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
         {
             step.ThrowIfNull(nameof(step));
 
@@ -39,11 +39,11 @@ namespace AutoVersionsDB.NotificationableEngine
 
             try
             {
-                int numOfInternalStep = step.GetNumOfInternalSteps(processState, actionStepArgs);
+                int numOfInternalStep = step.GetNumOfInternalSteps(notificationableEngineConfig,processState);
 
-                _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, step.StepName, additionalStepInfo, step.HasInternalStep);
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, step.StepName, step.HasInternalStep);
 
-                step.Execute(_notificationExecutersProvider, processState, actionStepArgs);
+                step.Execute(notificationableEngineConfig, _notificationExecutersProvider, processState);
 
                 _notificationExecutersProvider.NotifictionStateChangeHandler.StepEnd(CurrentNotificationStateItem, step.HasInternalStep);
 
@@ -62,9 +62,9 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public void SetStepStartManually(string stepName, string additionalStepInfo)
+        public void SetStepStartManually(string stepName)
         {
-            _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, stepName, additionalStepInfo, false);
+            _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, stepName, false);
         }
 
 
@@ -118,9 +118,9 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public void ExecuteStep(NotificationableActionStepBase step, string additionalStepInfo, TProcessState processState, ActionStepArgs actionStepArgs)
+        public void ExecuteStep(NotificationableActionStepBase step, NotificationableEngineConfig notificationableEngineConfig, TProcessState processState)
         {
-            base.ExecuteStep(step, additionalStepInfo, processState, actionStepArgs);
+            base.ExecuteStep(step, notificationableEngineConfig, processState);
         }
     }
 }

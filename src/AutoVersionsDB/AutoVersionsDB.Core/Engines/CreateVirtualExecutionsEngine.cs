@@ -16,15 +16,16 @@ namespace AutoVersionsDB.Core.Engines
 
         public CreateVirtualExecutionsEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                                 RestoreDatabaseStep rollbackStep,
-                                                ScriptFilesComparersManager scriptFilesComparersManager,
-                                                ProjectConfigValidationStep projectConfigValidationStep,
+                                                ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+                                                CreateScriptFilesStateStep createScriptFilesStateStep,
                                                 CreateBackupStep createBackupStep,
                                                 RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
                                                 ExecuteScriptsStep executeScriptsStep,
                                                 FinalizeProcessStep finalizeProcessStep)
-            : base(notificationExecutersProviderFactory, rollbackStep, scriptFilesComparersManager)
+            : base(notificationExecutersProviderFactory, rollbackStep)
         {
             ProcessSteps.Add(projectConfigValidationStep);
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(createBackupStep);
             ProcessSteps.Add(recreateDBVersionsTablesStep);
             ProcessSteps.Add(executeScriptsStep);

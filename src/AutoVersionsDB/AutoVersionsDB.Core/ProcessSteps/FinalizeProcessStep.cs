@@ -11,12 +11,12 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public class FinalizeProcessStep : AutoVersionsDbStep, IDisposable
+    public class FinalizeProcessStep : AutoVersionsDbStep
     {
         public override string StepName => "Finalize Process";
+        public override bool HasInternalStep => false;
 
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private IDBCommands _dbCommands;
 
 
 
@@ -27,110 +27,72 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
-        public override void Prepare(ProjectConfigItem projectConfig)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
+    
 
-            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
-
-        }
-
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override int GetNumOfInternalSteps(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             return 1;
         }
 
-        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(ProjectConfig projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
 
-            DataSet dsExecutionHistory = _dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
-
-            DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
-            DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
-
-            processState.EndProcessDateTime = DateTime.Now;
-
-            DataRow executionHistoryRow = dbScriptsExecutionHistoryTable.NewRow();
-
-            executionHistoryRow["DBScriptsExecutionHistoryID"] = 0;
-
-            executionHistoryRow["StartProcessDateTime"] = processState.StartProcessDateTime;
-            executionHistoryRow["ExecutionTypeName"] = processState.EngineMetaData["EngineTypeName"];
-            executionHistoryRow["EndProcessDateTime"] = processState.EndProcessDateTime;
-            executionHistoryRow["ProcessDurationInMs"] = processState.ProcessDurationInMs;
-            executionHistoryRow["NumOfScriptFiles"] = processState.ExecutedFiles.Count;
-            executionHistoryRow["DBBackupFileFullPath"] = processState.DBBackupFileFullPath;
-            executionHistoryRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
-
-            dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
-            _dbCommands.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
-
-
-            foreach (var executedFiles in processState.ExecutedFiles)
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {
-                DataRow newFileRow = dbScriptsExecutionHistoryFilesTable.NewRow();
+                DataSet dsExecutionHistory = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
-                newFileRow["DBScriptsExecutionHistoryID"] = 0;
-                newFileRow["ExecutedDateTime"] = DateTime.Now;
-                newFileRow["Filename"] = executedFiles.Filename;
-                newFileRow["FileFullPath"] = executedFiles.FileFullPath;
-                newFileRow["ScriptFileType"] = executedFiles.ScriptFileType.FileTypeCode;
-                newFileRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture); 
-                newFileRow["ComputedFileHash"] = executedFiles.ComputedHash;
-                newFileRow["ComputedFileHashDateTime"] = executedFiles.ComputedHashDateTime;
+                DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
+                DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
 
+                processState.EndProcessDateTime = DateTime.Now;
 
-                dbScriptsExecutionHistoryFilesTable.Rows.Add(newFileRow);
-            }
+                DataRow executionHistoryRow = dbScriptsExecutionHistoryTable.NewRow();
 
+                executionHistoryRow["DBScriptsExecutionHistoryID"] = 0;
 
-            int currDBScriptsExecutionHistoryID = Convert.ToInt32(executionHistoryRow["DBScriptsExecutionHistoryID"], CultureInfo.InvariantCulture);
+                executionHistoryRow["StartProcessDateTime"] = processState.StartProcessDateTime;
+                executionHistoryRow["ExecutionTypeName"] = processState.EngineMetaData["EngineTypeName"];
+                executionHistoryRow["EndProcessDateTime"] = processState.EndProcessDateTime;
+                executionHistoryRow["ProcessDurationInMs"] = processState.ProcessDurationInMs;
+                executionHistoryRow["NumOfScriptFiles"] = processState.ExecutedFiles.Count;
+                executionHistoryRow["DBBackupFileFullPath"] = processState.DBBackupFileFullPath;
+                executionHistoryRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
 
-            foreach (DataRow fileRow in dbScriptsExecutionHistoryFilesTable.Rows)
-            {
-                fileRow["DBScriptsExecutionHistoryID"] = currDBScriptsExecutionHistoryID;
-            }
-
-            _dbCommands.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
+                dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
+                dbCommands.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
 
 
-        }
-
-
-        #region IDisposable
-
-        private bool _disposed = false;
-
-        ~FinalizeProcessStep() => Dispose(false);
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (_dbCommands != null)
+                foreach (var executedFiles in processState.ExecutedFiles)
                 {
-                    _dbCommands.Dispose();
-                }
-            }
+                    DataRow newFileRow = dbScriptsExecutionHistoryFilesTable.NewRow();
 
-            _disposed = true;
+                    newFileRow["DBScriptsExecutionHistoryID"] = 0;
+                    newFileRow["ExecutedDateTime"] = DateTime.Now;
+                    newFileRow["Filename"] = executedFiles.Filename;
+                    newFileRow["FileFullPath"] = executedFiles.FileFullPath;
+                    newFileRow["ScriptFileType"] = executedFiles.ScriptFileType.FileTypeCode;
+                    newFileRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
+                    newFileRow["ComputedFileHash"] = executedFiles.ComputedHash;
+                    newFileRow["ComputedFileHashDateTime"] = executedFiles.ComputedHashDateTime;
+
+
+                    dbScriptsExecutionHistoryFilesTable.Rows.Add(newFileRow);
+                }
+
+
+                int currDBScriptsExecutionHistoryID = Convert.ToInt32(executionHistoryRow["DBScriptsExecutionHistoryID"], CultureInfo.InvariantCulture);
+
+                foreach (DataRow fileRow in dbScriptsExecutionHistoryFilesTable.Rows)
+                {
+                    fileRow["DBScriptsExecutionHistoryID"] = currDBScriptsExecutionHistoryID;
+                }
+
+                dbCommands.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
+
+            }
         }
 
-        #endregion
 
     }
 

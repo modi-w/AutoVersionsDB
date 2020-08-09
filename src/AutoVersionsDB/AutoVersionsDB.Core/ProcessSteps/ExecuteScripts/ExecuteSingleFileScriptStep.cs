@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
@@ -11,62 +12,52 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteSingleFileScriptStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ProjectConfigItem, ScriptFileInfoStepArgs>
+    public class ExecuteSingleFileScriptStep : AutoVersionsDbStep
     {
         private string _stepName;
         public override string StepName => _stepName;
+        public override bool HasInternalStep => true;
+
+        private RuntimeScriptFileBase _scriptFile;
+
 
         private IDBCommands _dbCommands;
+        private ExecuteScriptBlockStepFactory _executeScriptBlockStepFactory;
 
-
-        public ExecuteSingleFileScriptStep(ExecuteScriptBlockStep executeScriptBlockStep)
-        {
-            InternalNotificationableAction = executeScriptBlockStep;
-        }
-
-
-        public void OverrideStepName(string stepName)
-        {
-            _stepName = stepName;
-        }
-
-        public override void Prepare(ProjectConfigItem projectConfig)
-        {
-        }
-
-        public void SetDBCommands(IDBCommands dbCommands)
+        public ExecuteSingleFileScriptStep( ExecuteScriptBlockStepFactory executeScriptBlockStepFactory, IDBCommands dbCommands, string stepName, RuntimeScriptFileBase scriptFile)
         {
             dbCommands.ThrowIfNull(nameof(dbCommands));
 
+            _stepName = stepName;
+            _scriptFile = scriptFile;
+
             _dbCommands = dbCommands;
-
-            (InternalNotificationableAction as ExecuteScriptBlockStep).SetDBCommands(_dbCommands);
+            _executeScriptBlockStepFactory = executeScriptBlockStepFactory;
         }
+       
 
 
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
+        public override int GetNumOfInternalSteps(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
-            actionStepArgs.ThrowIfNull(nameof(actionStepArgs));
 
 
-            string sqlCommandStr = File.ReadAllText(actionStepArgs.ScriptFile.FileFullPath);
+            string sqlCommandStr = File.ReadAllText(_scriptFile.FileFullPath);
 
             int numOfScriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).Count();
 
             return numOfScriptBlocks;
         }
 
-        public override void Execute(NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState, ScriptFileInfoStepArgs actionStepArgs)
+        public override void Execute(ProjectConfig projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
-            actionStepArgs.ThrowIfNull(nameof(actionStepArgs));
 
             bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
 
             if (!isVirtualExecution)
             {
-                string sqlCommandStr = File.ReadAllText(actionStepArgs.ScriptFile.FileFullPath);
+                string sqlCommandStr = File.ReadAllText(_scriptFile.FileFullPath);
 
                 List<string> scriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).ToList();
 
@@ -76,15 +67,15 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                     {
                         if (!notificationExecutersProvider.NotifictionStatesHistory.HasError)
                         {
-                            ScriptBlockStepArgs scriptBlockStepArgs = new ScriptBlockStepArgs(scriptBlockStr);
+                          var executeScriptBlockStep = _executeScriptBlockStepFactory.Craete(_dbCommands, scriptBlockStr);
 
-                            notificationWrapperExecuter.ExecuteStep(InternalNotificationableAction, null, processState, scriptBlockStepArgs);
+                            notificationWrapperExecuter.ExecuteStep(executeScriptBlockStep, projectConfig, processState);
                         }
                     }
                 }
             }
 
-            processState.AppendExecutedFile(actionStepArgs.ScriptFile);
+            processState.AppendExecutedFile(_scriptFile);
 
         }
 

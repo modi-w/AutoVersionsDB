@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
@@ -8,22 +9,19 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class ArtifactFileValidationStep : ValidationsStep
+    public class ArtifactFileValidationsFactory : ValidationsFactory
     {
-        protected override bool ShouldContinueWhenFindError => false;
 
-        public ArtifactFileValidationStep(SingleValidationStep singleValidationStep)
-            : base(singleValidationStep)
-        {
-        }
-
-        protected override void SetValidators(ProjectConfigItem projectConfig)
+        public override List<ValidatorBase> Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            ArtifactFileValidator artifactFileValidator = new ArtifactFileValidator(projectConfig.IsDevEnvironment, projectConfig.DeliveryArtifactFolderPath);
-            Validators.Add(artifactFileValidator);
+            List<ValidatorBase> validators = new List<ValidatorBase>();
 
+            ArtifactFileValidator artifactFileValidator = new ArtifactFileValidator(projectConfig.IsDevEnvironment, projectConfig.DeliveryArtifactFolderPath);
+            validators.Add(artifactFileValidator);
+
+            return validators;
         }
     }
 }

@@ -14,16 +14,17 @@ namespace AutoVersionsDB.Core.Engines
 
 
         public DeployEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                            ScriptFilesComparersManager scriptFilesComparersManager,
-                            ProjectConfigValidationStep projectConfigValidationStep,
-                            CheckDeliveryEnvValidationStep checkDeliveryEnvValidationStep,
-                            SystemTableValidationStep systemTableValidationStep,
-                            DBStateValidationStep dbStateValidationStep,
+                            ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+                            ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
+                            CreateScriptFilesStateStep createScriptFilesStateStep,
+                            ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,
+                            ValidationsStep<DBStateValidationsFactory> dbStateValidationStep,
                             BuildDeployArtifactFileStep buildDeployArtifactFileStep)
-            : base(notificationExecutersProviderFactory, null, scriptFilesComparersManager)
+            : base(notificationExecutersProviderFactory, null)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(checkDeliveryEnvValidationStep);
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(systemTableValidationStep);
             ProcessSteps.Add(dbStateValidationStep);
             ProcessSteps.Add(buildDeployArtifactFileStep);

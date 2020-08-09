@@ -33,14 +33,14 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        internal void StepStart(NotificationStateItem notificationStateItem, string stepName, string additionalStepInfo, bool hasInternalStep)
+        internal void StepStart(NotificationStateItem notificationStateItem, string stepName, bool hasInternalStep)
         {
             notificationStateItem.StepName = stepName;
 
-            if (!string.IsNullOrWhiteSpace(additionalStepInfo))
-            {
-                notificationStateItem.StepName = $"{notificationStateItem.StepName} - {additionalStepInfo}";
-            }
+            //if (!string.IsNullOrWhiteSpace(additionalStepInfo))
+            //{
+            //    notificationStateItem.StepName = $"{notificationStateItem.StepName} - {additionalStepInfo}";
+            //}
 
             notificationStateItem.InternalNotificationStateItem = null;
 

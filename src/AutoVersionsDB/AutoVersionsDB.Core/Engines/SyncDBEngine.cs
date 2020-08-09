@@ -17,18 +17,19 @@ namespace AutoVersionsDB.Core.Engines
 
         public SyncDBEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                             RestoreDatabaseStep rollbackStep,
-                            ScriptFilesComparersManager scriptFilesComparersManager,
-                            ProjectConfigValidationStep projectConfigValidationStep,
-                            ArtifactFileValidationStep artifactFileValidationStep,
-                            SystemTableValidationStep systemTableValidationStep,
-                            DBStateValidationStep dbStateValidationStep,
+                            ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+                            ValidationsStep<ArtifactFileValidationsFactory> artifactFileValidationStep,
+                            CreateScriptFilesStateStep createScriptFilesStateStep,
+                            ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,
+                            ValidationsStep<DBStateValidationsFactory> dbStateValidationStep,
                             CreateBackupStep createBackupStep,
                             ExecuteScriptsStep executeScriptsStep,
                             FinalizeProcessStep finalizeProcessStep)
-            :base(notificationExecutersProviderFactory, rollbackStep, scriptFilesComparersManager)
+            :base(notificationExecutersProviderFactory, rollbackStep)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(artifactFileValidationStep);
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(systemTableValidationStep);
             ProcessSteps.Add(dbStateValidationStep);
             ProcessSteps.Add(createBackupStep);

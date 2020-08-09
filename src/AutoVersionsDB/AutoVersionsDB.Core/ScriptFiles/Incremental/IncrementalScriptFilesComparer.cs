@@ -10,9 +10,9 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
 {
     public class IncrementalScriptFilesComparer : ScriptFilesComparerBase
     {
-        public IncrementalScriptFilesComparer(ScriptFilesManager scriptFilesManager,
-                                                DBExecutedFilesManager dbExecutedFilesManager)
-            : base(scriptFilesManager, dbExecutedFilesManager)
+        public IncrementalScriptFilesComparer(FileSystemScriptFiles fileSystemScriptFiles,
+                                                DBExecutedFiles dbExecutedFiles)
+            : base(fileSystemScriptFiles, dbExecutedFiles)
         {
 
         }
@@ -28,8 +28,8 @@ namespace AutoVersionsDB.Core.ScriptFiles.Incremental
                 RuntimeScriptFileBase targetScriptFile = null;
                 if (!string.IsNullOrWhiteSpace(targetScriptFilename))
                 {
-                    string targetFileFullPath = Path.Combine(ScriptFilesManager.FolderPath, targetScriptFilename);
-                    targetScriptFile = ScriptFilesManager.CreateRuntimeScriptFileInstanceByFilename(targetFileFullPath);
+                    string targetFileFullPath = Path.Combine(FileSystemScriptFiles.FolderPath, targetScriptFilename);
+                    targetScriptFile = FileSystemScriptFiles.CreateRuntimeScriptFileInstanceByFilename(targetFileFullPath);
                 }
 
 

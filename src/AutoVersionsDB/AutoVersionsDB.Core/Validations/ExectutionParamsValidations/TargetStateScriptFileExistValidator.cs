@@ -11,11 +11,11 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
 
         public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
 
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
+        private ScriptFilesState _scriptFilesState;
 
-        public TargetStateScriptFileExistValidator(ScriptFilesComparersProvider scriptFilesComparersProvider)
+        public TargetStateScriptFileExistValidator(ScriptFilesState scriptFilesState)
         {
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
+            _scriptFilesState = scriptFilesState;
         }
 
         public override string Validate(AutoVersionsDBExecutionParams executionParam)
@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
             if (!string.IsNullOrWhiteSpace(executionParam.TargetStateScriptFileName))
             {
                 var isTargetFileExsit =
-                    _scriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles
+                    _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles
                         .Any(e => e.Filename.Trim().ToUpperInvariant() == executionParam.TargetStateScriptFileName.Trim().ToUpperInvariant());
 
                 if (!isTargetFileExsit)

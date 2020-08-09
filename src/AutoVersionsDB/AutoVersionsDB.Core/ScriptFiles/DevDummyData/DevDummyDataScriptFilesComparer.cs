@@ -5,9 +5,9 @@ namespace AutoVersionsDB.Core.ScriptFiles.DevDummyData
 {
     public class DevDummyDataScriptFilesComparer : RepeatableScriptFilesComparer
     {
-        public DevDummyDataScriptFilesComparer(ScriptFilesManager scriptFilesManager,
-                                                DBExecutedFilesManager dbExecutedFilesManager)
-            : base(scriptFilesManager, dbExecutedFilesManager)
+        public DevDummyDataScriptFilesComparer(FileSystemScriptFiles fileSystemScriptFiles,
+                                                DBExecutedFiles dbExecutedFiles)
+            : base(fileSystemScriptFiles, dbExecutedFiles)
         {
 
         }
