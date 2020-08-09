@@ -15,19 +15,19 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
 
 
-        public override List<ValidatorBase> Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
+        public override ValidationsGroup Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            List<ValidatorBase> validators = new List<ValidatorBase>();
+            ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
             TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(processState.ScriptFilesState);
-            validators.Add(targetStateScriptFileExistValidator);
+            validationsGroup.Add(targetStateScriptFileExistValidator);
 
             IsTargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new IsTargetScriptFiletAlreadyExecutedValidator(processState.ScriptFilesState);
-            validators.Add(isTargetScriptFiletAlreadyExecutedValidator);
+            validationsGroup.Add(isTargetScriptFiletAlreadyExecutedValidator);
 
-            return validators;
+            return validationsGroup;
         }
 
     }

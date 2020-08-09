@@ -14,17 +14,16 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     public class DBStateValidationsFactory : ValidationsFactory
     {
 
-        public override List<ValidatorBase> Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
+        public override ValidationsGroup Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-
-            List<ValidatorBase> validators = new List<ValidatorBase>();
+            ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
             IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator = new IsHistoryExecutedFilesChangedValidator(processState.ScriptFilesState);
-            validators.Add(isHistoryExecutedFilesChangedValidator);
+            validationsGroup.Add(isHistoryExecutedFilesChangedValidator);
 
-            return validators;
+            return validationsGroup;
         }
 
 

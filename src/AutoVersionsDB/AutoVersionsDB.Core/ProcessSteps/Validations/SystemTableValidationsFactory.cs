@@ -22,16 +22,16 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        public override List<ValidatorBase> Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
+        public override ValidationsGroup Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            List<ValidatorBase> validators = new List<ValidatorBase>();
+            ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
             SystemTablesValidator systemTablesValidator = new SystemTablesValidator(_dbCommandsFactoryProvider, projectConfig.ConnStr, projectConfig.DBTypeCode, projectConfig.IsDevEnvironment);
-            validators.Add(systemTablesValidator);
+            validationsGroup.Add(systemTablesValidator);
 
-            return validators;
+            return validationsGroup;
         }
 
 

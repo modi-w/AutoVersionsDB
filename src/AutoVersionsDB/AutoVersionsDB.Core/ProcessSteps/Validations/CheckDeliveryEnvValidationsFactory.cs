@@ -12,16 +12,16 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     public class CheckDeliveryEnvValidationsFactory : ValidationsFactory
     {
 
-        public override List<ValidatorBase> Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
+        public override ValidationsGroup Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            List<ValidatorBase> validators = new List<ValidatorBase>();
+            ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
             CheckDeliveryEnvValidator checkDeliveryEnvValidator = new CheckDeliveryEnvValidator(projectConfig.IsDevEnvironment);
-            validators.Add(checkDeliveryEnvValidator);
+            validationsGroup.Add(checkDeliveryEnvValidator);
 
-            return validators;
+            return validationsGroup;
         }
 
 

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class ValidationsStep : AutoVersionsDbStep, IDisposable
+    public class ValidationsStep : AutoVersionsDbStep
     {
         private ValidationsFactory _validationsFactory;
         private SingleValidationStepFactory _singleValidationStepFactory;
@@ -17,8 +17,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         public override string StepName => "Validation";
         public override bool HasInternalStep => true;
 
-        protected bool ShouldContinueWhenFindError { get; }
-        protected List<ValidatorBase> Validators { get; }
 
         public ValidationsStep(SingleValidationStepFactory singleValidationStepFactory, ValidationsFactory validationsFactory)
         {
@@ -26,7 +24,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
             _singleValidationStepFactory = singleValidationStepFactory;
 
-            Validators = new List<ValidatorBase>();
         }
 
 
@@ -39,13 +36,14 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
         public override void Execute(ProjectConfig projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
-            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(Validators.Count))
-            {
-                List<ValidatorBase> validators = _validationsFactory.Create(projectConfig, processState);
+            ValidationsGroup validationsGroup = _validationsFactory.Create(projectConfig, processState);
 
-                foreach (ValidatorBase validator in validators)
+            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(validationsGroup.Count))
+            {
+
+                foreach (ValidatorBase validator in validationsGroup.GetValidators())
                 {
-                    if (ShouldContinueWhenFindError
+                    if (validationsGroup.ShouldContinueWhenFindError
                         || !notificationExecutersProvider.NotifictionStatesHistory.HasError)
                     {
                         SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
@@ -57,40 +55,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        #region IDisposable
-
-        private bool _disposed = false;
-
-        ~ValidationsStep() => Dispose(false);
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-
-                foreach (IDisposable validatorItem in Validators.Where(e => e is IDisposable))
-                {
-                    validatorItem.Dispose();
-                }
-            }
-
-            _disposed = true;
-        }
-
-        #endregion
 
     }
 

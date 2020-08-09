@@ -21,56 +21,55 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        public override List<ValidatorBase> Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
+        public override ValidationsGroup Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-
-            List<ValidatorBase> validators = new List<ValidatorBase>();
+            ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
             ProjectNameValidator projectNameValidator = new ProjectNameValidator(projectConfig.ProjectName);
-            validators.Add(projectNameValidator);
+            validationsGroup.Add(projectNameValidator);
 
             DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
-            validators.Add(dbTypeValidator);
+            validationsGroup.Add(dbTypeValidator);
 
             ConnStrValidator connStrValidator = new ConnStrValidator(projectConfig.ConnStr, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
-            validators.Add(connStrValidator);
+            validationsGroup.Add(connStrValidator);
 
             ConnStrValidator connStrToMasterDBValidator = new ConnStrValidator(projectConfig.ConnStrToMasterDB, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
-            validators.Add(connStrToMasterDBValidator);
+            validationsGroup.Add(connStrToMasterDBValidator);
 
             DBBackupFolderValidator dbBackupBaseFolderValidator = new DBBackupFolderValidator(projectConfig.DBBackupBaseFolder);
-            validators.Add(dbBackupBaseFolderValidator);
+            validationsGroup.Add(dbBackupBaseFolderValidator);
 
             if (projectConfig.IsDevEnvironment)
             {
                 DevScriptsBaseFolderPathValidator scriptsRootFolderPathValidator = new DevScriptsBaseFolderPathValidator(projectConfig);
-                validators.Add(scriptsRootFolderPathValidator);
+                validationsGroup.Add(scriptsRootFolderPathValidator);
 
                 if (!string.IsNullOrWhiteSpace(projectConfig.DevScriptsBaseFolderPath))
                 {
                     ScriptsFolderPathValidator incrementalScriptsFolderPathValidator =
                         new ScriptsFolderPathValidator(projectConfig.IncrementalScriptsFolderPath);
-                    validators.Add(incrementalScriptsFolderPathValidator);
+                    validationsGroup.Add(incrementalScriptsFolderPathValidator);
 
                     ScriptsFolderPathValidator repeatableScriptsFolderPathValidator =
                         new ScriptsFolderPathValidator(projectConfig.RepeatableScriptsFolderPath);
-                    validators.Add(repeatableScriptsFolderPathValidator);
+                    validationsGroup.Add(repeatableScriptsFolderPathValidator);
 
                     ScriptsFolderPathValidator devDummyDataScriptsFolderPathValidator =
                         new ScriptsFolderPathValidator(projectConfig.DevDummyDataScriptsFolderPath);
-                    validators.Add(devDummyDataScriptsFolderPathValidator);
+                    validationsGroup.Add(devDummyDataScriptsFolderPathValidator);
                 }
             }
             else
             {
                 DeliveryArtifactFolderPathValidator deliveryArtifactFolderPathValidator = new DeliveryArtifactFolderPathValidator(projectConfig);
-                validators.Add(deliveryArtifactFolderPathValidator);
+                validationsGroup.Add(deliveryArtifactFolderPathValidator);
             }
 
 
-            return validators;
+            return validationsGroup;
         }
     }
 }
