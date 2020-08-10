@@ -14,10 +14,10 @@ namespace AutoVersionsDB.Core.ArtifactFile
         public const string TempExtractArtifactFolderName = "TempExtractArtifactFiles";
         public const string ArtifactFilenameExtension = ".avdb";
 
-        private ProjectConfig _projectConfigItem;
+        private ProjectConfigItem _projectConfigItem;
 
 
-        public ArtifactExtractor(ProjectConfig projectConfigItem)
+        public ArtifactExtractor(ProjectConfigItem projectConfigItem)
         {
             _projectConfigItem = projectConfigItem;
 

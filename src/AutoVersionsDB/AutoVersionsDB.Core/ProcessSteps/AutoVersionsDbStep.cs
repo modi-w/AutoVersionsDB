@@ -7,7 +7,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public abstract class AutoVersionsDbStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ProjectConfig>
+    public abstract class AutoVersionsDbStep : NotificationableActionStepBase<AutoVersionsDbProcessState, ProjectConfigItem>
     {
     }
 }

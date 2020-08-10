@@ -20,7 +20,7 @@ namespace AutoVersionsDB.WinApp
 
     public partial class DBProcessControl : UserControl
     {
-        private ProjectConfig _projectConfigItem;
+        private ProjectConfigItem _projectConfigItem;
         private ScriptFilesState _scriptFilesState;
 
         public enum DBVersionsMangementViewType
@@ -114,7 +114,7 @@ namespace AutoVersionsDB.WinApp
 
         #region Refresh
 
-        public void SetProjectConfigItem(ProjectConfig projectConfigItem)
+        public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
         {
             _projectConfigItem = projectConfigItem;
 

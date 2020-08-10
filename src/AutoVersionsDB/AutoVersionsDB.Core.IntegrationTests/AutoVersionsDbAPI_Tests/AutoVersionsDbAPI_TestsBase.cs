@@ -137,7 +137,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         }
 
 
-        protected NumOfConnections getNumOfOpenConnection(ProjectConfig projectConfig)
+        protected NumOfConnections getNumOfOpenConnection(ProjectConfigItem projectConfig)
         {
             NumOfConnections numOfConnectionsItem = new NumOfConnections();
 
@@ -175,7 +175,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
 
-        protected void restoreDB(ProjectConfig projectConfig, string filename)
+        protected void restoreDB(ProjectConfigItem projectConfig, string filename)
         {
             using (IDBConnectionManager dbConnectionManager = _dbCommandsFactoryProvider.CreateDBConnectionManager(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
@@ -212,7 +212,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
 
-        protected void assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(ProjectConfig projectConfig, string originalRestoreDBFilePath)
+        protected void assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(ProjectConfigItem projectConfig, string originalRestoreDBFilePath)
         {
             //Comment: this check is not work because the original bak files was backup on diffrent sql server
 
@@ -236,7 +236,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         }
 
-        protected void assertDbInEmptyStateExceptSystemTables(ProjectConfig projectConfig)
+        protected void assertDbInEmptyStateExceptSystemTables(ProjectConfigItem projectConfig)
         {
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
@@ -249,7 +249,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         }
 
 
-        protected void assertDbInMiddleState(ProjectConfig projectConfig)
+        protected void assertDbInMiddleState(ProjectConfigItem projectConfig)
         {
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
@@ -280,7 +280,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         }
 
-        protected void assertDbInFinalState_DevEnv(ProjectConfig projectConfig)
+        protected void assertDbInFinalState_DevEnv(ProjectConfigItem projectConfig)
         {
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
@@ -334,7 +334,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
         //Comment: Dev Dummy Data Scripts should not run on Delivery Environment
-        protected void assertDbInFinalState_DeliveryEnv(ProjectConfig projectConfig)
+        protected void assertDbInFinalState_DeliveryEnv(ProjectConfigItem projectConfig)
         {
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
@@ -383,7 +383,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         }
 
 
-        protected void assertDbInFinalState_OnlyIncremental(ProjectConfig projectConfig)
+        protected void assertDbInFinalState_OnlyIncremental(ProjectConfigItem projectConfig)
         {
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {

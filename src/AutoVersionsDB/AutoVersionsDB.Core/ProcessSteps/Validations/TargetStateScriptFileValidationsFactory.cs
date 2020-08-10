@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
 
 
-        public override ValidationsGroup Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
+        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 

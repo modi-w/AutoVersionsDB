@@ -25,8 +25,6 @@ namespace AutoVersionsDB.Core
 
         //public ProjectConfigItem ProjectConfigItem { get; private set; }
 
-        private static ConfigProjectsManager _configProjectsManager= NinjectUtils.KernelInstance.Get<ConfigProjectsManager>();
-
         private static ScriptFilesStateFactory _scriptFilesStateFactory = NinjectUtils.KernelInstance.Get<ScriptFilesStateFactory>();
 
         //    private static ScriptFilesComparersManager _scriptFilesComparersManager = NinjectUtils.KernelInstance.Get<ScriptFilesComparersManager>();
@@ -75,9 +73,9 @@ namespace AutoVersionsDB.Core
 
 
 
-        public static List<ProjectConfig> GetProjectsList()
+        public static List<ProjectConfigItem> GetProjectsList()
         {
-            return _configProjectsManager.ProjectConfigsList;
+            return ProjectConfigs.GetAllProjectConfigs().Values.ToList();
         }
 
 
@@ -100,11 +98,11 @@ namespace AutoVersionsDB.Core
         //    }
         //}
 
-        public static void SaveProjectConfig(ProjectConfig projectConfigItem)
+        public static void SaveProjectConfig(ProjectConfigItem projectConfigItem)
         {
             lock (_processSyncLock)
             {
-                _configProjectsManager.AddOrUpdateProjectConfig(projectConfigItem);
+                ProjectConfigs.AddOrUpdateProjectConfig(projectConfigItem);
             }
         }
 
@@ -113,7 +111,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                _configProjectsManager.RemoveProjectConfig(projectGuid);
+                ProjectConfigs.RemoveProjectConfig(projectGuid);
             }
         }
 
@@ -153,7 +151,7 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
-        public static ProcessTrace ValidateAll(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace ValidateAll(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -180,7 +178,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace ValidateProjectConfig(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace ValidateProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -195,7 +193,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        private static ProcessTrace ValidateArtifactFile(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateArtifactFile(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -210,7 +208,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        private static ProcessTrace ValidateSystemTableExist(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateSystemTableExist(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -226,7 +224,7 @@ namespace AutoVersionsDB.Core
         }
 
 
-        private static ProcessTrace ValidateDBState(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateDBState(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -241,7 +239,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static bool ValdiateTargetStateAlreadyExecuted(ProjectConfig projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static bool ValdiateTargetStateAlreadyExecuted(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -263,7 +261,7 @@ namespace AutoVersionsDB.Core
 
         #region Run Change Db State
 
-        public static ProcessTrace SyncDB(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SyncDB(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -280,7 +278,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace SetDBToSpecificState(ProjectConfig projectConfigItem, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SetDBToSpecificState(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -306,7 +304,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace RecreateDBFromScratch(ProjectConfig projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace RecreateDBFromScratch(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -325,7 +323,7 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace SetDBStateByVirtualExecution(ProjectConfig projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SetDBStateByVirtualExecution(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -361,7 +359,7 @@ namespace AutoVersionsDB.Core
 
         #region Deploy
 
-        public static ProcessTrace Deploy(ProjectConfig projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace Deploy(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -382,7 +380,7 @@ namespace AutoVersionsDB.Core
 
         #region Scripts
 
-        public static ScriptFilesState CreateScriptFilesState(ProjectConfig projectConfigItem)
+        public static ScriptFilesState CreateScriptFilesState(ProjectConfigItem projectConfigItem)
         {
             ScriptFilesState scriptFilesState;
 
@@ -395,7 +393,7 @@ namespace AutoVersionsDB.Core
             return scriptFilesState;
         }
 
-        public static string CreateNewIncrementalScriptFile(ProjectConfig projectConfigItem, string scriptName)
+        public static string CreateNewIncrementalScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
         {
             RuntimeScriptFileBase scriptFileItem;
 
@@ -408,7 +406,7 @@ namespace AutoVersionsDB.Core
             return scriptFileItem.FileFullPath;
         }
 
-        public static string CreateNewRepeatableScriptFile(ProjectConfig projectConfigItem, string scriptName)
+        public static string CreateNewRepeatableScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
         {
             RuntimeScriptFileBase scriptFileItem;
 
@@ -421,7 +419,7 @@ namespace AutoVersionsDB.Core
             return scriptFileItem.FileFullPath;
         }
 
-        public static string CreateNewDevDummyDataScriptFile(ProjectConfig projectConfigItem, string scriptName)
+        public static string CreateNewDevDummyDataScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
         {
             if (!projectConfigItem.IsDevEnvironment)
             {

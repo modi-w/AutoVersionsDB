@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override int GetNumOfInternalSteps(ProjectConfig projectConfig, AutoVersionsDbProcessState processState)
+        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
 
@@ -51,7 +51,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         }
 
 
-        public override void Execute(ProjectConfig projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
 
@@ -100,7 +100,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             return lastIncStriptFilename;
         }
 
-        private void runScriptsFilesList(IDBCommands dbCommands, NotificationExecutersProvider notificationExecutersProvider, ProjectConfig projectConfig, AutoVersionsDbProcessState processState, List<RuntimeScriptFileBase> scriptFilesList, string fileType)
+        private void runScriptsFilesList(IDBCommands dbCommands, NotificationExecutersProvider notificationExecutersProvider, ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, List<RuntimeScriptFileBase> scriptFilesList, string fileType)
         {
 
             bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);

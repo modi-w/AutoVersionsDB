@@ -23,7 +23,6 @@ namespace AutoVersionsDB.Core
             kernel.ThrowIfNull(nameof(kernel));
 
             kernel.Bind<DBCommandsFactoryProvider>().To<DBCommandsFactoryProvider>().InSingletonScope();
-            kernel.Bind<ConfigProjectsManager>().To<ConfigProjectsManager>().InSingletonScope();
             
         }
     }

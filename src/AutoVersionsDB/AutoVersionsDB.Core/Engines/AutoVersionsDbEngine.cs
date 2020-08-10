@@ -5,7 +5,7 @@ using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public abstract class AutoVersionsDbEngine : NotificationEngine<AutoVersionsDbProcessState, AutoVersionsDBExecutionParams, ProjectConfig>
+    public abstract class AutoVersionsDbEngine : NotificationEngine<AutoVersionsDbProcessState, AutoVersionsDBExecutionParams, ProjectConfigItem>
     {
 
         private bool _isVirtualExecution;

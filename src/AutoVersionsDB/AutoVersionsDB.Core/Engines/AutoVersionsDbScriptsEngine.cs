@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.Engines
         {
             e.ThrowIfNull(nameof(e));
 
-            ProjectConfig projectConfig = e.EngineConfig as ProjectConfig;
+            ProjectConfigItem projectConfig = e.EngineConfig as ProjectConfigItem;
 
             _artifactExtractor = new ArtifactExtractor(projectConfig);
 

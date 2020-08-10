@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
 
 
-        public void Reload(ProjectConfig projectConfig)
+        public void Reload(ProjectConfigItem projectConfig)
         {
             using(IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {

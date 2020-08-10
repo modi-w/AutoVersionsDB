@@ -19,7 +19,7 @@ namespace AutoVersionsDB.WinApp
     {
         private readonly List<DBType> _dbTypesList;
        
-        private ProjectConfig _projectConfigItem;
+        private ProjectConfigItem _projectConfigItem;
 
         public event OnNavToProcessHandler OnNavToProcess;
 
@@ -49,7 +49,7 @@ namespace AutoVersionsDB.WinApp
             imgError.Visible = false;
         }
 
-        public void SetProjectConfigItem(ProjectConfig projectConfigItem)
+        public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
         {
             _projectConfigItem = projectConfigItem;
 

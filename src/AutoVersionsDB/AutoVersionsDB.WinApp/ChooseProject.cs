@@ -14,7 +14,7 @@ namespace AutoVersionsDB.WinApp
     {
         private const string c_SearchPlaceHolderText = "Search Project...";
 
-        private List<ProjectConfig> _allProjectsList;
+        private List<ProjectConfigItem> _allProjectsList;
 
         public event EventHandler OnSetNewProject;
         public event OnNavToProcessHandler OnNavToProcess;
@@ -112,7 +112,7 @@ namespace AutoVersionsDB.WinApp
                 //if (_autoVersionsDbAPI!= null
                 //    && _autoVersionsDbAPI.ConfigProjectsManager != null)
                 //{
-                    List<ProjectConfig> filteredProjectList =
+                    List<ProjectConfigItem> filteredProjectList =
                         _allProjectsList
                         .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
                         .OrderBy(e => e.ProjectName)
@@ -120,7 +120,7 @@ namespace AutoVersionsDB.WinApp
 
                     flowLayoutPanel1.Controls.Clear();
 
-                    foreach (ProjectConfig projectConfigItem in filteredProjectList)
+                    foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
                     {
                         ProjectItemControl projectItem = new ProjectItemControl(projectConfigItem);
                         projectItem.OnNavToProcess += ProjectItem_OnNavToProcess;
@@ -136,7 +136,7 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void ProjectItem_OnEditProject(ProjectConfig projectConfigItem)
+        private void ProjectItem_OnEditProject(ProjectConfigItem projectConfigItem)
         {
             OnEditProject?.Invoke(projectConfigItem);
         }
@@ -146,7 +146,7 @@ namespace AutoVersionsDB.WinApp
             RefreshProjectList();
         }
 
-        private void ProjectItem_OnNavToProcess(ProjectConfig projectConfigItem)
+        private void ProjectItem_OnNavToProcess(ProjectConfigItem projectConfigItem)
         {
             OnNavToProcess?.Invoke(projectConfigItem);
         }

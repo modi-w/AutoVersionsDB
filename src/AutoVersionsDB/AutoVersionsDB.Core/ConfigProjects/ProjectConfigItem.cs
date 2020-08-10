@@ -8,7 +8,7 @@ using System.IO;
 
 namespace AutoVersionsDB.Core.ConfigProjects
 {
-    public class ProjectConfig : NotificationableEngineConfig
+    public class ProjectConfigItem : NotificationableEngineConfig
     {
         public string ProjectGuid { get; set; }
         public string ProjectName { get; set; }
@@ -114,7 +114,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
 
 
-        public ProjectConfig()
+        public ProjectConfigItem()
         {
             IsDevEnvironment = true;
             DBCommandsTimeout = 300;

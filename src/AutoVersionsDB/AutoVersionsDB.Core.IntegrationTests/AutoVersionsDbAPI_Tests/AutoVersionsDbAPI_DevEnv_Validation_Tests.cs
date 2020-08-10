@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DevEnv_ProjectConfigValidate_NotValid()
         {
             //Arrange
-            ProjectConfig projectConfig = new ProjectConfig()
+            ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
                 IsDevEnvironment = true
             };

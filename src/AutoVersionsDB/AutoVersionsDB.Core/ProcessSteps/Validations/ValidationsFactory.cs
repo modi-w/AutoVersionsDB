@@ -10,6 +10,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
   public abstract  class ValidationsFactory
     {
 
-        public abstract ValidationsGroup Create(ProjectConfig projectConfig, AutoVersionsDbProcessState processState);
+        public abstract ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState);
     }
 }
