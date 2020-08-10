@@ -12,65 +12,10 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core
 {
-    public static class AutoVersionsDbAPI //: IDisposable
+    public static class AutoVersionsDbAPI 
     {
 
         private static readonly object _processSyncLock = new object();
-
-        //private static ArtifactExtractor _currentArtifactExtractor;
-
-
-        private static DBCommandsFactoryProvider _dbCommandsFactoryProvider = NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>();
-        //private static NotificationExecutersProviderFactory _notificationExecutersProviderFactory= NinjectUtils.KernelInstance.Get<NotificationExecutersProviderFactory>();
-
-        //public ProjectConfigItem ProjectConfigItem { get; private set; }
-
-        private static ScriptFilesStateFactory _scriptFilesStateFactory = NinjectUtils.KernelInstance.Get<ScriptFilesStateFactory>();
-
-        //    private static ScriptFilesComparersManager _scriptFilesComparersManager = NinjectUtils.KernelInstance.Get<ScriptFilesComparersManager>();
-        //public ScriptFilesComparersProvider CurrentScriptFilesComparersProvider
-        //{
-        //    get
-        //    {
-        //        return _scriptFilesComparersManager.GetScriptFilesComparersProvider(ProjectConfigItem.ProjectGuid);
-        //    }
-        //}
-
-
-
-
-
-        //public bool HasError
-        //{
-        //    get
-        //    {
-        //        return NotificationExecutersFactoryManager.HasError;
-        //    }
-        //}
-        //public string ErrorCode
-        //{
-        //    get
-        //    {
-        //        return NotificationExecutersFactoryManager.ErrorCode;
-        //    }
-        //}
-
-        //public string InstructionsMessage
-        //{
-        //    get
-        //    {
-        //        return NotificationExecutersFactoryManager.InstructionsMessage;
-        //    }
-        //}
-
-        //public string InstructionsMessageStepName
-        //{
-        //    get
-        //    {
-        //        return NotificationExecutersFactoryManager.InstructionsMessageStepName;
-        //    }
-        //}
-
 
 
         public static List<ProjectConfigItem> GetProjectsList()
@@ -81,22 +26,14 @@ namespace AutoVersionsDB.Core
 
         public static List<DBType> GetDbTypesList()
         {
+            DBCommandsFactoryProvider dbCommandsFactoryProvider = NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>();
 
-            return _dbCommandsFactoryProvider.GetDbTypesList();
+            return dbCommandsFactoryProvider.GetDbTypesList();
         }
 
 
         #region Config
 
-        //private static void setProjectConfigItem(ProjectConfigItem projectConfigItem, Action<NotifictionStatesHistory, NotificationStateItem> onNotificationStateChanged)
-        //{
-        //    lock (_processSyncLock)
-        //    {
-        //        ProjectConfigItem = projectConfigItem;
-
-        //        Refresh(onNotificationStateChanged);
-        //    }
-        //}
 
         public static void SaveProjectConfig(ProjectConfigItem projectConfigItem)
         {
@@ -116,34 +53,6 @@ namespace AutoVersionsDB.Core
         }
 
 
-
-
-        //public NotifictionStatesHistory Refresh(ProjectConfigItem projectConfigItem, Action<NotifictionStatesHistory, NotificationStateItem> onNotificationStateChanged)
-        //{
-        //    NotifictionStatesHistory processTrace;
-
-        //    //if (_currentArtifactExtractor != null)
-        //    //{
-        //    //    _currentArtifactExtractor.Dispose();
-        //    //}
-
-        //    processTrace = ValidateProjectConfig(onNotificationStateChanged);
-
-        //    if (!processTrace.HasError)
-        //    {
-        //        ArtifactExtractor _currentArtifactExtractor = ArtifactExtractorFactory.Create(projectConfigItem);
-
-        //        RecreateScriptFilesComparersProvider();
-        //    }
-
-        //    return processTrace;
-        //}
-
-
-        //private void RecreateScriptFilesComparersProvider()
-        //{
-        //    _scriptFilesComparersManager.Load(ProjectConfigItem);
-        //}
 
 
         #endregion
@@ -271,8 +180,6 @@ namespace AutoVersionsDB.Core
                 {
                     processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
-
- //               RecreateScriptFilesComparersProvider();
             }
 
             return processTrace;
@@ -297,8 +204,6 @@ namespace AutoVersionsDB.Core
                         processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                     }
                 }
-
-       //         RecreateScriptFilesComparersProvider();
             }
 
             return processTrace;
@@ -316,8 +221,6 @@ namespace AutoVersionsDB.Core
                 {
                     processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                 }
-
-    //            RecreateScriptFilesComparersProvider();
             }
 
             return processTrace;
@@ -335,8 +238,6 @@ namespace AutoVersionsDB.Core
                 {
                     processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                 }
-
-  //              RecreateScriptFilesComparersProvider();
             }
 
             return processTrace;
@@ -386,7 +287,9 @@ namespace AutoVersionsDB.Core
 
             using (ArtifactExtractor _currentArtifactExtractor = ArtifactExtractorFactory.Create(projectConfigItem))
             {
-                scriptFilesState = _scriptFilesStateFactory.Create();
+                ScriptFilesStateFactory scriptFilesStateFactory = NinjectUtils.KernelInstance.Get<ScriptFilesStateFactory>();
+
+                scriptFilesState = scriptFilesStateFactory.Create();
                 scriptFilesState.Reload(projectConfigItem);
             }
 
@@ -439,50 +342,6 @@ namespace AutoVersionsDB.Core
 
 
         #endregion
-
-
-
-        //#region IDisposable
-
-        //private bool _disposed = false;
-
-        //~AutoVersionsDbAPI() => Dispose(false);
-
-        //// Public implementation of Dispose pattern callable by consumers.
-        //public void Dispose()
-        //{
-        //    Dispose(true);
-        //    GC.SuppressFinalize(this);
-        //}
-
-        //// Protected implementation of Dispose pattern.
-        //protected virtual void Dispose(bool disposing)
-        //{
-        //    if (_disposed)
-        //    {
-        //        return;
-        //    }
-
-        //    if (disposing)
-        //    {
-        //        if (_currentArtifactExtractor != null)
-        //        {
-        //            _currentArtifactExtractor.Dispose();
-        //            _currentArtifactExtractor = null;
-        //        }
-
-        //        if (ScriptFilesComparersManager != null)
-        //        {
-        //            ScriptFilesComparersManager.Dispose();
-        //        }
-
-        //    }
-
-        //    _disposed = true;
-        //}
-
-        //#endregion
-
 
     }
 }
