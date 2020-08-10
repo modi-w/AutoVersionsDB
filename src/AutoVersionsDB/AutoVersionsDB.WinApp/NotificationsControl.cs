@@ -200,13 +200,10 @@ namespace AutoVersionsDB.WinApp
 
         private void ShowMessageWindow(ProcessTrace processResults)
         {
-            //if (NotifictionStatesHistoryManager != null)
-            //{
             using (MessageWindow messageWindow = new MessageWindow(processResults))
             {
                 messageWindow.ShowDialog();
             }
-            //  }
 
         }
 

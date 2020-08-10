@@ -36,17 +36,17 @@ namespace AutoVersionsDB.DbCommands.Integration
         }
 
 
-        public IDBConnectionManager CreateDBConnectionManager(string dbTypeCode, string connectionString, int timeout)
+        public IDBConnection CreateDBConnection(string dbTypeCode, string connectionString, int timeout)
         {
-            IDBConnectionManager dbConnectionManager = null;
+            IDBConnection dbConnection = null;
 
             if (!string.IsNullOrWhiteSpace(dbTypeCode)
                 && _dbCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
             {
-                dbConnectionManager = dbCommands_Factory.CreateDBConnectionManager(connectionString, timeout);
+                dbConnection = dbCommands_Factory.CreateDBConnection(connectionString, timeout);
             }
 
-            return dbConnectionManager;
+            return dbConnection;
         }
 
 

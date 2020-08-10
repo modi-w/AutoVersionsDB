@@ -8,17 +8,17 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBQueryStatus : IDBQueryStatus
     {
-        private readonly SqlServerConnectionManager _sqlServerConnectionManager;
+        private readonly SqlServerConnection _sqlServerConnection;
 
 
 
-        public SqlServerDBQueryStatus(SqlServerConnectionManager sqlServerConnectionManager)
+        public SqlServerDBQueryStatus(SqlServerConnection sqlServerConnection)
         {
-            sqlServerConnectionManager.ThrowIfNull(nameof(sqlServerConnectionManager));
+            sqlServerConnection.ThrowIfNull(nameof(sqlServerConnection));
 
-            _sqlServerConnectionManager = sqlServerConnectionManager;
+            _sqlServerConnection = sqlServerConnection;
 
-            _sqlServerConnectionManager.Open();
+            _sqlServerConnection.Open();
         }
 
 
@@ -26,9 +26,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             int outVal = 0;
 
-            lock (_sqlServerConnectionManager)
+            lock (_sqlServerConnection)
             {
-                if (!_sqlServerConnectionManager.IsDisposed)
+                if (!_sqlServerConnection.IsDisposed)
                 {
                     string sqlCommandStr =
                             $@"SELECT 
@@ -44,7 +44,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                                 dbid, loginame";
 
 
-                    using (DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10))
+                    using (DataTable resultsTable = _sqlServerConnection.GetSelectCommand(sqlCommandStr, 10))
                     {
                         if (resultsTable.Rows.Count > 0)
                         {
@@ -78,9 +78,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             double outVal = 0;
 
-            lock (_sqlServerConnectionManager)
+            lock (_sqlServerConnection)
             {
-                if (!_sqlServerConnectionManager.IsDisposed)
+                if (!_sqlServerConnection.IsDisposed)
                 {
                     string sqlCommandStr =
                         $@"SELECT session_id as SPID, command, a.text AS Query, start_time, percent_complete, dateadd(second,estimated_completion_time/1000, getdate()) as estimated_completion_time
@@ -88,7 +88,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                     WHERE r.command in ('{queryName}')";
 
 
-                    using (DataTable resultsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCommandStr, 10))
+                    using (DataTable resultsTable = _sqlServerConnection.GetSelectCommand(sqlCommandStr, 10))
                     {
                         if (resultsTable.Rows.Count > 0)
                         {
@@ -123,11 +123,11 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             if (disposing)
             {
-                lock (_sqlServerConnectionManager)
+                lock (_sqlServerConnection)
                 {
-                    _sqlServerConnectionManager.Close();
+                    _sqlServerConnection.Close();
 
-                    _sqlServerConnectionManager.Dispose();
+                    _sqlServerConnection.Dispose();
 
                 }
             }

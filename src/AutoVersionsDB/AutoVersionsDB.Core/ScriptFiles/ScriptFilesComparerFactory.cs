@@ -10,20 +10,11 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
     public class ScriptFilesComparerFactory
     {
-        private FileChecksumManager _fileChecksumManager;
-        private IncrementalRuntimeScriptFileFactory _incrementalRuntimeScriptFileFactory;
-        private RepeatableRuntimeScriptFileFactory _repeatableRuntimeScriptFileFactory;
-        private DevDummyDataRuntimeScriptFileFactory _devDummyDataruntimeScriptFileFactory;
+        private FileChecksum _fileChecksum;
 
-        public ScriptFilesComparerFactory(FileChecksumManager fileChecksumManager,
-                                            IncrementalRuntimeScriptFileFactory incrementalRuntimeScriptFileFactory,
-                                            RepeatableRuntimeScriptFileFactory repeatableRuntimeScriptFileFactory,
-                                            DevDummyDataRuntimeScriptFileFactory devDummyDataruntimeScriptFileFactory)
+        public ScriptFilesComparerFactory(FileChecksum fileChecksum)
         {
-            _fileChecksumManager = fileChecksumManager;
-            _incrementalRuntimeScriptFileFactory = incrementalRuntimeScriptFileFactory;
-            _repeatableRuntimeScriptFileFactory = repeatableRuntimeScriptFileFactory;
-            _devDummyDataruntimeScriptFileFactory = devDummyDataruntimeScriptFileFactory;
+            _fileChecksum = fileChecksum;
         }
 
 
@@ -38,17 +29,17 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             if (typeof(TScriptFileType) == typeof(IncrementalScriptFileType))
             {
-                FileSystemScriptFiles fileSystemScriptFiles = new FileSystemScriptFiles(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
+                FileSystemScriptFiles fileSystemScriptFiles = new FileSystemScriptFiles(_fileChecksum, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
                 scriptFilesComparer = new IncrementalScriptFilesComparer(fileSystemScriptFiles, dbExecutedFiles);
             }
             else if (typeof(TScriptFileType) == typeof(RepeatableScriptFileType))
             {
-                FileSystemScriptFiles fileSystemScriptFiles = new FileSystemScriptFiles(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
+                FileSystemScriptFiles fileSystemScriptFiles = new FileSystemScriptFiles(_fileChecksum, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
                 scriptFilesComparer = new RepeatableScriptFilesComparer(fileSystemScriptFiles, dbExecutedFiles);
             }
             else if (typeof(TScriptFileType) == typeof(DevDummyDataScriptFileType))
             {
-                FileSystemScriptFiles fileSystemScriptFiles = new FileSystemScriptFiles(_fileChecksumManager, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
+                FileSystemScriptFiles fileSystemScriptFiles = new FileSystemScriptFiles(_fileChecksum, ScriptFileTypeBase.Create<TScriptFileType>(), folderPath);
                 scriptFilesComparer = new DevDummyDataScriptFilesComparer(fileSystemScriptFiles, dbExecutedFiles);
             }
 

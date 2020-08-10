@@ -5,7 +5,7 @@ namespace AutoVersionsDB.DbCommands.Contract
     {
         DBType DBType { get; }
 
-        IDBConnectionManager CreateDBConnectionManager(string connectionString, int timeout);
+        IDBConnection CreateDBConnection(string connectionString, int timeout);
 
         IDBCommands CreateDBCommands(string connectionString, int timeout);
 

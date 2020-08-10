@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 {
     public class FileSystemScriptFiles
     {
-        private readonly FileChecksumManager _fileChecksumManager;
+        private readonly FileChecksum _fileChecksum;
         private readonly ScriptFileTypeBase _scriptFileType;
 
         public List<RuntimeScriptFileBase> ScriptFilesList { get; private set; }
@@ -19,16 +19,16 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public string FolderPath { get; private set; }
 
-        public FileSystemScriptFiles(FileChecksumManager fileChecksumManager,
+        public FileSystemScriptFiles(FileChecksum fileChecksum,
                                         ScriptFileTypeBase scriptFileType,
                                         string folderPath)
         {
-            fileChecksumManager.ThrowIfNull(nameof(fileChecksumManager));
+            fileChecksum.ThrowIfNull(nameof(fileChecksum));
             scriptFileType.ThrowIfNull(nameof(scriptFileType));
             folderPath.ThrowIfNull(nameof(folderPath));
 
 
-            _fileChecksumManager = fileChecksumManager;
+            _fileChecksum = fileChecksum;
             _scriptFileType = scriptFileType;
             FolderPath = folderPath;
 
@@ -55,7 +55,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
                 {
                     RuntimeScriptFileBase currScriptFile = _scriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
 
-                    string computedFileHash = _fileChecksumManager.GetHashByFilePath(fileFullPath);
+                    string computedFileHash = _fileChecksum.GetHashByFilePath(fileFullPath);
                     currScriptFile.ComputedHash = computedFileHash;
                     currScriptFile.ComputedHashDateTime = DateTime.Now;
 

@@ -15,34 +15,34 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
    
 
-        public IDBConnectionManager CreateDBConnectionManager(string connectionString, int timeout)
+        public IDBConnection CreateDBConnection(string connectionString, int timeout)
         {
-            SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(connectionString, timeout);
 
-            return sqlServerConnectionManager;
+            return sqlServerConnection;
         }
 
 
         public IDBCommands CreateDBCommands(string connectionString, int timeout)
         {
-            SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
-            SqlServerDBCommands sqlServerDBCommands = new SqlServerDBCommands(sqlServerConnectionManager);
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(connectionString, timeout);
+            SqlServerDBCommands sqlServerDBCommands = new SqlServerDBCommands(sqlServerConnection);
 
             return sqlServerDBCommands;
         }
 
         public IDBBackupRestoreCommands CreateBackupRestoreCommands(string connectionString, int timeout)
         {
-            SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
-            SqlServerDBBackupRestoreCommands sqlServerDBBackupRestoreCommands = new SqlServerDBBackupRestoreCommands(sqlServerConnectionManager);
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(connectionString, timeout);
+            SqlServerDBBackupRestoreCommands sqlServerDBBackupRestoreCommands = new SqlServerDBBackupRestoreCommands(sqlServerConnection);
 
             return sqlServerDBBackupRestoreCommands;
         }
 
         public IDBQueryStatus CreateDBQueryStatus(string connectionString, int timeout)
         {
-            SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
-            SqlServerDBQueryStatus sqlServerDBQueryStatus = new SqlServerDBQueryStatus(sqlServerConnectionManager);
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(connectionString, timeout);
+            SqlServerDBQueryStatus sqlServerDBQueryStatus = new SqlServerDBQueryStatus(sqlServerConnection);
 
             return sqlServerDBQueryStatus;
         }

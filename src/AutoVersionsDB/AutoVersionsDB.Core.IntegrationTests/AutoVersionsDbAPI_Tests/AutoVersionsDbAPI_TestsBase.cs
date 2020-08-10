@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        protected FileChecksumManager _fileChecksumManager;
+        protected FileChecksum _fileChecksum;
 
 
         public AutoVersionsDbAPI_TestsBase()
@@ -48,7 +48,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
             _devDummyDataScriptFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
 
-            _fileChecksumManager = new FileChecksumManager();
+            _fileChecksum = new FileChecksum();
 
             _dbCommandsFactoryProvider = new DBCommandsFactoryProvider();
         }
@@ -177,7 +177,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void restoreDB(ProjectConfigItem projectConfig, string filename)
         {
-            using (IDBConnectionManager dbConnectionManager = _dbCommandsFactoryProvider.CreateDBConnectionManager(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             {
 
                 using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
@@ -189,7 +189,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                     }
 
-                    dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbConnectionManager.DataBaseName, dbTestsBaseLocation);
+                    dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbConnection.DataBaseName, dbTestsBaseLocation);
                 }
             }
         }
@@ -458,7 +458,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 FileInfo fiScriptFile = incSctipFilesDictionary[filename];
 
-                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -479,7 +479,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 FileInfo fiScriptFile = rptSctipFilesDictionary[filename];
 
-                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -502,7 +502,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                     FileInfo fiScriptFile = dddSctipFilesDictionary[filename];
 
-                    string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
+                    string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
                     Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
                 }
@@ -609,7 +609,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
-                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -626,7 +626,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
-                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -643,7 +643,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
 
-                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
                 if (fiScriptFile.Name == "rptScript_DataForLookupTable1.sql")
                 {
@@ -676,7 +676,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
-                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
                 Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
             }
@@ -707,7 +707,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
 
-                string computedFileHash = _fileChecksumManager.GetHashByFilePath(fiScriptFile.FullName);
+                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
                 if (fiScriptFile.Name == "dddScript_DataForTransTable1.sql")
                 {

@@ -33,12 +33,12 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             }
             else
             {
-                using (IDBConnectionManager dbConnectionManager = _dbCommandsFactoryProvider.CreateDBConnectionManager(_dbTypeCode, _connStr, 0))
+                using (IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbTypeCode, _connStr, 0))
                 {
-                    if (dbConnectionManager != null)
+                    if (dbConnection != null)
                     {
                         string exMessage;
-                        if (!dbConnectionManager.CheckConnection(out exMessage))
+                        if (!dbConnection.CheckConnection(out exMessage))
                         {
                             string errorMsg = $"Could not connect to the Database with the Connection String: '{_connStr}'. Error Message: '{exMessage}'";
                             return errorMsg;

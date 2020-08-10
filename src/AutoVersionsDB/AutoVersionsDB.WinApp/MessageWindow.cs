@@ -9,18 +9,18 @@ namespace AutoVersionsDB.WinApp
     public partial class MessageWindow : Form
     {
 
-        public ProcessTrace NotifictionStatesHistoryManager { get; private set; }
+        public ProcessTrace ProcessTrace { get; private set; }
 
-        public MessageWindow(ProcessTrace notifictionStatesHistoryManager)
+        public MessageWindow(ProcessTrace processTrace)
         {
-            notifictionStatesHistoryManager.ThrowIfNull(nameof(notifictionStatesHistoryManager));
+            processTrace.ThrowIfNull(nameof(processTrace));
 
 
             InitializeComponent();
 
-            NotifictionStatesHistoryManager = notifictionStatesHistoryManager;
+            ProcessTrace = processTrace;
 
-            chkShowOnlyErrors.Checked = NotifictionStatesHistoryManager.HasError;
+            chkShowOnlyErrors.Checked = ProcessTrace.HasError;
             updateMessage();
         }
 
@@ -35,7 +35,7 @@ namespace AutoVersionsDB.WinApp
         {
             rtbMessages.Clear();
 
-            if (NotifictionStatesHistoryManager.HasError)
+            if (ProcessTrace.HasError)
             {
                 Text = "Errors";
                 lblMessageType.Text = "Errors";
@@ -52,12 +52,12 @@ namespace AutoVersionsDB.WinApp
 
             if (chkShowOnlyErrors.Checked)
             {
-                string errorMessage = NotifictionStatesHistoryManager.GetOnlyErrorsHistoryAsString();
+                string errorMessage = ProcessTrace.GetOnlyErrorsHistoryAsString();
                 rtbMessages.AppendText(errorMessage);
             }
             else
             {
-                string processMessage = NotifictionStatesHistoryManager.GetAllHistoryAsString();
+                string processMessage = ProcessTrace.GetAllHistoryAsString();
                 rtbMessages.AppendText(processMessage);
             }
         }

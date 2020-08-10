@@ -30,8 +30,6 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                //_autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
-
                 //lblProjectIcon.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
                 //lblDeleteProject.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
 
@@ -109,9 +107,6 @@ namespace AutoVersionsDB.WinApp
             {
                 _allProjectsList = AutoVersionsDbAPI.GetProjectsList();
 
-                //if (_autoVersionsDbAPI!= null
-                //    && _autoVersionsDbAPI.ConfigProjectsManager != null)
-                //{
                     List<ProjectConfigItem> filteredProjectList =
                         _allProjectsList
                         .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
@@ -130,7 +125,6 @@ namespace AutoVersionsDB.WinApp
                     }
 
                     SetProjectItemsSize();
-          //      }
 
 
             }

@@ -86,8 +86,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 FileInfo extractFileInfo = extractFolderFileInfosDictionary[devFolderFileInfo.Name];
 
-                string devFolderFileHash = _fileChecksumManager.GetHashByFilePath(devFolderFileInfo.FullName);
-                string extractFolderFileHash = _fileChecksumManager.GetHashByFilePath(extractFileInfo.FullName);
+                string devFolderFileHash = _fileChecksum.GetHashByFilePath(devFolderFileInfo.FullName);
+                string extractFolderFileHash = _fileChecksum.GetHashByFilePath(extractFileInfo.FullName);
 
                 Assert.That(devFolderFileHash, Is.EqualTo(devFolderFileHash));
             }
