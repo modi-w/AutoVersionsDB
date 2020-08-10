@@ -8,9 +8,9 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class NotificationExecutersProvider
     {
-        public NotificationStateItem RootNotificationStateItem { get; private set; }
+        internal NotificationStateItem RootNotificationStateItem { get; private set; }
 
-        public NotifictionStateChangeHandler NotifictionStateChangeHandler { get; private set; }
+        internal NotifictionStateChangeHandler NotifictionStateChangeHandler { get; private set; }
         public ProcessTrace NotifictionStatesHistory
         {
             get
@@ -21,13 +21,13 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        public NotificationExecutersProvider(NotifictionStateChangeHandler notifictionStateChangeHandler)
+        internal NotificationExecutersProvider(NotifictionStateChangeHandler notifictionStateChangeHandler)
         {
             NotifictionStateChangeHandler = notifictionStateChangeHandler;
         }
 
 
-        public NotificationWrapperExecuter Reset(int numOfSteps)
+        internal NotificationWrapperExecuter Reset(int numOfSteps)
         {
             var rootNotificationWrapperExecuter = CreateNotificationWrapperExecuter(numOfSteps);
             RootNotificationStateItem = rootNotificationWrapperExecuter.CurrentNotificationStateItem;
@@ -54,7 +54,7 @@ namespace AutoVersionsDB.NotificationableEngine
             return newNotificationWrapperExecuter;
         }
 
-        public void ClearAllInternalProcessState()
+        internal void ClearAllInternalProcessState()
         {
             RootNotificationStateItem.InternalNotificationStateItem = null;
         }

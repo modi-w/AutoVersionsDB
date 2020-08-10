@@ -9,7 +9,15 @@ namespace AutoVersionsDB.NotificationableEngine
     public class ProcessTrace
     {
 
-        public List<NotificationStateItem> StatesHistory { get; }
+        private List<NotificationStateItem> _statesHistory;
+
+        public List<NotificationStateItem> StatesHistory
+        {
+            get
+            {
+                return _statesHistory.ToList();
+            }
+        }
 
 
         public bool HasError
@@ -18,9 +26,9 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 bool outVal;
 
-                lock (StatesHistory)
+                lock (_statesHistory)
                 {
-                    outVal = StatesHistory.Any(e => e.HasError);
+                    outVal = _statesHistory.Any(e => e.HasError);
                 }
 
                 return outVal;
@@ -34,9 +42,9 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 string outStr = "";
 
-                lock (StatesHistory)
+                lock (_statesHistory)
                 {
-                    var lastStateWithErrorCode = StatesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelErrorCode));
+                    var lastStateWithErrorCode = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelErrorCode));
                     if (lastStateWithErrorCode != null)
                     {
                         outStr = lastStateWithErrorCode.LowLevelErrorCode;
@@ -54,9 +62,9 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 string outStr = "";
 
-                lock (StatesHistory)
+                lock (_statesHistory)
                 {
-                    var lastStateWithInstructionsMessage = StatesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
+                    var lastStateWithInstructionsMessage = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
                     if (lastStateWithInstructionsMessage != null)
                     {
                         outStr = lastStateWithInstructionsMessage.LowLevelInstructionsMessage;
@@ -73,9 +81,9 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 string outStr = "";
 
-                lock (StatesHistory)
+                lock (_statesHistory)
                 {
-                    NotificationStateItem lastStateWithInstructionsMessage = StatesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
+                    NotificationStateItem lastStateWithInstructionsMessage = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
 
                     outStr = lastStateWithInstructionsMessage.LowLevelStepName;
                 }
@@ -85,17 +93,18 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        internal ProcessTrace() {
+        internal ProcessTrace()
+        {
 
-            StatesHistory = new List<NotificationStateItem>();
+            _statesHistory = new List<NotificationStateItem>();
         }
 
 
         internal void Appand(NotificationStateItem notificationStateItem)
         {
-            lock (StatesHistory)
+            lock (_statesHistory)
             {
-                StatesHistory.Add(notificationStateItem);
+                _statesHistory.Add(notificationStateItem);
             }
         }
 
@@ -104,9 +113,9 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             StringBuilder sbStrResults = new StringBuilder();
 
-            lock (StatesHistory)
+            lock (_statesHistory)
             {
-                foreach (var notificationState in StatesHistory.ToList())
+                foreach (var notificationState in _statesHistory.ToList())
                 {
                     sbStrResults.AppendLine(notificationState.ToString(true, true));
                 }
@@ -120,9 +129,9 @@ namespace AutoVersionsDB.NotificationableEngine
             StringBuilder sbStrResults = new StringBuilder();
 
 
-            lock (StatesHistory)
+            lock (_statesHistory)
             {
-                foreach (var notificationState in StatesHistory.Where(e => e.HasError).ToList())
+                foreach (var notificationState in _statesHistory.Where(e => e.HasError).ToList())
                 {
                     sbStrResults.AppendLine(notificationState.ToString(true, true));
                 }
