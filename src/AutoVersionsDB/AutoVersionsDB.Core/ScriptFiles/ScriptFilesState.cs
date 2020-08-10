@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Core.ArtifactFile;
+using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.ScriptFiles.Repeatable;
@@ -13,19 +14,23 @@ namespace AutoVersionsDB.Core.ScriptFiles
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
         private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
-
+        private readonly ArtifactExtractorFactory _artifactExtractorFactory;
+     
         public ScriptFilesComparerBase IncrementalScriptFilesComparer { get; private set; }
         public ScriptFilesComparerBase RepeatableScriptFilesComparer { get; private set; }
         public ScriptFilesComparerBase DevDummyDataScriptFilesComparer { get; private set; }
 
         public ScriptFilesState(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                            ScriptFilesComparerFactory scriptFilesComparerFactory)
+                                ScriptFilesComparerFactory scriptFilesComparerFactory,
+                                ArtifactExtractorFactory artifactExtractorFactory)
         {
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
             scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
+            artifactExtractorFactory.ThrowIfNull(nameof(artifactExtractorFactory));
 
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
+            _artifactExtractorFactory = artifactExtractorFactory;
 
         }
 
@@ -33,59 +38,30 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public void Reload(ProjectConfigItem projectConfig)
         {
-            using(IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(projectConfig))
             {
-                IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(dbCommands, projectConfig.IncrementalScriptsFolderPath);
-                RepeatableScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<RepeatableScriptFileType>(dbCommands, projectConfig.RepeatableScriptsFolderPath);
 
-                if (projectConfig.IsDevEnvironment)
+                using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
                 {
-                    DevDummyDataScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<DevDummyDataScriptFileType>(dbCommands, projectConfig.DevDummyDataScriptsFolderPath);
-                }
-                else
-                {
-                    DevDummyDataScriptFilesComparer = null;
+                    IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(dbCommands, projectConfig.IncrementalScriptsFolderPath);
+                    RepeatableScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<RepeatableScriptFileType>(dbCommands, projectConfig.RepeatableScriptsFolderPath);
+
+                    if (projectConfig.IsDevEnvironment)
+                    {
+                        DevDummyDataScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<DevDummyDataScriptFileType>(dbCommands, projectConfig.DevDummyDataScriptsFolderPath);
+                    }
+                    else
+                    {
+                        DevDummyDataScriptFilesComparer = null;
+                    }
                 }
             }
-
+        
         }
 
 
 
-        //#region IDisposable
 
-        //private bool _disposed = false;
-
-        //~ScriptFilesComparersProvider() => Dispose(false);
-
-        //// Public implementation of Dispose pattern callable by consumers.
-        //public void Dispose()
-        //{
-        //    Dispose(true);
-        //    GC.SuppressFinalize(this);
-        //}
-
-        //// Protected implementation of Dispose pattern.
-        //protected virtual void Dispose(bool disposing)
-        //{
-        //    if (_disposed)
-        //    {
-        //        return;
-        //    }
-
-        //    if (disposing)
-        //    {
-        //        if (_dbCommands != null)
-        //        {
-        //            _dbCommands.Dispose();
-        //        }
-
-        //    }
-
-        //    _disposed = true;
-        //}
-
-        //#endregion
 
     }
 }

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.Core.ArtifactFile
 {
-    public static class ArtifactExtractorFactory
+    public class ArtifactExtractorFactory
     {
-        public static ArtifactExtractor Create(ProjectConfigItem projectConfigItem)
+        public ArtifactExtractor Create(ProjectConfigItem projectConfigItem)
         {
             ArtifactExtractor newArtifactExtractor = new ArtifactExtractor(projectConfigItem);
 

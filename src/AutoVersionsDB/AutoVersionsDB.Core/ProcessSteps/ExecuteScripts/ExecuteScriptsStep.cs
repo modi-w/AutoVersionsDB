@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Core.ArtifactFile;
+using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
@@ -14,22 +15,26 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
     public class ExecuteScriptsStep : AutoVersionsDbStep
     {
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly ExecuteSingleFileScriptStepFactory _executeSingleFileScriptStepFactory;
+        private readonly ArtifactExtractorFactory _artifactExtractorFactory;
+
         public override string StepName => $"Run Scripts";
         public override bool HasInternalStep => true;
 
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-
-        private ExecuteSingleFileScriptStepFactory _executeSingleFileScriptStepFactory;
 
 
         public ExecuteScriptsStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                    ExecuteSingleFileScriptStepFactory executeSingleFileScriptStepFactory)
+                                    ExecuteSingleFileScriptStepFactory executeSingleFileScriptStepFactory,
+                                    ArtifactExtractorFactory artifactExtractorFactory)
         {
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
             executeSingleFileScriptStepFactory.ThrowIfNull(nameof(executeSingleFileScriptStepFactory));
+            artifactExtractorFactory.ThrowIfNull(nameof(artifactExtractorFactory));
 
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
             _executeSingleFileScriptStepFactory = executeSingleFileScriptStepFactory;
+            _artifactExtractorFactory = artifactExtractorFactory;
         }
 
 
@@ -61,23 +66,27 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                 targetStateScriptFileName = (processState.ExecutionParams as AutoVersionsDBExecutionParams).TargetStateScriptFileName;
             }
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(projectConfig))
             {
-                List<RuntimeScriptFileBase> incScriptFilesToExecute = processState.ScriptFilesState.IncrementalScriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
-                runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, incScriptFilesToExecute, "Incremental");
 
-                string lastIncStriptFilename = getLastIncFilename(processState);
-
-                if (string.IsNullOrWhiteSpace(targetStateScriptFileName)
-                    || lastIncStriptFilename.Trim().ToUpperInvariant() == targetStateScriptFileName.Trim().ToUpperInvariant())
+                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
                 {
-                    List<RuntimeScriptFileBase> rptScriptFilesToExecute = processState.ScriptFilesState.RepeatableScriptFilesComparer.GetPendingFilesToExecute(null);
-                    runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, rptScriptFilesToExecute, "Repeatable");
+                    List<RuntimeScriptFileBase> incScriptFilesToExecute = processState.ScriptFilesState.IncrementalScriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
+                    runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, incScriptFilesToExecute, "Incremental");
 
-                    if (processState.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
+                    string lastIncStriptFilename = getLastIncFilename(processState);
+
+                    if (string.IsNullOrWhiteSpace(targetStateScriptFileName)
+                        || lastIncStriptFilename.Trim().ToUpperInvariant() == targetStateScriptFileName.Trim().ToUpperInvariant())
                     {
-                        List<RuntimeScriptFileBase> dddScriptFilesToExecute = processState.ScriptFilesState.DevDummyDataScriptFilesComparer.GetPendingFilesToExecute(null);
-                        runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, dddScriptFilesToExecute, "DevDummyData");
+                        List<RuntimeScriptFileBase> rptScriptFilesToExecute = processState.ScriptFilesState.RepeatableScriptFilesComparer.GetPendingFilesToExecute(null);
+                        runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, rptScriptFilesToExecute, "Repeatable");
+
+                        if (processState.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
+                        {
+                            List<RuntimeScriptFileBase> dddScriptFilesToExecute = processState.ScriptFilesState.DevDummyDataScriptFilesComparer.GetPendingFilesToExecute(null);
+                            runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, dddScriptFilesToExecute, "DevDummyData");
+                        }
                     }
                 }
             }

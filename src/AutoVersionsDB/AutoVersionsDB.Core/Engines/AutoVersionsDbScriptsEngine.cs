@@ -11,7 +11,7 @@ namespace AutoVersionsDB.Core.Engines
 {
     public abstract class AutoVersionsDbScriptsEngine : AutoVersionsDbEngine
     {
-        private ArtifactExtractor _artifactExtractor;
+       // private ArtifactExtractor _artifactExtractor;
 
 
         public AutoVersionsDbScriptsEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
@@ -24,9 +24,9 @@ namespace AutoVersionsDB.Core.Engines
         {
             e.ThrowIfNull(nameof(e));
 
-            ProjectConfigItem projectConfig = e.EngineConfig as ProjectConfigItem;
+            //ProjectConfigItem projectConfig = e.EngineConfig as ProjectConfigItem;
 
-            _artifactExtractor = new ArtifactExtractor(projectConfig);
+        //    _artifactExtractor = new ArtifactExtractor(projectConfig);
 
             base.OnInitiated(e);
         }
@@ -43,10 +43,10 @@ namespace AutoVersionsDB.Core.Engines
 
             if (disposing)
             {
-                if (_artifactExtractor != null)
-                {
-                    _artifactExtractor.Dispose();
-                }
+                //if (_artifactExtractor != null)
+                //{
+                //    _artifactExtractor.Dispose();
+                //}
             }
 
             _disposed = true;

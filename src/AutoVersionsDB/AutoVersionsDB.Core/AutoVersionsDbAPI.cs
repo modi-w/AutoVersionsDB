@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core
 {
-    public static class AutoVersionsDbAPI 
+    public static class AutoVersionsDbAPI
     {
 
         private static readonly object _processSyncLock = new object();
@@ -66,7 +66,7 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                processTrace = ValidateArtifactFile(projectConfigItem,onNotificationStateChanged);
+                processTrace = ValidateArtifactFile(projectConfigItem, onNotificationStateChanged);
 
                 if (!processTrace.HasError)
                 {
@@ -285,13 +285,10 @@ namespace AutoVersionsDB.Core
         {
             ScriptFilesState scriptFilesState;
 
-            using (ArtifactExtractor _currentArtifactExtractor = ArtifactExtractorFactory.Create(projectConfigItem))
-            {
-                ScriptFilesStateFactory scriptFilesStateFactory = NinjectUtils.KernelInstance.Get<ScriptFilesStateFactory>();
+            ScriptFilesStateFactory scriptFilesStateFactory = NinjectUtils.KernelInstance.Get<ScriptFilesStateFactory>();
 
-                scriptFilesState = scriptFilesStateFactory.Create();
-                scriptFilesState.Reload(projectConfigItem);
-            }
+            scriptFilesState = scriptFilesStateFactory.Create();
+            scriptFilesState.Reload(projectConfigItem);
 
             return scriptFilesState;
         }
