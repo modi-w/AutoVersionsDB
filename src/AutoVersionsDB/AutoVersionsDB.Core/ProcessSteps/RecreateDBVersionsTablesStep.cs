@@ -12,10 +12,11 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
     public class RecreateDBVersionsTablesStep : AutoVersionsDbStep
     {
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+
         public override string StepName => "Recreate System Tables";
         public override bool HasInternalStep => false;
 
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
@@ -33,6 +34,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
+            processState.ThrowIfNull(nameof(processState));
+
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {
                 dbCommands.RecreateDBVersionsTables();

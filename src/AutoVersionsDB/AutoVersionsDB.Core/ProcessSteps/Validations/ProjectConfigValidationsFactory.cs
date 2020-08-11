@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class ProjectConfigValidationsFactory : ValidationsFactory
     {
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public ProjectConfigValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {

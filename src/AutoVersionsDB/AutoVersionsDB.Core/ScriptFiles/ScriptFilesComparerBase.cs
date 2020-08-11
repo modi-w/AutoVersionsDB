@@ -20,9 +20,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
         public string LastFileOfLastExecutedFilename => DbExecutedFiles.LastFileOfLastExecutedFilename;
 
         public List<RuntimeScriptFileBase> AllFileSystemScriptFiles => FileSystemScriptFiles.ScriptFilesList;
-        public List<RuntimeScriptFileBase> ExecutedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == eHashDiffType.Equal).ToList();
-        public List<RuntimeScriptFileBase> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == eHashDiffType.Different).ToList();
-        public List<RuntimeScriptFileBase> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == eHashDiffType.NotExist).ToList();
+        public List<RuntimeScriptFileBase> ExecutedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Equal).ToList();
+        public List<RuntimeScriptFileBase> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Different).ToList();
+        public List<RuntimeScriptFileBase> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.NotExist).ToList();
 
         public List<RuntimeScriptFileBase> NotExistInFileSystemButExistInDB { get; private set; }
 
@@ -54,15 +54,15 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
                 if (lastExecutedCurrnetFileRow == null)
                 {
-                    scriptFileItem.HashDiffType = eHashDiffType.NotExist;
+                    scriptFileItem.HashDiffType = HashDiffType.NotExist;
                 }
                 else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"], CultureInfo.InvariantCulture) != scriptFileItem.ComputedHash)
                 {
-                    scriptFileItem.HashDiffType = eHashDiffType.Different;
+                    scriptFileItem.HashDiffType = HashDiffType.Different;
                 }
                 else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"], CultureInfo.InvariantCulture) == scriptFileItem.ComputedHash)
                 {
-                    scriptFileItem.HashDiffType = eHashDiffType.Equal;
+                    scriptFileItem.HashDiffType = HashDiffType.Equal;
                 }
             }
         }

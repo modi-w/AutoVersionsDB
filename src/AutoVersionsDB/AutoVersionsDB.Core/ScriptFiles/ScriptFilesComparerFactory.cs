@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
     public class ScriptFilesComparerFactory
     {
-        private FileChecksum _fileChecksum;
+        private readonly FileChecksum _fileChecksum;
 
         public ScriptFilesComparerFactory(FileChecksum fileChecksum)
         {

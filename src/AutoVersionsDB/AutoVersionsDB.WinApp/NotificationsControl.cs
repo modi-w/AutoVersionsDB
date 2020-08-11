@@ -9,7 +9,7 @@ namespace AutoVersionsDB.WinApp
 {
     public partial class NotificationsControl : UserControl
     {
-        public ProcessTrace _processState;
+        private ProcessTrace _processState;
 
         public NotificationsControl()
         {
@@ -198,7 +198,7 @@ namespace AutoVersionsDB.WinApp
             ShowMessageWindow(_processState);
         }
 
-        private void ShowMessageWindow(ProcessTrace processResults)
+        private static void ShowMessageWindow(ProcessTrace processResults)
         {
             using (MessageWindow messageWindow = new MessageWindow(processResults))
             {

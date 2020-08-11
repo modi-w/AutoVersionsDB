@@ -26,7 +26,7 @@ namespace AutoVersionsDB.NotificationableEngine
     public abstract class NotificationEngine<TProcessState> : INotificationEngine
         where TProcessState : ProcessStateBase, new()
     {
-        private NotificationExecutersProviderFactory _notificationExecutersProviderFactory;
+        private readonly NotificationExecutersProviderFactory _notificationExecutersProviderFactory;
 
         public abstract string EngineTypeName { get; }
         public Dictionary<string, string> EngineMetaData { get; }

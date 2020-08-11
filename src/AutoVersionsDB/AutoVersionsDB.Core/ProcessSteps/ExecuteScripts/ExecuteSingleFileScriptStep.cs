@@ -14,15 +14,15 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
     public class ExecuteSingleFileScriptStep : AutoVersionsDbStep
     {
-        private string _stepName;
+        private readonly RuntimeScriptFileBase _scriptFile;
+        private readonly IDBCommands _dbCommands;
+        private readonly ExecuteScriptBlockStepFactory _executeScriptBlockStepFactory;
+
+
+        private readonly string _stepName;
         public override string StepName => _stepName;
         public override bool HasInternalStep => true;
 
-        private RuntimeScriptFileBase _scriptFile;
-
-
-        private IDBCommands _dbCommands;
-        private ExecuteScriptBlockStepFactory _executeScriptBlockStepFactory;
 
         public ExecuteSingleFileScriptStep( ExecuteScriptBlockStepFactory executeScriptBlockStepFactory, IDBCommands dbCommands, string stepName, RuntimeScriptFileBase scriptFile)
         {
@@ -51,6 +51,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
             processState.ThrowIfNull(nameof(processState));
 
             bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);

@@ -7,11 +7,12 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
 {
     public class TargetStateScriptFileExistValidator : ValidatorBase
     {
+        private readonly ScriptFilesState _scriptFilesState;
+
         public override string ValidatorName => "TargetStateScriptFileExist";
 
         public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
 
-        private ScriptFilesState _scriptFilesState;
 
         public TargetStateScriptFileExistValidator(ScriptFilesState scriptFilesState)
         {

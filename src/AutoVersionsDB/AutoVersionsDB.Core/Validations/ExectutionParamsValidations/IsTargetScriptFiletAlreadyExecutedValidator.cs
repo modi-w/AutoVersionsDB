@@ -7,11 +7,12 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
 {
     public class IsTargetScriptFiletAlreadyExecutedValidator : ValidatorBase
     {
+        private readonly ScriptFilesState _scriptFilesState;
+
         public override string ValidatorName => "IsTargetScriptFiletAlreadyExecuted";
 
         public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
 
-        private ScriptFilesState _scriptFilesState;
 
         public IsTargetScriptFiletAlreadyExecutedValidator(ScriptFilesState scriptFilesState)
         {

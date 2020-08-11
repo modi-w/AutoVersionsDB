@@ -38,6 +38,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {
                 string dbName = dbCommands.GetDataBaseName();

@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.Utils
     public class FileChecksum : IDisposable
     {
 
-        private SHA512 _hashEncryptor;
+        private readonly SHA512 _hashEncryptor;
 
         public FileChecksum()
         {

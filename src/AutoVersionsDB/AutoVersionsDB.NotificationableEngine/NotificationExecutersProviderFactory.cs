@@ -11,7 +11,9 @@ namespace AutoVersionsDB.NotificationableEngine
 
         }
 
+#pragma warning disable CA1822 // Mark members as static
         public NotificationExecutersProvider Create(Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+#pragma warning restore CA1822 // Mark members as static
         {
             NotifictionStateChangeHandler notifictionStateChangeHandler = new NotifictionStateChangeHandler(onNotificationStateChanged);
 

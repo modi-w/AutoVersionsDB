@@ -36,6 +36,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
             processState.ThrowIfNull(nameof(processState));
 
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))

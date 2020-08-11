@@ -5,12 +5,13 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
     public class DBTypeValidator : ValidatorBase
     {
+        private readonly string _dbTypeCode;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+
         public override string ValidatorName => "DBTypeCode";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
-        private string _dbTypeCode;
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public DBTypeValidator(string dbTypeCode,
                                 DBCommandsFactoryProvider dbCommandsFactoryProvider)

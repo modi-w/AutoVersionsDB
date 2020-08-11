@@ -23,8 +23,8 @@ namespace AutoVersionsDB.Core.Utils
                 //Get the assembly information
                 Assembly assemblyInfo = Assembly.GetExecutingAssembly();
 
-                //Location is where the assembly is run from
-                string assemblyLocation = assemblyInfo.Location;
+                ////Location is where the assembly is run from
+                //string assemblyLocation = assemblyInfo.Location;
 
                 //CodeBase is the location of the ClickOnce deployment files
                 var uriCodeBase = new Uri(assemblyInfo.CodeBase);

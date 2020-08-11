@@ -6,11 +6,12 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
     public class DeliveryArtifactFolderPathValidator : ValidatorBase
     {
+        private readonly ProjectConfigItem _projectConfigItem;
+
         public override string ValidatorName => "DeliveryArtifactFolderPath";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
-        private ProjectConfigItem _projectConfigItem;
 
         public DeliveryArtifactFolderPathValidator(ProjectConfigItem projectConfig)
         {

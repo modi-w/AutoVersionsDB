@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class SingleValidationStep : AutoVersionsDbStep
     {
-        private ValidatorBase _validator;
+        private readonly ValidatorBase _validator;
 
 
         public override string StepName => _validator.ValidatorName;

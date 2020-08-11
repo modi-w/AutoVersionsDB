@@ -9,7 +9,7 @@ namespace AutoVersionsDB.NotificationableEngine
     public class ProcessTrace
     {
 
-        private List<NotificationStateItem> _statesHistory;
+        private readonly List<NotificationStateItem> _statesHistory;
 
         public List<NotificationStateItem> StatesHistory
         {

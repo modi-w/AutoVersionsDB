@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
     public class ExecuteSingleFileScriptStepFactory
     {
-        private ExecuteScriptBlockStepFactory _executeScriptBlockStepFactory;
+        private readonly ExecuteScriptBlockStepFactory _executeScriptBlockStepFactory;
         public ExecuteSingleFileScriptStepFactory(ExecuteScriptBlockStepFactory executeScriptBlockStepFactory)
         {
             _executeScriptBlockStepFactory = executeScriptBlockStepFactory;

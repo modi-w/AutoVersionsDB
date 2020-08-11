@@ -1,19 +1,17 @@
-﻿using System;
+﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.ProcessSteps;
+using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.ScriptFiles.Incremental;
+using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.WinApp.Utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ScriptFiles;
-using AutoVersionsDB.Core.ScriptFiles.Incremental;
-using System.ComponentModel;
-using AutoVersionsDB.WinApp.Utils;
-using AutoVersionsDB.Core.ProcessSteps;
-using System.Globalization;
-using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -153,7 +151,7 @@ namespace AutoVersionsDB.WinApp
                 {
                     ProcessTrace processResults = AutoVersionsDbAPI.ValidateAll(_projectConfigItem, notificationsControl1.OnNotificationStateChanged);
 
-                    refreshScriptFilesState();
+                    RefreshScriptFilesState();
 
                     if (processResults.HasError)
                     {
@@ -333,7 +331,7 @@ namespace AutoVersionsDB.WinApp
 
                     ProcessTrace processResults = AutoVersionsDbAPI.SyncDB(_projectConfigItem, notificationsControl1.OnNotificationStateChanged);
 
-                    refreshScriptFilesState();
+                    RefreshScriptFilesState();
 
                     notificationsControl1.AfterComplete();
                     SetViewState_AfterProcessComplete(processResults);
@@ -348,10 +346,7 @@ namespace AutoVersionsDB.WinApp
             });
         }
 
-        private void refreshScriptFilesState()
-        {
-            _scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(_projectConfigItem);
-        }
+        private void RefreshScriptFilesState() => _scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(_projectConfigItem);
 
         private bool CheckIsTargetStateHistory()
         {
@@ -384,7 +379,7 @@ namespace AutoVersionsDB.WinApp
                         notificationsControl1.BeforeStart();
 
                         ProcessTrace processResults = AutoVersionsDbAPI.SetDBToSpecificState(_projectConfigItem, TargetStateScriptFileName, true, notificationsControl1.OnNotificationStateChanged);
-                        refreshScriptFilesState();
+                        RefreshScriptFilesState();
 
                         notificationsControl1.AfterComplete();
                         SetViewState_AfterProcessComplete(processResults);
@@ -409,7 +404,7 @@ namespace AutoVersionsDB.WinApp
                 notificationsControl1.BeforeStart();
 
                 ProcessTrace processResults = AutoVersionsDbAPI.Deploy(_projectConfigItem, notificationsControl1.OnNotificationStateChanged);
-                refreshScriptFilesState();
+                RefreshScriptFilesState();
 
                 notificationsControl1.AfterComplete();
                 SetViewState_AfterProcessComplete(processResults);
@@ -446,7 +441,7 @@ namespace AutoVersionsDB.WinApp
                         notificationsControl1.BeforeStart();
 
                         ProcessTrace processResults = AutoVersionsDbAPI.RecreateDBFromScratch(_projectConfigItem, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
-                        refreshScriptFilesState();
+                        RefreshScriptFilesState();
 
                         notificationsControl1.AfterComplete();
                         SetViewState_AfterProcessComplete(processResults);
@@ -472,7 +467,7 @@ namespace AutoVersionsDB.WinApp
                     notificationsControl1.BeforeStart();
 
                     ProcessTrace processResults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(_projectConfigItem, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
-                    refreshScriptFilesState();
+                    RefreshScriptFilesState();
 
                     notificationsControl1.AfterComplete();
                     SetViewState_AfterProcessComplete(processResults);
@@ -723,9 +718,9 @@ namespace AutoVersionsDB.WinApp
 
                     currGridRow.Cells[1].Style.BackColor = currRowFileInfo.HashDiffType switch
                     {
-                        eHashDiffType.NotExist => Color.White,
-                        eHashDiffType.Different => Color.LightSalmon,
-                        eHashDiffType.Equal => Color.LightGreen,
+                        HashDiffType.NotExist => Color.White,
+                        HashDiffType.Different => Color.LightSalmon,
+                        HashDiffType.Equal => Color.LightGreen,
                         _ => Color.White,
                     };
                 }

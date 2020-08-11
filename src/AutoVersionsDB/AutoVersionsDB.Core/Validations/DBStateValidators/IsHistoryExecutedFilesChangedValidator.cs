@@ -7,12 +7,13 @@ namespace AutoVersionsDB.Core.Validations.DBStateValidators
 {
     public class IsHistoryExecutedFilesChangedValidator : ValidatorBase
     {
+        private readonly ScriptFilesState _scriptFilesState;
+
         public override string ValidatorName => "IsHistoryExecutedFilesChanged";
 
         public override string ErrorInstructionsMessage => "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";
 
 
-        private ScriptFilesState _scriptFilesState;
 
         public IsHistoryExecutedFilesChangedValidator(ScriptFilesState scriptFilesState)
         {

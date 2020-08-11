@@ -9,6 +9,7 @@ using System;
 using Ninject;
 using System.Collections.Generic;
 using System.Linq;
+using AutoVersionsDB.Core.Utils;
 
 namespace AutoVersionsDB.Core
 {
@@ -319,9 +320,11 @@ namespace AutoVersionsDB.Core
             return scriptFileItem.FileFullPath;
         }
 
-        public static string CreateNewDevDummyDataScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
+        public static string CreateNewDevDummyDataScriptFile(ProjectConfigItem projectConfig, string scriptName)
         {
-            if (!projectConfigItem.IsDevEnvironment)
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            if (!projectConfig.IsDevEnvironment)
             {
                 throw new Exception("DevdummyData Scripts not allow in Delivery environment");
             }
@@ -330,7 +333,7 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
+                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfig);
                 scriptFileItem = scriptFilesState.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
             }
 

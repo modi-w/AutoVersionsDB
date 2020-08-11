@@ -74,7 +74,7 @@
             this.chkShowOnlyErrors.TabIndex = 66;
             this.chkShowOnlyErrors.Text = "Show Only Errors";
             this.chkShowOnlyErrors.UseVisualStyleBackColor = true;
-            this.chkShowOnlyErrors.CheckedChanged += new System.EventHandler(this.chkShowOnlyErrors_CheckedChanged);
+            this.chkShowOnlyErrors.CheckedChanged += new System.EventHandler(this.ChkShowOnlyErrors_CheckedChanged);
             // 
             // imgMsgType
             // 

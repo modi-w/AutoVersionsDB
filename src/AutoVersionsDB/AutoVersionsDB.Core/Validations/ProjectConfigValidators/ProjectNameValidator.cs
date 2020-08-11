@@ -4,11 +4,12 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
     public class ProjectNameValidator : ValidatorBase
     {
+        private readonly string _projectName;
+
         public override string ValidatorName => "ProjectName";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
-        private string _projectName;
 
         public ProjectNameValidator(string projectName)
         {

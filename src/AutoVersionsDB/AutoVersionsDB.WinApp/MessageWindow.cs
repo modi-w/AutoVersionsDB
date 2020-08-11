@@ -21,17 +21,17 @@ namespace AutoVersionsDB.WinApp
             ProcessTrace = processTrace;
 
             chkShowOnlyErrors.Checked = ProcessTrace.HasError;
-            updateMessage();
+            UpdateMessage();
         }
 
 
-        private void chkShowOnlyErrors_CheckedChanged(object sender, EventArgs e)
+        private void ChkShowOnlyErrors_CheckedChanged(object sender, EventArgs e)
         {
-            updateMessage();
+            UpdateMessage();
         }
 
 
-        private void updateMessage()
+        private void UpdateMessage()
         {
             rtbMessages.Clear();
 

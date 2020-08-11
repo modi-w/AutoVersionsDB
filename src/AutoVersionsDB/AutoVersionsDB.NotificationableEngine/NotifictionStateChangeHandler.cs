@@ -9,7 +9,7 @@ namespace AutoVersionsDB.NotificationableEngine
     {
 
 
-        private Action<ProcessTrace, NotificationStateItem> _onNotificationStateChanged;
+        private readonly Action<ProcessTrace, NotificationStateItem> _onNotificationStateChanged;
 
 
         public ProcessTrace NotifictionStatesHistory { get; private set; }
@@ -27,7 +27,7 @@ namespace AutoVersionsDB.NotificationableEngine
             RootNotificationStateItem = rootNotificationStateItem;
             NotifictionStatesHistory = new ProcessTrace();
             
-            riseNotificationStateChanged();
+            RiseNotificationStateChanged();
         }
 
 
@@ -48,7 +48,7 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 notificationStateItem.LastNotifyPrecents = notificationStateItem.Precents;
 
-                riseNotificationStateChanged();
+                RiseNotificationStateChanged();
             }
         }
 
@@ -62,7 +62,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 {
                     notificationStateItem.LastNotifyPrecents = notificationStateItem.Precents;
 
-                    riseNotificationStateChanged();
+                    RiseNotificationStateChanged();
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 notificationStateItem.LastNotifyPrecents = notificationStateItem.Precents;
 
-                riseNotificationStateChanged();
+                RiseNotificationStateChanged();
             }
         }
 
@@ -86,12 +86,12 @@ namespace AutoVersionsDB.NotificationableEngine
             notificationStateItem.ErrorMesage = errorMessage;
             notificationStateItem.InstructionsMessage = instructionsMessage;
 
-            riseNotificationStateChanged();
+            RiseNotificationStateChanged();
         }
 
 
 
-        private void riseNotificationStateChanged()
+        private void RiseNotificationStateChanged()
         {
             NotificationStateItem snapshotNotificationState = RootNotificationStateItem.Clone();
             snapshotNotificationState.SnapshotTimeStemp = DateTime.Now;

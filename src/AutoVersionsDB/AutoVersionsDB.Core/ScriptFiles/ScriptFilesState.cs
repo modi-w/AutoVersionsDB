@@ -38,9 +38,10 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public void Reload(ProjectConfigItem projectConfig)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
             using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(projectConfig))
             {
-
                 using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
                 {
                     IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(dbCommands, projectConfig.IncrementalScriptsFolderPath);

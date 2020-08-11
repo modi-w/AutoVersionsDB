@@ -28,7 +28,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
                  {
                      try
                      {
-                         run(onProgress);
+                         Run(onProgress);
                      }
                      catch (ThreadAbortException threadAbortEx)
                      {
@@ -50,7 +50,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
 
 
 
-        private void run(Action<double> onProgress)
+        private void Run(Action<double> onProgress)
         {
             Thread.Sleep(IntervalInMs);
 

@@ -27,11 +27,11 @@ namespace AutoVersionsDB.WinApp
             NinjectKernelContainer = new StandardKernel();
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            registerServices(NinjectKernelContainer);
+            RegisterServices(NinjectKernelContainer);
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
         }
 
-        private static void registerServices(IKernel kernel)
+        private static void RegisterServices(IKernel kernel)
         {
             kernel.ThrowIfNull(nameof(kernel));
 
@@ -43,10 +43,10 @@ namespace AutoVersionsDB.WinApp
             NinjectKernelContainer = new StandardKernel();
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            registerServicesForTests(NinjectKernelContainer);
+            RegisterServicesForTests(NinjectKernelContainer);
         }
 
-        private static void registerServicesForTests(IKernel kernel)
+        private static void RegisterServicesForTests(IKernel kernel)
         {
             kernel.ThrowIfNull(nameof(kernel));
 

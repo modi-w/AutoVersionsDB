@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class ValidationsGroup
     {
-        private List<ValidatorBase> _validators;
+        private readonly List<ValidatorBase> _validators;
 
         public int Count
         {

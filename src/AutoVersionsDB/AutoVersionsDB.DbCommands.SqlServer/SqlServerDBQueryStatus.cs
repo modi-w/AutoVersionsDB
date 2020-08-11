@@ -65,16 +65,16 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public double GetBackupProcessStatus()
         {
-            return getQueryProcessStatus("BACKUP DATABASE");
+            return GetQueryProcessStatus("BACKUP DATABASE");
         }
 
         public double GetRestoreProcessStatus()
         {
-            return getQueryProcessStatus("RESTORE DATABASE");
+            return GetQueryProcessStatus("RESTORE DATABASE");
         }
 
 
-        private double getQueryProcessStatus(string queryName)
+        private double GetQueryProcessStatus(string queryName)
         {
             double outVal = 0;
 

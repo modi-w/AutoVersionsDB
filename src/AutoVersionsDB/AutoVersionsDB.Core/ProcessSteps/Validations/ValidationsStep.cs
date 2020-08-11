@@ -11,8 +11,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class ValidationsStep : AutoVersionsDbStep
     {
-        private ValidationsFactory _validationsFactory;
-        private SingleValidationStepFactory _singleValidationStepFactory;
+        private readonly ValidationsFactory _validationsFactory;
+        private readonly SingleValidationStepFactory _singleValidationStepFactory;
 
         public override string StepName => "Validation";
         public override bool HasInternalStep => true;
@@ -36,6 +36,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
         public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
+            processState.ThrowIfNull(nameof(processState));
+
             ValidationsGroup validationsGroup = _validationsFactory.Create(projectConfig, processState);
 
             using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(validationsGroup.Count))

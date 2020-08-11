@@ -10,12 +10,12 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
     public class ExecuteScriptBlockStep : AutoVersionsDbStep
     {
+        private readonly IDBCommands _dbCommands;
+        private readonly string _scriptBlockToExecute;
+
         public override string StepName => "Execute Script Block";
         public override bool HasInternalStep => false;
 
-        private IDBCommands _dbCommands;
-
-        private string _scriptBlockToExecute;
 
         public ExecuteScriptBlockStep(IDBCommands dbCommands, string scriptBlockToExecute)
         {

@@ -6,12 +6,13 @@ namespace AutoVersionsDB.Core.Validations
 {
     public class ArtifactFileValidator : ValidatorBase
     {
+        private readonly bool _isDevEnvironment;
+        private readonly string _deliveryArtifactFolderPath;
+
         public override string ValidatorName => "ArtifactFile";
 
         public override string ErrorInstructionsMessage => "Artifact File not exist";
 
-        private bool _isDevEnvironment;
-        private string _deliveryArtifactFolderPath;
 
         public ArtifactFileValidator(bool isDevEnvironment, string deliveryArtifactFolderPath)
         {

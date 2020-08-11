@@ -53,7 +53,7 @@
             this.lblProjectName.TabIndex = 3;
             this.lblProjectName.Text = "Project 1";
             this.lblProjectName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblProjectName.Click += new System.EventHandler(this.lblProjectName_Click);
+            this.lblProjectName.Click += new System.EventHandler(this.LblProjectName_Click);
             // 
             // label8
             // 
@@ -74,7 +74,7 @@
             this.lblProcessLink.Size = new System.Drawing.Size(43, 56);
             this.lblProcessLink.TabIndex = 7;
             this.lblProcessLink.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lblProcessLink.Click += new System.EventHandler(this.lblProcessLink_Click);
+            this.lblProcessLink.Click += new System.EventHandler(this.LblProcessLink_Click);
             // 
             // lblEditProject
             // 
@@ -86,7 +86,7 @@
             this.lblEditProject.Name = "lblEditProject";
             this.lblEditProject.Size = new System.Drawing.Size(50, 53);
             this.lblEditProject.TabIndex = 6;
-            this.lblEditProject.Click += new System.EventHandler(this.lblEditProject_Click);
+            this.lblEditProject.Click += new System.EventHandler(this.LblEditProject_Click);
             // 
             // lblDeleteProject
             // 
@@ -98,7 +98,7 @@
             this.lblDeleteProject.Name = "lblDeleteProject";
             this.lblDeleteProject.Size = new System.Drawing.Size(50, 53);
             this.lblDeleteProject.TabIndex = 5;
-            this.lblDeleteProject.Click += new System.EventHandler(this.lblDeleteProject_Click);
+            this.lblDeleteProject.Click += new System.EventHandler(this.LblDeleteProject_Click);
             // 
             // lblProjectIcon
             // 
@@ -109,7 +109,7 @@
             this.lblProjectIcon.Size = new System.Drawing.Size(45, 56);
             this.lblProjectIcon.TabIndex = 4;
             this.lblProjectIcon.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lblProjectIcon.Click += new System.EventHandler(this.lblProjectIcon_Click);
+            this.lblProjectIcon.Click += new System.EventHandler(this.LblProjectIcon_Click);
             // 
             // label25
             // 

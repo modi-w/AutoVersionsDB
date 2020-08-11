@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 {
     public class DBExecutedFiles
     {
-        private IDBCommands _dbCommands;
+        private readonly IDBCommands _dbCommands;
 
         public ScriptFileTypeBase ScriptFileType { get; private set; }
 
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public void Load()
         {
-            loadExecutedFilesList();
+            LoadExecutedFilesList();
 
             DataRow lastRow = ExecutedFilesList.LastOrDefault();
 
@@ -45,9 +45,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
         }
 
 
-        private void loadExecutedFilesList()
+        private void LoadExecutedFilesList()
         {
-            if (isSystemTablesExist())
+            if (IsSystemTablesExist())
             {
                 
 
@@ -64,7 +64,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
             }
         }
 
-        private bool isSystemTablesExist()
+        private bool IsSystemTablesExist()
         {
             return _dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName)
                      && _dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName);

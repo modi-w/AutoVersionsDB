@@ -26,7 +26,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
             dicAllProjectConfigs[projectConfig.ProjectGuid] = projectConfig;
 
-            saveProjectConfigsFile(dicAllProjectConfigs);
+            SaveProjectConfigsFile(dicAllProjectConfigs);
         }
 
         public static void RemoveProjectConfig(string projectGuid)
@@ -35,12 +35,12 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
             dicAllProjectConfigs.Remove(projectGuid);
 
-            saveProjectConfigsFile(dicAllProjectConfigs);
+            SaveProjectConfigsFile(dicAllProjectConfigs);
         }
 
 
 
-        private static void saveProjectConfigsFile(Dictionary<string, ProjectConfigItem> dicAllProjectConfigs)
+        private static void SaveProjectConfigsFile(Dictionary<string, ProjectConfigItem> dicAllProjectConfigs)
         {
             List<ProjectConfigItem> projectConfigs = dicAllProjectConfigs.Values.ToList();
             string projectConfigsListStr = SerializationUtils.JsonSerialize(projectConfigs);

@@ -58,6 +58,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
             processState.ThrowIfNull(nameof(processState));
 
             string targetStateScriptFileName = null;
@@ -72,20 +74,20 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                 using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
                 {
                     List<RuntimeScriptFileBase> incScriptFilesToExecute = processState.ScriptFilesState.IncrementalScriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
-                    runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, incScriptFilesToExecute, "Incremental");
+                    RunScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, incScriptFilesToExecute, "Incremental");
 
-                    string lastIncStriptFilename = getLastIncFilename(processState);
+                    string lastIncStriptFilename = GetLastIncFilename(processState);
 
                     if (string.IsNullOrWhiteSpace(targetStateScriptFileName)
                         || lastIncStriptFilename.Trim().ToUpperInvariant() == targetStateScriptFileName.Trim().ToUpperInvariant())
                     {
                         List<RuntimeScriptFileBase> rptScriptFilesToExecute = processState.ScriptFilesState.RepeatableScriptFilesComparer.GetPendingFilesToExecute(null);
-                        runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, rptScriptFilesToExecute, "Repeatable");
+                        RunScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, rptScriptFilesToExecute, "Repeatable");
 
                         if (processState.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
                         {
                             List<RuntimeScriptFileBase> dddScriptFilesToExecute = processState.ScriptFilesState.DevDummyDataScriptFilesComparer.GetPendingFilesToExecute(null);
-                            runScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, dddScriptFilesToExecute, "DevDummyData");
+                            RunScriptsFilesList(dbCommands, notificationExecutersProvider, projectConfig, processState, dddScriptFilesToExecute, "DevDummyData");
                         }
                     }
                 }
@@ -95,7 +97,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         }
 
 
-        private string getLastIncFilename(AutoVersionsDbProcessState processState)
+        private static string GetLastIncFilename(AutoVersionsDbProcessState processState)
         {
             string lastIncStriptFilename = "";
 
@@ -109,7 +111,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             return lastIncStriptFilename;
         }
 
-        private void runScriptsFilesList(IDBCommands dbCommands, NotificationExecutersProvider notificationExecutersProvider, ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, List<RuntimeScriptFileBase> scriptFilesList, string fileType)
+        private void RunScriptsFilesList(IDBCommands dbCommands, NotificationExecutersProvider notificationExecutersProvider, ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, List<RuntimeScriptFileBase> scriptFilesList, string fileType)
         {
 
             bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
