@@ -4,7 +4,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
 {
     public class DBRestoreStatusNotifyer : DBProcessStatusNotifyerBase
     {
-        private IDBQueryStatus _dbQueryStatus;
+        private readonly IDBQueryStatus _dbQueryStatus;
 
         public DBRestoreStatusNotifyer(IDBQueryStatus dbQueryStatus, int interval)
             : base(interval)

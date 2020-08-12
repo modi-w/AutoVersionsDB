@@ -9,22 +9,17 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class NotificationWrapperExecuter : IDisposable
     {
-        private readonly NotifictionStatesHistoryManager _notifictionStatesHistoryManager;
+        private readonly NotificationExecutersProvider _notificationExecutersProvider;
         private readonly NotificationStateItem _parentNotificationStateItem;
         public NotificationStateItem CurrentNotificationStateItem { get; set; }
 
-        private readonly double _minPrecentChangeToNotify;
 
-        private double _prevNotifyPrecent;
-
-        public NotificationWrapperExecuter(NotifictionStatesHistoryManager notifictionStatesHistoryManager,
+        public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
                                             NotificationStateItem parentNotificationStateItem,
-                                            int numOfStep,
-                                            double minPrecentChangeToNotify = 1)
+                                            int numOfStep)
         {
-            _notifictionStatesHistoryManager = notifictionStatesHistoryManager;
+            _notificationExecutersProvider = notificationExecutersProvider;
             _parentNotificationStateItem = parentNotificationStateItem;
-            _minPrecentChangeToNotify = minPrecentChangeToNotify;
 
             CurrentNotificationStateItem = new NotificationStateItem(numOfStep);
 
@@ -35,7 +30,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public void ExecuteStep(NotificationableActionStepBase step, string additionalStepInfo, ProcessStateBase processState, ActionStepArgs actionStepArgs)
+        public void ExecuteStep(NotificationableActionStepBase step, NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
         {
             step.ThrowIfNull(nameof(step));
 
@@ -44,47 +39,39 @@ namespace AutoVersionsDB.NotificationableEngine
 
             try
             {
-                int numOfInternalStep = step.GetNumOfInternalSteps(processState, actionStepArgs);
+                int numOfInternalStep = step.GetNumOfInternalSteps(notificationableEngineConfig,processState);
 
-                CurrentNotificationStateItem.StepStart(step.StepName, additionalStepInfo);
-                if (step.InternalNotificationableAction == null)
-                {
-                    CallHandleNotificationStateChanged();
-                }
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, step.StepName, step.HasInternalStep);
 
-                step.Execute(processState, actionStepArgs);
+                step.Execute(notificationableEngineConfig, _notificationExecutersProvider, processState);
 
-                CurrentNotificationStateItem.StepEnd();
-                if (step.InternalNotificationableAction == null)
-                {
-                    CallHandleNotificationStateChanged();
-                }
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepEnd(CurrentNotificationStateItem, step.HasInternalStep);
+
             }
             catch (NotificationEngineException ex)
             {
-                CurrentNotificationStateItem.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage);
-                _notifictionStatesHistoryManager.HandleNotificationStateChanged();
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepError(CurrentNotificationStateItem, ex.ErrorCode, ex.Message, ex.InstructionsMessage);
 
             }
             catch (Exception ex)
             {
-                CurrentNotificationStateItem.StepError(step.StepName, ex.Message, "Error occurred during the process.");
-                _notifictionStatesHistoryManager.HandleNotificationStateChanged();
+                _notificationExecutersProvider.NotifictionStateChangeHandler.StepError(CurrentNotificationStateItem, step.StepName, ex.Message, "Error occurred during the process.");
 
             }
 
         }
 
-        public void CallHandleNotificationStateChanged()
+
+        public void SetStepStartManually(string stepName)
         {
-            if (_prevNotifyPrecent == 0
-                || CurrentNotificationStateItem.Precents - _prevNotifyPrecent > _minPrecentChangeToNotify)
-            {
-                _prevNotifyPrecent = CurrentNotificationStateItem.Precents;
-                _notifictionStatesHistoryManager.HandleNotificationStateChanged();
-            }
+            _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, stepName, false);
         }
 
+
+        public void ForceStepProgress(int stepNumber)
+        {
+            _notificationExecutersProvider.NotifictionStateChangeHandler.ForceStepProgress(CurrentNotificationStateItem, stepNumber);
+        }
 
 
         #region IDisposable
@@ -123,18 +110,17 @@ namespace AutoVersionsDB.NotificationableEngine
         where TProcessState : ProcessStateBase
     {
 
-        public NotificationWrapperExecuter(NotifictionStatesHistoryManager notifictionStatesHistoryManager,
+        public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
                                             NotificationStateItem parentNotificationStateItem,
-                                            int numOfStep,
-                                            double minPrecentChangeToNotify = 1)
-            : base(notifictionStatesHistoryManager, parentNotificationStateItem, numOfStep, minPrecentChangeToNotify)
+                                            int numOfStep)
+            : base(notificationExecutersProvider, parentNotificationStateItem, numOfStep)
         {
         }
 
 
-        public void ExecuteStep(NotificationableActionStepBase step, string additionalStepInfo, TProcessState processState, ActionStepArgs actionStepArgs)
+        public void ExecuteStep(NotificationableActionStepBase step, NotificationableEngineConfig notificationableEngineConfig, TProcessState processState)
         {
-            base.ExecuteStep(step, additionalStepInfo, processState, actionStepArgs);
+            base.ExecuteStep(step, notificationableEngineConfig, processState);
         }
     }
 }

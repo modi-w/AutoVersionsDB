@@ -9,14 +9,13 @@ using System;
 namespace AutoVersionsDB.Core.ProcessSteps
 {
 
-    public class ResetDBStep : AutoVersionsDbStep, IDisposable
+    public class ResetDBStep : AutoVersionsDbStep
     {
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+
         public override string StepName => "Resolve Reset Database";
+        public override bool HasInternalStep => false;
 
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private IDBCommands _dbCommands;
-
-        private bool _isDevEnvironment;
 
 
         public ResetDBStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
@@ -26,70 +25,30 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
-        public override void Prepare(ProjectConfigItem projectConfig)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-
-            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
-            _isDevEnvironment = projectConfig.IsDevEnvironment;
-        }
-
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
         {
             return 1;
         }
 
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
-            //if (processState.IsResetDBFlag) 
-            //{
-                if (!_isDevEnvironment)
-                {
-                    throw new Exception("Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).");
-                }
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
+            processState.ThrowIfNull(nameof(processState));
 
-                _dbCommands.DropAllDB();
-
-                //_dbCommands.RecreateDBVersionsTables();
-            //}
-        }
-
-
-        #region IDisposable
-
-        private bool _disposed = false;
-
-        ~ResetDBStep() => Dispose(false);
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
+            if (!projectConfig.IsDevEnvironment)
             {
-                return;
+                throw new Exception("Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).");
             }
 
-            if (disposing)
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {
-                if (_dbCommands != null)
-                {
-                    _dbCommands.Dispose();
-                }
-
+                dbCommands.DropAllDB();
             }
 
-            _disposed = true;
         }
 
-        #endregion
+
 
     }
 }

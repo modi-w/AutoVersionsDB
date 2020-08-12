@@ -3,7 +3,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
 {
     public class DBBackupStatusNotifyer : DBProcessStatusNotifyerBase
     {
-        private IDBQueryStatus _dbQueryStatus;
+        private readonly IDBQueryStatus _dbQueryStatus;
 
         public DBBackupStatusNotifyer(IDBQueryStatus dbQueryStatus, int interval)
             :base(interval)

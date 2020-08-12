@@ -9,9 +9,9 @@ namespace AutoVersionsDB.Core.ScriptFiles.Repeatable
 {
     public class RepeatableScriptFilesComparer : ScriptFilesComparerBase
     {
-        public RepeatableScriptFilesComparer(ScriptFilesManager scriptFilesManager,
-                                                DBExecutedFilesManager dbExecutedFilesManager)
-            : base (scriptFilesManager, dbExecutedFilesManager)
+        public RepeatableScriptFilesComparer(FileSystemScriptFiles fileSystemScriptFiles,
+                                                DBExecutedFiles dbExecutedFiles)
+            : base (fileSystemScriptFiles, dbExecutedFiles)
         {
 
         }

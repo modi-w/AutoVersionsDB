@@ -3,6 +3,7 @@ using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfig
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using AutoVersionsDB.Core.ProcessSteps;
 using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -18,7 +19,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void RestoreDB_SyncDB([ValueSource("ProjectConfigItemArray_DevEnv_ScriptError")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -26,18 +26,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SyncDB();
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig, null);
+
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
         }
 
         [Test]
         public void RestoreDB_SetDBToSpecificState([ValueSource("ProjectConfigItemArray_DevEnv_ScriptError")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -45,18 +45,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SetDBToSpecificState(c_targetStateFile_FinalState, false);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig, c_targetStateFile_FinalState, false, null);
+
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
         }
 
         [Test]
         public void RestoreDB_RecreateDBFromScratch([ValueSource("ProjectConfigItemArray_DevEnv_ScriptError")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -64,11 +64,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.RecreateDBFromScratch(null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig, null, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
         }
 
 
@@ -77,12 +77,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
 
-        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest)
+        protected void AssertRestore(ProjectConfigItem projectConfig, string orginalDBBackupFilePathForTheTest, ProcessTrace processTrace)
         {
-            Assert.That(_autoVersionsDbAPI.HasError);
+            Assert.That(processTrace.HasError);
 
-            bool isRestoreExecuted = _autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager
-                .NotificationStatesProcessHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
+            bool isRestoreExecuted =
+                processTrace
+                .StatesHistory.Any(e => !string.IsNullOrWhiteSpace(e.StepName)
                                                         && e.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 
             Assert.That(isRestoreExecuted, Is.EqualTo(true));

@@ -5,49 +5,44 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBCommandsFactory : IDBCommandsFactory
     {
-        public string DBTypeCode
+        public DBType DBType
         {
             get
             {
-                return "SqlServer";
-            }
-        }
-        public string DBTypeName
-        {
-            get
-            {
-                return "Sql Server";
+                return new DBType("SqlServer", "Sql Server");
             }
         }
 
-        public IDBConnectionManager CreateDBConnectionManager(string connectionString, int timeout)
-        {
-            SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
+   
 
-            return sqlServerConnectionManager;
+        public IDBConnection CreateDBConnection(string connectionString, int timeout)
+        {
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(connectionString, timeout);
+
+            return sqlServerConnection;
         }
 
 
         public IDBCommands CreateDBCommands(string connectionString, int timeout)
         {
-            SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
-            SqlServerDBCommands sqlServerDBCommands = new SqlServerDBCommands(sqlServerConnectionManager);
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(connectionString, timeout);
+            SqlServerDBCommands sqlServerDBCommands = new SqlServerDBCommands(sqlServerConnection);
 
             return sqlServerDBCommands;
         }
 
         public IDBBackupRestoreCommands CreateBackupRestoreCommands(string connectionString, int timeout)
         {
-            SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
-            SqlServerDBBackupRestoreCommands sqlServerDBBackupRestoreCommands = new SqlServerDBBackupRestoreCommands(sqlServerConnectionManager);
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(connectionString, timeout);
+            SqlServerDBBackupRestoreCommands sqlServerDBBackupRestoreCommands = new SqlServerDBBackupRestoreCommands(sqlServerConnection);
 
             return sqlServerDBBackupRestoreCommands;
         }
 
         public IDBQueryStatus CreateDBQueryStatus(string connectionString, int timeout)
         {
-            SqlServerConnectionManager sqlServerConnectionManager = new SqlServerConnectionManager(connectionString, timeout);
-            SqlServerDBQueryStatus sqlServerDBQueryStatus = new SqlServerDBQueryStatus(sqlServerConnectionManager);
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(connectionString, timeout);
+            SqlServerDBQueryStatus sqlServerDBQueryStatus = new SqlServerDBQueryStatus(sqlServerConnection);
 
             return sqlServerDBQueryStatus;
         }

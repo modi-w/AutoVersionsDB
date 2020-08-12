@@ -7,41 +7,42 @@ namespace AutoVersionsDB.Core.Validations.DBStateValidators
 {
     public class IsHistoryExecutedFilesChangedValidator : ValidatorBase
     {
+        private readonly ScriptFilesState _scriptFilesState;
+
         public override string ValidatorName => "IsHistoryExecutedFilesChanged";
 
         public override string ErrorInstructionsMessage => "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";
 
 
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
 
-        public IsHistoryExecutedFilesChangedValidator(ScriptFilesComparersProvider scriptFilesComparersProvider)
+        public IsHistoryExecutedFilesChangedValidator(ScriptFilesState scriptFilesState)
         {
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
+            _scriptFilesState = scriptFilesState;
         }
 
 
         public override string Validate(AutoVersionsDBExecutionParams executionParam)
         {
 
-            if (_scriptFilesComparersProvider.IncrementalScriptFilesComparer.ChangedFiles.Count > 0)
+            if (_scriptFilesState.IncrementalScriptFilesComparer.ChangedFiles.Count > 0)
             {
-                IEnumerable<string> changeFilenamesList = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.ChangedFiles.Select(e => e.Filename);
+                IEnumerable<string> changeFilenamesList = _scriptFilesState.IncrementalScriptFilesComparer.ChangedFiles.Select(e => e.Filename);
 
                 string errorMsg = $"The following files changed: '{string.Join(", ", changeFilenamesList)}'";
                 return errorMsg;
             }
 
-            if (!string.IsNullOrWhiteSpace(_scriptFilesComparersProvider.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename))
+            if (!string.IsNullOrWhiteSpace(_scriptFilesState.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename))
             {
-                foreach (var scriptFileItem in _scriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles)
+                foreach (var scriptFileItem in _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles)
                 {
-                    if (scriptFileItem.Filename.Trim().ToUpperInvariant() == _scriptFilesComparersProvider.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename.Trim().ToUpperInvariant())
+                    if (scriptFileItem.Filename.Trim().ToUpperInvariant() == _scriptFilesState.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename.Trim().ToUpperInvariant())
                     {
                         break;
                     }
                     else
                     {
-                        bool isFileNotExecuted = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.NotExistInDBButExistInFileSystem.Any(e => e.Filename.Trim().ToUpperInvariant() == scriptFileItem.Filename.Trim().ToUpperInvariant());
+                        bool isFileNotExecuted = _scriptFilesState.IncrementalScriptFilesComparer.NotExistInDBButExistInFileSystem.Any(e => e.Filename.Trim().ToUpperInvariant() == scriptFileItem.Filename.Trim().ToUpperInvariant());
 
                         if (isFileNotExecuted)
                         {
@@ -51,9 +52,9 @@ namespace AutoVersionsDB.Core.Validations.DBStateValidators
                     }
                 }
 
-                if (_scriptFilesComparersProvider.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Count > 0)
+                if (_scriptFilesState.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Count > 0)
                 {
-                    IEnumerable<string> notExistInFileSystemFilenamesList = _scriptFilesComparersProvider.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Select(e => e.Filename);
+                    IEnumerable<string> notExistInFileSystemFilenamesList = _scriptFilesState.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Select(e => e.Filename);
 
                     string errorMsg = $"The following files changed: '{string.Join(", ", notExistInFileSystemFilenamesList)}'";
                     return errorMsg;

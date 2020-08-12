@@ -15,9 +15,6 @@ namespace AutoVersionsDB.WinApp
 {
     public partial class ProjectItemControl : UserControl
     {
-        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
-
-
         public event OnNavToProcessHandler OnNavToProcess;
         public event OnRefreshProjectListHandler OnRefreshProjectList;
         public event OnEditProjectHandler OnEditProject;
@@ -34,40 +31,36 @@ namespace AutoVersionsDB.WinApp
 
             lblProjectName.Text = ProjectConfig.ProjectName;
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
-            }
         }
 
-        private void lblProjectName_Click(object sender, EventArgs e)
+        private void LblProjectName_Click(object sender, EventArgs e)
         {
             OnNavToProcess?.Invoke(ProjectConfig);
         }
 
-        private void lblProjectIcon_Click(object sender, EventArgs e)
+        private void LblProjectIcon_Click(object sender, EventArgs e)
         {
             OnNavToProcess?.Invoke(ProjectConfig);
         }
 
-        private void lblProcessLink_Click(object sender, EventArgs e)
+        private void LblProcessLink_Click(object sender, EventArgs e)
         {
             OnNavToProcess?.Invoke(ProjectConfig);
         }
 
-        private void lblEditProject_Click(object sender, EventArgs e)
+        private void LblEditProject_Click(object sender, EventArgs e)
         {
             OnEditProject?.Invoke(ProjectConfig);
         }
 
-        private void lblDeleteProject_Click(object sender, EventArgs e)
+        private void LblDeleteProject_Click(object sender, EventArgs e)
         {
             string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.ProjectName}'";
             bool results = MessageBox.Show(this, warningMessage, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes;
 
             if (results)
             {
-                _autoVersionsDbAPI.ConfigProjectsManager.RemoveProjectConfig(ProjectConfig.ProjectGuid);
+                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.ProjectGuid);
 
                 OnRefreshProjectList?.Invoke();
             }
@@ -89,7 +82,6 @@ namespace AutoVersionsDB.WinApp
             if (disposing)
             {
                 // Dispose managed state (managed objects).
-                _autoVersionsDbAPI.Dispose();
 
                 if (components != null)
                 {

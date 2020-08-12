@@ -14,17 +14,18 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Create Virtual Executions";
 
 
-        public CreateVirtualExecutionsEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public CreateVirtualExecutionsEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                                 RestoreDatabaseStep rollbackStep,
-                                                ScriptFilesComparersManager scriptFilesComparersManager,
-                                                ProjectConfigValidationStep projectConfigValidationStep,
+                                                ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+                                                CreateScriptFilesStateStep createScriptFilesStateStep,
                                                 CreateBackupStep createBackupStep,
                                                 RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
                                                 ExecuteScriptsStep executeScriptsStep,
                                                 FinalizeProcessStep finalizeProcessStep)
-            : base(notificationExecutersFactoryManager, rollbackStep, scriptFilesComparersManager)
+            : base(notificationExecutersProviderFactory, rollbackStep)
         {
             ProcessSteps.Add(projectConfigValidationStep);
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(createBackupStep);
             ProcessSteps.Add(recreateDBVersionsTablesStep);
             ProcessSteps.Add(executeScriptsStep);

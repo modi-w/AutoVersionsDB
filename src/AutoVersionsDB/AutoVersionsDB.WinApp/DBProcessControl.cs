@@ -1,24 +1,26 @@
-﻿using System;
+﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.ProcessSteps;
+using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.Core.ScriptFiles.Incremental;
+using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.WinApp.Utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ScriptFiles;
-using AutoVersionsDB.Core.ScriptFiles.Incremental;
-using System.ComponentModel;
-using AutoVersionsDB.WinApp.Utils;
-using AutoVersionsDB.Core.ProcessSteps;
-using System.Globalization;
 
 namespace AutoVersionsDB.WinApp
 {
 
     public partial class DBProcessControl : UserControl
     {
+        private ProjectConfigItem _projectConfigItem;
+        private ScriptFilesState _scriptFilesState;
+
         public enum DBVersionsMangementViewType
         {
             ReadyToRunSync,
@@ -29,9 +31,6 @@ namespace AutoVersionsDB.WinApp
             InProcess,
             RestoreDatabaseError
         }
-
-
-        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
 
 
@@ -67,10 +66,6 @@ namespace AutoVersionsDB.WinApp
             //pnlSetDBStateManually.Location = new Point(880, 24);
             //btnShowHistoricalBackups.Location = new Point(880, 24);
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
-            }
 
             //#if !DEBUG
             btnSetDBToSpecificState.Visible = false;
@@ -119,7 +114,7 @@ namespace AutoVersionsDB.WinApp
 
         public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
         {
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfigItem);
+            _projectConfigItem = projectConfigItem;
 
             RefreshAll();
         }
@@ -135,7 +130,7 @@ namespace AutoVersionsDB.WinApp
 
             pnlDevDummyDataFiles.BeginInvoke((MethodInvoker)(() =>
             {
-                pnlDevDummyDataFiles.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                pnlDevDummyDataFiles.Visible = _projectConfigItem.IsDevEnvironment;
             }));
 
 
@@ -149,23 +144,24 @@ namespace AutoVersionsDB.WinApp
             {
                 notificationsControl1.BeforeStart();
 
-                _autoVersionsDbAPI.Refresh();
 
                 //      bindToUIElements();
 
                 try
                 {
-                    _autoVersionsDbAPI.ValidateAll();
+                    ProcessTrace processResults = AutoVersionsDbAPI.ValidateAll(_projectConfigItem, notificationsControl1.OnNotificationStateChanged);
 
-                    if (_autoVersionsDbAPI.HasError)
+                    RefreshScriptFilesState();
+
+                    if (processResults.HasError)
                     {
                         notificationsControl1.AfterComplete();
 
-                        if (_autoVersionsDbAPI.ErrorCode == "SystemTables")
+                        if (processResults.ErrorCode == "SystemTables")
                         {
                             SetViewState(DBVersionsMangementViewType.MissingSystemTables);
                         }
-                        else if (_autoVersionsDbAPI.ErrorCode == "IsHistoryExecutedFilesChanged")
+                        else if (processResults.ErrorCode == "IsHistoryExecutedFilesChanged")
                         {
                             SetViewState(DBVersionsMangementViewType.HistoryExecutedFilesChanged);
                         }
@@ -176,6 +172,7 @@ namespace AutoVersionsDB.WinApp
                     }
                     else
                     {
+
                         notificationsControl1.Clear();
                         SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
                     }
@@ -211,7 +208,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnShowHistoricalBackups_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DBBackupBaseFolder);
+            OsProcessUtils.StartOsProcess(_projectConfigItem.DBBackupBaseFolder);
         }
 
         private void BtnCancelSyncSpecificState_Click(object sender, EventArgs e)
@@ -229,7 +226,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnNavToEdit_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(_autoVersionsDbAPI.ProjectConfigItem);
+            OnEditProject?.Invoke(_projectConfigItem);
         }
 
 
@@ -257,7 +254,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnOpenIncrementalScriptsFolder_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.IncrementalScriptsFolderPath);
+            OsProcessUtils.StartOsProcess(_projectConfigItem.IncrementalScriptsFolderPath);
         }
         private void BtnCreateNewIncrementalScriptFile_Click(object sender, EventArgs e)
         {
@@ -267,7 +264,7 @@ namespace AutoVersionsDB.WinApp
 
                 if (textInputWindow.IsApply)
                 {
-                    string newFileFullPath = _autoVersionsDbAPI.CreateNewIncrementalScriptFile(textInputWindow.ResultText);
+                    string newFileFullPath = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(_projectConfigItem, textInputWindow.ResultText);
 
                     RefreshAll();
 
@@ -279,7 +276,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnOpenRepeatableScriptsFolder_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.RepeatableScriptsFolderPath);
+            OsProcessUtils.StartOsProcess(_projectConfigItem.RepeatableScriptsFolderPath);
         }
         private void BtnCreateNewRepeatableScriptFile_Click(object sender, EventArgs e)
         {
@@ -289,7 +286,7 @@ namespace AutoVersionsDB.WinApp
 
                 if (textInputWindow.IsApply)
                 {
-                    string newFileFullPath = _autoVersionsDbAPI.CreateNewRepeatableScriptFile(textInputWindow.ResultText);
+                    string newFileFullPath = AutoVersionsDbAPI.CreateNewRepeatableScriptFile(_projectConfigItem, textInputWindow.ResultText);
                     RefreshAll();
                     OsProcessUtils.StartOsProcess(newFileFullPath);
                 }
@@ -300,7 +297,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnOpenDevDummyDataScriptsFolder_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DevDummyDataScriptsFolderPath);
+            OsProcessUtils.StartOsProcess(_projectConfigItem.DevDummyDataScriptsFolderPath);
         }
         private void BtnCreateNewDevDummyDataScriptFile_Click(object sender, EventArgs e)
         {
@@ -310,7 +307,7 @@ namespace AutoVersionsDB.WinApp
 
                 if (textInputWindow.IsApply)
                 {
-                    string newFileFullPath = _autoVersionsDbAPI.CreateNewDevDummyDataScriptFile(textInputWindow.ResultText);
+                    string newFileFullPath = AutoVersionsDbAPI.CreateNewDevDummyDataScriptFile(_projectConfigItem, textInputWindow.ResultText);
                     RefreshAll();
                     OsProcessUtils.StartOsProcess(newFileFullPath);
                 }
@@ -332,10 +329,12 @@ namespace AutoVersionsDB.WinApp
                     SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
-                    _autoVersionsDbAPI.SyncDB();
+                    ProcessTrace processResults = AutoVersionsDbAPI.SyncDB(_projectConfigItem, notificationsControl1.OnNotificationStateChanged);
+
+                    RefreshScriptFilesState();
 
                     notificationsControl1.AfterComplete();
-                    SetViewState_AfterProcessComplete();
+                    SetViewState_AfterProcessComplete(processResults);
                 }
                 catch (Exception ex)
                 {
@@ -347,15 +346,13 @@ namespace AutoVersionsDB.WinApp
             });
         }
 
-
-
-
+        private void RefreshScriptFilesState() => _scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(_projectConfigItem);
 
         private bool CheckIsTargetStateHistory()
         {
             bool isAllowRun = true;
 
-            if (!_autoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(TargetStateScriptFileName))
+            if (!AutoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(_projectConfigItem, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged))
             {
                 string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
                 isAllowRun = MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
@@ -381,10 +378,11 @@ namespace AutoVersionsDB.WinApp
                         SetViewState(DBVersionsMangementViewType.InProcess);
                         notificationsControl1.BeforeStart();
 
-                        _autoVersionsDbAPI.SetDBToSpecificState(TargetStateScriptFileName, true);
+                        ProcessTrace processResults = AutoVersionsDbAPI.SetDBToSpecificState(_projectConfigItem, TargetStateScriptFileName, true, notificationsControl1.OnNotificationStateChanged);
+                        RefreshScriptFilesState();
 
                         notificationsControl1.AfterComplete();
-                        SetViewState_AfterProcessComplete();
+                        SetViewState_AfterProcessComplete(processResults);
 
                     }
                     catch (Exception ex)
@@ -405,12 +403,13 @@ namespace AutoVersionsDB.WinApp
                 SetViewState(DBVersionsMangementViewType.InProcess);
                 notificationsControl1.BeforeStart();
 
-                _autoVersionsDbAPI.Deploy();
+                ProcessTrace processResults = AutoVersionsDbAPI.Deploy(_projectConfigItem, notificationsControl1.OnNotificationStateChanged);
+                RefreshScriptFilesState();
 
                 notificationsControl1.AfterComplete();
-                SetViewState_AfterProcessComplete();
+                SetViewState_AfterProcessComplete(processResults);
 
-                OsProcessUtils.StartOsProcess(_autoVersionsDbAPI.ProjectConfigItem.DeployArtifactFolderPath);
+                OsProcessUtils.StartOsProcess(_projectConfigItem.DeployArtifactFolderPath);
             }
             catch (Exception ex)
             {
@@ -441,10 +440,11 @@ namespace AutoVersionsDB.WinApp
                         SetViewState(DBVersionsMangementViewType.InProcess);
                         notificationsControl1.BeforeStart();
 
-                        _autoVersionsDbAPI.RecreateDBFromScratch(TargetStateScriptFileName);
+                        ProcessTrace processResults = AutoVersionsDbAPI.RecreateDBFromScratch(_projectConfigItem, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
+                        RefreshScriptFilesState();
 
                         notificationsControl1.AfterComplete();
-                        SetViewState_AfterProcessComplete();
+                        SetViewState_AfterProcessComplete(processResults);
                     }
                     catch (Exception ex)
                     {
@@ -466,10 +466,11 @@ namespace AutoVersionsDB.WinApp
                     SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
-                    _autoVersionsDbAPI.SetDBStateByVirtualExecution(TargetStateScriptFileName);
+                    ProcessTrace processResults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(_projectConfigItem, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
+                    RefreshScriptFilesState();
 
                     notificationsControl1.AfterComplete();
-                    SetViewState_AfterProcessComplete();
+                    SetViewState_AfterProcessComplete(processResults);
                 }
                 catch (Exception ex)
                 {
@@ -496,7 +497,7 @@ namespace AutoVersionsDB.WinApp
             HideAllActionPanels();
 
             SetControlHideOrVisible(pnlRepeatableFiles, true);
-            if (_autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment)
+            if (_projectConfigItem.IsDevEnvironment)
             {
                 SetControlHideOrVisible(pnlDevDummyDataFiles, true);
             }
@@ -611,29 +612,29 @@ namespace AutoVersionsDB.WinApp
 
             btnRecreateDbFromScratchMain.BeginInvoke((MethodInvoker)(() =>
             {
-                btnRecreateDbFromScratchMain.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                btnRecreateDbFromScratchMain.Visible = _projectConfigItem.IsDevEnvironment;
             }));
             lblRecreateDbFromScratchMain.BeginInvoke((MethodInvoker)(() =>
             {
-                lblRecreateDbFromScratchMain.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                lblRecreateDbFromScratchMain.Visible = _projectConfigItem.IsDevEnvironment;
             }));
 
             btnDeploy.BeginInvoke((MethodInvoker)(() =>
             {
-                btnDeploy.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                btnDeploy.Visible = _projectConfigItem.IsDevEnvironment;
             }));
             lblDeploy.BeginInvoke((MethodInvoker)(() =>
             {
-                lblDeploy.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                lblDeploy.Visible = _projectConfigItem.IsDevEnvironment;
             }));
 
             btnRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
             {
-                btnRecreateDbFromScratch2.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                btnRecreateDbFromScratch2.Visible = _projectConfigItem.IsDevEnvironment;
             }));
             lblRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
             {
-                lblRecreateDbFromScratch2.Visible = _autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment;
+                lblRecreateDbFromScratch2.Visible = _projectConfigItem.IsDevEnvironment;
             }));
 
         }
@@ -652,13 +653,11 @@ namespace AutoVersionsDB.WinApp
 
             lblProjectName.BeginInvoke((MethodInvoker)(() =>
             {
-                lblProjectName.Text = _autoVersionsDbAPI.ProjectConfigItem.ProjectName;
+                lblProjectName.Text = _projectConfigItem.ProjectName;
             }));
 
 
-            if (!_autoVersionsDbAPI.HasError
-                || _autoVersionsDbAPI.ErrorCode == "IsHistoryExecutedFilesChanged"
-                || _autoVersionsDbAPI.ErrorCode == "SystemTables")
+            if (_scriptFilesState != null)
             {
                 BindIncrementalGrid(dbVersionsMangementViewType);
                 BindRepeatableGrid();
@@ -670,7 +669,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BindIncrementalGrid(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
-            List<RuntimeScriptFileBase> allIncrementalScriptFiles = _autoVersionsDbAPI.CurrentScriptFilesComparersProvider.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            List<RuntimeScriptFileBase> allIncrementalScriptFiles = _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
             if (dbVersionsMangementViewType == DBVersionsMangementViewType.ReadyToSyncToSpecificState
                 || dbVersionsMangementViewType == DBVersionsMangementViewType.SetDBStateManually)
@@ -684,16 +683,16 @@ namespace AutoVersionsDB.WinApp
 
         private void BindRepeatableGrid()
         {
-            List<RuntimeScriptFileBase> allRepeatableScriptFiles = _autoVersionsDbAPI.CurrentScriptFilesComparersProvider.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            List<RuntimeScriptFileBase> allRepeatableScriptFiles = _scriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
             BindGridDataSource(dgRepeatableScriptsFiles, allRepeatableScriptFiles);
         }
 
         private void BindDevDummyDataGrid()
         {
-            if (_autoVersionsDbAPI.ProjectConfigItem.IsDevEnvironment)
+            if (_projectConfigItem.IsDevEnvironment)
             {
-                List<RuntimeScriptFileBase> allDevDummyDataScriptFiles = _autoVersionsDbAPI.CurrentScriptFilesComparersProvider.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                List<RuntimeScriptFileBase> allDevDummyDataScriptFiles = _scriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
                 BindGridDataSource(dgDevDummyDataScriptsFiles, allDevDummyDataScriptFiles);
             }
@@ -719,9 +718,9 @@ namespace AutoVersionsDB.WinApp
 
                     currGridRow.Cells[1].Style.BackColor = currRowFileInfo.HashDiffType switch
                     {
-                        eHashDiffType.NotExist => Color.White,
-                        eHashDiffType.Different => Color.LightSalmon,
-                        eHashDiffType.Equal => Color.LightGreen,
+                        HashDiffType.NotExist => Color.White,
+                        HashDiffType.Different => Color.LightSalmon,
+                        HashDiffType.Equal => Color.LightGreen,
                         _ => Color.White,
                     };
                 }
@@ -801,11 +800,11 @@ namespace AutoVersionsDB.WinApp
             }));
         }
 
-        private void SetViewState_AfterProcessComplete()
+        private void SetViewState_AfterProcessComplete(ProcessTrace processResults)
         {
-            if (_autoVersionsDbAPI.HasError
-                && !string.IsNullOrWhiteSpace(_autoVersionsDbAPI.InstructionsMessageStepName)
-                && string.CompareOrdinal(_autoVersionsDbAPI.InstructionsMessageStepName, RestoreDatabaseStep.StepNameStr) == 0)
+            if (processResults.HasError
+                && !string.IsNullOrWhiteSpace(processResults.InstructionsMessageStepName)
+                && string.CompareOrdinal(processResults.InstructionsMessageStepName, RestoreDatabaseStep.StepNameStr) == 0)
             {
                 SetViewState(DBVersionsMangementViewType.RestoreDatabaseError);
             }
@@ -841,7 +840,7 @@ namespace AutoVersionsDB.WinApp
             if (disposing)
             {
                 // Dispose managed state (managed objects).
-                _autoVersionsDbAPI.Dispose();
+                //AutoVersionsDbAPI.Dispose();
 
                 if (components != null)
                 {

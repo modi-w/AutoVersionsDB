@@ -10,82 +10,42 @@ using System;
 namespace AutoVersionsDB.Core.ProcessSteps
 {
 
-    public class RecreateDBVersionsTablesStep : AutoVersionsDbStep, IDisposable
+    public class RecreateDBVersionsTablesStep : AutoVersionsDbStep
     {
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+
         public override string StepName => "Recreate System Tables";
+        public override bool HasInternalStep => false;
 
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private ScriptFilesComparersManager _scriptFilesComparersManager;
 
-        private ProjectConfigItem _projectConfig;
-        private IDBCommands _dbCommands;
-
-        public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                            ScriptFilesComparersManager scriptFilesComparersManager)
+        public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
             dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
-            scriptFilesComparersManager.ThrowIfNull(nameof(scriptFilesComparersManager));
 
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
-            _scriptFilesComparersManager = scriptFilesComparersManager;
         }
 
-        public override void Prepare(ProjectConfigItem projectConfig)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-           
-            _projectConfig = projectConfig;
+      
 
-            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
-        }
-
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
         {
             return 1;
         }
 
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
-            _dbCommands.RecreateDBVersionsTables();
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
+            processState.ThrowIfNull(nameof(processState));
 
-            ScriptFilesComparersProvider scriptFilesComparersProvider = _scriptFilesComparersManager.GetScriptFilesComparersProvider(_projectConfig.ProjectGuid);
-            scriptFilesComparersProvider.Reload();
-        }
-
-
-        #region IDisposable
-
-        private bool _disposed = false;
-
-        ~RecreateDBVersionsTablesStep() => Dispose(false);
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {
-                return;
+                dbCommands.RecreateDBVersionsTables();
             }
 
-            if (disposing)
-            {
-                if (_dbCommands != null)
-                {
-                    _dbCommands.Dispose();
-                }
-
-            }
-
-            _disposed = true;
+            processState.ScriptFilesState.Reload(projectConfig);
         }
 
-        #endregion
+
     }
 }

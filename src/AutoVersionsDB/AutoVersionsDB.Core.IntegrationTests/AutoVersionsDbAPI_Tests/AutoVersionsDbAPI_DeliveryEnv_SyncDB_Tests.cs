@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System.IO;
 
@@ -13,20 +14,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         [Test]
         public void DBStateInMiddle___ShouldBeInFinalState_ShouldNotRunDevDummyData([ValueSource("ProjectConfigItemArray_DeliveryEnv_WithDevDummyDataFiles")] ProjectConfigItemForTestBase projectConfig)
         {
-            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
-
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
+            RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
+            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
 
             //Act
-            _autoVersionsDbAPI.SyncDB();
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig, null);
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processTrace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInFinalState_DeliveryEnv(projectConfig);
@@ -38,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void NextScriptHasVersionHigherThenTheLastFileVersion_NotSameDay__ShouldBeInFinalState([ValueSource("ProjectConfigItemArray_DeliveryEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
+            RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -46,10 +46,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SyncDB();
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig, null);
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processTrace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInFinalState_DeliveryEnv(projectConfig);
@@ -61,7 +61,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void RepeatableScriptsChanged__ShouldRunOnlyTheChangedScripts([ValueSource("ProjectConfigItemArray_DeliveryEnv_ChangedHistoryFiles_Repeatable")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
+            RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DeliveryEnv.bak");
             restoreDB(projectConfig, dbBackupFileFullPath);
 
@@ -69,11 +69,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            _autoVersionsDbAPI.SyncDB();
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig, null);
 
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processTrace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFullPath);
             assertDbInFinalState_DeliveryEnv(projectConfig);

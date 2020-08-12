@@ -9,94 +9,70 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public abstract class ValidationsStep : AutoVersionsDbStep, IDisposable
+    public class ValidationsStep : AutoVersionsDbStep
     {
+        private readonly ValidationsFactory _validationsFactory;
+        private readonly SingleValidationStepFactory _singleValidationStepFactory;
+
         public override string StepName => "Validation";
+        public override bool HasInternalStep => true;
 
-        private readonly NotificationExecutersFactoryManager _notificationExecutersFactoryManager;
-     
-        protected abstract bool ShouldContinueWhenFindError { get; }
-        protected List<ValidatorBase> Validators { get; }
 
-        public ValidationsStep(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                        SingleValidationStep singleValidationStep)
+        public ValidationsStep(SingleValidationStepFactory singleValidationStepFactory, ValidationsFactory validationsFactory)
         {
-            _notificationExecutersFactoryManager = notificationExecutersFactoryManager;
-            InternalNotificationableAction = singleValidationStep;
-            
-            Validators = new List<ValidatorBase>();
+            _validationsFactory = validationsFactory;
+
+            _singleValidationStepFactory = singleValidationStepFactory;
+
         }
 
 
 
-        public override void Prepare(ProjectConfigItem projectConfig)
+        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+        {
+            return _validationsFactory.Create(projectConfig, processState).Count;
+        }
+
+
+        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
+            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
+            processState.ThrowIfNull(nameof(processState));
 
-            SetValidators(projectConfig);
-        }
+            ValidationsGroup validationsGroup = _validationsFactory.Create(projectConfig, processState);
 
-        protected abstract void SetValidators(ProjectConfigItem projectConfig);
-
-
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
-        {
-            return Validators.Count;
-        }
-
-
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
-        {
-            using (NotificationWrapperExecuter notificationWrapperExecuter = _notificationExecutersFactoryManager.CreateNotificationWrapperExecuter(Validators.Count))
+            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(validationsGroup.Count))
             {
-                foreach (ValidatorBase validator in Validators)
-                {
-                    if (ShouldContinueWhenFindError
-                        || !_notificationExecutersFactoryManager.HasError)
-                    {
-                        ValidatorStepArgs validatorStepArgs = new ValidatorStepArgs(validator);
 
-                        notificationWrapperExecuter.ExecuteStep(InternalNotificationableAction, validator.ValidatorName, processState, validatorStepArgs);
+                foreach (ValidatorBase validator in validationsGroup.GetValidators())
+                {
+                    if (validationsGroup.ShouldContinueWhenFindError
+                        || !notificationExecutersProvider.NotifictionStatesHistory.HasError)
+                    {
+                        SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
+
+                        notificationWrapperExecuter.ExecuteStep(singleValidationStep, projectConfig, processState);
                     }
                 }
             }
         }
 
 
-        #region IDisposable
 
-        private bool _disposed = false;
+    }
 
-        ~ValidationsStep() => Dispose(false);
 
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
+    public class ValidationsStep<TValidationsFactory> : ValidationsStep
+        where TValidationsFactory : ValidationsFactory
+    {
+
+
+        public ValidationsStep(SingleValidationStepFactory singleValidationStepFactory, TValidationsFactory validationsFactory)
+            : base(singleValidationStepFactory, validationsFactory)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+
         }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-
-                foreach (IDisposable validatorItem in Validators.Where(e=>e is IDisposable))
-                {
-                    validatorItem.Dispose();
-                }
-            }
-
-            _disposed = true;
-        }
-
-        #endregion
 
     }
 }

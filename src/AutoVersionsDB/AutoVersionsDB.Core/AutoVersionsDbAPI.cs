@@ -7,131 +7,53 @@ using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using Ninject;
+using System.Collections.Generic;
+using System.Linq;
+using AutoVersionsDB.Core.Utils;
 
 namespace AutoVersionsDB.Core
 {
-    public class AutoVersionsDbAPI : IDisposable
+    public static class AutoVersionsDbAPI
     {
-        public static readonly AutoVersionsDbAPI Instance = NinjectUtils.KernelInstance.Get<AutoVersionsDbAPI>();
+
+        private static readonly object _processSyncLock = new object();
 
 
-        private readonly object _processSyncLock = new object();
-
-        private ArtifactExtractor _currentArtifactExtractor;
-
-
-        public DBCommandsFactoryProvider DBCommandsFactoryProvider { get; }
-        public NotificationExecutersFactoryManager NotificationExecutersFactoryManager { get;  }
-
-        public ProjectConfigItem ProjectConfigItem { get; private set; }
-       
-        public ConfigProjectsManager ConfigProjectsManager { get; }
-
-        public ScriptFilesComparersManager ScriptFilesComparersManager { get; }
-        public ScriptFilesComparersProvider CurrentScriptFilesComparersProvider
+        public static List<ProjectConfigItem> GetProjectsList()
         {
-            get
-            {
-                return ScriptFilesComparersManager.GetScriptFilesComparersProvider(ProjectConfigItem.ProjectGuid);
-            }
+            return ProjectConfigs.GetAllProjectConfigs().Values.ToList();
         }
 
 
-
-
-
-        public bool HasError
+        public static List<DBType> GetDbTypesList()
         {
-            get
-            {
-                return NotificationExecutersFactoryManager.HasError;
-            }
-        }
-        public string ErrorCode
-        {
-            get
-            {
-                return NotificationExecutersFactoryManager.ErrorCode;
-            }
-        }
+            DBCommandsFactoryProvider dbCommandsFactoryProvider = NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>();
 
-        public string InstructionsMessage
-        {
-            get
-            {
-                return NotificationExecutersFactoryManager.InstructionsMessage;
-            }
-        }
-
-        public string InstructionsMessageStepName
-        {
-            get
-            {
-                return NotificationExecutersFactoryManager.InstructionsMessageStepName;
-            }
-        }
-
-
-
-
-
-        public AutoVersionsDbAPI(ConfigProjectsManager configProjectsManager,
-                                DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                ScriptFilesComparersManager scriptFilesComparersManager,
-                                NotificationExecutersFactoryManager notificationExecutersFactoryManager)
-        {
-            ConfigProjectsManager = configProjectsManager;
-
-            DBCommandsFactoryProvider = dbCommandsFactoryProvider;
-            ScriptFilesComparersManager = scriptFilesComparersManager;
-
-            NotificationExecutersFactoryManager = notificationExecutersFactoryManager;
-
+            return dbCommandsFactoryProvider.GetDbTypesList();
         }
 
 
         #region Config
 
-        public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
+
+        public static void SaveProjectConfig(ProjectConfigItem projectConfigItem)
         {
             lock (_processSyncLock)
             {
-                ProjectConfigItem = projectConfigItem;
-
-                Refresh();
+                ProjectConfigs.AddOrUpdateProjectConfig(projectConfigItem);
             }
         }
 
-        public void SaveProjectConfig()
+
+        public static void RemoveProjectConfig(string projectGuid)
         {
             lock (_processSyncLock)
             {
-                ConfigProjectsManager.AddOrUpdateProjectConfig(ProjectConfigItem);
-            }
-        }
-
-        public void Refresh()
-        {
-            if (_currentArtifactExtractor != null)
-            {
-                _currentArtifactExtractor.Dispose();
-            }
-
-            ValidateProjectConfig();
-
-            if (!HasError)
-            {
-                _currentArtifactExtractor = ArtifactExtractorFactory.Create(ProjectConfigItem);
-
-                RecreateScriptFilesComparersProvider();
+                ProjectConfigs.RemoveProjectConfig(projectGuid);
             }
         }
 
 
-        private void RecreateScriptFilesComparersProvider()
-        {
-            ScriptFilesComparersManager.Load(ProjectConfigItem);
-        }
 
 
         #endregion
@@ -139,92 +61,109 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
-        public void ValidateAll()
+        public static ProcessTrace ValidateAll(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
-                ValidateArtifactFile();
+                processTrace = ValidateArtifactFile(projectConfigItem, onNotificationStateChanged);
 
-                if (!HasError)
+                if (!processTrace.HasError)
                 {
-                    ValidateProjectConfig();
+                    processTrace = ValidateProjectConfig(projectConfigItem, onNotificationStateChanged);
 
-                    if (!HasError)
+                    if (!processTrace.HasError)
                     {
-                        ValidateSystemTableExist();
+                        processTrace = ValidateSystemTableExist(projectConfigItem, onNotificationStateChanged);
 
-                        if (!HasError)
+                        if (!processTrace.HasError)
                         {
-                            ValidateDBState();
+                            processTrace = ValidateDBState(projectConfigItem, onNotificationStateChanged);
                         }
                     }
                 }
             }
+
+            return processTrace;
         }
 
-        public void ValidateProjectConfig()
+        public static ProcessTrace ValidateProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ProjectConfigValidationEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
-           }
+            }
+
+            return processTrace;
         }
 
-        private void ValidateArtifactFile()
+        private static ProcessTrace ValidateArtifactFile(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ArtifactFileValidationEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
+
+            return processTrace;
         }
 
-        private void ValidateSystemTableExist()
+        private static ProcessTrace ValidateSystemTableExist(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SystemTableExsitValidationEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
+
+            return processTrace;
         }
 
 
-        private void ValidateDBState()
+        private static ProcessTrace ValidateDBState(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DBStateValidationEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
+
+            return processTrace;
         }
 
-        public bool ValdiateTargetStateAlreadyExecuted(string targetStateScriptFilename)
+        public static bool ValdiateTargetStateAlreadyExecuted(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
 
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(executionParams);
+                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                 }
             }
 
-            return !NotificationExecutersFactoryManager.HasError;
+            return !processTrace.HasError;
         }
 
         #endregion
@@ -232,27 +171,30 @@ namespace AutoVersionsDB.Core
 
         #region Run Change Db State
 
-        public void SyncDB()
+        public static ProcessTrace SyncDB(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
-
-                RecreateScriptFilesComparersProvider();
             }
+
+            return processTrace;
         }
 
-        public void SetDBToSpecificState(string targetStateScriptFilename, bool isIgnoreHistoryWarning)
+        public static ProcessTrace SetDBToSpecificState(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 if (isIgnoreHistoryWarning)
                 {
-                    RecreateDBFromScratch(targetStateScriptFilename);
+                    processTrace = RecreateDBFromScratch(projectConfigItem, targetStateScriptFilename, onNotificationStateChanged);
                 }
                 else
                 {
@@ -260,45 +202,46 @@ namespace AutoVersionsDB.Core
 
                     using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBToSpecificStateEngine>())
                     {
-                        engine.Prepare(ProjectConfigItem);
-                        engine.Run(executionParams);
+                        processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                     }
                 }
-
-                RecreateScriptFilesComparersProvider();
             }
+
+            return processTrace;
         }
 
-        public void RecreateDBFromScratch(string targetStateScriptFilename)
+        public static ProcessTrace RecreateDBFromScratch(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
 
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<RecreateDBFromScratchEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(executionParams);
+                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                 }
-
-                RecreateScriptFilesComparersProvider();
             }
+
+            return processTrace;
         }
 
-        public void SetDBStateByVirtualExecution(string targetStateScriptFilename)
+        public static ProcessTrace SetDBStateByVirtualExecution(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
 
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<CreateVirtualExecutionsEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(executionParams);
+                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
                 }
-
-                RecreateScriptFilesComparersProvider();
             }
+
+            return processTrace;
         }
 
 
@@ -318,54 +261,70 @@ namespace AutoVersionsDB.Core
 
         #region Deploy
 
-        public void Deploy()
+        public static ProcessTrace Deploy(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
+            ProcessTrace processTrace;
+
             lock (_processSyncLock)
             {
                 using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DeployEngine>())
                 {
-                    engine.Prepare(ProjectConfigItem);
-                    engine.Run(null);
+                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
                 }
             }
+
+            return processTrace;
         }
 
         #endregion
 
 
 
-        #region Script
+        #region Scripts
 
+        public static ScriptFilesState CreateScriptFilesState(ProjectConfigItem projectConfigItem)
+        {
+            ScriptFilesState scriptFilesState;
 
-        public string CreateNewIncrementalScriptFile(string scriptName)
+            ScriptFilesStateFactory scriptFilesStateFactory = NinjectUtils.KernelInstance.Get<ScriptFilesStateFactory>();
+
+            scriptFilesState = scriptFilesStateFactory.Create();
+            scriptFilesState.Reload(projectConfigItem);
+
+            return scriptFilesState;
+        }
+
+        public static string CreateNewIncrementalScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
         {
             RuntimeScriptFileBase scriptFileItem;
 
             lock (_processSyncLock)
             {
-                scriptFileItem = CurrentScriptFilesComparersProvider.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-                RecreateScriptFilesComparersProvider();
+                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
+                scriptFileItem = scriptFilesState.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
             }
 
             return scriptFileItem.FileFullPath;
         }
 
-        public string CreateNewRepeatableScriptFile(string scriptName)
+        public static string CreateNewRepeatableScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
         {
             RuntimeScriptFileBase scriptFileItem;
 
             lock (_processSyncLock)
             {
-                scriptFileItem = CurrentScriptFilesComparersProvider.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-                RecreateScriptFilesComparersProvider();
+                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
+                scriptFileItem = scriptFilesState.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
             }
 
             return scriptFileItem.FileFullPath;
         }
 
-        public string CreateNewDevDummyDataScriptFile(string scriptName)
+        public static string CreateNewDevDummyDataScriptFile(ProjectConfigItem projectConfig, string scriptName)
         {
-            if (!ProjectConfigItem.IsDevEnvironment)
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            if (!projectConfig.IsDevEnvironment)
             {
                 throw new Exception("DevdummyData Scripts not allow in Delivery environment");
             }
@@ -374,8 +333,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                scriptFileItem = CurrentScriptFilesComparersProvider.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-                RecreateScriptFilesComparersProvider();
+                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfig);
+                scriptFileItem = scriptFilesState.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
             }
 
             return scriptFileItem.FileFullPath;
@@ -383,50 +342,6 @@ namespace AutoVersionsDB.Core
 
 
         #endregion
-
-
-
-        #region IDisposable
-
-        private bool _disposed = false;
-
-        ~AutoVersionsDbAPI() => Dispose(false);
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (_currentArtifactExtractor != null)
-                {
-                    _currentArtifactExtractor.Dispose();
-                    _currentArtifactExtractor = null;
-                }
-
-                if (ScriptFilesComparersManager != null)
-                {
-                    ScriptFilesComparersManager.Dispose();
-                }
-
-            }
-
-            _disposed = true;
-        }
-
-        #endregion
-
 
     }
 }

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoVersionsDB.NotificationableEngine
+namespace AutoVersionsDB.Core.ScriptFiles
 {
-    public interface IDBDefinitionsErrorTypesFactory
+    public enum HashDiffType
     {
-        List<string> Create();
+        NotExist = 0,
+        Different = 1,
+        Equal = 2
     }
 }

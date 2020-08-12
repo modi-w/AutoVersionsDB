@@ -5,11 +5,12 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
     public class DBBackupFolderValidator : ValidatorBase
     {
+        private readonly string _dbBackupBaseFolder;
+
         public override string ValidatorName => "DBBackupFolderPath";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
-        private string _dbBackupBaseFolder;
 
         public DBBackupFolderValidator(string dbBackupBaseFolder)
         {

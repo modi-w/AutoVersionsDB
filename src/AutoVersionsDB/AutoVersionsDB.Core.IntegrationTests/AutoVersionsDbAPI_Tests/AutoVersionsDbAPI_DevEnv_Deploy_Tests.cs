@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
+using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -15,15 +16,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void Deploy([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
 
 
             //Act
-            _autoVersionsDbAPI.Deploy();
+            ProcessTrace processTrace = AutoVersionsDbAPI.Deploy(projectConfig, null);
 
 
             //Assert
-            assertProccessErrors();
+            assertProccessErrors(processTrace);
             assertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(projectConfig);
 
         }
@@ -86,8 +86,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 FileInfo extractFileInfo = extractFolderFileInfosDictionary[devFolderFileInfo.Name];
 
-                string devFolderFileHash = _fileChecksumManager.GetHashByFilePath(devFolderFileInfo.FullName);
-                string extractFolderFileHash = _fileChecksumManager.GetHashByFilePath(extractFileInfo.FullName);
+                string devFolderFileHash = _fileChecksum.GetHashByFilePath(devFolderFileInfo.FullName);
+                string extractFolderFileHash = _fileChecksum.GetHashByFilePath(extractFileInfo.FullName);
 
                 Assert.That(devFolderFileHash, Is.EqualTo(devFolderFileHash));
             }

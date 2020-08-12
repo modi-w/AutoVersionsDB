@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.Engines
 {
     public class AutoVersionsDbProcessState : ProcessStateBase
     {
-
+        public ScriptFilesState ScriptFilesState { get; set; }
         public string DBBackupFileFullPath { get; set; }
 
         public override bool CanRollback

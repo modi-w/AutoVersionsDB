@@ -13,34 +13,34 @@ namespace AutoVersionsDB.Core.ScriptFiles
 {
     public abstract class ScriptFilesComparerBase
     {
-        protected ScriptFilesManager ScriptFilesManager { get; private set; }
+        protected FileSystemScriptFiles FileSystemScriptFiles { get; private set; }
 
-        protected DBExecutedFilesManager DbExecutedFilesManager { get; private set; }
+        protected DBExecutedFiles DbExecutedFiles { get; private set; }
 
-        public string LastFileOfLastExecutedFilename => DbExecutedFilesManager.LastFileOfLastExecutedFilename;
+        public string LastFileOfLastExecutedFilename => DbExecutedFiles.LastFileOfLastExecutedFilename;
 
-        public List<RuntimeScriptFileBase> AllFileSystemScriptFiles => ScriptFilesManager.ScriptFilesList;
-        public List<RuntimeScriptFileBase> ExecutedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == eHashDiffType.Equal).ToList();
-        public List<RuntimeScriptFileBase> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == eHashDiffType.Different).ToList();
-        public List<RuntimeScriptFileBase> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == eHashDiffType.NotExist).ToList();
+        public List<RuntimeScriptFileBase> AllFileSystemScriptFiles => FileSystemScriptFiles.ScriptFilesList;
+        public List<RuntimeScriptFileBase> ExecutedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Equal).ToList();
+        public List<RuntimeScriptFileBase> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Different).ToList();
+        public List<RuntimeScriptFileBase> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.NotExist).ToList();
 
         public List<RuntimeScriptFileBase> NotExistInFileSystemButExistInDB { get; private set; }
 
         public RuntimeScriptFileBase LastScriptFile => AllFileSystemScriptFiles.LastOrDefault();
 
 
-        public ScriptFilesComparerBase(ScriptFilesManager scriptFilesManager,
-                                        DBExecutedFilesManager dbExecutedFilesManager)
+        public ScriptFilesComparerBase(FileSystemScriptFiles fileSystemScriptFiles,
+                                        DBExecutedFiles dbExecutedFiles)
         {
-            scriptFilesManager.ThrowIfNull(nameof(scriptFilesManager));
-            dbExecutedFilesManager.ThrowIfNull(nameof(dbExecutedFilesManager));
+            fileSystemScriptFiles.ThrowIfNull(nameof(fileSystemScriptFiles));
+            dbExecutedFiles.ThrowIfNull(nameof(dbExecutedFiles));
 
-            this.ScriptFilesManager = scriptFilesManager;
-            this.DbExecutedFilesManager = dbExecutedFilesManager;
+            this.FileSystemScriptFiles = fileSystemScriptFiles;
+            this.DbExecutedFiles = dbExecutedFiles;
 
             SetIsHashDifferentFlag();
 
-            CreateFileExistInDBButNotExistInSystemList(scriptFilesManager);
+            CreateFileExistInDBButNotExistInSystemList(fileSystemScriptFiles);
         }
 
 
@@ -49,29 +49,29 @@ namespace AutoVersionsDB.Core.ScriptFiles
             foreach (RuntimeScriptFileBase scriptFileItem in AllFileSystemScriptFiles)
             {
                 DataRow lastExecutedCurrnetFileRow =
-                            DbExecutedFilesManager.ExecutedFilesList
+                            DbExecutedFiles.ExecutedFilesList
                             .LastOrDefault(row => Convert.ToString(row["Filename"], CultureInfo.InvariantCulture).Trim().ToUpperInvariant() == scriptFileItem.Filename.Trim().ToUpperInvariant());
 
                 if (lastExecutedCurrnetFileRow == null)
                 {
-                    scriptFileItem.HashDiffType = eHashDiffType.NotExist;
+                    scriptFileItem.HashDiffType = HashDiffType.NotExist;
                 }
                 else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"], CultureInfo.InvariantCulture) != scriptFileItem.ComputedHash)
                 {
-                    scriptFileItem.HashDiffType = eHashDiffType.Different;
+                    scriptFileItem.HashDiffType = HashDiffType.Different;
                 }
                 else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"], CultureInfo.InvariantCulture) == scriptFileItem.ComputedHash)
                 {
-                    scriptFileItem.HashDiffType = eHashDiffType.Equal;
+                    scriptFileItem.HashDiffType = HashDiffType.Equal;
                 }
             }
         }
 
-        private void CreateFileExistInDBButNotExistInSystemList(ScriptFilesManager scriptFilesManager)
+        private void CreateFileExistInDBButNotExistInSystemList(FileSystemScriptFiles fileSystemScriptFiles)
         {
             NotExistInFileSystemButExistInDB = new List<RuntimeScriptFileBase>();
 
-            foreach (DataRow dbExecutedFileRow in DbExecutedFilesManager.ExecutedFilesList)
+            foreach (DataRow dbExecutedFileRow in DbExecutedFiles.ExecutedFilesList)
             {
                 string dbFilename = Convert.ToString(dbExecutedFileRow["Filename"], CultureInfo.InvariantCulture);
 
@@ -80,12 +80,12 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
                 if (fileSystemFile == null)
                 {
-                    string fileFullPath = Path.Combine(scriptFilesManager.FolderPath, dbFilename);
-                    RuntimeScriptFileBase misssingFileSystemFileItem = scriptFilesManager.CreateRuntimeScriptFileInstanceByFilename(fileFullPath);
+                    string fileFullPath = Path.Combine(fileSystemScriptFiles.FolderPath, dbFilename);
+                    RuntimeScriptFileBase misssingFileSystemFileItem = fileSystemScriptFiles.CreateRuntimeScriptFileInstanceByFilename(fileFullPath);
                     NotExistInFileSystemButExistInDB.Add(misssingFileSystemFileItem);
                 }
 
-                if (dbFilename == DbExecutedFilesManager.LastFileOfLastExecutedFilename)
+                if (dbFilename == DbExecutedFiles.LastFileOfLastExecutedFilename)
                 {
                     break;
                 }
@@ -99,17 +99,17 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public RuntimeScriptFileBase CreateNextNewScriptFile(string scriptName)
         {
-            return ScriptFilesManager.CreateNextRuntimeScriptFileInstance(scriptName, LastScriptFile);
+            return FileSystemScriptFiles.CreateNextRuntimeScriptFileInstance(scriptName, LastScriptFile);
         }
 
 
         protected RuntimeScriptFileBase CreateLasetExecutedFileItem()
         {
             RuntimeScriptFileBase prevExecutionLastScriptFile = null;
-            if (!string.IsNullOrWhiteSpace(DbExecutedFilesManager.LastFileOfLastExecutedFilename))
+            if (!string.IsNullOrWhiteSpace(DbExecutedFiles.LastFileOfLastExecutedFilename))
             {
-                string lastFileFullPath = Path.Combine(ScriptFilesManager.FolderPath, DbExecutedFilesManager.LastFileOfLastExecutedFilename);
-                prevExecutionLastScriptFile = ScriptFilesManager.CreateRuntimeScriptFileInstanceByFilename(lastFileFullPath);
+                string lastFileFullPath = Path.Combine(FileSystemScriptFiles.FolderPath, DbExecutedFiles.LastFileOfLastExecutedFilename);
+                prevExecutionLastScriptFile = FileSystemScriptFiles.CreateRuntimeScriptFileInstanceByFilename(lastFileFullPath);
             }
 
             return prevExecutionLastScriptFile;

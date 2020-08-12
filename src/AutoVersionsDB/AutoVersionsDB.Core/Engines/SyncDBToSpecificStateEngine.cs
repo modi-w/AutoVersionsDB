@@ -14,21 +14,22 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Set DB To Specific State";
 
 
-        public SyncDBToSpecificStateEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public SyncDBToSpecificStateEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                             RestoreDatabaseStep rollbackStep,
-                                            ScriptFilesComparersManager scriptFilesComparersManager,
-                                            ProjectConfigValidationStep projectConfigValidationStep,
-                                            CheckDeliveryEnvValidationStep checkDeliveryEnvValidationStep,
-                                            SystemTableValidationStep systemTableValidationStep,
-                                            DBStateValidationStep dbStateValidationStep,
-                                            TargetStateScriptFileValidationStep targetStateScriptFileValidationStep,
+                                            ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+                                            ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
+                                            CreateScriptFilesStateStep createScriptFilesStateStep,
+                                            ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,
+                                            ValidationsStep<DBStateValidationsFactory> dbStateValidationStep,
+                                            ValidationsStep<TargetStateScriptFileValidationsFactory> targetStateScriptFileValidationStep,
                                             CreateBackupStep createBackupStep,
                                             ExecuteScriptsStep executeScriptsStep,
                                             FinalizeProcessStep finalizeProcessStep)
-            : base(notificationExecutersFactoryManager, rollbackStep, scriptFilesComparersManager)
+            : base(notificationExecutersProviderFactory, rollbackStep)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(checkDeliveryEnvValidationStep);
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(systemTableValidationStep);
             ProcessSteps.Add(dbStateValidationStep);
             ProcessSteps.Add(targetStateScriptFileValidationStep);

@@ -6,14 +6,15 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
     public class ConnStrValidator : ValidatorBase
     {
+        private readonly string _connStr;
+        private readonly string _dbTypeCode;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+
         public override string ValidatorName => "ConnStr";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        private string _connStr;
-        private string _dbTypeCode;
-        private DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public ConnStrValidator(string connStr,
                                 string dbTypeCode,
@@ -33,12 +34,11 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             }
             else
             {
-                using (IDBConnectionManager dbConnectionManager = _dbCommandsFactoryProvider.CreateDBConnectionManager(_dbTypeCode, _connStr, 0))
+                using (IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbTypeCode, _connStr, 0))
                 {
-                    if (dbConnectionManager != null)
+                    if (dbConnection != null)
                     {
-                        string exMessage;
-                        if (!dbConnectionManager.CheckConnection(out exMessage))
+                        if (!dbConnection.CheckConnection(out string exMessage))
                         {
                             string errorMsg = $"Could not connect to the Database with the Connection String: '{_connStr}'. Error Message: '{exMessage}'";
                             return errorMsg;

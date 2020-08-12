@@ -3,11 +3,9 @@ namespace AutoVersionsDB.DbCommands.Contract
 {
     public interface IDBCommandsFactory
     {
-        string DBTypeCode { get; }
-        string DBTypeName { get; }
+        DBType DBType { get; }
 
-
-        IDBConnectionManager CreateDBConnectionManager(string connectionString, int timeout);
+        IDBConnection CreateDBConnection(string connectionString, int timeout);
 
         IDBCommands CreateDBCommands(string connectionString, int timeout);
 

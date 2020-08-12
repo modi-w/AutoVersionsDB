@@ -8,17 +8,17 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBBackupRestoreCommands : IDBBackupRestoreCommands
     {
-        private readonly SqlServerConnectionManager _sqlServerConnectionManager;
+        private readonly SqlServerConnection _sqlServerConnection;
 
 
 
-        public SqlServerDBBackupRestoreCommands(SqlServerConnectionManager sqlServerConnectionManager)
+        public SqlServerDBBackupRestoreCommands(SqlServerConnection sqlServerConnection)
         {
-            sqlServerConnectionManager.ThrowIfNull(nameof(sqlServerConnectionManager));
+            sqlServerConnection.ThrowIfNull(nameof(sqlServerConnection));
 
-            _sqlServerConnectionManager = sqlServerConnectionManager;
+            _sqlServerConnection = sqlServerConnection;
 
-            _sqlServerConnectionManager.Open();
+            _sqlServerConnection.Open();
         }
 
 
@@ -26,7 +26,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             string sqlCommandStr = $"BACKUP DATABASE [{dbName}] TO DISK='{filename}'";
 
-            _sqlServerConnectionManager.ExecSQLCommandStr(sqlCommandStr);
+            _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
         }
 
 
@@ -38,7 +38,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             ResolveDBInSingleUserMode(dbName, dbFilesBasePath);
 
             string sqlCmdStr = $"ALTER DATABASE [{dbName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
-            _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
+            _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr);
 
             sqlCmdStr = $"RESTORE DATABASE [{dbName}] FROM DISK='{filename}' WITH REPLACE";// ;";
             if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
@@ -47,14 +47,14 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 sqlCmdStr += $@" MOVE '{dbName}_log' TO '{dbFilesBasePath}\{dbName}.ldf';";
             }
 
-            _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
+            _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr);
 
             //_sqlServerConnectionManager.Close();
 
             //_sqlServerConnectionManager.Open();
 
             sqlCmdStr = $"ALTER DATABASE [{dbName}] SET MULTI_USER";
-            _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr);
+            _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr);
 
             //_sqlServerConnectionManager.Close();
         }
@@ -64,7 +64,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             bool isDBInSigleUserMode = false;
 
             string sqlCmdStr2 = $"SELECT user_access_desc FROM sys.databases WHERE name = '{dbName}'";
-            using (DataTable dbStateTable = _sqlServerConnectionManager.GetSelectCommand(sqlCmdStr2))
+            using (DataTable dbStateTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr2))
             {
                 if (dbStateTable.Rows.Count > 0)
                 {
@@ -78,7 +78,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             {
                 sqlCmdStr2 = $"SELECT request_session_id FROM sys.dm_tran_locks WHERE resource_database_id = DB_ID('{dbName}')";
 
-                using (DataTable sessionsTable = _sqlServerConnectionManager.GetSelectCommand(sqlCmdStr2))
+                using (DataTable sessionsTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr2))
                 {
                     foreach (DataRow rowSession in sessionsTable.Rows)
                     {
@@ -86,7 +86,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                         if (seesionID > 50)
                         {
                             sqlCmdStr2 = $"KILL {seesionID}";
-                            _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+                            _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);
                         }
                     }
                 }
@@ -96,7 +96,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
 
                 sqlCmdStr2 = $"DROP DATABASE [{dbName}]";
-                _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+                _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);
 
                 sqlCmdStr2 = $"CREATE DATABASE [{dbName}]";
                 if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
@@ -106,13 +106,13 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                     sqlCmdStr2 += " LOG ON ";
                     sqlCmdStr2 += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
                 }
-                _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+                _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);
             }
             else
             {
                 sqlCmdStr2 = $"SELECT name FROM master.dbo.sysdatabases WHERE ('[' + name + ']' = '{dbName}' OR name = '{dbName}' )";
 
-                using (DataTable dtIsDBExsit = _sqlServerConnectionManager.GetSelectCommand(sqlCmdStr2))
+                using (DataTable dtIsDBExsit = _sqlServerConnection.GetSelectCommand(sqlCmdStr2))
                 {
                     if (dtIsDBExsit.Rows.Count == 0)
                     {
@@ -130,7 +130,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                             sqlCmdStr2 += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
                         }
 
-                        _sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
+                        _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);
                     }
                 }
             }
@@ -158,9 +158,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             if (disposing)
             {
                 // free managed resources
-                _sqlServerConnectionManager.Close();
+                _sqlServerConnection.Close();
 
-                _sqlServerConnectionManager.Dispose();
+                _sqlServerConnection.Dispose();
             }
             // free native resources here if there are any
         }

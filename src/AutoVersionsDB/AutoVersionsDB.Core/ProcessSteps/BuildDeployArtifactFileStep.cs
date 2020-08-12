@@ -14,19 +14,12 @@ using System.IO.Compression;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public class BuildDeployArtifactFileStep : AutoVersionsDbStep, IDisposable
+    public class BuildDeployArtifactFileStep : AutoVersionsDbStep
     {
         public override string StepName => "Build Deploy Artifact File";
+        public override bool HasInternalStep => false;
 
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private IDBCommands _dbCommands;
-
-        private string _dbName;
-
-        private string _incrementalScriptsFolderPath;
-        private string _repeatableScriptsFolderPath;
-
-        private string _deployArtifactFolderPath;
 
         public BuildDeployArtifactFileStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
@@ -36,118 +29,84 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         }
 
-        public override void Prepare(ProjectConfigItem projectConfig)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
+      
 
-            _dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout);
-
-            _dbName = _dbCommands.GetDataBaseName();
-            _incrementalScriptsFolderPath = projectConfig.IncrementalScriptsFolderPath;
-            _repeatableScriptsFolderPath = projectConfig.RepeatableScriptsFolderPath;
-            _deployArtifactFolderPath = projectConfig.DeployArtifactFolderPath;
-        }
-
-
-        public override int GetNumOfInternalSteps(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
         {
             return 1;
         }
 
-        public override void Execute(AutoVersionsDbProcessState processState, ActionStepArgs actionStepArgs)
+        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
         {
-            string tempFolderForDeploy = Path.Combine(AutoVersionsDBSettings.TempFolderPath, $"Deploy_{_dbName}_{DateTime.Now:HH-mm-dd-fff}");
-            if (!Directory.Exists(tempFolderForDeploy))
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {
-                Directory.CreateDirectory(tempFolderForDeploy);
-            }
+                string dbName = dbCommands.GetDataBaseName();
 
 
-
-            ScriptFileTypeBase incrementalScriptFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
-
-            string incrementalSubFolderToDeploy = Path.Combine(tempFolderForDeploy, incrementalScriptFileType.RelativeFolderName);
-            if (!Directory.Exists(incrementalSubFolderToDeploy))
-            {
-                Directory.CreateDirectory(incrementalSubFolderToDeploy);
-            }
-
-            DirectoryInfo diIncremental = new DirectoryInfo(_incrementalScriptsFolderPath);
-            foreach (FileInfo scriptFileToCopy in diIncremental.GetFiles())
-            {
-                string targetFilename = Path.Combine(incrementalSubFolderToDeploy, scriptFileToCopy.Name);
-                scriptFileToCopy.CopyTo(targetFilename, true);
-            }
-
-
-            ScriptFileTypeBase repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
-
-            string repeatableSubFolderToDeploy = Path.Combine(tempFolderForDeploy, repeatableScriptFileType.RelativeFolderName);
-            if (!Directory.Exists(repeatableSubFolderToDeploy))
-            {
-                Directory.CreateDirectory(repeatableSubFolderToDeploy);
-            }
-
-            DirectoryInfo diRepeatable = new DirectoryInfo(_repeatableScriptsFolderPath);
-            foreach (FileInfo scriptFileToCopy in diRepeatable.GetFiles())
-            {
-                string targetFilename = Path.Combine(repeatableSubFolderToDeploy, scriptFileToCopy.Name);
-                scriptFileToCopy.CopyTo(targetFilename, true);
-            }
-
-
-
-
-            if (!Directory.Exists(_deployArtifactFolderPath))
-            {
-                Directory.CreateDirectory(_deployArtifactFolderPath);
-            }
-
-            string targetFileFullPath = Path.Combine(_deployArtifactFolderPath, $"{_dbName}{ArtifactExtractor.ArtifactFilenameExtension}");
-
-            if (File.Exists(targetFileFullPath))
-            {
-                File.Delete(targetFileFullPath);
-            }
-
-            ZipFile.CreateFromDirectory(tempFolderForDeploy, targetFileFullPath);
-        }
-
-
-
-
-
-        #region IDisposable
-
-        private bool _disposed = false;
-
-        ~BuildDeployArtifactFileStep() => Dispose(false);
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (_dbCommands != null)
+                string tempFolderForDeploy = Path.Combine(AutoVersionsDBSettings.TempFolderPath, $"Deploy_{dbName}_{DateTime.Now:HH-mm-dd-fff}");
+                if (!Directory.Exists(tempFolderForDeploy))
                 {
-                    _dbCommands.Dispose();
+                    Directory.CreateDirectory(tempFolderForDeploy);
                 }
+
+
+
+                ScriptFileTypeBase incrementalScriptFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
+
+                string incrementalSubFolderToDeploy = Path.Combine(tempFolderForDeploy, incrementalScriptFileType.RelativeFolderName);
+                if (!Directory.Exists(incrementalSubFolderToDeploy))
+                {
+                    Directory.CreateDirectory(incrementalSubFolderToDeploy);
+                }
+
+                DirectoryInfo diIncremental = new DirectoryInfo(projectConfig.IncrementalScriptsFolderPath);
+                foreach (FileInfo scriptFileToCopy in diIncremental.GetFiles())
+                {
+                    string targetFilename = Path.Combine(incrementalSubFolderToDeploy, scriptFileToCopy.Name);
+                    scriptFileToCopy.CopyTo(targetFilename, true);
+                }
+
+
+                ScriptFileTypeBase repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
+
+                string repeatableSubFolderToDeploy = Path.Combine(tempFolderForDeploy, repeatableScriptFileType.RelativeFolderName);
+                if (!Directory.Exists(repeatableSubFolderToDeploy))
+                {
+                    Directory.CreateDirectory(repeatableSubFolderToDeploy);
+                }
+
+                DirectoryInfo diRepeatable = new DirectoryInfo(projectConfig.RepeatableScriptsFolderPath);
+                foreach (FileInfo scriptFileToCopy in diRepeatable.GetFiles())
+                {
+                    string targetFilename = Path.Combine(repeatableSubFolderToDeploy, scriptFileToCopy.Name);
+                    scriptFileToCopy.CopyTo(targetFilename, true);
+                }
+
+
+
+
+                if (!Directory.Exists(projectConfig.DeployArtifactFolderPath))
+                {
+                    Directory.CreateDirectory(projectConfig.DeployArtifactFolderPath);
+                }
+
+                string targetFileFullPath = Path.Combine(projectConfig.DeployArtifactFolderPath, $"{dbName}{ArtifactExtractor.ArtifactFilenameExtension}");
+
+                if (File.Exists(targetFileFullPath))
+                {
+                    File.Delete(targetFileFullPath);
+                }
+
+                ZipFile.CreateFromDirectory(tempFolderForDeploy, targetFileFullPath);
             }
 
-            _disposed = true;
         }
 
-        #endregion
+
+
+     
 
     }
 }

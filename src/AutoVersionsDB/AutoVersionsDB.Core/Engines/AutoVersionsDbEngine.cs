@@ -23,9 +23,9 @@ namespace AutoVersionsDB.Core.Engines
             }
         }
 
-        public AutoVersionsDbEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
+        public AutoVersionsDbEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
                                     NotificationableActionStepBase rollbackStep)
-            : base(notificationExecutersFactoryManager, rollbackStep)
+            : base(notificationExecutersProviderFactory, rollbackStep)
         {
             IsVirtualExecution = false;
 

@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
     public class AutoVersionsDbAPI_DevEnv_CreateRuntimeScriptFile_Tests : AutoVersionsDbAPI_TestsBase
     {
         private string c_RelFolder_Incremental = "Incremental";
-        
+
         private string c_Incremental_scriptName1 = "TestIncScript1";
         private string _scriptFullPath_Incremental_scriptName1
         {
@@ -84,7 +84,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             }
 
 
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -93,7 +92,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             try
             {
                 //Act
-                fileToDelete = _autoVersionsDbAPI.CreateNewIncrementalScriptFile(c_Incremental_scriptName1);
+                fileToDelete = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig, c_Incremental_scriptName1);
 
                 //Assert
                 Assert.That(File.Exists(_scriptFullPath_Incremental_scriptName1));
@@ -118,7 +117,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             }
 
 
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -128,8 +126,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             try
             {
                 //Act
-                fileToDelete1 = _autoVersionsDbAPI.CreateNewIncrementalScriptFile(c_Incremental_scriptName1);
-                fileToDelete2 = _autoVersionsDbAPI.CreateNewIncrementalScriptFile(c_Incremental_scriptName2);
+                fileToDelete1 = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig, c_Incremental_scriptName1);
+                fileToDelete2 = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig, c_Incremental_scriptName2);
 
                 //Assert
                 Assert.That(File.Exists(_scriptFullPath_Incremental_scriptName1));
@@ -165,7 +163,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             }
 
 
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -174,7 +171,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             try
             {
                 //Act
-                fileToDelete = _autoVersionsDbAPI.CreateNewRepeatableScriptFile(c_Repeatable_scriptName1);
+                fileToDelete = AutoVersionsDbAPI.CreateNewRepeatableScriptFile(projectConfig, c_Repeatable_scriptName1);
 
                 //Assert
                 Assert.That(File.Exists(_scriptFullPath_Repeatable_scriptName1));
@@ -200,7 +197,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             }
 
 
-            _autoVersionsDbAPI.SetProjectConfigItem(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
@@ -209,7 +205,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             try
             {
                 //Act
-                fileToDelete = _autoVersionsDbAPI.CreateNewDevDummyDataScriptFile(c_DevDummyData_scriptName1);
+                fileToDelete = AutoVersionsDbAPI.CreateNewDevDummyDataScriptFile(projectConfig, c_DevDummyData_scriptName1);
 
                 //Assert
                 Assert.That(File.Exists(_scriptFullPath_DevDummyData_scriptName1));

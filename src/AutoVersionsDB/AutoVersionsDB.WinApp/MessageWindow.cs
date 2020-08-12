@@ -9,33 +9,33 @@ namespace AutoVersionsDB.WinApp
     public partial class MessageWindow : Form
     {
 
-        public NotifictionStatesHistoryManager NotifictionStatesHistoryManager { get; private set; }
+        public ProcessTrace ProcessTrace { get; private set; }
 
-        public MessageWindow(NotifictionStatesHistoryManager notifictionStatesHistoryManager)
+        public MessageWindow(ProcessTrace processTrace)
         {
-            notifictionStatesHistoryManager.ThrowIfNull(nameof(notifictionStatesHistoryManager));
+            processTrace.ThrowIfNull(nameof(processTrace));
 
 
             InitializeComponent();
 
-            NotifictionStatesHistoryManager = notifictionStatesHistoryManager;
+            ProcessTrace = processTrace;
 
-            chkShowOnlyErrors.Checked = NotifictionStatesHistoryManager.HasError;
-            updateMessage();
+            chkShowOnlyErrors.Checked = ProcessTrace.HasError;
+            UpdateMessage();
         }
 
 
-        private void chkShowOnlyErrors_CheckedChanged(object sender, EventArgs e)
+        private void ChkShowOnlyErrors_CheckedChanged(object sender, EventArgs e)
         {
-            updateMessage();
+            UpdateMessage();
         }
 
 
-        private void updateMessage()
+        private void UpdateMessage()
         {
             rtbMessages.Clear();
 
-            if (NotifictionStatesHistoryManager.HasError)
+            if (ProcessTrace.HasError)
             {
                 Text = "Errors";
                 lblMessageType.Text = "Errors";
@@ -52,12 +52,12 @@ namespace AutoVersionsDB.WinApp
 
             if (chkShowOnlyErrors.Checked)
             {
-                string errorMessage = NotifictionStatesHistoryManager.GetOnlyErrorsHistoryAsString();
+                string errorMessage = ProcessTrace.GetOnlyErrorsHistoryAsString();
                 rtbMessages.AppendText(errorMessage);
             }
             else
             {
-                string processMessage = NotifictionStatesHistoryManager.GetAllHistoryAsString();
+                string processMessage = ProcessTrace.GetAllHistoryAsString();
                 rtbMessages.AppendText(processMessage);
             }
         }

@@ -7,15 +7,16 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
 {
     public class IsTargetScriptFiletAlreadyExecutedValidator : ValidatorBase
     {
+        private readonly ScriptFilesState _scriptFilesState;
+
         public override string ValidatorName => "IsTargetScriptFiletAlreadyExecuted";
 
         public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
 
-        private ScriptFilesComparersProvider _scriptFilesComparersProvider;
 
-        public IsTargetScriptFiletAlreadyExecutedValidator(ScriptFilesComparersProvider scriptFilesComparersProvider)
+        public IsTargetScriptFiletAlreadyExecutedValidator(ScriptFilesState scriptFilesState)
         {
-            _scriptFilesComparersProvider = scriptFilesComparersProvider;
+            _scriptFilesState = scriptFilesState;
         }
 
         public override string Validate(AutoVersionsDBExecutionParams executionParam)
@@ -25,7 +26,7 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
             if (!string.IsNullOrWhiteSpace(executionParam.TargetStateScriptFileName))
             {
                 var isTargetFileExecuted =
-                    _scriptFilesComparersProvider.IncrementalScriptFilesComparer.ExecutedFiles
+                    _scriptFilesState.IncrementalScriptFilesComparer.ExecutedFiles
                         .Any(e => e.Filename.Trim().ToUpperInvariant() == executionParam.TargetStateScriptFileName.Trim().ToUpperInvariant());
 
                 if (isTargetFileExecuted)

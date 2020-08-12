@@ -14,11 +14,12 @@ namespace AutoVersionsDB.WinApp
     {
         private const string c_SearchPlaceHolderText = "Search Project...";
 
+        private List<ProjectConfigItem> _allProjectsList;
+
         public event EventHandler OnSetNewProject;
         public event OnNavToProcessHandler OnNavToProcess;
         public event OnEditProjectHandler OnEditProject;
 
-        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
 
         //private double dummy
 
@@ -29,8 +30,6 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
-
                 //lblProjectIcon.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
                 //lblDeleteProject.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
 
@@ -106,11 +105,10 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                if (_autoVersionsDbAPI!= null
-                    && _autoVersionsDbAPI.ConfigProjectsManager != null)
-                {
+                _allProjectsList = AutoVersionsDbAPI.GetProjectsList();
+
                     List<ProjectConfigItem> filteredProjectList =
-                        _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList
+                        _allProjectsList
                         .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
                         .OrderBy(e => e.ProjectName)
                         .ToList();
@@ -127,7 +125,6 @@ namespace AutoVersionsDB.WinApp
                     }
 
                     SetProjectItemsSize();
-                }
 
 
             }
@@ -180,7 +177,7 @@ namespace AutoVersionsDB.WinApp
             if (disposing)
             {
                 // Dispose managed state (managed objects).
-                _autoVersionsDbAPI.Dispose();
+                //_autoVersionsDbAPI.Dispose();
 
                 if (components != null)
                 {

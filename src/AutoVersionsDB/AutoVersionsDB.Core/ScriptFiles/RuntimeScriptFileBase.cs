@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public string ComputedHash { get; set; }
         public DateTime ComputedHashDateTime { get; set; }
-        public eHashDiffType HashDiffType { get; set; }
+        public HashDiffType HashDiffType { get; set; }
 
         public DateTime ExecutedDateTime { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ProcessSteps.Validations;
+﻿using AutoVersionsDB.Core.ProcessSteps;
+using AutoVersionsDB.Core.ProcessSteps.Validations;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
 using System;
@@ -12,11 +13,12 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Target State Script File Validation";
 
 
-        public TargetStateScriptFileValidationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                                     ScriptFilesComparersManager scriptFilesComparersManager,
-                                                     TargetStateScriptFileValidationStep targetStateScriptFileValidationStep)
-            : base(notificationExecutersFactoryManager, null, scriptFilesComparersManager)
+        public TargetStateScriptFileValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
+                                                        CreateScriptFilesStateStep createScriptFilesStateStep,
+                                                        ValidationsStep<TargetStateScriptFileValidationsFactory> targetStateScriptFileValidationStep)
+            : base(notificationExecutersProviderFactory, null)
         {
+            ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(targetStateScriptFileValidationStep);
         }
     }

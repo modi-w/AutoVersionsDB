@@ -5,11 +5,12 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
     public class ScriptsFolderPathValidator : ValidatorBase
     {
+        private readonly string _scriptFolderPath;
+
         public override string ValidatorName => "ScriptsFolderPath";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
-        private string _scriptFolderPath;
 
 
         public ScriptsFolderPathValidator(string scriptFolderPath)

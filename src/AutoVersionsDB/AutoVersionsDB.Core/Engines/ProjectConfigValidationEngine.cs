@@ -12,9 +12,9 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Project Config Validation";
 
 
-        public ProjectConfigValidationEngine(NotificationExecutersFactoryManager notificationExecutersFactoryManager,
-                                            ProjectConfigValidationStep projectConfigValidationStep)
-            : base(notificationExecutersFactoryManager, null)
+        public ProjectConfigValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
+                                            ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep)
+            : base(notificationExecutersProviderFactory, null)
         {
             ProcessSteps.Add(projectConfigValidationStep);
         }

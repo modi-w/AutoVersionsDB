@@ -9,26 +9,18 @@ namespace AutoVersionsDB.WinApp
 {
     public partial class NotificationsControl : UserControl
     {
-        private readonly AutoVersionsDbAPI _autoVersionsDbAPI = null;
-
+        private ProcessTrace _processState;
 
         public NotificationsControl()
         {
             InitializeComponent();
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                _autoVersionsDbAPI = AutoVersionsDbAPI.Instance;
-
-                AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged += NotifictionStatesHistoryManager_OnNotificationStateItemChanged;
-
-                this.Disposed += NotificationsControl_Disposed;
-            }
-
         }
 
-        private void NotifictionStatesHistoryManager_OnNotificationStateItemChanged(NotificationStateItem notificationStateItem)
+        public void OnNotificationStateChanged(ProcessTrace processState, NotificationStateItem notificationStateItem)
         {
+            _processState = processState;
+
             ResolveColorAndImageByErrorStatus(true);
 
             lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
@@ -138,11 +130,11 @@ namespace AutoVersionsDB.WinApp
 
             ResolveColorAndImageByErrorStatus(false);
 
-            if (!string.IsNullOrWhiteSpace(_autoVersionsDbAPI.InstructionsMessage))
+            if (!string.IsNullOrWhiteSpace(_processState.InstructionsMessage))
             {
                 lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
                 {
-                    lblProcessStatusMessage.Text = _autoVersionsDbAPI.InstructionsMessage;
+                    lblProcessStatusMessage.Text = _processState.InstructionsMessage;
                 }));
             }
             else
@@ -162,7 +154,7 @@ namespace AutoVersionsDB.WinApp
             }
             else
             {
-                if (_autoVersionsDbAPI.HasError)
+                if (_processState.HasError)
                 {
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -182,7 +174,7 @@ namespace AutoVersionsDB.WinApp
                 }
             }
 
-            if (_autoVersionsDbAPI.HasError)
+            if (_processState.HasError)
             {
 
                 lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
@@ -203,18 +195,15 @@ namespace AutoVersionsDB.WinApp
 
         private void PbStatus_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow();
+            ShowMessageWindow(_processState);
         }
 
-        private void ShowMessageWindow()
+        private static void ShowMessageWindow(ProcessTrace processResults)
         {
-            //if (NotifictionStatesHistoryManager != null)
-            //{
-            using (MessageWindow messageWindow = new MessageWindow(_autoVersionsDbAPI.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager))
+            using (MessageWindow messageWindow = new MessageWindow(processResults))
             {
                 messageWindow.ShowDialog();
             }
-            //  }
 
         }
 
@@ -239,19 +228,15 @@ namespace AutoVersionsDB.WinApp
 
         private void LblPrecents_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow();
+            ShowMessageWindow(_processState);
         }
 
         private void LblProcessStatusMessage_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow();
+            ShowMessageWindow(_processState);
         }
 
 
-        private void NotificationsControl_Disposed(object sender, EventArgs e)
-        {
-            AutoVersionsDbAPI.Instance.NotificationExecutersFactoryManager.NotifictionStatesHistoryManager.OnNotificationStateItemChanged -= NotifictionStatesHistoryManager_OnNotificationStateItemChanged;
-        }
 
 
         #region Dispose
@@ -270,7 +255,7 @@ namespace AutoVersionsDB.WinApp
             if (disposing)
             {
                 // Dispose managed state (managed objects).
-                _autoVersionsDbAPI.Dispose();
+                //AutoVersionsDbAPI.Dispose();
 
                 if (components != null)
                 {
