@@ -10,7 +10,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class SyncDBEngine : AutoVersionsDbScriptsEngine
+    public class SyncDBEngine : AutoVersionsDbEngine
     {
         public override string EngineTypeName => "Sync DB";
 

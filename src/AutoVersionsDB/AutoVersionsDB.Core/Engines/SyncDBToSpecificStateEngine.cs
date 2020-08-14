@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class SyncDBToSpecificStateEngine : AutoVersionsDbScriptsEngine
+    public class SyncDBToSpecificStateEngine : AutoVersionsDbEngine
     {
         public override string EngineTypeName => "Set DB To Specific State";
 

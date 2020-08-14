@@ -12,7 +12,7 @@ namespace AutoVersionsDB.NotificationableEngine
         private readonly Action<ProcessTrace, NotificationStateItem> _onNotificationStateChanged;
 
 
-        public ProcessTrace NotifictionStatesHistory { get; private set; }
+        public ProcessTrace ProcessTrace { get; private set; }
 
         public NotificationStateItem RootNotificationStateItem { get; private set; }
 
@@ -25,7 +25,7 @@ namespace AutoVersionsDB.NotificationableEngine
         internal void Reset(NotificationStateItem rootNotificationStateItem)
         {
             RootNotificationStateItem = rootNotificationStateItem;
-            NotifictionStatesHistory = new ProcessTrace();
+            ProcessTrace = new ProcessTrace();
             
             RiseNotificationStateChanged();
         }
@@ -96,14 +96,14 @@ namespace AutoVersionsDB.NotificationableEngine
             NotificationStateItem snapshotNotificationState = RootNotificationStateItem.Clone();
             snapshotNotificationState.SnapshotTimeStemp = DateTime.Now;
 
-            lock (NotifictionStatesHistory)
+            lock (ProcessTrace)
             {
-                NotifictionStatesHistory.Appand(snapshotNotificationState);
+                ProcessTrace.Appand(snapshotNotificationState);
             }
 
             Task.Run(() =>
             {
-                _onNotificationStateChanged?.Invoke(NotifictionStatesHistory, snapshotNotificationState);
+                _onNotificationStateChanged?.Invoke(ProcessTrace, snapshotNotificationState);
             });
         }
     }

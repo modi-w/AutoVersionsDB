@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class RecreateDBFromScratchEngine : AutoVersionsDbScriptsEngine
+    public class RecreateDBFromScratchEngine : AutoVersionsDbEngine
     {
         public override string EngineTypeName => "Recreate DB From Scratch";
 

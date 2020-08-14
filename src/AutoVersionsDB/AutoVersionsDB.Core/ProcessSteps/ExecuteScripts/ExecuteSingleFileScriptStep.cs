@@ -67,7 +67,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                 {
                     foreach (string scriptBlockStr in scriptBlocks)
                     {
-                        if (!notificationExecutersProvider.NotifictionStatesHistory.HasError)
+                        if (!notificationExecutersProvider.ProcessTrace.HasError)
                         {
                           var executeScriptBlockStep = _executeScriptBlockStepFactory.Craete(_dbCommands, scriptBlockStr);
 

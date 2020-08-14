@@ -120,7 +120,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             {
                 foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
                 {
-                    if (!notificationExecutersProvider.NotifictionStatesHistory.HasError)
+                    if (!notificationExecutersProvider.ProcessTrace.HasError)
                     {
                         string ignoreStr = "";
                         if (isVirtualExecution)

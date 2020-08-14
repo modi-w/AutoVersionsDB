@@ -11,11 +11,11 @@ namespace AutoVersionsDB.NotificationableEngine
         internal NotificationStateItem RootNotificationStateItem { get; private set; }
 
         internal NotifictionStateChangeHandler NotifictionStateChangeHandler { get; private set; }
-        public ProcessTrace NotifictionStatesHistory
+        public ProcessTrace ProcessTrace
         {
             get
             {
-                return NotifictionStateChangeHandler.NotifictionStatesHistory;
+                return NotifictionStateChangeHandler.ProcessTrace;
             }
         }
 

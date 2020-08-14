@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class TargetStateScriptFileValidationEngine : AutoVersionsDbScriptsEngine
+    public class TargetStateScriptFileValidationEngine : AutoVersionsDbEngine
     {
         public override string EngineTypeName => "Target State Script File Validation";
 

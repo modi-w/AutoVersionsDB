@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class DeployEngine : AutoVersionsDbScriptsEngine
+    public class DeployEngine : AutoVersionsDbEngine
     {
         public override string EngineTypeName =>  "Deploy";
 

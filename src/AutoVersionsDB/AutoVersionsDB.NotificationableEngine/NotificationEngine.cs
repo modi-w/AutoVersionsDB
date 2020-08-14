@@ -34,7 +34,6 @@ namespace AutoVersionsDB.NotificationableEngine
         public List<NotificationableActionStepBase> ProcessSteps { get; }
         public NotificationableActionStepBase RollbackStep { get; }
 
-        //public event EventHandler<PrepareEngineEventArgs> Preparing;
         public event EventHandler<InitiateEngineEventArgs> Initiated;
 
         public NotificationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
@@ -55,31 +54,6 @@ namespace AutoVersionsDB.NotificationableEngine
 
         }
 
-        //public void Prepare(NotificationableEngineConfig notificationableEngineConfig)
-        //{
-        //    RaisePreparing(notificationableEngineConfig);
-
-        //    if (RollbackStep != null)
-        //    {
-        //        RollbackStep.Prepare(notificationableEngineConfig);
-        //    }
-
-        //    foreach (NotificationableActionStepBase processStep in ProcessSteps)
-        //    {
-        //        processStep.Prepare(notificationableEngineConfig);
-        //    }
-
-        //    RaisePrepared(notificationableEngineConfig);
-        //}
-
-        //private void RaisePreparing(NotificationableEngineConfig NotificationableEngineConfig)
-        //{
-        //    OnPreparing(new PrepareEngineEventArgs(NotificationableEngineConfig));
-        //}
-        //protected virtual void OnPreparing(PrepareEngineEventArgs e)
-        //{
-        //    this.Preparing?.Invoke(this, e);
-        //}
 
         private void RaiseInitiated(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processStateBase)
         {
@@ -111,13 +85,13 @@ namespace AutoVersionsDB.NotificationableEngine
 
             using (NotificationWrapperExecuter rootNotificationWrapperExecuter = notificationExecutersProvider.Reset(totalNumOfSteps))
             {
-                if (!notificationExecutersProvider.NotifictionStatesHistory.HasError)
+                if (!notificationExecutersProvider.ProcessTrace.HasError)
                 {
                     foreach (NotificationableActionStepBase processStep in ProcessSteps)
                     {
                         rootNotificationWrapperExecuter.ExecuteStep(processStep, notificationableEngineConfig, processState);
 
-                        if (notificationExecutersProvider.NotifictionStatesHistory.HasError)
+                        if (notificationExecutersProvider.ProcessTrace.HasError)
                         {
                             RollbackProcess(notificationExecutersProvider, rootNotificationWrapperExecuter, notificationableEngineConfig, processState);
                             break;
@@ -132,7 +106,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 processState.EndProcessDateTime = DateTime.Now;
             }
 
-            return notificationExecutersProvider.NotifictionStatesHistory;
+            return notificationExecutersProvider.ProcessTrace;
         }
 
 

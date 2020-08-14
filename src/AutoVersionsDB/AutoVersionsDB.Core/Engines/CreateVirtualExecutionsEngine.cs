@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class CreateVirtualExecutionsEngine : AutoVersionsDbScriptsEngine
+    public class CreateVirtualExecutionsEngine : AutoVersionsDbEngine
     {
         public override string EngineTypeName => "Create Virtual Executions";
 

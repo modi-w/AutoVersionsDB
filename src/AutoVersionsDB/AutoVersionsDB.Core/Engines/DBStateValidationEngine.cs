@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class DBStateValidationEngine : AutoVersionsDbScriptsEngine
+    public class DBStateValidationEngine : AutoVersionsDbEngine
     {
         public override string EngineTypeName => "DB State Validation";
 

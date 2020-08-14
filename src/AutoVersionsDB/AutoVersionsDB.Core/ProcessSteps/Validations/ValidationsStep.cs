@@ -48,7 +48,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
                 foreach (ValidatorBase validator in validationsGroup.GetValidators())
                 {
                     if (validationsGroup.ShouldContinueWhenFindError
-                        || !notificationExecutersProvider.NotifictionStatesHistory.HasError)
+                        || !notificationExecutersProvider.ProcessTrace.HasError)
                     {
                         SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
 
