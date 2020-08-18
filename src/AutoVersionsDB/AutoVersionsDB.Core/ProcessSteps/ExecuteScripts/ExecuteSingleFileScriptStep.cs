@@ -63,17 +63,17 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
                 List<string> scriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).ToList();
 
-                using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(scriptBlocks.Count))
+                List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
+                foreach (string scriptBlockStr in scriptBlocks)
                 {
-                    foreach (string scriptBlockStr in scriptBlocks)
-                    {
-                        if (!notificationExecutersProvider.ProcessTrace.HasError)
-                        {
-                          var executeScriptBlockStep = _executeScriptBlockStepFactory.Craete(_dbCommands, scriptBlockStr);
+                    var executeScriptBlockStep = _executeScriptBlockStepFactory.Craete(_dbCommands, scriptBlockStr);
+                    internalSteps.Add(executeScriptBlockStep);
+                }
 
-                            notificationWrapperExecuter.ExecuteStep(executeScriptBlockStep, projectConfig, processState);
-                        }
-                    }
+                using (NotificationWrapperExecuter notificationWrapperExecuter =
+                        notificationExecutersProvider.CreateNotificationWrapperExecuter(this.StepName, internalSteps, false))
+                {
+                    notificationWrapperExecuter.Execute(projectConfig, notificationExecutersProvider, processState);
                 }
             }
 

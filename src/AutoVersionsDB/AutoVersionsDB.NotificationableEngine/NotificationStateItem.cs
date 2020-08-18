@@ -171,9 +171,13 @@ namespace AutoVersionsDB.NotificationableEngine
             NumOfSteps = numOfSteps;
         }
 
+        //internal void CreateInternalNotificationStateItem(int numOfSteps)
+        //{
+        //    InternalNotificationStateItem = new NotificationStateItem(numOfSteps);
+        //}
 
 
-      
+
 
 
 

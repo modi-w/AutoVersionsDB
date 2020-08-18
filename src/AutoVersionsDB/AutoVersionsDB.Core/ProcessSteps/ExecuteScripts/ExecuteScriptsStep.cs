@@ -116,26 +116,26 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
             bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
 
-            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(scriptFilesList.Count))
+            List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
+            foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
             {
-                foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
+                string ignoreStr = "";
+                if (isVirtualExecution)
                 {
-                    if (!notificationExecutersProvider.ProcessTrace.HasError)
-                    {
-                        string ignoreStr = "";
-                        if (isVirtualExecution)
-                        {
-                            ignoreStr = " - Ignore (virtual execution)";
-                        }
-
-                        string stepName = $"{fileType} - {scriptFile.Filename}{ignoreStr}";
-
-                        ExecuteSingleFileScriptStep executeSingleFileScriptStep = _executeSingleFileScriptStepFactory.Create(dbCommands, stepName, scriptFile);
-
-
-                        notificationWrapperExecuter.ExecuteStep(executeSingleFileScriptStep, projectConfig, processState);
-                    }
+                    ignoreStr = " - Ignore (virtual execution)";
                 }
+
+                string stepName = $"{fileType} - {scriptFile.Filename}{ignoreStr}";
+
+                ExecuteSingleFileScriptStep executeSingleFileScriptStep = _executeSingleFileScriptStepFactory.Create(dbCommands, stepName, scriptFile);
+                
+                internalSteps.Add(executeSingleFileScriptStep);
+            }
+
+            using (NotificationWrapperExecuter notificationWrapperExecuter =
+                notificationExecutersProvider.CreateNotificationWrapperExecuter(this.StepName, internalSteps, false))
+            {
+                notificationWrapperExecuter.Execute(projectConfig, notificationExecutersProvider, processState);
             }
 
         }

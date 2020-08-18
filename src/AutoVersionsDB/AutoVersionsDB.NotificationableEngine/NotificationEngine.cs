@@ -67,8 +67,6 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public ProcessTrace Run(NotificationableEngineConfig notificationableEngineConfig, ExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
         {
-            int totalNumOfSteps = ProcessSteps.Count;
-
             ProcessStateBase processState = new TProcessState()
             {
                 ExecutionParams = executionParams,
@@ -83,22 +81,14 @@ namespace AutoVersionsDB.NotificationableEngine
 
             NotificationExecutersProvider notificationExecutersProvider = _notificationExecutersProviderFactory.Create(onNotificationStateChanged);
 
-            using (NotificationWrapperExecuter rootNotificationWrapperExecuter = notificationExecutersProvider.Reset(totalNumOfSteps))
+            using (NotificationWrapperExecuter rootNotificationWrapperExecuter = notificationExecutersProvider.Reset(ProcessSteps, false))
             {
-                if (!notificationExecutersProvider.ProcessTrace.HasError)
+                rootNotificationWrapperExecuter.Execute(notificationableEngineConfig, notificationExecutersProvider, processState);
+
+                if (notificationExecutersProvider.ProcessTrace.HasError)
                 {
-                    foreach (NotificationableActionStepBase processStep in ProcessSteps)
-                    {
-                        rootNotificationWrapperExecuter.ExecuteStep(processStep, notificationableEngineConfig, processState);
-
-                        if (notificationExecutersProvider.ProcessTrace.HasError)
-                        {
-                            RollbackProcess(notificationExecutersProvider, rootNotificationWrapperExecuter, notificationableEngineConfig, processState);
-                            break;
-                        }
-                    }
+                    RollbackProcess(notificationExecutersProvider, notificationableEngineConfig, processState);
                 }
-
             }
 
             if (!processState.EndProcessDateTime.HasValue)
@@ -111,16 +101,21 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        private void RollbackProcess(NotificationExecutersProvider notificationExecutersProvider, NotificationWrapperExecuter currentNotificationWrapperExecuter, NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
+        private void RollbackProcess(NotificationExecutersProvider notificationExecutersProvider, NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
         {
             if (RollbackStep != null)
             {
                 if (processState.CanRollback)
                 {
                     notificationExecutersProvider.ClearAllInternalProcessState();
-                    notificationExecutersProvider.RootNotificationStateItem.NumOfSteps++;
-                    //currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, $"because error on {stepName}", processState, null);
-                    currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, notificationableEngineConfig, processState);
+                    notificationExecutersProvider.NotifictionStateChangeHandler.RootNotificationStateItem.NumOfSteps++;
+
+                    //כרגע הבעיה היא שה- restore רץ כאילו הוא sub step של ה- step האחרון שרץ
+
+                    using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(RollbackStep.StepName, new List<NotificationableActionStepBase>() { RollbackStep }, true))
+                    {
+                        notificationWrapperExecuter.Execute(notificationableEngineConfig, notificationExecutersProvider, processState);
+                    }
                 }
             }
         }

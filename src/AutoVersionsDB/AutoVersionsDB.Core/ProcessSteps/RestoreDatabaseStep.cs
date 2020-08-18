@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
-   
+
         public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
         {
             return 1;
@@ -48,46 +48,40 @@ namespace AutoVersionsDB.Core.ProcessSteps
             processState.ThrowIfNull(nameof(processState));
 
 
-            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
+            notificationExecutersProvider.SetStepStartManually(100, "Restore process");
+
+            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
             {
-                notificationWrapperExecuter.SetStepStartManually("Restore process");
+                DBProcessStatusNotifyerBase dbRestoreStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus) as DBRestoreStatusNotifyer;
 
-                using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
+                dbRestoreStatusNotifyer.Start((precents) =>
                 {
-                    DBProcessStatusNotifyerBase dbRestoreStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus) as DBRestoreStatusNotifyer;
-               
-                    dbRestoreStatusNotifyer.Start((precents) =>
-                    {
 
-                        if (notificationWrapperExecuter.CurrentNotificationStateItem != null)
-                        {
-                            notificationWrapperExecuter.ForceStepProgress(Convert.ToInt32(precents));
-                        }
-                    });
+                    notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
+                });
 
-                    try
+                try
+                {
+                    using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
                     {
-                        using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+                        using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
                         {
-                            using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
-                            {
-                                dbBackupRestoreCommands.RestoreDbFromBackup(processState.DBBackupFileFullPath, dbCommands.GetDataBaseName());
-                            }
+                            dbBackupRestoreCommands.RestoreDbFromBackup(processState.DBBackupFileFullPath, dbCommands.GetDataBaseName());
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        string errorInstructionsMessage = "The process fail when trying to 'Restore the Database', try to change the Timeout parameter and restore the database manually.";
+                }
+                catch (Exception ex)
+                {
+                    string errorInstructionsMessage = "The process fail when trying to 'Restore the Database', try to change the Timeout parameter and restore the database manually.";
 
-                        throw new NotificationEngineException(this.StepName, ex.Message, errorInstructionsMessage, ex);
-                    }
-
-                    dbRestoreStatusNotifyer.Stop();
-
-
+                    throw new NotificationEngineException(this.StepName, ex.Message, errorInstructionsMessage, ex);
                 }
 
+                dbRestoreStatusNotifyer.Stop();
+
+
             }
+
         }
 
     }

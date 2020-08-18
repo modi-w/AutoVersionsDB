@@ -42,23 +42,18 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
             ValidationsGroup validationsGroup = _validationsFactory.Create(projectConfig, processState);
 
-            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(validationsGroup.Count))
+            List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
+            foreach (ValidatorBase validator in validationsGroup.GetValidators())
             {
-
-                foreach (ValidatorBase validator in validationsGroup.GetValidators())
-                {
-                    if (validationsGroup.ShouldContinueWhenFindError
-                        || !notificationExecutersProvider.ProcessTrace.HasError)
-                    {
-                        SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
-
-                        notificationWrapperExecuter.ExecuteStep(singleValidationStep, projectConfig, processState);
-                    }
-                }
+                SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
+                internalSteps.Add(singleValidationStep);
+            }
+            using (NotificationWrapperExecuter notificationWrapperExecuter =
+                    notificationExecutersProvider.CreateNotificationWrapperExecuter(this.StepName, internalSteps, validationsGroup.ShouldContinueWhenFindError))
+            {
+                notificationWrapperExecuter.Execute(projectConfig, notificationExecutersProvider, processState);
             }
         }
-
-
 
     }
 

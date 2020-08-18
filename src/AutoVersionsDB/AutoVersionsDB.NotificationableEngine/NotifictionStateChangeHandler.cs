@@ -8,13 +8,33 @@ namespace AutoVersionsDB.NotificationableEngine
     public class NotifictionStateChangeHandler
     {
 
-
         private readonly Action<ProcessTrace, NotificationStateItem> _onNotificationStateChanged;
 
 
         public ProcessTrace ProcessTrace { get; private set; }
 
         public NotificationStateItem RootNotificationStateItem { get; private set; }
+
+        public NotificationStateItem CurrentNotificationStateItem
+        {
+            get
+            {
+                NotificationStateItem currentParentNotificationStateItem = null;
+                NotificationStateItem nextNotificationStateItem = this.RootNotificationStateItem;
+
+                while (nextNotificationStateItem != null)
+                {
+                    currentParentNotificationStateItem = nextNotificationStateItem;
+                    nextNotificationStateItem = nextNotificationStateItem.InternalNotificationStateItem;
+                }
+
+                return currentParentNotificationStateItem;
+            }
+
+        }
+
+
+
 
 
         internal NotifictionStateChangeHandler(Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
@@ -88,6 +108,9 @@ namespace AutoVersionsDB.NotificationableEngine
 
             RiseNotificationStateChanged();
         }
+
+
+
 
 
 

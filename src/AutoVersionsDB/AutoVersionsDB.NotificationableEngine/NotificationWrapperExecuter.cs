@@ -1,27 +1,53 @@
 ﻿using AutoVersionsDB.NotificationableEngine.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public class NotificationWrapperExecuter : IDisposable
+    public class NotificationWrapperExecuter : NotificationableActionStepBase, IDisposable
     {
-        private readonly NotificationExecutersProvider _notificationExecutersProvider;
         private readonly NotificationStateItem _parentNotificationStateItem;
+        private readonly List<NotificationableActionStepBase> _internalSteps;
+        private readonly bool _isContinueOnError;
+
+        private string _parentStepName;
+        public override string StepName
+        {
+            get
+            {
+                return _parentStepName;
+            }
+        }
+        public override bool HasInternalStep
+        {
+            get
+            {
+                return _internalSteps.Count > 0;
+            }
+        }
+
+
+
         public NotificationStateItem CurrentNotificationStateItem { get; set; }
 
 
-        public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
-                                            NotificationStateItem parentNotificationStateItem,
-                                            int numOfStep)
+
+        public NotificationWrapperExecuter(NotificationStateItem parentNotificationStateItem,
+                                            string parentStepName,
+                                            IEnumerable<NotificationableActionStepBase> internalSteps,
+                                            bool isContinueOnError)
         {
-            _notificationExecutersProvider = notificationExecutersProvider;
             _parentNotificationStateItem = parentNotificationStateItem;
 
-            CurrentNotificationStateItem = new NotificationStateItem(numOfStep);
+            _parentStepName = parentStepName;
+            _internalSteps = internalSteps.ToList();
+            _isContinueOnError = isContinueOnError;
+
+            CurrentNotificationStateItem = new NotificationStateItem(_internalSteps.Count);
 
             if (_parentNotificationStateItem != null)
             {
@@ -30,48 +56,48 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public void ExecuteStep(NotificationableActionStepBase step, NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
+        public override int GetNumOfInternalSteps(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
         {
-            step.ThrowIfNull(nameof(step));
-
-            //Comment: we do not check here: if (!_notifictionStatesHistoryManager.HasError)
-            //          because then the engine will not run the rollback process
-
-            try
-            {
-                int numOfInternalStep = step.GetNumOfInternalSteps(notificationableEngineConfig,processState);
-
-                _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, step.StepName, step.HasInternalStep);
-
-                step.Execute(notificationableEngineConfig, _notificationExecutersProvider, processState);
-
-                _notificationExecutersProvider.NotifictionStateChangeHandler.StepEnd(CurrentNotificationStateItem, step.HasInternalStep);
-
-            }
-            catch (NotificationEngineException ex)
-            {
-                _notificationExecutersProvider.NotifictionStateChangeHandler.StepError(CurrentNotificationStateItem, ex.ErrorCode, ex.Message, ex.InstructionsMessage);
-
-            }
-            catch (Exception ex)
-            {
-                _notificationExecutersProvider.NotifictionStateChangeHandler.StepError(CurrentNotificationStateItem, step.StepName, ex.Message, "Error occurred during the process.");
-
-            }
-
+            return _internalSteps.Count;
         }
 
 
-        public void SetStepStartManually(string stepName)
+
+        public override void Execute(NotificationableEngineConfig notificationableEngineConfig, NotificationExecutersProvider notificationExecutersProvider, ProcessStateBase processState)
         {
-            _notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, stepName, false);
+            foreach (var step in _internalSteps)
+            {
+                try
+                {
+                    int numOfInternalStep = step.GetNumOfInternalSteps(notificationableEngineConfig, processState);
+
+                    notificationExecutersProvider.NotifictionStateChangeHandler.StepStart(CurrentNotificationStateItem, step.StepName, step.HasInternalStep);
+
+                    step.Execute(notificationableEngineConfig, notificationExecutersProvider, processState);
+
+                    notificationExecutersProvider.NotifictionStateChangeHandler.StepEnd(CurrentNotificationStateItem, step.HasInternalStep);
+
+                }
+                catch (NotificationEngineException ex)
+                {
+                    notificationExecutersProvider.NotifictionStateChangeHandler.StepError(CurrentNotificationStateItem, ex.ErrorCode, ex.Message, ex.InstructionsMessage);
+
+                }
+                catch (Exception ex)
+                {
+                    notificationExecutersProvider.NotifictionStateChangeHandler.StepError(CurrentNotificationStateItem, step.StepName, ex.Message, "Error occurred during the process.");
+                }
+
+                if (notificationExecutersProvider.ProcessTrace.HasError && !_isContinueOnError)
+                {
+                    break;
+                }
+
+            }
         }
 
 
-        public void ForceStepProgress(int stepNumber)
-        {
-            _notificationExecutersProvider.NotifictionStateChangeHandler.ForceStepProgress(CurrentNotificationStateItem, stepNumber);
-        }
+
 
 
         #region IDisposable
@@ -106,21 +132,21 @@ namespace AutoVersionsDB.NotificationableEngine
 
     }
 
-    public class NotificationWrapperExecuter<TProcessState> : NotificationWrapperExecuter
-        where TProcessState : ProcessStateBase
-    {
+    //public class NotificationWrapperExecuter<TProcessState> : NotificationWrapperExecuter
+    //    where TProcessState : ProcessStateBase
+    //{
 
-        public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
-                                            NotificationStateItem parentNotificationStateItem,
-                                            int numOfStep)
-            : base(notificationExecutersProvider, parentNotificationStateItem, numOfStep)
-        {
-        }
+    //    public NotificationWrapperExecuter(NotificationExecutersProvider notificationExecutersProvider,
+    //                                        NotificationStateItem parentNotificationStateItem,
+    //                                        int numOfStep)
+    //        : base(notificationExecutersProvider, parentNotificationStateItem, numOfStep)
+    //    {
+    //    }
 
 
-        public void ExecuteStep(NotificationableActionStepBase step, NotificationableEngineConfig notificationableEngineConfig, TProcessState processState)
-        {
-            base.ExecuteStep(step, notificationableEngineConfig, processState);
-        }
-    }
+    //    public void ExecuteStep(NotificationableActionStepBase step, NotificationableEngineConfig notificationableEngineConfig, TProcessState processState)
+    //    {
+    //        base.ExecuteStep(step, notificationableEngineConfig, processState);
+    //    }
+    //}
 }

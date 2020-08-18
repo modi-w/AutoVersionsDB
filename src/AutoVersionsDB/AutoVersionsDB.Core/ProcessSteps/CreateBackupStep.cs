@@ -56,32 +56,26 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 string targetFileFullPath = Path.Combine(projectConfig.DBBackupBaseFolder, targetFileName);
                 FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
 
-                using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
+                notificationExecutersProvider.SetStepStartManually(100, "Backup process");
+
+                using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
                 {
-                    notificationWrapperExecuter.SetStepStartManually("Backup process");
+                    DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
 
-                    using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
+
+                    dbBackupStatusNotifyer.Start(
+                    (precents) =>
                     {
-                        DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
+                        notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
+                    });
 
-
-                        dbBackupStatusNotifyer.Start(
-                        (precents) =>
-                        {
-                            if (notificationWrapperExecuter.CurrentNotificationStateItem != null)
-                            {
-                                notificationWrapperExecuter.ForceStepProgress(Convert.ToInt32(precents));
-                            }
-                        });
-
-                        using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
-                        {
-                            dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
-                        }
-
-
-                        dbBackupStatusNotifyer.Stop();
+                    using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
+                    {
+                        dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
                     }
+
+
+                    dbBackupStatusNotifyer.Stop();
                 }
 
                 processState.DBBackupFileFullPath = targetFileFullPath;
