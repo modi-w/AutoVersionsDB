@@ -22,6 +22,9 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             InternalSteps = new List<NotificationableActionStepBase>();
         }
+
+
+
     }
 
     public abstract class NotificationableActionStepBase<TProcessState, TNotificationableEngineConfig> : NotificationableActionStepBase

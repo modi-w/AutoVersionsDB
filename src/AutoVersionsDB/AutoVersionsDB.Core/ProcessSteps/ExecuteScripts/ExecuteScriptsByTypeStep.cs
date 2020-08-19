@@ -52,7 +52,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
             List<RuntimeScriptFileBase> scriptFilesList = scriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
 
-            List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
             foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
             {
                 string ignoreStr = "";
@@ -65,10 +64,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
                 ExecuteSingleFileScriptStep executeSingleFileScriptStep = _executeSingleFileScriptStepFactory.Create(_dbCommands, stepName, scriptFile);
 
-                internalSteps.Add(executeSingleFileScriptStep);
+                InternalSteps.Add(executeSingleFileScriptStep);
             }
 
-            onExecuteStepsList.Invoke(internalSteps, false);
+            onExecuteStepsList.Invoke(InternalSteps, false);
 
         }
 

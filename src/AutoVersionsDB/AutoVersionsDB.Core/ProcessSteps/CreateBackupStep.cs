@@ -58,11 +58,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
             {
                 DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
 
-                List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
                 for (int internalStepNumber = 1; internalStepNumber <= 100; internalStepNumber++)
                 {
                     ExternalProcessStatusStep externalProcessStatusStep = new ExternalProcessStatusStep(internalStepNumber);
-                    internalSteps.Add(externalProcessStatusStep);
+                    InternalSteps.Add(externalProcessStatusStep);
                 }
 
                 Exception processExpetion = null;
@@ -73,7 +72,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 {
                     //notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
 
-                    foreach (ExternalProcessStatusStep step in internalSteps)
+                    foreach (ExternalProcessStatusStep step in InternalSteps)
                     {
                         if (!step.IsCompleted)
                         {
@@ -92,7 +91,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                             {
                                 dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
 
-                                foreach (ExternalProcessStatusStep step in internalSteps)
+                                foreach (ExternalProcessStatusStep step in InternalSteps)
                                 {
                                     if (!step.IsCompleted)
                                     {
@@ -109,7 +108,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
                 });
 
-                onExecuteStepsList.Invoke(internalSteps, false);
+                onExecuteStepsList.Invoke(InternalSteps, false);
 
 
 

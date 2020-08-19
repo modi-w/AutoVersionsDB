@@ -32,14 +32,13 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
             ValidationsGroup validationsGroup = _validationsFactory.Create(projectConfig, processState);
 
-            List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
             foreach (ValidatorBase validator in validationsGroup.GetValidators())
             {
                 SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
-                internalSteps.Add(singleValidationStep);
+                InternalSteps.Add(singleValidationStep);
             }
 
-            onExecuteStepsList.Invoke(internalSteps, true);
+            onExecuteStepsList.Invoke(InternalSteps, true);
         }
 
     }

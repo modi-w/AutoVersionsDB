@@ -8,26 +8,10 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    //public interface INotificationEngine : IDisposable
-    //{
-    //    string EngineTypeName { get; }
-
-    //    Dictionary<string, string> EngineMetaData { get; }
-
-    //    List<NotificationableActionStepBase> ProcessSteps { get; }
-    //    NotificationableActionStepBase RollbackStep { get; }
-
-    //    //void Prepare(NotificationableEngineConfig notificationableEngineConfig);
-
-    //    ProcessTrace Run(NotificationableEngineConfig notificationableEngineConfig, ExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged);
-    //}
-
 
     public abstract class NotificationEngine<TProcessState> : IDisposable
         where TProcessState : ProcessStateBase, new()
     {
-        //    private readonly NotificationExecutersProviderFactory _notificationExecutersProviderFactory;
-
         private NotifictionStateChangeHandler _notifictionStateChangeHandler;
         private NotificationableEngineConfig _notificationableEngineConfig;
         private ProcessStateBase _processState;
@@ -189,13 +173,25 @@ namespace AutoVersionsDB.NotificationableEngine
                     }
                 }
 
-                foreach (IDisposable processStep in ProcessSteps.Where(e => e is IDisposable))
-                {
-                    processStep.Dispose();
-                }
+
+                disposStepsList(this.ProcessSteps);
             }
 
             _disposed = true;
+        }
+
+        private static void disposStepsList(IEnumerable<NotificationableActionStepBase> processStepsToDispose)
+        {
+            foreach (var processStep in processStepsToDispose)
+            {
+                disposStepsList(processStep.InternalSteps);
+
+                IDisposable disposeStep =processStep as IDisposable;
+                if (disposeStep != null)
+                {
+                    disposeStep.Dispose();
+                }
+            }
         }
 
         #endregion

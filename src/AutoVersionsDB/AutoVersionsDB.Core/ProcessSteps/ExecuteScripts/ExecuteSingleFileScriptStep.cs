@@ -49,14 +49,13 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
                 List<string> scriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).ToList();
 
-                List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
                 foreach (string scriptBlockStr in scriptBlocks)
                 {
                     var executeScriptBlockStep = _executeScriptBlockStepFactory.Craete(_dbCommands, scriptBlockStr);
-                    internalSteps.Add(executeScriptBlockStep);
+                    InternalSteps.Add(executeScriptBlockStep);
                 }
 
-                onExecuteStepsList.Invoke(internalSteps, false);
+                onExecuteStepsList.Invoke(InternalSteps, false);
             }
 
             processState.AppendExecutedFile(_scriptFile);

@@ -48,11 +48,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
             {
                 DBProcessStatusNotifyerBase dbRestoreStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus) as DBRestoreStatusNotifyer;
 
-                List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
                 for (int internalStepNumber = 1; internalStepNumber <= 100; internalStepNumber++)
                 {
                     ExternalProcessStatusStep externalProcessStatusStep = new ExternalProcessStatusStep(internalStepNumber);
-                    internalSteps.Add(externalProcessStatusStep);
+                    InternalSteps.Add(externalProcessStatusStep);
                 }
 
                 Exception processExpetion = null;
@@ -62,7 +61,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 {
                     // notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
 
-                    foreach (ExternalProcessStatusStep step in internalSteps)
+                    foreach (ExternalProcessStatusStep step in InternalSteps)
                     {
                         if (!step.IsCompleted)
                         {
@@ -82,7 +81,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                             {
                                 dbBackupRestoreCommands.RestoreDbFromBackup(processState.DBBackupFileFullPath, dbCommands.GetDataBaseName());
 
-                                foreach (ExternalProcessStatusStep step in internalSteps)
+                                foreach (ExternalProcessStatusStep step in InternalSteps)
                                 {
                                     if (!step.IsCompleted)
                                     {
@@ -100,7 +99,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     }
                 });
 
-                onExecuteStepsList.Invoke(internalSteps, true);
+                onExecuteStepsList.Invoke(InternalSteps, true);
 
                 dbRestoreStatusNotifyer.Stop();
 
