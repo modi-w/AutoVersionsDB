@@ -3,6 +3,8 @@ using AutoVersionsDB.Core.Engines;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
+using System;
+using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -12,7 +14,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
 
         public override string StepName => _validator.ValidatorName;
-        public override bool HasInternalStep => false;
 
 
 
@@ -24,12 +25,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
 
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            return 1;
-        }
-
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
             processState.ThrowIfNull(nameof(processState));
 

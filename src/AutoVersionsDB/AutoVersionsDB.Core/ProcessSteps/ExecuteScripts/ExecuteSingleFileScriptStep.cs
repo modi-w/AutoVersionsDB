@@ -21,10 +21,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
         private readonly string _stepName;
         public override string StepName => _stepName;
-        public override bool HasInternalStep => true;
 
 
-        public ExecuteSingleFileScriptStep( ExecuteScriptBlockStepFactory executeScriptBlockStepFactory, IDBCommands dbCommands, string stepName, RuntimeScriptFileBase scriptFile)
+        public ExecuteSingleFileScriptStep(ExecuteScriptBlockStepFactory executeScriptBlockStepFactory, IDBCommands dbCommands, string stepName, RuntimeScriptFileBase scriptFile)
         {
             dbCommands.ThrowIfNull(nameof(dbCommands));
 
@@ -34,25 +33,12 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             _dbCommands = dbCommands;
             _executeScriptBlockStepFactory = executeScriptBlockStepFactory;
         }
-       
 
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            processState.ThrowIfNull(nameof(processState));
 
-
-            string sqlCommandStr = File.ReadAllText(_scriptFile.FileFullPath);
-
-            int numOfScriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).Count();
-
-            return numOfScriptBlocks;
-        }
-
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
             processState.ThrowIfNull(nameof(processState));
 
             bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
@@ -70,17 +56,13 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                     internalSteps.Add(executeScriptBlockStep);
                 }
 
-                using (NotificationWrapperExecuter notificationWrapperExecuter =
-                        notificationExecutersProvider.CreateNotificationWrapperExecuter(this.StepName, internalSteps, false))
-                {
-                    notificationWrapperExecuter.Execute(projectConfig, notificationExecutersProvider, processState);
-                }
+                onExecuteStepsList.Invoke(internalSteps, false);
             }
 
             processState.AppendExecutedFile(_scriptFile);
 
         }
 
-        
+
     }
 }

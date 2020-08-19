@@ -6,6 +6,7 @@ using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
+using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
@@ -15,8 +16,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public override string StepName => "Recreate System Tables";
-        public override bool HasInternalStep => false;
-
 
         public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
@@ -25,17 +24,11 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
-      
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            return 1;
-        }
 
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
             processState.ThrowIfNull(nameof(processState));
 
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))

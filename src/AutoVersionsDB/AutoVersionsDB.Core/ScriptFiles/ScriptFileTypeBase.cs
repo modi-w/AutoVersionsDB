@@ -2,7 +2,7 @@
 {
     public abstract class ScriptFileTypeBase
     {
-        public static ScriptFileTypeBase Create<TScriptFileType>()
+        public static TScriptFileType Create<TScriptFileType>()
                 where TScriptFileType : ScriptFileTypeBase, new()
         {
             return new TScriptFileType();

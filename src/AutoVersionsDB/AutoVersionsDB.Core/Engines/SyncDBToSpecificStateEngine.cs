@@ -14,8 +14,7 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Set DB To Specific State";
 
 
-        public SyncDBToSpecificStateEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                            RestoreDatabaseStep rollbackStep,
+        public SyncDBToSpecificStateEngine(RestoreDatabaseStep rollbackStep,
                                             ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                             ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                                             CreateScriptFilesStateStep createScriptFilesStateStep,
@@ -23,9 +22,9 @@ namespace AutoVersionsDB.Core.Engines
                                             ValidationsStep<DBStateValidationsFactory> dbStateValidationStep,
                                             ValidationsStep<TargetStateScriptFileValidationsFactory> targetStateScriptFileValidationStep,
                                             CreateBackupStep createBackupStep,
-                                            ExecuteScriptsStep executeScriptsStep,
+                                            ExecuteAllScriptsStep executeScriptsStep,
                                             FinalizeProcessStep finalizeProcessStep)
-            : base(notificationExecutersProviderFactory, rollbackStep)
+            : base(rollbackStep)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(checkDeliveryEnvValidationStep);

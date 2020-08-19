@@ -10,13 +10,18 @@ namespace AutoVersionsDB.NotificationableEngine
     {
         public abstract string StepName { get; }
 
-        public abstract bool HasInternalStep { get; }
+        public List<NotificationableActionStepBase>  InternalSteps { get; }
+        public bool IsContinueOnErrorInIternalStep { get; }
+
+        //    public abstract int GetNumOfInternalSteps(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState);
+
+        public abstract void Execute(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState, Action<List<NotificationableActionStepBase>,bool> onExecuteStepsList);
 
 
-        public abstract int GetNumOfInternalSteps(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState);
-
-        public abstract void Execute(NotificationableEngineConfig notificationableEngineConfig, NotificationExecutersProvider notificationExecutersProvider, ProcessStateBase processState);
-
+        protected NotificationableActionStepBase()
+        {
+            InternalSteps = new List<NotificationableActionStepBase>();
+        }
     }
 
     public abstract class NotificationableActionStepBase<TProcessState, TNotificationableEngineConfig> : NotificationableActionStepBase
@@ -24,19 +29,19 @@ namespace AutoVersionsDB.NotificationableEngine
             where TNotificationableEngineConfig : NotificationableEngineConfig
     {
 
-        public override int GetNumOfInternalSteps(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
+        //public override int GetNumOfInternalSteps(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
+        //{
+        //    return GetNumOfInternalSteps(notificationableEngineConfig as TNotificationableEngineConfig, processState as TProcessState);
+        //}
+        //public abstract int GetNumOfInternalSteps(TNotificationableEngineConfig notificationableEngineConfig, TProcessState processState);
+
+
+        public override void Execute(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
-            return GetNumOfInternalSteps(notificationableEngineConfig as TNotificationableEngineConfig, processState as TProcessState);
-        }
-        public abstract int GetNumOfInternalSteps(TNotificationableEngineConfig notificationableEngineConfig, TProcessState processState);
-
-
-        public override void Execute(NotificationableEngineConfig notificationableEngineConfig, NotificationExecutersProvider notificationExecutersProvider, ProcessStateBase processState)
-        {
-            Execute(notificationableEngineConfig as TNotificationableEngineConfig, notificationExecutersProvider, processState as TProcessState);
+            Execute(notificationableEngineConfig as TNotificationableEngineConfig, processState as TProcessState, onExecuteStepsList);
         }
 
-        public abstract void Execute(TNotificationableEngineConfig notificationableEngineConfig, NotificationExecutersProvider notificationExecutersProvider, TProcessState processState);
+        public abstract void Execute(TNotificationableEngineConfig notificationableEngineConfig, TProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList);
     }
 
  

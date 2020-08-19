@@ -13,10 +13,9 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "DB State Validation";
 
 
-        public DBStateValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                        CreateScriptFilesStateStep createScriptFilesStateStep,
+        public DBStateValidationEngine(CreateScriptFilesStateStep createScriptFilesStateStep,
                                         ValidationsStep<DBStateValidationsFactory> dbStateValidationStep)
-            : base(notificationExecutersProviderFactory, null)
+            : base(null)
         {
             ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(dbStateValidationStep);

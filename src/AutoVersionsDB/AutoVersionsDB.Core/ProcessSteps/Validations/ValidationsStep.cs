@@ -15,8 +15,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         private readonly SingleValidationStepFactory _singleValidationStepFactory;
 
         public override string StepName => "Validation";
-        public override bool HasInternalStep => true;
-
 
         public ValidationsStep(SingleValidationStepFactory singleValidationStepFactory, ValidationsFactory validationsFactory)
         {
@@ -27,17 +25,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            return _validationsFactory.Create(projectConfig, processState).Count;
-        }
-
-
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
             processState.ThrowIfNull(nameof(processState));
 
             ValidationsGroup validationsGroup = _validationsFactory.Create(projectConfig, processState);
@@ -48,11 +38,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
                 SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
                 internalSteps.Add(singleValidationStep);
             }
-            using (NotificationWrapperExecuter notificationWrapperExecuter =
-                    notificationExecutersProvider.CreateNotificationWrapperExecuter(this.StepName, internalSteps, validationsGroup.ShouldContinueWhenFindError))
-            {
-                notificationWrapperExecuter.Execute(projectConfig, notificationExecutersProvider, processState);
-            }
+
+            onExecuteStepsList.Invoke(internalSteps, true);
         }
 
     }

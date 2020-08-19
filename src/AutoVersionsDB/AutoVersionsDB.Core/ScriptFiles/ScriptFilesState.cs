@@ -7,6 +7,7 @@ using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using System;
+using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core.ScriptFiles
 {
@@ -15,7 +16,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
         private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
         private readonly ArtifactExtractorFactory _artifactExtractorFactory;
-     
+
+        private readonly Dictionary<string, ScriptFilesComparerBase> _scriptFilesComparersDictionary;
+
         public ScriptFilesComparerBase IncrementalScriptFilesComparer { get; private set; }
         public ScriptFilesComparerBase RepeatableScriptFilesComparer { get; private set; }
         public ScriptFilesComparerBase DevDummyDataScriptFilesComparer { get; private set; }
@@ -32,6 +35,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
             _artifactExtractorFactory = artifactExtractorFactory;
 
+            _scriptFilesComparersDictionary = new Dictionary<string, ScriptFilesComparerBase>();
         }
 
 
@@ -45,11 +49,15 @@ namespace AutoVersionsDB.Core.ScriptFiles
                 using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
                 {
                     IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(dbCommands, projectConfig.IncrementalScriptsFolderPath);
+                    _scriptFilesComparersDictionary[IncrementalScriptFilesComparer.ScriptFileType.FileTypeCode] = IncrementalScriptFilesComparer;
+
                     RepeatableScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<RepeatableScriptFileType>(dbCommands, projectConfig.RepeatableScriptsFolderPath);
+                    _scriptFilesComparersDictionary[RepeatableScriptFilesComparer.ScriptFileType.FileTypeCode] =RepeatableScriptFilesComparer;
 
                     if (projectConfig.IsDevEnvironment)
                     {
                         DevDummyDataScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<DevDummyDataScriptFileType>(dbCommands, projectConfig.DevDummyDataScriptsFolderPath);
+                        _scriptFilesComparersDictionary[DevDummyDataScriptFilesComparer.ScriptFileType.FileTypeCode]= DevDummyDataScriptFilesComparer;
                     }
                     else
                     {
@@ -57,10 +65,16 @@ namespace AutoVersionsDB.Core.ScriptFiles
                     }
                 }
             }
-        
+
         }
 
 
+        public ScriptFilesComparerBase GetScriptFilesComparerByType(string fileTypeCode)
+        {
+            _scriptFilesComparersDictionary.TryGetValue(fileTypeCode, out ScriptFilesComparerBase scriptFilesComparer);
+
+            return scriptFilesComparer;
+        }
 
 
 

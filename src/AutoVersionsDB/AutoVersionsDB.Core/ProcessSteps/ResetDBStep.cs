@@ -5,6 +5,7 @@ using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
+using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
@@ -14,7 +15,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public override string StepName => "Resolve Reset Database";
-        public override bool HasInternalStep => false;
 
 
 
@@ -25,15 +25,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            return 1;
-        }
 
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
             processState.ThrowIfNull(nameof(processState));
 
             if (!projectConfig.IsDevEnvironment)

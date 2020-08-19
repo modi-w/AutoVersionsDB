@@ -166,7 +166,12 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        internal NotificationStateItem(int numOfSteps)
+        internal NotificationStateItem(string stepName)
+        {
+            StepName = stepName;
+        }
+
+        internal void SetNumOfSteps(int numOfSteps)
         {
             NumOfSteps = numOfSteps;
         }
@@ -191,36 +196,40 @@ namespace AutoVersionsDB.NotificationableEngine
             string outStr;
 
             string stepStageStr = "";
-            if (isIncludeStepStage)
+            if (NumOfSteps>0
+                && isIncludeStepStage)
             {
                 stepStageStr = $" ({StepNumber}/{NumOfSteps})";
             }
 
-            //if (parentStateItem == null)
+
+            //if (NumOfSteps > 0)
             //{
-            //    outStr = $"Process {Precents:N0}%{stepStageStr} -> {StepName}";
+            //    outStr = $"{Precents:N0}%{stepStageStr} -> {StepName}";
             //}
             //else
             //{
-            outStr = $"{Precents:N0}%{stepStageStr} -> {StepName}";
-            //    }
+            //    outStr = $" -> {StepName}";
+            //}
+
+            if (NumOfSteps > 0)
+            {
+                outStr = $"{StepName} {Precents:N0}%{stepStageStr}";
+            }
+            else
+            {
+                outStr = $"{StepName}";
+            }
+
 
             if (InternalNotificationStateItem != null)
             {
-                outStr = $"{outStr} {InternalNotificationStateItem.ToString(false, isIncludeStepStage)}";
+                outStr = $"{outStr} -> {InternalNotificationStateItem.ToString(false, isIncludeStepStage)}";
             }
 
 
 
-            //if (isIncludeStepStage)
-            //{
-            //    outStr = $"{StepName} {Precents:N0}% ({StepNumber}/{NumOfSteps})";
-            //}
-            //else
-            //{
-            //    outStr = $"{StepName} {Precents:N0}%";
-
-            //}
+           
 
 
             //if (InternalNotificationStateItem != null)

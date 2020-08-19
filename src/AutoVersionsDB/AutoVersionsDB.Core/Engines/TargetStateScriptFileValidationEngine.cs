@@ -13,10 +13,9 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName => "Target State Script File Validation";
 
 
-        public TargetStateScriptFileValidationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                                        CreateScriptFilesStateStep createScriptFilesStateStep,
+        public TargetStateScriptFileValidationEngine(CreateScriptFilesStateStep createScriptFilesStateStep,
                                                         ValidationsStep<TargetStateScriptFileValidationsFactory> targetStateScriptFileValidationStep)
-            : base(notificationExecutersProviderFactory, null)
+            : base(null)
         {
             ProcessSteps.Add(createScriptFilesStateStep);
             ProcessSteps.Add(targetStateScriptFileValidationStep);

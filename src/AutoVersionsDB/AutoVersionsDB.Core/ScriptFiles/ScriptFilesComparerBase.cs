@@ -17,6 +17,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         protected DBExecutedFiles DbExecutedFiles { get; private set; }
 
+        public ScriptFileTypeBase ScriptFileType { get; }
+
+
         public string LastFileOfLastExecutedFilename => DbExecutedFiles.LastFileOfLastExecutedFilename;
 
         public List<RuntimeScriptFileBase> AllFileSystemScriptFiles => FileSystemScriptFiles.ScriptFilesList;
@@ -35,6 +38,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
             fileSystemScriptFiles.ThrowIfNull(nameof(fileSystemScriptFiles));
             dbExecutedFiles.ThrowIfNull(nameof(dbExecutedFiles));
 
+            this.ScriptFileType = fileSystemScriptFiles.ScriptFileType;
             this.FileSystemScriptFiles = fileSystemScriptFiles;
             this.DbExecutedFiles = dbExecutedFiles;
 

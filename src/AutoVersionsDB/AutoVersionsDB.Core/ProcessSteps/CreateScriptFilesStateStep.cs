@@ -6,6 +6,7 @@ using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
+using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
@@ -13,8 +14,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
     public class CreateScriptFilesStateStep : AutoVersionsDbStep
     {
         public override string StepName => "Create Script Files State";
-        public override bool HasInternalStep => false;
-
         private readonly ScriptFilesStateFactory _scriptFilesStateFactory;
 
 
@@ -26,12 +25,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            return 1;
-        }
 
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));

@@ -63,14 +63,17 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             bool isDBInSigleUserMode = false;
 
-            string sqlCmdStr2 = $"SELECT user_access_desc FROM sys.databases WHERE name = '{dbName}'";
+            string sqlCmdStr2 = $"SELECT user_access_desc, state_desc FROM sys.databases WHERE name = '{dbName}'";
             using (DataTable dbStateTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr2))
             {
                 if (dbStateTable.Rows.Count > 0)
                 {
                     DataRow dbStateRow = dbStateTable.Rows[0];
 
-                    isDBInSigleUserMode = Convert.ToString(dbStateRow["user_access_desc"], CultureInfo.InvariantCulture) == "SINGLE_USER";
+                    isDBInSigleUserMode = Convert.ToString(dbStateRow["user_access_desc"], CultureInfo.InvariantCulture) == "SINGLE_USER"
+                                    || Convert.ToString(dbStateRow["state_desc"], CultureInfo.InvariantCulture) == "RESTORING";
+
+
                 }
             }
 

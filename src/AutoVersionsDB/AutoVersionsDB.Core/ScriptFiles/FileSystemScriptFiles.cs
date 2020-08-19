@@ -11,7 +11,8 @@ namespace AutoVersionsDB.Core.ScriptFiles
     public class FileSystemScriptFiles
     {
         private readonly FileChecksum _fileChecksum;
-        private readonly ScriptFileTypeBase _scriptFileType;
+       
+        public ScriptFileTypeBase ScriptFileType { get; }
 
         public List<RuntimeScriptFileBase> ScriptFilesList { get; private set; }
         public Dictionary<string, RuntimeScriptFileBase> ScriptFilesDictionary { get; private set; }
@@ -29,7 +30,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
 
             _fileChecksum = fileChecksum;
-            _scriptFileType = scriptFileType;
+            ScriptFileType = scriptFileType;
             FolderPath = folderPath;
 
             Load();
@@ -49,11 +50,11 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             if (Directory.Exists(FolderPath))
             {
-                string[] arrAllScriptFiles = Directory.GetFiles(FolderPath, $"{_scriptFileType.Prefix}*.sql", SearchOption.TopDirectoryOnly);
+                string[] arrAllScriptFiles = Directory.GetFiles(FolderPath, $"{ScriptFileType.Prefix}*.sql", SearchOption.TopDirectoryOnly);
 
                 foreach (string fileFullPath in arrAllScriptFiles)
                 {
-                    RuntimeScriptFileBase currScriptFile = _scriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
+                    RuntimeScriptFileBase currScriptFile = ScriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
 
                     string computedFileHash = _fileChecksum.GetHashByFilePath(fileFullPath);
                     currScriptFile.ComputedHash = computedFileHash;
@@ -69,14 +70,14 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
         public RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string fileFullPath)
         {
-            return _scriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
+            return ScriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
         }
 
         public RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile)
         {
             scriptName.ThrowIfNull(nameof(scriptName));
 
-            RuntimeScriptFileBase newRuntimeScriptFile = _scriptFileType.RuntimeScriptFileFactory.CreateNextRuntimeScriptFileInstance(FolderPath, scriptName, prevRuntimeScriptFile);
+            RuntimeScriptFileBase newRuntimeScriptFile = ScriptFileType.RuntimeScriptFileFactory.CreateNextRuntimeScriptFileInstance(FolderPath, scriptName, prevRuntimeScriptFile);
 
             File.AppendAllText(newRuntimeScriptFile.FileFullPath, "", Encoding.UTF8);
 

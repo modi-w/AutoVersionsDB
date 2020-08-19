@@ -8,8 +8,10 @@ using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using Ninject;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
@@ -17,7 +19,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
     public class CreateBackupStep : AutoVersionsDbStep
     {
         public override string StepName => "Create Backup";
-        public override bool HasInternalStep => false;
 
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
         private readonly DBProcessStatusNotifyerFactory _dbProcessStatusNotifyerFactory;
@@ -34,49 +35,85 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            return 1;
-        }
 
-
-
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
             processState.ThrowIfNull(nameof(processState));
 
             string timeStampStr = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.InvariantCulture);
 
+            string targetFileName;
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
             {
+                targetFileName = $"bu_{ dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
+            }
 
-                string targetFileName = $"bu_{ dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
-                string targetFileFullPath = Path.Combine(projectConfig.DBBackupBaseFolder, targetFileName);
-                FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
+            string targetFileFullPath = Path.Combine(projectConfig.DBBackupBaseFolder, targetFileName);
+            FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
 
-                notificationExecutersProvider.SetStepStartManually(100, "Backup process");
+            //notificationExecutersProvider.SetStepStartManually(100, "Backup process");
 
-                using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
+            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
+            {
+                DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
+
+                List<NotificationableActionStepBase> internalSteps = new List<NotificationableActionStepBase>();
+                for (int internalStepNumber = 1; internalStepNumber <= 100; internalStepNumber++)
                 {
-                    DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
+                    ExternalProcessStatusStep externalProcessStatusStep = new ExternalProcessStatusStep(internalStepNumber);
+                    internalSteps.Add(externalProcessStatusStep);
+                }
+
+                Exception processExpetion = null;
 
 
-                    dbBackupStatusNotifyer.Start(
-                    (precents) =>
+                dbBackupStatusNotifyer.Start(
+                (precents) =>
+                {
+                    //notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
+
+                    foreach (ExternalProcessStatusStep step in internalSteps)
                     {
-                        notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
-                    });
+                        if (!step.IsCompleted)
+                        {
+                            step.SetProcessState((int)Math.Floor(precents), processExpetion);
+                        }
+                    }
+                });
 
-                    using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
+                Task.Run(() =>
+                {
+                    try
                     {
-                        dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
+                        using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+                        {
+                            using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
+                            {
+                                dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
+
+                                foreach (ExternalProcessStatusStep step in internalSteps)
+                                {
+                                    if (!step.IsCompleted)
+                                    {
+                                        step.SetProcessState(100, processExpetion);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        processExpetion = ex;
                     }
 
+                });
 
-                    dbBackupStatusNotifyer.Stop();
-                }
+                onExecuteStepsList.Invoke(internalSteps, false);
+
+
+
+                dbBackupStatusNotifyer.Stop();
 
                 processState.DBBackupFileFullPath = targetFileFullPath;
             }

@@ -13,14 +13,13 @@ namespace AutoVersionsDB.Core.Engines
         public override string EngineTypeName =>  "Deploy";
 
 
-        public DeployEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                            ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+        public DeployEngine(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                             ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                             CreateScriptFilesStateStep createScriptFilesStateStep,
                             ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,
                             ValidationsStep<DBStateValidationsFactory> dbStateValidationStep,
                             BuildDeployArtifactFileStep buildDeployArtifactFileStep)
-            : base(notificationExecutersProviderFactory, null)
+            : base(null)
         {
             ProcessSteps.Add(projectConfigValidationStep);
             ProcessSteps.Add(checkDeliveryEnvValidationStep);

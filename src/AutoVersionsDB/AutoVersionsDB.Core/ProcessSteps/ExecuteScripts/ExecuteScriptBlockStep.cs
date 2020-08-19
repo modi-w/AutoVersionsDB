@@ -4,6 +4,7 @@ using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
@@ -14,8 +15,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         private readonly string _scriptBlockToExecute;
 
         public override string StepName => "Execute Script Block";
-        public override bool HasInternalStep => false;
-
 
         public ExecuteScriptBlockStep(IDBCommands dbCommands, string scriptBlockToExecute)
         {
@@ -27,13 +26,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            return 1;
-        }
 
-
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
         {
             processState.ThrowIfNull(nameof(processState));
 
