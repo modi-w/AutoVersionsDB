@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class CreateVirtualExecutionsEngine : AutoVersionsDbEngine
+    public class CreateVirtualExecutionsEngine : AutoVersionsDbEngineSettingBase
     {
         public override string EngineTypeName => "Create Virtual Executions";
 
@@ -23,12 +23,12 @@ namespace AutoVersionsDB.Core.Engines
                                                 FinalizeProcessStep finalizeProcessStep)
             : base(rollbackStep)
         {
-            ProcessSteps.Add(projectConfigValidationStep);
-            ProcessSteps.Add(createScriptFilesStateStep);
-            ProcessSteps.Add(createBackupStep);
-            ProcessSteps.Add(recreateDBVersionsTablesStep);
-            ProcessSteps.Add(executeScriptsStep);
-            ProcessSteps.Add(finalizeProcessStep);
+            AddStep(projectConfigValidationStep);
+            AddStep(createScriptFilesStateStep);
+            AddStep(createBackupStep);
+            AddStep(recreateDBVersionsTablesStep);
+            AddStep(executeScriptsStep);
+            AddStep(finalizeProcessStep);
 
             IsVirtualExecution = true;
         }

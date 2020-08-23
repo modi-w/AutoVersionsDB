@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class RecreateDBFromScratchEngine : AutoVersionsDbEngine
+    public class RecreateDBFromScratchEngine : AutoVersionsDbEngineSettingBase
     {
         public override string EngineTypeName => "Recreate DB From Scratch";
 
@@ -25,14 +25,14 @@ namespace AutoVersionsDB.Core.Engines
                                             FinalizeProcessStep finalizeProcessStep)
             : base(rollbackStep)
         {
-            ProcessSteps.Add(projectConfigValidationStep);
-            ProcessSteps.Add(checkDeliveryEnvValidationStep);
-            ProcessSteps.Add(createScriptFilesStateStep);
-            ProcessSteps.Add(createBackupStep);
-            ProcessSteps.Add(resetDBStep);
-            ProcessSteps.Add(recreateDBVersionsTablesStep);
-            ProcessSteps.Add(executeScriptsStep);
-            ProcessSteps.Add(finalizeProcessStep);
+            AddStep(projectConfigValidationStep);
+            AddStep(checkDeliveryEnvValidationStep);
+            AddStep(createScriptFilesStateStep);
+            AddStep(createBackupStep);
+            AddStep(resetDBStep);
+            AddStep(recreateDBVersionsTablesStep);
+            AddStep(executeScriptsStep);
+            AddStep(finalizeProcessStep);
         }
     }
 }

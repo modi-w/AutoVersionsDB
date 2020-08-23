@@ -36,14 +36,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));
 
-            bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
-
-            if (!isVirtualExecution)
+            if (!processState.IsVirtualExecution)
             {
                 string sqlCommandStr = File.ReadAllText(_scriptFile.FileFullPath);
 
@@ -55,7 +52,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                     InternalSteps.Add(executeScriptBlockStep);
                 }
 
-                onExecuteStepsList.Invoke(InternalSteps, false);
+                ExecuteInternalSteps(processState, false);
             }
 
             processState.AppendExecutedFile(_scriptFile);

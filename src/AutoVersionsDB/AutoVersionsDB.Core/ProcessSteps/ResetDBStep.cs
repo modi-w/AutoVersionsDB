@@ -26,17 +26,16 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));
 
-            if (!projectConfig.IsDevEnvironment)
+            if (!processState.ProjectConfig.IsDevEnvironment)
             {
                 throw new Exception("Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).");
             }
 
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
             {
                 dbCommands.DropAllDB();
             }

@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace AutoVersionsDB.NotificationableEngine
-{
-    public class InitiateEngineEventArgs : EventArgs
-    {
-        public NotificationableEngineConfig EngineConfig { get; }
+//namespace AutoVersionsDB.NotificationableEngine
+//{
+//    public class InitiateEngineEventArgs : EventArgs
+//    {
+//        public NotificationableEngineConfig EngineConfig { get; }
 
-        public ProcessStateBase ProcessStateBase { get; }
+//        public ProcessStateBase ProcessStateBase { get; }
 
-        public InitiateEngineEventArgs(NotificationableEngineConfig engineConfig, ProcessStateBase processStateBase)
-        {
-            EngineConfig = engineConfig;
-            ProcessStateBase = processStateBase;
-        }
-    }
-}
+//        public InitiateEngineEventArgs(NotificationableEngineConfig engineConfig, ProcessStateBase processStateBase)
+//        {
+//            EngineConfig = engineConfig;
+//            ProcessStateBase = processStateBase;
+//        }
+//    }
+//}

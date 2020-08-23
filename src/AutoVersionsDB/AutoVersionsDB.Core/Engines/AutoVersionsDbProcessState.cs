@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ScriptFiles;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.NotificationableEngine;
 using System;
@@ -10,6 +11,23 @@ namespace AutoVersionsDB.Core.Engines
     {
         public ScriptFilesState ScriptFilesState { get; set; }
         public string DBBackupFileFullPath { get; set; }
+
+        public ProjectConfigItem ProjectConfig
+        {
+            get
+            {
+                return (base.ExecutionParams as AutoVersionsDBExecutionParams).ProjectConfig;
+            }
+        }
+
+        public bool IsVirtualExecution
+        {
+            get
+            {
+                return (base.EngineSettings as AutoVersionsDbEngineSettingBase).IsVirtualExecution;
+            }
+        }
+
 
         public override bool CanRollback
         {

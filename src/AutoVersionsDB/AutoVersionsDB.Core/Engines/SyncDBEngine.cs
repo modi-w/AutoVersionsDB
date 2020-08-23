@@ -10,7 +10,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class SyncDBEngine : AutoVersionsDbEngine
+    public class SyncDBEngine : AutoVersionsDbEngineSettingBase
     {
         public override string EngineTypeName => "Sync DB";
 
@@ -26,14 +26,14 @@ namespace AutoVersionsDB.Core.Engines
                             FinalizeProcessStep finalizeProcessStep)
             :base( rollbackStep)
         {
-            ProcessSteps.Add(projectConfigValidationStep);
-            ProcessSteps.Add(artifactFileValidationStep);
-            ProcessSteps.Add(createScriptFilesStateStep);
-            ProcessSteps.Add(systemTableValidationStep);
-            ProcessSteps.Add(dbStateValidationStep);
-            ProcessSteps.Add(createBackupStep);
-            ProcessSteps.Add(executeScriptsStep);
-            ProcessSteps.Add(finalizeProcessStep);
+            AddStep(projectConfigValidationStep);
+            AddStep(artifactFileValidationStep);
+            AddStep(createScriptFilesStateStep);
+            AddStep(systemTableValidationStep);
+            AddStep(dbStateValidationStep);
+            AddStep(createBackupStep);
+            AddStep(executeScriptsStep);
+            AddStep(finalizeProcessStep);
         }
 
 

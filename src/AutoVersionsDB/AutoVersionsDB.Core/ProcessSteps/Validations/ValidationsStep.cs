@@ -25,12 +25,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));
 
-            ValidationsGroup validationsGroup = _validationsFactory.Create(projectConfig, processState);
+            ValidationsGroup validationsGroup = _validationsFactory.Create(processState.ProjectConfig, processState);
 
             foreach (ValidatorBase validator in validationsGroup.GetValidators())
             {
@@ -38,7 +37,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
                 InternalSteps.Add(singleValidationStep);
             }
 
-            onExecuteStepsList.Invoke(InternalSteps, true);
+            base.ExecuteInternalSteps(processState, true);
         }
 
     }

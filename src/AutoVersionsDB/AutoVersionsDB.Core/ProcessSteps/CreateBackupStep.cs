@@ -36,25 +36,24 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));
 
             string timeStampStr = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.InvariantCulture);
 
             string targetFileName;
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
             {
                 targetFileName = $"bu_{ dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
             }
 
-            string targetFileFullPath = Path.Combine(projectConfig.DBBackupBaseFolder, targetFileName);
+            string targetFileFullPath = Path.Combine(processState.ProjectConfig.DBBackupBaseFolder, targetFileName);
             FileSystemPathUtils.ResloveFilePath(targetFileFullPath);
 
             //notificationExecutersProvider.SetStepStartManually(100, "Backup process");
 
-            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
+            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStrToMasterDB))
             {
                 DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
 
@@ -85,9 +84,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 {
                     try
                     {
-                        using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+                        using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
                         {
-                            using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
+                            using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStrToMasterDB, processState.ProjectConfig.DBCommandsTimeout))
                             {
                                 dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
 
@@ -108,7 +107,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
                 });
 
-                onExecuteStepsList.Invoke(InternalSteps, false);
+                ExecuteInternalSteps(processState, false);
 
 
 

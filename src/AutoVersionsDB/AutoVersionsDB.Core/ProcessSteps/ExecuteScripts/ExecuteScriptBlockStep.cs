@@ -27,13 +27,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
 
-            bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
-
-            if (!isVirtualExecution)
+            if (!processState.IsVirtualExecution)
             {
                 _dbCommands.ExecSQLCommandStr(_scriptBlockToExecute);
             }

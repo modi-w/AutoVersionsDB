@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
             processState.ThrowIfNull(nameof(processState));
 

@@ -31,11 +31,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
             {
                 string dbName = dbCommands.GetDataBaseName();
 
@@ -56,7 +54,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     Directory.CreateDirectory(incrementalSubFolderToDeploy);
                 }
 
-                DirectoryInfo diIncremental = new DirectoryInfo(projectConfig.IncrementalScriptsFolderPath);
+                DirectoryInfo diIncremental = new DirectoryInfo(processState.ProjectConfig.IncrementalScriptsFolderPath);
                 foreach (FileInfo scriptFileToCopy in diIncremental.GetFiles())
                 {
                     string targetFilename = Path.Combine(incrementalSubFolderToDeploy, scriptFileToCopy.Name);
@@ -72,7 +70,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     Directory.CreateDirectory(repeatableSubFolderToDeploy);
                 }
 
-                DirectoryInfo diRepeatable = new DirectoryInfo(projectConfig.RepeatableScriptsFolderPath);
+                DirectoryInfo diRepeatable = new DirectoryInfo(processState.ProjectConfig.RepeatableScriptsFolderPath);
                 foreach (FileInfo scriptFileToCopy in diRepeatable.GetFiles())
                 {
                     string targetFilename = Path.Combine(repeatableSubFolderToDeploy, scriptFileToCopy.Name);
@@ -82,12 +80,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-                if (!Directory.Exists(projectConfig.DeployArtifactFolderPath))
+                if (!Directory.Exists(processState.ProjectConfig.DeployArtifactFolderPath))
                 {
-                    Directory.CreateDirectory(projectConfig.DeployArtifactFolderPath);
+                    Directory.CreateDirectory(processState.ProjectConfig.DeployArtifactFolderPath);
                 }
 
-                string targetFileFullPath = Path.Combine(projectConfig.DeployArtifactFolderPath, $"{dbName}{ArtifactExtractor.ArtifactFilenameExtension}");
+                string targetFileFullPath = Path.Combine(processState.ProjectConfig.DeployArtifactFolderPath, $"{dbName}{ArtifactExtractor.ArtifactFilenameExtension}");
 
                 if (File.Exists(targetFileFullPath))
                 {
@@ -98,10 +96,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
             }
 
         }
-
-
-
-     
 
     }
 }

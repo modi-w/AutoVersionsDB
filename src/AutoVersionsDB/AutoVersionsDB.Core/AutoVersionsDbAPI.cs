@@ -61,7 +61,7 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
-        public static ProcessTrace ValidateAll(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace ValidateAll(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -88,45 +88,45 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace ValidateProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace ValidateProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ProjectConfigValidationEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<ProjectConfigValidationEngine>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
                 }
             }
 
             return processTrace;
         }
 
-        private static ProcessTrace ValidateArtifactFile(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateArtifactFile(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<ArtifactFileValidationEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<ArtifactFileValidationEngineSetting>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
                 }
             }
 
             return processTrace;
         }
 
-        private static ProcessTrace ValidateSystemTableExist(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateSystemTableExist(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SystemTableExsitValidationEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SystemTableExsitValidationEngine>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
                 }
             }
 
@@ -134,32 +134,30 @@ namespace AutoVersionsDB.Core
         }
 
 
-        private static ProcessTrace ValidateDBState(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        private static ProcessTrace ValidateDBState(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DBStateValidationEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<DBStateValidationEngine>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
                 }
             }
 
             return processTrace;
         }
 
-        public static bool ValdiateTargetStateAlreadyExecuted(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static bool ValdiateTargetStateAlreadyExecuted(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
-
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<TargetStateScriptFileValidationEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<TargetStateScriptFileValidationEngine>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
                 }
             }
 
@@ -171,22 +169,24 @@ namespace AutoVersionsDB.Core
 
         #region Run Change Db State
 
-        public static ProcessTrace SyncDB(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SyncDB(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SyncDBEngine>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
+
+
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
                 }
             }
 
             return processTrace;
         }
 
-        public static ProcessTrace SetDBToSpecificState(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SetDBToSpecificState(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
@@ -198,11 +198,9 @@ namespace AutoVersionsDB.Core
                 }
                 else
                 {
-                    ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
-
-                    using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<SyncDBToSpecificStateEngine>())
+                    using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SyncDBToSpecificStateEngine>>())
                     {
-                        processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
+                        processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
                     }
                 }
             }
@@ -210,34 +208,30 @@ namespace AutoVersionsDB.Core
             return processTrace;
         }
 
-        public static ProcessTrace RecreateDBFromScratch(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace RecreateDBFromScratch(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
-
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<RecreateDBFromScratchEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<RecreateDBFromScratchEngine>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
                 }
             }
 
             return processTrace;
         }
 
-        public static ProcessTrace SetDBStateByVirtualExecution(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace SetDBStateByVirtualExecution(ProjectConfigItem projectConfigItem, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                ExecutionParams executionParams = CreateTargetStepExectionParams(targetStateScriptFilename);
-
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<CreateVirtualExecutionsEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<CreateVirtualExecutionsEngine>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, executionParams, onNotificationStateChanged);
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
                 }
             }
 
@@ -246,30 +240,21 @@ namespace AutoVersionsDB.Core
 
 
 
-        private static ExecutionParams CreateTargetStepExectionParams(string targetStateScriptFilename)
-        {
-            AutoVersionsDBExecutionParams targetStateScriptExecutionParam = new AutoVersionsDBExecutionParams()
-            {
-                TargetStateScriptFileName = targetStateScriptFilename
-            };
-
-            return targetStateScriptExecutionParam;
-        }
 
         #endregion
 
 
         #region Deploy
 
-        public static ProcessTrace Deploy(ProjectConfigItem projectConfigItem, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
+        public static ProcessTrace Deploy(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             ProcessTrace processTrace;
 
             lock (_processSyncLock)
             {
-                using (AutoVersionsDbEngine engine = NinjectUtils.KernelInstance.Get<DeployEngine>())
+                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<DeployEngine>>())
                 {
-                    processTrace = engine.Run(projectConfigItem, null, onNotificationStateChanged);
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
                 }
             }
 

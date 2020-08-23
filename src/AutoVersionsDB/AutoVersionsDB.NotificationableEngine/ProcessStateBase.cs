@@ -10,7 +10,7 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public abstract class ProcessStateBase
     {
-        public Dictionary<string, string> EngineMetaData { get; }
+        public EngineSettings EngineSettings { get; private set; }
 
         public ExecutionParams ExecutionParams { get; set; }
 
@@ -24,19 +24,14 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public ProcessStateBase()
         {
-            EngineMetaData = new Dictionary<string, string>();
         }
 
-        public void SetEngineMetaData(Dictionary<string, string> engineMetaData)
+        internal void SetEngineSettings(EngineSettings engineSettings)
         {
-            engineMetaData.ThrowIfNull(nameof(engineMetaData));
+            engineSettings.ThrowIfNull(nameof(engineSettings));
 
-            EngineMetaData.Clear();
+            EngineSettings = engineSettings;
 
-            foreach (var keyValueParams in engineMetaData)
-            {
-                EngineMetaData.Add(keyValueParams.Key, keyValueParams.Value);
-            }
         }
     }
 

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class SystemTableExsitValidationEngine : AutoVersionsDbEngine
+    public class SystemTableExsitValidationEngine : AutoVersionsDbEngineSettingBase
     {
         public override string EngineTypeName => "System Table Exsit Validation";
 
@@ -16,8 +16,8 @@ namespace AutoVersionsDB.Core.Engines
                                                 ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep)
             : base(null)
         {
-            ProcessSteps.Add(createScriptFilesStateStep);
-            ProcessSteps.Add(systemTableValidationStep);
+            AddStep(createScriptFilesStateStep);
+            AddStep(systemTableValidationStep);
         }
     }
 }

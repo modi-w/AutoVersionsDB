@@ -8,9 +8,9 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class DeployEngine : AutoVersionsDbEngine
+    public class DeployEngine : AutoVersionsDbEngineSettingBase
     {
-        public override string EngineTypeName =>  "Deploy";
+        public override string EngineTypeName => "Deploy";
 
 
         public DeployEngine(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
@@ -21,12 +21,12 @@ namespace AutoVersionsDB.Core.Engines
                             BuildDeployArtifactFileStep buildDeployArtifactFileStep)
             : base(null)
         {
-            ProcessSteps.Add(projectConfigValidationStep);
-            ProcessSteps.Add(checkDeliveryEnvValidationStep);
-            ProcessSteps.Add(createScriptFilesStateStep);
-            ProcessSteps.Add(systemTableValidationStep);
-            ProcessSteps.Add(dbStateValidationStep);
-            ProcessSteps.Add(buildDeployArtifactFileStep);
+            AddStep(projectConfigValidationStep);
+            AddStep(checkDeliveryEnvValidationStep);
+            AddStep(createScriptFilesStateStep);
+            AddStep(systemTableValidationStep);
+            AddStep(dbStateValidationStep);
+            AddStep(buildDeployArtifactFileStep);
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class SyncDBToSpecificStateEngine : AutoVersionsDbEngine
+    public class SyncDBToSpecificStateEngine : AutoVersionsDbEngineSettingBase
     {
         public override string EngineTypeName => "Set DB To Specific State";
 
@@ -26,15 +26,15 @@ namespace AutoVersionsDB.Core.Engines
                                             FinalizeProcessStep finalizeProcessStep)
             : base(rollbackStep)
         {
-            ProcessSteps.Add(projectConfigValidationStep);
-            ProcessSteps.Add(checkDeliveryEnvValidationStep);
-            ProcessSteps.Add(createScriptFilesStateStep);
-            ProcessSteps.Add(systemTableValidationStep);
-            ProcessSteps.Add(dbStateValidationStep);
-            ProcessSteps.Add(targetStateScriptFileValidationStep);
-            ProcessSteps.Add(createBackupStep);
-            ProcessSteps.Add(executeScriptsStep);
-            ProcessSteps.Add(finalizeProcessStep);
+            AddStep(projectConfigValidationStep);
+            AddStep(checkDeliveryEnvValidationStep);
+            AddStep(createScriptFilesStateStep);
+            AddStep(systemTableValidationStep);
+            AddStep(dbStateValidationStep);
+            AddStep(targetStateScriptFileValidationStep);
+            AddStep(createBackupStep);
+            AddStep(executeScriptsStep);
+            AddStep(finalizeProcessStep);
         }
     }
 }

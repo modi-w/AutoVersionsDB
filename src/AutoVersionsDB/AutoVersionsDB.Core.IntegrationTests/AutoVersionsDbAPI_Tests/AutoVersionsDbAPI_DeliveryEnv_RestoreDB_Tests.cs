@@ -45,9 +45,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             bool isRestoreExecuted = 
                 processTrace
-                .StatesHistory.Any(e => e.InternalNotificationStateItem != null
-                                        && !string.IsNullOrWhiteSpace(e.InternalNotificationStateItem.StepName)
-                                        && e.InternalNotificationStateItem.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
+                .StatesHistory.Any(e => e.InternalStepNotificationState != null
+                                        && !string.IsNullOrWhiteSpace(e.InternalStepNotificationState.StepName)
+                                        && e.InternalStepNotificationState.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 
             Assert.That(isRestoreExecuted, Is.EqualTo(true));
 

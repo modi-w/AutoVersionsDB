@@ -29,12 +29,11 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));
 
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
             {
                 DataSet dsExecutionHistory = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
@@ -48,12 +47,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 executionHistoryRow["DBScriptsExecutionHistoryID"] = 0;
 
                 executionHistoryRow["StartProcessDateTime"] = processState.StartProcessDateTime;
-                executionHistoryRow["ExecutionTypeName"] = processState.EngineMetaData["EngineTypeName"];
+                executionHistoryRow["ExecutionTypeName"] = processState.EngineSettings.EngineTypeName;
                 executionHistoryRow["EndProcessDateTime"] = processState.EndProcessDateTime;
                 executionHistoryRow["ProcessDurationInMs"] = processState.ProcessDurationInMs;
                 executionHistoryRow["NumOfScriptFiles"] = processState.ExecutedFiles.Count;
                 executionHistoryRow["DBBackupFileFullPath"] = processState.DBBackupFileFullPath;
-                executionHistoryRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
+                executionHistoryRow["IsVirtualExecution"] = processState.IsVirtualExecution;
 
                 dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
                 dbCommands.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
@@ -68,7 +67,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     newFileRow["Filename"] = executedFiles.Filename;
                     newFileRow["FileFullPath"] = executedFiles.FileFullPath;
                     newFileRow["ScriptFileType"] = executedFiles.ScriptFileType.FileTypeCode;
-                    newFileRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
+                    newFileRow["IsVirtualExecution"] = processState.IsVirtualExecution;
                     newFileRow["ComputedFileHash"] = executedFiles.ComputedHash;
                     newFileRow["ComputedFileHashDateTime"] = executedFiles.ComputedHashDateTime;
 

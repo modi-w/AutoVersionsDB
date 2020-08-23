@@ -5,28 +5,16 @@ using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public abstract class AutoVersionsDbEngine : NotificationEngine<AutoVersionsDbProcessState, AutoVersionsDBExecutionParams, ProjectConfigItem>
+    public class AutoVersionsDbEngine<TEngineSettings> : NotificationEngine<TEngineSettings, AutoVersionsDbProcessState, AutoVersionsDBExecutionParams>
+        where TEngineSettings : AutoVersionsDbEngineSettingBase
     {
 
-        private bool _isVirtualExecution;
-        public bool IsVirtualExecution
-        {
-            get
-            {
-                return _isVirtualExecution;
-            }
-            protected set
-            {
-                _isVirtualExecution = value;
 
-                EngineMetaData["IsVirtualExecution"] = _isVirtualExecution.ToString();
-            }
-        }
-
-        public AutoVersionsDbEngine(NotificationableActionStepBase rollbackStep)
-            : base(rollbackStep)
+        public AutoVersionsDbEngine(TEngineSettings engineSettings,
+                                    ProcessTraceStateChangeHandler processStateChangeHandler,
+                                    StepsExecuter stepsExecuter)
+            : base(engineSettings, processStateChangeHandler, stepsExecuter)
         {
-            IsVirtualExecution = false;
 
         }
 

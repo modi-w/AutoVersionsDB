@@ -43,17 +43,15 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute( AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));
 
 
-
-            using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(projectConfig))
+            using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(processState.ProjectConfig))
             {
 
-                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
                 {
 
                     ScriptFileTypeBase incrementalFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
@@ -87,8 +85,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                         }
                     }
 
-
-                    onExecuteStepsList.Invoke(InternalSteps, false);
+                    ExecuteInternalSteps(processState, false);
                 }
             }
 

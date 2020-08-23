@@ -26,13 +26,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));
 
             processState.ScriptFilesState = _scriptFilesStateFactory.Create();
-            processState.ScriptFilesState.Reload(projectConfig);
+            processState.ScriptFilesState.Reload(processState.ProjectConfig);
         }
 
 

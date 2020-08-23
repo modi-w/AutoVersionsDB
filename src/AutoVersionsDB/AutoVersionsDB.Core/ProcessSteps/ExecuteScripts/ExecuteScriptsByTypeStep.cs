@@ -33,9 +33,8 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState, Action<List<NotificationableActionStepBase>, bool> onExecuteStepsList)
+        public override void Execute(AutoVersionsDbProcessState processState)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));
 
 
@@ -45,9 +44,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                 targetStateScriptFileName = (processState.ExecutionParams as AutoVersionsDBExecutionParams).TargetStateScriptFileName;
             }
 
-            bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
-
-
             ScriptFilesComparerBase scriptFilesComparer = processState.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);
 
             List<RuntimeScriptFileBase> scriptFilesList = scriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
@@ -55,7 +51,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
             {
                 string ignoreStr = "";
-                if (isVirtualExecution)
+                if (processState.IsVirtualExecution)
                 {
                     ignoreStr = " - Ignore (virtual execution)";
                 }
@@ -67,7 +63,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                 InternalSteps.Add(executeSingleFileScriptStep);
             }
 
-            onExecuteStepsList.Invoke(InternalSteps, false);
+            ExecuteInternalSteps(processState, false);
 
         }
 

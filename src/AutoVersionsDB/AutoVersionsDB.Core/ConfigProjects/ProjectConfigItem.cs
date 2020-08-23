@@ -8,7 +8,7 @@ using System.IO;
 
 namespace AutoVersionsDB.Core.ConfigProjects
 {
-    public class ProjectConfigItem : NotificationableEngineConfig
+    public class ProjectConfigItem 
     {
         public string ProjectGuid { get; set; }
         public string ProjectName { get; set; }

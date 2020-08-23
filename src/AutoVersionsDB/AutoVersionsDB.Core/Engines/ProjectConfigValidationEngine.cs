@@ -7,7 +7,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.Engines
 {
-    public class ProjectConfigValidationEngine : AutoVersionsDbEngine
+    public class ProjectConfigValidationEngine : AutoVersionsDbEngineSettingBase
     {
         public override string EngineTypeName => "Project Config Validation";
 
@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.Engines
         public ProjectConfigValidationEngine(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep)
             : base(null)
         {
-            ProcessSteps.Add(projectConfigValidationStep);
+            AddStep(projectConfigValidationStep);
         }
     }
 }

@@ -98,9 +98,9 @@ namespace AutoVersionsDB.WinApp
         {
             if (processResults.HasError)
             {
-                List<NotificationStateItem> errorStates = processResults.StatesHistory.Where(e => e.HasError).ToList();
+                List<StepNotificationState> errorStates = processResults.StatesHistory.Where(e => e.HasError).ToList();
 
-                foreach (NotificationStateItem errorStateItem in errorStates)
+                foreach (StepNotificationState errorStateItem in errorStates)
                 {
                     switch (errorStateItem.LowLevelErrorCode)
                     {

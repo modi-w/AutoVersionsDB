@@ -17,7 +17,7 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        public void OnNotificationStateChanged(ProcessTrace processState, NotificationStateItem notificationStateItem)
+        public void OnNotificationStateChanged(ProcessTrace processState, StepNotificationState notificationStateItem)
         {
             _processState = processState;
 
