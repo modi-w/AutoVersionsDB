@@ -11,6 +11,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class ArtifactFileValidationsFactory : ValidationsFactory
     {
+        public override string ValidationName => "ArtifactFile";
 
         public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
         {

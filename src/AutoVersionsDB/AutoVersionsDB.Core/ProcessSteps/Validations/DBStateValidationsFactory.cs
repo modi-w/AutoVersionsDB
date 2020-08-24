@@ -13,6 +13,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class DBStateValidationsFactory : ValidationsFactory
     {
+        public override string ValidationName => "DB State";
 
         public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
         {

@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         private readonly ValidationsFactory _validationsFactory;
         private readonly SingleValidationStepFactory _singleValidationStepFactory;
 
-        public override string StepName => "Validation";
+        public override string StepName => $"Validation - {_validationsFactory.ValidationName}";
 
         public ValidationsStep(SingleValidationStepFactory singleValidationStepFactory, ValidationsFactory validationsFactory)
         {

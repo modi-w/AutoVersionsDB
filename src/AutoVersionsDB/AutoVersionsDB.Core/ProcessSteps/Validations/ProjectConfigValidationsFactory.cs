@@ -15,6 +15,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
+        public override string ValidationName => "Project Config";
+
+
         public ProjectConfigValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;

@@ -13,6 +13,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class TargetStateScriptFileValidationsFactory : ValidationsFactory
     {
+        public override string ValidationName => "Target State Script File";
 
 
         public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)

@@ -9,6 +9,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
   public abstract  class ValidationsFactory
     {
+        public abstract string ValidationName { get; }
 
         public abstract ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState);
     }

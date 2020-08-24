@@ -15,6 +15,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
+        public override string ValidationName => "System Tables";
 
         public SystemTableValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
