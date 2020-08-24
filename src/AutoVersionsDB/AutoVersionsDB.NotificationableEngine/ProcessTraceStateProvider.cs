@@ -9,7 +9,7 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class ProcessTraceStateProvider
     {
-        private ConcurrentDictionary<string, ProcessTraceState> _processTraceStateCache;
+        private static ConcurrentDictionary<string, ProcessTraceState> _processTraceStateCache;
 
         public ProcessTraceStateProvider()
         {
@@ -18,7 +18,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         
 
-        public string CreateNew(string processName, Action<ProcessTrace, StepNotificationState> onStepNotificationStateChanged)
+        public virtual string CreateNew(string processName, Action<ProcessTrace, StepNotificationState> onStepNotificationStateChanged)
         {
             ProcessTraceState newProcessTraceState = new ProcessTraceState(processName, onStepNotificationStateChanged);
 
@@ -28,11 +28,15 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public ProcessTraceState Get(string key)
+        public virtual ProcessTraceState Get(string key)
         {
             return _processTraceStateCache[key];
         }
 
+        public virtual void Release(string key)
+        {
+            _processTraceStateCache.TryRemove(key, out ProcessTraceState removedProcessTraceState);
+        }
 
 
     }

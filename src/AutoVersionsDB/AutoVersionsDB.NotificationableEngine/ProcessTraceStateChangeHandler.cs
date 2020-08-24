@@ -9,7 +9,7 @@ namespace AutoVersionsDB.NotificationableEngine
     {
         private ProcessTraceStateProvider _processTraceStateProvider;
 
-        internal ProcessTraceStateChangeHandler(ProcessTraceStateProvider processTraceStateProvider)
+        public ProcessTraceStateChangeHandler(ProcessTraceStateProvider processTraceStateProvider)
         {
             _processTraceStateProvider = processTraceStateProvider;
         }
@@ -45,7 +45,7 @@ namespace AutoVersionsDB.NotificationableEngine
             //}
         }
 
-        public void SetInternalSteps(string processTraceStateKey, int numOfSteps)
+        internal void SetInternalSteps(string processTraceStateKey, int numOfSteps)
         {
             _processTraceStateProvider
                 .Get(processTraceStateKey)
@@ -157,10 +157,15 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        
+        internal void Release(string processTraceStateKey)
+        {
+            _processTraceStateProvider.Release(processTraceStateKey);
+        }
 
 
 
-      
+
+
+
     }
 }

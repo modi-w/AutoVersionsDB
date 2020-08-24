@@ -46,6 +46,9 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
         public void Stop()
         {
             IsActive = false;
+
+            //Comment: we wait here because the run process is run on another thread
+            Thread.Sleep(IntervalInMs * 2);
         }
 
 

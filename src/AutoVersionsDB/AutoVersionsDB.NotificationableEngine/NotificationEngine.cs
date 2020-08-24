@@ -60,6 +60,11 @@ namespace AutoVersionsDB.NotificationableEngine
 
             _stepsExecuter.SetProcessProperty(processTraceStateKey, _engineSettings.RollbackStep);
 
+            if (_engineSettings.RollbackStep!= null)
+            {
+                _engineSettings.RollbackStep.SetStepsExecuter(_stepsExecuter);
+            }
+
             _stepsExecuter.ExecuteSteps(_engineSettings.ProcessSteps, processState, false);
 
 
@@ -68,8 +73,11 @@ namespace AutoVersionsDB.NotificationableEngine
                 processState.EndProcessDateTime = DateTime.Now;
             }
 
+            ProcessTrace processTrace = _processStateChangeHandler.ProcessTrace(processTraceStateKey);
 
-            return _processStateChangeHandler.ProcessTrace(processTraceStateKey);
+            _processStateChangeHandler.Release(processTraceStateKey);
+
+            return processTrace;
         }
 
 

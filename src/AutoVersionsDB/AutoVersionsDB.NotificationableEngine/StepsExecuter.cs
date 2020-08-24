@@ -14,7 +14,7 @@ namespace AutoVersionsDB.NotificationableEngine
         private ActionStepBase _rollbackStep;
 
 
-        internal StepsExecuter(ProcessTraceStateChangeHandler notifictionStateChangeHandler)
+        public StepsExecuter(ProcessTraceStateChangeHandler notifictionStateChangeHandler)
         {
             _notifictionStateChangeHandler = notifictionStateChangeHandler;
         }
@@ -53,7 +53,8 @@ namespace AutoVersionsDB.NotificationableEngine
 
                             if (_rollbackStep != null)
                             {
-                                _rollbackStep.Execute(processState);
+                                NotificationableActionStep wrappedRollbackStep = DecorateStep(_rollbackStep);
+                                wrappedRollbackStep.Execute(processState);
                             }
                         }
 

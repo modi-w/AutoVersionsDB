@@ -101,7 +101,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 ExecuteInternalSteps(processState, true);
 
                 dbRestoreStatusNotifyer.Stop();
-
+                
 
             }
 
