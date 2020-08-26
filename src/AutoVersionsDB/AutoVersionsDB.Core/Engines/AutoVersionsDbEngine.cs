@@ -11,9 +11,8 @@ namespace AutoVersionsDB.Core.Engines
 
 
         public AutoVersionsDbEngine(TEngineSettings engineSettings,
-                                    ProcessTraceStateChangeHandler processStateChangeHandler,
                                     StepsExecuter stepsExecuter)
-            : base(engineSettings, processStateChangeHandler, stepsExecuter)
+            : base(engineSettings, stepsExecuter)
         {
 
         }

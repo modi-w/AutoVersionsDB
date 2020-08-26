@@ -7,17 +7,17 @@ namespace AutoVersionsDB.NotificationableEngine
     internal class NotificationableActionStep : ActionStepBase
     {
         private readonly ActionStepBase _internalStep;
-        private readonly ProcessTraceStateChangeHandler _notifictionStateChangeHandler;
+        private readonly ProcessTrace _processTrace;
         private readonly string _processTraceStateKey;
 
         public override string StepName => _internalStep.StepName;
 
 
-        public NotificationableActionStep(ProcessTraceStateChangeHandler notifictionStateChangeHandler,
+        public NotificationableActionStep(ProcessTrace processTrace,
                                             string processTraceStateKey,
                                             ActionStepBase internalStep)
         {
-            _notifictionStateChangeHandler = notifictionStateChangeHandler;
+            _processTrace = processTrace;
             _processTraceStateKey = processTraceStateKey;
             _internalStep = internalStep;
         }
@@ -28,7 +28,7 @@ namespace AutoVersionsDB.NotificationableEngine
             if (!processState.IsRollbackExecuted)
             {
 
-                _notifictionStateChangeHandler.StepStart(_processTraceStateKey,_internalStep.StepName);
+                _processTrace.StepStart(_internalStep.StepName);
 
                 try
                 {
@@ -36,15 +36,15 @@ namespace AutoVersionsDB.NotificationableEngine
                 }
                 catch (NotificationEngineException ex)
                 {
-                    _notifictionStateChangeHandler.StepError(_processTraceStateKey, ex.ErrorCode, ex.Message, ex.InstructionsMessage);
+                    _processTrace.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage);
 
                 }
                 catch (Exception ex)
                 {
-                    _notifictionStateChangeHandler.StepError(_processTraceStateKey, _internalStep.StepName, ex.ToString(), "Error occurred during the process.");
+                    _processTrace.StepError(_internalStep.StepName, ex.ToString(), "Error occurred during the process.");
                 }
 
-                _notifictionStateChangeHandler.StepEnd(_processTraceStateKey);
+                _processTrace.StepEnd();
             }
         }
     }

@@ -8,21 +8,20 @@ namespace AutoVersionsDB.NotificationableEngine
     public class StepsExecuter
     {
 
-        private ProcessTraceStateChangeHandler _notifictionStateChangeHandler;
+        private ProcessTrace _processTrace;
 
         private string _processTraceStateKey;
         private ActionStepBase _rollbackStep;
 
 
-        public StepsExecuter(ProcessTraceStateChangeHandler notifictionStateChangeHandler)
+        public StepsExecuter()
         {
-            _notifictionStateChangeHandler = notifictionStateChangeHandler;
         }
 
 
-        internal void SetProcessProperty(string processTraceStateKey, ActionStepBase rollbackStep)
+        internal void SetProcessProperty(ProcessTrace processTrace, ActionStepBase rollbackStep)
         {
-            _processTraceStateKey = processTraceStateKey;
+            _processTrace = processTrace;
             _rollbackStep = rollbackStep;
         }
 
@@ -39,17 +38,17 @@ namespace AutoVersionsDB.NotificationableEngine
 
             if (!processState.IsRollbackExecuted)
             {
-                _notifictionStateChangeHandler.SetInternalSteps(_processTraceStateKey, wrappedSteps.Count);
+                _processTrace.SetInternalSteps(wrappedSteps.Count);
 
                 foreach (var step in wrappedSteps)
                 {
                     step.Execute(processState);
 
-                    if (_notifictionStateChangeHandler.HasError(_processTraceStateKey) && !isContinueOnError)
+                    if (_processTrace.HasError && !isContinueOnError)
                     {
                         if (processState.CanRollback)
                         {
-                            _notifictionStateChangeHandler.ClearAllInternalProcessState(_processTraceStateKey);
+                            _processTrace.ClearAllInternalProcessState();
 
                             if (_rollbackStep != null)
                             {
@@ -72,7 +71,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         private NotificationableActionStep DecorateStep(ActionStepBase step)
         {
-            return new NotificationableActionStep(_notifictionStateChangeHandler, _processTraceStateKey, step);
+            return new NotificationableActionStep(_processTrace, _processTraceStateKey, step);
         }
 
         private List<NotificationableActionStep> DecorateSteps(IEnumerable<ActionStepBase> steps)

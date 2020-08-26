@@ -8,8 +8,10 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class ProcessTrace
     {
-
         private readonly List<StepNotificationState> _statesHistory;
+
+        private Action<ProcessTrace, StepNotificationState> OnStepNotificationStateChanged { get; }
+
 
         public List<StepNotificationState> StatesHistory
         {
@@ -93,10 +95,57 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        internal ProcessTrace()
-        {
+        internal StepNotificationState RootStepNotificationState { get; }
 
+
+        internal StepNotificationState ParentStepNotificationState
+        {
+            get
+            {
+                StepNotificationState parentStepNotificationState = this.RootStepNotificationState;
+                StepNotificationState prevParentStepNotificationState = parentStepNotificationState;
+
+                while (parentStepNotificationState != null
+                        && parentStepNotificationState.InternalStepNotificationState != null)
+                {
+                    prevParentStepNotificationState = parentStepNotificationState;
+                    parentStepNotificationState = parentStepNotificationState.InternalStepNotificationState;
+                }
+
+                return prevParentStepNotificationState;
+            }
+        }
+
+        internal StepNotificationState CurrentStepNotificationState
+        {
+            get
+            {
+                StepNotificationState parentStepNotificationState = ParentStepNotificationState;
+
+                if (parentStepNotificationState.InternalStepNotificationState == null)
+                {
+                    return parentStepNotificationState;
+                }
+                else
+                {
+                    return parentStepNotificationState.InternalStepNotificationState;
+                }
+
+            }
+        }
+
+
+
+
+
+        internal ProcessTrace(string processName, Action<ProcessTrace, StepNotificationState> onStepNotificationStateChanged)
+        {
             _statesHistory = new List<StepNotificationState>();
+
+            OnStepNotificationStateChanged = onStepNotificationStateChanged;
+
+            RootStepNotificationState = new StepNotificationState(processName);
+
         }
 
 
@@ -107,6 +156,85 @@ namespace AutoVersionsDB.NotificationableEngine
                 _statesHistory.Add(notificationStateItem);
             }
         }
+
+        internal void StepStart(string stepName)
+        {
+            this.CurrentStepNotificationState
+                .InternalStepNotificationState = new StepNotificationState(stepName);
+
+
+            //     stepNotificationState.InternalStepNotificationState = null;
+
+            //if (stepNotificationState.NumOfSteps > 0)
+            //{
+            //    stepNotificationState.LastNotifyPrecents = stepNotificationState.Precents;
+
+            //    RiseNotificationStateChanged();
+            //}
+        }
+
+        internal void SetInternalSteps( int numOfSteps)
+        {
+            this.CurrentStepNotificationState
+                .SetNumOfSteps(numOfSteps);
+
+            RiseNotificationStateChanged();
+        }
+
+
+        internal void StepEnd()
+        {
+            ParentStepNotificationState.StepNumber++;
+
+            if (ParentStepNotificationState.NumOfSteps > 0)
+            {
+                if (ParentStepNotificationState.IsPrecentsAboveMin)
+                {
+                    ParentStepNotificationState.LastNotifyPrecents = ParentStepNotificationState.Precents;
+
+                    RiseNotificationStateChanged();
+                }
+            }
+
+            ParentStepNotificationState.InternalStepNotificationState = null;
+        }
+
+
+        internal void StepError( string errorCode, string errorMessage, string instructionsMessage)
+        {
+            this.CurrentStepNotificationState.ErrorCode = errorCode;
+            this.CurrentStepNotificationState.ErrorMesage = errorMessage;
+            this.CurrentStepNotificationState.InstructionsMessage = instructionsMessage;
+
+            RiseNotificationStateChanged();
+        }
+
+
+
+        internal void ClearAllInternalProcessState()
+        {
+            this.RootStepNotificationState
+                .InternalStepNotificationState = null;
+        }
+
+
+        private void RiseNotificationStateChanged()
+        {
+
+            StepNotificationState snapshotNotificationState = this.RootStepNotificationState.Clone();
+
+            snapshotNotificationState.SnapshotTimeStemp = DateTime.Now;
+
+            this.Appand(snapshotNotificationState);
+
+            Task.Run(() =>
+            {
+                this.OnStepNotificationStateChanged?.Invoke(this, snapshotNotificationState);
+            });
+        }
+
+
+
 
 
         public string GetAllHistoryAsString()

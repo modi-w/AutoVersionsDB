@@ -19,15 +19,12 @@ namespace AutoVersionsDB.NotificationableEngine
         where TProcessState : ProcessStateBase, new()
     {
         private EngineSettings _engineSettings;
-        private ProcessTraceStateChangeHandler _processStateChangeHandler;
         private StepsExecuter _stepsExecuter;
 
         public NotificationEngine(EngineSettings engineSettings,
-                                    ProcessTraceStateChangeHandler processStateChangeHandler,
                                     StepsExecuter stepsExecuter)
         {
             _engineSettings = engineSettings;
-            _processStateChangeHandler = processStateChangeHandler;
             _stepsExecuter = stepsExecuter;
         }
 
@@ -57,34 +54,25 @@ namespace AutoVersionsDB.NotificationableEngine
 
             //RaiseInitiated(notificationableEngineConfig, processState);
 
-            string processTraceStateKey = _processStateChangeHandler.CreateNew(_engineSettings.EngineTypeName, onNotificationStateChanged);
+            ProcessTrace processTrace = new ProcessTrace(_engineSettings.EngineTypeName, onNotificationStateChanged);
 
-            try
+            _stepsExecuter.SetProcessProperty(processTrace, _engineSettings.RollbackStep);
+
+            if (_engineSettings.RollbackStep != null)
             {
-                _stepsExecuter.SetProcessProperty(processTraceStateKey, _engineSettings.RollbackStep);
-
-                if (_engineSettings.RollbackStep != null)
-                {
-                    _engineSettings.RollbackStep.SetStepsExecuter(_stepsExecuter);
-                }
-
-                _stepsExecuter.ExecuteSteps(_engineSettings.ProcessSteps, processState, false);
-
-
-                if (!processState.EndProcessDateTime.HasValue)
-                {
-                    processState.EndProcessDateTime = DateTime.Now;
-                }
-
-                processTraceResults = _processStateChangeHandler.ProcessTrace(processTraceStateKey);
-
-            }
-            finally
-            {
-                _processStateChangeHandler.Release(processTraceStateKey);
+                _engineSettings.RollbackStep.SetStepsExecuter(_stepsExecuter);
             }
 
-            return processTraceResults;
+            _stepsExecuter.ExecuteSteps(_engineSettings.ProcessSteps, processState, false);
+
+
+            if (!processState.EndProcessDateTime.HasValue)
+            {
+                processState.EndProcessDateTime = DateTime.Now;
+            }
+
+
+            return processTrace;
         }
 
 
@@ -150,9 +138,8 @@ namespace AutoVersionsDB.NotificationableEngine
     {
 
         public NotificationEngine(TEngineSettings engineSettings,
-                                    ProcessTraceStateChangeHandler processStateChangeHandler,
                                     StepsExecuter stepsExecuter)
-            : base(engineSettings, processStateChangeHandler, stepsExecuter)
+            : base(engineSettings, stepsExecuter)
         {
         }
 
