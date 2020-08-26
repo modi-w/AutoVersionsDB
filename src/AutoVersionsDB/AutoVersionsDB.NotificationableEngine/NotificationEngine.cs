@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoVersionsDB.NotificationableEngine
 {
 
-    public interface INotificationEngine :IDisposable
+    public interface INotificationEngine : IDisposable
     {
         ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged);
     }
@@ -44,6 +44,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
+            ProcessTrace processTraceResults;
 
             TProcessState processState = new TProcessState()
             {
@@ -58,26 +59,32 @@ namespace AutoVersionsDB.NotificationableEngine
 
             string processTraceStateKey = _processStateChangeHandler.CreateNew(_engineSettings.EngineTypeName, onNotificationStateChanged);
 
-            _stepsExecuter.SetProcessProperty(processTraceStateKey, _engineSettings.RollbackStep);
-
-            if (_engineSettings.RollbackStep!= null)
+            try
             {
-                _engineSettings.RollbackStep.SetStepsExecuter(_stepsExecuter);
+                _stepsExecuter.SetProcessProperty(processTraceStateKey, _engineSettings.RollbackStep);
+
+                if (_engineSettings.RollbackStep != null)
+                {
+                    _engineSettings.RollbackStep.SetStepsExecuter(_stepsExecuter);
+                }
+
+                _stepsExecuter.ExecuteSteps(_engineSettings.ProcessSteps, processState, false);
+
+
+                if (!processState.EndProcessDateTime.HasValue)
+                {
+                    processState.EndProcessDateTime = DateTime.Now;
+                }
+
+                processTraceResults = _processStateChangeHandler.ProcessTrace(processTraceStateKey);
+
+            }
+            finally
+            {
+                _processStateChangeHandler.Release(processTraceStateKey);
             }
 
-            _stepsExecuter.ExecuteSteps(_engineSettings.ProcessSteps, processState, false);
-
-
-            if (!processState.EndProcessDateTime.HasValue)
-            {
-                processState.EndProcessDateTime = DateTime.Now;
-            }
-
-            ProcessTrace processTrace = _processStateChangeHandler.ProcessTrace(processTraceStateKey);
-
-            _processStateChangeHandler.Release(processTraceStateKey);
-
-            return processTrace;
+            return processTraceResults;
         }
 
 
