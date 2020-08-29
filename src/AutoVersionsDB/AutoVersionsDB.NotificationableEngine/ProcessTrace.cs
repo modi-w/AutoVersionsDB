@@ -6,10 +6,63 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    //public class ProcessTraceProxy
-    //{
+    public class ProcessTraceHandler
+    {
+        private ProcessTrace _processTrace;
 
-    //}
+        internal ProcessTrace ProcessTrace
+        {
+            get
+            {
+                return _processTrace;
+            }
+        }
+
+        internal bool HasError
+        {
+            get
+            {
+                return _processTrace.HasError;
+            }
+        }
+
+
+        public ProcessTraceHandler()
+        {
+
+        }
+
+        internal void StartProcess(string processName, Action<ProcessTrace, StepNotificationState> onStepNotificationStateChanged)
+        {
+            _processTrace = new ProcessTrace(processName, onStepNotificationStateChanged);
+        }
+
+        internal void StepStart(string stepName)
+        {
+            _processTrace.StepStart(stepName);
+        }
+
+
+        internal void SetInternalSteps(int numOfSteps)
+        {
+            _processTrace.SetInternalSteps(numOfSteps);
+        }
+
+        internal void StepEnd()
+        {
+            _processTrace.StepEnd();
+        }
+
+        internal void StepError(string errorCode, string errorMessage, string instructionsMessage)
+        {
+            _processTrace.StepError(errorCode, errorMessage, instructionsMessage);
+        }
+
+        internal void ClearAllInternalProcessState()
+        {
+            _processTrace.ClearAllInternalProcessState();
+        }
+    }
 
 
     public class ProcessTrace
@@ -155,7 +208,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        internal void Appand(StepNotificationState notificationStateItem)
+        private void Appand(StepNotificationState notificationStateItem)
         {
             lock (_statesHistory)
             {
@@ -167,19 +220,9 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             this._currentStepNotificationState
                 .InternalStepNotificationState = new StepNotificationState(stepName);
-
-
-            //     stepNotificationState.InternalStepNotificationState = null;
-
-            //if (stepNotificationState.NumOfSteps > 0)
-            //{
-            //    stepNotificationState.LastNotifyPrecents = stepNotificationState.Precents;
-
-            //    RiseNotificationStateChanged();
-            //}
         }
 
-        internal void SetInternalSteps( int numOfSteps)
+        internal void SetInternalSteps(int numOfSteps)
         {
             this._currentStepNotificationState
                 .SetNumOfSteps(numOfSteps);
@@ -206,7 +249,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        internal void StepError( string errorCode, string errorMessage, string instructionsMessage)
+        internal void StepError(string errorCode, string errorMessage, string instructionsMessage)
         {
             this._currentStepNotificationState.ErrorCode = errorCode;
             this._currentStepNotificationState.ErrorMesage = errorMessage;

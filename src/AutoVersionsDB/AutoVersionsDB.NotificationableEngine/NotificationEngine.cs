@@ -14,18 +14,26 @@ namespace AutoVersionsDB.NotificationableEngine
         ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged);
     }
 
-    public abstract class NotificationEngine<TEngineSettings, TProcessState> : INotificationEngine
+    public interface IStepsExecuter
+    {
+        void ExecuteSteps(IEnumerable<ActionStepBase> steps,
+                                ProcessStateBase processState,
+                                bool isContinueOnError);
+    }
+
+    public abstract class NotificationEngine<TEngineSettings, TProcessState> : INotificationEngine, IStepsExecuter
         where TEngineSettings : EngineSettings
         where TProcessState : ProcessStateBase, new()
     {
         private EngineSettings _engineSettings;
-        private StepsExecuter _stepsExecuter;
+        private ProcessTraceHandler _processTraceHandler;
+
 
         public NotificationEngine(EngineSettings engineSettings,
-                                    StepsExecuter stepsExecuter)
+                                    ProcessTraceHandler processTraceHandler)
         {
             _engineSettings = engineSettings;
-            _stepsExecuter = stepsExecuter;
+            _processTraceHandler = processTraceHandler;
         }
 
 
@@ -41,8 +49,6 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ProcessTrace processTraceResults;
-
             TProcessState processState = new TProcessState()
             {
                 ExecutionParams = executionParams,
@@ -54,16 +60,14 @@ namespace AutoVersionsDB.NotificationableEngine
 
             //RaiseInitiated(notificationableEngineConfig, processState);
 
-            ProcessTrace processTrace = new ProcessTrace(_engineSettings.EngineTypeName, onNotificationStateChanged);
-
-            _stepsExecuter.SetProcessProperty(processTrace, _engineSettings.RollbackStep);
+            _processTraceHandler.StartProcess(_engineSettings.EngineTypeName, onNotificationStateChanged);
 
             if (_engineSettings.RollbackStep != null)
             {
-                _engineSettings.RollbackStep.SetStepsExecuter(_stepsExecuter);
+                _engineSettings.RollbackStep.SetStepsExecuter(this);
             }
 
-            _stepsExecuter.ExecuteSteps(_engineSettings.ProcessSteps, processState, false);
+            ExecuteSteps(_engineSettings.ProcessSteps, processState, false);
 
 
             if (!processState.EndProcessDateTime.HasValue)
@@ -72,7 +76,75 @@ namespace AutoVersionsDB.NotificationableEngine
             }
 
 
-            return processTrace;
+            return _processTraceHandler.ProcessTrace;
+        }
+
+
+        public void ExecuteSteps(IEnumerable<ActionStepBase> steps,
+                                ProcessStateBase processState,
+                                bool isContinueOnError)
+        {
+            foreach (var step in steps)
+            {
+                step.SetStepsExecuter(this);
+            }
+
+            if (!processState.IsRollbackExecuted)
+            {
+                _processTraceHandler.SetInternalSteps(steps.Count());
+
+                foreach (var step in steps)
+                {
+                    ExecuteStep(step,processState);
+
+                    if (_processTraceHandler.HasError && !isContinueOnError)
+                    {
+                        if (processState.CanRollback)
+                        {
+                            _processTraceHandler.ClearAllInternalProcessState();
+
+                            if (_engineSettings.RollbackStep != null)
+                            {
+                                ExecuteStep(_engineSettings.RollbackStep,processState);
+                            }
+                        }
+
+                        processState.IsRollbackExecuted = true;
+
+                        break;
+                    }
+                }
+            }
+
+
+        }
+
+
+
+
+        private void ExecuteStep(ActionStepBase step, ProcessStateBase processState)
+        {
+            if (!processState.IsRollbackExecuted)
+            {
+
+                _processTraceHandler.StepStart(step.StepName);
+
+                try
+                {
+                    step.Execute(processState);
+                }
+                catch (NotificationEngineException ex)
+                {
+                    _processTraceHandler.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage);
+
+                }
+                catch (Exception ex)
+                {
+                    _processTraceHandler.StepError(step.StepName, ex.ToString(), "Error occurred during the process.");
+                }
+
+                _processTraceHandler.StepEnd();
+            }
         }
 
 
@@ -138,8 +210,8 @@ namespace AutoVersionsDB.NotificationableEngine
     {
 
         public NotificationEngine(TEngineSettings engineSettings,
-                                    StepsExecuter stepsExecuter)
-            : base(engineSettings, stepsExecuter)
+                                    ProcessTraceHandler processTraceHandler)
+            : base(engineSettings, processTraceHandler)
         {
         }
 

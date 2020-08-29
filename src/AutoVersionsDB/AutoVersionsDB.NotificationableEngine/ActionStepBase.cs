@@ -13,7 +13,7 @@ namespace AutoVersionsDB.NotificationableEngine
         public List<ActionStepBase> InternalSteps { get; }
         public bool IsContinueOnErrorInIternalStep { get; }
 
-        private StepsExecuter _stepsExecuter;
+        private IStepsExecuter _stepsExecuter;
 
         public abstract void Execute(ProcessStateBase processState);
 
@@ -24,7 +24,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        internal void SetStepsExecuter(StepsExecuter stepsExecuter)
+        internal void SetStepsExecuter(IStepsExecuter stepsExecuter)
         {
             _stepsExecuter = stepsExecuter;
         }
