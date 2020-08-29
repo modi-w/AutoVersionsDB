@@ -91,7 +91,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
             if (!processState.IsRollbackExecuted)
             {
-                _processTraceHandler.SetInternalSteps(steps.Count());
+                _processTraceHandler.SetNumOfInternalSteps(steps.Count());
 
                 foreach (var step in steps)
                 {

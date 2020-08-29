@@ -1,75 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public class ProcessTraceHandler
-    {
-        private ProcessTrace _processTrace;
-
-        internal ProcessTrace ProcessTrace
-        {
-            get
-            {
-                return _processTrace;
-            }
-        }
-
-        internal bool HasError
-        {
-            get
-            {
-                return _processTrace.HasError;
-            }
-        }
-
-
-        public ProcessTraceHandler()
-        {
-
-        }
-
-        internal void StartProcess(string processName, Action<ProcessTrace, StepNotificationState> onStepNotificationStateChanged)
-        {
-            _processTrace = new ProcessTrace(processName, onStepNotificationStateChanged);
-        }
-
-        internal void StepStart(string stepName)
-        {
-            _processTrace.StepStart(stepName);
-        }
-
-
-        internal void SetInternalSteps(int numOfSteps)
-        {
-            _processTrace.SetInternalSteps(numOfSteps);
-        }
-
-        internal void StepEnd()
-        {
-            _processTrace.StepEnd();
-        }
-
-        internal void StepError(string errorCode, string errorMessage, string instructionsMessage)
-        {
-            _processTrace.StepError(errorCode, errorMessage, instructionsMessage);
-        }
-
-        internal void ClearAllInternalProcessState()
-        {
-            _processTrace.ClearAllInternalProcessState();
-        }
-    }
-
-
     public class ProcessTrace
     {
         private readonly List<StepNotificationState> _statesHistory;
 
-        private Action<ProcessTrace, StepNotificationState> OnStepNotificationStateChanged { get; }
 
 
         public List<StepNotificationState> StatesHistory
@@ -154,61 +92,14 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        private StepNotificationState _rootStepNotificationState;
 
-
-        private StepNotificationState _parentStepNotificationState
-        {
-            get
-            {
-                StepNotificationState parentStepNotificationState = this._rootStepNotificationState;
-                StepNotificationState prevParentStepNotificationState = parentStepNotificationState;
-
-                while (parentStepNotificationState != null
-                        && parentStepNotificationState.InternalStepNotificationState != null)
-                {
-                    prevParentStepNotificationState = parentStepNotificationState;
-                    parentStepNotificationState = parentStepNotificationState.InternalStepNotificationState;
-                }
-
-                return prevParentStepNotificationState;
-            }
-        }
-
-        private StepNotificationState _currentStepNotificationState
-        {
-            get
-            {
-                StepNotificationState parentStepNotificationState = _parentStepNotificationState;
-
-                if (parentStepNotificationState.InternalStepNotificationState == null)
-                {
-                    return parentStepNotificationState;
-                }
-                else
-                {
-                    return parentStepNotificationState.InternalStepNotificationState;
-                }
-
-            }
-        }
-
-
-
-
-
-        internal ProcessTrace(string processName, Action<ProcessTrace, StepNotificationState> onStepNotificationStateChanged)
+        internal ProcessTrace()
         {
             _statesHistory = new List<StepNotificationState>();
-
-            OnStepNotificationStateChanged = onStepNotificationStateChanged;
-
-            _rootStepNotificationState = new StepNotificationState(processName);
-
         }
 
 
-        private void Appand(StepNotificationState notificationStateItem)
+        internal void Appand(StepNotificationState notificationStateItem)
         {
             lock (_statesHistory)
             {
@@ -216,71 +107,6 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
-        internal void StepStart(string stepName)
-        {
-            this._currentStepNotificationState
-                .InternalStepNotificationState = new StepNotificationState(stepName);
-        }
-
-        internal void SetInternalSteps(int numOfSteps)
-        {
-            this._currentStepNotificationState
-                .SetNumOfSteps(numOfSteps);
-
-            RiseNotificationStateChanged();
-        }
-
-
-        internal void StepEnd()
-        {
-            _parentStepNotificationState.StepNumber++;
-
-            if (_parentStepNotificationState.NumOfSteps > 0)
-            {
-                if (_parentStepNotificationState.IsPrecentsAboveMin)
-                {
-                    _parentStepNotificationState.LastNotifyPrecents = _parentStepNotificationState.Precents;
-
-                    RiseNotificationStateChanged();
-                }
-            }
-
-            _parentStepNotificationState.InternalStepNotificationState = null;
-        }
-
-
-        internal void StepError(string errorCode, string errorMessage, string instructionsMessage)
-        {
-            this._currentStepNotificationState.ErrorCode = errorCode;
-            this._currentStepNotificationState.ErrorMesage = errorMessage;
-            this._currentStepNotificationState.InstructionsMessage = instructionsMessage;
-
-            RiseNotificationStateChanged();
-        }
-
-
-
-        internal void ClearAllInternalProcessState()
-        {
-            this._rootStepNotificationState
-                .InternalStepNotificationState = null;
-        }
-
-
-        private void RiseNotificationStateChanged()
-        {
-
-            StepNotificationState snapshotNotificationState = this._rootStepNotificationState.Clone();
-
-            snapshotNotificationState.SnapshotTimeStemp = DateTime.Now;
-
-            this.Appand(snapshotNotificationState);
-
-            Task.Run(() =>
-            {
-                this.OnStepNotificationStateChanged?.Invoke(this, snapshotNotificationState);
-            });
-        }
 
 
 
