@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AutoVersionsDB.NotificationableEngine
 {
 
-    public interface INotificationEngine : IDisposable
+    public interface INotificationEngine 
     {
         ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged);
     }
@@ -21,7 +21,7 @@ namespace AutoVersionsDB.NotificationableEngine
                                 bool isContinueOnError);
     }
 
-    public abstract class NotificationEngine<TEngineSettings, TProcessState> : INotificationEngine, IStepsExecuter
+    public abstract class NotificationEngine<TEngineSettings, TProcessState> : INotificationEngine, IStepsExecuter, IDisposable
         where TEngineSettings : EngineSettings
         where TProcessState : ProcessStateBase, new()
     {
@@ -37,16 +37,6 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        //private void RaiseInitiated(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
-        //{
-        //    OnInitiated(new InitiateEngineEventArgs(notificationableEngineConfig, processState));
-        //}
-        //protected virtual void OnInitiated(InitiateEngineEventArgs e)
-        //{
-        //    this.Initiated?.Invoke(this, e);
-        //}
-
-
         public ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             TProcessState processState = new TProcessState()
@@ -57,8 +47,6 @@ namespace AutoVersionsDB.NotificationableEngine
             };
 
             processState.SetEngineSettings(_engineSettings);
-
-            //RaiseInitiated(notificationableEngineConfig, processState);
 
             _processTraceHandler.StartProcess(_engineSettings.EngineTypeName, onNotificationStateChanged);
 

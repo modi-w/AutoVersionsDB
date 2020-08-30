@@ -94,10 +94,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<ProjectConfigValidationEngine>>())
-                {
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<ProjectConfigValidationEngine>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
             }
 
             return processTrace;
@@ -109,10 +107,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<ArtifactFileValidationEngineSetting>>())
-                {
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<ArtifactFileValidationEngineSetting>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
             }
 
             return processTrace;
@@ -124,10 +120,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SystemTableExsitValidationEngine>>())
-                {
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SystemTableExsitValidationEngine>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
             }
 
             return processTrace;
@@ -140,10 +134,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<DBStateValidationEngine>>())
-                {
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<DBStateValidationEngine>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
             }
 
             return processTrace;
@@ -155,10 +147,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<TargetStateScriptFileValidationEngine>>())
-                {
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<TargetStateScriptFileValidationEngine>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
             }
 
             return !processTrace.HasError;
@@ -175,12 +165,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SyncDBEngine>>())
-                {
-
-
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SyncDBEngine>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
             }
 
             return processTrace;
@@ -198,10 +184,8 @@ namespace AutoVersionsDB.Core
                 }
                 else
                 {
-                    using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SyncDBToSpecificStateEngine>>())
-                    {
-                        processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
-                    }
+                    INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<SyncDBToSpecificStateEngine>>();
+                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
                 }
             }
 
@@ -214,10 +198,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<RecreateDBFromScratchEngine>>())
-                {
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<RecreateDBFromScratchEngine>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
             }
 
             return processTrace;
@@ -229,10 +211,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<CreateVirtualExecutionsEngine>>())
-                {
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<CreateVirtualExecutionsEngine>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, targetStateScriptFilename), onNotificationStateChanged);
             }
 
             return processTrace;
@@ -252,10 +232,8 @@ namespace AutoVersionsDB.Core
 
             lock (_processSyncLock)
             {
-                using (INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<DeployEngine>>())
-                {
-                    processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
-                }
+                INotificationEngine engine = NinjectUtils.KernelInstance.Get<AutoVersionsDbEngine<DeployEngine>>();
+                processTrace = engine.Run(new AutoVersionsDBExecutionParams(projectConfigItem, null), onNotificationStateChanged);
             }
 
             return processTrace;
