@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,19 +9,27 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public abstract class ActionStepBase
     {
+        private readonly List<ActionStepBase> _internalSteps;
+        public ReadOnlyCollection<ActionStepBase> ReadOnlyInternalSteps
+        {
+            get
+            {
+                return _internalSteps.AsReadOnly();
+            }
+        }
+
         public abstract string StepName { get; }
 
-        public List<ActionStepBase> InternalSteps { get; }
         public bool IsContinueOnErrorInIternalStep { get; }
 
         private IStepsExecuter _stepsExecuter;
 
-        public abstract void Execute(EngineContext processState);
+        public abstract void Execute(ProcessContext processContext);
 
 
         protected ActionStepBase()
         {
-            InternalSteps = new List<ActionStepBase>();
+            _internalSteps = new List<ActionStepBase>();
         }
 
 
@@ -30,24 +39,33 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        protected void ExecuteInternalSteps(EngineContext processState, bool isContinueOnError)
+        protected void AddInternalStep(ActionStepBase internalStep)
         {
-            _stepsExecuter.ExecuteSteps(InternalSteps, processState, isContinueOnError);
+            _internalSteps.Add(internalStep);
         }
 
+       
+
+
+        protected void ExecuteInternalSteps(bool isContinueOnError)
+        {
+            _stepsExecuter.ExecuteSteps(_internalSteps, isContinueOnError);
+        }
     }
 
-    public abstract class ActionStepBase<TEngineContext> : ActionStepBase
-            where TEngineContext : EngineContext
+
+
+    public abstract class ActionStepBase<TProcessContext> : ActionStepBase
+            where TProcessContext : ProcessContext
     {
 
 
-        public override void Execute(EngineContext engineContext)
+        public override void Execute(ProcessContext processContext)
         {
-            Execute(engineContext as TEngineContext);
+            Execute(processContext as TProcessContext);
         }
 
-        public abstract void Execute(TEngineContext engineContext);
+        public abstract void Execute(TProcessContext processContext);
     }
 
 

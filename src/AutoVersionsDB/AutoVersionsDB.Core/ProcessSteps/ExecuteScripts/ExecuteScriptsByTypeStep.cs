@@ -1,6 +1,6 @@
 ﻿using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
@@ -33,25 +33,25 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(AutoVersionsDbEngineContext processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
 
             string targetStateScriptFileName = null;
-            if (processState.ExecutionParams != null)
+            if (processContext.ProcessParams != null)
             {
-                targetStateScriptFileName = (processState.ExecutionParams as AutoVersionsDBExecutionParams).TargetStateScriptFileName;
+                targetStateScriptFileName = (processContext.ProcessParams as AutoVersionsDbProcessParams).TargetStateScriptFileName;
             }
 
-            ScriptFilesComparerBase scriptFilesComparer = processState.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);
+            ScriptFilesComparerBase scriptFilesComparer = processContext.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);
 
             List<RuntimeScriptFileBase> scriptFilesList = scriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
 
             foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
             {
                 string ignoreStr = "";
-                if (processState.IsVirtualExecution)
+                if (processContext.IsVirtualExecution)
                 {
                     ignoreStr = " - Ignore (virtual execution)";
                 }
@@ -60,10 +60,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
                 ExecuteSingleFileScriptStep executeSingleFileScriptStep = _executeSingleFileScriptStepFactory.Create(_dbCommands, stepName, scriptFile);
 
-                InternalSteps.Add(executeSingleFileScriptStep);
+                AddInternalStep(executeSingleFileScriptStep);
             }
 
-            ExecuteInternalSteps(processState, false);
+            ExecuteInternalSteps( false);
 
         }
 

@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
@@ -26,16 +26,16 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
-        public override void Execute(AutoVersionsDbEngineContext processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
-            if (!processState.ProjectConfig.IsDevEnvironment)
+            if (!processContext.ProjectConfig.IsDevEnvironment)
             {
                 throw new Exception("Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).");
             }
 
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
             {
                 dbCommands.DropAllDB();
             }

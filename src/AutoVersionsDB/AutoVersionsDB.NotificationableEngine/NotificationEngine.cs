@@ -12,38 +12,38 @@ namespace AutoVersionsDB.NotificationableEngine
     internal sealed class NotificationEngine : IStepsExecuter, IDisposable
     {
         private ProcessTraceHandler _processTraceHandler;
-        private EngineContext _engineContext;
+        private ProcessContext _processContext;
 
         internal NotificationEngine(ProcessTraceHandler processTraceHandler,
-                                    EngineContext engineContext)
+                                    ProcessContext processContext)
         {
             _processTraceHandler = processTraceHandler;
-            _engineContext = engineContext;
+            _processContext = processContext;
         }
 
 
 
-        internal ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        internal ProcessTrace Run(ProcessParams processParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
 
-            _engineContext.ExecutionParams = executionParams;
+            _processContext.ProcessParams = processParams;
 
-            _engineContext.StartProcessDateTime = DateTime.Now;
+            _processContext.StartProcessDateTime = DateTime.Now;
 
 
-            _processTraceHandler.StartProcess(_engineContext.EngineSettings.EngineTypeName, onNotificationStateChanged);
+            _processTraceHandler.StartProcess(_processContext.ProcessDefinition.EngineTypeName, onNotificationStateChanged);
 
-            if (_engineContext.EngineSettings.RollbackStep != null)
+            if (_processContext.ProcessDefinition.RollbackStep != null)
             {
-                _engineContext.EngineSettings.RollbackStep.SetStepsExecuter(this);
+                _processContext.ProcessDefinition.RollbackStep.SetStepsExecuter(this);
             }
 
-            ExecuteSteps(_engineContext.EngineSettings.ProcessSteps, _engineContext, false);
+            ExecuteSteps(_processContext.ProcessDefinition.ProcessSteps, false);
 
 
-            if (!_engineContext.EndProcessDateTime.HasValue)
+            if (!_processContext.EndProcessDateTime.HasValue)
             {
-                _engineContext.EndProcessDateTime = DateTime.Now;
+                _processContext.EndProcessDateTime = DateTime.Now;
             }
 
 
@@ -52,7 +52,6 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
         public void ExecuteSteps(IEnumerable<ActionStepBase> steps,
-                                EngineContext _engineContext,
                                 bool isContinueOnError)
         {
             foreach (var step in steps)
@@ -60,7 +59,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 step.SetStepsExecuter(this);
             }
 
-            if (!_engineContext.IsRollbackExecuted)
+            if (!_processContext.IsRollbackExecuted)
             {
                 _processTraceHandler.SetNumOfInternalSteps(steps.Count());
 
@@ -70,17 +69,17 @@ namespace AutoVersionsDB.NotificationableEngine
 
                     if (_processTraceHandler.HasError && !isContinueOnError)
                     {
-                        if (_engineContext.CanRollback)
+                        if (_processContext.CanRollback)
                         {
-                            _processTraceHandler.ClearAllInternalProcessState();
+                            _processTraceHandler.ClearAllStepNotificationState();
 
-                            if (_engineContext.EngineSettings.RollbackStep != null)
+                            if (_processContext.ProcessDefinition.RollbackStep != null)
                             {
-                                ExecuteStep(_engineContext.EngineSettings.RollbackStep);
+                                ExecuteStep(_processContext.ProcessDefinition.RollbackStep);
                             }
                         }
 
-                        _engineContext.IsRollbackExecuted = true;
+                        _processContext.IsRollbackExecuted = true;
 
                         break;
                     }
@@ -95,16 +94,16 @@ namespace AutoVersionsDB.NotificationableEngine
 
         private void ExecuteStep(ActionStepBase step)
         {
-            if (!_engineContext.IsRollbackExecuted)
+            if (!_processContext.IsRollbackExecuted)
             {
 
                 _processTraceHandler.StepStart(step.StepName);
 
                 try
                 {
-                    step.Execute(_engineContext);
+                    step.Execute(_processContext);
                 }
-                catch (NotificationEngineException ex)
+                catch (NotificationProcessException ex)
                 {
                     _processTraceHandler.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage);
 
@@ -145,28 +144,16 @@ namespace AutoVersionsDB.NotificationableEngine
             if (disposing)
             {
 
-                if (_engineContext.EngineSettings != null)
+                if (_processContext.ProcessDefinition != null)
                 {
-                    _engineContext.EngineSettings.Dispose();
+                    _processContext.ProcessDefinition.Dispose();
                 }
             }
 
             _disposed = true;
         }
 
-        private static void disposStepsList(IEnumerable<ActionStepBase> processStepsToDispose)
-        {
-            foreach (var processStep in processStepsToDispose)
-            {
-                disposStepsList(processStep.InternalSteps);
-
-                IDisposable disposeStep = processStep as IDisposable;
-                if (disposeStep != null)
-                {
-                    disposeStep.Dispose();
-                }
-            }
-        }
+       
 
         #endregion
 
@@ -174,29 +161,6 @@ namespace AutoVersionsDB.NotificationableEngine
     }
 
 
-    //public class NotificationEngine<TEngineSettings, TProcessState, TExecutionParams> : NotificationEngine<TEngineSettings, TProcessState>
-    //    where TEngineSettings : EngineSettings
-    //    where TProcessState : ProcessStateBase, new()
-    //    where TExecutionParams : ExecutionParams
-    //{
-
-    //    public NotificationEngine(ProcessTraceHandler processTraceHandler)
-    //        : base(engineSettings, processTraceHandler)
-    //    {
-    //    }
-
-    //    //public virtual void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
-    //    //{
-    //    //    base.Prepare(notificationableEngineConfig);
-    //    //}
-
-
-
-    //    public ProcessTrace Run(TExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-    //    {
-    //        return base.Run(executionParams, onNotificationStateChanged);
-    //    }
-    //}
 
 }
 

@@ -1,6 +1,6 @@
 ﻿using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
@@ -43,28 +43,28 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute( AutoVersionsDbEngineContext processState)
+        public override void Execute( AutoVersionsDbProcessContext processContext)
         {
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
 
-            using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(processState.ProjectConfig))
+            using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(processContext.ProjectConfig))
             {
 
-                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
+                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
                 {
 
                     ScriptFileTypeBase incrementalFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
                     ExecuteScriptsByTypeStep incrementalExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(incrementalFileType.FileTypeCode, dbCommands);
-                    InternalSteps.Add(incrementalExecuteScriptsByTypeStep);
+                    AddInternalStep(incrementalExecuteScriptsByTypeStep);
 
 
-                    string lastIncStriptFilename = GetLastIncFilename(processState);
+                    string lastIncStriptFilename = GetLastIncFilename(processContext);
 
                     string targetStateScriptFileName = null;
-                    if (processState.ExecutionParams != null)
+                    if (processContext.ProcessParams != null)
                     {
-                        targetStateScriptFileName = (processState.ExecutionParams as AutoVersionsDBExecutionParams).TargetStateScriptFileName;
+                        targetStateScriptFileName = (processContext.ProcessParams as AutoVersionsDbProcessParams).TargetStateScriptFileName;
                     }
 
 
@@ -73,19 +73,19 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                     {
                         ScriptFileTypeBase repeatableFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
                         ExecuteScriptsByTypeStep repeatableFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(repeatableFileType.FileTypeCode, dbCommands);
-                        InternalSteps.Add(repeatableFileTypeExecuteScriptsByTypeStep);
+                        AddInternalStep(repeatableFileTypeExecuteScriptsByTypeStep);
 
 
-                        if (processState.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
+                        if (processContext.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
                         {
                             ScriptFileTypeBase devDummyDataFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
                             ExecuteScriptsByTypeStep devDummyDataFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(devDummyDataFileType.FileTypeCode, dbCommands);
-                            InternalSteps.Add(devDummyDataFileTypeExecuteScriptsByTypeStep);
+                            AddInternalStep(devDummyDataFileTypeExecuteScriptsByTypeStep);
 
                         }
                     }
 
-                    ExecuteInternalSteps(processState, false);
+                    ExecuteInternalSteps( false);
                 }
             }
 
@@ -93,12 +93,12 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         }
 
 
-        private static string GetLastIncFilename(AutoVersionsDbEngineContext processState)
+        private static string GetLastIncFilename(AutoVersionsDbProcessContext processContext)
         {
             string lastIncStriptFilename = "";
 
 
-            RuntimeScriptFileBase lastIncScriptFiles = processState.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.LastOrDefault();
+            RuntimeScriptFileBase lastIncScriptFiles = processContext.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.LastOrDefault();
             if (lastIncScriptFiles != null)
             {
                 lastIncStriptFilename = lastIncScriptFiles.Filename;

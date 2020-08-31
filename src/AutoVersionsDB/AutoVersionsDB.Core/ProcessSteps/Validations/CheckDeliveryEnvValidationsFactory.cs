@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public override string ValidationName => "Check Delivery Environment";
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbEngineContext processState)
+        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 

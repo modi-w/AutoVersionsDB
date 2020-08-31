@@ -6,13 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class SystemTableExsitValidationEngine : AutoVersionsDbEngineSettingBase
+    public class SystemTableExsitValidationProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "System Table Exsit Validation";
 
-        public SystemTableExsitValidationEngine(CreateScriptFilesStateStep createScriptFilesStateStep,
+        public SystemTableExsitValidationProcessDefinition(CreateScriptFilesStateStep createScriptFilesStateStep,
                                                 ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep)
             : base(null)
         {

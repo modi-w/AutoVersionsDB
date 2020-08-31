@@ -5,9 +5,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
     internal interface IStepsExecuter
     {
-        void ExecuteSteps(IEnumerable<ActionStepBase> steps,
-                                EngineContext processState,
-                                bool isContinueOnError);
+        void ExecuteSteps(IEnumerable<ActionStepBase> steps, bool isContinueOnError);
     }
 
 

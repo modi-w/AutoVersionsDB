@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
@@ -16,17 +16,17 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         public override string ValidationName => "Target State Script File";
 
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbEngineContext processState)
+        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
-            TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(processState.ScriptFilesState);
+            TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(processContext.ScriptFilesState);
             validationsGroup.Add(targetStateScriptFileExistValidator);
 
-            IsTargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new IsTargetScriptFiletAlreadyExecutedValidator(processState.ScriptFilesState);
+            IsTargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new IsTargetScriptFiletAlreadyExecutedValidator(processContext.ScriptFilesState);
             validationsGroup.Add(isTargetScriptFiletAlreadyExecutedValidator);
 
             return validationsGroup;

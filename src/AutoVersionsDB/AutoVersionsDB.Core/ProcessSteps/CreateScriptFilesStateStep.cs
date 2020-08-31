@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
@@ -26,12 +26,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbEngineContext processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
-            processState.ScriptFilesState = _scriptFilesStateFactory.Create();
-            processState.ScriptFilesState.Reload(processState.ProjectConfig);
+            processContext.ScriptFilesState = _scriptFilesStateFactory.Create();
+            processContext.ScriptFilesState.Reload(processContext.ProjectConfig);
         }
 
 

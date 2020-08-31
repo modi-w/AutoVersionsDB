@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
         {
             get
             {
-                return CurrentStepNumber >= StepNumber || ProcessExpetion!=null;
+                return CurrentStepNumber >= StepNumber || ProcessExpetion != null;
             }
         }
 
@@ -33,17 +33,17 @@ namespace AutoVersionsDB.Core.ProcessSteps
             StepNumber = stepNumber;
         }
 
-        public void SetProcessState( int currentStepNumber, Exception processExpetion)
+        public void SetProcessState(int currentStepNumber, Exception processExpetion)
         {
             CurrentStepNumber = currentStepNumber;
             ProcessExpetion = processExpetion;
         }
 
-        public override void Execute(AutoVersionsDbEngineContext processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
             while (!IsCompleted)
             {
-                if (ProcessExpetion!= null)
+                if (ProcessExpetion != null)
                 {
                     throw ProcessExpetion;
                 }

@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
@@ -36,11 +36,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(AutoVersionsDbEngineContext processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
-            if (!processState.IsVirtualExecution)
+            if (!processContext.IsVirtualExecution)
             {
                 string sqlCommandStr = File.ReadAllText(_scriptFile.FileFullPath);
 
@@ -49,13 +49,13 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                 foreach (string scriptBlockStr in scriptBlocks)
                 {
                     var executeScriptBlockStep = _executeScriptBlockStepFactory.Craete(_dbCommands, scriptBlockStr);
-                    InternalSteps.Add(executeScriptBlockStep);
+                    AddInternalStep(executeScriptBlockStep);
                 }
 
-                ExecuteInternalSteps(processState, false);
+                ExecuteInternalSteps( false);
             }
 
-            processState.AppendExecutedFile(_scriptFile);
+            processContext.AppendExecutedFile(_scriptFile);
 
         }
 

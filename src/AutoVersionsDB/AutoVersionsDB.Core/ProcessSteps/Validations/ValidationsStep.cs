@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
@@ -25,19 +25,19 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        public override void Execute(AutoVersionsDbEngineContext processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
-            ValidationsGroup validationsGroup = _validationsFactory.Create(processState.ProjectConfig, processState);
+            ValidationsGroup validationsGroup = _validationsFactory.Create(processContext.ProjectConfig, processContext);
 
             foreach (ValidatorBase validator in validationsGroup.GetValidators())
             {
                 SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
-                InternalSteps.Add(singleValidationStep);
+                AddInternalStep(singleValidationStep);
             }
 
-            base.ExecuteInternalSteps(processState, true);
+            base.ExecuteInternalSteps(true);
         }
 
     }

@@ -5,9 +5,9 @@ using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class AutoVersionsDbEngineContext : EngineContext
+    public class AutoVersionsDbProcessContext : ProcessContext
     {
         public ScriptFilesState ScriptFilesState { get; set; }
         public string DBBackupFileFullPath { get; set; }
@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.Engines
         {
             get
             {
-                return (base.ExecutionParams as AutoVersionsDBExecutionParams).ProjectConfig;
+                return (ProcessParams as AutoVersionsDbProcessParams).ProjectConfig;
             }
         }
 
@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.Engines
         {
             get
             {
-                return (base.EngineSettings as AutoVersionsDbEngineSettingBase).IsVirtualExecution;
+                return (ProcessDefinition as AutoVersionsDbProcessDefinition).IsVirtualExecution;
             }
         }
 
@@ -62,7 +62,7 @@ namespace AutoVersionsDB.Core.Engines
 
         public List<RuntimeScriptFileBase> ExecutedFiles { get; private set; }
 
-        public AutoVersionsDbEngineContext()
+        public AutoVersionsDbProcessContext()
         {
             ExecutedFiles = new List<RuntimeScriptFileBase>();
         }

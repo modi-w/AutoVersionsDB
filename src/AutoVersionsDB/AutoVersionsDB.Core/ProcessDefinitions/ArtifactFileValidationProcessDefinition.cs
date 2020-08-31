@@ -5,14 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class ArtifactFileValidationEngineSetting : AutoVersionsDbEngineSettingBase
+    public class ArtifactFileValidationProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "Artifact File Validation";
 
 
-        public ArtifactFileValidationEngineSetting(ValidationsStep<ArtifactFileValidationsFactory> artifactFileValidationStep)
+        public ArtifactFileValidationProcessDefinition(ValidationsStep<ArtifactFileValidationsFactory> artifactFileValidationStep)
             : base(null)
         {
             AddStep(artifactFileValidationStep);

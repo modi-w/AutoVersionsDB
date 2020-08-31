@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public abstract class EngineSettings : IDisposable
+    public abstract class ProcessDefinition : IDisposable
     {
         public abstract string EngineTypeName { get; }
 
@@ -20,7 +20,7 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
-        public EngineSettings(ActionStepBase rollbackStep)
+        public ProcessDefinition(ActionStepBase rollbackStep)
         {
             _processSteps = new List<ActionStepBase>();
 
@@ -38,7 +38,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         private bool _disposed = false;
 
-        ~EngineSettings() => Dispose(false);
+        ~ProcessDefinition() => Dispose(false);
 
         // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()
@@ -77,7 +77,7 @@ namespace AutoVersionsDB.NotificationableEngine
         {
             foreach (var processStep in processStepsToDispose)
             {
-                disposStepsList(processStep.InternalSteps);
+                disposStepsList(processStep.ReadOnlyInternalSteps);
 
                 IDisposable disposeStep = processStep as IDisposable;
                 if (disposeStep != null)

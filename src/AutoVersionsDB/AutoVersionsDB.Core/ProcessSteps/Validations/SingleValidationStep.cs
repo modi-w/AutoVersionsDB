@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
@@ -25,15 +25,15 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
 
 
-        public override void Execute(AutoVersionsDbEngineContext processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
-            string errorMsg = _validator.Validate(processState.ExecutionParams as AutoVersionsDBExecutionParams);
+            string errorMsg = _validator.Validate(processContext.ProcessParams as AutoVersionsDbProcessParams);
 
             if (!string.IsNullOrWhiteSpace(errorMsg))
             {
-                throw new NotificationEngineException(_validator.ValidatorName, errorMsg, _validator.ErrorInstructionsMessage);
+                throw new NotificationProcessException(_validator.ValidatorName, errorMsg, _validator.ErrorInstructionsMessage);
             }
         }
 

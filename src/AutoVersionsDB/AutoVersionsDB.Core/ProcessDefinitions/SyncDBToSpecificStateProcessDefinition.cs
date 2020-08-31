@@ -7,14 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class SyncDBToSpecificStateEngine : AutoVersionsDbEngineSettingBase
+    public class SyncDBToSpecificStateProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "Set DB To Specific State";
 
 
-        public SyncDBToSpecificStateEngine(RestoreDatabaseStep rollbackStep,
+        public SyncDBToSpecificStateProcessDefinition(RestoreDatabaseStep rollbackStep,
                                             ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                             ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                                             CreateScriptFilesStateStep createScriptFilesStateStep,

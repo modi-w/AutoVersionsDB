@@ -7,14 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class CreateVirtualExecutionsEngine : AutoVersionsDbEngineSettingBase
+    public class CreateVirtualExecutionsProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "Create Virtual Executions";
 
 
-        public CreateVirtualExecutionsEngine(RestoreDatabaseStep rollbackStep,
+        public CreateVirtualExecutionsProcessDefinition(RestoreDatabaseStep rollbackStep,
                                                 ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                                 CreateScriptFilesStateStep createScriptFilesStateStep,
                                                 CreateBackupStep createBackupStep,

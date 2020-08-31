@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Validations;
 using System;
 using System.Collections.Generic;
@@ -7,10 +7,10 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-  public abstract  class ValidationsFactory
+    public abstract  class ValidationsFactory
     {
         public abstract string ValidationName { get; }
 
-        public abstract ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbEngineContext processState);
+        public abstract ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext);
     }
 }

@@ -5,14 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class ProjectConfigValidationEngine : AutoVersionsDbEngineSettingBase
+    public class ProjectConfigValidationProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "Project Config Validation";
 
 
-        public ProjectConfigValidationEngine(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep)
+        public ProjectConfigValidationProcessDefinition(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep)
             : base(null)
         {
             AddStep(projectConfigValidationStep);

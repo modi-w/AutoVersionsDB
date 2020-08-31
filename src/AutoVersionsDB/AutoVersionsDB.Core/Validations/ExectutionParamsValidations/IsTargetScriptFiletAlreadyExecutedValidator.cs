@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
             _scriptFilesState = scriptFilesState;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             executionParam.ThrowIfNull(nameof(executionParam));
 

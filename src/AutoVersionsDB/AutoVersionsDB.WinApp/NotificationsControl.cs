@@ -9,7 +9,7 @@ namespace AutoVersionsDB.WinApp
 {
     public partial class NotificationsControl : UserControl
     {
-        private ProcessTrace _processState;
+        private ProcessTrace _processTrace;
 
         public NotificationsControl()
         {
@@ -17,9 +17,9 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        public void OnNotificationStateChanged(ProcessTrace processState, StepNotificationState notificationStateItem)
+        public void OnNotificationStateChanged(ProcessTrace processTrace, StepNotificationState notificationStateItem)
         {
-            _processState = processState;
+            _processTrace = processTrace;
 
             ResolveColorAndImageByErrorStatus(true);
 
@@ -130,11 +130,11 @@ namespace AutoVersionsDB.WinApp
 
             ResolveColorAndImageByErrorStatus(false);
 
-            if (!string.IsNullOrWhiteSpace(_processState.InstructionsMessage))
+            if (!string.IsNullOrWhiteSpace(_processTrace.InstructionsMessage))
             {
                 lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
                 {
-                    lblProcessStatusMessage.Text = _processState.InstructionsMessage;
+                    lblProcessStatusMessage.Text = _processTrace.InstructionsMessage;
                 }));
             }
             else
@@ -154,7 +154,7 @@ namespace AutoVersionsDB.WinApp
             }
             else
             {
-                if (_processState.HasError)
+                if (_processTrace.HasError)
                 {
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -174,7 +174,7 @@ namespace AutoVersionsDB.WinApp
                 }
             }
 
-            if (_processState.HasError)
+            if (_processTrace.HasError)
             {
 
                 lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
@@ -195,7 +195,7 @@ namespace AutoVersionsDB.WinApp
 
         private void PbStatus_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow(_processState);
+            ShowMessageWindow(_processTrace);
         }
 
         private static void ShowMessageWindow(ProcessTrace processResults)
@@ -228,12 +228,12 @@ namespace AutoVersionsDB.WinApp
 
         private void LblPrecents_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow(_processState);
+            ShowMessageWindow(_processTrace);
         }
 
         private void LblProcessStatusMessage_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow(_processState);
+            ShowMessageWindow(_processTrace);
         }
 
 

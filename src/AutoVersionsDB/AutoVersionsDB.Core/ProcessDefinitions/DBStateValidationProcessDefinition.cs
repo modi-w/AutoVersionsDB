@@ -6,14 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class DBStateValidationEngine : AutoVersionsDbEngineSettingBase
+    public class DBStateValidationProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "DB State Validation";
 
 
-        public DBStateValidationEngine(CreateScriptFilesStateStep createScriptFilesStateStep,
+        public DBStateValidationProcessDefinition(CreateScriptFilesStateStep createScriptFilesStateStep,
                                         ValidationsStep<DBStateValidationsFactory> dbStateValidationStep)
             : base(null)
         {

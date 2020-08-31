@@ -6,14 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class DeployEngine : AutoVersionsDbEngineSettingBase
+    public class DeployProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "Deploy";
 
 
-        public DeployEngine(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+        public DeployProcessDefinition(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                             ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                             CreateScriptFilesStateStep createScriptFilesStateStep,
                             ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,

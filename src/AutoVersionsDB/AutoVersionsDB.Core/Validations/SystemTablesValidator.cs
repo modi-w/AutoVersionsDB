@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using System;
@@ -41,7 +41,7 @@ namespace AutoVersionsDB.Core.Validations
             _isDevEnvironment = isDevEnvironment;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbTypeCode, _connStr, 0))
             {

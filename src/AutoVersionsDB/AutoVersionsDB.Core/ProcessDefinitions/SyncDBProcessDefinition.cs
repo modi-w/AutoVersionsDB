@@ -8,14 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class SyncDBEngine : AutoVersionsDbEngineSettingBase
+    public class SyncDBProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "Sync DB";
 
 
-        public SyncDBEngine(RestoreDatabaseStep rollbackStep,
+        public SyncDBProcessDefinition(RestoreDatabaseStep rollbackStep,
                             ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                             ValidationsStep<ArtifactFileValidationsFactory> artifactFileValidationStep,
                             CreateScriptFilesStateStep createScriptFilesStateStep,
@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.Engines
                             CreateBackupStep createBackupStep,
                             ExecuteAllScriptsStep executeScriptsStep,
                             FinalizeProcessStep finalizeProcessStep)
-            :base( rollbackStep)
+            : base(rollbackStep)
         {
             AddStep(projectConfigValidationStep);
             AddStep(artifactFileValidationStep);
@@ -37,6 +37,6 @@ namespace AutoVersionsDB.Core.Engines
         }
 
 
-    
+
     }
 }

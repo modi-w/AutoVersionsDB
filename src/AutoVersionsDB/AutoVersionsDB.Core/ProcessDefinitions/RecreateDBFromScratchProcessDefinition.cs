@@ -7,14 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.Engines
+namespace AutoVersionsDB.Core.ProcessDefinitions
 {
-    public class RecreateDBFromScratchEngine : AutoVersionsDbEngineSettingBase
+    public class RecreateDBFromScratchProcessDefinition : AutoVersionsDbProcessDefinition
     {
         public override string EngineTypeName => "Recreate DB From Scratch";
 
 
-        public RecreateDBFromScratchEngine(RestoreDatabaseStep rollbackStep,
+        public RecreateDBFromScratchProcessDefinition(RestoreDatabaseStep rollbackStep,
                                             ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                             ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                                             CreateScriptFilesStateStep createScriptFilesStateStep,

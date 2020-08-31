@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
@@ -29,36 +29,36 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbEngineContext processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
+            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
             {
                 DataSet dsExecutionHistory = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
                 DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
                 DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
 
-                processState.EndProcessDateTime = DateTime.Now;
+                processContext.EndProcessDateTime = DateTime.Now;
 
                 DataRow executionHistoryRow = dbScriptsExecutionHistoryTable.NewRow();
 
                 executionHistoryRow["DBScriptsExecutionHistoryID"] = 0;
 
-                executionHistoryRow["StartProcessDateTime"] = processState.StartProcessDateTime;
-                executionHistoryRow["ExecutionTypeName"] = processState.EngineSettings.EngineTypeName;
-                executionHistoryRow["EndProcessDateTime"] = processState.EndProcessDateTime;
-                executionHistoryRow["ProcessDurationInMs"] = processState.ProcessDurationInMs;
-                executionHistoryRow["NumOfScriptFiles"] = processState.ExecutedFiles.Count;
-                executionHistoryRow["DBBackupFileFullPath"] = processState.DBBackupFileFullPath;
-                executionHistoryRow["IsVirtualExecution"] = processState.IsVirtualExecution;
+                executionHistoryRow["StartProcessDateTime"] = processContext.StartProcessDateTime;
+                executionHistoryRow["ExecutionTypeName"] = processContext.ProcessDefinition.EngineTypeName;
+                executionHistoryRow["EndProcessDateTime"] = processContext.EndProcessDateTime;
+                executionHistoryRow["ProcessDurationInMs"] = processContext.ProcessDurationInMs;
+                executionHistoryRow["NumOfScriptFiles"] = processContext.ExecutedFiles.Count;
+                executionHistoryRow["DBBackupFileFullPath"] = processContext.DBBackupFileFullPath;
+                executionHistoryRow["IsVirtualExecution"] = processContext.IsVirtualExecution;
 
                 dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
                 dbCommands.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
 
 
-                foreach (var executedFiles in processState.ExecutedFiles)
+                foreach (var executedFiles in processContext.ExecutedFiles)
                 {
                     DataRow newFileRow = dbScriptsExecutionHistoryFilesTable.NewRow();
 
@@ -67,7 +67,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     newFileRow["Filename"] = executedFiles.Filename;
                     newFileRow["FileFullPath"] = executedFiles.FileFullPath;
                     newFileRow["ScriptFileType"] = executedFiles.ScriptFileType.FileTypeCode;
-                    newFileRow["IsVirtualExecution"] = processState.IsVirtualExecution;
+                    newFileRow["IsVirtualExecution"] = processContext.IsVirtualExecution;
                     newFileRow["ComputedFileHash"] = executedFiles.ComputedHash;
                     newFileRow["ComputedFileHashDateTime"] = executedFiles.ComputedHashDateTime;
 

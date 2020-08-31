@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core.Validations.DBStateValidators
         }
 
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
 
             if (_scriptFilesState.IncrementalScriptFilesComparer.ChangedFiles.Count > 0)

@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.Validations;
@@ -15,14 +15,14 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public override string ValidationName => "DB State";
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbEngineContext processState)
+        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
-            IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator = new IsHistoryExecutedFilesChangedValidator(processState.ScriptFilesState);
+            IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator = new IsHistoryExecutedFilesChangedValidator(processContext.ScriptFilesState);
             validationsGroup.Add(isHistoryExecutedFilesChangedValidator);
 
             return validationsGroup;

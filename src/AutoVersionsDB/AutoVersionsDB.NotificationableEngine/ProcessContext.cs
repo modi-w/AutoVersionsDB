@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public abstract class EngineContext
+    public abstract class ProcessContext
     {
-        public EngineSettings EngineSettings { get; internal set; }
+        public ProcessDefinition ProcessDefinition { get; internal set; }
 
-        public ExecutionParams ExecutionParams { get; set; }
+        public ProcessParams ProcessParams { get; set; }
 
         public DateTime? StartProcessDateTime { get; set; }
         public DateTime? EndProcessDateTime { get; set; }
@@ -22,7 +22,7 @@ namespace AutoVersionsDB.NotificationableEngine
         public bool IsRollbackExecuted { get; internal set; }
 
 
-        public EngineContext()
+        public ProcessContext()
         {
 
         }

@@ -119,7 +119,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        internal void ClearAllInternalProcessState()
+        internal void ClearAllStepNotificationState()
         {
             _rootStepNotificationState
                 .InternalStepNotificationState = null;

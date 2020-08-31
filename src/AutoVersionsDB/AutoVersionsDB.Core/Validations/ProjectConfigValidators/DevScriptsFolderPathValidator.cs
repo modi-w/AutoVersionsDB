@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             _projectConfigItem = projectConfig;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             if (_projectConfigItem.IsDevEnvironment)
             {

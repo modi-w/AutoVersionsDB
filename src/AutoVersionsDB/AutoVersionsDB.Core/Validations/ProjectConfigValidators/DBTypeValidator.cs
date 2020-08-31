@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.DbCommands.Integration;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
@@ -20,7 +20,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             _dbTypeCode = dbTypeCode;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             if (string.IsNullOrWhiteSpace(_dbTypeCode))
             {
