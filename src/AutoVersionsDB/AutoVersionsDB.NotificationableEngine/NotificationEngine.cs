@@ -21,7 +21,7 @@ namespace AutoVersionsDB.NotificationableEngine
                                 bool isContinueOnError);
     }
 
-    public abstract class NotificationEngine<TEngineSettings, TProcessState> : INotificationEngine, IStepsExecuter, IDisposable
+    public class NotificationEngine<TEngineSettings, TProcessState> : INotificationEngine, IStepsExecuter, IDisposable
         where TEngineSettings : EngineSettings
         where TProcessState : ProcessStateBase, new()
     {
@@ -191,7 +191,7 @@ namespace AutoVersionsDB.NotificationableEngine
     }
 
 
-    public abstract class NotificationEngine<TEngineSettings, TProcessState, TExecutionParams> : NotificationEngine<TEngineSettings, TProcessState>
+    public class NotificationEngine<TEngineSettings, TProcessState, TExecutionParams> : NotificationEngine<TEngineSettings, TProcessState>
         where TEngineSettings : EngineSettings
         where TProcessState : ProcessStateBase, new()
         where TExecutionParams : ExecutionParams
