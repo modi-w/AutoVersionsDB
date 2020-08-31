@@ -9,58 +9,41 @@ using System.Threading.Tasks;
 namespace AutoVersionsDB.NotificationableEngine
 {
 
-    public interface INotificationEngine 
+    internal sealed class NotificationEngine : IStepsExecuter, IDisposable
     {
-        ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged);
-    }
-
-    public interface IStepsExecuter
-    {
-        void ExecuteSteps(IEnumerable<ActionStepBase> steps,
-                                ProcessStateBase processState,
-                                bool isContinueOnError);
-    }
-
-    public class NotificationEngine<TEngineSettings, TProcessState> : INotificationEngine, IStepsExecuter, IDisposable
-        where TEngineSettings : EngineSettings
-        where TProcessState : ProcessStateBase, new()
-    {
-        private EngineSettings _engineSettings;
         private ProcessTraceHandler _processTraceHandler;
+        private EngineContext _engineContext;
 
-
-        public NotificationEngine(EngineSettings engineSettings,
-                                    ProcessTraceHandler processTraceHandler)
+        internal NotificationEngine(ProcessTraceHandler processTraceHandler,
+                                    EngineContext engineContext)
         {
-            _engineSettings = engineSettings;
             _processTraceHandler = processTraceHandler;
+            _engineContext = engineContext;
         }
 
 
-        public ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+
+        internal ProcessTrace Run(ExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            TProcessState processState = new TProcessState()
+
+            _engineContext.ExecutionParams = executionParams;
+
+            _engineContext.StartProcessDateTime = DateTime.Now;
+
+
+            _processTraceHandler.StartProcess(_engineContext.EngineSettings.EngineTypeName, onNotificationStateChanged);
+
+            if (_engineContext.EngineSettings.RollbackStep != null)
             {
-                ExecutionParams = executionParams,
-
-                StartProcessDateTime = DateTime.Now
-            };
-
-            processState.SetEngineSettings(_engineSettings);
-
-            _processTraceHandler.StartProcess(_engineSettings.EngineTypeName, onNotificationStateChanged);
-
-            if (_engineSettings.RollbackStep != null)
-            {
-                _engineSettings.RollbackStep.SetStepsExecuter(this);
+                _engineContext.EngineSettings.RollbackStep.SetStepsExecuter(this);
             }
 
-            ExecuteSteps(_engineSettings.ProcessSteps, processState, false);
+            ExecuteSteps(_engineContext.EngineSettings.ProcessSteps, _engineContext, false);
 
 
-            if (!processState.EndProcessDateTime.HasValue)
+            if (!_engineContext.EndProcessDateTime.HasValue)
             {
-                processState.EndProcessDateTime = DateTime.Now;
+                _engineContext.EndProcessDateTime = DateTime.Now;
             }
 
 
@@ -69,7 +52,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
         public void ExecuteSteps(IEnumerable<ActionStepBase> steps,
-                                ProcessStateBase processState,
+                                EngineContext _engineContext,
                                 bool isContinueOnError)
         {
             foreach (var step in steps)
@@ -77,27 +60,27 @@ namespace AutoVersionsDB.NotificationableEngine
                 step.SetStepsExecuter(this);
             }
 
-            if (!processState.IsRollbackExecuted)
+            if (!_engineContext.IsRollbackExecuted)
             {
                 _processTraceHandler.SetNumOfInternalSteps(steps.Count());
 
                 foreach (var step in steps)
                 {
-                    ExecuteStep(step,processState);
+                    ExecuteStep(step);
 
                     if (_processTraceHandler.HasError && !isContinueOnError)
                     {
-                        if (processState.CanRollback)
+                        if (_engineContext.CanRollback)
                         {
                             _processTraceHandler.ClearAllInternalProcessState();
 
-                            if (_engineSettings.RollbackStep != null)
+                            if (_engineContext.EngineSettings.RollbackStep != null)
                             {
-                                ExecuteStep(_engineSettings.RollbackStep,processState);
+                                ExecuteStep(_engineContext.EngineSettings.RollbackStep);
                             }
                         }
 
-                        processState.IsRollbackExecuted = true;
+                        _engineContext.IsRollbackExecuted = true;
 
                         break;
                     }
@@ -110,16 +93,16 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        private void ExecuteStep(ActionStepBase step, ProcessStateBase processState)
+        private void ExecuteStep(ActionStepBase step)
         {
-            if (!processState.IsRollbackExecuted)
+            if (!_engineContext.IsRollbackExecuted)
             {
 
                 _processTraceHandler.StepStart(step.StepName);
 
                 try
                 {
-                    step.Execute(processState);
+                    step.Execute(_engineContext);
                 }
                 catch (NotificationEngineException ex)
                 {
@@ -152,7 +135,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
         // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        public void Dispose(bool disposing)
         {
             if (_disposed)
             {
@@ -162,9 +145,9 @@ namespace AutoVersionsDB.NotificationableEngine
             if (disposing)
             {
 
-                if (_engineSettings != null)
+                if (_engineContext.EngineSettings != null)
                 {
-                    _engineSettings.Dispose();
+                    _engineContext.EngineSettings.Dispose();
                 }
             }
 
@@ -191,30 +174,29 @@ namespace AutoVersionsDB.NotificationableEngine
     }
 
 
-    public class NotificationEngine<TEngineSettings, TProcessState, TExecutionParams> : NotificationEngine<TEngineSettings, TProcessState>
-        where TEngineSettings : EngineSettings
-        where TProcessState : ProcessStateBase, new()
-        where TExecutionParams : ExecutionParams
-    {
+    //public class NotificationEngine<TEngineSettings, TProcessState, TExecutionParams> : NotificationEngine<TEngineSettings, TProcessState>
+    //    where TEngineSettings : EngineSettings
+    //    where TProcessState : ProcessStateBase, new()
+    //    where TExecutionParams : ExecutionParams
+    //{
 
-        public NotificationEngine(TEngineSettings engineSettings,
-                                    ProcessTraceHandler processTraceHandler)
-            : base(engineSettings, processTraceHandler)
-        {
-        }
+    //    public NotificationEngine(ProcessTraceHandler processTraceHandler)
+    //        : base(engineSettings, processTraceHandler)
+    //    {
+    //    }
 
-        //public virtual void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
-        //{
-        //    base.Prepare(notificationableEngineConfig);
-        //}
-
+    //    //public virtual void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
+    //    //{
+    //    //    base.Prepare(notificationableEngineConfig);
+    //    //}
 
 
-        public ProcessTrace Run(TExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-        {
-            return base.Run(executionParams, onNotificationStateChanged);
-        }
-    }
+
+    //    public ProcessTrace Run(TExecutionParams executionParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+    //    {
+    //        return base.Run(executionParams, onNotificationStateChanged);
+    //    }
+    //}
 
 }
 

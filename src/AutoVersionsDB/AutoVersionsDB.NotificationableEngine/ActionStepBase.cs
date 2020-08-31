@@ -15,7 +15,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         private IStepsExecuter _stepsExecuter;
 
-        public abstract void Execute(ProcessStateBase processState);
+        public abstract void Execute(EngineContext processState);
 
 
         protected ActionStepBase()
@@ -30,30 +30,24 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        protected void ExecuteInternalSteps(ProcessStateBase processState, bool isContinueOnError)
+        protected void ExecuteInternalSteps(EngineContext processState, bool isContinueOnError)
         {
             _stepsExecuter.ExecuteSteps(InternalSteps, processState, isContinueOnError);
         }
 
     }
 
-    public abstract class ActionStepBase<TProcessState> : ActionStepBase
-            where TProcessState : ProcessStateBase
+    public abstract class ActionStepBase<TEngineContext> : ActionStepBase
+            where TEngineContext : EngineContext
     {
 
-        //public override int GetNumOfInternalSteps(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
-        //{
-        //    return GetNumOfInternalSteps(notificationableEngineConfig as TNotificationableEngineConfig, processState as TProcessState);
-        //}
-        //public abstract int GetNumOfInternalSteps(TNotificationableEngineConfig notificationableEngineConfig, TProcessState processState);
 
-
-        public override void Execute(ProcessStateBase processState)
+        public override void Execute(EngineContext engineContext)
         {
-            Execute(processState as TProcessState);
+            Execute(engineContext as TEngineContext);
         }
 
-        public abstract void Execute(TProcessState processState);
+        public abstract void Execute(TEngineContext engineContext);
     }
 
 

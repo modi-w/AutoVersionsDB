@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(AutoVersionsDbProcessState processState)
+        public override void Execute(AutoVersionsDbEngineContext processState)
         {
             processState.ThrowIfNull(nameof(processState));
 

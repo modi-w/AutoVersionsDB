@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessState processState)
+        public override void Execute(AutoVersionsDbEngineContext processState)
         {
             using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processState.ProjectConfig.DBTypeCode, processState.ProjectConfig.ConnStr, processState.ProjectConfig.DBCommandsTimeout))
             {

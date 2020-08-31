@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             ProcessExpetion = processExpetion;
         }
 
-        public override void Execute(AutoVersionsDbProcessState processState)
+        public override void Execute(AutoVersionsDbEngineContext processState)
         {
             while (!IsCompleted)
             {

@@ -11,6 +11,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         public abstract string ValidationName { get; }
 
-        public abstract ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState);
+        public abstract ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbEngineContext processState);
     }
 }

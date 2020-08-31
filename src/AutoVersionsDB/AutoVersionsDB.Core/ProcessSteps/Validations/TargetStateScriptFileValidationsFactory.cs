@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         public override string ValidationName => "Target State Script File";
 
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbEngineContext processState)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
             processState.ThrowIfNull(nameof(processState));

@@ -1,23 +1,25 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ScriptFiles;
-using AutoVersionsDB.NotificationableEngine;
+﻿//using AutoVersionsDB.Core.ConfigProjects;
+//using AutoVersionsDB.Core.ScriptFiles;
+//using AutoVersionsDB.NotificationableEngine;
 
 
-namespace AutoVersionsDB.Core.Engines
-{
-    public class AutoVersionsDbEngine<TEngineSettings> : NotificationEngine<TEngineSettings, AutoVersionsDbProcessState, AutoVersionsDBExecutionParams>
-        where TEngineSettings : AutoVersionsDbEngineSettingBase
-    {
+//namespace AutoVersionsDB.Core.Engines
+//{
 
 
-        public AutoVersionsDbEngine(TEngineSettings engineSettings,
-                                    ProcessTraceHandler processTraceHandler)
-            : base(engineSettings, processTraceHandler)
-        {
-
-        }
+//    public class AutoVersionsDbEngine<TEngineSettings> : NotificationEngine<TEngineSettings, AutoVersionsDbEngineContext, AutoVersionsDBExecutionParams>
+//        where TEngineSettings : AutoVersionsDbEngineSettingBase
+//    {
 
 
+//        public AutoVersionsDbEngine(TEngineSettings engineSettings,
+//                                    ProcessTraceHandler processTraceHandler)
+//            : base(engineSettings, processTraceHandler)
+//        {
 
-    }
-}
+//        }
+
+
+
+//    }
+//}
