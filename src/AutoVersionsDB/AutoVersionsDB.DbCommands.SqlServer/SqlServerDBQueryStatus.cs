@@ -12,7 +12,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
-        public SqlServerDBQueryStatus(SqlServerConnection sqlServerConnection)
+        internal SqlServerDBQueryStatus(SqlServerConnection sqlServerConnection)
         {
             sqlServerConnection.ThrowIfNull(nameof(sqlServerConnection));
 
@@ -106,35 +106,35 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         }
 
 
-        #region IDisposable
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        //#region IDisposable
+        //public void Dispose()
+        //{
+        //    Dispose(true);
+        //    GC.SuppressFinalize(this);
+        //}
 
-        ~SqlServerDBQueryStatus()
-        {
-            Dispose(false);
-        }
+        //~SqlServerDBQueryStatus()
+        //{
+        //    Dispose(false);
+        //}
 
-        // The bulk of the clean-up code is implemented in Dispose(bool)
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                lock (_sqlServerConnection)
-                {
-                    _sqlServerConnection.Close();
+        //// The bulk of the clean-up code is implemented in Dispose(bool)
+        //protected virtual void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        lock (_sqlServerConnection)
+        //        {
+        //            _sqlServerConnection.Close();
 
-                    _sqlServerConnection.Dispose();
+        //            _sqlServerConnection.Dispose();
 
-                }
-            }
-            // free native resources here if there are any
-        }
+        //        }
+        //    }
+        //    // free native resources here if there are any
+        //}
 
-        #endregion
+        //#endregion
 
     }
 }

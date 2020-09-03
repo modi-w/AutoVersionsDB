@@ -2,9 +2,9 @@
 
 namespace AutoVersionsDB.DbCommands.Contract
 {
-    public interface IDBConnection : IDisposable
+    public interface IDBConnection 
     {
-        bool IsDisposed { get; }
+        //bool IsDisposed { get; }
 
         void Open();
 

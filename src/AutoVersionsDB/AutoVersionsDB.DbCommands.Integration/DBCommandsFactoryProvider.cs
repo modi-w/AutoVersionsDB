@@ -92,6 +92,17 @@ namespace AutoVersionsDB.DbCommands.Integration
 
 
 
+        public void ReleaseService(string dbTypeCode, object serviceToRelease)
+        {
+            if (!string.IsNullOrWhiteSpace(dbTypeCode)
+              && _dbCommandsFactoryDictionary.TryGetValue(dbTypeCode, out IDBCommandsFactory dbCommands_Factory))
+            {
+                dbCommands_Factory.ReleaseService(serviceToRelease);
+            }
+        }
+
+
+
         private void PopulateFactoriesDictionary()
         {
             _dbCommandsFactoryDictionary = new Dictionary<string, IDBCommandsFactory>();

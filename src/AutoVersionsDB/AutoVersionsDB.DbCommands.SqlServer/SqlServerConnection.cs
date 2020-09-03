@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
-    public class SqlServerConnection : IDBConnection
+    public class SqlServerConnection : IDBConnection, IDisposable
     {
         private readonly SqlConnection _sqlDbConnection;
 
@@ -44,7 +44,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
-        public SqlServerConnection(string connectionString, int timeout)
+        internal SqlServerConnection(string connectionString, int timeout)
         {
             _sqlDbConnection = new SqlConnection();
             ConnectionString = connectionString;

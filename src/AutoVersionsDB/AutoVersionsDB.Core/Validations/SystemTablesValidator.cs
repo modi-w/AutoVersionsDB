@@ -30,7 +30,7 @@ namespace AutoVersionsDB.Core.Validations
         private readonly string _dbTypeCode;
         private readonly bool _isDevEnvironment;
 
-        public SystemTablesValidator(DBCommandsFactoryProvider dbCommandsFactoryProvider,   
+        public SystemTablesValidator(DBCommandsFactoryProvider dbCommandsFactoryProvider,
                                     string connStr,
                                     string dbTypeCode,
                                     bool isDevEnvironment)
@@ -43,7 +43,8 @@ namespace AutoVersionsDB.Core.Validations
 
         public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbTypeCode, _connStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbTypeCode, _connStr, 0);
+            try
             {
 
                 if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName))
@@ -109,6 +110,10 @@ namespace AutoVersionsDB.Core.Validations
                     }
                 }
 
+            }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(_dbTypeCode, dbCommands);
             }
 
 

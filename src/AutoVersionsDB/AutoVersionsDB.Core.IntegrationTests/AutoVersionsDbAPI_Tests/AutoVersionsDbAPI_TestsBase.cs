@@ -142,22 +142,25 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfConnectionsItem = new NumOfConnections();
 
             string masterDBName;
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
+            IDBCommands dbCommandsMater = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0);
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            IDBQueryStatus dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB);
+
+            try
             {
                 masterDBName = dbCommands.GetDataBaseName();
-            }
-
-
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
-            {
                 numOfConnectionsItem.DBName = dbCommands.GetDataBaseName();
-            }
 
-            using (IDBQueryStatus dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
-            {
                 numOfConnectionsItem.NumOfConnectionsToDB = dbQueryStatus.GetNumOfOpenConnection(numOfConnectionsItem.DBName);
                 numOfConnectionsItem.NumOfConnectionsToMasterDB = dbQueryStatus.GetNumOfOpenConnection(masterDBName);
             }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommandsMater);
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbQueryStatus);
+            }
+
 
             return numOfConnectionsItem;
         }
@@ -177,21 +180,25 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void restoreDB(ProjectConfigItem projectConfig, string filename)
         {
-            using (IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0);
+            try
             {
-
-                using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
+                string dbTestsBaseLocation = Path.Combine(Utils.FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.BL.IntegrationTests", "TestsDBs");
+                if (!Directory.Exists(dbTestsBaseLocation))
                 {
-                    string dbTestsBaseLocation = Path.Combine(Utils.FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.BL.IntegrationTests", "TestsDBs");
-                    if (!Directory.Exists(dbTestsBaseLocation))
-                    {
-                        Directory.CreateDirectory(dbTestsBaseLocation);
+                    Directory.CreateDirectory(dbTestsBaseLocation);
 
-                    }
-
-                    dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbConnection.DataBaseName, dbTestsBaseLocation);
                 }
+
+                dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbConnection.DataBaseName, dbTestsBaseLocation);
             }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbConnection);
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbBackupRestoreCommands);
+            }
+
         }
 
 
@@ -238,20 +245,25 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInEmptyStateExceptSystemTables(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            try
             {
                 DataTable allSchemaTable = dbCommands.GetAllDBSchemaExceptDBVersionSchema();
 
                 Assert.That(allSchemaTable.Rows.Count, Is.EqualTo(0));
             }
-
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+            }
 
         }
 
 
         protected void assertDbInMiddleState(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            try
             {
                 bool isTable1Exist = dbCommands.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
@@ -276,13 +288,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 bool isSpOnTable1Exist = dbCommands.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
                 Assert.That(isSpOnTable1Exist, Is.True);
             }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+            }
 
 
         }
 
         protected void assertDbInFinalState_DevEnv(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            try
             {
                 bool isTable1Exist = dbCommands.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
@@ -329,6 +346,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 bool isSpOnTable1Exist = dbCommands.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
                 Assert.That(isSpOnTable1Exist, Is.True);
             }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+            }
 
         }
 
@@ -336,7 +357,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         //Comment: Dev Dummy Data Scripts should not run on Delivery Environment
         protected void assertDbInFinalState_DeliveryEnv(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            try
             {
                 bool isTable1Exist = dbCommands.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
@@ -379,13 +401,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 bool isSpOnTable1Exist = dbCommands.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
                 Assert.That(isSpOnTable1Exist, Is.True);
             }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+            }
+
 
         }
 
 
         protected void assertDbInFinalState_OnlyIncremental(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            try
             {
                 bool isTable1Exist = dbCommands.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
@@ -423,6 +451,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 bool isSpOnTable1Exist = dbCommands.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
                 Assert.That(isSpOnTable1Exist, Is.True);
             }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+            }
 
         }
 
@@ -435,96 +467,101 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             ArtifactExtractor artifactExtractor = null;
 
             IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
-
-            DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
-
-            if (!projectConfig.IsDevEnvironment)
+            try
             {
-                artifactExtractor = new ArtifactExtractor(projectConfig);
-            }
+
+                DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+
+                if (!projectConfig.IsDevEnvironment)
+                {
+                    artifactExtractor = new ArtifactExtractor(projectConfig);
+                }
 
 
-            string[] arrIncAllScriptFiles = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
-            Dictionary<string, FileInfo> incSctipFilesDictionary = arrIncAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+                string[] arrIncAllScriptFiles = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+                Dictionary<string, FileInfo> incSctipFilesDictionary = arrIncAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
 
-            List<DataRow> incExecutionHistoryFilesDBRows =
-                dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _incrementalScriptFileType.FileTypeCode).ToList();
+                List<DataRow> incExecutionHistoryFilesDBRows =
+                    dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _incrementalScriptFileType.FileTypeCode).ToList();
 
-            foreach (DataRow executedScriptRow in incExecutionHistoryFilesDBRows)
-            {
-                string filename = Convert.ToString(executedScriptRow["Filename"]);
-
-                Assert.That(incSctipFilesDictionary.ContainsKey(filename));
-
-                FileInfo fiScriptFile = incSctipFilesDictionary[filename];
-
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
-
-                Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
-            }
-
-
-            string[] arrRptAllScriptFiles = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
-            Dictionary<string, FileInfo> rptSctipFilesDictionary = arrRptAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
-
-
-            List<DataRow> rptExecutionHistoryFilesDBRows =
-                dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _repeatableScriptFileType.FileTypeCode).ToList();
-
-            foreach (DataRow executedScriptRow in rptExecutionHistoryFilesDBRows)
-            {
-                string filename = Convert.ToString(executedScriptRow["Filename"]);
-
-                Assert.That(rptSctipFilesDictionary.ContainsKey(filename));
-
-                FileInfo fiScriptFile = rptSctipFilesDictionary[filename];
-
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
-
-                Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
-            }
-
-
-            if (projectConfig.IsDevEnvironment)
-            {
-                string[] arrDddAllScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
-                Dictionary<string, FileInfo> dddSctipFilesDictionary = arrDddAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
-
-
-                List<DataRow> dddExecutionHistoryFilesDBRows =
-                    dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _devDummyDataScriptFileType.FileTypeCode).ToList();
-
-                foreach (DataRow executedScriptRow in dddExecutionHistoryFilesDBRows)
+                foreach (DataRow executedScriptRow in incExecutionHistoryFilesDBRows)
                 {
                     string filename = Convert.ToString(executedScriptRow["Filename"]);
 
-                    Assert.That(dddSctipFilesDictionary.ContainsKey(filename));
+                    Assert.That(incSctipFilesDictionary.ContainsKey(filename));
 
-                    FileInfo fiScriptFile = dddSctipFilesDictionary[filename];
+                    FileInfo fiScriptFile = incSctipFilesDictionary[filename];
 
                     string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
                     Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
                 }
+
+
+                string[] arrRptAllScriptFiles = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+                Dictionary<string, FileInfo> rptSctipFilesDictionary = arrRptAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+
+
+                List<DataRow> rptExecutionHistoryFilesDBRows =
+                    dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _repeatableScriptFileType.FileTypeCode).ToList();
+
+                foreach (DataRow executedScriptRow in rptExecutionHistoryFilesDBRows)
+                {
+                    string filename = Convert.ToString(executedScriptRow["Filename"]);
+
+                    Assert.That(rptSctipFilesDictionary.ContainsKey(filename));
+
+                    FileInfo fiScriptFile = rptSctipFilesDictionary[filename];
+
+                    string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
+
+                    Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
+                }
+
+
+                if (projectConfig.IsDevEnvironment)
+                {
+                    string[] arrDddAllScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+                    Dictionary<string, FileInfo> dddSctipFilesDictionary = arrDddAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+
+
+                    List<DataRow> dddExecutionHistoryFilesDBRows =
+                        dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _devDummyDataScriptFileType.FileTypeCode).ToList();
+
+                    foreach (DataRow executedScriptRow in dddExecutionHistoryFilesDBRows)
+                    {
+                        string filename = Convert.ToString(executedScriptRow["Filename"]);
+
+                        Assert.That(dddSctipFilesDictionary.ContainsKey(filename));
+
+                        FileInfo fiScriptFile = dddSctipFilesDictionary[filename];
+
+                        string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
+
+                        Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
+                    }
+                }
+
+
+
+                if (artifactExtractor != null)
+                {
+                    artifactExtractor.Dispose();
+                    artifactExtractor = null;
+                }
             }
-
-
-
-            if (artifactExtractor != null)
+            finally
             {
-                artifactExtractor.Dispose();
-                artifactExtractor = null;
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
             }
-
-            dbCommands.Dispose();
-            dbCommands = null;
 
         }
 
 
         protected void assertThatDbExecutedFilesAreInMiddleState(ProjectConfigItemForTestBase projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            try
             {
                 DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
 
@@ -535,6 +572,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 Assert.That(executedDBFileList[1]["Filename"], Is.EqualTo("incScript_2020-02-25.101_CreateLookupTable1.sql"));
                 Assert.That(executedDBFileList[2]["Filename"], Is.EqualTo("incScript_2020-02-25.102_CreateLookupTable2.sql"));
             }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+            }
+
 
         }
 
@@ -542,10 +584,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         protected void assertThatAllFilesInFolderExistWithTheSameHashInTheDb_FinalState(ProjectConfigItemForTestBase projectConfig)
         {
             DataTable dbScriptsExecutionHistoryFilesTable;
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            try
             {
                 dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
             }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+            }
+
 
             if (!projectConfig.IsDevEnvironment)
             {
@@ -571,9 +619,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         protected void assertThatAllFilesInFolderExistWithTheSameHashInTheDb_RunAgainAfterRepetableFilesChanged(ProjectConfigItemForTestBase projectConfig)
         {
             DataTable dbScriptsExecutionHistoryFilesTable;
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            try
             {
                 dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+            }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
             }
 
             if (!projectConfig.IsDevEnvironment)

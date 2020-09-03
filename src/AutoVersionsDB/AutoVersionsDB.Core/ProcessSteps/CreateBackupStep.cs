@@ -43,9 +43,14 @@ namespace AutoVersionsDB.Core.ProcessSteps
             string timeStampStr = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.InvariantCulture);
 
             string targetFileName;
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
+            IDBCommands dbCommandsExternal = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout);
+            try
             {
-                targetFileName = $"bu_{ dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
+                targetFileName = $"bu_{dbCommandsExternal.GetDataBaseName()}_{timeStampStr}.bak";
+            }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(processContext.ProjectConfig.DBTypeCode, dbCommandsExternal);
             }
 
             string targetFileFullPath = Path.Combine(processContext.ProjectConfig.DBBackupBaseFolder, targetFileName);
@@ -53,7 +58,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
             //notificationExecutersProvider.SetStepStartManually(100, "Backup process");
 
-            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStrToMasterDB))
+            var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStrToMasterDB);
+           
+            try
             {
                 DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus) as DBBackupStatusNotifyer;
 
@@ -82,21 +89,18 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
                 Task.Run(() =>
                 {
+                    IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout);
+                    IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStrToMasterDB, processContext.ProjectConfig.DBCommandsTimeout);
+
                     try
                     {
-                        using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
-                        {
-                            using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStrToMasterDB, processContext.ProjectConfig.DBCommandsTimeout))
-                            {
-                                dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
+                        dbBackupRestoreCommands.CreateDbBackup(targetFileFullPath, dbCommands.GetDataBaseName());
 
-                                foreach (ExternalProcessStatusStep step in ReadOnlyInternalSteps)
-                                {
-                                    if (!step.IsCompleted)
-                                    {
-                                        step.SetProcessState(100, processExpetion);
-                                    }
-                                }
+                        foreach (ExternalProcessStatusStep step in ReadOnlyInternalSteps)
+                        {
+                            if (!step.IsCompleted)
+                            {
+                                step.SetProcessState(100, processExpetion);
                             }
                         }
                     }
@@ -104,16 +108,23 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     {
                         processExpetion = ex;
                     }
+                    finally
+                    {
+                        _dbCommandsFactoryProvider.ReleaseService(processContext.ProjectConfig.DBTypeCode, dbCommands);
+                        _dbCommandsFactoryProvider.ReleaseService(processContext.ProjectConfig.DBTypeCode, dbBackupRestoreCommands);
+                    }
 
                 });
 
                 ExecuteInternalSteps(false);
 
-
-
                 dbBackupStatusNotifyer.Stop();
 
                 processContext.DBBackupFileFullPath = targetFileFullPath;
+            }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(processContext.ProjectConfig.DBTypeCode, dbQueryStatus);
             }
 
         }

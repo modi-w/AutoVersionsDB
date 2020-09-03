@@ -92,12 +92,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             string tempBackupFileToCompare = Path.Combine(FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder), $"TempBackupFileToCompare_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")}");
 
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
+            IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0);
+            try
             {
-                using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
-                {
-                    dbBackupRestoreCommands.CreateDbBackup(tempBackupFileToCompare, dbCommands.GetDataBaseName());
-                }
+                dbBackupRestoreCommands.CreateDbBackup(tempBackupFileToCompare, dbCommands.GetDataBaseName());
+            }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbCommands);
+                _dbCommandsFactoryProvider.ReleaseService(projectConfig.DBTypeCode, dbBackupRestoreCommands);
             }
 
             FileInfo fiOrginalDBBackupFilePathForTheTest = new FileInfo(orginalDBBackupFilePathForTheTest);

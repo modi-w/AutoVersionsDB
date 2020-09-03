@@ -33,7 +33,8 @@ namespace AutoVersionsDB.Core.ProcessSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
+            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout);
+            try
             {
                 DataSet dsExecutionHistory = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
@@ -85,6 +86,10 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
                 dbCommands.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
 
+            }
+            finally
+            {
+                _dbCommandsFactoryProvider.ReleaseService(processContext.ProjectConfig.DBTypeCode, dbCommands);
             }
         }
 

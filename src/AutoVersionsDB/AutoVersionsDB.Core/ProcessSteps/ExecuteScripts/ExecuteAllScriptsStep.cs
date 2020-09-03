@@ -43,7 +43,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute( AutoVersionsDbProcessContext processContext)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 
@@ -51,9 +51,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(processContext.ProjectConfig))
             {
 
-                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
-                {
+                var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout);
 
+                try
+                {
                     ScriptFileTypeBase incrementalFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
                     ExecuteScriptsByTypeStep incrementalExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(incrementalFileType.FileTypeCode, dbCommands);
                     AddInternalStep(incrementalExecuteScriptsByTypeStep);
@@ -85,11 +86,14 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                         }
                     }
 
-                    ExecuteInternalSteps( false);
+                    ExecuteInternalSteps(false);
                 }
+                finally
+                {
+                    _dbCommandsFactoryProvider.ReleaseService(processContext.ProjectConfig.DBTypeCode, dbCommands);
+                }
+
             }
-
-
         }
 
 

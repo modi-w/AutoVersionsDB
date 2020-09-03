@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.ArtifactFile
 
                     FileInfo lastArtifactFile = artifactFilesList.OrderBy(e => e.LastWriteTime).LastOrDefault();
 
-                    if(lastArtifactFile!= null)
+                    if (lastArtifactFile != null)
                     {
                         if (Directory.Exists(_projectConfigItem.DeliveryExtractedFilesArtifactFolder))
                         {
@@ -75,15 +75,17 @@ namespace AutoVersionsDB.Core.ArtifactFile
         {
             if (disposing)
             {
-                if (!_projectConfigItem.IsDevEnvironment)
+            }
+
+            if (!_projectConfigItem.IsDevEnvironment)
+            {
+                if (Directory.Exists(_projectConfigItem.DeliveryExtractedFilesArtifactFolder))
                 {
-                    if (Directory.Exists(_projectConfigItem.DeliveryExtractedFilesArtifactFolder))
-                    {
-                        Directory.Delete(_projectConfigItem.DeliveryExtractedFilesArtifactFolder, true);
-                    }
+                    Directory.Delete(_projectConfigItem.DeliveryExtractedFilesArtifactFolder, true);
                 }
             }
         }
+
 
         #endregion
 
