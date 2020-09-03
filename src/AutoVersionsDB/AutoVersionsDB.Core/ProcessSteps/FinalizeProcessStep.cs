@@ -29,9 +29,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
             {
-                DataSet dsExecutionHistory = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
+                DataSet dsExecutionHistory = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
 
                 DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
                 DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
@@ -51,7 +51,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 executionHistoryRow["IsVirtualExecution"] = processContext.IsVirtualExecution;
 
                 dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
-                dbCommands.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
+                dbCommands.Instance.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
 
 
                 foreach (var executedFiles in processContext.ExecutedFiles)
@@ -79,7 +79,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     fileRow["DBScriptsExecutionHistoryID"] = currDBScriptsExecutionHistoryID;
                 }
 
-                dbCommands.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
+                dbCommands.Instance.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
 
             }
         }

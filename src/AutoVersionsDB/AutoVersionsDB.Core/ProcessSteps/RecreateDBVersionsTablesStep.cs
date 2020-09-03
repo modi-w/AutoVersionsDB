@@ -24,9 +24,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
             {
-                dbCommands.RecreateDBVersionsTables();
+                dbCommands.Instance.RecreateDBVersionsTables();
             }
 
             processContext.ScriptFilesState.Reload(processContext.ProjectConfig);

@@ -2,7 +2,7 @@
 
 namespace AutoVersionsDB.DbCommands.Contract
 {
-    public interface IDBConnection : IDisposable
+    public interface IDBConnection //: IDisposable
     {
         bool IsDisposed { get; }
 

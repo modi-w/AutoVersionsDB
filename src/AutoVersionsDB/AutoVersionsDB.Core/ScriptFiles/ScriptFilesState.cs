@@ -45,17 +45,17 @@ namespace AutoVersionsDB.Core.ScriptFiles
 
             using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(projectConfig))
             {
-                using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout).AsDisposable())
                 {
-                    IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(dbCommands, projectConfig.IncrementalScriptsFolderPath);
+                    IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(dbCommands.Instance, projectConfig.IncrementalScriptsFolderPath);
                     _scriptFilesComparersDictionary[IncrementalScriptFilesComparer.ScriptFileType.FileTypeCode] = IncrementalScriptFilesComparer;
 
-                    RepeatableScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<RepeatableScriptFileType>(dbCommands, projectConfig.RepeatableScriptsFolderPath);
+                    RepeatableScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<RepeatableScriptFileType>(dbCommands.Instance, projectConfig.RepeatableScriptsFolderPath);
                     _scriptFilesComparersDictionary[RepeatableScriptFilesComparer.ScriptFileType.FileTypeCode] =RepeatableScriptFilesComparer;
 
                     if (projectConfig.IsDevEnvironment)
                     {
-                        DevDummyDataScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<DevDummyDataScriptFileType>(dbCommands, projectConfig.DevDummyDataScriptsFolderPath);
+                        DevDummyDataScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<DevDummyDataScriptFileType>(dbCommands.Instance, projectConfig.DevDummyDataScriptsFolderPath);
                         _scriptFilesComparersDictionary[DevDummyDataScriptFilesComparer.ScriptFileType.FileTypeCode]= DevDummyDataScriptFilesComparer;
                     }
                     else

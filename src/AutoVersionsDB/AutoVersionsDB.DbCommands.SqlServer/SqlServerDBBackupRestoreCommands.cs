@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
-    public class SqlServerDBBackupRestoreCommands : IDBBackupRestoreCommands
+    public class SqlServerDBBackupRestoreCommands : IDBBackupRestoreCommands, IDisposable
     {
         private readonly SqlServerConnection _sqlServerConnection;
 

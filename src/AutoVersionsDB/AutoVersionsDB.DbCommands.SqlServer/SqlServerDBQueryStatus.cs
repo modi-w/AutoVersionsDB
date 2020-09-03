@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
-    public class SqlServerDBQueryStatus : IDBQueryStatus
+    public class SqlServerDBQueryStatus : IDBQueryStatus, IDisposable
     {
         private readonly SqlServerConnection _sqlServerConnection;
 
