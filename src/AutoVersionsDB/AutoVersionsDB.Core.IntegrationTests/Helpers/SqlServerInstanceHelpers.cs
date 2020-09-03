@@ -26,15 +26,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.Helpers
 
         private static string initSqlLocalDB()
         {
-            //SqlLocalDbOptions sqlLocalDbOptions = new SqlLocalDbOptions()
-            //{
-            //    NativeApiOverrideVersion = "14.0"
-            //};
-
-
-            //var services = new ServiceCollection().AddLogging((p) => p.AddConsole().SetMinimumLevel(LogLevel.Debug));
-            //var loggerFactory = services.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
-            //ISqlLocalDbApi localDB = new SqlLocalDbApi(sqlLocalDbOptions, loggerFactory);
             ISqlLocalDbApi localDB = new SqlLocalDbApi();
             ISqlLocalDbInstanceInfo instance = localDB.GetOrCreateInstance(@"localtestdb");
 

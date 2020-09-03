@@ -286,6 +286,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutoVersionsDB.Common\AutoVersionsDB.Common.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj" />
   </ItemGroup>
 

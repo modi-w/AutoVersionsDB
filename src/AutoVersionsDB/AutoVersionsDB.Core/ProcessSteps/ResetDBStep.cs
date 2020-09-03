@@ -1,11 +1,8 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ProcessDefinitions;
-using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
 using System;
-using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {

@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using System;
 
@@ -11,10 +12,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectCo
         {
             this.ProjectGuid = Guid.NewGuid().ToString();
             this.ProjectName = "IntegrationTestProject";
-            this.DevScriptsBaseFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
-            this.DeployArtifactFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DeployArtifact_FolderPath);
-            this.DeliveryArtifactFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
-            this.DBBackupBaseFolder = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
+            this.DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+            this.DeployArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DeployArtifact_FolderPath);
+            this.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+            this.DBBackupBaseFolder = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
         }
 
         public override string ToString()

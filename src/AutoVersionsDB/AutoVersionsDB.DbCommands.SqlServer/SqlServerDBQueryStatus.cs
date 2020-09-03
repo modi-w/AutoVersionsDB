@@ -1,5 +1,5 @@
-﻿using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.SqlServer.Utils;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.DbCommands.Contract;
 using System;
 using System.Data;
 using System.Globalization;

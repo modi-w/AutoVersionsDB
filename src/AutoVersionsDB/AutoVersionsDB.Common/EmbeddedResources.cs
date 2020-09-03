@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace AutoVersionsDB.DbCommands.SqlServer.Utils
+namespace AutoVersionsDB.Common
 {
     public static class EmbeddedResources
     {
@@ -9,7 +9,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer.Utils
         {
             string result;
             //https://stackoverflow.com/questions/3314140/how-to-read-embedded-resource-text-file
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetCallingAssembly();//.GetExecutingAssembly();
             var resourceName = filePathInTheDLL;
 
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))

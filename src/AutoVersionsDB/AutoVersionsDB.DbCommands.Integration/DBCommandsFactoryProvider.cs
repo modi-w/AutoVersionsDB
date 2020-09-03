@@ -1,6 +1,5 @@
 ﻿using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.SqlServer;
-using AutoVersionsDB.DbCommands.SqlServer.Utils;
 using System.Collections.Generic;
 using System.Linq;
 

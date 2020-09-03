@@ -33,7 +33,7 @@ namespace AutoVersionsDB.WinApp
 
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.ThrowIfNull(nameof(kernel));
+          //  kernel.ThrowIfNull(nameof(kernel));
 
         }
 
@@ -48,7 +48,7 @@ namespace AutoVersionsDB.WinApp
 
         private static void RegisterServicesForTests(IKernel kernel)
         {
-            kernel.ThrowIfNull(nameof(kernel));
+           // kernel.ThrowIfNull(nameof(kernel));
 
             //TODO: register Mock services
 

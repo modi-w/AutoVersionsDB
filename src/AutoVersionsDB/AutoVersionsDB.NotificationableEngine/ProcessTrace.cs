@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -17,7 +18,6 @@ namespace AutoVersionsDB.NotificationableEngine
                 return _statesHistory.ToList();
             }
         }
-
 
         public bool HasError
         {

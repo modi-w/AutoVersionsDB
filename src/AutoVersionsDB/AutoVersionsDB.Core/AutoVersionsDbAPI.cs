@@ -8,8 +8,8 @@ using System;
 using Ninject;
 using System.Collections.Generic;
 using System.Linq;
-using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Common;
 
 namespace AutoVersionsDB.Core
 {

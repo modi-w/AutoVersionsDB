@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ArtifactFile;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
@@ -58,7 +59,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         [SetUp]
         public void Init()
         {
-            string dbBackupFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
+            string dbBackupFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
             if (!Directory.Exists(dbBackupFolderPath))
             {
                 Directory.CreateDirectory(dbBackupFolderPath);
@@ -182,7 +183,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
                 {
-                    string dbTestsBaseLocation = Path.Combine(Utils.FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.BL.IntegrationTests", "TestsDBs");
+                    string dbTestsBaseLocation = Path.Combine(FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.BL.IntegrationTests", "TestsDBs");
                     if (!Directory.Exists(dbTestsBaseLocation))
                     {
                         Directory.CreateDirectory(dbTestsBaseLocation);

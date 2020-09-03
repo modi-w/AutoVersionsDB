@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.WinApp.Utils
+namespace AutoVersionsDB.Common
 {
     public static class ExceptionsUtils
     {

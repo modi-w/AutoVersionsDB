@@ -1,5 +1,4 @@
 ﻿using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.SqlServer.Utils;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {

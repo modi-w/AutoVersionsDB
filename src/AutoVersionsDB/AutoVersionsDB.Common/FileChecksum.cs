@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace AutoVersionsDB.Core.IntegrationTests.Helpers
+namespace AutoVersionsDB.Common
 {
     public class FileChecksum : IDisposable
     {
 
-        private SHA512 _hashEncryptor;
+        private readonly SHA512 _hashEncryptor;
 
         public FileChecksum()
         {

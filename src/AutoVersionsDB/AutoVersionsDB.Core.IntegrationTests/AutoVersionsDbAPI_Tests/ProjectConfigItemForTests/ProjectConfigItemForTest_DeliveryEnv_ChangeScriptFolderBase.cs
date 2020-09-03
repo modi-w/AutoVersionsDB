@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.IntegrationTests.Helpers;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.IntegrationTests.Helpers;
 
 namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests
 {
@@ -7,7 +8,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectCo
 
         public ProjectConfigItemForTest_DeliveryEnv_ChangeScriptFolderBase(string scriptFolderPath)
         {
-            DeliveryArtifactFolderPath = FileSystemHelpers.ParsePathVaribles(scriptFolderPath);
+            DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(scriptFolderPath);
         }
 
 
