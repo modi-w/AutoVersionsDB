@@ -30,15 +30,9 @@ namespace AutoVersionsDB.Core.ProcessSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout);
-         
-            try
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout))
             {
                 dbCommands.RecreateDBVersionsTables();
-            }
-            finally
-            {
-                _dbCommandsFactoryProvider.ReleaseService(processContext.ProjectConfig.DBTypeCode, dbCommands);
             }
 
             processContext.ScriptFilesState.Reload(processContext.ProjectConfig);

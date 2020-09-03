@@ -1,7 +1,7 @@
 ﻿
 namespace AutoVersionsDB.DbCommands.Contract
 {
-    public interface IDBCommandsFactory 
+    public interface IDBCommandsFactory
     {
         DBType DBType { get; }
 
@@ -12,8 +12,5 @@ namespace AutoVersionsDB.DbCommands.Contract
         IDBBackupRestoreCommands CreateBackupRestoreCommands(string connectionString, int timeout);
 
         IDBQueryStatus CreateDBQueryStatus(string connectionString, int timeout);
-
-
-        void ReleaseService(object serviceToRelease);
     }
 }

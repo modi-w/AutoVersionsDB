@@ -34,8 +34,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             }
             else
             {
-                IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbTypeCode, _connStr, 0);
-                try
+                using (IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbTypeCode, _connStr, 0))
                 {
                     if (dbConnection != null)
                     {
@@ -45,10 +44,6 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
                             return errorMsg;
                         }
                     }
-                }
-                finally
-                {
-                    _dbCommandsFactoryProvider.ReleaseService(_dbTypeCode, dbConnection);
                 }
 
             }

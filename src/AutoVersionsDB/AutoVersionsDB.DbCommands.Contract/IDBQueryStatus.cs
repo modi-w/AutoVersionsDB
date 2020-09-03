@@ -2,7 +2,7 @@
 
 namespace AutoVersionsDB.DbCommands.Contract
 {
-    public interface IDBQueryStatus //: IDisposable
+    public interface IDBQueryStatus: IDisposable
     {
         int GetNumOfOpenConnection(string dbName);
 
