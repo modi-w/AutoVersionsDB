@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ArtifactFile;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations
@@ -20,7 +20,7 @@ namespace AutoVersionsDB.Core.Validations
             _deliveryArtifactFolderPath = deliveryArtifactFolderPath;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             if (!_isDevEnvironment)
             {

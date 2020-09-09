@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
-    public class SqlServerConnection : IDBConnection
+    public class SqlServerConnection : IDBConnection, IDisposable
     {
         private readonly SqlConnection _sqlDbConnection;
 

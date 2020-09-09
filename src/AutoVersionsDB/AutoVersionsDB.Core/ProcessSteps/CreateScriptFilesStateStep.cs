@@ -1,11 +1,6 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
-using AutoVersionsDB.Core.Utils;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
-using System;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
@@ -13,8 +8,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
     public class CreateScriptFilesStateStep : AutoVersionsDbStep
     {
         public override string StepName => "Create Script Files State";
-        public override bool HasInternalStep => false;
-
         private readonly ScriptFilesStateFactory _scriptFilesStateFactory;
 
 
@@ -26,18 +19,13 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
-        {
-            return 1;
-        }
 
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-            processState.ThrowIfNull(nameof(processState));
+            processContext.ThrowIfNull(nameof(processContext));
 
-            processState.ScriptFilesState = _scriptFilesStateFactory.Create();
-            processState.ScriptFilesState.Reload(projectConfig);
+            processContext.ScriptFilesState = _scriptFilesStateFactory.Create();
+            processContext.ScriptFilesState.Reload(processContext.ProjectConfig);
         }
 
 

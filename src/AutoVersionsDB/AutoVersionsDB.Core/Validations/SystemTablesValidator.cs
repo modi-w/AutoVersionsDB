@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using System;
@@ -41,25 +42,25 @@ namespace AutoVersionsDB.Core.Validations
             _isDevEnvironment = isDevEnvironment;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbTypeCode, _connStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbTypeCode, _connStr, 0).AsDisposable())
             {
 
-                if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName))
+                if (!dbCommands.Instance.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName))
                 {
                     string errorMsg = $"The table '{DBCommandsConsts.DbScriptsExecutionHistoryFullTableName}' is not exist in the db";
                     return errorMsg;
                 }
 
-                if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName))
+                if (!dbCommands.Instance.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName))
                 {
                     string errorMsg = $"The table '{DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName}' is not exist in the db";
                     return errorMsg;
                 }
 
 
-                DataSet systemTablesSetFromDB = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
+                DataSet systemTablesSetFromDB = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
 
                 DataTable scriptsExecutionHistoryTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
 

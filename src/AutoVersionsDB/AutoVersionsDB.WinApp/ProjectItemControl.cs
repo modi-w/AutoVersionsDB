@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoVersionsDB.Common;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -23,6 +24,7 @@ namespace AutoVersionsDB.WinApp
 
         public ProjectItemControl(ProjectConfigItem projectConfigItem)
         {
+            
             projectConfigItem.ThrowIfNull(nameof(projectConfigItem));
 
             InitializeComponent();

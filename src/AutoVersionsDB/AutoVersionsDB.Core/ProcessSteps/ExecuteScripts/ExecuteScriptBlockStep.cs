@@ -1,10 +1,6 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
-using AutoVersionsDB.Core.Utils;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Globalization;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
@@ -14,8 +10,6 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         private readonly string _scriptBlockToExecute;
 
         public override string StepName => "Execute Script Block";
-        public override bool HasInternalStep => false;
-
 
         public ExecuteScriptBlockStep(IDBCommands dbCommands, string scriptBlockToExecute)
         {
@@ -27,19 +21,12 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            return 1;
-        }
+            processContext.ThrowIfNull(nameof(processContext));
 
-
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
-        {
-            processState.ThrowIfNull(nameof(processState));
-
-            bool isVirtualExecution = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
-
-            if (!isVirtualExecution)
+            if (!processContext.IsVirtualExecution)
             {
                 _dbCommands.ExecSQLCommandStr(_scriptBlockToExecute);
             }

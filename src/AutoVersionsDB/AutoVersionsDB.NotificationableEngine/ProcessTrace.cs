@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
     public class ProcessTrace
     {
+        private readonly List<StepNotificationState> _statesHistory;
 
-        private readonly List<NotificationStateItem> _statesHistory;
 
-        public List<NotificationStateItem> StatesHistory
+
+        public List<StepNotificationState> StatesHistory
         {
             get
             {
                 return _statesHistory.ToList();
             }
         }
-
 
         public bool HasError
         {
@@ -83,7 +82,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
                 lock (_statesHistory)
                 {
-                    NotificationStateItem lastStateWithInstructionsMessage = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
+                    StepNotificationState lastStateWithInstructionsMessage = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
 
                     outStr = lastStateWithInstructionsMessage.LowLevelStepName;
                 }
@@ -93,20 +92,24 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
+
         internal ProcessTrace()
         {
-
-            _statesHistory = new List<NotificationStateItem>();
+            _statesHistory = new List<StepNotificationState>();
         }
 
 
-        internal void Appand(NotificationStateItem notificationStateItem)
+        internal void Appand(StepNotificationState notificationStateItem)
         {
             lock (_statesHistory)
             {
                 _statesHistory.Add(notificationStateItem);
             }
         }
+
+
+
+
 
 
         public string GetAllHistoryAsString()

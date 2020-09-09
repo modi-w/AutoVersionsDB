@@ -1,14 +1,15 @@
-﻿using AutoVersionsDB.Core.ArtifactFile;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.ScriptFiles.Repeatable;
-using AutoVersionsDB.Core.Utils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 
@@ -17,7 +18,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
     public class BuildDeployArtifactFileStep : AutoVersionsDbStep
     {
         public override string StepName => "Build Deploy Artifact File";
-        public override bool HasInternalStep => false;
 
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
@@ -29,20 +29,13 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
         }
 
-      
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            return 1;
-        }
-
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
             {
-                string dbName = dbCommands.GetDataBaseName();
+                string dbName = dbCommands.Instance.GetDataBaseName();
 
 
                 string tempFolderForDeploy = Path.Combine(AutoVersionsDBSettings.TempFolderPath, $"Deploy_{dbName}_{DateTime.Now:HH-mm-dd-fff}");
@@ -61,7 +54,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     Directory.CreateDirectory(incrementalSubFolderToDeploy);
                 }
 
-                DirectoryInfo diIncremental = new DirectoryInfo(projectConfig.IncrementalScriptsFolderPath);
+                DirectoryInfo diIncremental = new DirectoryInfo(processContext.ProjectConfig.IncrementalScriptsFolderPath);
                 foreach (FileInfo scriptFileToCopy in diIncremental.GetFiles())
                 {
                     string targetFilename = Path.Combine(incrementalSubFolderToDeploy, scriptFileToCopy.Name);
@@ -77,7 +70,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     Directory.CreateDirectory(repeatableSubFolderToDeploy);
                 }
 
-                DirectoryInfo diRepeatable = new DirectoryInfo(projectConfig.RepeatableScriptsFolderPath);
+                DirectoryInfo diRepeatable = new DirectoryInfo(processContext.ProjectConfig.RepeatableScriptsFolderPath);
                 foreach (FileInfo scriptFileToCopy in diRepeatable.GetFiles())
                 {
                     string targetFilename = Path.Combine(repeatableSubFolderToDeploy, scriptFileToCopy.Name);
@@ -87,12 +80,12 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-                if (!Directory.Exists(projectConfig.DeployArtifactFolderPath))
+                if (!Directory.Exists(processContext.ProjectConfig.DeployArtifactFolderPath))
                 {
-                    Directory.CreateDirectory(projectConfig.DeployArtifactFolderPath);
+                    Directory.CreateDirectory(processContext.ProjectConfig.DeployArtifactFolderPath);
                 }
 
-                string targetFileFullPath = Path.Combine(projectConfig.DeployArtifactFolderPath, $"{dbName}{ArtifactExtractor.ArtifactFilenameExtension}");
+                string targetFileFullPath = Path.Combine(processContext.ProjectConfig.DeployArtifactFolderPath, $"{dbName}{ArtifactExtractor.ArtifactFilenameExtension}");
 
                 if (File.Exists(targetFileFullPath))
                 {
@@ -103,10 +96,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
             }
 
         }
-
-
-
-     
 
     }
 }

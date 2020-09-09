@@ -5,7 +5,7 @@ using System.Data;
 
 namespace AutoVersionsDB.DbCommands.Contract
 {
-    public interface IDBCommands : IDisposable
+    public interface IDBCommands //: IDisposable
     {
         string GetDataBaseName();
 

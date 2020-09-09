@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -19,7 +20,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             get
             {
-                string devScriptsBaseFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
 
                 string scriptFilename = $"incScript_{DateTime.Today:yyyy-MM-dd}.001_{c_Incremental_scriptName1}.sql";
                 string script1FullPath = Path.Combine(devScriptsBaseFolderPath, c_RelFolder_Incremental, scriptFilename);
@@ -32,7 +33,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             get
             {
-                string devScriptsBaseFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
 
                 string scriptFilename = $"incScript_{DateTime.Today:yyyy-MM-dd}.002_{c_Incremental_scriptName2}.sql";
                 string script1FullPath = Path.Combine(devScriptsBaseFolderPath, c_RelFolder_Incremental, scriptFilename);
@@ -48,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             get
             {
-                string devScriptsBaseFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
 
                 string scriptFilename = $"rptScript_{c_Repeatable_scriptName1}.sql";
                 string script1FullPath = Path.Combine(devScriptsBaseFolderPath, c_RelFolder_Repeatable, scriptFilename);
@@ -64,7 +65,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             get
             {
-                string devScriptsBaseFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
 
                 string scriptFilename = $"dddScript_{c_DevDummyData_scriptName1}.sql";
                 string script1FullPath = Path.Combine(devScriptsBaseFolderPath, c_RelFolder_DevDummyData, scriptFilename);
@@ -84,7 +85,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             }
 
 
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
+            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
             string fileToDelete = "";
@@ -117,7 +118,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             }
 
 
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
+            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
             string fileToDelete1 = "";
@@ -163,7 +164,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             }
 
 
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
+            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
             string fileToDelete = "";
@@ -197,7 +198,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             }
 
 
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemHelpers.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
+            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
 
             string fileToDelete = "";

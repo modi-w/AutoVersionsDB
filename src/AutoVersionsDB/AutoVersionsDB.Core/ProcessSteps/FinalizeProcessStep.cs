@@ -1,20 +1,16 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
-using AutoVersionsDB.Core.Utils;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Data;
 using System.Globalization;
-using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
     public class FinalizeProcessStep : AutoVersionsDbStep
     {
         public override string StepName => "Finalize Process";
-        public override bool HasInternalStep => false;
 
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
@@ -27,45 +23,38 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
-    
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            return 1;
-        }
+            processContext.ThrowIfNull(nameof(processContext));
 
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
-            processState.ThrowIfNull(nameof(processState));
-
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
             {
-                DataSet dsExecutionHistory = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
+                DataSet dsExecutionHistory = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
 
                 DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
                 DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
 
-                processState.EndProcessDateTime = DateTime.Now;
+                processContext.EndProcessDateTime = DateTime.Now;
 
                 DataRow executionHistoryRow = dbScriptsExecutionHistoryTable.NewRow();
 
                 executionHistoryRow["DBScriptsExecutionHistoryID"] = 0;
 
-                executionHistoryRow["StartProcessDateTime"] = processState.StartProcessDateTime;
-                executionHistoryRow["ExecutionTypeName"] = processState.EngineMetaData["EngineTypeName"];
-                executionHistoryRow["EndProcessDateTime"] = processState.EndProcessDateTime;
-                executionHistoryRow["ProcessDurationInMs"] = processState.ProcessDurationInMs;
-                executionHistoryRow["NumOfScriptFiles"] = processState.ExecutedFiles.Count;
-                executionHistoryRow["DBBackupFileFullPath"] = processState.DBBackupFileFullPath;
-                executionHistoryRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
+                executionHistoryRow["StartProcessDateTime"] = processContext.StartProcessDateTime;
+                executionHistoryRow["ExecutionTypeName"] = processContext.ProcessDefinition.EngineTypeName;
+                executionHistoryRow["EndProcessDateTime"] = processContext.EndProcessDateTime;
+                executionHistoryRow["ProcessDurationInMs"] = processContext.ProcessDurationInMs;
+                executionHistoryRow["NumOfScriptFiles"] = processContext.ExecutedFiles.Count;
+                executionHistoryRow["DBBackupFileFullPath"] = processContext.DBBackupFileFullPath;
+                executionHistoryRow["IsVirtualExecution"] = processContext.IsVirtualExecution;
 
                 dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
-                dbCommands.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
+                dbCommands.Instance.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
 
 
-                foreach (var executedFiles in processState.ExecutedFiles)
+                foreach (var executedFiles in processContext.ExecutedFiles)
                 {
                     DataRow newFileRow = dbScriptsExecutionHistoryFilesTable.NewRow();
 
@@ -74,7 +63,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     newFileRow["Filename"] = executedFiles.Filename;
                     newFileRow["FileFullPath"] = executedFiles.FileFullPath;
                     newFileRow["ScriptFileType"] = executedFiles.ScriptFileType.FileTypeCode;
-                    newFileRow["IsVirtualExecution"] = Convert.ToBoolean(processState.EngineMetaData["IsVirtualExecution"], CultureInfo.InvariantCulture);
+                    newFileRow["IsVirtualExecution"] = processContext.IsVirtualExecution;
                     newFileRow["ComputedFileHash"] = executedFiles.ComputedHash;
                     newFileRow["ComputedFileHashDateTime"] = executedFiles.ComputedHashDateTime;
 
@@ -90,7 +79,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     fileRow["DBScriptsExecutionHistoryID"] = currDBScriptsExecutionHistoryID;
                 }
 
-                dbCommands.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
+                dbCommands.Instance.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
 
             }
         }

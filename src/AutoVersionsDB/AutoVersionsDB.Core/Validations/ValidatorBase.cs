@@ -1,6 +1,4 @@
-﻿using AutoVersionsDB.Core.Engines;
-
-
+﻿using AutoVersionsDB.Core.ProcessDefinitions;
 
 namespace AutoVersionsDB.Core.Validations
 {
@@ -10,7 +8,7 @@ namespace AutoVersionsDB.Core.Validations
 
         public abstract string ErrorInstructionsMessage { get; }
 
-        public abstract string Validate(AutoVersionsDBExecutionParams executionParam);
+        public abstract string Validate(AutoVersionsDbProcessParams executionParam);
     }
 
 

@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ProcessDefinitions;
 
 namespace AutoVersionsDB.Core.Validations
 {
@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.Validations
             _isDevEnvironment = isDevEnvironment;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             if (!_isDevEnvironment)
             {

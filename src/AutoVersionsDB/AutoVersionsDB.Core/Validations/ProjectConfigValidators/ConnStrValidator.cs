@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 
@@ -25,7 +26,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             if (string.IsNullOrWhiteSpace(_connStr))
             {
@@ -34,11 +35,11 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             }
             else
             {
-                using (IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbTypeCode, _connStr, 0))
+                using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbTypeCode, _connStr, 0).AsDisposable())
                 {
                     if (dbConnection != null)
                     {
-                        if (!dbConnection.CheckConnection(out string exMessage))
+                        if (!dbConnection.Instance.CheckConnection(out string exMessage))
                         {
                             string errorMsg = $"Could not connect to the Database with the Connection String: '{_connStr}'. Error Message: '{exMessage}'";
                             return errorMsg;

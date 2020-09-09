@@ -1,5 +1,5 @@
-﻿using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.SqlServer.Utils;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.DbCommands.Contract;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
-    public class SqlServerDBCommands : IDBCommands
+    public class SqlServerDBCommands : IDBCommands, IDisposable
     {
         private readonly SqlServerConnection _sqlServerConnection;
 

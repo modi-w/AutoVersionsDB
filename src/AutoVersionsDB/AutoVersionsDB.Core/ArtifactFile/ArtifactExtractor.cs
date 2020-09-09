@@ -75,14 +75,17 @@ namespace AutoVersionsDB.Core.ArtifactFile
         {
             if (disposing)
             {
-                if (!_projectConfigItem.IsDevEnvironment)
+            }
+
+            //Comment: delete files is unmanage resource - so it is not in the disposing condition
+            if (!_projectConfigItem.IsDevEnvironment)
+            {
+                if (Directory.Exists(_projectConfigItem.DeliveryExtractedFilesArtifactFolder))
                 {
-                    if (Directory.Exists(_projectConfigItem.DeliveryExtractedFilesArtifactFolder))
-                    {
-                        Directory.Delete(_projectConfigItem.DeliveryExtractedFilesArtifactFolder, true);
-                    }
+                    Directory.Delete(_projectConfigItem.DeliveryExtractedFilesArtifactFolder, true);
                 }
             }
+
         }
 
         #endregion

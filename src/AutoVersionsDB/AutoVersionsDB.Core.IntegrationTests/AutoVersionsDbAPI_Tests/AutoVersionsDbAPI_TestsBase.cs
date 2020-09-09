@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ArtifactFile;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
@@ -58,7 +59,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         [SetUp]
         public void Init()
         {
-            string dbBackupFolderPath = FileSystemHelpers.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
+            string dbBackupFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
             if (!Directory.Exists(dbBackupFolderPath))
             {
                 Directory.CreateDirectory(dbBackupFolderPath);
@@ -142,21 +143,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfConnectionsItem = new NumOfConnections();
 
             string masterDBName;
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0).AsDisposable())
             {
-                masterDBName = dbCommands.GetDataBaseName();
+                masterDBName =  dbCommands.Instance.GetDataBaseName();
             }
 
 
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                numOfConnectionsItem.DBName = dbCommands.GetDataBaseName();
+                numOfConnectionsItem.DBName =  dbCommands.Instance.GetDataBaseName();
             }
 
-            using (IDBQueryStatus dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
+            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB).AsDisposable())
             {
-                numOfConnectionsItem.NumOfConnectionsToDB = dbQueryStatus.GetNumOfOpenConnection(numOfConnectionsItem.DBName);
-                numOfConnectionsItem.NumOfConnectionsToMasterDB = dbQueryStatus.GetNumOfOpenConnection(masterDBName);
+                numOfConnectionsItem.NumOfConnectionsToDB = dbQueryStatus.Instance.GetNumOfOpenConnection(numOfConnectionsItem.DBName);
+                numOfConnectionsItem.NumOfConnectionsToMasterDB = dbQueryStatus.Instance.GetNumOfOpenConnection(masterDBName);
             }
 
             return numOfConnectionsItem;
@@ -177,19 +178,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void restoreDB(ProjectConfigItem projectConfig, string filename)
         {
-            using (IDBConnection dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
 
-                using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0))
+                using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0).AsDisposable())
                 {
-                    string dbTestsBaseLocation = Path.Combine(Utils.FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.BL.IntegrationTests", "TestsDBs");
+                    string dbTestsBaseLocation = Path.Combine(FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.BL.IntegrationTests", "TestsDBs");
                     if (!Directory.Exists(dbTestsBaseLocation))
                     {
                         Directory.CreateDirectory(dbTestsBaseLocation);
 
                     }
 
-                    dbBackupRestoreCommands.RestoreDbFromBackup(filename, dbConnection.DataBaseName, dbTestsBaseLocation);
+                    dbBackupRestoreCommands.Instance.RestoreDbFromBackup(filename, dbConnection.Instance.DataBaseName, dbTestsBaseLocation);
                 }
             }
         }
@@ -221,7 +222,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //string dbBackupFileFullPath;
             //using (IDBCommands dbCommands = _dbCommands_FactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             //{
-            //    DataTable executionHistoryTable = dbCommands.GetTable(DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName);
+            //    DataTable executionHistoryTable = dbCommands.Instance.GetTable(DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName);
 
             //    DataRow lastRow = executionHistoryTable.Rows[executionHistoryTable.Rows.Count - 1];
 
@@ -238,9 +239,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInEmptyStateExceptSystemTables(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                DataTable allSchemaTable = dbCommands.GetAllDBSchemaExceptDBVersionSchema();
+                DataTable allSchemaTable = dbCommands.Instance.GetAllDBSchemaExceptDBVersionSchema();
 
                 Assert.That(allSchemaTable.Rows.Count, Is.EqualTo(0));
             }
@@ -251,29 +252,29 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInMiddleState(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                bool isTable1Exist = dbCommands.CheckIfTableExist("Schema1", "Table1");
+                bool isTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
 
-                DataTable table1Data = dbCommands.GetTable("Schema1.Table1");
+                DataTable table1Data = dbCommands.Instance.GetTable("Schema1.Table1");
                 Assert.That(table1Data.Rows.Count, Is.EqualTo(2));
                 Assert.That(table1Data.Rows[0]["Col1"], Is.EqualTo("aa"));
                 Assert.That(table1Data.Rows[1]["Col1"], Is.EqualTo("bb"));
 
-                bool isLookupTable1Exist = dbCommands.CheckIfTableExist("Schema2", "LookupTable1");
+                bool isLookupTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema2", "LookupTable1");
                 Assert.That(isLookupTable1Exist, Is.True);
 
-                DataTable lookupTable1Data = dbCommands.GetTable("Schema2.LookupTable1");
+                DataTable lookupTable1Data = dbCommands.Instance.GetTable("Schema2.LookupTable1");
                 Assert.That(lookupTable1Data.Rows.Count, Is.EqualTo(0));
 
-                bool isLookupTable2Exist = dbCommands.CheckIfTableExist("Schema2", "LookupTable2");
+                bool isLookupTable2Exist = dbCommands.Instance.CheckIfTableExist("Schema2", "LookupTable2");
                 Assert.That(isLookupTable2Exist, Is.True);
 
-                DataTable lookupTable2Data = dbCommands.GetTable("Schema2.LookupTable2");
+                DataTable lookupTable2Data = dbCommands.Instance.GetTable("Schema2.LookupTable2");
                 Assert.That(lookupTable2Data.Rows.Count, Is.EqualTo(0));
 
-                bool isSpOnTable1Exist = dbCommands.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
+                bool isSpOnTable1Exist = dbCommands.Instance.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
                 Assert.That(isSpOnTable1Exist, Is.True);
             }
 
@@ -282,51 +283,51 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInFinalState_DevEnv(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                bool isTable1Exist = dbCommands.CheckIfTableExist("Schema1", "Table1");
+                bool isTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
 
-                DataTable table1Data = dbCommands.GetTable("Schema1.Table1");
+                DataTable table1Data = dbCommands.Instance.GetTable("Schema1.Table1");
                 Assert.That(table1Data.Rows.Count, Is.EqualTo(2));
                 Assert.That(table1Data.Rows[0]["Col1"], Is.EqualTo("aa"));
                 Assert.That(table1Data.Rows[1]["Col1"], Is.EqualTo("bb"));
 
-                bool isLookupTable1Exist = dbCommands.CheckIfTableExist("Schema2", "LookupTable1");
+                bool isLookupTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema2", "LookupTable1");
                 Assert.That(isLookupTable1Exist, Is.True);
 
-                DataTable lookupTable1Data = dbCommands.GetTable("Schema2.LookupTable1");
+                DataTable lookupTable1Data = dbCommands.Instance.GetTable("Schema2.LookupTable1");
                 Assert.That(lookupTable1Data.Rows.Count, Is.EqualTo(2));
                 Assert.That(lookupTable1Data.Rows[0]["Lookup1Value"], Is.EqualTo("Value1"));
                 Assert.That(lookupTable1Data.Rows[1]["Lookup1Value"], Is.EqualTo("Value2"));
 
-                bool isLookupTable2Exist = dbCommands.CheckIfTableExist("Schema2", "LookupTable2");
+                bool isLookupTable2Exist = dbCommands.Instance.CheckIfTableExist("Schema2", "LookupTable2");
                 Assert.That(isLookupTable2Exist, Is.True);
 
-                DataTable lookupTable2Data = dbCommands.GetTable("Schema2.LookupTable2");
+                DataTable lookupTable2Data = dbCommands.Instance.GetTable("Schema2.LookupTable2");
                 Assert.That(lookupTable2Data.Rows.Count, Is.EqualTo(3));
                 Assert.That(lookupTable2Data.Rows[0]["Lookup2Value"], Is.EqualTo("Value3"));
                 Assert.That(lookupTable2Data.Rows[1]["Lookup2Value"], Is.EqualTo("Value4"));
                 Assert.That(lookupTable2Data.Rows[2]["Lookup2Value"], Is.EqualTo("Value5"));
 
-                bool isInvoiceTable1Exist = dbCommands.CheckIfTableExist("Schema3", "InvoiceTable1");
+                bool isInvoiceTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema3", "InvoiceTable1");
                 Assert.That(isInvoiceTable1Exist, Is.True);
 
-                DataTable invoiceTable1Data = dbCommands.GetTable("Schema3.InvoiceTable1");
+                DataTable invoiceTable1Data = dbCommands.Instance.GetTable("Schema3.InvoiceTable1");
                 Assert.That(invoiceTable1Data.Rows.Count, Is.EqualTo(2));
                 Assert.That(invoiceTable1Data.Rows[0]["Comments"], Is.EqualTo("Comment 1"));
                 Assert.That(invoiceTable1Data.Rows[1]["Comments"], Is.EqualTo("Comment 2"));
 
-                bool isTransTable1Exist = dbCommands.CheckIfTableExist("Schema3", "TransTable1");
+                bool isTransTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema3", "TransTable1");
                 Assert.That(isTransTable1Exist, Is.True);
 
-                DataTable transTable1Data = dbCommands.GetTable("Schema3.TransTable1");
+                DataTable transTable1Data = dbCommands.Instance.GetTable("Schema3.TransTable1");
                 Assert.That(transTable1Data.Rows.Count, Is.EqualTo(2));
                 Assert.That(transTable1Data.Rows[0]["TotalPrice"], Is.EqualTo(200));
                 Assert.That(transTable1Data.Rows[1]["TotalPrice"], Is.EqualTo(1000));
 
 
-                bool isSpOnTable1Exist = dbCommands.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
+                bool isSpOnTable1Exist = dbCommands.Instance.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
                 Assert.That(isSpOnTable1Exist, Is.True);
             }
 
@@ -336,47 +337,47 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         //Comment: Dev Dummy Data Scripts should not run on Delivery Environment
         protected void assertDbInFinalState_DeliveryEnv(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                bool isTable1Exist = dbCommands.CheckIfTableExist("Schema1", "Table1");
+                bool isTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
 
-                DataTable table1Data = dbCommands.GetTable("Schema1.Table1");
+                DataTable table1Data = dbCommands.Instance.GetTable("Schema1.Table1");
                 Assert.That(table1Data.Rows.Count, Is.EqualTo(2));
                 Assert.That(table1Data.Rows[0]["Col1"], Is.EqualTo("aa"));
                 Assert.That(table1Data.Rows[1]["Col1"], Is.EqualTo("bb"));
 
-                bool isLookupTable1Exist = dbCommands.CheckIfTableExist("Schema2", "LookupTable1");
+                bool isLookupTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema2", "LookupTable1");
                 Assert.That(isLookupTable1Exist, Is.True);
 
-                DataTable lookupTable1Data = dbCommands.GetTable("Schema2.LookupTable1");
+                DataTable lookupTable1Data = dbCommands.Instance.GetTable("Schema2.LookupTable1");
                 Assert.That(lookupTable1Data.Rows.Count, Is.EqualTo(2));
                 Assert.That(lookupTable1Data.Rows[0]["Lookup1Value"], Is.EqualTo("Value1"));
                 Assert.That(lookupTable1Data.Rows[1]["Lookup1Value"], Is.EqualTo("Value2"));
 
-                bool isLookupTable2Exist = dbCommands.CheckIfTableExist("Schema2", "LookupTable2");
+                bool isLookupTable2Exist = dbCommands.Instance.CheckIfTableExist("Schema2", "LookupTable2");
                 Assert.That(isLookupTable2Exist, Is.True);
 
-                DataTable lookupTable2Data = dbCommands.GetTable("Schema2.LookupTable2");
+                DataTable lookupTable2Data = dbCommands.Instance.GetTable("Schema2.LookupTable2");
                 Assert.That(lookupTable2Data.Rows.Count, Is.EqualTo(3));
                 Assert.That(lookupTable2Data.Rows[0]["Lookup2Value"], Is.EqualTo("Value3"));
                 Assert.That(lookupTable2Data.Rows[1]["Lookup2Value"], Is.EqualTo("Value4"));
                 Assert.That(lookupTable2Data.Rows[2]["Lookup2Value"], Is.EqualTo("Value5"));
 
-                bool isInvoiceTable1Exist = dbCommands.CheckIfTableExist("Schema3", "InvoiceTable1");
+                bool isInvoiceTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema3", "InvoiceTable1");
                 Assert.That(isInvoiceTable1Exist, Is.True);
 
-                DataTable invoiceTable1Data = dbCommands.GetTable("Schema3.InvoiceTable1");
+                DataTable invoiceTable1Data = dbCommands.Instance.GetTable("Schema3.InvoiceTable1");
                 Assert.That(invoiceTable1Data.Rows.Count, Is.EqualTo(0));
 
-                bool isTransTable1Exist = dbCommands.CheckIfTableExist("Schema3", "TransTable1");
+                bool isTransTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema3", "TransTable1");
                 Assert.That(isTransTable1Exist, Is.True);
 
-                DataTable transTable1Data = dbCommands.GetTable("Schema3.TransTable1");
+                DataTable transTable1Data = dbCommands.Instance.GetTable("Schema3.TransTable1");
                 Assert.That(transTable1Data.Rows.Count, Is.EqualTo(0));
 
 
-                bool isSpOnTable1Exist = dbCommands.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
+                bool isSpOnTable1Exist = dbCommands.Instance.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
                 Assert.That(isSpOnTable1Exist, Is.True);
             }
 
@@ -385,42 +386,42 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInFinalState_OnlyIncremental(ProjectConfigItem projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                bool isTable1Exist = dbCommands.CheckIfTableExist("Schema1", "Table1");
+                bool isTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
 
-                DataTable table1Data = dbCommands.GetTable("Schema1.Table1");
+                DataTable table1Data = dbCommands.Instance.GetTable("Schema1.Table1");
                 Assert.That(table1Data.Rows.Count, Is.EqualTo(2));
                 Assert.That(table1Data.Rows[0]["Col1"], Is.EqualTo("aa"));
                 Assert.That(table1Data.Rows[1]["Col1"], Is.EqualTo("bb"));
 
-                bool isLookupTable1Exist = dbCommands.CheckIfTableExist("Schema2", "LookupTable1");
+                bool isLookupTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema2", "LookupTable1");
                 Assert.That(isLookupTable1Exist, Is.True);
 
-                DataTable lookupTable1Data = dbCommands.GetTable("Schema2.LookupTable1");
+                DataTable lookupTable1Data = dbCommands.Instance.GetTable("Schema2.LookupTable1");
                 Assert.That(lookupTable1Data.Rows.Count, Is.EqualTo(0));
 
-                bool isLookupTable2Exist = dbCommands.CheckIfTableExist("Schema2", "LookupTable2");
+                bool isLookupTable2Exist = dbCommands.Instance.CheckIfTableExist("Schema2", "LookupTable2");
                 Assert.That(isLookupTable2Exist, Is.True);
 
-                DataTable lookupTable2Data = dbCommands.GetTable("Schema2.LookupTable2");
+                DataTable lookupTable2Data = dbCommands.Instance.GetTable("Schema2.LookupTable2");
                 Assert.That(lookupTable2Data.Rows.Count, Is.EqualTo(0));
 
-                bool isInvoiceTable1Exist = dbCommands.CheckIfTableExist("Schema3", "InvoiceTable1");
+                bool isInvoiceTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema3", "InvoiceTable1");
                 Assert.That(isInvoiceTable1Exist, Is.True);
 
-                DataTable invoiceTable1Data = dbCommands.GetTable("Schema3.InvoiceTable1");
+                DataTable invoiceTable1Data = dbCommands.Instance.GetTable("Schema3.InvoiceTable1");
                 Assert.That(invoiceTable1Data.Rows.Count, Is.EqualTo(0));
 
-                bool isTransTable1Exist = dbCommands.CheckIfTableExist("Schema3", "TransTable1");
+                bool isTransTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema3", "TransTable1");
                 Assert.That(isTransTable1Exist, Is.True);
 
-                DataTable transTable1Data = dbCommands.GetTable("Schema3.TransTable1");
+                DataTable transTable1Data = dbCommands.Instance.GetTable("Schema3.TransTable1");
                 Assert.That(transTable1Data.Rows.Count, Is.EqualTo(0));
 
 
-                bool isSpOnTable1Exist = dbCommands.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
+                bool isSpOnTable1Exist = dbCommands.Instance.CheckIfStoredProcedureExist("Schema1", "SpOnTable1");
                 Assert.That(isSpOnTable1Exist, Is.True);
             }
 
@@ -432,101 +433,103 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertThatAllFilesInTheDbExistWithTheSameHashInTheFolder(ProjectConfigItemForTestBase projectConfig)
         {
-            ArtifactExtractor artifactExtractor = null;
 
-            IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0);
-
-            DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
-
-            if (!projectConfig.IsDevEnvironment)
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                artifactExtractor = new ArtifactExtractor(projectConfig);
-            }
+                ArtifactExtractor artifactExtractor = null;
+
+                DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.Instance.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+
+                if (!projectConfig.IsDevEnvironment)
+                {
+                    artifactExtractor = new ArtifactExtractor(projectConfig);
+                }
 
 
-            string[] arrIncAllScriptFiles = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
-            Dictionary<string, FileInfo> incSctipFilesDictionary = arrIncAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+                string[] arrIncAllScriptFiles = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+                Dictionary<string, FileInfo> incSctipFilesDictionary = arrIncAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
 
-            List<DataRow> incExecutionHistoryFilesDBRows =
-                dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _incrementalScriptFileType.FileTypeCode).ToList();
+                List<DataRow> incExecutionHistoryFilesDBRows =
+                    dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _incrementalScriptFileType.FileTypeCode).ToList();
 
-            foreach (DataRow executedScriptRow in incExecutionHistoryFilesDBRows)
-            {
-                string filename = Convert.ToString(executedScriptRow["Filename"]);
-
-                Assert.That(incSctipFilesDictionary.ContainsKey(filename));
-
-                FileInfo fiScriptFile = incSctipFilesDictionary[filename];
-
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
-
-                Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
-            }
-
-
-            string[] arrRptAllScriptFiles = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
-            Dictionary<string, FileInfo> rptSctipFilesDictionary = arrRptAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
-
-
-            List<DataRow> rptExecutionHistoryFilesDBRows =
-                dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _repeatableScriptFileType.FileTypeCode).ToList();
-
-            foreach (DataRow executedScriptRow in rptExecutionHistoryFilesDBRows)
-            {
-                string filename = Convert.ToString(executedScriptRow["Filename"]);
-
-                Assert.That(rptSctipFilesDictionary.ContainsKey(filename));
-
-                FileInfo fiScriptFile = rptSctipFilesDictionary[filename];
-
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
-
-                Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
-            }
-
-
-            if (projectConfig.IsDevEnvironment)
-            {
-                string[] arrDddAllScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
-                Dictionary<string, FileInfo> dddSctipFilesDictionary = arrDddAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
-
-
-                List<DataRow> dddExecutionHistoryFilesDBRows =
-                    dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _devDummyDataScriptFileType.FileTypeCode).ToList();
-
-                foreach (DataRow executedScriptRow in dddExecutionHistoryFilesDBRows)
+                foreach (DataRow executedScriptRow in incExecutionHistoryFilesDBRows)
                 {
                     string filename = Convert.ToString(executedScriptRow["Filename"]);
 
-                    Assert.That(dddSctipFilesDictionary.ContainsKey(filename));
+                    Assert.That(incSctipFilesDictionary.ContainsKey(filename));
 
-                    FileInfo fiScriptFile = dddSctipFilesDictionary[filename];
+                    FileInfo fiScriptFile = incSctipFilesDictionary[filename];
 
                     string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
                     Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
                 }
+
+
+                string[] arrRptAllScriptFiles = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+                Dictionary<string, FileInfo> rptSctipFilesDictionary = arrRptAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+
+
+                List<DataRow> rptExecutionHistoryFilesDBRows =
+                    dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _repeatableScriptFileType.FileTypeCode).ToList();
+
+                foreach (DataRow executedScriptRow in rptExecutionHistoryFilesDBRows)
+                {
+                    string filename = Convert.ToString(executedScriptRow["Filename"]);
+
+                    Assert.That(rptSctipFilesDictionary.ContainsKey(filename));
+
+                    FileInfo fiScriptFile = rptSctipFilesDictionary[filename];
+
+                    string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
+
+                    Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
+                }
+
+
+                if (projectConfig.IsDevEnvironment)
+                {
+                    string[] arrDddAllScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+                    Dictionary<string, FileInfo> dddSctipFilesDictionary = arrDddAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+
+
+                    List<DataRow> dddExecutionHistoryFilesDBRows =
+                        dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _devDummyDataScriptFileType.FileTypeCode).ToList();
+
+                    foreach (DataRow executedScriptRow in dddExecutionHistoryFilesDBRows)
+                    {
+                        string filename = Convert.ToString(executedScriptRow["Filename"]);
+
+                        Assert.That(dddSctipFilesDictionary.ContainsKey(filename));
+
+                        FileInfo fiScriptFile = dddSctipFilesDictionary[filename];
+
+                        string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
+
+                        Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash));
+                    }
+                }
+
+
+
+                if (artifactExtractor != null)
+                {
+                    artifactExtractor.Dispose();
+                    artifactExtractor = null;
+                }
             }
 
 
 
-            if (artifactExtractor != null)
-            {
-                artifactExtractor.Dispose();
-                artifactExtractor = null;
-            }
-
-            dbCommands.Dispose();
-            dbCommands = null;
 
         }
 
 
         protected void assertThatDbExecutedFilesAreInMiddleState(ProjectConfigItemForTestBase projectConfig)
         {
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+                DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.Instance.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
 
                 List<DataRow> executedDBFileList = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().OrderBy(row => Convert.ToInt32(row["ID"])).ToList();
                 Assert.That(executedDBFileList.Count, Is.EqualTo(3));
@@ -542,9 +545,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         protected void assertThatAllFilesInFolderExistWithTheSameHashInTheDb_FinalState(ProjectConfigItemForTestBase projectConfig)
         {
             DataTable dbScriptsExecutionHistoryFilesTable;
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+                dbScriptsExecutionHistoryFilesTable = dbCommands.Instance.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
             }
 
             if (!projectConfig.IsDevEnvironment)
@@ -571,9 +574,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         protected void assertThatAllFilesInFolderExistWithTheSameHashInTheDb_RunAgainAfterRepetableFilesChanged(ProjectConfigItemForTestBase projectConfig)
         {
             DataTable dbScriptsExecutionHistoryFilesTable;
-            using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
             {
-                dbScriptsExecutionHistoryFilesTable = dbCommands.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+                dbScriptsExecutionHistoryFilesTable = dbCommands.Instance.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
             }
 
             if (!projectConfig.IsDevEnvironment)

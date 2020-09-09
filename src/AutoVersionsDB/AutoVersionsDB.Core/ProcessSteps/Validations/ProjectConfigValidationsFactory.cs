@@ -1,13 +1,8 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
-using AutoVersionsDB.Core.Utils;
-using AutoVersionsDB.Core.Validations;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Validations.ProjectConfigValidators;
 using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -15,13 +10,16 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
+        public override string ValidationName => "Project Config";
+
+
         public ProjectConfigValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 

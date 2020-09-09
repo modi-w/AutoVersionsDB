@@ -1,129 +1,119 @@
-﻿using AutoVersionsDB.NotificationableEngine.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public interface INotificationEngine : IDisposable
+
+    internal sealed class NotificationEngine : IStepsExecuter, IDisposable
     {
-        string EngineTypeName { get; }
+        private ProcessTraceHandler _processTraceHandler;
+        private ProcessContext _processContext;
 
-        Dictionary<string, string> EngineMetaData { get; }
-
-        List<NotificationableActionStepBase> ProcessSteps { get; }
-        NotificationableActionStepBase RollbackStep { get; }
-
-        //void Prepare(NotificationableEngineConfig notificationableEngineConfig);
-
-        ProcessTrace Run(NotificationableEngineConfig notificationableEngineConfig, ExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged);
-    }
-
-
-    public abstract class NotificationEngine<TProcessState> : INotificationEngine
-        where TProcessState : ProcessStateBase, new()
-    {
-        private readonly NotificationExecutersProviderFactory _notificationExecutersProviderFactory;
-
-        public abstract string EngineTypeName { get; }
-        public Dictionary<string, string> EngineMetaData { get; }
-
-        public List<NotificationableActionStepBase> ProcessSteps { get; }
-        public NotificationableActionStepBase RollbackStep { get; }
-
-        public event EventHandler<InitiateEngineEventArgs> Initiated;
-
-        public NotificationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                    NotificationableActionStepBase rollbackStep)
+        internal NotificationEngine(ProcessTraceHandler processTraceHandler,
+                                    ProcessContext processContext)
         {
-            notificationExecutersProviderFactory.ThrowIfNull(nameof(notificationExecutersProviderFactory));
-
-            RollbackStep = rollbackStep;
-
-            ProcessSteps = new List<NotificationableActionStepBase>();
-
-            _notificationExecutersProviderFactory = notificationExecutersProviderFactory;
-
-            EngineMetaData = new Dictionary<string, string>
-            {
-                ["EngineTypeName"] = EngineTypeName
-            };
-
+            _processTraceHandler = processTraceHandler;
+            _processContext = processContext;
         }
 
 
-        private void RaiseInitiated(NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processStateBase)
+
+        internal ProcessTrace Run(ProcessParams processParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            OnInitiated(new InitiateEngineEventArgs(notificationableEngineConfig, processStateBase));
-        }
-        protected virtual void OnInitiated(InitiateEngineEventArgs e)
-        {
-            this.Initiated?.Invoke(this, e);
-        }
+
+            _processContext.ProcessParams = processParams;
+
+            _processContext.StartProcessDateTime = DateTime.Now;
 
 
-        public ProcessTrace Run(NotificationableEngineConfig notificationableEngineConfig, ExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
-        {
-            int totalNumOfSteps = ProcessSteps.Count;
+            _processTraceHandler.StartProcess(_processContext.ProcessDefinition.EngineTypeName, onNotificationStateChanged);
 
-            ProcessStateBase processState = new TProcessState()
+            if (_processContext.ProcessDefinition.RollbackStep != null)
             {
-                ExecutionParams = executionParams,
+                _processContext.ProcessDefinition.RollbackStep.SetStepsExecuter(this);
+            }
 
-                StartProcessDateTime = DateTime.Now
-            };
-
-            processState.SetEngineMetaData(this.EngineMetaData);
-
-            RaiseInitiated(notificationableEngineConfig, processState);
+            ExecuteSteps(_processContext.ProcessDefinition.ProcessSteps, false);
 
 
-            NotificationExecutersProvider notificationExecutersProvider = _notificationExecutersProviderFactory.Create(onNotificationStateChanged);
-
-            using (NotificationWrapperExecuter rootNotificationWrapperExecuter = notificationExecutersProvider.Reset(totalNumOfSteps))
+            if (!_processContext.EndProcessDateTime.HasValue)
             {
-                if (!notificationExecutersProvider.ProcessTrace.HasError)
+                _processContext.EndProcessDateTime = DateTime.Now;
+            }
+
+
+            return _processTraceHandler.ProcessTrace;
+        }
+
+
+        public void ExecuteSteps(IEnumerable<ActionStepBase> steps,
+                                bool isContinueOnError)
+        {
+            foreach (var step in steps)
+            {
+                step.SetStepsExecuter(this);
+            }
+
+            if (!_processContext.IsRollbackExecuted)
+            {
+                _processTraceHandler.SetNumOfInternalSteps(steps.Count());
+
+                foreach (var step in steps)
                 {
-                    foreach (NotificationableActionStepBase processStep in ProcessSteps)
-                    {
-                        rootNotificationWrapperExecuter.ExecuteStep(processStep, notificationableEngineConfig, processState);
+                    ExecuteStep(step);
 
-                        if (notificationExecutersProvider.ProcessTrace.HasError)
+                    if (_processTraceHandler.HasError && !isContinueOnError)
+                    {
+                        if (_processContext.CanRollback)
                         {
-                            RollbackProcess(notificationExecutersProvider, rootNotificationWrapperExecuter, notificationableEngineConfig, processState);
-                            break;
+                            _processTraceHandler.ClearAllStepNotificationState();
+
+                            if (_processContext.ProcessDefinition.RollbackStep != null)
+                            {
+                                ExecuteStep(_processContext.ProcessDefinition.RollbackStep);
+                            }
                         }
+
+                        _processContext.IsRollbackExecuted = true;
+
+                        break;
                     }
                 }
-
             }
 
-            if (!processState.EndProcessDateTime.HasValue)
-            {
-                processState.EndProcessDateTime = DateTime.Now;
-            }
 
-            return notificationExecutersProvider.ProcessTrace;
         }
 
 
 
-        private void RollbackProcess(NotificationExecutersProvider notificationExecutersProvider, NotificationWrapperExecuter currentNotificationWrapperExecuter, NotificationableEngineConfig notificationableEngineConfig, ProcessStateBase processState)
+
+        private void ExecuteStep(ActionStepBase step)
         {
-            if (RollbackStep != null)
+            if (!_processContext.IsRollbackExecuted)
             {
-                if (processState.CanRollback)
+
+                _processTraceHandler.StepStart(step.StepName);
+
+                try
                 {
-                    notificationExecutersProvider.ClearAllInternalProcessState();
-                    notificationExecutersProvider.RootNotificationStateItem.NumOfSteps++;
-                    //currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, $"because error on {stepName}", processState, null);
-                    currentNotificationWrapperExecuter.ExecuteStep(RollbackStep, notificationableEngineConfig, processState);
+                    step.Execute(_processContext);
                 }
+                catch (NotificationProcessException ex)
+                {
+                    _processTraceHandler.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage);
+
+                }
+                catch (Exception ex)
+                {
+                    _processTraceHandler.StepError(step.StepName, ex.ToString(), "Error occurred during the process.");
+                }
+
+                _processTraceHandler.StepEnd();
             }
         }
+
+
 
 
         #region IDisposable
@@ -140,7 +130,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
         // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
+        public void Dispose(bool disposing)
         {
             if (_disposed)
             {
@@ -150,22 +140,16 @@ namespace AutoVersionsDB.NotificationableEngine
             if (disposing)
             {
 
-                if (RollbackStep != null)
+                if (_processContext.ProcessDefinition != null)
                 {
-                    if (RollbackStep is IDisposable)
-                    {
-                        (RollbackStep as IDisposable).Dispose();
-                    }
-                }
-
-                foreach (IDisposable processStep in ProcessSteps.Where(e => e is IDisposable))
-                {
-                    processStep.Dispose();
+                    _processContext.ProcessDefinition.Dispose();
                 }
             }
 
             _disposed = true;
         }
+
+       
 
         #endregion
 
@@ -173,30 +157,6 @@ namespace AutoVersionsDB.NotificationableEngine
     }
 
 
-    public abstract class NotificationEngine<TProcessState, TExecutionParams, TNotificationableEngineConfig> : NotificationEngine<TProcessState>
-        where TProcessState : ProcessStateBase, new()
-        where TExecutionParams : ExecutionParams
-        where TNotificationableEngineConfig : NotificationableEngineConfig
-    {
-
-        public NotificationEngine(NotificationExecutersProviderFactory notificationExecutersProviderFactory,
-                                    NotificationableActionStepBase rollbackStep)
-            : base(notificationExecutersProviderFactory, rollbackStep)
-        {
-        }
-
-        //public virtual void Prepare(TNotificationableEngineConfig notificationableEngineConfig)
-        //{
-        //    base.Prepare(notificationableEngineConfig);
-        //}
-
-
-
-        public ProcessTrace Run(TNotificationableEngineConfig notificationableEngineConfig, TExecutionParams executionParams, Action<ProcessTrace, NotificationStateItem> onNotificationStateChanged)
-        {
-            return base.Run(notificationableEngineConfig as NotificationableEngineConfig, executionParams, onNotificationStateChanged);
-        }
-    }
 
 }
 

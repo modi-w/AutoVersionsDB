@@ -1,12 +1,12 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
-using AutoVersionsDB.Core.Utils;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
-using Ninject;
 using System;
+using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
@@ -14,7 +14,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
     public class RestoreDatabaseStep : AutoVersionsDbStep
     {
         public const string StepNameStr = "Rollback (Restore) Database";
-        public override bool HasInternalStep => false;
 
         public override string StepName => StepNameStr;
 
@@ -33,45 +32,58 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
-   
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            return 1;
-        }
+            processContext.ThrowIfNull(nameof(processContext));
 
 
+            //notificationExecutersProvider.SetStepStartManually(100, "Restore process");
 
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
-            processState.ThrowIfNull(nameof(processState));
-
-
-            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(100))
+            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStrToMasterDB).AsDisposable())
             {
-                notificationWrapperExecuter.SetStepStartManually("Restore process");
+                DBProcessStatusNotifyerBase dbRestoreStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus.Instance) as DBRestoreStatusNotifyer;
 
-                using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB))
+                for (int internalStepNumber = 1; internalStepNumber <= 100; internalStepNumber++)
                 {
-                    DBProcessStatusNotifyerBase dbRestoreStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus) as DBRestoreStatusNotifyer;
-               
-                    dbRestoreStatusNotifyer.Start((precents) =>
-                    {
+                    ExternalProcessStatusStep externalProcessStatusStep = new ExternalProcessStatusStep(internalStepNumber);
+                    AddInternalStep(externalProcessStatusStep);
+                }
 
-                        if (notificationWrapperExecuter.CurrentNotificationStateItem != null)
+                Exception processExpetion = null;
+
+
+                dbRestoreStatusNotifyer.Start((precents) =>
+                {
+                    // notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
+
+                    foreach (ExternalProcessStatusStep step in ReadOnlyInternalSteps)
+                    {
+                        if (!step.IsCompleted)
                         {
-                            notificationWrapperExecuter.ForceStepProgress(Convert.ToInt32(precents));
+                            step.SetProcessState((int)Math.Floor(precents), processExpetion);
                         }
-                    });
+                    }
+                });
+
+                Task.Run(() =>
+                {
 
                     try
                     {
-                        using (IDBCommands dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+                        using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
                         {
-                            using (IDBBackupRestoreCommands dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, projectConfig.DBCommandsTimeout))
+                            using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStrToMasterDB, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
                             {
-                                dbBackupRestoreCommands.RestoreDbFromBackup(processState.DBBackupFileFullPath, dbCommands.GetDataBaseName());
+                                dbBackupRestoreCommands.Instance.RestoreDbFromBackup(processContext.DBBackupFileFullPath, dbCommands.Instance.GetDataBaseName());
+
+                                foreach (ExternalProcessStatusStep step in ReadOnlyInternalSteps)
+                                {
+                                    if (!step.IsCompleted)
+                                    {
+                                        step.SetProcessState(100, processExpetion);
+                                    }
+                                }
                             }
                         }
                     }
@@ -79,15 +91,17 @@ namespace AutoVersionsDB.Core.ProcessSteps
                     {
                         string errorInstructionsMessage = "The process fail when trying to 'Restore the Database', try to change the Timeout parameter and restore the database manually.";
 
-                        throw new NotificationEngineException(this.StepName, ex.Message, errorInstructionsMessage, ex);
+                        processExpetion = new NotificationProcessException(this.StepName, ex.Message, errorInstructionsMessage, ex);
                     }
+                });
 
-                    dbRestoreStatusNotifyer.Stop();
+                ExecuteInternalSteps(true);
 
-
-                }
+                dbRestoreStatusNotifyer.Stop();
+                
 
             }
+
         }
 
     }

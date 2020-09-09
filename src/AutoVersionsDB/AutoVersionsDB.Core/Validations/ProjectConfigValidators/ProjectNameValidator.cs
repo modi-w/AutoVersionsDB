@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ProcessDefinitions;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             _projectName = projectName;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             if (string.IsNullOrWhiteSpace(_projectName))
             {

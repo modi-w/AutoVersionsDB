@@ -1,11 +1,6 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
-using AutoVersionsDB.Core.Utils;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Validations;
-using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -14,9 +9,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         private readonly ValidationsFactory _validationsFactory;
         private readonly SingleValidationStepFactory _singleValidationStepFactory;
 
-        public override string StepName => "Validation";
-        public override bool HasInternalStep => true;
-
+        public override string StepName => $"Validation - {_validationsFactory.ValidationName}";
 
         public ValidationsStep(SingleValidationStepFactory singleValidationStepFactory, ValidationsFactory validationsFactory)
         {
@@ -27,38 +20,20 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            return _validationsFactory.Create(projectConfig, processState).Count;
-        }
+            processContext.ThrowIfNull(nameof(processContext));
 
+            ValidationsGroup validationsGroup = _validationsFactory.Create(processContext.ProjectConfig, processContext);
 
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
-            processState.ThrowIfNull(nameof(processState));
-
-            ValidationsGroup validationsGroup = _validationsFactory.Create(projectConfig, processState);
-
-            using (NotificationWrapperExecuter notificationWrapperExecuter = notificationExecutersProvider.CreateNotificationWrapperExecuter(validationsGroup.Count))
+            foreach (ValidatorBase validator in validationsGroup.GetValidators())
             {
-
-                foreach (ValidatorBase validator in validationsGroup.GetValidators())
-                {
-                    if (validationsGroup.ShouldContinueWhenFindError
-                        || !notificationExecutersProvider.ProcessTrace.HasError)
-                    {
-                        SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
-
-                        notificationWrapperExecuter.ExecuteStep(singleValidationStep, projectConfig, processState);
-                    }
-                }
+                SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
+                AddInternalStep(singleValidationStep);
             }
+
+            base.ExecuteInternalSteps(true);
         }
-
-
 
     }
 

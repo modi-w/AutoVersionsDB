@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.Engines;
+﻿using AutoVersionsDB.Core.ProcessDefinitions;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             _scriptFolderPath = scriptFolderPath;
         }
 
-        public override string Validate(AutoVersionsDBExecutionParams executionParam)
+        public override string Validate(AutoVersionsDbProcessParams executionParam)
         {
             if (!Directory.Exists(_scriptFolderPath))
             {

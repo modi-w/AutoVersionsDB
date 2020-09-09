@@ -1,13 +1,10 @@
-﻿using AutoVersionsDB.Core.ScriptFiles;
+﻿using AutoVersionsDB.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoVersionsDB.Core.Utils;
 
 namespace AutoVersionsDB.Core.ScriptFiles
 {
@@ -16,6 +13,9 @@ namespace AutoVersionsDB.Core.ScriptFiles
         protected FileSystemScriptFiles FileSystemScriptFiles { get; private set; }
 
         protected DBExecutedFiles DbExecutedFiles { get; private set; }
+
+        public ScriptFileTypeBase ScriptFileType { get; }
+
 
         public string LastFileOfLastExecutedFilename => DbExecutedFiles.LastFileOfLastExecutedFilename;
 
@@ -35,6 +35,7 @@ namespace AutoVersionsDB.Core.ScriptFiles
             fileSystemScriptFiles.ThrowIfNull(nameof(fileSystemScriptFiles));
             dbExecutedFiles.ThrowIfNull(nameof(dbExecutedFiles));
 
+            this.ScriptFileType = fileSystemScriptFiles.ScriptFileType;
             this.FileSystemScriptFiles = fileSystemScriptFiles;
             this.DbExecutedFiles = dbExecutedFiles;
 

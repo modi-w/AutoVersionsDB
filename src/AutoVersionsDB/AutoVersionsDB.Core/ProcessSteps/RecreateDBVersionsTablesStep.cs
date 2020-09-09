@@ -1,11 +1,6 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Engines;
-using AutoVersionsDB.Core.ScriptFiles;
-using AutoVersionsDB.Core.Utils;
-using AutoVersionsDB.DbCommands.Contract;
+﻿using AutoVersionsDB.Common;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
-using System;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
@@ -15,8 +10,6 @@ namespace AutoVersionsDB.Core.ProcessSteps
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         public override string StepName => "Recreate System Tables";
-        public override bool HasInternalStep => false;
-
 
         public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
@@ -25,25 +18,18 @@ namespace AutoVersionsDB.Core.ProcessSteps
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
-      
 
-        public override int GetNumOfInternalSteps(ProjectConfigItem projectConfig, AutoVersionsDbProcessState processState)
+
+        public override void Execute(AutoVersionsDbProcessContext processContext)
         {
-            return 1;
-        }
+            processContext.ThrowIfNull(nameof(processContext));
 
-        public override void Execute(ProjectConfigItem projectConfig, NotificationExecutersProvider notificationExecutersProvider, AutoVersionsDbProcessState processState)
-        {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-            notificationExecutersProvider.ThrowIfNull(nameof(notificationExecutersProvider));
-            processState.ThrowIfNull(nameof(processState));
-
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout))
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
             {
-                dbCommands.RecreateDBVersionsTables();
+                dbCommands.Instance.RecreateDBVersionsTables();
             }
 
-            processState.ScriptFilesState.Reload(projectConfig);
+            processContext.ScriptFilesState.Reload(processContext.ProjectConfig);
         }
 
 
