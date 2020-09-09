@@ -40,7 +40,6 @@
     <Content Include="AppIcon.ico" />
     <Content Include="AutoVersionsDB.Setup.wax" />
     <Content Include="License.rtf" />
-    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">
@@ -91,8 +90,5 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props'))" />
-    <Error Condition="!Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets'))" />
   </Target>
-  <Import Project="..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets')" />
 </Project>
