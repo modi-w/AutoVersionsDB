@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutoVersionsDB.Console
+namespace AutoVersionsDB.ConsoleApp
 {
     class Program
     {
