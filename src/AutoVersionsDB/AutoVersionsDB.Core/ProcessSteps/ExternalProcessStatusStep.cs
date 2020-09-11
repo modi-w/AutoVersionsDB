@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public class ExternalProcessStatusStep : AutoVersionsDbStep
+    public class ExternalProcessStatusStep : DBVersionsStep
     {
 
         public int StepNumber { get; }
@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
             ProcessExpetion = processExpetion;
         }
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             while (!IsCompleted)
             {

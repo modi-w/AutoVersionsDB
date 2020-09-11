@@ -105,8 +105,7 @@ namespace AutoVersionsDB.WinApp
 
         private void ChooseProject1_OnSetNewProject1(object sender, EventArgs e)
         {
-            ProjectConfigItem newProjectConfig = new ProjectConfigItem();
-            editProjectConfigDetails1.SetProjectConfigItem(newProjectConfig);
+            editProjectConfigDetails1.CreateNewProjectConfig();
 
             tabMainLayout.SelectedTab = tbEditProjectConfig;
         }

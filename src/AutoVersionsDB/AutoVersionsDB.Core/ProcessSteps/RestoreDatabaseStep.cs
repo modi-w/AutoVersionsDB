@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
 using AutoVersionsDB.DbCommands.Integration;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace AutoVersionsDB.Core.ProcessSteps
 {
 
-    public class RestoreDatabaseStep : AutoVersionsDbStep
+    public class RestoreDatabaseStep : DBVersionsStep
     {
         public const string StepNameStr = "Rollback (Restore) Database";
 
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 
@@ -98,7 +98,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
                 ExecuteInternalSteps(true);
 
                 dbRestoreStatusNotifyer.Stop();
-                
+
 
             }
 

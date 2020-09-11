@@ -3,42 +3,100 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace AutoVersionsDB.Core.ConfigProjects
 {
-    public static class ProjectConfigs
+
+    public class ProjectConfigs
     {
-       
 
-        public  static void AddOrUpdateProjectConfig(ProjectConfigItem projectConfig)
+        private static object _saveSync = new object();
+
+
+        public void SaveNewProjectConfig(ProjectConfigItem projectConfig)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            if (string.IsNullOrWhiteSpace(projectConfig.ProjectGuid))
+            lock (_saveSync)
             {
-                projectConfig.ProjectGuid = Guid.NewGuid().ToString();
+                projectConfig.ThrowIfNull(nameof(projectConfig));
+                projectConfig.ProjectCode.ThrowIfNull(nameof(projectConfig.ProjectCode));
+
+                var dicAllProjectConfigs = GetAllProjectConfigs();
+
+                if (dicAllProjectConfigs.ContainsKey(projectConfig.ProjectCode))
+                {
+                    throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is aready exist.");
+                }
+
+                dicAllProjectConfigs.Add(projectConfig.ProjectCode, projectConfig);
+
+                SaveProjectConfigsFile(dicAllProjectConfigs);
             }
 
-
-            var dicAllProjectConfigs = GetAllProjectConfigs();
-
-            dicAllProjectConfigs[projectConfig.ProjectGuid] = projectConfig;
-
-            SaveProjectConfigsFile(dicAllProjectConfigs);
         }
 
-        public static void RemoveProjectConfig(string projectGuid)
+        public void UpdateProjectConfig(ProjectConfigItem projectConfig)
         {
-            var dicAllProjectConfigs = GetAllProjectConfigs();
+            lock (_saveSync)
+            {
+                projectConfig.ThrowIfNull(nameof(projectConfig));
+                projectConfig.ProjectCode.ThrowIfNull(nameof(projectConfig.ProjectCode));
 
-            dicAllProjectConfigs.Remove(projectGuid);
+                var dicAllProjectConfigs = GetAllProjectConfigs();
 
-            SaveProjectConfigsFile(dicAllProjectConfigs);
+                if (dicAllProjectConfigs.ContainsKey(projectConfig.ProjectCode))
+                {
+                    throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is not exist.");
+                }
+
+
+                dicAllProjectConfigs[projectConfig.ProjectCode] = projectConfig;
+
+                SaveProjectConfigsFile(dicAllProjectConfigs);
+            }
+        }
+
+        public void ChangeProjectCode(string prevProjectCode, string newProjectCode)
+        {
+            lock (_saveSync)
+            {
+                prevProjectCode.ThrowIfNull(nameof(prevProjectCode));
+                newProjectCode.ThrowIfNull(nameof(newProjectCode));
+
+                var dicAllProjectConfigs = GetAllProjectConfigs();
+
+                if (!dicAllProjectConfigs.TryGetValue(prevProjectCode, out ProjectConfigItem projectConfig))
+                {
+                    throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is not exist.");
+                }
+
+                projectConfig.ProjectCode = newProjectCode;
+
+                SaveProjectConfigsFile(dicAllProjectConfigs);
+            }
+        }
+
+        public void RemoveProjectConfig(string projectCode)
+        {
+            lock (_saveSync)
+            {
+                var dicAllProjectConfigs = GetAllProjectConfigs();
+
+                if (dicAllProjectConfigs.ContainsKey(projectCode))
+                {
+                    throw new Exception($"ProjectCode: '{projectCode}' is not exist.");
+                }
+
+
+                dicAllProjectConfigs.Remove(projectCode);
+
+                SaveProjectConfigsFile(dicAllProjectConfigs);
+            }
         }
 
 
 
-        private static void SaveProjectConfigsFile(Dictionary<string, ProjectConfigItem> dicAllProjectConfigs)
+        private void SaveProjectConfigsFile(Dictionary<string, ProjectConfigItem> dicAllProjectConfigs)
         {
             List<ProjectConfigItem> projectConfigs = dicAllProjectConfigs.Values.ToList();
             string projectConfigsListStr = SerializationUtils.JsonSerialize(projectConfigs);
@@ -49,7 +107,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         }
 
 
-        public static Dictionary<string, ProjectConfigItem> GetAllProjectConfigs()
+        public Dictionary<string, ProjectConfigItem> GetAllProjectConfigs()
         {
             Dictionary<string, ProjectConfigItem> dicAllProjectConfigs = new Dictionary<string, ProjectConfigItem>();
 
@@ -68,10 +126,24 @@ namespace AutoVersionsDB.Core.ConfigProjects
                 listAllProjectConfigs = new List<ProjectConfigItem>();
             }
 
-            listAllProjectConfigs.OrderBy(e => e.ProjectName).ToList();
-            dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.ProjectGuid);
+            listAllProjectConfigs.OrderBy(e => e.ProjectCode).ToList();
+            dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.ProjectCode);
 
             return dicAllProjectConfigs;
+        }
+
+        public virtual ProjectConfigItem GetProjectConfigByProjectCode(string projectCode)
+        {
+            var dicAllProjectConfigs = GetAllProjectConfigs();
+
+            return dicAllProjectConfigs[projectCode];
+        }
+
+        public virtual bool IsProjectCodeExsit(string projectCode)
+        {
+            var dicAllProjectConfigs = GetAllProjectConfigs();
+
+            return dicAllProjectConfigs.ContainsKey(projectCode);
         }
 
 

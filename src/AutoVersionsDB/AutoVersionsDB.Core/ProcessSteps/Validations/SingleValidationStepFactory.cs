@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
         }
 
-        public virtual SingleValidationStep Create(ValidatorBase validator)
+        internal virtual SingleValidationStep Create(ValidatorBase validator)
         {
             return new SingleValidationStep(validator);
         }

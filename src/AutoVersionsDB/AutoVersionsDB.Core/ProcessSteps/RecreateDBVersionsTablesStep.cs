@@ -1,11 +1,11 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.DbCommands.Integration;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
 
-    public class RecreateDBVersionsTablesStep : AutoVersionsDbStep
+    public class RecreateDBVersionsTablesStep : DBVersionsStep
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
@@ -20,7 +20,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 

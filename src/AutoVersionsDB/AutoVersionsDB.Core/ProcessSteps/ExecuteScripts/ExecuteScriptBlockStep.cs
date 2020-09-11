@@ -1,10 +1,10 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.DbCommands.Contract;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteScriptBlockStep : AutoVersionsDbStep
+    public class ExecuteScriptBlockStep : DBVersionsStep
     {
         private readonly IDBCommands _dbCommands;
         private readonly string _scriptBlockToExecute;
@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 

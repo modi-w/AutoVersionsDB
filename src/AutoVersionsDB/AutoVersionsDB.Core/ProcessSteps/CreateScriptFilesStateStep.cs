@@ -1,11 +1,11 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
 
-    public class CreateScriptFilesStateStep : AutoVersionsDbStep
+    public class CreateScriptFilesStateStep : DBVersionsStep
     {
         public override string StepName => "Create Script Files State";
         private readonly ScriptFilesStateFactory _scriptFilesStateFactory;
@@ -20,7 +20,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 

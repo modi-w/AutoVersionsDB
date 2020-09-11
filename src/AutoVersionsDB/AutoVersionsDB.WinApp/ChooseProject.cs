@@ -109,8 +109,8 @@ namespace AutoVersionsDB.WinApp
 
                     List<ProjectConfigItem> filteredProjectList =
                         _allProjectsList
-                        .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
-                        .OrderBy(e => e.ProjectName)
+                        .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectCode.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
+                        .OrderBy(e => e.ProjectCode)
                         .ToList();
 
                     flowLayoutPanel1.Controls.Clear();

@@ -1,10 +1,12 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class ValidationsStep : AutoVersionsDbStep
+    public class ValidationsStep : ActionStepBase
     {
         private readonly ValidationsFactory _validationsFactory;
         private readonly SingleValidationStepFactory _singleValidationStepFactory;
@@ -20,11 +22,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(ProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            ValidationsGroup validationsGroup = _validationsFactory.Create(processContext.ProjectConfig, processContext);
+            ValidationsGroup validationsGroup = _validationsFactory.Create(processContext);
 
             foreach (ValidatorBase validator in validationsGroup.GetValidators())
             {

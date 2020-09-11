@@ -7,21 +7,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.ProcessDefinitions
+namespace AutoVersionsDB.Core.Processes.DBVersionsProcesses
 {
-    public class CreateVirtualExecutionsProcessDefinition : AutoVersionsDbProcessDefinition
+    public class CreateVirtualExecutionsProcessDefinition : DBVersionsProcessDefinition
     {
         public override string EngineTypeName => "Create Virtual Executions";
 
 
         public CreateVirtualExecutionsProcessDefinition(RestoreDatabaseStep rollbackStep,
+                                                ValidationsStep<ProjectCodeExistValidationsFactory> projectCodeExistValidationStep,
+                                                SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                                 ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                                 CreateScriptFilesStateStep createScriptFilesStateStep,
                                                 CreateBackupStep createBackupStep,
                                                 RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
                                                 ExecuteAllScriptsStep executeScriptsStep,
                                                 FinalizeProcessStep finalizeProcessStep)
-            : base(rollbackStep)
+            : base(rollbackStep, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(projectConfigValidationStep);
             AddStep(createScriptFilesStateStep);

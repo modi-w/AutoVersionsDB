@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteSingleFileScriptStep : AutoVersionsDbStep
+    public class ExecuteSingleFileScriptStep : DBVersionsStep
     {
         private readonly RuntimeScriptFileBase _scriptFile;
         private readonly IDBCommands _dbCommands;
@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 

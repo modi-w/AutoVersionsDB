@@ -10,8 +10,10 @@ namespace AutoVersionsDB.Core.ConfigProjects
 {
     public class ProjectConfigItem 
     {
-        public string ProjectGuid { get; set; }
-        public string ProjectName { get; set; }
+        //public string ProjectGuid { get; set; }
+        public string ProjectCode { get; set; }
+
+        public string ProjectDescription { get; set; }
 
 
         public string DBTypeCode { get; set; }

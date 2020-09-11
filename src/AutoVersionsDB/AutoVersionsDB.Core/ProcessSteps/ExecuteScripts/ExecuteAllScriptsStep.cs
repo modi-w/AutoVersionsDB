@@ -1,7 +1,7 @@
 ﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
@@ -16,7 +16,7 @@ using System.Security.Cryptography;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteAllScriptsStep : AutoVersionsDbStep
+    public class ExecuteAllScriptsStep : DBVersionsStep
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
         private readonly ExecuteScriptsByTypeStepFactory _executeScriptsByTypeStepFactory;
@@ -42,7 +42,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute( AutoVersionsDbProcessContext processContext)
+        public override void Execute( DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 
@@ -63,7 +63,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
                     string targetStateScriptFileName = null;
                     if (processContext.ProcessParams != null)
                     {
-                        targetStateScriptFileName = (processContext.ProcessParams as AutoVersionsDbProcessParams).TargetStateScriptFileName;
+                        targetStateScriptFileName = (processContext.ProcessParams as DBVersionsProcessParams).TargetStateScriptFileName;
                     }
 
 
@@ -92,7 +92,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
         }
 
 
-        private static string GetLastIncFilename(AutoVersionsDbProcessContext processContext)
+        private static string GetLastIncFilename(DBVersionsProcessContext processContext)
         {
             string lastIncStriptFilename = "";
 

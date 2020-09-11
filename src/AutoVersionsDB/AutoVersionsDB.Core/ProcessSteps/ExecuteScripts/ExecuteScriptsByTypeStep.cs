@@ -1,12 +1,12 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
 using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 {
-    public class ExecuteScriptsByTypeStep : AutoVersionsDbStep
+    public class ExecuteScriptsByTypeStep : DBVersionsStep
     {
         private readonly IDBCommands _dbCommands;
         private readonly ExecuteSingleFileScriptStepFactory _executeSingleFileScriptStepFactory;
@@ -26,7 +26,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 
@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ExecuteScripts
             string targetStateScriptFileName = null;
             if (processContext.ProcessParams != null)
             {
-                targetStateScriptFileName = (processContext.ProcessParams as AutoVersionsDbProcessParams).TargetStateScriptFileName;
+                targetStateScriptFileName = (processContext.ProcessParams as DBVersionsProcessParams).TargetStateScriptFileName;
             }
 
             ScriptFilesComparerBase scriptFilesComparer = processContext.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);

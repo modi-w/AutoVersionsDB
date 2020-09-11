@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
 using System.Linq;
 
@@ -8,31 +8,32 @@ namespace AutoVersionsDB.Core.Validations.ExectutionParamsValidations
     public class IsTargetScriptFiletAlreadyExecutedValidator : ValidatorBase
     {
         private readonly ScriptFilesState _scriptFilesState;
+        private readonly string _targetStateScriptFileName;
 
-        public override string ValidatorName => "IsTargetScriptFiletAlreadyExecuted";
+        internal override string ValidatorName => "IsTargetScriptFiletAlreadyExecuted";
 
-        public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
+        internal override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
 
 
-        public IsTargetScriptFiletAlreadyExecutedValidator(ScriptFilesState scriptFilesState)
+        internal IsTargetScriptFiletAlreadyExecutedValidator(ScriptFilesState scriptFilesState,
+                                                            string targetStateScriptFileName)
         {
             _scriptFilesState = scriptFilesState;
+            _targetStateScriptFileName = targetStateScriptFileName;
         }
 
-        public override string Validate(AutoVersionsDbProcessParams executionParam)
+        internal override string Validate()
         {
-            executionParam.ThrowIfNull(nameof(executionParam));
-
-            if (!string.IsNullOrWhiteSpace(executionParam.TargetStateScriptFileName))
+            if (!string.IsNullOrWhiteSpace(_targetStateScriptFileName))
             {
                 var isTargetFileExecuted =
                     _scriptFilesState.IncrementalScriptFilesComparer.ExecutedFiles
-                        .Any(e => e.Filename.Trim().ToUpperInvariant() == executionParam.TargetStateScriptFileName.Trim().ToUpperInvariant());
+                        .Any(e => e.Filename.Trim().ToUpperInvariant() == _targetStateScriptFileName.Trim().ToUpperInvariant());
 
                 if (isTargetFileExecuted)
                 {
 
-                    string errorMsg = $"The target file '{executionParam.TargetStateScriptFileName}' is already executed on this database.";
+                    string errorMsg = $"The target file '{_targetStateScriptFileName}' is already executed on this database.";
                     return errorMsg;
                 }
             }

@@ -31,7 +31,7 @@ namespace AutoVersionsDB.WinApp
 
             ProjectConfig = projectConfigItem;
 
-            lblProjectName.Text = ProjectConfig.ProjectName;
+            lblProjectCode.Text = ProjectConfig.ProjectCode;
 
         }
 
@@ -57,12 +57,12 @@ namespace AutoVersionsDB.WinApp
 
         private void LblDeleteProject_Click(object sender, EventArgs e)
         {
-            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.ProjectName}'";
+            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.ProjectCode}'";
             bool results = MessageBox.Show(this, warningMessage, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes;
 
             if (results)
             {
-                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.ProjectGuid);
+                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig, null);
 
                 OnRefreshProjectList?.Invoke();
             }

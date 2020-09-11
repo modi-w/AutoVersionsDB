@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ProcessDefinitions;
+﻿using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
+using AutoVersionsDB.NotificationableEngine;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
@@ -7,18 +8,20 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
     {
         private readonly string _scriptFolderPath;
 
-        public override string ValidatorName => "ScriptsFolderPath";
+        internal override string ValidatorName { get; }
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+        internal override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
 
-        public ScriptsFolderPathValidator(string scriptFolderPath)
+        internal ScriptsFolderPathValidator(string propertyName,
+                                            string scriptFolderPath)
         {
+            ValidatorName = propertyName;
             _scriptFolderPath = scriptFolderPath;
         }
 
-        public override string Validate(AutoVersionsDbProcessParams executionParam)
+        internal override string Validate()
         {
             if (!Directory.Exists(_scriptFolderPath))
             {

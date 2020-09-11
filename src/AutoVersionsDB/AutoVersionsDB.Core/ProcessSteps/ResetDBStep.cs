@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using System;
@@ -7,7 +7,7 @@ using System;
 namespace AutoVersionsDB.Core.ProcessSteps
 {
 
-    public class ResetDBStep : AutoVersionsDbStep
+    public class ResetDBStep : DBVersionsStep
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
@@ -23,7 +23,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
         }
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 

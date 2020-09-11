@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblProjectName = new System.Windows.Forms.Label();
+            this.lblProjectCode = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.lblProcessLink = new System.Windows.Forms.Label();
             this.lblEditProject = new System.Windows.Forms.Label();
@@ -41,19 +41,19 @@
             // 
             // lblProjectName
             // 
-            this.lblProjectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblProjectName.CausesValidation = false;
-            this.lblProjectName.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblProjectName.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblProjectName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblProjectName.Location = new System.Drawing.Point(63, 6);
-            this.lblProjectName.Name = "lblProjectName";
-            this.lblProjectName.Size = new System.Drawing.Size(457, 56);
-            this.lblProjectName.TabIndex = 3;
-            this.lblProjectName.Text = "Project 1";
-            this.lblProjectName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblProjectName.Click += new System.EventHandler(this.LblProjectName_Click);
+            this.lblProjectCode.CausesValidation = false;
+            this.lblProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblProjectCode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblProjectCode.Location = new System.Drawing.Point(63, 6);
+            this.lblProjectCode.Name = "lblProjectName";
+            this.lblProjectCode.Size = new System.Drawing.Size(457, 56);
+            this.lblProjectCode.TabIndex = 3;
+            this.lblProjectCode.Text = "Project 1";
+            this.lblProjectCode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblProjectCode.Click += new System.EventHandler(this.LblProjectName_Click);
             // 
             // label8
             // 
@@ -158,7 +158,7 @@
             this.Controls.Add(this.lblEditProject);
             this.Controls.Add(this.lblDeleteProject);
             this.Controls.Add(this.lblProjectIcon);
-            this.Controls.Add(this.lblProjectName);
+            this.Controls.Add(this.lblProjectCode);
             this.Name = "ProjectItemControl";
             this.Size = new System.Drawing.Size(669, 69);
             this.ResumeLayout(false);
@@ -170,7 +170,7 @@
 
         private System.Windows.Forms.Label lblDeleteProject;
         private System.Windows.Forms.Label lblProjectIcon;
-        private System.Windows.Forms.Label lblProjectName;
+        private System.Windows.Forms.Label lblProjectCode;
         private System.Windows.Forms.Label lblEditProject;
         private System.Windows.Forms.Label lblProcessLink;
         private System.Windows.Forms.Label label8;

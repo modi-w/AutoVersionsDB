@@ -1,17 +1,19 @@
 ﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class ArtifactFileValidationsFactory : ValidationsFactory
     {
-        public override string ValidationName => "ArtifactFile";
+        internal override string ValidationName => "ArtifactFile";
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext)
+        internal override ValidationsGroup Create(ProcessContext processContext)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
+            ProjectConfigItem projectConfig = (processContext as IProjectConfigable).ProjectConfig;
+
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 

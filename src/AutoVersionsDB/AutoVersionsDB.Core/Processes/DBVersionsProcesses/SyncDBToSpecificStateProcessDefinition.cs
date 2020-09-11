@@ -7,30 +7,34 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.ProcessDefinitions
+namespace AutoVersionsDB.Core.Processes.DBVersionsProcesses
 {
-    public class RecreateDBFromScratchProcessDefinition : AutoVersionsDbProcessDefinition
+    public class SyncDBToSpecificStateProcessDefinition : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "Recreate DB From Scratch";
+        public override string EngineTypeName => "Set DB To Specific State";
 
 
-        public RecreateDBFromScratchProcessDefinition(RestoreDatabaseStep rollbackStep,
+        public SyncDBToSpecificStateProcessDefinition(RestoreDatabaseStep rollbackStep,
+                                            ValidationsStep<ProjectCodeExistValidationsFactory> projectCodeExistValidationStep,
+                                            SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                             ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                             ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                                             CreateScriptFilesStateStep createScriptFilesStateStep,
+                                            ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,
+                                            ValidationsStep<DBStateValidationsFactory> dbStateValidationStep,
+                                            ValidationsStep<TargetStateScriptFileValidationsFactory> targetStateScriptFileValidationStep,
                                             CreateBackupStep createBackupStep,
-                                            ResetDBStep resetDBStep,
-                                            RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
                                             ExecuteAllScriptsStep executeScriptsStep,
                                             FinalizeProcessStep finalizeProcessStep)
-            : base(rollbackStep)
+            : base(rollbackStep, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(projectConfigValidationStep);
             AddStep(checkDeliveryEnvValidationStep);
             AddStep(createScriptFilesStateStep);
+            AddStep(systemTableValidationStep);
+            AddStep(dbStateValidationStep);
+            AddStep(targetStateScriptFileValidationStep);
             AddStep(createBackupStep);
-            AddStep(resetDBStep);
-            AddStep(recreateDBVersionsTablesStep);
             AddStep(executeScriptsStep);
             AddStep(finalizeProcessStep);
         }

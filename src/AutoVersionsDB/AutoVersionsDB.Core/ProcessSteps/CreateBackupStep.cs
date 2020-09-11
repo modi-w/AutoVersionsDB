@@ -1,6 +1,6 @@
 ﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace AutoVersionsDB.Core.ProcessSteps
 {
 
-    public class CreateBackupStep : AutoVersionsDbStep
+    public class CreateBackupStep : DBVersionsStep
     {
         public override string StepName => "Create Backup";
 
@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 

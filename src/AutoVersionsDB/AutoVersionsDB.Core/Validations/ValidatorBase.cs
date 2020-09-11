@@ -1,25 +1,26 @@
-﻿using AutoVersionsDB.Core.ProcessDefinitions;
+﻿using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.Validations
 {
     public abstract class ValidatorBase
     {
-        public abstract string ValidatorName { get; }
+        internal abstract string ValidatorName { get; }
 
-        public abstract string ErrorInstructionsMessage { get; }
+        internal abstract string ErrorInstructionsMessage { get; }
 
-        public abstract string Validate(AutoVersionsDbProcessParams executionParam);
+        internal abstract string Validate();
     }
 
 
-    //public abstract class ValidatorBase<TValidationArgs> : ValidatorBase
+    //internal abstract class ValidatorBase<TValidationArgs> : ValidatorBase
     //    where TValidationArgs : ValidationArgs
     //{
-    //    public override string Validate(ValidationArgs validationArgs)
+    //    internal override string Validate(ValidationArgs validationArgs)
     //    {
     //        return Validate(validationArgs as TValidationArgs);
     //    }
 
-    //    public abstract string Validate(TValidationArgs validationArgs);
+    //    internal abstract string Validate(TValidationArgs validationArgs);
     //}
 }

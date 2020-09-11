@@ -1,35 +1,39 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
+using AutoVersionsDB.NotificationableEngine;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
     public class DevScriptsBaseFolderPathValidator : ValidatorBase
     {
-        private readonly ProjectConfigItem _projectConfigItem;
+        private readonly bool _isDevEnvironment;
+        private readonly string _devScriptsBaseFolderPath;
 
-        public override string ValidatorName => "DevScriptsBaseFolder";
+        internal override string ValidatorName => "DevScriptsBaseFolder";
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+        internal override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        public DevScriptsBaseFolderPathValidator(ProjectConfigItem projectConfig)
+        internal DevScriptsBaseFolderPathValidator(bool isDevEnvironment,
+                                                    string devScriptsBaseFolderPath)
         {
-            _projectConfigItem = projectConfig;
+            _isDevEnvironment= isDevEnvironment;
+            _devScriptsBaseFolderPath = devScriptsBaseFolderPath;
         }
 
-        public override string Validate(AutoVersionsDbProcessParams executionParam)
+        internal override string Validate()
         {
-            if (_projectConfigItem.IsDevEnvironment)
+            if (_isDevEnvironment)
             {
-                if (string.IsNullOrWhiteSpace(_projectConfigItem.DevScriptsBaseFolderPath))
+                if (string.IsNullOrWhiteSpace(_devScriptsBaseFolderPath))
                 {
                     string errorMsg = "Scripts Folder Path is empty";
                     return errorMsg;
                 }
                 else
                 {
-                    if (!Directory.Exists(_projectConfigItem.DevScriptsBaseFolderPath))
+                    if (!Directory.Exists(_devScriptsBaseFolderPath))
                     {
                         string errorMsg = "Scripts Folder is not exist";
                         return errorMsg;

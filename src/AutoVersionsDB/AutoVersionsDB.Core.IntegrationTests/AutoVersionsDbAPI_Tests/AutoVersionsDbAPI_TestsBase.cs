@@ -10,6 +10,7 @@ using AutoVersionsDB.Core.ScriptFiles.Repeatable;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
+using Moq;
 using Ninject;
 using NUnit.Framework;
 using System;
@@ -33,6 +34,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected StandardKernel _ninjectKernelContainer;
 
+        protected Mock<ProjectConfigs> _mockProjectConfigs;
+
         protected DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         protected FileChecksum _fileChecksum;
@@ -43,7 +46,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _ninjectKernelContainer = new StandardKernel();
             _ninjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
+            _mockProjectConfigs = new Mock<ProjectConfigs>();
+            _mockProjectConfigs.Setup(m => m.IsProjectCodeExsit(It.IsAny<string>())).Returns(true);
+            _ninjectKernelContainer.Bind<ProjectConfigs>().ToConstant(_mockProjectConfigs.Object);
+
             NinjectUtils.SetKernelInstance(_ninjectKernelContainer);
+
 
             _incrementalScriptFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
             _repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();

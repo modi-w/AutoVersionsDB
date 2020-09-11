@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using System;
@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public class FinalizeProcessStep : AutoVersionsDbStep
+    public class FinalizeProcessStep : DBVersionsStep
     {
         public override string StepName => "Finalize Process";
 
@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             processContext.ThrowIfNull(nameof(processContext));
 

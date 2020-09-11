@@ -1,22 +1,26 @@
 ﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations.DBStateValidators;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class DBStateValidationsFactory : ValidationsFactory
     {
-        public override string ValidationName => "DB State";
+        internal override string ValidationName => "DB State";
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext)
+        internal override ValidationsGroup Create(ProcessContext processContext)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-            processContext.ThrowIfNull(nameof(processContext));
+            ProjectConfigItem projectConfig = (processContext as IProjectConfigable).ProjectConfig;
+
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
-            IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator = new IsHistoryExecutedFilesChangedValidator(processContext.ScriptFilesState);
+            DBVersionsProcessContext dbVersionsProcessContext = processContext as DBVersionsProcessContext;
+
+            IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator = 
+                new IsHistoryExecutedFilesChangedValidator(dbVersionsProcessContext.ScriptFilesState);
             validationsGroup.Add(isHistoryExecutedFilesChangedValidator);
 
             return validationsGroup;

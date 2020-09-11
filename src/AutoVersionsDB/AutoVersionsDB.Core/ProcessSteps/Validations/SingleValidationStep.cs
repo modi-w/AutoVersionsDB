@@ -1,11 +1,11 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
-    public class SingleValidationStep : AutoVersionsDbStep
+    public class SingleValidationStep : ActionStepBase
     {
         private readonly ValidatorBase _validator;
 
@@ -22,11 +22,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(ProcessContext processContext)
         {
-            processContext.ThrowIfNull(nameof(processContext));
-
-            string errorMsg = _validator.Validate(processContext.ProcessParams as AutoVersionsDbProcessParams);
+            string errorMsg = _validator.Validate();
 
             if (!string.IsNullOrWhiteSpace(errorMsg))
             {

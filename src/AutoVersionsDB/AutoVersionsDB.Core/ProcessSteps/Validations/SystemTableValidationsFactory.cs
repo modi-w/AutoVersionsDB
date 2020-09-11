@@ -1,8 +1,9 @@
 ﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -10,7 +11,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        public override string ValidationName => "System Tables";
+        internal override string ValidationName => "System Tables";
 
         public SystemTableValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
@@ -18,9 +19,10 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext)
+        internal override ValidationsGroup Create(ProcessContext processContext)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
+            ProjectConfigItem projectConfig = (processContext as IProjectConfigable).ProjectConfig;
+
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 

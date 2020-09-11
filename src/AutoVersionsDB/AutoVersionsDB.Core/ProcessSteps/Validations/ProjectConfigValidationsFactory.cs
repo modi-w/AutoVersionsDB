@@ -1,8 +1,9 @@
 ﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations.ProjectConfigValidators;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -10,7 +11,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        public override string ValidationName => "Project Config";
+        internal override string ValidationName => "Project Config";
 
 
         public ProjectConfigValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
@@ -19,22 +20,23 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        public override ValidationsGroup Create(ProjectConfigItem projectConfig, AutoVersionsDbProcessContext processContext)
+        internal override ValidationsGroup Create(ProcessContext processContext)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
+            ProjectConfigItem projectConfig = (processContext as IProjectConfigable).ProjectConfig;
+
 
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
-            ProjectNameValidator projectNameValidator = new ProjectNameValidator(projectConfig.ProjectName);
+            ProjectCodeNotEmpty projectNameValidator = new ProjectCodeNotEmpty(projectConfig.ProjectCode);
             validationsGroup.Add(projectNameValidator);
 
             DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
             validationsGroup.Add(dbTypeValidator);
 
-            ConnStrValidator connStrValidator = new ConnStrValidator(projectConfig.ConnStr, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
+            ConnStrValidator connStrValidator = new ConnStrValidator(nameof(projectConfig.ConnStr), projectConfig.ConnStr, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
             validationsGroup.Add(connStrValidator);
 
-            ConnStrValidator connStrToMasterDBValidator = new ConnStrValidator(projectConfig.ConnStrToMasterDB, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
+            ConnStrValidator connStrToMasterDBValidator = new ConnStrValidator(nameof(projectConfig.ConnStrToMasterDB), projectConfig.ConnStrToMasterDB, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
             validationsGroup.Add(connStrToMasterDBValidator);
 
             DBBackupFolderValidator dbBackupBaseFolderValidator = new DBBackupFolderValidator(projectConfig.DBBackupBaseFolder);
@@ -42,27 +44,27 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
 
             if (projectConfig.IsDevEnvironment)
             {
-                DevScriptsBaseFolderPathValidator scriptsRootFolderPathValidator = new DevScriptsBaseFolderPathValidator(projectConfig);
+                DevScriptsBaseFolderPathValidator scriptsRootFolderPathValidator = new DevScriptsBaseFolderPathValidator(projectConfig.IsDevEnvironment, projectConfig.DevScriptsBaseFolderPath);
                 validationsGroup.Add(scriptsRootFolderPathValidator);
 
                 if (!string.IsNullOrWhiteSpace(projectConfig.DevScriptsBaseFolderPath))
                 {
                     ScriptsFolderPathValidator incrementalScriptsFolderPathValidator =
-                        new ScriptsFolderPathValidator(projectConfig.IncrementalScriptsFolderPath);
+                        new ScriptsFolderPathValidator(nameof(projectConfig.IncrementalScriptsFolderPath), projectConfig.IncrementalScriptsFolderPath);
                     validationsGroup.Add(incrementalScriptsFolderPathValidator);
 
                     ScriptsFolderPathValidator repeatableScriptsFolderPathValidator =
-                        new ScriptsFolderPathValidator(projectConfig.RepeatableScriptsFolderPath);
+                        new ScriptsFolderPathValidator(nameof(projectConfig.RepeatableScriptsFolderPath), projectConfig.RepeatableScriptsFolderPath);
                     validationsGroup.Add(repeatableScriptsFolderPathValidator);
 
                     ScriptsFolderPathValidator devDummyDataScriptsFolderPathValidator =
-                        new ScriptsFolderPathValidator(projectConfig.DevDummyDataScriptsFolderPath);
+                        new ScriptsFolderPathValidator(nameof(projectConfig.DevDummyDataScriptsFolderPath), projectConfig.DevDummyDataScriptsFolderPath);
                     validationsGroup.Add(devDummyDataScriptsFolderPathValidator);
                 }
             }
             else
             {
-                DeliveryArtifactFolderPathValidator deliveryArtifactFolderPathValidator = new DeliveryArtifactFolderPathValidator(projectConfig);
+                DeliveryArtifactFolderPathValidator deliveryArtifactFolderPathValidator = new DeliveryArtifactFolderPathValidator(projectConfig.DeliveryArtifactFolderPath);
                 validationsGroup.Add(deliveryArtifactFolderPathValidator);
             }
 

@@ -27,12 +27,12 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
             _validators = new List<ValidatorBase>();
         }
 
-        public void Add(ValidatorBase validator)
+        internal void Add(ValidatorBase validator)
         {
             _validators.Add(validator);
         }
-         
-        public IEnumerable<ValidatorBase> GetValidators()
+
+        internal IEnumerable<ValidatorBase> GetValidators()
         {
             return _validators.ToList();
         }

@@ -1,7 +1,7 @@
 ﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessDefinitions;
+using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.ScriptFiles.Repeatable;
@@ -15,7 +15,7 @@ using System.IO.Compression;
 
 namespace AutoVersionsDB.Core.ProcessSteps
 {
-    public class BuildDeployArtifactFileStep : AutoVersionsDbStep
+    public class BuildDeployArtifactFileStep : DBVersionsStep
     {
         public override string StepName => "Build Deploy Artifact File";
 
@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.ProcessSteps
 
 
 
-        public override void Execute(AutoVersionsDbProcessContext processContext)
+        public override void Execute(DBVersionsProcessContext processContext)
         {
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
             {

@@ -149,7 +149,7 @@ namespace AutoVersionsDB.NotificationableEngine
             _disposed = true;
         }
 
-       
+
 
         #endregion
 

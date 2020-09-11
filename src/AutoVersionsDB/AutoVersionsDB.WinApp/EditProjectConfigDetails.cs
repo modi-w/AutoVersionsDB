@@ -18,8 +18,9 @@ namespace AutoVersionsDB.WinApp
     public partial class EditProjectConfigDetails : UserControl
     {
         private readonly List<DBType> _dbTypesList;
-       
-        private ProjectConfigItem _projectConfigItem;
+
+        private ProjectConfigItem _projectConfig;
+        private bool _isNewProjectConfig;
 
         public event OnNavToProcessHandler OnNavToProcess;
 
@@ -51,11 +52,17 @@ namespace AutoVersionsDB.WinApp
 
         public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
         {
-            _projectConfigItem = projectConfigItem;
+            _projectConfig = projectConfigItem;
 
             BindToUIElements();
 
             ValidateAll();
+        }
+
+        public void CreateNewProjectConfig()
+        {
+            _projectConfig = new ProjectConfigItem();
+            _isNewProjectConfig = true;
         }
 
 
@@ -67,8 +74,15 @@ namespace AutoVersionsDB.WinApp
 
             ClearUIElementsErrors();
 
-            ProcessTrace processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectConfigItem,notificationsControl1.OnNotificationStateChanged);
+            ProcessTrace processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectConfig.ProjectCode, notificationsControl1.OnNotificationStateChanged);
 
+            handleCompleteProcess(processResults);
+
+            return !processResults.HasError;
+        }
+
+        private void handleCompleteProcess(ProcessTrace processResults)
+        {
             notificationsControl1.AfterComplete();
 
             SetErrorsToUiElements(processResults);
@@ -90,8 +104,6 @@ namespace AutoVersionsDB.WinApp
             {
                 lblDbProcess.Visible = !processResults.HasError;
             }));
-
-            return !processResults.HasError;
         }
 
         private void SetErrorsToUiElements(ProcessTrace processResults)
@@ -104,9 +116,9 @@ namespace AutoVersionsDB.WinApp
                 {
                     switch (errorStateItem.LowLevelErrorCode)
                     {
-                        case "ProjectName":
+                        case "ProjectCode":
 
-                            SetErrorInErrorProvider(tbProjectName, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbProjectCode, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         case "DBTypeCode":
@@ -157,7 +169,7 @@ namespace AutoVersionsDB.WinApp
 
         private void ClearUIElementsErrors()
         {
-            SetErrorInErrorProvider(tbProjectName, null);
+            SetErrorInErrorProvider(tbProjectCode, null);
             SetErrorInErrorProvider(cboConncectionType, null);
             SetErrorInErrorProvider(tbConnStr, null);
             SetErrorInErrorProvider(tbConnStrToMasterDB, null);
@@ -189,9 +201,9 @@ namespace AutoVersionsDB.WinApp
                 cboConncectionType.SelectedIndex = -1;
             }));
 
-            if (!string.IsNullOrWhiteSpace(_projectConfigItem.DBTypeCode))
+            if (!string.IsNullOrWhiteSpace(_projectConfig.DBTypeCode))
             {
-                DBType currSelectedItem = _dbTypesList.FirstOrDefault(e => e.Code == _projectConfigItem.DBTypeCode);
+                DBType currSelectedItem = _dbTypesList.FirstOrDefault(e => e.Code == _projectConfig.DBTypeCode);
                 if (currSelectedItem != null)
                 {
                     cboConncectionType.BeginInvoke((MethodInvoker)(() =>
@@ -201,56 +213,56 @@ namespace AutoVersionsDB.WinApp
                 }
             }
 
-            tbProjectName.BeginInvoke((MethodInvoker)(() =>
+            tbProjectCode.BeginInvoke((MethodInvoker)(() =>
             {
-                tbProjectName.Text = _projectConfigItem.ProjectName;
+                tbProjectCode.Text = _projectConfig.ProjectCode;
             }));
-            lblProjectGuid.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblProjectGuid.Text = _projectConfigItem.ProjectGuid;
-            }));
+            //lblProjectGuid.BeginInvoke((MethodInvoker)(() =>
+            //{
+            //    lblProjectGuid.Text = _projectConfigItem.ProjectGuid;
+            //}));
             tbConnStr.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStr.Text = _projectConfigItem.ConnStr;
+                tbConnStr.Text = _projectConfig.ConnStr;
             }));
             tbConnStrToMasterDB.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStrToMasterDB.Text = _projectConfigItem.ConnStrToMasterDB;
+                tbConnStrToMasterDB.Text = _projectConfig.ConnStrToMasterDB;
             }));
             tbDBBackupFolder.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDBBackupFolder.Text = _projectConfigItem.DBBackupBaseFolder;
+                tbDBBackupFolder.Text = _projectConfig.DBBackupBaseFolder;
             }));
 
             tbDevScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDevScriptsFolderPath.Text = _projectConfigItem.DevScriptsBaseFolderPath;
+                tbDevScriptsFolderPath.Text = _projectConfig.DevScriptsBaseFolderPath;
             }));
             tbDeployArtifactFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDeployArtifactFolderPath.Text = _projectConfigItem.DeployArtifactFolderPath;
+                tbDeployArtifactFolderPath.Text = _projectConfig.DeployArtifactFolderPath;
             }));
             tbDeliveryArtifactFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDeliveryArtifactFolderPath.Text = _projectConfigItem.DeliveryArtifactFolderPath;
+                tbDeliveryArtifactFolderPath.Text = _projectConfig.DeliveryArtifactFolderPath;
             }));
 
 
             rbDevEnv.BeginInvoke((MethodInvoker)(() =>
             {
-                rbDevEnv.Checked = _projectConfigItem.IsDevEnvironment;
+                rbDevEnv.Checked = _projectConfig.IsDevEnvironment;
             }));
             rbDelEnv.BeginInvoke((MethodInvoker)(() =>
             {
-                rbDelEnv.Checked = !_projectConfigItem.IsDevEnvironment;
+                rbDelEnv.Checked = !_projectConfig.IsDevEnvironment;
             }));
 
 
-            if (_projectConfigItem.DBCommandsTimeout > 0)
+            if (_projectConfig.DBCommandsTimeout > 0)
             {
                 tbConnectionTimeout.BeginInvoke((MethodInvoker)(() =>
                 {
-                    tbConnectionTimeout.Text = _projectConfigItem.DBCommandsTimeout.ToString(CultureInfo.InvariantCulture);
+                    tbConnectionTimeout.Text = _projectConfig.DBCommandsTimeout.ToString(CultureInfo.InvariantCulture);
                 }));
             }
 
@@ -280,15 +292,15 @@ namespace AutoVersionsDB.WinApp
         {
             lbllncrementalScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                lbllncrementalScriptsFolderPath.Text = _projectConfigItem.IncrementalScriptsFolderPath;
+                lbllncrementalScriptsFolderPath.Text = _projectConfig.IncrementalScriptsFolderPath;
             }));
             lblRepeatableScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                lblRepeatableScriptsFolderPath.Text = _projectConfigItem.RepeatableScriptsFolderPath;
+                lblRepeatableScriptsFolderPath.Text = _projectConfig.RepeatableScriptsFolderPath;
             }));
             lblDevDummyDataScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
             {
-                lblDevDummyDataScriptsFolderPath.Text = _projectConfigItem.DevDummyDataScriptsFolderPath;
+                lblDevDummyDataScriptsFolderPath.Text = _projectConfig.DevDummyDataScriptsFolderPath;
             }));
         }
 
@@ -298,25 +310,25 @@ namespace AutoVersionsDB.WinApp
 
         private void BindFromUIElements()
         {
-            _projectConfigItem.ProjectName = tbProjectName.Text;
-            _projectConfigItem.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
-            _projectConfigItem.ConnStr = tbConnStr.Text;
-            _projectConfigItem.ConnStrToMasterDB = tbConnStrToMasterDB.Text;
-            _projectConfigItem.DBBackupBaseFolder = tbDBBackupFolder.Text;
+            _projectConfig.ProjectCode = tbProjectCode.Text;
+            _projectConfig.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
+            _projectConfig.ConnStr = tbConnStr.Text;
+            _projectConfig.ConnStrToMasterDB = tbConnStrToMasterDB.Text;
+            _projectConfig.DBBackupBaseFolder = tbDBBackupFolder.Text;
 
-            _projectConfigItem.IsDevEnvironment = rbDevEnv.Checked;
+            _projectConfig.IsDevEnvironment = rbDevEnv.Checked;
 
             //    _projectConfigItem.IsDevEnvironment = chkAllowDropDB.Checked;
 
             if (int.TryParse(tbConnectionTimeout.Text, out int parsedInt)
                 && parsedInt > 0)
             {
-                _projectConfigItem.DBCommandsTimeout = parsedInt;
+                _projectConfig.DBCommandsTimeout = parsedInt;
             }
 
-            _projectConfigItem.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
-            _projectConfigItem.DeployArtifactFolderPath = tbDeployArtifactFolderPath.Text;
-            _projectConfigItem.DeliveryArtifactFolderPath = tbDeliveryArtifactFolderPath.Text;
+            _projectConfig.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
+            _projectConfig.DeployArtifactFolderPath = tbDeployArtifactFolderPath.Text;
+            _projectConfig.DeliveryArtifactFolderPath = tbDeliveryArtifactFolderPath.Text;
         }
 
 
@@ -336,14 +348,15 @@ namespace AutoVersionsDB.WinApp
 
         private void TbScriptsRootFolderPath_TextChanged(object sender, EventArgs e)
         {
-            _projectConfigItem.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
+            _projectConfig.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
             BindScriptsPathLabels();
         }
 
         private void BtnNavToProcess_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(_projectConfigItem);
+            OnNavToProcess?.Invoke(_projectConfig);
         }
+
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -358,11 +371,25 @@ namespace AutoVersionsDB.WinApp
 
             Task.Run(() =>
             {
-                ValidateAll();
-                //if (validateAll())
-                //{
-                AutoVersionsDbAPI.SaveProjectConfig(_projectConfigItem);
-                //}
+                if (_isNewProjectConfig)
+                {
+                    ProcessTrace processTrace = AutoVersionsDbAPI.SaveNewProjectConfig(_projectConfig, notificationsControl1.OnNotificationStateChanged);
+
+                    if (!processTrace.HasError)
+                    {
+                        _isNewProjectConfig = false;
+                    }
+
+                    handleCompleteProcess(processTrace);
+
+                }
+                else
+                {
+                    AutoVersionsDbAPI.UpdateProjectConfig(_projectConfig, notificationsControl1.OnNotificationStateChanged);
+
+                    ValidateAll();
+                }
+              
 
                 btnSave.BeginInvoke((MethodInvoker)(() =>
                 {
@@ -394,7 +421,7 @@ namespace AutoVersionsDB.WinApp
                     components.Dispose();
                 }
             }
-            
+
 
 
             _disposed = true;
