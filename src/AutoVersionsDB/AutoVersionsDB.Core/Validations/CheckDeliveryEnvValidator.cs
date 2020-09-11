@@ -1,22 +1,23 @@
 ﻿using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Validations
 {
     public class CheckDeliveryEnvValidator : ValidatorBase
     {
-        internal override string ValidatorName => "DeliveryEnvironment";
+        public override string ValidatorName => "DeliveryEnvironment";
 
-        internal override string ErrorInstructionsMessage => "Could not run this command on Delivery Environment";
+        public override string ErrorInstructionsMessage => "Could not run this command on Delivery Environment";
 
         private readonly bool _isDevEnvironment;
 
-        internal CheckDeliveryEnvValidator(bool isDevEnvironment)
+        public CheckDeliveryEnvValidator(bool isDevEnvironment)
         {
             _isDevEnvironment = isDevEnvironment;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             if (!_isDevEnvironment)
             {

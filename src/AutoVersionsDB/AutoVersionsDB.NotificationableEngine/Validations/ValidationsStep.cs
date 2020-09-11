@@ -1,10 +1,7 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
-using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
 
-namespace AutoVersionsDB.Core.ProcessSteps.Validations
+namespace AutoVersionsDB.NotificationableEngine.Validations
 {
     public class ValidationsStep : ActionStepBase
     {
@@ -34,7 +31,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
                 AddInternalStep(singleValidationStep);
             }
 
-            base.ExecuteInternalSteps(true);
+            ExecuteInternalSteps(true);
         }
 
     }

@@ -3,6 +3,7 @@ using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
@@ -12,13 +13,13 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
         private readonly string _dbTypeCode;
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        internal override string ValidatorName { get; }
+        public override string ValidatorName { get; }
 
-        internal override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
 
-        internal ConnStrValidator(string propertyName,
+        public ConnStrValidator(string propertyName,
                                 string connStr,
                                 string dbTypeCode,
                                 DBCommandsFactoryProvider dbCommandsFactoryProvider)
@@ -29,7 +30,7 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             if (string.IsNullOrWhiteSpace(_connStr))
             {

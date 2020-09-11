@@ -3,6 +3,7 @@ using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 using System;
 using System.Data;
 
@@ -10,9 +11,9 @@ namespace AutoVersionsDB.Core.Validations
 {
     public class SystemTablesValidator : ValidatorBase
     {
-        internal override string ValidatorName => "SystemTables";
+        public override string ValidatorName => "SystemTables";
 
-        internal override string ErrorInstructionsMessage
+        public override string ErrorInstructionsMessage
         {
             get
             {
@@ -32,7 +33,7 @@ namespace AutoVersionsDB.Core.Validations
         private readonly string _dbTypeCode;
         private readonly bool _isDevEnvironment;
 
-        internal SystemTablesValidator(DBCommandsFactoryProvider dbCommandsFactoryProvider,   
+        public SystemTablesValidator(DBCommandsFactoryProvider dbCommandsFactoryProvider,   
                                         string connStr,
                                         string dbTypeCode,
                                         bool isDevEnvironment)
@@ -43,7 +44,7 @@ namespace AutoVersionsDB.Core.Validations
             _isDevEnvironment = isDevEnvironment;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbTypeCode, _connStr, 0).AsDisposable())
             {

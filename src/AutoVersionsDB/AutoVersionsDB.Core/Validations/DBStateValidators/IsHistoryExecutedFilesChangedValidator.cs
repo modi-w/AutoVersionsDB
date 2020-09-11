@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
+using AutoVersionsDB.NotificationableEngine.Validations;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,19 +10,19 @@ namespace AutoVersionsDB.Core.Validations.DBStateValidators
     {
         private readonly ScriptFilesState _scriptFilesState;
 
-        internal override string ValidatorName => "IsHistoryExecutedFilesChanged";
+        public override string ValidatorName => "IsHistoryExecutedFilesChanged";
 
-        internal override string ErrorInstructionsMessage => "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";
+        public override string ErrorInstructionsMessage => "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";
 
 
 
-        internal IsHistoryExecutedFilesChangedValidator(ScriptFilesState scriptFilesState)
+        public IsHistoryExecutedFilesChangedValidator(ScriptFilesState scriptFilesState)
         {
             _scriptFilesState = scriptFilesState;
         }
 
 
-        internal override string Validate()
+        public override string Validate()
         {
 
             if (_scriptFilesState.IncrementalScriptFilesComparer.ChangedFiles.Count > 0)

@@ -1,9 +1,8 @@
-﻿using AutoVersionsDB.Core.Validations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.ProcessSteps.Validations
+namespace AutoVersionsDB.NotificationableEngine.Validations
 {
     public class SingleValidationStepFactory
     {

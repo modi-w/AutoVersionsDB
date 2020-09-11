@@ -1,10 +1,9 @@
-﻿using AutoVersionsDB.Core.Validations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AutoVersionsDB.Core.ProcessSteps.Validations
+namespace AutoVersionsDB.NotificationableEngine.Validations
 {
     public class ValidationsGroup
     {
@@ -27,12 +26,12 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
             _validators = new List<ValidatorBase>();
         }
 
-        internal void Add(ValidatorBase validator)
+        public void Add(ValidatorBase validator)
         {
             _validators.Add(validator);
         }
 
-        internal IEnumerable<ValidatorBase> GetValidators()
+        public IEnumerable<ValidatorBase> GetValidators()
         {
             return _validators.ToList();
         }

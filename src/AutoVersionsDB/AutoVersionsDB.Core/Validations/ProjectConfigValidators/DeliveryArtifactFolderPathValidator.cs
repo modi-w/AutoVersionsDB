@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
@@ -9,17 +10,17 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
     {
         private readonly string _deliveryArtifactFolderPath;
 
-        internal override string ValidatorName => "DeliveryArtifactFolderPath";
+        public override string ValidatorName => "DeliveryArtifactFolderPath";
 
-        internal override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        internal DeliveryArtifactFolderPathValidator(string deliveryArtifactFolderPath)
+        public DeliveryArtifactFolderPathValidator(string deliveryArtifactFolderPath)
         {
             _deliveryArtifactFolderPath = deliveryArtifactFolderPath;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             if (string.IsNullOrWhiteSpace(_deliveryArtifactFolderPath))
             {

@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations
@@ -10,19 +11,19 @@ namespace AutoVersionsDB.Core.Validations
         private readonly bool _isDevEnvironment;
         private readonly string _deliveryArtifactFolderPath;
 
-        internal override string ValidatorName => "ArtifactFile";
+        public override string ValidatorName => "ArtifactFile";
 
-        internal override string ErrorInstructionsMessage => "Artifact File not exist";
+        public override string ErrorInstructionsMessage => "Artifact File not exist";
 
 
-        internal ArtifactFileValidator(bool isDevEnvironment, 
+        public ArtifactFileValidator(bool isDevEnvironment, 
                                         string deliveryArtifactFolderPath)
         {
             _isDevEnvironment = isDevEnvironment;
             _deliveryArtifactFolderPath = deliveryArtifactFolderPath;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             if (!_isDevEnvironment)
             {

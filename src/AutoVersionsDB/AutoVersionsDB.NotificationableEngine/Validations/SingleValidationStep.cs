@@ -1,9 +1,7 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
-using AutoVersionsDB.Core.Validations;
 using AutoVersionsDB.NotificationableEngine;
 
-namespace AutoVersionsDB.Core.ProcessSteps.Validations
+namespace AutoVersionsDB.NotificationableEngine.Validations
 {
     public class SingleValidationStep : ActionStepBase
     {

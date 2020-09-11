@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
@@ -9,19 +10,19 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
         private readonly string _dbTypeCode;
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        internal override string ValidatorName => "DBTypeCode";
+        public override string ValidatorName => "DBTypeCode";
 
-        internal override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        internal DBTypeValidator(string dbTypeCode,
+        public DBTypeValidator(string dbTypeCode,
                                 DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
             _dbTypeCode = dbTypeCode;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             if (string.IsNullOrWhiteSpace(_dbTypeCode))
             {

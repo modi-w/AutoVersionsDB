@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
@@ -10,19 +11,19 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
         private readonly bool _isDevEnvironment;
         private readonly string _devScriptsBaseFolderPath;
 
-        internal override string ValidatorName => "DevScriptsBaseFolder";
+        public override string ValidatorName => "DevScriptsBaseFolder";
 
-        internal override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        internal DevScriptsBaseFolderPathValidator(bool isDevEnvironment,
+        public DevScriptsBaseFolderPathValidator(bool isDevEnvironment,
                                                     string devScriptsBaseFolderPath)
         {
             _isDevEnvironment= isDevEnvironment;
             _devScriptsBaseFolderPath = devScriptsBaseFolderPath;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             if (_isDevEnvironment)
             {

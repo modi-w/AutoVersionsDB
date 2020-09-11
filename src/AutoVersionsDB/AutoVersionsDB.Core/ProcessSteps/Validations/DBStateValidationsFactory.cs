@@ -3,14 +3,15 @@ using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations.DBStateValidators;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class DBStateValidationsFactory : ValidationsFactory
     {
-        internal override string ValidationName => "DB State";
+        public override string ValidationName => "DB State";
 
-        internal override ValidationsGroup Create(ProcessContext processContext)
+        public override ValidationsGroup Create(ProcessContext processContext)
         {
             ProjectConfigItem projectConfig = (processContext as IProjectConfigable).ProjectConfig;
 

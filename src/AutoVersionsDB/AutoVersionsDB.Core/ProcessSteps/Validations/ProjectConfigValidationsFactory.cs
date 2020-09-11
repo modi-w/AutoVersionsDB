@@ -4,6 +4,7 @@ using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations.ProjectConfigValidators;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
@@ -11,7 +12,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
     {
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        internal override string ValidationName => "Project Config";
+        public override string ValidationName => "Project Config";
 
 
         public ProjectConfigValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
@@ -20,7 +21,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
         }
 
 
-        internal override ValidationsGroup Create(ProcessContext processContext)
+        public override ValidationsGroup Create(ProcessContext processContext)
         {
             ProjectConfigItem projectConfig = (processContext as IProjectConfigable).ProjectConfig;
 

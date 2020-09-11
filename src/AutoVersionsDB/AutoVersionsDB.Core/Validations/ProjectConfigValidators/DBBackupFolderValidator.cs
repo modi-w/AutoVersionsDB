@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
@@ -8,17 +9,17 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
     {
         private readonly string _dbBackupBaseFolder;
 
-        internal override string ValidatorName => "DBBackupFolderPath";
+        public override string ValidatorName => "DBBackupFolderPath";
 
-        internal override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        internal DBBackupFolderValidator(string dbBackupBaseFolder)
+        public DBBackupFolderValidator(string dbBackupBaseFolder)
         {
             _dbBackupBaseFolder = dbBackupBaseFolder;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             if (string.IsNullOrWhiteSpace(_dbBackupBaseFolder))
             {

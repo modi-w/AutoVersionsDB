@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
 {
@@ -8,17 +9,17 @@ namespace AutoVersionsDB.Core.Validations.ProjectConfigValidators
     {
         private readonly string _projectCode;
 
-        internal override string ValidatorName => "ProjectCodeNotEmpty";
+        public override string ValidatorName => "ProjectCodeNotEmpty";
 
-        internal override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        internal ProjectCodeNotEmpty(string projectCode)
+        public ProjectCodeNotEmpty(string projectCode)
         {
             _projectCode = projectCode;
         }
 
-        internal override string Validate()
+        public override string Validate()
         {
             if (string.IsNullOrWhiteSpace(_projectCode))
             {

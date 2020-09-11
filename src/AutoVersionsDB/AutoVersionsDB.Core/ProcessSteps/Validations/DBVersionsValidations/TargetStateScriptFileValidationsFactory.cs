@@ -3,15 +3,16 @@ using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.Validations.ExectutionParamsValidations;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.ProcessSteps.Validations
 {
     public class TargetStateScriptFileValidationsFactory : ValidationsFactory
     {
-        internal override string ValidationName => "Target State Script File";
+        public override string ValidationName => "Target State Script File";
 
 
-        internal override ValidationsGroup Create(ProcessContext processContext)
+        public override ValidationsGroup Create(ProcessContext processContext)
         {
             ProjectConfigItem projectConfig = (processContext as IProjectConfigable).ProjectConfig;
 
