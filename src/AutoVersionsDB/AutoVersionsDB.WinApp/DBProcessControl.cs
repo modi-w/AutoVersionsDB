@@ -112,9 +112,9 @@ namespace AutoVersionsDB.WinApp
 
         #region Refresh
 
-        public void SetProjectConfigItem(ProjectConfigItem projectConfigItem)
+        public void SetProjectConfigItem(string projectCode)
         {
-            _projectConfigItem = projectConfigItem;
+            _projectConfigItem = AutoVersionsDbAPI.GetProjectConfigByProjectCode(projectCode);
 
             RefreshAll();
         }
@@ -226,7 +226,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnNavToEdit_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(_projectConfigItem);
+            OnEditProject?.Invoke(_projectConfigItem.ProjectCode);
         }
 
 

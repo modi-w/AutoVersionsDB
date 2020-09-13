@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\ProjectItemControl.Designer.cs">
       <Link>ProjectItemControl.Designer.cs</Link>
+      <DependentUpon>ProjectItemControl.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Properties\Resources.Designer.cs">
       <Link>Properties\Resources.Designer.cs</Link>
@@ -143,6 +144,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ProjectItemControl.resx">
       <Link>ProjectItemControl.resx</Link>
+      <DependentUpon>ProjectItemControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Properties\Resources.resx">
       <Link>Properties\Resources.resx</Link>

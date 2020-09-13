@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.ProcessDefinitions
         public override string EngineTypeName => "Save New Config Validation";
 
 
-        internal UpdateProjectConfigProcessDefinition(ValidationsStep<ProjectCodeExistValidationsFactory> projectCodeNotExistValidationStep,
+        public UpdateProjectConfigProcessDefinition(ValidationsStep<ProjectCodeExistValidationsFactory> projectCodeNotExistValidationStep,
                                                         UpdateProjectConfigStep updateProjectConfigStep)
             : base()
         {

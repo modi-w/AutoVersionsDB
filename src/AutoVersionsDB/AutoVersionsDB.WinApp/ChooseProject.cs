@@ -45,9 +45,10 @@ namespace AutoVersionsDB.WinApp
 
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
 
+
+                this.Load += ChooseProject_Load;
             }
-           
-            this.Load += ChooseProject_Load;
+
 
         }
 
@@ -67,8 +68,11 @@ namespace AutoVersionsDB.WinApp
 
         private void ChooseProject_Load(object sender, EventArgs e)
         {
-            //flowLayoutPanel1.Width = this.Width;
-            RefreshProjectList();
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                //flowLayoutPanel1.Width = this.Width;
+                RefreshProjectList();
+            }
         }
 
         private void TbSerchProject_LostFocus(object sender, EventArgs e)
@@ -130,9 +134,9 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void ProjectItem_OnEditProject(ProjectConfigItem projectConfigItem)
+        private void ProjectItem_OnEditProject(string projectCode)
         {
-            OnEditProject?.Invoke(projectConfigItem);
+            OnEditProject?.Invoke(projectCode);
         }
 
         private void ProjectItem_OnRefreshProjectList()
@@ -140,9 +144,9 @@ namespace AutoVersionsDB.WinApp
             RefreshProjectList();
         }
 
-        private void ProjectItem_OnNavToProcess(ProjectConfigItem projectConfigItem)
+        private void ProjectItem_OnNavToProcess(string projectCode)
         {
-            OnNavToProcess?.Invoke(projectConfigItem);
+            OnNavToProcess?.Invoke(projectCode);
         }
 
       

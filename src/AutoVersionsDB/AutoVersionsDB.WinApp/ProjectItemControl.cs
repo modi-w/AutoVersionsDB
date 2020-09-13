@@ -37,22 +37,22 @@ namespace AutoVersionsDB.WinApp
 
         private void LblProjectName_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig);
+            OnNavToProcess?.Invoke(ProjectConfig.ProjectCode);
         }
 
         private void LblProjectIcon_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig);
+            OnNavToProcess?.Invoke(ProjectConfig.ProjectCode);
         }
 
         private void LblProcessLink_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig);
+            OnNavToProcess?.Invoke(ProjectConfig.ProjectCode);
         }
 
         private void LblEditProject_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(ProjectConfig);
+            OnEditProject?.Invoke(ProjectConfig.ProjectCode);
         }
 
         private void LblDeleteProject_Click(object sender, EventArgs e)
@@ -62,7 +62,7 @@ namespace AutoVersionsDB.WinApp
 
             if (results)
             {
-                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig, null);
+                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.ProjectCode, null);
 
                 OnRefreshProjectList?.Invoke();
             }

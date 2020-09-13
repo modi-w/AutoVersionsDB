@@ -5,14 +5,24 @@ namespace AutoVersionsDB.Core.ProcessDefinitions
 {
     public class ProjectConfigProcessParams : ProcessParams, IProjectCode
     {
-        public ProjectConfigItem ProjectConfig { get; set; }
-        public string ProjectCode => ProjectConfig.ProjectCode;
-        public string NewProjectCode { get; set; }
+        public ProjectConfigItem ProjectConfig { get; }
+        public string ProjectCode { get; }
+        public string NewProjectCode { get; }
 
-        public ProjectConfigProcessParams(ProjectConfigItem projectConfig, string newProjectCode)
+        public ProjectConfigProcessParams(string projectCode)
+        {
+            ProjectCode = projectCode;
+        }
+
+        public ProjectConfigProcessParams(string projectCode, string newProjectCode)
+        {
+            ProjectCode = projectCode;
+            NewProjectCode = newProjectCode;
+        }
+        public ProjectConfigProcessParams(ProjectConfigItem projectConfig)
         {
             ProjectConfig = projectConfig;
-            NewProjectCode = newProjectCode;
+            ProjectCode = projectConfig.ProjectCode;
         }
     }
 }

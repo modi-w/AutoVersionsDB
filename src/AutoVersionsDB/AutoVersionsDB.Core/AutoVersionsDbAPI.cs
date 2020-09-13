@@ -20,14 +20,6 @@ namespace AutoVersionsDB.Core
         private static readonly object _processSyncLock = new object();
 
 
-        public static List<ProjectConfigItem> GetProjectsList()
-        {
-            ProjectConfigs projectConfigs = NinjectUtils.KernelInstance.Get<ProjectConfigs>();
-
-            return projectConfigs.GetAllProjectConfigs().Values.ToList();
-        }
-
-
         public static List<DBType> GetDbTypesList()
         {
             DBCommandsFactoryProvider dbCommandsFactoryProvider = NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>();
@@ -36,14 +28,33 @@ namespace AutoVersionsDB.Core
         }
 
 
+
+
+
+
         #region Config
+
+        public static List<ProjectConfigItem> GetProjectsList()
+        {
+            ProjectConfigs projectConfigs = NinjectUtils.KernelInstance.Get<ProjectConfigs>();
+
+            return projectConfigs.GetAllProjectConfigs().Values.ToList();
+        }
+
+        public static ProjectConfigItem GetProjectConfigByProjectCode(string projectCode)
+        {
+            ProjectConfigs projectConfigs = NinjectUtils.KernelInstance.Get<ProjectConfigs>();
+
+            return projectConfigs.GetProjectConfigByProjectCode(projectCode);
+        }
+
 
 
         public static ProcessTrace SaveNewProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return runProjectConfigProcess<SaveNewProjectConfigProcessDefinition>(projectConfigItem, null, onNotificationStateChanged);
+                return runProjectConfigProcess<SaveNewProjectConfigProcessDefinition>(projectConfigItem, onNotificationStateChanged);
             }
         }
 
@@ -51,23 +62,23 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return runProjectConfigProcess<UpdateProjectConfigProcessDefinition>(projectConfigItem, null, onNotificationStateChanged);
+                return runProjectConfigProcess<UpdateProjectConfigProcessDefinition>(projectConfigItem, onNotificationStateChanged);
             }
         }
 
-        public static ProcessTrace ChangeProjectCode(ProjectConfigItem projectConfigItem, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessTrace ChangeProjectCode(string prevProjectCode, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return runProjectConfigProcess<ChangeProjectCodeProcessDefinition>(projectConfigItem, newProjectCode, onNotificationStateChanged);
+                return runProjectConfigProcess<ChangeProjectCodeProcessDefinition>(prevProjectCode, newProjectCode, onNotificationStateChanged);
             }
         }
 
-        public static ProcessTrace RemoveProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessTrace RemoveProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return runProjectConfigProcess<RemoveProjectConfigProcessDefinition>(projectConfigItem, null, onNotificationStateChanged);
+                return runProjectConfigProcess<RemoveProjectConfigProcessDefinition>(projectCode, onNotificationStateChanged);
             }
         }
 
@@ -257,19 +268,42 @@ namespace AutoVersionsDB.Core
 
 
 
-        private static ProcessTrace runProjectConfigProcess<TProcessDefinition>(ProjectConfigItem projectConfig, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        private static ProcessTrace runProjectConfigProcess<TProcessDefinition>(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
             where TProcessDefinition : ProcessDefinition
         {
             ProcessTrace processTrace;
             lock (_processSyncLock)
             {
                 var processRunner = NinjectUtils.KernelInstance.Get<NotificationProcessRunner<TProcessDefinition, ProjectConfigProcessContext>>();
-                processTrace = processRunner.Run(new ProjectConfigProcessParams(projectConfig, newProjectCode), onNotificationStateChanged);
+                processTrace = processRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
             }
 
             return processTrace;
         }
+        private static ProcessTrace runProjectConfigProcess<TProcessDefinition>(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+            where TProcessDefinition : ProcessDefinition
+        {
+            ProcessTrace processTrace;
+            lock (_processSyncLock)
+            {
+                var processRunner = NinjectUtils.KernelInstance.Get<NotificationProcessRunner<TProcessDefinition, ProjectConfigProcessContext>>();
+                processTrace = processRunner.Run(new ProjectConfigProcessParams(projectCode), onNotificationStateChanged);
+            }
 
+            return processTrace;
+        }
+        private static ProcessTrace runProjectConfigProcess<TProcessDefinition>(string projectCode, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+            where TProcessDefinition : ProcessDefinition
+        {
+            ProcessTrace processTrace;
+            lock (_processSyncLock)
+            {
+                var processRunner = NinjectUtils.KernelInstance.Get<NotificationProcessRunner<TProcessDefinition, ProjectConfigProcessContext>>();
+                processTrace = processRunner.Run(new ProjectConfigProcessParams(projectCode, newProjectCode), onNotificationStateChanged);
+            }
+
+            return processTrace;
+        }
 
         private static ProcessTrace runDBVersionsProcess<TProcessDefinition>(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
             where TProcessDefinition : ProcessDefinition

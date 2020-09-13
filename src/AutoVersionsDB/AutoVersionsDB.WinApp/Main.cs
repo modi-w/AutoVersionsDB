@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
-    public delegate void OnNavToProcessHandler(ProjectConfigItem projectConfigItem);
+    public delegate void OnNavToProcessHandler(string projectCode);
     public delegate void OnRefreshProjectListHandler();
-    public delegate void OnEditProjectHandler(ProjectConfigItem projectConfigItem);
+    public delegate void OnEditProjectHandler(string projectCode);
 
 
     public partial class Main : Form
@@ -55,34 +55,34 @@ namespace AutoVersionsDB.WinApp
      //       tabMainLayout.Width = this.Width - 50;
         }
 
-        private void EditProjectConfigDetails1_OnNavToProcess(ProjectConfigItem projectConfigItem)
+        private void EditProjectConfigDetails1_OnNavToProcess(string projectCode)
         {
             tabMainLayout.SelectTab(tbDBVersionsMangement);
 
             Task.Run(() => {
 
-                dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
+                dbVersionsMangement1.SetProjectConfigItem(projectCode);
             });
         }
 
-        private void ChooseProject1_OnEditProject(ProjectConfigItem projectConfigItem)
+        private void ChooseProject1_OnEditProject(string projectCode)
         {
             tabMainLayout.SelectedTab = tbEditProjectConfig;
         
             Task.Run(() => {
 
-                editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
+                editProjectConfigDetails1.SetProjectConfigItem(projectCode);
             });
         }
     
 
-        private void DbVersionsMangement1_OnEditProject(ProjectConfigItem projectConfigItem)
+        private void DbVersionsMangement1_OnEditProject(string projectCode)
         {
             tabMainLayout.SelectedTab = tbEditProjectConfig;
 
             Task.Run(() => {
 
-                editProjectConfigDetails1.SetProjectConfigItem(projectConfigItem);
+                editProjectConfigDetails1.SetProjectConfigItem(projectCode);
             });
         }
 
@@ -111,13 +111,13 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void ChooseProject1_OnNavToProcess(ProjectConfigItem projectConfigItem)
+        private void ChooseProject1_OnNavToProcess(string projectCode)
         {
             tabMainLayout.SelectTab(tbDBVersionsMangement);
 
             Task.Run(() => {
 
-                dbVersionsMangement1.SetProjectConfigItem(projectConfigItem);
+                dbVersionsMangement1.SetProjectConfigItem(projectCode);
             });
 
         }

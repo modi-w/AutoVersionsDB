@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tbProjectCode = new System.Windows.Forms.TextBox();
-            this.lblProjectGuid = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tbConnStr = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -62,6 +60,10 @@
             this.btnNavToProcess = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSaveProjectCode = new System.Windows.Forms.Button();
+            this.btnEditProjectCode = new System.Windows.Forms.Button();
+            this.tbProjectDescription = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label17 = new System.Windows.Forms.Label();
@@ -99,21 +101,6 @@
             this.pnlDevEnvDeplyFolder.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label3.ForeColor = System.Drawing.Color.DimGray;
-            this.errPrvProjectDetails.SetIconAlignment(this.label3, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
-            this.label3.Location = new System.Drawing.Point(25, 73);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 25);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Project Guid";
-            // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -123,34 +110,20 @@
             this.label2.Location = new System.Drawing.Point(25, 20);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(201, 36);
+            this.label2.Size = new System.Drawing.Size(94, 36);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Project Name:";
+            this.label2.Text = "Code:";
             // 
             // tbProjectCode
             // 
             this.tbProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbProjectCode.Location = new System.Drawing.Point(255, 25);
-            this.tbProjectCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbProjectCode.Location = new System.Drawing.Point(206, 26);
+            this.tbProjectCode.Margin = new System.Windows.Forms.Padding(4);
             this.tbProjectCode.Name = "tbProjectCode";
-            this.tbProjectCode.Size = new System.Drawing.Size(679, 30);
+            this.tbProjectCode.Size = new System.Drawing.Size(284, 30);
             this.tbProjectCode.TabIndex = 2;
-            // 
-            // lblProjectGuid
-            // 
-            this.lblProjectGuid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblProjectGuid.AutoSize = true;
-            this.lblProjectGuid.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblProjectGuid.ForeColor = System.Drawing.Color.DimGray;
-            this.lblProjectGuid.Location = new System.Drawing.Point(249, 73);
-            this.lblProjectGuid.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblProjectGuid.Name = "lblProjectGuid";
-            this.lblProjectGuid.Size = new System.Drawing.Size(209, 25);
-            this.lblProjectGuid.TabIndex = 4;
-            this.lblProjectGuid.Text = "1234-1234-1234-1234";
             // 
             // label5
             // 
@@ -171,7 +144,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbConnStr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbConnStr.Location = new System.Drawing.Point(27, 118);
-            this.tbConnStr.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbConnStr.Margin = new System.Windows.Forms.Padding(4);
             this.tbConnStr.Multiline = true;
             this.tbConnStr.Name = "tbConnStr";
             this.tbConnStr.Size = new System.Drawing.Size(945, 66);
@@ -198,7 +171,7 @@
             this.tbDBBackupFolder.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.tbDBBackupFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.tbDBBackupFolder.Location = new System.Drawing.Point(29, 50);
-            this.tbDBBackupFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDBBackupFolder.Margin = new System.Windows.Forms.Padding(4);
             this.tbDBBackupFolder.Name = "tbDBBackupFolder";
             this.tbDBBackupFolder.Size = new System.Drawing.Size(943, 34);
             this.tbDBBackupFolder.TabIndex = 18;
@@ -224,7 +197,7 @@
             this.tbDevScriptsFolderPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.tbDevScriptsFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.tbDevScriptsFolderPath.Location = new System.Drawing.Point(19, 57);
-            this.tbDevScriptsFolderPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDevScriptsFolderPath.Margin = new System.Windows.Forms.Padding(4);
             this.tbDevScriptsFolderPath.Name = "tbDevScriptsFolderPath";
             this.tbDevScriptsFolderPath.Size = new System.Drawing.Size(953, 34);
             this.tbDevScriptsFolderPath.TabIndex = 21;
@@ -248,7 +221,7 @@
             this.cboConncectionType.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.cboConncectionType.FormattingEnabled = true;
             this.cboConncectionType.Location = new System.Drawing.Point(183, 14);
-            this.cboConncectionType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cboConncectionType.Margin = new System.Windows.Forms.Padding(4);
             this.cboConncectionType.Name = "cboConncectionType";
             this.cboConncectionType.Size = new System.Drawing.Size(356, 37);
             this.cboConncectionType.TabIndex = 32;
@@ -272,7 +245,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbConnStrToMasterDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbConnStrToMasterDB.Location = new System.Drawing.Point(29, 249);
-            this.tbConnStrToMasterDB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbConnStrToMasterDB.Margin = new System.Windows.Forms.Padding(4);
             this.tbConnStrToMasterDB.Multiline = true;
             this.tbConnStrToMasterDB.Name = "tbConnStrToMasterDB";
             this.tbConnStrToMasterDB.Size = new System.Drawing.Size(945, 66);
@@ -404,7 +377,7 @@
             this.tbConnectionTimeout.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.tbConnectionTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.tbConnectionTimeout.Location = new System.Drawing.Point(877, 17);
-            this.tbConnectionTimeout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbConnectionTimeout.Margin = new System.Windows.Forms.Padding(4);
             this.tbConnectionTimeout.Name = "tbConnectionTimeout";
             this.tbConnectionTimeout.Size = new System.Drawing.Size(93, 34);
             this.tbConnectionTimeout.TabIndex = 35;
@@ -425,7 +398,7 @@
             this.panel5.Controls.Add(this.label1);
             this.panel5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panel5.Location = new System.Drawing.Point(27, 15);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(995, 82);
             this.panel5.TabIndex = 64;
@@ -456,7 +429,7 @@
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSave.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnSave.Location = new System.Drawing.Point(835, 15);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
             this.btnSave.Size = new System.Drawing.Size(51, 49);
@@ -510,7 +483,7 @@
             this.btnNavToProcess.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnNavToProcess.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnNavToProcess.Location = new System.Drawing.Point(921, 16);
-            this.btnNavToProcess.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnNavToProcess.Margin = new System.Windows.Forms.Padding(4);
             this.btnNavToProcess.Name = "btnNavToProcess";
             this.btnNavToProcess.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
             this.btnNavToProcess.Size = new System.Drawing.Size(51, 49);
@@ -535,16 +508,86 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnSaveProjectCode);
+            this.panel1.Controls.Add(this.btnEditProjectCode);
+            this.panel1.Controls.Add(this.tbProjectDescription);
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label16);
             this.panel1.Controls.Add(this.tbProjectCode);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.lblProjectGuid);
             this.panel1.Location = new System.Drawing.Point(27, 201);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(995, 121);
             this.panel1.TabIndex = 70;
+            // 
+            // btnSaveProjectCode
+            // 
+            this.btnSaveProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveProjectCode.BackColor = System.Drawing.Color.Transparent;
+            this.btnSaveProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSaveProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnSaveProjectCode.FlatAppearance.BorderSize = 0;
+            this.btnSaveProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSaveProjectCode.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnSaveProjectCode.Image = global::AutoVersionsDB.WinApp.Properties.Resources.SaveIcon;
+            this.btnSaveProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSaveProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnSaveProjectCode.Location = new System.Drawing.Point(557, 17);
+            this.btnSaveProjectCode.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSaveProjectCode.Name = "btnSaveProjectCode";
+            this.btnSaveProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnSaveProjectCode.Size = new System.Drawing.Size(51, 49);
+            this.btnSaveProjectCode.TabIndex = 90;
+            this.btnSaveProjectCode.UseVisualStyleBackColor = false;
+            this.btnSaveProjectCode.Click += new System.EventHandler(this.btnSaveProjectCode_Click);
+            // 
+            // btnEditProjectCode
+            // 
+            this.btnEditProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditProjectCode.BackColor = System.Drawing.Color.Transparent;
+            this.btnEditProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEditProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnEditProjectCode.FlatAppearance.BorderSize = 0;
+            this.btnEditProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnEditProjectCode.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnEditProjectCode.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
+            this.btnEditProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnEditProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnEditProjectCode.Location = new System.Drawing.Point(498, 17);
+            this.btnEditProjectCode.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditProjectCode.Name = "btnEditProjectCode";
+            this.btnEditProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnEditProjectCode.Size = new System.Drawing.Size(51, 49);
+            this.btnEditProjectCode.TabIndex = 89;
+            this.btnEditProjectCode.UseVisualStyleBackColor = false;
+            this.btnEditProjectCode.Click += new System.EventHandler(this.btnEditProjectCode_Click);
+            // 
+            // tbProjectDescription
+            // 
+            this.tbProjectDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbProjectDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbProjectDescription.Location = new System.Drawing.Point(206, 71);
+            this.tbProjectDescription.Margin = new System.Windows.Forms.Padding(4);
+            this.tbProjectDescription.Name = "tbProjectDescription";
+            this.tbProjectDescription.Size = new System.Drawing.Size(728, 30);
+            this.tbProjectDescription.TabIndex = 66;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label3.Location = new System.Drawing.Point(25, 66);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(173, 36);
+            this.label3.TabIndex = 65;
+            this.label3.Text = "Description:";
             // 
             // label16
             // 
@@ -573,7 +616,7 @@
             this.panel2.Controls.Add(this.tbConnStrToMasterDB);
             this.panel2.Controls.Add(this.cboConncectionType);
             this.panel2.Location = new System.Drawing.Point(27, 330);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(995, 356);
             this.panel2.TabIndex = 71;
@@ -605,7 +648,7 @@
             this.panel3.Controls.Add(this.rbDevEnv);
             this.panel3.Controls.Add(this.label18);
             this.panel3.Location = new System.Drawing.Point(27, 814);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(995, 142);
             this.panel3.TabIndex = 71;
@@ -681,7 +724,7 @@
             this.rbDelEnv.AutoSize = true;
             this.rbDelEnv.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.rbDelEnv.Location = new System.Drawing.Point(473, 15);
-            this.rbDelEnv.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbDelEnv.Margin = new System.Windows.Forms.Padding(4);
             this.rbDelEnv.Name = "rbDelEnv";
             this.rbDelEnv.Size = new System.Drawing.Size(301, 40);
             this.rbDelEnv.TabIndex = 66;
@@ -695,7 +738,7 @@
             this.rbDevEnv.AutoSize = true;
             this.rbDevEnv.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.rbDevEnv.Location = new System.Drawing.Point(27, 15);
-            this.rbDevEnv.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbDevEnv.Margin = new System.Windows.Forms.Padding(4);
             this.rbDevEnv.Name = "rbDevEnv";
             this.rbDevEnv.Size = new System.Drawing.Size(367, 40);
             this.rbDevEnv.TabIndex = 65;
@@ -731,7 +774,7 @@
             this.pnlDevEnvFoldersFields.Controls.Add(this.lbllncrementalScriptsFolderPath);
             this.pnlDevEnvFoldersFields.Controls.Add(this.label12);
             this.pnlDevEnvFoldersFields.Location = new System.Drawing.Point(27, 964);
-            this.pnlDevEnvFoldersFields.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlDevEnvFoldersFields.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDevEnvFoldersFields.Name = "pnlDevEnvFoldersFields";
             this.pnlDevEnvFoldersFields.Size = new System.Drawing.Size(995, 296);
             this.pnlDevEnvFoldersFields.TabIndex = 74;
@@ -768,7 +811,7 @@
             this.tbDeployArtifactFolderPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.tbDeployArtifactFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.tbDeployArtifactFolderPath.Location = new System.Drawing.Point(19, 65);
-            this.tbDeployArtifactFolderPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDeployArtifactFolderPath.Margin = new System.Windows.Forms.Padding(4);
             this.tbDeployArtifactFolderPath.Name = "tbDeployArtifactFolderPath";
             this.tbDeployArtifactFolderPath.Size = new System.Drawing.Size(953, 34);
             this.tbDeployArtifactFolderPath.TabIndex = 65;
@@ -783,7 +826,7 @@
             this.pnlDelEnvFields.Controls.Add(this.tbDeliveryArtifactFolderPath);
             this.pnlDelEnvFields.Controls.Add(this.label8);
             this.pnlDelEnvFields.Location = new System.Drawing.Point(27, 1399);
-            this.pnlDelEnvFields.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlDelEnvFields.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDelEnvFields.Name = "pnlDelEnvFields";
             this.pnlDelEnvFields.Size = new System.Drawing.Size(995, 124);
             this.pnlDelEnvFields.TabIndex = 75;
@@ -809,7 +852,7 @@
             this.tbDeliveryArtifactFolderPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.tbDeliveryArtifactFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.tbDeliveryArtifactFolderPath.Location = new System.Drawing.Point(19, 60);
-            this.tbDeliveryArtifactFolderPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDeliveryArtifactFolderPath.Margin = new System.Windows.Forms.Padding(4);
             this.tbDeliveryArtifactFolderPath.Name = "tbDeliveryArtifactFolderPath";
             this.tbDeliveryArtifactFolderPath.Size = new System.Drawing.Size(953, 34);
             this.tbDeliveryArtifactFolderPath.TabIndex = 65;
@@ -835,7 +878,7 @@
             this.panel7.Controls.Add(this.label9);
             this.panel7.Controls.Add(this.tbDBBackupFolder);
             this.panel7.Location = new System.Drawing.Point(27, 694);
-            this.panel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(995, 112);
             this.panel7.TabIndex = 76;
@@ -856,7 +899,7 @@
             this.notificationsControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.notificationsControl1.Location = new System.Drawing.Point(27, 105);
-            this.notificationsControl1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.notificationsControl1.Margin = new System.Windows.Forms.Padding(5);
             this.notificationsControl1.Name = "notificationsControl1";
             this.notificationsControl1.Size = new System.Drawing.Size(996, 65);
             this.notificationsControl1.TabIndex = 77;
@@ -871,7 +914,7 @@
             this.pnlDevEnvDeplyFolder.Controls.Add(this.tbDeployArtifactFolderPath);
             this.pnlDevEnvDeplyFolder.Controls.Add(this.label26);
             this.pnlDevEnvDeplyFolder.Location = new System.Drawing.Point(27, 1268);
-            this.pnlDevEnvDeplyFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlDevEnvDeplyFolder.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDevEnvDeplyFolder.Name = "pnlDevEnvDeplyFolder";
             this.pnlDevEnvDeplyFolder.Size = new System.Drawing.Size(995, 124);
             this.pnlDevEnvDeplyFolder.TabIndex = 76;
@@ -902,7 +945,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel5);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EditProjectConfigDetails";
             this.Size = new System.Drawing.Size(1037, 1569);
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).EndInit();
@@ -934,7 +977,6 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnNavToProcess;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox tbConnStrToMasterDB;
         private System.Windows.Forms.ComboBox cboConncectionType;
@@ -945,7 +987,6 @@
         private System.Windows.Forms.TextBox tbDBBackupFolder;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbConnStr;
-        private System.Windows.Forms.Label lblProjectGuid;
         private System.Windows.Forms.TextBox tbProjectCode;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
@@ -986,5 +1027,9 @@
         private System.Windows.Forms.Label lblDbProcess;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.TextBox tbProjectDescription;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnSaveProjectCode;
+        private System.Windows.Forms.Button btnEditProjectCode;
     }
 }

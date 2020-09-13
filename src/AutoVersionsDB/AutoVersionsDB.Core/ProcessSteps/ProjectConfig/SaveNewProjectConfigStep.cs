@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core.ProcessSteps.ProjectConfig
 
         private readonly ProjectConfigs _projectConfigs;
 
-        internal SaveNewProjectConfigStep(ProjectConfigs projectConfigs)
+        public SaveNewProjectConfigStep(ProjectConfigs projectConfigs)
         {
             projectConfigs.ThrowIfNull(nameof(projectConfigs));
 

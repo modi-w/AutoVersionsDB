@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
 using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.Core.ScriptFiles.Incremental;
@@ -17,11 +18,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.ProjectConfig
 {
     public class RemoveProjectConfigStep : ProjectConfigStep
     {
-        public override string StepName => "Update New Project Config";
+        public override string StepName => "Remove Project Config";
 
         private readonly ProjectConfigs _projectConfigs;
 
-        internal RemoveProjectConfigStep(ProjectConfigs projectConfigs)
+        public RemoveProjectConfigStep(ProjectConfigs projectConfigs)
         {
             projectConfigs.ThrowIfNull(nameof(projectConfigs));
 
@@ -33,7 +34,9 @@ namespace AutoVersionsDB.Core.ProcessSteps.ProjectConfig
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
-            _projectConfigs.RemoveProjectConfig(processContext.ProjectConfig.ProjectCode);
+            ProjectConfigProcessParams projectConfigProcessParams = processContext.ProcessParams as ProjectConfigProcessParams;
+
+            _projectConfigs.RemoveProjectConfig(projectConfigProcessParams.ProjectCode);
         }
 
     }
