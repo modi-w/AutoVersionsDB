@@ -34,7 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.lblProjectCode = new System.Windows.Forms.Label();
+            this.lblProjectName = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.dgIncrementalScriptsFiles = new System.Windows.Forms.DataGridView();
             this.rowNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -135,16 +135,16 @@
             // 
             // lblProjectName
             // 
-            this.lblProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblProjectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblProjectCode.AutoEllipsis = true;
-            this.lblProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblProjectCode.ForeColor = System.Drawing.Color.DimGray;
-            this.lblProjectCode.Location = new System.Drawing.Point(98, 14);
-            this.lblProjectCode.Name = "lblProjectName";
-            this.lblProjectCode.Size = new System.Drawing.Size(458, 39);
-            this.lblProjectCode.TabIndex = 16;
-            this.lblProjectCode.Text = "Project 1";
+            this.lblProjectName.AutoEllipsis = true;
+            this.lblProjectName.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblProjectName.ForeColor = System.Drawing.Color.DimGray;
+            this.lblProjectName.Location = new System.Drawing.Point(98, 14);
+            this.lblProjectName.Name = "lblProjectName";
+            this.lblProjectName.Size = new System.Drawing.Size(458, 39);
+            this.lblProjectName.TabIndex = 16;
+            this.lblProjectName.Text = "Project 1";
             // 
             // label17
             // 
@@ -468,7 +468,7 @@
             this.pnlHeader.Controls.Add(this.btnNavToEdit);
             this.pnlHeader.Controls.Add(this.btnRefresh);
             this.pnlHeader.Controls.Add(this.label8);
-            this.pnlHeader.Controls.Add(this.lblProjectCode);
+            this.pnlHeader.Controls.Add(this.lblProjectName);
             this.pnlHeader.Location = new System.Drawing.Point(15, 13);
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(877, 67);
@@ -1378,7 +1378,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblProjectCode;
+        private System.Windows.Forms.Label lblProjectName;
         private System.Windows.Forms.Button btnRunSync;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.DataGridView dgIncrementalScriptsFiles;

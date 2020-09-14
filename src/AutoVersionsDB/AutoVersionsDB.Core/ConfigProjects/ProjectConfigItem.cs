@@ -12,9 +12,23 @@ namespace AutoVersionsDB.Core.ConfigProjects
     {
         //public string ProjectGuid { get; set; }
         public string ProjectCode { get; set; }
-
         public string ProjectDescription { get; set; }
 
+        public string ProjectFullName
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(ProjectDescription))
+                {
+                    return $"{ProjectCode} - {ProjectDescription}";
+                }
+                else
+                {
+                    return ProjectCode;
+                }
+
+            }
+        }
 
         public string DBTypeCode { get; set; }
         public string ConnStr { get; set; }

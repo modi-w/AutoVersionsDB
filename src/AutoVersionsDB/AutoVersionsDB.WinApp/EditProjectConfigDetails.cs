@@ -23,6 +23,7 @@ namespace AutoVersionsDB.WinApp
 
         public enum EditProjectConfigDetailsViewType
         {
+            InPorcess,
             New,
             Update,
             EditProjectCode,
@@ -59,64 +60,82 @@ namespace AutoVersionsDB.WinApp
             imgError.Visible = false;
         }
 
+        public void CreateNewProjectConfig()
+        {
+            _projectCode = null;
+            ChangeViewType(EditProjectConfigDetailsViewType.New);
+        }
+
+
         public void SetProjectConfigItem(string projectCode)
         {
             _projectCode = projectCode;
 
-            ProjectConfigItem projectConfig = AutoVersionsDbAPI.GetProjectConfigByProjectCode(projectCode);
+            RefreshForm();
+        }
+
+        private void RefreshForm()
+        {
+            ProjectConfigItem projectConfig = AutoVersionsDbAPI.GetProjectConfigByProjectCode(_projectCode);
             BindToUIElements(projectConfig);
 
-            ValidateAll(_projectCode);
+            ValidateAll();
 
-            _viewType = EditProjectConfigDetailsViewType.Update;
-            viewTypeChanged();
+            ChangeViewType(EditProjectConfigDetailsViewType.Update);
         }
 
-        public void CreateNewProjectConfig()
-        {
-            _viewType = EditProjectConfigDetailsViewType.New;
-            viewTypeChanged();
-        }
 
 
         #region Validation
 
-        private bool ValidateAll(string projectCode)
+        private void ValidateAll()
         {
-            notificationsControl1.Clear();
+            ChangeViewType(EditProjectConfigDetailsViewType.InPorcess);
 
-            ClearUIElementsErrors();
+            Task.Run(() =>
+            {
+                notificationsControl1.Clear();
 
-            ProcessTrace processResults = AutoVersionsDbAPI.ValidateProjectConfig(projectCode, notificationsControl1.OnNotificationStateChanged);
+                ClearUIElementsErrors();
 
-            handleCompleteProcess(processResults);
+                ProcessTrace processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectCode, notificationsControl1.OnNotificationStateChanged);
 
-            return !processResults.HasError;
+                handleProcessErrors(processResults);
+            });
         }
 
         private void handleCompleteProcess(ProcessTrace processResults)
+        {
+            if (processResults.HasError)
+            {
+                handleProcessErrors(processResults);
+            }
+            else
+            {
+                RefreshForm();
+            }
+        }
+
+
+        private void handleProcessErrors(ProcessTrace processResults)
         {
             notificationsControl1.AfterComplete();
 
             SetErrorsToUiElements(processResults);
 
-            imgError.BeginInvoke((MethodInvoker)(() =>
-            {
-                imgError.Visible = processResults.HasError;
-            }));
+            SetControlVisableOrHide(imgError, processResults.HasError);
+            SetControlVisableOrHide(imgValid, !processResults.HasError);
+            SetControlVisableOrHide(btnNavToProcess, !processResults.HasError);
+            SetControlVisableOrHide(lblDbProcess, !processResults.HasError);
 
-            imgValid.BeginInvoke((MethodInvoker)(() =>
+            if (string.IsNullOrWhiteSpace(_projectCode))
             {
-                imgValid.Visible = !processResults.HasError;
-            }));
-            btnNavToProcess.BeginInvoke((MethodInvoker)(() =>
+                ChangeViewType(EditProjectConfigDetailsViewType.New);
+            }
+            else
             {
-                btnNavToProcess.Visible = !processResults.HasError;
-            }));
-            lblDbProcess.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblDbProcess.Visible = !processResults.HasError;
-            }));
+                ChangeViewType(EditProjectConfigDetailsViewType.Update);
+            }
         }
 
         private void SetErrorsToUiElements(ProcessTrace processResults)
@@ -230,10 +249,10 @@ namespace AutoVersionsDB.WinApp
             {
                 tbProjectCode.Text = projectConfig.ProjectCode;
             }));
-            //lblProjectGuid.BeginInvoke((MethodInvoker)(() =>
-            //{
-            //    lblProjectGuid.Text = _projectConfigItem.ProjectGuid;
-            //}));
+            tbProjectDescription.BeginInvoke((MethodInvoker)(() =>
+            {
+                tbProjectDescription.Text = projectConfig.ProjectDescription;
+            }));
             tbConnStr.BeginInvoke((MethodInvoker)(() =>
             {
                 tbConnStr.Text = projectConfig.ConnStr;
@@ -326,6 +345,7 @@ namespace AutoVersionsDB.WinApp
             ProjectConfigItem projectConfig = new ProjectConfigItem();
 
             projectConfig.ProjectCode = tbProjectCode.Text;
+            projectConfig.ProjectDescription = tbProjectDescription.Text;
             projectConfig.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
             projectConfig.ConnStr = tbConnStr.Text;
             projectConfig.ConnStrToMasterDB = tbConnStrToMasterDB.Text;
@@ -378,11 +398,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-
-            btnSave.BeginInvoke((MethodInvoker)(() =>
-            {
-                btnSave.Enabled = false;
-            }));
+            ChangeViewType(EditProjectConfigDetailsViewType.InPorcess);
 
 
             ProjectConfigItem projectConfig = BindFromUIElements();
@@ -391,127 +407,107 @@ namespace AutoVersionsDB.WinApp
             {
                 if (_viewType == EditProjectConfigDetailsViewType.New)
                 {
-                    ProcessTrace processTrace = AutoVersionsDbAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
+                    ProcessTrace processResults = AutoVersionsDbAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
 
-                    handleCompleteProcess(processTrace);
-
-                    if (!processTrace.HasError)
+                    if (!processResults.HasError)
                     {
-                        _viewType = EditProjectConfigDetailsViewType.Update;
-                        viewTypeChanged();
+                        _projectCode = projectConfig.ProjectCode;
                     }
+
+                    handleCompleteProcess(processResults);
+
                 }
                 else
                 {
-                    ProcessTrace processTrace = AutoVersionsDbAPI.UpdateProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
+                    ProcessTrace processResults = AutoVersionsDbAPI.UpdateProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
 
-                    handleCompleteProcess(processTrace);
+                    handleCompleteProcess(processResults);
                 }
-
-
-                btnSave.BeginInvoke((MethodInvoker)(() =>
-                {
-                    btnSave.Enabled = true;
-                }));
             });
         }
 
 
         private void btnEditProjectCode_Click(object sender, EventArgs e)
         {
-            _viewType = EditProjectConfigDetailsViewType.EditProjectCode;
-            viewTypeChanged();
+            ChangeViewType(EditProjectConfigDetailsViewType.EditProjectCode);
         }
-
+        private void btnCancelEditProjectCode_Click(object sender, EventArgs e)
+        {
+            RefreshForm();
+        }
         private void btnSaveProjectCode_Click(object sender, EventArgs e)
         {
-            btnSave.BeginInvoke((MethodInvoker)(() =>
-            {
-                btnSave.Enabled = false;
-            }));
+            ChangeViewType(EditProjectConfigDetailsViewType.InPorcess);
 
 
             Task.Run(() =>
             {
-                ProcessTrace processTrace = AutoVersionsDbAPI.ChangeProjectCode(_projectCode, tbProjectCode.Text, notificationsControl1.OnNotificationStateChanged);
+                ProcessTrace processResults = AutoVersionsDbAPI.ChangeProjectCode(_projectCode, tbProjectCode.Text, notificationsControl1.OnNotificationStateChanged);
 
-                handleCompleteProcess(processTrace);
-
-                btnSave.BeginInvoke((MethodInvoker)(() =>
+                if (!processResults.HasError)
                 {
-                    btnSave.Enabled = true;
-                }));
+                    _projectCode = tbProjectCode.Text;
+                }
+
+
+                handleCompleteProcess(processResults);
             });
         }
 
 
-        private void viewTypeChanged()
+        private void ChangeViewType(EditProjectConfigDetailsViewType viewType)
         {
+            _viewType = viewType;
+
             switch (_viewType)
             {
+                case EditProjectConfigDetailsViewType.InPorcess:
+
+                    SetAllControlsEnableDisable(false);
+                    break;
+
                 case EditProjectConfigDetailsViewType.New:
 
-                    tbProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        tbProjectCode.Enabled = true;
-                    }));
-                    btnEditProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        btnEditProjectCode.Visible = false;
-                    }));
-                    btnSaveProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        btnSaveProjectCode.Visible = false;
-                    }));
+                    SetAllControlsEnableDisable(true);
 
-                    btnSave.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        btnSave.Enabled = true;
-                    }));
+                    SetControlVisableOrHide(btnEditProjectCode, false);
+                    SetControlVisableOrHide(btnSaveProjectCode, false);
+                    SetControlVisableOrHide(btnCancelEditProjectCode, false);
 
                     break;
 
                 case EditProjectConfigDetailsViewType.Update:
 
-                    tbProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        tbProjectCode.Enabled = false;
-                    }));
-                    btnEditProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        btnEditProjectCode.Visible = true;
-                    }));
-                    btnSaveProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        btnSaveProjectCode.Visible = false;
-                    }));
+                    SetAllControlsEnableDisable(true);
 
-                    btnSave.BeginInvoke((MethodInvoker)(() =>
+                    SetControlEnableOrDisable(tbProjectCode, false);
+
+                    SetControlVisableOrHide(btnSaveProjectCode, false);
+                    SetControlVisableOrHide(btnCancelEditProjectCode, false);
+                    SetControlVisableOrHide(btnEditProjectCode, true);
+                    SetControlEnableOrDisable(btnEditProjectCode, true);
+
+                    this.BeginInvoke((MethodInvoker)(() =>
                     {
-                        btnSave.Enabled = true;
+                        this.VerticalScroll.Value = 0;
                     }));
 
                     break;
 
                 case EditProjectConfigDetailsViewType.EditProjectCode:
 
-                    tbProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        tbProjectCode.Enabled = true;
-                    }));
-                    btnEditProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        btnEditProjectCode.Visible = false;
-                    }));
-                    btnSaveProjectCode.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        btnSaveProjectCode.Visible = true;
-                    }));
+                    SetAllControlsEnableDisable(false);
 
-                    btnSave.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        btnSave.Enabled = false;
-                    }));
+                    SetControlEnableOrDisable(tbProjectCode, true);
+
+                    SetControlVisableOrHide(btnEditProjectCode, false);
+                    SetControlVisableOrHide(btnSaveProjectCode, true);
+                    SetControlEnableOrDisable(btnSaveProjectCode, true);
+                    SetControlVisableOrHide(btnCancelEditProjectCode, true);
+                    SetControlEnableOrDisable(btnCancelEditProjectCode, true);
+
+
+                    tbProjectCode.Focus();
 
 
                     break;
@@ -521,18 +517,42 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void SetAllControlsEnableDisable()
+        private void SetAllControlsEnableDisable(bool isEnable)
         {
-
+            SetControlEnableOrDisable(tbConnectionTimeout, isEnable);
+            SetControlEnableOrDisable(btnNavToProcess, isEnable);
+            SetControlEnableOrDisable(tbConnStrToMasterDB, isEnable);
+            SetControlEnableOrDisable(cboConncectionType, isEnable);
+            SetControlEnableOrDisable(tbDevScriptsFolderPath, isEnable);
+            SetControlEnableOrDisable(tbDBBackupFolder, isEnable);
+            SetControlEnableOrDisable(tbConnStr, isEnable);
+            SetControlEnableOrDisable(tbProjectCode, isEnable);
+            SetControlEnableOrDisable(rbDevEnv, isEnable);
+            SetControlEnableOrDisable(rbDelEnv, isEnable);
+            SetControlEnableOrDisable(tbDeployArtifactFolderPath, isEnable);
+            SetControlEnableOrDisable(tbDeliveryArtifactFolderPath, isEnable);
+            SetControlEnableOrDisable(btnSave, isEnable);
+            SetControlEnableOrDisable(tbProjectDescription, isEnable);
+            SetControlEnableOrDisable(btnSaveProjectCode, isEnable);
+            SetControlEnableOrDisable(btnEditProjectCode, isEnable);
         }
 
-        private static void SetControlEnableDisable(Control control, bool isEnable)
+        private static void SetControlEnableOrDisable(Control control, bool isEnable)
         {
             control.BeginInvoke((MethodInvoker)(() =>
             {
-                control.Visible = isEnable;
+                control.Enabled = isEnable;
             }));
         }
+
+        private static void SetControlVisableOrHide(Control control, bool isVisible)
+        {
+            control.BeginInvoke((MethodInvoker)(() =>
+            {
+                control.Visible = isVisible;
+            }));
+        }
+
 
         #region Dispose
 
@@ -565,8 +585,9 @@ namespace AutoVersionsDB.WinApp
         }
 
 
+
         #endregion
 
-
+       
     }
 }

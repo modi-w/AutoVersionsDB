@@ -22,18 +22,24 @@ namespace AutoVersionsDB.WinApp
 
         public ProjectConfigItem ProjectConfig { get; private set; }
 
-        public ProjectItemControl(ProjectConfigItem projectConfigItem)
+        //public ProjectItemControl(ProjectConfigItem projectConfigItem)
+        public ProjectItemControl()
         {
-            
-            projectConfigItem.ThrowIfNull(nameof(projectConfigItem));
+
+            //projectConfigItem.ThrowIfNull(nameof(projectConfigItem));
 
             InitializeComponent();
 
-            ProjectConfig = projectConfigItem;
-
-            lblProjectCode.Text = ProjectConfig.ProjectCode;
 
         }
+
+        public void SetProjectConfig(ProjectConfigItem projectConfig)
+        {
+            ProjectConfig = projectConfig;
+
+            lblProjectCode.Text = ProjectConfig.ProjectFullName;
+        }
+
 
         private void LblProjectName_Click(object sender, EventArgs e)
         {

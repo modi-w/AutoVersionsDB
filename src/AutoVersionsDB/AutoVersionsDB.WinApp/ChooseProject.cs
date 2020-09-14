@@ -111,24 +111,25 @@ namespace AutoVersionsDB.WinApp
             {
                 _allProjectsList = AutoVersionsDbAPI.GetProjectsList();
 
-                    List<ProjectConfigItem> filteredProjectList =
-                        _allProjectsList
-                        .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectCode.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
-                        .OrderBy(e => e.ProjectCode)
-                        .ToList();
+                List<ProjectConfigItem> filteredProjectList =
+                    _allProjectsList
+                    .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectCode.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
+                    .OrderBy(e => e.ProjectCode)
+                    .ToList();
 
-                    flowLayoutPanel1.Controls.Clear();
+                flowLayoutPanel1.Controls.Clear();
 
-                    foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
-                    {
-                        ProjectItemControl projectItem = new ProjectItemControl(projectConfigItem);
-                        projectItem.OnNavToProcess += ProjectItem_OnNavToProcess;
-                        projectItem.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
-                        projectItem.OnEditProject += ProjectItem_OnEditProject;
-                        flowLayoutPanel1.Controls.Add(projectItem);
-                    }
+                foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
+                {
+                    ProjectItemControl projectItemControl = new ProjectItemControl();
+                    projectItemControl.SetProjectConfig(projectConfigItem);
+                    projectItemControl.OnNavToProcess += ProjectItem_OnNavToProcess;
+                    projectItemControl.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
+                    projectItemControl.OnEditProject += ProjectItem_OnEditProject;
+                    flowLayoutPanel1.Controls.Add(projectItemControl);
+                }
 
-                    SetProjectItemsSize();
+                SetProjectItemsSize();
 
 
             }
@@ -149,9 +150,9 @@ namespace AutoVersionsDB.WinApp
             OnNavToProcess?.Invoke(projectCode);
         }
 
-      
 
-    
+
+
 
         private void TbSerchProject_TextChanged(object sender, EventArgs e)
         {

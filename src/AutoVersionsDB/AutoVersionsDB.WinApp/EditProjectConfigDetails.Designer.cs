@@ -90,6 +90,7 @@
             this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsControl();
             this.pnlDevEnvDeplyFolder = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
+            this.btnCancelEditProjectCode = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -220,10 +221,10 @@
             // 
             this.cboConncectionType.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.cboConncectionType.FormattingEnabled = true;
-            this.cboConncectionType.Location = new System.Drawing.Point(183, 14);
+            this.cboConncectionType.Location = new System.Drawing.Point(206, 14);
             this.cboConncectionType.Margin = new System.Windows.Forms.Padding(4);
             this.cboConncectionType.Name = "cboConncectionType";
-            this.cboConncectionType.Size = new System.Drawing.Size(356, 37);
+            this.cboConncectionType.Size = new System.Drawing.Size(333, 37);
             this.cboConncectionType.TabIndex = 32;
             // 
             // label14
@@ -363,7 +364,7 @@
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label13.Location = new System.Drawing.Point(555, 17);
+            this.label13.Location = new System.Drawing.Point(580, 15);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(289, 36);
@@ -508,6 +509,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnCancelEditProjectCode);
             this.panel1.Controls.Add(this.btnSaveProjectCode);
             this.panel1.Controls.Add(this.btnEditProjectCode);
             this.panel1.Controls.Add(this.tbProjectDescription);
@@ -930,6 +932,27 @@
             this.label26.Size = new System.Drawing.Size(5, 123);
             this.label26.TabIndex = 64;
             // 
+            // btnCancelEditProjectCode
+            // 
+            this.btnCancelEditProjectCode.BackColor = System.Drawing.Color.Transparent;
+            this.btnCancelEditProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelEditProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCancelEditProjectCode.FlatAppearance.BorderSize = 0;
+            this.btnCancelEditProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelEditProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCancelEditProjectCode.ForeColor = System.Drawing.Color.Gray;
+            this.btnCancelEditProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCancelEditProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCancelEditProjectCode.Location = new System.Drawing.Point(162, 23);
+            this.btnCancelEditProjectCode.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelEditProjectCode.Name = "btnCancelEditProjectCode";
+            this.btnCancelEditProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnCancelEditProjectCode.Size = new System.Drawing.Size(36, 39);
+            this.btnCancelEditProjectCode.TabIndex = 91;
+            this.btnCancelEditProjectCode.Text = "X";
+            this.btnCancelEditProjectCode.UseVisualStyleBackColor = false;
+            this.btnCancelEditProjectCode.Click += new System.EventHandler(this.btnCancelEditProjectCode_Click);
+            // 
             // EditProjectConfigDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1031,5 +1054,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnSaveProjectCode;
         private System.Windows.Forms.Button btnEditProjectCode;
+        private System.Windows.Forms.Button btnCancelEditProjectCode;
     }
 }

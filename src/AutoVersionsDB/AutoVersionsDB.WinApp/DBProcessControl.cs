@@ -651,9 +651,9 @@ namespace AutoVersionsDB.WinApp
         private void BindToUIElements(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
 
-            lblProjectCode.BeginInvoke((MethodInvoker)(() =>
+            lblProjectName.BeginInvoke((MethodInvoker)(() =>
             {
-                lblProjectCode.Text = _projectConfigItem.ProjectCode;
+                lblProjectName.Text = _projectConfigItem.ProjectFullName;
             }));
 
 
