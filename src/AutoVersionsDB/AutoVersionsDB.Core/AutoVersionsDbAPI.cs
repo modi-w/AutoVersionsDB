@@ -1,6 +1,4 @@
-﻿using AutoVersionsDB.Core.ArtifactFile;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ScriptFiles;
+﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
@@ -8,9 +6,12 @@ using System;
 using Ninject;
 using System.Collections.Generic;
 using System.Linq;
-using AutoVersionsDB.Core.ProcessDefinitions;
 using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.Processes.DBVersionsProcesses;
+using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
+using AutoVersionsDB.Core.ConfigProjects.Processes;
+using AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions;
+using AutoVersionsDB.Core.DBVersions.Processes;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 
 namespace AutoVersionsDB.Core
 {
@@ -299,7 +300,7 @@ namespace AutoVersionsDB.Core
             lock (_processSyncLock)
             {
                 var processRunner = NinjectUtils.KernelInstance.Get<NotificationProcessRunner<TProcessDefinition, ProjectConfigProcessContext>>();
-                processTrace = processRunner.Run(new ProjectConfigProcessParams(projectCode, newProjectCode), onNotificationStateChanged);
+                processTrace = processRunner.Run(new ChangeProjectCodeProcessParams(projectCode, newProjectCode), onNotificationStateChanged);
             }
 
             return processTrace;

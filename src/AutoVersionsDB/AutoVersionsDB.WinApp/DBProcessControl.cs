@@ -1,8 +1,8 @@
 ﻿using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ProcessSteps;
-using AutoVersionsDB.Core.ScriptFiles;
-using AutoVersionsDB.Core.ScriptFiles.Incremental;
+using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.WinApp.Utils;
 using System;

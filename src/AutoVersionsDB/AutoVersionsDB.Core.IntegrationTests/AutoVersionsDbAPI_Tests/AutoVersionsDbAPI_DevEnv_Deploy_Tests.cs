@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.ArtifactFile;
+﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;

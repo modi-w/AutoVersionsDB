@@ -1,12 +1,12 @@
 ﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ArtifactFile;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.ArtifactFile;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
-using AutoVersionsDB.Core.ScriptFiles;
-using AutoVersionsDB.Core.ScriptFiles.DevDummyData;
-using AutoVersionsDB.Core.ScriptFiles.Incremental;
-using AutoVersionsDB.Core.ScriptFiles.Repeatable;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
