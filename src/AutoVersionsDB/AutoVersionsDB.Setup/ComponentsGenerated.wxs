@@ -2,67 +2,67 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmp2BF30502C5FC3F6B419BEA23951F77CF" Guid="{2152CD39-28C2-4016-8CBD-2F77536B82C4}">
+            <Component Id="cmp2BF30502C5FC3F6B419BEA23951F77CF" Guid="{C3A1EC4D-DD26-46D5-8A68-FC096D0ABD65}">
                 <File Id="fil7C92B4D1604106E42D61F42312480392" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.Common.dll" />
             </Component>
-            <Component Id="cmp4B1CE1F145DE0A9E7FFF4FF9D6317A26" Guid="{20DA00BD-4EBD-4E45-B76E-BDABB2FB4EDB}">
+            <Component Id="cmp4B1CE1F145DE0A9E7FFF4FF9D6317A26" Guid="{25E70DA7-4761-41A0-A131-177B73851727}">
                 <File Id="filA3B52C3998F86B34FDD435DEAACCC604" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.Common.pdb" />
             </Component>
-            <Component Id="cmp0DBF14FFC8B47321CC74C413886778BD" Guid="{B94C14AD-E21E-4223-8F9E-2F56136D26AD}">
+            <Component Id="cmp0DBF14FFC8B47321CC74C413886778BD" Guid="{A383207A-A29D-4DEE-B19E-7385FAEC2E5F}">
                 <File Id="fil8E4ECF04502D01B7538E0D12013B983E" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.Core.dll" />
             </Component>
-            <Component Id="cmpEE95F5B786CA41135F018CEC840468A0" Guid="{23ADA143-F59E-40A9-85FD-2500A389C19D}">
+            <Component Id="cmpEE95F5B786CA41135F018CEC840468A0" Guid="{ABB4DD5C-8A9B-4BFA-BCFA-C85DE9B4AC5D}">
                 <File Id="filC2C3CC0188FC566BEC8725647899619F" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.Core.pdb" />
             </Component>
-            <Component Id="cmpA26566E2DB35DAA82D36ABF3B990FE8B" Guid="{01D58490-C51C-4ECC-9417-2F3CEFC6DEA5}">
+            <Component Id="cmpA26566E2DB35DAA82D36ABF3B990FE8B" Guid="{0CD19B07-1B6F-4ED2-8126-AA0BA0CF97B4}">
                 <File Id="filB0F7326AEAD217FE59AF32B1BA5FD3EB" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.DbCommands.Contract.dll" />
             </Component>
-            <Component Id="cmp1D7D110B3913E1DD996591B32AED60AE" Guid="{95C195C8-DFB2-411F-BB0D-8869017EFE27}">
+            <Component Id="cmp1D7D110B3913E1DD996591B32AED60AE" Guid="{F4366E9A-5779-432F-8658-724BE1A21DD1}">
                 <File Id="filBADB6CD34782647F5651F6207F98D352" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.DbCommands.Contract.pdb" />
             </Component>
-            <Component Id="cmpE69EE762861953DEE67F435D8FEFFC6C" Guid="{15DD5CDE-9770-4C37-8F36-52A91F06187D}">
+            <Component Id="cmpE69EE762861953DEE67F435D8FEFFC6C" Guid="{BBAC8489-26EE-4F18-8B4A-8DB0D4022C59}">
                 <File Id="fil678B3819B97344810FAE42737E36DB9B" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.DbCommands.Integration.dll" />
             </Component>
-            <Component Id="cmpB26E96EDC26183694AC95C4C0F936EAE" Guid="{C050F318-1CEE-41DA-9872-8D13C5CB1235}">
+            <Component Id="cmpB26E96EDC26183694AC95C4C0F936EAE" Guid="{A820425D-776F-4127-9162-3FCA7F11F20A}">
                 <File Id="fil76CA21E311E137DB8462DD70EBD02A81" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.DbCommands.Integration.pdb" />
             </Component>
-            <Component Id="cmpA843A30A2E841F57AAE52B96A734380C" Guid="{4DBC4047-81C5-4330-8EBD-B86713E8CD13}">
+            <Component Id="cmpA843A30A2E841F57AAE52B96A734380C" Guid="{78F9C613-1D64-4E9A-94C1-094421EF58DA}">
                 <File Id="fil813CF0D00BAB4D07B482A3D92AC8F89E" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.DbCommands.SqlServer.dll" />
             </Component>
-            <Component Id="cmpBFE22E2C7A624C10855CC7B7CC650DD5" Guid="{B904635D-5EFC-46C2-AB7A-C6D0295B9BFE}">
+            <Component Id="cmpBFE22E2C7A624C10855CC7B7CC650DD5" Guid="{762009F5-8147-468B-936F-FA648DF11367}">
                 <File Id="fil8A30E83CDC159585B7BE658F1DE2C9E6" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.DbCommands.SqlServer.pdb" />
             </Component>
-            <Component Id="cmp0366AE6AA0313310954A43E2B8DE1C36" Guid="{F5C3B25C-07AC-4FA7-BBBA-6C1FBD366C9E}">
+            <Component Id="cmp0366AE6AA0313310954A43E2B8DE1C36" Guid="{A4EF2C96-D83D-4ED2-BEB7-3F90AEA05DA5}">
                 <File Id="filFF1EC05DA7E3DA3C027C8C115C341E15" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.NotificationableEngine.dll" />
             </Component>
-            <Component Id="cmpBFF09DA7FD4A2DAAF7701DC9BB88A6A2" Guid="{52B2D96C-3283-473E-807C-6A3352B189BD}">
+            <Component Id="cmpBFF09DA7FD4A2DAAF7701DC9BB88A6A2" Guid="{93CF432D-C562-4E5C-8798-48455BC35106}">
                 <File Id="filF64FB3313410043A4CB7B9935EE06C1F" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.NotificationableEngine.pdb" />
             </Component>
-            <Component Id="cmpA348D3C0FD3DD30BC246D9BC179680B0" Guid="{1FFD3488-40B7-4ACC-8A53-1F5D18366E27}">
+            <Component Id="cmpA348D3C0FD3DD30BC246D9BC179680B0" Guid="{EA6FE1FE-3E77-4010-B9E7-0FB6082169F5}">
                 <File Id="fil87E33F65F5F12B859C239683B77A87AC" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.WinApp.deps.json" />
             </Component>
-            <Component Id="cmp257A19B0980540F122E5FFDB6C2FB2AC" Guid="{1A42B2C8-9611-46A1-80E6-8BE9E8BAFCDD}">
+            <Component Id="cmp257A19B0980540F122E5FFDB6C2FB2AC" Guid="{83FFA76B-0385-4A2E-9EA3-9965FE3955A6}">
                 <File Id="fil0882F295BEE801F84BA4219A8017633A" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.WinApp.dll" />
             </Component>
-            <Component Id="cmpF7E90042B29BE4EB501C5BADFE974139" Guid="{61A8F683-EAC0-442D-B14C-D7EAB69D1D35}">
+            <Component Id="cmpF7E90042B29BE4EB501C5BADFE974139" Guid="{83CD8C6C-C249-4A70-B3EC-72555B330E60}">
                 <File Id="fil14A16DE4871020374555E8E6A3BB7F42" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.WinApp.exe" />
             </Component>
-            <Component Id="cmp511008A99417D70CA71C649E39557E1A" Guid="{079E50B2-C6F9-43D3-9585-15FE3AB98998}">
+            <Component Id="cmp511008A99417D70CA71C649E39557E1A" Guid="{D819FBCA-EA1C-4B85-B05E-07620FF73D50}">
                 <File Id="fil26A03CF9922F68ED7DDE8FC27E175B7C" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.WinApp.pdb" />
             </Component>
-            <Component Id="cmp134483DC9CACE8FC45BC0C65DD776E48" Guid="{D85231BC-E52C-4557-8FB1-02D5CE6F08D1}">
+            <Component Id="cmp134483DC9CACE8FC45BC0C65DD776E48" Guid="{263C1F0B-AB96-4F48-890C-5DB8D9811F34}">
                 <File Id="fil5BA6CAC816501273099AF68C0951D5B2" KeyPath="yes" Source="$(var.BasePath)\AutoVersionsDB.WinApp.runtimeconfig.json" />
             </Component>
-            <Component Id="cmpBC4FC00A26E7D32479D42D3411317FC5" Guid="{1A83E0DA-94DD-49A9-9E7B-28722FF4529A}">
+            <Component Id="cmpBC4FC00A26E7D32479D42D3411317FC5" Guid="{FFB81550-3690-4197-A6F0-85CE35756AAB}">
                 <File Id="fil90A8AAD9FC612906D405476D61CEA3F4" KeyPath="yes" Source="$(var.BasePath)\Newtonsoft.Json.dll" />
             </Component>
-            <Component Id="cmpDA60982F820038280380BE207B6E738E" Guid="{7B97FAD8-1760-4699-A090-69E69C438F38}">
+            <Component Id="cmpDA60982F820038280380BE207B6E738E" Guid="{0A46BF1F-4559-4E00-A462-62F1C09F290C}">
                 <File Id="filFB25B5D44CA54D4D876DD0B5BC0DA0E0" KeyPath="yes" Source="$(var.BasePath)\Ninject.dll" />
             </Component>
-            <Component Id="cmpE78757BD03463E74652C32CEEAB79A64" Guid="{E44F6FCD-3531-4872-B66D-A4AB2FECA780}">
+            <Component Id="cmpE78757BD03463E74652C32CEEAB79A64" Guid="{D72F58DF-93A4-4616-A59F-B8FB7A98F6F4}">
                 <File Id="fil3D4C95920C2AC75503C11D9296D4B8BB" KeyPath="yes" Source="$(var.BasePath)\sni.dll" />
             </Component>
-            <Component Id="cmp7FFA1CFB45EDA1442E42E34E1F3DB27E" Guid="{E26AE17F-A8D9-4279-8EFC-A1D6D72A5CE9}">
+            <Component Id="cmp7FFA1CFB45EDA1442E42E34E1F3DB27E" Guid="{17D43830-ED61-4710-865D-AA6FAE1CD249}">
                 <File Id="filEF4B8F9C45AD18CA9F559E7A542D0C98" KeyPath="yes" Source="$(var.BasePath)\System.Data.SqlClient.dll" />
             </Component>
         </DirectoryRef>

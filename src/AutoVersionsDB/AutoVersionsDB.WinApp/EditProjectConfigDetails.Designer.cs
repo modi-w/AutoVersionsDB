@@ -60,6 +60,7 @@
             this.btnNavToProcess = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCancelEditProjectCode = new System.Windows.Forms.Button();
             this.btnSaveProjectCode = new System.Windows.Forms.Button();
             this.btnEditProjectCode = new System.Windows.Forms.Button();
             this.tbProjectDescription = new System.Windows.Forms.TextBox();
@@ -90,7 +91,6 @@
             this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsControl();
             this.pnlDevEnvDeplyFolder = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
-            this.btnCancelEditProjectCode = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -523,6 +523,27 @@
             this.panel1.Size = new System.Drawing.Size(995, 121);
             this.panel1.TabIndex = 70;
             // 
+            // btnCancelEditProjectCode
+            // 
+            this.btnCancelEditProjectCode.BackColor = System.Drawing.Color.Transparent;
+            this.btnCancelEditProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelEditProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCancelEditProjectCode.FlatAppearance.BorderSize = 0;
+            this.btnCancelEditProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelEditProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCancelEditProjectCode.ForeColor = System.Drawing.Color.Gray;
+            this.btnCancelEditProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCancelEditProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCancelEditProjectCode.Location = new System.Drawing.Point(162, 23);
+            this.btnCancelEditProjectCode.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelEditProjectCode.Name = "btnCancelEditProjectCode";
+            this.btnCancelEditProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnCancelEditProjectCode.Size = new System.Drawing.Size(36, 39);
+            this.btnCancelEditProjectCode.TabIndex = 91;
+            this.btnCancelEditProjectCode.Text = "X";
+            this.btnCancelEditProjectCode.UseVisualStyleBackColor = false;
+            this.btnCancelEditProjectCode.Click += new System.EventHandler(this.btnCancelEditProjectCode_Click);
+            // 
             // btnSaveProjectCode
             // 
             this.btnSaveProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -932,27 +953,6 @@
             this.label26.Size = new System.Drawing.Size(5, 123);
             this.label26.TabIndex = 64;
             // 
-            // btnCancelEditProjectCode
-            // 
-            this.btnCancelEditProjectCode.BackColor = System.Drawing.Color.Transparent;
-            this.btnCancelEditProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelEditProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnCancelEditProjectCode.FlatAppearance.BorderSize = 0;
-            this.btnCancelEditProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelEditProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCancelEditProjectCode.ForeColor = System.Drawing.Color.Gray;
-            this.btnCancelEditProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancelEditProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCancelEditProjectCode.Location = new System.Drawing.Point(162, 23);
-            this.btnCancelEditProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancelEditProjectCode.Name = "btnCancelEditProjectCode";
-            this.btnCancelEditProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnCancelEditProjectCode.Size = new System.Drawing.Size(36, 39);
-            this.btnCancelEditProjectCode.TabIndex = 91;
-            this.btnCancelEditProjectCode.Text = "X";
-            this.btnCancelEditProjectCode.UseVisualStyleBackColor = false;
-            this.btnCancelEditProjectCode.Click += new System.EventHandler(this.btnCancelEditProjectCode_Click);
-            // 
             // EditProjectConfigDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -970,7 +970,7 @@
             this.Controls.Add(this.panel5);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EditProjectConfigDetails";
-            this.Size = new System.Drawing.Size(1037, 1569);
+            this.Size = new System.Drawing.Size(1037, 1594);
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();

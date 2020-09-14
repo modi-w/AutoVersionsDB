@@ -63,6 +63,14 @@ namespace AutoVersionsDB.WinApp
         public void CreateNewProjectConfig()
         {
             _projectCode = null;
+           
+            notificationsControl1.Clear();
+
+            ClearUIElementsErrors();
+
+            BindToUIElements(new ProjectConfigItem());
+
+
             ChangeViewType(EditProjectConfigDetailsViewType.New);
         }
 
@@ -148,7 +156,7 @@ namespace AutoVersionsDB.WinApp
                 {
                     switch (errorStateItem.LowLevelErrorCode)
                     {
-                        case "ProjectCode":
+                        case "ProjectCodeNotEmpty":
 
                             SetErrorInErrorProvider(tbProjectCode, errorStateItem.LowLevelErrorMessage);
                             break;
@@ -405,7 +413,7 @@ namespace AutoVersionsDB.WinApp
 
             Task.Run(() =>
             {
-                if (_viewType == EditProjectConfigDetailsViewType.New)
+                if (string.IsNullOrWhiteSpace(_projectCode))
                 {
                     ProcessTrace processResults = AutoVersionsDbAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
 

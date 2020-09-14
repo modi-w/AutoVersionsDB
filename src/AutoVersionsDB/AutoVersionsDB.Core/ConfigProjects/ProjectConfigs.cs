@@ -82,7 +82,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
             {
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (dicAllProjectConfigs.ContainsKey(projectCode))
+                if (!dicAllProjectConfigs.ContainsKey(projectCode))
                 {
                     throw new Exception($"ProjectCode: '{projectCode}' is not exist.");
                 }

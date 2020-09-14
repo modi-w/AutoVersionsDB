@@ -151,7 +151,6 @@ namespace AutoVersionsDB.WinApp
                 {
                     ProcessTrace processResults = AutoVersionsDbAPI.ValidateAll(_projectConfigItem.ProjectCode, notificationsControl1.OnNotificationStateChanged);
 
-                    RefreshScriptFilesState();
 
                     if (processResults.HasError)
                     {
@@ -167,11 +166,21 @@ namespace AutoVersionsDB.WinApp
                         }
                         else
                         {
+                            if (processResults.ErrorCode == "DevScriptsBaseFolder")
+                            {
+                                _scriptFilesState = null;
+                            }
+                            else
+                            {
+                                RefreshScriptFilesState();
+                            }
+
                             SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
                         }
                     }
                     else
                     {
+                        RefreshScriptFilesState();
 
                         notificationsControl1.Clear();
                         SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
@@ -657,25 +666,30 @@ namespace AutoVersionsDB.WinApp
             }));
 
 
-            if (_scriptFilesState != null)
-            {
-                BindIncrementalGrid(dbVersionsMangementViewType);
-                BindRepeatableGrid();
-                BindDevDummyDataGrid();
-            }
+            BindIncrementalGrid(dbVersionsMangementViewType);
+            BindRepeatableGrid();
+            BindDevDummyDataGrid();
 
         }
 
 
         private void BindIncrementalGrid(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
-            List<RuntimeScriptFileBase> allIncrementalScriptFiles = _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
-
-            if (dbVersionsMangementViewType == DBVersionsMangementViewType.ReadyToSyncToSpecificState
-                || dbVersionsMangementViewType == DBVersionsMangementViewType.SetDBStateManually)
+            List<RuntimeScriptFileBase> allIncrementalScriptFiles;
+            if (_scriptFilesState == null)
             {
-                RuntimeScriptFileBase emptyDBTargetState = new EmptyDbStateRuntimeScriptFile();
-                allIncrementalScriptFiles.Insert(0, emptyDBTargetState);
+                allIncrementalScriptFiles = new List<RuntimeScriptFileBase>();
+            }
+            else
+            {
+                allIncrementalScriptFiles = _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+
+                if (dbVersionsMangementViewType == DBVersionsMangementViewType.ReadyToSyncToSpecificState
+                    || dbVersionsMangementViewType == DBVersionsMangementViewType.SetDBStateManually)
+                {
+                    RuntimeScriptFileBase emptyDBTargetState = new EmptyDbStateRuntimeScriptFile();
+                    allIncrementalScriptFiles.Insert(0, emptyDBTargetState);
+                }
             }
 
             BindGridDataSource(dgIncrementalScriptsFiles, allIncrementalScriptFiles);
@@ -683,7 +697,15 @@ namespace AutoVersionsDB.WinApp
 
         private void BindRepeatableGrid()
         {
-            List<RuntimeScriptFileBase> allRepeatableScriptFiles = _scriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            List<RuntimeScriptFileBase> allRepeatableScriptFiles;
+            if (_scriptFilesState == null)
+            {
+                allRepeatableScriptFiles = new List<RuntimeScriptFileBase>();
+            }
+            else
+            {
+                allRepeatableScriptFiles = _scriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            }
 
             BindGridDataSource(dgRepeatableScriptsFiles, allRepeatableScriptFiles);
         }
@@ -692,7 +714,15 @@ namespace AutoVersionsDB.WinApp
         {
             if (_projectConfigItem.IsDevEnvironment)
             {
-                List<RuntimeScriptFileBase> allDevDummyDataScriptFiles = _scriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                List<RuntimeScriptFileBase> allDevDummyDataScriptFiles;
+                if (_scriptFilesState == null)
+                {
+                    allDevDummyDataScriptFiles = new List<RuntimeScriptFileBase>();
+                }
+                else
+                {
+                    allDevDummyDataScriptFiles = _scriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                }
 
                 BindGridDataSource(dgDevDummyDataScriptsFiles, allDevDummyDataScriptFiles);
             }

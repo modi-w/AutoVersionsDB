@@ -62,6 +62,11 @@ namespace AutoVersionsDB.Core.ProcessSteps.Validations
                         new ScriptsFolderPathValidator(nameof(projectConfig.DevDummyDataScriptsFolderPath), projectConfig.DevDummyDataScriptsFolderPath);
                     validationsGroup.Add(devDummyDataScriptsFolderPathValidator);
                 }
+
+                DeployArtifactFolderPathValidator deployArtifactFolderPathValidator = new DeployArtifactFolderPathValidator( projectConfig.DeployArtifactFolderPath);
+                validationsGroup.Add(deployArtifactFolderPathValidator);
+
+                
             }
             else
             {
