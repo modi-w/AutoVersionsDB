@@ -8,7 +8,7 @@ using System.Reflection;
 namespace AutoVersionsDB.Core.ConfigProjects
 {
 
-    public class ProjectConfigs
+    public class ProjectConfigsStorage
     {
 
         private static object _saveSync = new object();

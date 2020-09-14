@@ -10,13 +10,13 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         public override string StepName => "Set Project Config In Process Context";
 
-        private readonly ProjectConfigs _projectConfigs;
+        private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public SetProjectConfigInProcessContextStep(ProjectConfigs projectConfigs)
+        public SetProjectConfigInProcessContextStep(ProjectConfigsStorage projectConfigsStorage)
         {
-            projectConfigs.ThrowIfNull(nameof(projectConfigs));
+            projectConfigsStorage.ThrowIfNull(nameof(projectConfigsStorage));
 
-            _projectConfigs = projectConfigs;
+            _projectConfigsStorage = projectConfigsStorage;
         }
 
 
@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             string projectCode = (processContext.ProcessParams as DBVersionsProcessParams).ProjectCode;
 
-            processContext.SetProjectConfig(_projectConfigs.GetProjectConfigByProjectCode(projectCode));
+            processContext.SetProjectConfig(_projectConfigsStorage.GetProjectConfigByProjectCode(projectCode));
 
         }
     }

@@ -37,16 +37,16 @@ namespace AutoVersionsDB.Core
 
         public static List<ProjectConfigItem> GetProjectsList()
         {
-            ProjectConfigs projectConfigs = NinjectUtils.KernelInstance.Get<ProjectConfigs>();
+            ProjectConfigsStorage projectConfigsStorage = NinjectUtils.KernelInstance.Get<ProjectConfigsStorage>();
 
-            return projectConfigs.GetAllProjectConfigs().Values.ToList();
+            return projectConfigsStorage.GetAllProjectConfigs().Values.ToList();
         }
 
         public static ProjectConfigItem GetProjectConfigByProjectCode(string projectCode)
         {
-            ProjectConfigs projectConfigs = NinjectUtils.KernelInstance.Get<ProjectConfigs>();
+            ProjectConfigsStorage projectConfigsStorage = NinjectUtils.KernelInstance.Get<ProjectConfigsStorage>();
 
-            return projectConfigs.GetProjectConfigByProjectCode(projectCode);
+            return projectConfigsStorage.GetProjectConfigByProjectCode(projectCode);
         }
 
 

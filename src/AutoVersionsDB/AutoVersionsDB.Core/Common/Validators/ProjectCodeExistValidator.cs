@@ -6,7 +6,7 @@ namespace AutoVersionsDB.Core.Common.Validators
 {
     public class ProjectCodeExistValidator : ValidatorBase
     {
-        private readonly ProjectConfigs _projectConfigs;
+        private readonly ProjectConfigsStorage _projectConfigsStorage;
         private readonly string _projectCode;
 
         public override string ValidatorName => "ProjectCodeExist";
@@ -15,17 +15,17 @@ namespace AutoVersionsDB.Core.Common.Validators
 
 
         public ProjectCodeExistValidator(string projectCode,
-                                            ProjectConfigs projectConfigs)
+                                            ProjectConfigsStorage projectConfigsStorage)
         {
             _projectCode = projectCode;
-            _projectConfigs = projectConfigs;
+            _projectConfigsStorage = projectConfigsStorage;
         }
 
         public override string Validate()
         {
             if (!string.IsNullOrWhiteSpace(_projectCode))
             {
-                if (!_projectConfigs.IsProjectCodeExsit(_projectCode))
+                if (!_projectConfigsStorage.IsProjectCodeExsit(_projectCode))
                 {
                     string errorMsg = $"Project Code: '{_projectCode}' is not exist.";
                     return errorMsg;

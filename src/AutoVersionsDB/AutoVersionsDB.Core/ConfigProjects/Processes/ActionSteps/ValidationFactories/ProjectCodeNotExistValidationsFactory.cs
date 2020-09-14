@@ -8,14 +8,14 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
 {
     public class ProjectCodeNotExistValidationsFactory : ValidationsFactory
     {
-        private readonly ProjectConfigs _projectConfigs;
+        private readonly ProjectConfigsStorage _projectConfigsStorage;
 
         public override string ValidationName => "ProjectCodeNotExist";
 
 
-        public ProjectCodeNotExistValidationsFactory(ProjectConfigs projectConfigs)
+        public ProjectCodeNotExistValidationsFactory(ProjectConfigsStorage projectConfigsStorage)
         {
-            _projectConfigs = projectConfigs;
+            _projectConfigsStorage = projectConfigsStorage;
         }
 
 
@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
 
             string projectCode = (processContext.ProcessParams as ProjectConfigProcessParams).ProjectCode;
 
-            ProjectCodeNotExistValidator projectNameValidator = new ProjectCodeNotExistValidator(projectCode, _projectConfigs);
+            ProjectCodeNotExistValidator projectNameValidator = new ProjectCodeNotExistValidator(projectCode, _projectConfigsStorage);
             validationsGroup.Add(projectNameValidator);
 
             return validationsGroup;

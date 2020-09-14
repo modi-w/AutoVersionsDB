@@ -11,13 +11,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
     {
         public override string StepName => "Remove Project Config";
 
-        private readonly ProjectConfigs _projectConfigs;
+        private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public RemoveProjectConfigStep(ProjectConfigs projectConfigs)
+        public RemoveProjectConfigStep(ProjectConfigsStorage projectConfigsStorage)
         {
-            projectConfigs.ThrowIfNull(nameof(projectConfigs));
+            projectConfigsStorage.ThrowIfNull(nameof(projectConfigsStorage));
 
-            _projectConfigs = projectConfigs;
+            _projectConfigsStorage = projectConfigsStorage;
 
         }
 
@@ -27,7 +27,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
         {
             ProjectConfigProcessParams projectConfigProcessParams = processContext.ProcessParams as ProjectConfigProcessParams;
 
-            _projectConfigs.RemoveProjectConfig(projectConfigProcessParams.ProjectCode);
+            _projectConfigsStorage.RemoveProjectConfig(projectConfigProcessParams.ProjectCode);
         }
 
     }

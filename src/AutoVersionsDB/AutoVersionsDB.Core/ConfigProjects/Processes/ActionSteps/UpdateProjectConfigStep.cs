@@ -14,13 +14,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
     {
         public override string StepName => "Update Project Config";
 
-        private readonly ProjectConfigs _projectConfigs;
+        private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public UpdateProjectConfigStep(ProjectConfigs projectConfigs)
+        public UpdateProjectConfigStep(ProjectConfigsStorage projectConfigsStorage)
         {
-            projectConfigs.ThrowIfNull(nameof(projectConfigs));
+            projectConfigsStorage.ThrowIfNull(nameof(projectConfigsStorage));
 
-            _projectConfigs = projectConfigs;
+            _projectConfigsStorage = projectConfigsStorage;
 
         }
 
@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
-            _projectConfigs.UpdateProjectConfig(processContext.ProjectConfig);
+            _projectConfigsStorage.UpdateProjectConfig(processContext.ProjectConfig);
         }
 
     }

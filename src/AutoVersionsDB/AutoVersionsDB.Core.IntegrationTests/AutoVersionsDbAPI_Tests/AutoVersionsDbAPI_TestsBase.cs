@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected StandardKernel _ninjectKernelContainer;
 
-        protected Mock<ProjectConfigs> _mockProjectConfigs;
+        protected Mock<ProjectConfigsStorage> _mockProjectConfigsStorage;
 
         protected DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
@@ -46,9 +46,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             _ninjectKernelContainer = new StandardKernel();
             _ninjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            _mockProjectConfigs = new Mock<ProjectConfigs>();
-            _mockProjectConfigs.Setup(m => m.IsProjectCodeExsit(It.IsAny<string>())).Returns(true);
-            _ninjectKernelContainer.Bind<ProjectConfigs>().ToConstant(_mockProjectConfigs.Object);
+            _mockProjectConfigsStorage = new Mock<ProjectConfigsStorage>();
+            _mockProjectConfigsStorage.Setup(m => m.IsProjectCodeExsit(It.IsAny<string>())).Returns(true);
+            _ninjectKernelContainer.Bind<ProjectConfigsStorage>().ToConstant(_mockProjectConfigsStorage.Object);
 
             NinjectUtils.SetKernelInstance(_ninjectKernelContainer);
 

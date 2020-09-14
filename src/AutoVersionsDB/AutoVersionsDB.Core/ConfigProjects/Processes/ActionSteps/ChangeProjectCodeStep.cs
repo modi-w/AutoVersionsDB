@@ -12,13 +12,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
     {
         public override string StepName => "Change Project Code";
 
-        private readonly ProjectConfigs _projectConfigs;
+        private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public ChangeProjectCodeStep(ProjectConfigs projectConfigs)
+        public ChangeProjectCodeStep(ProjectConfigsStorage projectConfigsStorage)
         {
-            projectConfigs.ThrowIfNull(nameof(projectConfigs));
+            projectConfigsStorage.ThrowIfNull(nameof(projectConfigsStorage));
 
-            _projectConfigs = projectConfigs;
+            _projectConfigsStorage = projectConfigsStorage;
 
         }
 
@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
         {
             ChangeProjectCodeProcessParams projectConfigProcessParams = processContext.ProcessParams as ChangeProjectCodeProcessParams;
 
-            _projectConfigs.ChangeProjectCode(projectConfigProcessParams.ProjectCode, projectConfigProcessParams.NewProjectCode);
+            _projectConfigsStorage.ChangeProjectCode(projectConfigProcessParams.ProjectCode, projectConfigProcessParams.NewProjectCode);
         }
 
     }

@@ -14,13 +14,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
     {
         public override string StepName => "Save New Project Config";
 
-        private readonly ProjectConfigs _projectConfigs;
+        private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public SaveNewProjectConfigStep(ProjectConfigs projectConfigs)
+        public SaveNewProjectConfigStep(ProjectConfigsStorage projectConfigsStorage)
         {
-            projectConfigs.ThrowIfNull(nameof(projectConfigs));
+            projectConfigsStorage.ThrowIfNull(nameof(projectConfigsStorage));
 
-            _projectConfigs = projectConfigs;
+            _projectConfigsStorage = projectConfigsStorage;
 
         }
 
@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
-            _projectConfigs.SaveNewProjectConfig(processContext.ProjectConfig);
+            _projectConfigsStorage.SaveNewProjectConfig(processContext.ProjectConfig);
         }
 
     }
