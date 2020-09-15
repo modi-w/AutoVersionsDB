@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Common;
+﻿using AutoVersionsDB.Helpers;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using System;

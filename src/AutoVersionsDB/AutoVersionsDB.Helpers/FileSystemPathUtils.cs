@@ -10,8 +10,7 @@ using System.Web;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 
-
-namespace AutoVersionsDB.Common
+namespace AutoVersionsDB.Helpers
 {
     public static class FileSystemPathUtils
     {
@@ -31,7 +30,7 @@ namespace AutoVersionsDB.Common
                 return Path.GetDirectoryName(uriCodeBase.LocalPath);
             }
         }
-        
+
 
 
 

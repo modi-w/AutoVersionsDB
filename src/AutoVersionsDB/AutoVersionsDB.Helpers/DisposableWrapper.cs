@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Common
+namespace AutoVersionsDB.Helpers
 {
     //https://social.msdn.microsoft.com/forums/en-us/824b42e7-07f9-4a67-bd04-6b296d4fdc11/net-framework-hidden-disposables?forum=msdnmagazine
     //https://docs.microsoft.com/en-us/archive/msdn-magazine/2016/november/net-framework-hidden-disposables

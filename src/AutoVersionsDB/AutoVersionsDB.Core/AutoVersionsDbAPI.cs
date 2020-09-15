@@ -6,7 +6,6 @@ using System;
 using Ninject;
 using System.Collections.Generic;
 using System.Linq;
-using AutoVersionsDB.Common;
 using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
 using AutoVersionsDB.Core.ConfigProjects.Processes;
 using AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions;

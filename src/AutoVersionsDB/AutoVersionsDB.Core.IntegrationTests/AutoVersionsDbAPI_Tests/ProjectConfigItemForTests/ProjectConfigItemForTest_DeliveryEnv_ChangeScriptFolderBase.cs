@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Common;
+﻿using AutoVersionsDB.Helpers;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
 
 namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests

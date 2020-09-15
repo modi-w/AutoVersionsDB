@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Common
+namespace AutoVersionsDB.Helpers
 {
     public static class ExceptionsUtils
     {

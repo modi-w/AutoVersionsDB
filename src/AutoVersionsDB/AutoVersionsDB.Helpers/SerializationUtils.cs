@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace AutoVersionsDB.Common
+namespace AutoVersionsDB.Helpers
 {
     public static class SerializationUtils
     {

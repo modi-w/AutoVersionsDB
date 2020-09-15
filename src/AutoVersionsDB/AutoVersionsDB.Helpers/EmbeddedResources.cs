@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace AutoVersionsDB.Common
+namespace AutoVersionsDB.Helpers
 {
     public static class EmbeddedResources
     {

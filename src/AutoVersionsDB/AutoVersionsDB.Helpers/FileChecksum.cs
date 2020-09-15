@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoVersionsDB.Common
+namespace AutoVersionsDB.Helpers
 {
     public class FileChecksum : IDisposable
     {

@@ -1,5 +1,4 @@
-﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.Core.ConfigProjects.Processes.Validators;
+﻿using AutoVersionsDB.Core.ConfigProjects.Processes.Validators;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;

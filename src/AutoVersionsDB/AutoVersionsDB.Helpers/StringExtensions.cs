@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace AutoVersionsDB.Common
+namespace AutoVersionsDB.Helpers
 {
     public static class StringExtensions
     {
         public static string ToTrimedInvariant(this string str)
         {
-            if (str== null)
+            if (str == null)
             {
                 return "";
             }
