@@ -23,12 +23,12 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (dicAllProjectConfigs.ContainsKey(projectConfig.ProjectCode))
+                if (dicAllProjectConfigs.ContainsKey(projectConfig.ProjectCode.ToTrimedInvariant()))
                 {
                     throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is aready exist.");
                 }
 
-                dicAllProjectConfigs.Add(projectConfig.ProjectCode, projectConfig);
+                dicAllProjectConfigs.Add(projectConfig.ProjectCode.ToTrimedInvariant(), projectConfig);
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
@@ -44,13 +44,13 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (!dicAllProjectConfigs.ContainsKey(projectConfig.ProjectCode))
+                if (!dicAllProjectConfigs.ContainsKey(projectConfig.ProjectCode.ToTrimedInvariant()))
                 {
                     throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is not exist.");
                 }
 
 
-                dicAllProjectConfigs[projectConfig.ProjectCode] = projectConfig;
+                dicAllProjectConfigs[projectConfig.ProjectCode.ToTrimedInvariant()] = projectConfig;
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
@@ -65,7 +65,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (!dicAllProjectConfigs.TryGetValue(prevProjectCode, out ProjectConfigItem projectConfig))
+                if (!dicAllProjectConfigs.TryGetValue(prevProjectCode.ToTrimedInvariant(), out ProjectConfigItem projectConfig))
                 {
                     throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is not exist.");
                 }
@@ -82,13 +82,13 @@ namespace AutoVersionsDB.Core.ConfigProjects
             {
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (!dicAllProjectConfigs.ContainsKey(projectCode))
+                if (!dicAllProjectConfigs.ContainsKey(projectCode.ToTrimedInvariant()))
                 {
                     throw new Exception($"ProjectCode: '{projectCode}' is not exist.");
                 }
 
 
-                dicAllProjectConfigs.Remove(projectCode);
+                dicAllProjectConfigs.Remove(projectCode.ToTrimedInvariant());
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
@@ -126,8 +126,8 @@ namespace AutoVersionsDB.Core.ConfigProjects
                 listAllProjectConfigs = new List<ProjectConfigItem>();
             }
 
-            listAllProjectConfigs.OrderBy(e => e.ProjectCode).ToList();
-            dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.ProjectCode);
+            listAllProjectConfigs.OrderBy(e => e.ProjectCode.ToTrimedInvariant()).ToList();
+            dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.ProjectCode.ToTrimedInvariant());
 
             return dicAllProjectConfigs;
         }
@@ -136,18 +136,19 @@ namespace AutoVersionsDB.Core.ConfigProjects
         {
             var dicAllProjectConfigs = GetAllProjectConfigs();
 
-            return dicAllProjectConfigs[projectCode];
+            return dicAllProjectConfigs[projectCode.ToTrimedInvariant()];
         }
 
         public virtual bool IsProjectCodeExsit(string projectCode)
         {
             var dicAllProjectConfigs = GetAllProjectConfigs();
 
-            return dicAllProjectConfigs.ContainsKey(projectCode);
+            return dicAllProjectConfigs.ContainsKey(projectCode.ToTrimedInvariant());
         }
 
 
 
+       
         //private string clearInvalidCharsForFilename(string inputStr)
         //{
         //    string outStr = inputStr;
