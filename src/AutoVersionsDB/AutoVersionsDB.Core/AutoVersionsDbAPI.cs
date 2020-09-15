@@ -12,6 +12,7 @@ using AutoVersionsDB.Core.ConfigProjects.Processes;
 using AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions;
 using AutoVersionsDB.Core.DBVersions.Processes;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.Core.DBVersions;
 
 namespace AutoVersionsDB.Core
 {
@@ -19,6 +20,20 @@ namespace AutoVersionsDB.Core
     {
 
         private static readonly object _processSyncLock = new object();
+
+
+        private static ProjectConfigsAPI GetNewProjectConfigsAPIInstance()
+        {
+            return NinjectUtils.KernelInstance.Get<ProjectConfigsAPI>();
+        }
+
+        private static DBVersionsAPI GetNewDBVersionsAPIInstance()
+        {
+            return NinjectUtils.KernelInstance.Get<DBVersionsAPI>();
+        }
+
+
+
 
 
         public static List<DBType> GetDbTypesList()
@@ -37,33 +52,35 @@ namespace AutoVersionsDB.Core
 
         public static List<ProjectConfigItem> GetProjectsList()
         {
-            ProjectConfigsStorage projectConfigsStorage = NinjectUtils.KernelInstance.Get<ProjectConfigsStorage>();
-
-            return projectConfigsStorage.GetAllProjectConfigs().Values.ToList();
+            lock (_processSyncLock)
+            {
+                return GetNewProjectConfigsAPIInstance().GetProjectsList();
+            }
         }
 
         public static ProjectConfigItem GetProjectConfigByProjectCode(string projectCode)
         {
-            ProjectConfigsStorage projectConfigsStorage = NinjectUtils.KernelInstance.Get<ProjectConfigsStorage>();
-
-            return projectConfigsStorage.GetProjectConfigByProjectCode(projectCode);
-        }
-
-
-
-        public static ProcessTrace SaveNewProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-        {
             lock (_processSyncLock)
             {
-                return runProjectConfigProcess<SaveNewProjectConfigProcessDefinition>(projectConfigItem, onNotificationStateChanged);
+                return GetNewProjectConfigsAPIInstance().GetProjectConfigByProjectCode(projectCode);
             }
         }
 
-        public static ProcessTrace UpdateProjectConfig(ProjectConfigItem projectConfigItem, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+
+
+        public static ProcessTrace SaveNewProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return runProjectConfigProcess<UpdateProjectConfigProcessDefinition>(projectConfigItem, onNotificationStateChanged);
+                return GetNewProjectConfigsAPIInstance().SaveNewProjectConfig(projectConfig, onNotificationStateChanged);
+            }
+        }
+
+        public static ProcessTrace UpdateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        {
+            lock (_processSyncLock)
+            {
+                return GetNewProjectConfigsAPIInstance().UpdateProjectConfig(projectConfig, onNotificationStateChanged);
             }
         }
 
@@ -71,7 +88,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return runProjectConfigProcess<ChangeProjectCodeProcessDefinition>(prevProjectCode, newProjectCode, onNotificationStateChanged);
+                return GetNewProjectConfigsAPIInstance().ChangeProjectCode(prevProjectCode, newProjectCode, onNotificationStateChanged);
             }
         }
 
@@ -79,7 +96,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return runProjectConfigProcess<RemoveProjectConfigProcessDefinition>(projectCode, onNotificationStateChanged);
+                return GetNewProjectConfigsAPIInstance().RemoveProjectConfig(projectCode, onNotificationStateChanged);
             }
         }
 
@@ -93,100 +110,69 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
-        public static ProcessTrace ValidateAll(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessTrace ValidateDBVersions(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ProcessTrace processTrace;
-
             lock (_processSyncLock)
             {
-                processTrace = ValidateArtifactFile(projectCode, onNotificationStateChanged);
-
-                if (!processTrace.HasError)
-                {
-                    processTrace = ValidateProjectConfig(projectCode, onNotificationStateChanged);
-
-                    if (!processTrace.HasError)
-                    {
-                        processTrace = ValidateSystemTableExist(projectCode, onNotificationStateChanged);
-
-                        if (!processTrace.HasError)
-                        {
-                            processTrace = ValidateDBState(projectCode, onNotificationStateChanged);
-                        }
-                    }
-                }
+                return GetNewDBVersionsAPIInstance().ValidateDBVersions(projectCode, onNotificationStateChanged);
             }
-
-            return processTrace;
         }
 
         public static ProcessTrace ValidateProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return runDBVersionsProcess<ProjectConfigValidationProcessDefinition>(projectCode, null, onNotificationStateChanged);
+            lock (_processSyncLock)
+            {
+                return GetNewDBVersionsAPIInstance().ValidateProjectConfig(projectCode, onNotificationStateChanged);
+            }
         }
 
-        private static ProcessTrace ValidateArtifactFile(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-        {
-            return runDBVersionsProcess<ArtifactFileValidationProcessDefinition>(projectCode, null, onNotificationStateChanged);
-        }
-
-        private static ProcessTrace ValidateSystemTableExist(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-        {
-            return runDBVersionsProcess<SystemTableExsitValidationProcessDefinition>(projectCode, null, onNotificationStateChanged);
-        }
-
-
-        private static ProcessTrace ValidateDBState(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-        {
-            return runDBVersionsProcess<DBStateValidationProcessDefinition>(projectCode, null, onNotificationStateChanged);
-        }
 
         public static bool ValdiateTargetStateAlreadyExecuted(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ProcessTrace processTrace = runDBVersionsProcess<TargetStateScriptFileValidationProcessDefinition>(projectCode, targetStateScriptFilename, onNotificationStateChanged);
-            return !processTrace.HasError;
+            lock (_processSyncLock)
+            {
+                return GetNewDBVersionsAPIInstance().ValdiateTargetStateAlreadyExecuted(projectCode, targetStateScriptFilename, onNotificationStateChanged);
+            }
         }
 
         #endregion
 
 
         #region Run Change Db State
-    
+
         public static ProcessTrace SyncDB(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return runDBVersionsProcess<SyncDBProcessDefinition>(projectCode, null, onNotificationStateChanged);
-        }
-
-        public static ProcessTrace SetDBToSpecificState(string projectCode, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-        {      
-            ProcessTrace processTrace;
-
             lock (_processSyncLock)
             {
-                if (isIgnoreHistoryWarning)
-                {
-                    processTrace = RecreateDBFromScratch(projectCode, targetStateScriptFilename, onNotificationStateChanged);
-                }
-                else
-                {
-                    processTrace = runDBVersionsProcess<SyncDBToSpecificStateProcessDefinition>(projectCode, targetStateScriptFilename, onNotificationStateChanged);
-                }
+                return GetNewDBVersionsAPIInstance().SyncDB(projectCode, onNotificationStateChanged);
             }
-
-            return processTrace;
         }
 
         public static ProcessTrace RecreateDBFromScratch(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return runDBVersionsProcess<RecreateDBFromScratchProcessDefinition>(projectCode, targetStateScriptFilename, onNotificationStateChanged);
+            lock (_processSyncLock)
+            {
+                return GetNewDBVersionsAPIInstance().RecreateDBFromScratch(projectCode, targetStateScriptFilename, onNotificationStateChanged);
+            }
         }
+
+
+        public static ProcessTrace SetDBToSpecificState(string projectCode, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        {
+            lock (_processSyncLock)
+            {
+                return GetNewDBVersionsAPIInstance().SetDBToSpecificState(projectCode, targetStateScriptFilename, isIgnoreHistoryWarning, onNotificationStateChanged);
+            }
+        }
+
 
         public static ProcessTrace SetDBStateByVirtualExecution(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return runDBVersionsProcess<CreateVirtualExecutionsProcessDefinition>(projectCode, targetStateScriptFilename, onNotificationStateChanged);
+            lock (_processSyncLock)
+            {
+                return GetNewDBVersionsAPIInstance().SetDBStateByVirtualExecution(projectCode, targetStateScriptFilename, onNotificationStateChanged);
+            }
         }
-
-
 
 
         #endregion
@@ -196,7 +182,10 @@ namespace AutoVersionsDB.Core
 
         public static ProcessTrace Deploy(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return runDBVersionsProcess<DeployProcessDefinition>(projectCode, null, onNotificationStateChanged);
+            lock (_processSyncLock)
+            {
+                return GetNewDBVersionsAPIInstance().Deploy(projectCode, onNotificationStateChanged);
+            }
         }
 
         #endregion
@@ -205,62 +194,36 @@ namespace AutoVersionsDB.Core
 
         #region Scripts
 
-        public static ScriptFilesState CreateScriptFilesState(ProjectConfigItem projectConfigItem)
+        public static ScriptFilesState CreateScriptFilesState(ProjectConfigItem projectConfig)
         {
-            ScriptFilesState scriptFilesState;
-
-            ScriptFilesStateFactory scriptFilesStateFactory = NinjectUtils.KernelInstance.Get<ScriptFilesStateFactory>();
-
-            scriptFilesState = scriptFilesStateFactory.Create();
-            scriptFilesState.Reload(projectConfigItem);
-
-            return scriptFilesState;
-        }
-
-        public static string CreateNewIncrementalScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
-        {
-            RuntimeScriptFileBase scriptFileItem;
-
             lock (_processSyncLock)
             {
-                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
-                scriptFileItem = scriptFilesState.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                return GetNewDBVersionsAPIInstance().CreateScriptFilesState(projectConfig);
             }
-
-            return scriptFileItem.FileFullPath;
         }
 
-        public static string CreateNewRepeatableScriptFile(ProjectConfigItem projectConfigItem, string scriptName)
+        public static string CreateNewIncrementalScriptFile(ProjectConfigItem projectConfig, string scriptName)
         {
-            RuntimeScriptFileBase scriptFileItem;
-
             lock (_processSyncLock)
             {
-                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfigItem);
-                scriptFileItem = scriptFilesState.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                return GetNewDBVersionsAPIInstance().CreateNewIncrementalScriptFile(projectConfig, scriptName);
             }
+        }
 
-            return scriptFileItem.FileFullPath;
+        public static string CreateNewRepeatableScriptFile(ProjectConfigItem projectConfig, string scriptName)
+        {
+            lock (_processSyncLock)
+            {
+                return GetNewDBVersionsAPIInstance().CreateNewRepeatableScriptFile(projectConfig, scriptName);
+            }
         }
 
         public static string CreateNewDevDummyDataScriptFile(ProjectConfigItem projectConfig, string scriptName)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            if (!projectConfig.IsDevEnvironment)
-            {
-                throw new Exception("DevdummyData Scripts not allow in Delivery environment");
-            }
-
-            RuntimeScriptFileBase scriptFileItem;
-
             lock (_processSyncLock)
             {
-                ScriptFilesState scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(projectConfig);
-                scriptFileItem = scriptFilesState.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
+                return GetNewDBVersionsAPIInstance().CreateNewDevDummyDataScriptFile(projectConfig, scriptName);
             }
-
-            return scriptFileItem.FileFullPath;
         }
 
 
@@ -268,56 +231,6 @@ namespace AutoVersionsDB.Core
 
 
 
-
-        private static ProcessTrace runProjectConfigProcess<TProcessDefinition>(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-            where TProcessDefinition : ProcessDefinition
-        {
-            ProcessTrace processTrace;
-            lock (_processSyncLock)
-            {
-                var processRunner = NinjectUtils.KernelInstance.Get<NotificationProcessRunner<TProcessDefinition, ProjectConfigProcessContext>>();
-                processTrace = processRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
-            }
-
-            return processTrace;
-        }
-        private static ProcessTrace runProjectConfigProcess<TProcessDefinition>(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-            where TProcessDefinition : ProcessDefinition
-        {
-            ProcessTrace processTrace;
-            lock (_processSyncLock)
-            {
-                var processRunner = NinjectUtils.KernelInstance.Get<NotificationProcessRunner<TProcessDefinition, ProjectConfigProcessContext>>();
-                processTrace = processRunner.Run(new ProjectConfigProcessParams(projectCode), onNotificationStateChanged);
-            }
-
-            return processTrace;
-        }
-        private static ProcessTrace runProjectConfigProcess<TProcessDefinition>(string projectCode, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-            where TProcessDefinition : ProcessDefinition
-        {
-            ProcessTrace processTrace;
-            lock (_processSyncLock)
-            {
-                var processRunner = NinjectUtils.KernelInstance.Get<NotificationProcessRunner<TProcessDefinition, ProjectConfigProcessContext>>();
-                processTrace = processRunner.Run(new ChangeProjectCodeProcessParams(projectCode, newProjectCode), onNotificationStateChanged);
-            }
-
-            return processTrace;
-        }
-
-        private static ProcessTrace runDBVersionsProcess<TProcessDefinition>(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-            where TProcessDefinition : ProcessDefinition
-        {
-            ProcessTrace processTrace;
-            lock (_processSyncLock)
-            {
-                var processRunner = NinjectUtils.KernelInstance.Get<NotificationProcessRunner<TProcessDefinition, DBVersionsProcessContext>>();
-                processTrace = processRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename), onNotificationStateChanged);
-            }
-
-            return processTrace;
-        }
 
 
     }

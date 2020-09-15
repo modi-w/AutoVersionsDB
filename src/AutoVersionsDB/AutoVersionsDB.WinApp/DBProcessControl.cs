@@ -149,7 +149,7 @@ namespace AutoVersionsDB.WinApp
 
                 try
                 {
-                    ProcessTrace processResults = AutoVersionsDbAPI.ValidateAll(_projectConfigItem.ProjectCode, notificationsControl1.OnNotificationStateChanged);
+                    ProcessTrace processResults = AutoVersionsDbAPI.ValidateDBVersions(_projectConfigItem.ProjectCode, notificationsControl1.OnNotificationStateChanged);
 
 
                     if (processResults.HasError)

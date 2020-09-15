@@ -77,7 +77,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.ProjectCode, null);
 
 
             //Assert
@@ -99,7 +99,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.ProjectCode, null);
 
 
             //Assert
@@ -121,7 +121,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.ProjectCode, null);
 
 
             //Assert
@@ -143,7 +143,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.ProjectCode, null);
 
 
             //Assert
