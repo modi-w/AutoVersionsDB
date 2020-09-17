@@ -25,6 +25,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
 
             string projectCode = (processContext.ProcessParams as ProjectConfigProcessParams).ProjectCode;
 
+            ProjectCodeMandatory projectCodeNotEmpty = new ProjectCodeMandatory(projectCode);
+            validationsGroup.Add(projectCodeNotEmpty);
+
             ProjectCodeExistValidator projectNameValidator = new ProjectCodeExistValidator(projectCode, _projectConfigsStorage);
             validationsGroup.Add(projectNameValidator);
 

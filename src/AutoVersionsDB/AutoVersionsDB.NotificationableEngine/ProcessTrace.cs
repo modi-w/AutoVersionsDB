@@ -134,10 +134,17 @@ namespace AutoVersionsDB.NotificationableEngine
 
             lock (_statesHistory)
             {
-                foreach (var notificationState in _statesHistory.Where(e => e.HasError).ToList())
+                var notificationState = _statesHistory.Where(e => e.HasError).FirstOrDefault();
+
+                if (notificationState != null)
                 {
                     sbStrResults.AppendLine(notificationState.ToString(true, true));
                 }
+
+                //foreach (var notificationState in _statesHistory.Where(e => e.HasError).ToList())
+                //{
+                //    sbStrResults.AppendLine(notificationState.ToString(true, true));
+                //}
             }
 
 

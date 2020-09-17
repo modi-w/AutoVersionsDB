@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             //Assert
             List<StepNotificationState> notificationStatesHistory = processTrace.StatesHistory;
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ProjectCodeNotEmpty"));
+            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ProjectCodeMandatory"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ConnStr"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBBackupFolderPath"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBTypeCode"));

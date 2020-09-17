@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.ConfigProjects.Processes.Validators;
+﻿using AutoVersionsDB.Core.Common.Validators;
+using AutoVersionsDB.Core.ConfigProjects.Processes.Validators;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
@@ -23,6 +24,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
             string projectCode = (processContext.ProcessParams as ProjectConfigProcessParams).ProjectCode;
+
+            ProjectCodeMandatory projectCodeNotEmpty = new ProjectCodeMandatory(projectCode);
+            validationsGroup.Add(projectCodeNotEmpty);
 
             ProjectCodeNotExistValidator projectNameValidator = new ProjectCodeNotExistValidator(projectCode, _projectConfigsStorage);
             validationsGroup.Add(projectNameValidator);

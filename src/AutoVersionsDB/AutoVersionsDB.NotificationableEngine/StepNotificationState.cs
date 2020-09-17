@@ -226,10 +226,10 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 outStr = $"{outStr} -> {InternalStepNotificationState.ToString(false, isIncludeStepStage)}";
             }
-
-
-
-           
+            else if (HasError)
+            {
+                outStr = $"{outStr}. Error: {LowLevelErrorMessage}";
+            }
 
 
             //if (InternalNotificationStateItem != null)
@@ -237,10 +237,7 @@ namespace AutoVersionsDB.NotificationableEngine
             //    outStr = $"{outStr} -> {InternalNotificationStateItem.ToString(this,false, isIncludeStepStage)}";
             //}
 
-            if (HasError)
-            {
-                outStr = $"{outStr}. Error: {LowLevelErrorMessage}";
-            }
+            
 
             if (isIncludeTimestamp)
             {

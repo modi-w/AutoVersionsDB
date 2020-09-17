@@ -3,16 +3,16 @@ using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Common.Validators
 {
-    public class ProjectCodeNotEmpty : ValidatorBase
+    public class ProjectCodeMandatory : ValidatorBase
     {
         private readonly string _projectCode;
 
-        public override string ValidatorName => "ProjectCodeNotEmpty";
+        public override string ValidatorName => "ProjectCodeMandatory";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        public ProjectCodeNotEmpty(string projectCode)
+        public ProjectCodeMandatory(string projectCode)
         {
             _projectCode = projectCode;
         }

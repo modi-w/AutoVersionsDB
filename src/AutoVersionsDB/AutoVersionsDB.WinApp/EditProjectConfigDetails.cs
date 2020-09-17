@@ -156,7 +156,7 @@ namespace AutoVersionsDB.WinApp
                 {
                     switch (errorStateItem.LowLevelErrorCode)
                     {
-                        case "ProjectCodeNotEmpty":
+                        case "ProjectCodeMandatory":
 
                             SetErrorInErrorProvider(tbProjectCode, errorStateItem.LowLevelErrorMessage);
                             break;
