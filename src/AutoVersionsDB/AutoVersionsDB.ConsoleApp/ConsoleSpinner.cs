@@ -12,8 +12,6 @@ namespace AutoVersionsDB.ConsoleApp
     {
         private  int _counter;
 
-        public static object ConsolWriteSync = new object();
-
         public int IntervalInMs { get; private set; }
         public bool IsActive { get; private set; }
 
@@ -55,7 +53,7 @@ namespace AutoVersionsDB.ConsoleApp
             //Comment: we wait here because the run process is run on another thread
             Thread.Sleep(IntervalInMs * 10);
 
-            lock (ConsolWriteSync)
+            lock (ConsoleHandler.ConsolWriteSync)
             {
                 Console.SetCursorPosition(0, Console.CursorTop);
                 Console.Write(" ");
@@ -79,7 +77,7 @@ namespace AutoVersionsDB.ConsoleApp
         {
             _counter++;
 
-            lock (ConsolWriteSync)
+            lock (ConsoleHandler.ConsolWriteSync)
             {
                 Console.SetCursorPosition(0, Console.CursorTop);
                 switch (_counter % 4)

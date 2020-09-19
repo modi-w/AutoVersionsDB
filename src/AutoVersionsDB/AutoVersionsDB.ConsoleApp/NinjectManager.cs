@@ -32,7 +32,8 @@ namespace AutoVersionsDB.ConsoleApp
 
         private static void RegisterServices(IKernel kernel)
         {
-          //  kernel.ThrowIfNull(nameof(kernel));
+            //  kernel.ThrowIfNull(nameof(kernel));
+            kernel.Bind<ConsoleHandler>().To<ConsoleHandler>().InSingletonScope();
 
         }
 

@@ -8,10 +8,10 @@ using System.IO;
 
 namespace AutoVersionsDB.Core.ConfigProjects
 {
-    public class ProjectConfigItem 
+    public class ProjectConfigItem
     {
         public string ProjectCode { get; set; }
-        
+
 
         public string ProjectDescription { get; set; }
 
@@ -137,9 +137,31 @@ namespace AutoVersionsDB.Core.ConfigProjects
             DBCommandsTimeout = 300;
         }
 
+        public ProjectConfigItem(string projectCode,
+                                    string projectDescription,
+                                    string dbTypeCode,
+                                    string connStr,
+                                    string connStrToMasterDB,
+                                    string dbBackupBaseFolder,
+                                    bool isDevEnvironment,
+                                    string devScriptsBaseFolderPath,
+                                    string deployArtifactFolderPath,
+                                    string deliveryArtifactFolderPath)
+
+        {
+            ProjectCode = projectCode;
+            ProjectDescription = projectDescription;
+            DBTypeCode = dbTypeCode;
+            ConnStr = connStr;
+            ConnStrToMasterDB = connStrToMasterDB;
+            DBBackupBaseFolder = dbBackupBaseFolder;
+            IsDevEnvironment = isDevEnvironment;
+            DevScriptsBaseFolderPath = devScriptsBaseFolderPath;
+            DeployArtifactFolderPath = deployArtifactFolderPath;
+            DeliveryArtifactFolderPath = deliveryArtifactFolderPath;
+        }
 
 
-        
 
     }
 }
