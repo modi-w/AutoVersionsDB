@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.CommandLine;
@@ -150,20 +151,20 @@ namespace AutoVersionsDB.ConsoleApp
                  getTargetOption(),
             };
 
-            command.Description = "Set the Database to specific state by virtually executions the scripts file. This method is useful when production database didnt use this tool yet. Insert into the 'Target' option the target script file name that you want to set the db state.";
+            command.Description = "Set the Database to specific state by virtually executions the scripts file. This command is useful when production database didnt use this tool yet. Insert into the 'Target' option the target script file name that you want to set the db state.";
 
 
-            command.Handler = CommandHandler.Create<string,string>((code, target) =>
-            {
-                ProcessTrace processReults;
+            command.Handler = CommandHandler.Create<string, string>((code, target) =>
+             {
+                 ProcessTrace processReults;
 
-                using (ConsoleSpinner spinner = new ConsoleSpinner())
-                {
-                    processReults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(code, target, onNotificationStateChanged);
-                }
+                 using (ConsoleSpinner spinner = new ConsoleSpinner())
+                 {
+                     processReults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(code, target, onNotificationStateChanged);
+                 }
 
-                handleProcessComplete(processReults);
-            });
+                 handleProcessComplete(processReults);
+             });
 
             return command;
         }
@@ -195,6 +196,40 @@ namespace AutoVersionsDB.ConsoleApp
         }
 
 
+        private static Command createInitCommand()
+        {
+            Command command = new Command("init")
+            {
+                getCodeOption(),
+                getDescriptionOption(),
+                getDBTypeOption(),
+            };
+
+            command.Description = "Initiate project. Define a new project for AutoVersionsDB.";
+
+
+            command.Handler = CommandHandler.Create<string, string, string>((code, description, dbType) =>
+            {
+                ProcessTrace processReults;
+
+                using (ConsoleSpinner spinner = new ConsoleSpinner())
+                {
+                    ProjectConfigItem projectConfig = new ProjectConfigItem()
+                    {
+                        ProjectCode = code,
+                        ProjectDescription = description,
+                        DBTypeCode = dbType
+                    };
+
+                    processReults = AutoVersionsDbAPI.SaveNewProjectConfig(projectConfig, onNotificationStateChanged);
+                }
+
+                handleProcessComplete(processReults);
+            });
+
+            return command;
+        }
+
 
         private static Option<string> getCodeOption()
         {
@@ -202,6 +237,38 @@ namespace AutoVersionsDB.ConsoleApp
             codeOption.IsRequired = true;
             return codeOption;
         }
+
+        private static Option<string> getDescriptionOption()
+        {
+            return new Option<string>(new string[] { "--description", "-desc" }, "Description for the project");
+        }
+
+        private static Option<string> getDBTypeOption()
+        {
+            return new Option<string>(new string[] { "--db-type", "-dbt" }, "Database Type (SqlServer)");
+        }
+
+        private static Option<string> getConnectionStringOption()
+        {
+            return new Option<string>(new string[] { "--connection-string", "-connstr" }, "Connection String for the Database");
+        }
+
+        private static Option<string> getConnectionStringForMasterDBOption()
+        {
+            return new Option<string>(new string[] { "--connection-string-master", "-connstrm" }, "Connection String for the master Database (with dbowner privileges)");
+        }
+
+        private static Option<string> getBackupFolderPathOption()
+        {
+            return new Option<string>(new string[] { "--backup-folder", "-buf" }, "Backup up folder path for saving the database before run");
+        }
+
+
+        //    new Option(new string[]{"","" },""),
+        //    new Option(new string[]{"-de","--dev-environment" },"Is the project run on dev environment (allow to use dummy data scripts files)"),
+        //    new Option(new string[]{"-sf","--scripts-base-folder" },"For dev environment only - the scripts base folder path. Where all the project scripts files located"),
+        //    new Option(new string[]{"-sf","--scripts-base-folder" },"For dev environment only - the scripts base folder path. Where all the project scripts files located"),
+
 
         private static Option<string> getTargetOption()
         {
@@ -251,7 +318,7 @@ namespace AutoVersionsDB.ConsoleApp
             for (int i = 0; i < numberOfLineForLastMessage; i++)
             {
                 Console.Write(new String(' ', Console.BufferWidth));
-                if (i == 0 && cursorLeft>0)
+                if (i == 0 && cursorLeft > 0)
                 {
                     Console.SetCursorPosition(0, Console.CursorTop);
                 }
