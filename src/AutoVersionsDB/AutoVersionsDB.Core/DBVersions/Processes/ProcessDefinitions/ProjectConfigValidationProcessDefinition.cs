@@ -14,8 +14,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
         public override string EngineTypeName => "Project Config Validation";
 
 
-        public ProjectConfigValidationProcessDefinition(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
-                                                        ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+        public ProjectConfigValidationProcessDefinition(ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+                                                        ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                                         SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep)
             : base(null, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
         {

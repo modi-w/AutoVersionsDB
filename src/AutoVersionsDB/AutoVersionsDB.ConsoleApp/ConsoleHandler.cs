@@ -30,8 +30,21 @@ namespace AutoVersionsDB.ConsoleApp
         public void SetErrorMessage(string message)
         {
             TextWriter errorWriter = Console.Error;
+            Console.ForegroundColor = ConsoleColor.Red;
             errorWriter.WriteLine(message);
+
+            Console.ForegroundColor = ConsoleColor.White;
         }
+
+        public void SetErrorInstruction(string message)
+        {
+            TextWriter errorWriter = Console.Error;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            errorWriter.WriteLine(message);
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
 
         public void ProcessComplete(ProcessTrace processReults)
         {

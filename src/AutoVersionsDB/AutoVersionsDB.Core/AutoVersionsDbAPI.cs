@@ -20,14 +20,17 @@ namespace AutoVersionsDB.Core
 
         private static readonly object _processSyncLock = new object();
 
-        private static readonly AutoVersionsDBCLI _autoVersionsDBCLI = NinjectUtils.KernelInstance.Get<AutoVersionsDBCLI>();
+        private static AutoVersionsDBCLI GetNewInstanceForAutoVersionsDBCLI()
+        {
+            return NinjectUtils.KernelInstance.Get<AutoVersionsDBCLI>();
+        }
 
-        private static ProjectConfigsAPI GetInstanceNewProjectConfigsAPI()
+        private static ProjectConfigsAPI GetNewInstanceForProjectConfigsAPI()
         {
             return NinjectUtils.KernelInstance.Get<ProjectConfigsAPI>();
         }
 
-        private static DBVersionsAPI GetInstanceNewDBVersionsAPI()
+        private static DBVersionsAPI GetNewInstanceForDBVersionsAPI()
         {
             return NinjectUtils.KernelInstance.Get<DBVersionsAPI>();
         }
@@ -45,11 +48,11 @@ namespace AutoVersionsDB.Core
 
         public static int CLIRun(string[] args)
         {
-            return _autoVersionsDBCLI.Run(args);
+            return GetNewInstanceForAutoVersionsDBCLI().Run(args);
         }
         public static int CLIRun(string args)
         {
-            return _autoVersionsDBCLI.Run(args);
+            return GetNewInstanceForAutoVersionsDBCLI().Run(args);
         }
 
 
@@ -60,7 +63,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewProjectConfigsAPI().GetProjectsList();
+                return GetNewInstanceForProjectConfigsAPI().GetProjectsList();
             }
         }
 
@@ -68,7 +71,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewProjectConfigsAPI().GetProjectConfigByProjectCode(projectCode);
+                return GetNewInstanceForProjectConfigsAPI().GetProjectConfigByProjectCode(projectCode);
             }
         }
 
@@ -78,7 +81,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewProjectConfigsAPI().SaveNewProjectConfig(projectConfig, onNotificationStateChanged);
+                return GetNewInstanceForProjectConfigsAPI().SaveNewProjectConfig(projectConfig, onNotificationStateChanged);
             }
         }
 
@@ -86,7 +89,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewProjectConfigsAPI().UpdateProjectConfig(projectConfig, onNotificationStateChanged);
+                return GetNewInstanceForProjectConfigsAPI().UpdateProjectConfig(projectConfig, onNotificationStateChanged);
             }
         }
 
@@ -94,7 +97,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewProjectConfigsAPI().ChangeProjectCode(prevProjectCode, newProjectCode, onNotificationStateChanged);
+                return GetNewInstanceForProjectConfigsAPI().ChangeProjectCode(prevProjectCode, newProjectCode, onNotificationStateChanged);
             }
         }
 
@@ -102,7 +105,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewProjectConfigsAPI().RemoveProjectConfig(projectCode, onNotificationStateChanged);
+                return GetNewInstanceForProjectConfigsAPI().RemoveProjectConfig(projectCode, onNotificationStateChanged);
             }
         }
 
@@ -120,7 +123,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().ValidateDBVersions(projectCode, onNotificationStateChanged);
+                return GetNewInstanceForDBVersionsAPI().ValidateDBVersions(projectCode, onNotificationStateChanged);
             }
         }
 
@@ -128,7 +131,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().ValidateProjectConfig(projectCode, onNotificationStateChanged);
+                return GetNewInstanceForDBVersionsAPI().ValidateProjectConfig(projectCode, onNotificationStateChanged);
             }
         }
 
@@ -137,7 +140,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().ValdiateTargetStateAlreadyExecuted(projectCode, targetStateScriptFilename, onNotificationStateChanged);
+                return GetNewInstanceForDBVersionsAPI().ValdiateTargetStateAlreadyExecuted(projectCode, targetStateScriptFilename, onNotificationStateChanged);
             }
         }
 
@@ -150,7 +153,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().SyncDB(projectCode, onNotificationStateChanged);
+                return GetNewInstanceForDBVersionsAPI().SyncDB(projectCode, onNotificationStateChanged);
             }
         }
 
@@ -158,7 +161,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().RecreateDBFromScratch(projectCode, targetStateScriptFilename, onNotificationStateChanged);
+                return GetNewInstanceForDBVersionsAPI().RecreateDBFromScratch(projectCode, targetStateScriptFilename, onNotificationStateChanged);
             }
         }
 
@@ -167,7 +170,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().SetDBToSpecificState(projectCode, targetStateScriptFilename, isIgnoreHistoryWarning, onNotificationStateChanged);
+                return GetNewInstanceForDBVersionsAPI().SetDBToSpecificState(projectCode, targetStateScriptFilename, isIgnoreHistoryWarning, onNotificationStateChanged);
             }
         }
 
@@ -176,7 +179,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().SetDBStateByVirtualExecution(projectCode, targetStateScriptFilename, onNotificationStateChanged);
+                return GetNewInstanceForDBVersionsAPI().SetDBStateByVirtualExecution(projectCode, targetStateScriptFilename, onNotificationStateChanged);
             }
         }
 
@@ -190,7 +193,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().Deploy(projectCode, onNotificationStateChanged);
+                return GetNewInstanceForDBVersionsAPI().Deploy(projectCode, onNotificationStateChanged);
             }
         }
 
@@ -204,7 +207,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().CreateScriptFilesState(projectConfig);
+                return GetNewInstanceForDBVersionsAPI().CreateScriptFilesState(projectConfig);
             }
         }
 
@@ -212,7 +215,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().CreateNewIncrementalScriptFile(projectConfig, scriptName);
+                return GetNewInstanceForDBVersionsAPI().CreateNewIncrementalScriptFile(projectConfig, scriptName);
             }
         }
 
@@ -220,7 +223,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().CreateNewRepeatableScriptFile(projectConfig, scriptName);
+                return GetNewInstanceForDBVersionsAPI().CreateNewRepeatableScriptFile(projectConfig, scriptName);
             }
         }
 
@@ -228,7 +231,7 @@ namespace AutoVersionsDB.Core
         {
             lock (_processSyncLock)
             {
-                return GetInstanceNewDBVersionsAPI().CreateNewDevDummyDataScriptFile(projectConfig, scriptName);
+                return GetNewInstanceForDBVersionsAPI().CreateNewDevDummyDataScriptFile(projectConfig, scriptName);
             }
         }
 
