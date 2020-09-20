@@ -17,7 +17,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes
         public ProjectConfigProcessParams(ProjectConfigItem projectConfig)
         {
             ProjectConfig = projectConfig;
-            ProjectCode = projectConfig.ProjectCode;
+            ProjectCode = projectConfig.Code;
         }
     }
 }

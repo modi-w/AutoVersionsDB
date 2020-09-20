@@ -162,7 +162,7 @@ namespace AutoVersionsDB.Core.DBVersions
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 
-            if (!projectConfig.IsDevEnvironment)
+            if (!projectConfig.DevEnvironment)
             {
                 throw new Exception("DevdummyData Scripts not allow in Delivery environment");
             }

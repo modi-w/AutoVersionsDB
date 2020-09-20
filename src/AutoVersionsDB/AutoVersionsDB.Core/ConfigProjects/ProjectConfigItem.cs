@@ -10,40 +10,40 @@ namespace AutoVersionsDB.Core.ConfigProjects
 {
     public class ProjectConfigItem
     {
-        public string ProjectCode { get; set; }
+        public string Code { get; set; }
 
 
-        public string ProjectDescription { get; set; }
+        public string Description { get; set; }
 
         public string ProjectFullName
         {
             get
             {
-                if (!string.IsNullOrWhiteSpace(ProjectDescription))
+                if (!string.IsNullOrWhiteSpace(Description))
                 {
-                    return $"{ProjectCode} - {ProjectDescription}";
+                    return $"{Code} - {Description}";
                 }
                 else
                 {
-                    return ProjectCode;
+                    return Code;
                 }
 
             }
         }
 
-        public string DBTypeCode { get; set; }
-        public string ConnStr { get; set; }
+        public string DBType { get; set; }
+        public string ConnectionString { get; set; }
 
-        public string ConnStrToMasterDB { get; set; }
+        public string ConnectionStringToMasterDB { get; set; }
 
-        public string DBBackupBaseFolder { get; set; }
+        public string BackupFolderPath { get; set; }
 
-        public bool IsDevEnvironment { get; set; }
+        public bool DevEnvironment { get; set; }
 
         public string DevScriptsBaseFolderPath { get; set; }
 
-
         public string DeployArtifactFolderPath { get; set; }
+    
         public string DeliveryArtifactFolderPath { get; set; }
 
 
@@ -70,7 +70,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         {
             get
             {
-                if (IsDevEnvironment)
+                if (DevEnvironment)
                 {
                     return DevScriptsBaseFolderPath;
                 }
@@ -133,33 +133,10 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         public ProjectConfigItem()
         {
-            IsDevEnvironment = true;
+            DevEnvironment = true;
             DBCommandsTimeout = 300;
         }
 
-        public ProjectConfigItem(string projectCode,
-                                    string projectDescription,
-                                    string dbTypeCode,
-                                    string connStr,
-                                    string connStrToMasterDB,
-                                    string dbBackupBaseFolder,
-                                    bool isDevEnvironment,
-                                    string devScriptsBaseFolderPath,
-                                    string deployArtifactFolderPath,
-                                    string deliveryArtifactFolderPath)
-
-        {
-            ProjectCode = projectCode;
-            ProjectDescription = projectDescription;
-            DBTypeCode = dbTypeCode;
-            ConnStr = connStr;
-            ConnStrToMasterDB = connStrToMasterDB;
-            DBBackupBaseFolder = dbBackupBaseFolder;
-            IsDevEnvironment = isDevEnvironment;
-            DevScriptsBaseFolderPath = devScriptsBaseFolderPath;
-            DeployArtifactFolderPath = deployArtifactFolderPath;
-            DeliveryArtifactFolderPath = deliveryArtifactFolderPath;
-        }
 
 
 

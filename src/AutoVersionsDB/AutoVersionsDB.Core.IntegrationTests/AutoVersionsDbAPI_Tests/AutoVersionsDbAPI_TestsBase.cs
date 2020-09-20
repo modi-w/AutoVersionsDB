@@ -151,18 +151,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfConnectionsItem = new NumOfConnections();
 
             string masterDBName;
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionStringToMasterDB, 0).AsDisposable())
             {
                 masterDBName =  dbCommands.Instance.GetDataBaseName();
             }
 
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 numOfConnectionsItem.DBName =  dbCommands.Instance.GetDataBaseName();
             }
 
-            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB).AsDisposable())
+            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBType, projectConfig.ConnectionStringToMasterDB).AsDisposable())
             {
                 numOfConnectionsItem.NumOfConnectionsToDB = dbQueryStatus.Instance.GetNumOfOpenConnection(numOfConnectionsItem.DBName);
                 numOfConnectionsItem.NumOfConnectionsToMasterDB = dbQueryStatus.Instance.GetNumOfOpenConnection(masterDBName);
@@ -186,10 +186,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void restoreDB(ProjectConfigItem projectConfig, string filename)
         {
-            using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
 
-                using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0).AsDisposable())
+                using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBType, projectConfig.ConnectionStringToMasterDB, 0).AsDisposable())
                 {
                     string dbTestsBaseLocation = Path.Combine(FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.BL.IntegrationTests", "TestsDBs");
                     if (!Directory.Exists(dbTestsBaseLocation))
@@ -247,7 +247,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInEmptyStateExceptSystemTables(ProjectConfigItem projectConfig)
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 DataTable allSchemaTable = dbCommands.Instance.GetAllDBSchemaExceptDBVersionSchema();
 
@@ -260,7 +260,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInMiddleState(ProjectConfigItem projectConfig)
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 bool isTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
@@ -291,7 +291,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInFinalState_DevEnv(ProjectConfigItem projectConfig)
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 bool isTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
@@ -345,7 +345,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         //Comment: Dev Dummy Data Scripts should not run on Delivery Environment
         protected void assertDbInFinalState_DeliveryEnv(ProjectConfigItem projectConfig)
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 bool isTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
@@ -394,7 +394,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertDbInFinalState_OnlyIncremental(ProjectConfigItem projectConfig)
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 bool isTable1Exist = dbCommands.Instance.CheckIfTableExist("Schema1", "Table1");
                 Assert.That(isTable1Exist, Is.True);
@@ -442,13 +442,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         protected void assertThatAllFilesInTheDbExistWithTheSameHashInTheFolder(ProjectConfigItemForTestBase projectConfig)
         {
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 ArtifactExtractor artifactExtractor = null;
 
                 DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.Instance.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
 
-                if (!projectConfig.IsDevEnvironment)
+                if (!projectConfig.DevEnvironment)
                 {
                     artifactExtractor = new ArtifactExtractor(projectConfig);
                 }
@@ -495,7 +495,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
                 }
 
 
-                if (projectConfig.IsDevEnvironment)
+                if (projectConfig.DevEnvironment)
                 {
                     string[] arrDddAllScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
                     Dictionary<string, FileInfo> dddSctipFilesDictionary = arrDddAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
@@ -535,7 +535,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected void assertThatDbExecutedFilesAreInMiddleState(ProjectConfigItemForTestBase projectConfig)
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 DataTable dbScriptsExecutionHistoryFilesTable = dbCommands.Instance.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
 
@@ -553,12 +553,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         protected void assertThatAllFilesInFolderExistWithTheSameHashInTheDb_FinalState(ProjectConfigItemForTestBase projectConfig)
         {
             DataTable dbScriptsExecutionHistoryFilesTable;
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 dbScriptsExecutionHistoryFilesTable = dbCommands.Instance.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
             }
 
-            if (!projectConfig.IsDevEnvironment)
+            if (!projectConfig.DevEnvironment)
             {
                 using (ArtifactExtractor artifactExtractor = new ArtifactExtractor(projectConfig))
                 {
@@ -582,12 +582,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         protected void assertThatAllFilesInFolderExistWithTheSameHashInTheDb_RunAgainAfterRepetableFilesChanged(ProjectConfigItemForTestBase projectConfig)
         {
             DataTable dbScriptsExecutionHistoryFilesTable;
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
                 dbScriptsExecutionHistoryFilesTable = dbCommands.Instance.GetTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
             }
 
-            if (!projectConfig.IsDevEnvironment)
+            if (!projectConfig.DevEnvironment)
             {
                 using (ArtifactExtractor artifactExtractor = new ArtifactExtractor(projectConfig))
                 {

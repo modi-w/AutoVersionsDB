@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
-            CheckDeliveryEnvValidator checkDeliveryEnvValidator = new CheckDeliveryEnvValidator(projectConfig.IsDevEnvironment);
+            CheckDeliveryEnvValidator checkDeliveryEnvValidator = new CheckDeliveryEnvValidator(projectConfig.DevEnvironment);
             validationsGroup.Add(checkDeliveryEnvValidator);
 
             return validationsGroup;

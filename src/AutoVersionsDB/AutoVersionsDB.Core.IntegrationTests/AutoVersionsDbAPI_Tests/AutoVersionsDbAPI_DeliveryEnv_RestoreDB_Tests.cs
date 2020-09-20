@@ -30,7 +30,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
@@ -57,9 +57,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             string tempBackupFileToCompare = Path.Combine(FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder), $"TempBackupFileToCompare_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")}");
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, 0).AsDisposable())
             {
-                using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBTypeCode, projectConfig.ConnStrToMasterDB, 0).AsDisposable())
+                using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(projectConfig.DBType, projectConfig.ConnectionStringToMasterDB, 0).AsDisposable())
                 {
                     dbBackupRestoreCommands.Instance.CreateDbBackup(tempBackupFileToCompare, dbCommands.Instance.GetDataBaseName());
                 }

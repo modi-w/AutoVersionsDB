@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
             //Assert
             assertProccessErrors(processTrace);
@@ -49,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
             //Assert
             assertProccessErrors(processTrace);
@@ -73,7 +73,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
 
             //Assert

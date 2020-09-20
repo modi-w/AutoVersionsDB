@@ -27,7 +27,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
-            SystemTablesValidator systemTablesValidator = new SystemTablesValidator(_dbCommandsFactoryProvider, projectConfig.ConnStr, projectConfig.DBTypeCode, projectConfig.IsDevEnvironment);
+            SystemTablesValidator systemTablesValidator = new SystemTablesValidator(_dbCommandsFactoryProvider, projectConfig.ConnectionString, projectConfig.DBType, projectConfig.DevEnvironment);
             validationsGroup.Add(systemTablesValidator);
 
             return validationsGroup;

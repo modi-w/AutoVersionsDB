@@ -130,7 +130,7 @@ namespace AutoVersionsDB.WinApp
 
             pnlDevDummyDataFiles.BeginInvoke((MethodInvoker)(() =>
             {
-                pnlDevDummyDataFiles.Visible = _projectConfigItem.IsDevEnvironment;
+                pnlDevDummyDataFiles.Visible = _projectConfigItem.DevEnvironment;
             }));
 
 
@@ -149,7 +149,7 @@ namespace AutoVersionsDB.WinApp
 
                 try
                 {
-                    ProcessTrace processResults = AutoVersionsDbAPI.ValidateDBVersions(_projectConfigItem.ProjectCode, notificationsControl1.OnNotificationStateChanged);
+                    ProcessTrace processResults = AutoVersionsDbAPI.ValidateDBVersions(_projectConfigItem.Code, notificationsControl1.OnNotificationStateChanged);
 
 
                     if (processResults.HasError)
@@ -217,7 +217,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnShowHistoricalBackups_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_projectConfigItem.DBBackupBaseFolder);
+            OsProcessUtils.StartOsProcess(_projectConfigItem.BackupFolderPath);
         }
 
         private void BtnCancelSyncSpecificState_Click(object sender, EventArgs e)
@@ -235,7 +235,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnNavToEdit_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(_projectConfigItem.ProjectCode);
+            OnEditProject?.Invoke(_projectConfigItem.Code);
         }
 
 
@@ -338,7 +338,7 @@ namespace AutoVersionsDB.WinApp
                     SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
-                    ProcessTrace processResults = AutoVersionsDbAPI.SyncDB(_projectConfigItem.ProjectCode, notificationsControl1.OnNotificationStateChanged);
+                    ProcessTrace processResults = AutoVersionsDbAPI.SyncDB(_projectConfigItem.Code, notificationsControl1.OnNotificationStateChanged);
 
                     RefreshScriptFilesState();
 
@@ -361,7 +361,7 @@ namespace AutoVersionsDB.WinApp
         {
             bool isAllowRun = true;
 
-            if (!AutoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(_projectConfigItem.ProjectCode, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged))
+            if (!AutoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(_projectConfigItem.Code, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged))
             {
                 string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
                 isAllowRun = MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
@@ -387,7 +387,7 @@ namespace AutoVersionsDB.WinApp
                         SetViewState(DBVersionsMangementViewType.InProcess);
                         notificationsControl1.BeforeStart();
 
-                        ProcessTrace processResults = AutoVersionsDbAPI.SetDBToSpecificState(_projectConfigItem.ProjectCode, TargetStateScriptFileName, true, notificationsControl1.OnNotificationStateChanged);
+                        ProcessTrace processResults = AutoVersionsDbAPI.SetDBToSpecificState(_projectConfigItem.Code, TargetStateScriptFileName, true, notificationsControl1.OnNotificationStateChanged);
                         RefreshScriptFilesState();
 
                         notificationsControl1.AfterComplete();
@@ -412,7 +412,7 @@ namespace AutoVersionsDB.WinApp
                 SetViewState(DBVersionsMangementViewType.InProcess);
                 notificationsControl1.BeforeStart();
 
-                ProcessTrace processResults = AutoVersionsDbAPI.Deploy(_projectConfigItem.ProjectCode, notificationsControl1.OnNotificationStateChanged);
+                ProcessTrace processResults = AutoVersionsDbAPI.Deploy(_projectConfigItem.Code, notificationsControl1.OnNotificationStateChanged);
                 RefreshScriptFilesState();
 
                 notificationsControl1.AfterComplete();
@@ -449,7 +449,7 @@ namespace AutoVersionsDB.WinApp
                         SetViewState(DBVersionsMangementViewType.InProcess);
                         notificationsControl1.BeforeStart();
 
-                        ProcessTrace processResults = AutoVersionsDbAPI.RecreateDBFromScratch(_projectConfigItem.ProjectCode, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
+                        ProcessTrace processResults = AutoVersionsDbAPI.RecreateDBFromScratch(_projectConfigItem.Code, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
                         RefreshScriptFilesState();
 
                         notificationsControl1.AfterComplete();
@@ -475,7 +475,7 @@ namespace AutoVersionsDB.WinApp
                     SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
-                    ProcessTrace processResults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(_projectConfigItem.ProjectCode, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
+                    ProcessTrace processResults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(_projectConfigItem.Code, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
                     RefreshScriptFilesState();
 
                     notificationsControl1.AfterComplete();
@@ -506,7 +506,7 @@ namespace AutoVersionsDB.WinApp
             HideAllActionPanels();
 
             SetControlHideOrVisible(pnlRepeatableFiles, true);
-            if (_projectConfigItem.IsDevEnvironment)
+            if (_projectConfigItem.DevEnvironment)
             {
                 SetControlHideOrVisible(pnlDevDummyDataFiles, true);
             }
@@ -621,29 +621,29 @@ namespace AutoVersionsDB.WinApp
 
             btnRecreateDbFromScratchMain.BeginInvoke((MethodInvoker)(() =>
             {
-                btnRecreateDbFromScratchMain.Visible = _projectConfigItem.IsDevEnvironment;
+                btnRecreateDbFromScratchMain.Visible = _projectConfigItem.DevEnvironment;
             }));
             lblRecreateDbFromScratchMain.BeginInvoke((MethodInvoker)(() =>
             {
-                lblRecreateDbFromScratchMain.Visible = _projectConfigItem.IsDevEnvironment;
+                lblRecreateDbFromScratchMain.Visible = _projectConfigItem.DevEnvironment;
             }));
 
             btnDeploy.BeginInvoke((MethodInvoker)(() =>
             {
-                btnDeploy.Visible = _projectConfigItem.IsDevEnvironment;
+                btnDeploy.Visible = _projectConfigItem.DevEnvironment;
             }));
             lblDeploy.BeginInvoke((MethodInvoker)(() =>
             {
-                lblDeploy.Visible = _projectConfigItem.IsDevEnvironment;
+                lblDeploy.Visible = _projectConfigItem.DevEnvironment;
             }));
 
             btnRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
             {
-                btnRecreateDbFromScratch2.Visible = _projectConfigItem.IsDevEnvironment;
+                btnRecreateDbFromScratch2.Visible = _projectConfigItem.DevEnvironment;
             }));
             lblRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
             {
-                lblRecreateDbFromScratch2.Visible = _projectConfigItem.IsDevEnvironment;
+                lblRecreateDbFromScratch2.Visible = _projectConfigItem.DevEnvironment;
             }));
 
         }
@@ -712,7 +712,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BindDevDummyDataGrid()
         {
-            if (_projectConfigItem.IsDevEnvironment)
+            if (_projectConfigItem.DevEnvironment)
             {
                 List<RuntimeScriptFileBase> allDevDummyDataScriptFiles;
                 if (_scriptFilesState == null)

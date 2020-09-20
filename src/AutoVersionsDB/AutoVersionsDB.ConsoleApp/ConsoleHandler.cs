@@ -2,6 +2,7 @@
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -26,6 +27,12 @@ namespace AutoVersionsDB.ConsoleApp
         }
 
 
+        public void SetErrorMessage(string message)
+        {
+            TextWriter errorWriter = Console.Error;
+            errorWriter.WriteLine(message);
+        }
+
         public void ProcessComplete(ProcessTrace processReults)
         {
             ClearConsoleLine(0);
@@ -35,19 +42,26 @@ namespace AutoVersionsDB.ConsoleApp
 
                 if (processReults.HasError)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("The process complete with errors:");
-                    Console.WriteLine("--------------------------------");
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(processReults.GetOnlyErrorsHistoryAsString());
+                    //Console.ForegroundColor = ConsoleColor.Red;
+                    //Console.WriteLine("The process complete with errors:");
+                    //Console.WriteLine("--------------------------------");
+                    //Console.ForegroundColor = ConsoleColor.DarkRed;
+                    //Console.WriteLine(processReults.GetOnlyErrorsHistoryAsString());
 
-                    if (!string.IsNullOrWhiteSpace(processReults.InstructionsMessage))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(processReults.InstructionsMessage);
-                    }
+                    //if (!string.IsNullOrWhiteSpace(processReults.InstructionsMessage))
+                    //{
+                    //    Console.ForegroundColor = ConsoleColor.Red;
+                    //    Console.WriteLine(processReults.InstructionsMessage);
+                    //}
 
-                    Console.ForegroundColor = ConsoleColor.White;
+                    //Console.ForegroundColor = ConsoleColor.White;
+
+
+                    SetErrorMessage("The process complete with errors:");
+                    SetErrorMessage("--------------------------------");
+                    SetErrorMessage(processReults.GetOnlyErrorsHistoryAsString());
+                    SetErrorMessage(processReults.InstructionsMessage);
+
                 }
                 else
                 {

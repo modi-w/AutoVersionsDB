@@ -5,7 +5,7 @@
 
         public ProjectConfigItemForTest_DeliveryEnvBase()
         {
-            IsDevEnvironment = false;
+            DevEnvironment = false;
         }
 
 

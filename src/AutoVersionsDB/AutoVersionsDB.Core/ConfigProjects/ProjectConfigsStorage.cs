@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace AutoVersionsDB.Core.ConfigProjects
 {
@@ -19,16 +20,16 @@ namespace AutoVersionsDB.Core.ConfigProjects
             lock (_saveSync)
             {
                 projectConfig.ThrowIfNull(nameof(projectConfig));
-                projectConfig.ProjectCode.ThrowIfNull(nameof(projectConfig.ProjectCode));
+                projectConfig.Code.ThrowIfNull(nameof(projectConfig.Code));
 
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (dicAllProjectConfigs.ContainsKey(projectConfig.ProjectCode.ToTrimedInvariant()))
+                if (dicAllProjectConfigs.ContainsKey(projectConfig.Code.ToTrimedInvariant()))
                 {
-                    throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is aready exist.");
+                    throw new Exception($"ProjectCode: '{projectConfig.Code}' is aready exist.");
                 }
 
-                dicAllProjectConfigs.Add(projectConfig.ProjectCode.ToTrimedInvariant(), projectConfig);
+                dicAllProjectConfigs.Add(projectConfig.Code.ToTrimedInvariant(), projectConfig);
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
@@ -40,17 +41,17 @@ namespace AutoVersionsDB.Core.ConfigProjects
             lock (_saveSync)
             {
                 projectConfig.ThrowIfNull(nameof(projectConfig));
-                projectConfig.ProjectCode.ThrowIfNull(nameof(projectConfig.ProjectCode));
+                projectConfig.Code.ThrowIfNull(nameof(projectConfig.Code));
 
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (!dicAllProjectConfigs.ContainsKey(projectConfig.ProjectCode.ToTrimedInvariant()))
+                if (!dicAllProjectConfigs.ContainsKey(projectConfig.Code.ToTrimedInvariant()))
                 {
-                    throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is not exist.");
+                    throw new Exception($"ProjectCode: '{projectConfig.Code}' is not exist.");
                 }
 
 
-                dicAllProjectConfigs[projectConfig.ProjectCode.ToTrimedInvariant()] = projectConfig;
+                dicAllProjectConfigs[projectConfig.Code.ToTrimedInvariant()] = projectConfig;
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
@@ -67,10 +68,10 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 if (!dicAllProjectConfigs.TryGetValue(prevProjectCode.ToTrimedInvariant(), out ProjectConfigItem projectConfig))
                 {
-                    throw new Exception($"ProjectCode: '{projectConfig.ProjectCode}' is not exist.");
+                    throw new Exception($"ProjectCode: '{projectConfig.Code}' is not exist.");
                 }
 
-                projectConfig.ProjectCode = newProjectCode;
+                projectConfig.Code = newProjectCode;
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
@@ -126,8 +127,8 @@ namespace AutoVersionsDB.Core.ConfigProjects
                 listAllProjectConfigs = new List<ProjectConfigItem>();
             }
 
-            listAllProjectConfigs.OrderBy(e => e.ProjectCode.ToTrimedInvariant()).ToList();
-            dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.ProjectCode.ToTrimedInvariant());
+            listAllProjectConfigs.OrderBy(e => e.Code.ToTrimedInvariant()).ToList();
+            dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.Code.ToTrimedInvariant());
 
             return dicAllProjectConfigs;
         }
@@ -136,7 +137,9 @@ namespace AutoVersionsDB.Core.ConfigProjects
         {
             var dicAllProjectConfigs = GetAllProjectConfigs();
 
-            return dicAllProjectConfigs[projectCode.ToTrimedInvariant()];
+            dicAllProjectConfigs.TryGetValue( projectCode.ToTrimedInvariant(), out ProjectConfigItem resultProjectConfig);
+
+            return resultProjectConfig;
         }
 
         public virtual bool IsProjectCodeExsit(string projectCode)

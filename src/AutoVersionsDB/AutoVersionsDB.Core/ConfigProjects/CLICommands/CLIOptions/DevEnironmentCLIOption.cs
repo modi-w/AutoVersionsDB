@@ -5,11 +5,12 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ConfigProjects.CLICommands.CLIOptions
 {
-    public class DevEnironmentCLIOption : Option<bool>
+    public class DevEnvironmentCLIOption : Option<bool>
     {
-        public DevEnironmentCLIOption()
-            : base(new string[] { "--dev-environment", "-dev" }, "Is the project run on dev environment (allow to use dummy data scripts files)")
+        public DevEnvironmentCLIOption()
+            : base(new string[] { "--dev-environment", "-dev" }, "Is the project run on dev environment (use scripts files) or on a delivery environment (use artifact file)")
         {
+            IsRequired = true;
         }
     }
 }

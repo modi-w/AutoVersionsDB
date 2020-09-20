@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
-            ArtifactFileValidator artifactFileValidator = new ArtifactFileValidator(projectConfig.IsDevEnvironment, projectConfig.DeliveryArtifactFolderPath);
+            ArtifactFileValidator artifactFileValidator = new ArtifactFileValidator(projectConfig.DevEnvironment, projectConfig.DeliveryArtifactFolderPath);
             validationsGroup.Add(artifactFileValidator);
 
             return validationsGroup;

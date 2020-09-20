@@ -11,10 +11,13 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 {
-    public class InitCommandFactory : CLICommandFactory
+    public class ConfigCommandFactory : CLICommandFactory
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly IConsoleHandler _consoleHandler;
+
+        private readonly EnvironmentCommandFactory _environmentCommandFactory;
+        private readonly ChangeCodeCommandFactory _changeCodeCommandFactory;
 
         private readonly CodeCLIOption _codeOption;
         private readonly DescriptionCLIOption _descriptionOption;
@@ -22,35 +25,36 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private readonly ConnectionStringCLIOption _connectionStringOption;
         private readonly ConnectionStringToMasterDBCLIOption _connectionStringToMasterDBOption;
         private readonly BackupFolderPathCLIOption _backupFolderPathOption;
-        private readonly DevEnvironmentCLIOption _devEnvironmentOption;
         private readonly ScriptsBaseFolderPathCLIOption _scriptsBaseFolderPathOption;
         private readonly DeployArtifactFolderPathCLIOption _deployArtifactFolderPathOption;
         private readonly DeliveryArtifactFolderPathCLIOption _deliveryArtifactFolderPathOption;
 
 
 
-        public InitCommandFactory(ProjectConfigsAPI projectConfigsAPI,
+        public ConfigCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                     IConsoleHandler consoleHandler,
+                                    EnvironmentCommandFactory environmentCommandFactory,
+                                    ChangeCodeCommandFactory changeCodeCommandFactory,
                                     CodeCLIOption codeOption,
                                     DescriptionCLIOption descriptionOption,
                                     DBTypeCLIOption dbTypeOption,
                                     ConnectionStringCLIOption connectionStringOption,
                                     ConnectionStringToMasterDBCLIOption connectionStringToMasterDBOption,
                                     BackupFolderPathCLIOption backupFolderPathOption,
-                                    DevEnvironmentCLIOption devEnvironmentOption,
                                     ScriptsBaseFolderPathCLIOption scriptsBaseFolderPathOption,
                                     DeployArtifactFolderPathCLIOption deployArtifactFolderPathOption,
                                     DeliveryArtifactFolderPathCLIOption deliveryArtifactFolderPathOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
+            _environmentCommandFactory = environmentCommandFactory;
+            _changeCodeCommandFactory = changeCodeCommandFactory;
             _codeOption = codeOption;
             _descriptionOption = descriptionOption;
             _dbTypeOption = dbTypeOption;
             _connectionStringOption = connectionStringOption;
             _connectionStringToMasterDBOption = connectionStringToMasterDBOption;
             _backupFolderPathOption = backupFolderPathOption;
-            _devEnvironmentOption = devEnvironmentOption;
             _scriptsBaseFolderPathOption = scriptsBaseFolderPathOption;
             _deployArtifactFolderPathOption = deployArtifactFolderPathOption;
             _deliveryArtifactFolderPathOption = deliveryArtifactFolderPathOption;
@@ -58,7 +62,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
         public override Command Create()
         {
-            Command command = new Command("init")
+            Command command = new Command("config")
             {
                 _codeOption,
                 _descriptionOption,
@@ -66,25 +70,77 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                 _connectionStringOption,
                 _connectionStringToMasterDBOption,
                 _backupFolderPathOption,
-                _devEnvironmentOption,
                 _scriptsBaseFolderPathOption,
                 _deployArtifactFolderPathOption,
                 _deliveryArtifactFolderPathOption,
             };
 
-            command.Description = "Initiate project. Define a new project for AutoVersionsDB.";
+            command.Description = "Change project configuration.";
 
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
             {
-                _consoleHandler.StartSpiiner();
-                ProcessTrace processReults = _projectConfigsAPI.SaveNewProjectConfig(projectConfig, _consoleHandler.OnNotificationStateChanged);
-                _consoleHandler.StopSpinner();
+                ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigByProjectCode(projectConfig.Code);
 
-                _consoleHandler.ProcessComplete(processReults);
+                if (existProjectConfig == null)
+                {
+                    _consoleHandler.SetErrorMessage($"Project Code: '{projectConfig.Code}' is not exist. You can use the 'init' command to define new project.");
+                }
+                else
+                {
+                    overrideProjectConfigProperties(existProjectConfig, projectConfig);
+
+                    _consoleHandler.StartSpiiner();
+                    ProcessTrace processReults = _projectConfigsAPI.UpdateProjectConfig(existProjectConfig, _consoleHandler.OnNotificationStateChanged);
+                    _consoleHandler.StopSpinner();
+
+                    _consoleHandler.ProcessComplete(processReults);
+                }
             });
 
+            Command changeCodeCommand = _changeCodeCommandFactory.Create();
+            command.Add(changeCodeCommand);
+
+            Command environmentCommand = _environmentCommandFactory.Create();
+            command.Add(environmentCommand);
+
             return command;
+        }
+
+        private static void overrideProjectConfigProperties(ProjectConfigItem existProjectConfig, ProjectConfigItem projectConfig)
+        {
+            if (existProjectConfig.Description != null)
+            {
+                existProjectConfig.Description = projectConfig.Description;
+            }
+            if (existProjectConfig.DBType != null)
+            {
+                existProjectConfig.DBType = projectConfig.DBType;
+            }
+            if (existProjectConfig.ConnectionString != null)
+            {
+                existProjectConfig.ConnectionString = projectConfig.ConnectionString;
+            }
+            if (existProjectConfig.ConnectionStringToMasterDB != null)
+            {
+                existProjectConfig.ConnectionStringToMasterDB = projectConfig.ConnectionStringToMasterDB;
+            }
+            if (existProjectConfig.BackupFolderPath != null)
+            {
+                existProjectConfig.BackupFolderPath = projectConfig.BackupFolderPath;
+            }
+            if (existProjectConfig.DevScriptsBaseFolderPath != null)
+            {
+                existProjectConfig.DevScriptsBaseFolderPath = projectConfig.DevScriptsBaseFolderPath;
+            }
+            if (existProjectConfig.DeployArtifactFolderPath != null)
+            {
+                existProjectConfig.DeployArtifactFolderPath = projectConfig.DeployArtifactFolderPath;
+            }
+            if (existProjectConfig.DeliveryArtifactFolderPath != null)
+            {
+                existProjectConfig.DeliveryArtifactFolderPath = projectConfig.DeliveryArtifactFolderPath;
+            }
         }
     }
 }

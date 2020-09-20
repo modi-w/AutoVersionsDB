@@ -13,11 +13,15 @@ namespace AutoVersionsDB.Core.ConfigProjects
         private readonly List<CLICommandFactory> _cliCommandFactories;
 
 
-        public ProjectConfigsCLIBuilder(InitCommandFactory initCommandFactory)
+        public ProjectConfigsCLIBuilder(InitCommandFactory initCommandFactory,
+                                        ConfigCommandFactory configCommandFactory,
+                                        RemoveCommandFactory removeCommandFactory)
         {
             _cliCommandFactories = new List<CLICommandFactory>()
             {
                 initCommandFactory,
+                configCommandFactory,
+                removeCommandFactory,
             };
         }
 

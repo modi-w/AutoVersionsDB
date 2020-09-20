@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.Deploy(projectConfig.ProjectCode, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.Deploy(projectConfig.Code, null);
 
 
             //Assert

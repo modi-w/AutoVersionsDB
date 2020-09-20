@@ -47,6 +47,10 @@ namespace AutoVersionsDB.Core
         {
             return _autoVersionsDBCLI.Run(args);
         }
+        public static int CLIRun(string args)
+        {
+            return _autoVersionsDBCLI.Run(args);
+        }
 
 
 

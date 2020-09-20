@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.ProjectCode, c_targetStateFile_MiddleState, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.Code, c_targetStateFile_MiddleState, null);
 
 
             //Assert
@@ -51,7 +51,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.ProjectCode, c_targetStateFile_MiddleState, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.Code, c_targetStateFile_MiddleState, null);
 
 
             //Assert
@@ -77,7 +77,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.ProjectCode, c_targetStateFile_FinalState, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.Code, c_targetStateFile_FinalState, null);
 
             //Assert
             assertProccessErrors(processTrace);

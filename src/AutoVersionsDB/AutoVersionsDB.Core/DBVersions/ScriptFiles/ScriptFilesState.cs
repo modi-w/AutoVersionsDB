@@ -45,7 +45,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
             using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(projectConfig))
             {
-                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, projectConfig.DBCommandsTimeout).AsDisposable())
+                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBType, projectConfig.ConnectionString, projectConfig.DBCommandsTimeout).AsDisposable())
                 {
                     IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(dbCommands.Instance, projectConfig.IncrementalScriptsFolderPath);
                     _scriptFilesComparersDictionary[IncrementalScriptFilesComparer.ScriptFileType.FileTypeCode] = IncrementalScriptFilesComparer;
@@ -53,7 +53,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
                     RepeatableScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<RepeatableScriptFileType>(dbCommands.Instance, projectConfig.RepeatableScriptsFolderPath);
                     _scriptFilesComparersDictionary[RepeatableScriptFilesComparer.ScriptFileType.FileTypeCode] = RepeatableScriptFilesComparer;
 
-                    if (projectConfig.IsDevEnvironment)
+                    if (projectConfig.DevEnvironment)
                     {
                         DevDummyDataScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<DevDummyDataScriptFileType>(dbCommands.Instance, projectConfig.DevDummyDataScriptsFolderPath);
                         _scriptFilesComparersDictionary[DevDummyDataScriptFilesComparer.ScriptFileType.FileTypeCode] = DevDummyDataScriptFilesComparer;

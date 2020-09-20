@@ -8,5 +8,7 @@ namespace AutoVersionsDB.Core.Common.CLI
         void ProcessComplete(ProcessTrace processReults);
         void StartSpiiner();
         void StopSpinner();
+
+        void SetErrorMessage(string message);
     }
 }

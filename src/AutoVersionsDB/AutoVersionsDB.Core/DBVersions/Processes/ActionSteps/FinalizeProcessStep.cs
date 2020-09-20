@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBTypeCode, processContext.ProjectConfig.ConnStr, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBType, processContext.ProjectConfig.ConnectionString, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
             {
                 DataSet dsExecutionHistory = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
 

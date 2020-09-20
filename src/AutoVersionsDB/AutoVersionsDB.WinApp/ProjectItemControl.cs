@@ -43,32 +43,32 @@ namespace AutoVersionsDB.WinApp
 
         private void LblProjectName_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.ProjectCode);
+            OnNavToProcess?.Invoke(ProjectConfig.Code);
         }
 
         private void LblProjectIcon_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.ProjectCode);
+            OnNavToProcess?.Invoke(ProjectConfig.Code);
         }
 
         private void LblProcessLink_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.ProjectCode);
+            OnNavToProcess?.Invoke(ProjectConfig.Code);
         }
 
         private void LblEditProject_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(ProjectConfig.ProjectCode);
+            OnEditProject?.Invoke(ProjectConfig.Code);
         }
 
         private void LblDeleteProject_Click(object sender, EventArgs e)
         {
-            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.ProjectCode}'";
+            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.Code}'";
             bool results = MessageBox.Show(this, warningMessage, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes;
 
             if (results)
             {
-                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.ProjectCode, null);
+                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.Code, null);
 
                 OnRefreshProjectList?.Invoke();
             }

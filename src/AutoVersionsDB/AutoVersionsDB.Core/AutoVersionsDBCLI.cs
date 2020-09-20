@@ -24,12 +24,26 @@ namespace AutoVersionsDB.Core
 
         public int Run(string[] args)
         {
+            RootCommand rootCommand = createCli();
+
+            return rootCommand.InvokeAsync(args).Result;
+        }
+
+        public int Run(string args)
+        {
+            RootCommand rootCommand = createCli();
+
+            return rootCommand.InvokeAsync(args).Result;
+        }
+
+        private RootCommand createCli()
+        {
             RootCommand rootCommand = new RootCommand();
 
             _projectConfigsCLIBuilder.Build(rootCommand);
             _dbVersionsCLIBuilder.Build(rootCommand);
-
-            return rootCommand.InvokeAsync(args).Result;
+            return rootCommand;
         }
+
     }
 }

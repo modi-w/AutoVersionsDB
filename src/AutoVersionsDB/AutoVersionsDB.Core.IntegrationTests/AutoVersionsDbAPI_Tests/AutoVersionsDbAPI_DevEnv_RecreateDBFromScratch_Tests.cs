@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.ProjectCode, null, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.Code, null, null);
 
 
             //Assert
@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.ProjectCode, c_targetStateFile_FinalState, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.Code, c_targetStateFile_FinalState, null);
 
             //Assert
             assertProccessErrors(processTrace);
@@ -74,7 +74,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.ProjectCode, null, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.Code, null, null);
 
             //Assert
             assertProccessErrors(processTrace);
@@ -98,7 +98,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.ProjectCode, null, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.Code, null, null);
 
             //Assert
             assertProccessErrors(processTrace);
@@ -122,7 +122,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.ProjectCode,c_targetStateFile_MiddleState, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.Code,c_targetStateFile_MiddleState, null);
 
             //Assert
             assertProccessErrors(processTrace);

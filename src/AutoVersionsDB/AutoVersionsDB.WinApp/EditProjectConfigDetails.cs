@@ -241,9 +241,9 @@ namespace AutoVersionsDB.WinApp
                 cboConncectionType.SelectedIndex = -1;
             }));
 
-            if (!string.IsNullOrWhiteSpace(projectConfig.DBTypeCode))
+            if (!string.IsNullOrWhiteSpace(projectConfig.DBType))
             {
-                DBType currSelectedItem = _dbTypesList.FirstOrDefault(e => e.Code == projectConfig.DBTypeCode);
+                DBType currSelectedItem = _dbTypesList.FirstOrDefault(e => e.Code == projectConfig.DBType);
                 if (currSelectedItem != null)
                 {
                     cboConncectionType.BeginInvoke((MethodInvoker)(() =>
@@ -255,23 +255,23 @@ namespace AutoVersionsDB.WinApp
 
             tbProjectCode.BeginInvoke((MethodInvoker)(() =>
             {
-                tbProjectCode.Text = projectConfig.ProjectCode;
+                tbProjectCode.Text = projectConfig.Code;
             }));
             tbProjectDescription.BeginInvoke((MethodInvoker)(() =>
             {
-                tbProjectDescription.Text = projectConfig.ProjectDescription;
+                tbProjectDescription.Text = projectConfig.Description;
             }));
             tbConnStr.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStr.Text = projectConfig.ConnStr;
+                tbConnStr.Text = projectConfig.ConnectionString;
             }));
             tbConnStrToMasterDB.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStrToMasterDB.Text = projectConfig.ConnStrToMasterDB;
+                tbConnStrToMasterDB.Text = projectConfig.ConnectionStringToMasterDB;
             }));
             tbDBBackupFolder.BeginInvoke((MethodInvoker)(() =>
             {
-                tbDBBackupFolder.Text = projectConfig.DBBackupBaseFolder;
+                tbDBBackupFolder.Text = projectConfig.BackupFolderPath;
             }));
 
             tbDevScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
@@ -290,11 +290,11 @@ namespace AutoVersionsDB.WinApp
 
             rbDevEnv.BeginInvoke((MethodInvoker)(() =>
             {
-                rbDevEnv.Checked = projectConfig.IsDevEnvironment;
+                rbDevEnv.Checked = projectConfig.DevEnvironment;
             }));
             rbDelEnv.BeginInvoke((MethodInvoker)(() =>
             {
-                rbDelEnv.Checked = !projectConfig.IsDevEnvironment;
+                rbDelEnv.Checked = !projectConfig.DevEnvironment;
             }));
 
 
@@ -352,14 +352,14 @@ namespace AutoVersionsDB.WinApp
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem();
 
-            projectConfig.ProjectCode = tbProjectCode.Text;
-            projectConfig.ProjectDescription = tbProjectDescription.Text;
-            projectConfig.DBTypeCode = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
-            projectConfig.ConnStr = tbConnStr.Text;
-            projectConfig.ConnStrToMasterDB = tbConnStrToMasterDB.Text;
-            projectConfig.DBBackupBaseFolder = tbDBBackupFolder.Text;
+            projectConfig.Code = tbProjectCode.Text;
+            projectConfig.Description = tbProjectDescription.Text;
+            projectConfig.DBType = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
+            projectConfig.ConnectionString = tbConnStr.Text;
+            projectConfig.ConnectionStringToMasterDB = tbConnStrToMasterDB.Text;
+            projectConfig.BackupFolderPath = tbDBBackupFolder.Text;
 
-            projectConfig.IsDevEnvironment = rbDevEnv.Checked;
+            projectConfig.DevEnvironment = rbDevEnv.Checked;
 
             //    _projectConfigItem.IsDevEnvironment = chkAllowDropDB.Checked;
 
@@ -419,7 +419,7 @@ namespace AutoVersionsDB.WinApp
 
                     if (!processResults.HasError)
                     {
-                        _projectCode = projectConfig.ProjectCode;
+                        _projectCode = projectConfig.Code;
                     }
 
                     handleCompleteProcess(processResults);

@@ -23,7 +23,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.ProjectCode, c_targetStateFile_FinalState, false, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.Code, c_targetStateFile_FinalState, false, null);
 
             //Assert
             assertProccessErrors(processTrace);
@@ -47,7 +47,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.ProjectCode, c_targetStateFile_FinalState, false, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.Code, c_targetStateFile_FinalState, false, null);
 
             //Assert
             assertProccessErrors(processTrace);
@@ -71,7 +71,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.ProjectCode, c_targetStateFile_MiddleState, false, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.Code, c_targetStateFile_MiddleState, false, null);
 
             //Assert
             assertProccessErrors(processTrace);
@@ -95,7 +95,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.ProjectCode, c_targetStateFile_MiddleState, false, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.Code, c_targetStateFile_MiddleState, false, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
@@ -116,7 +116,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.ProjectCode, c_targetStateFile_MiddleState, true, null);
+            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.Code, c_targetStateFile_MiddleState, true, null);
 
             //Assert
             assertProccessErrors(processTrace);

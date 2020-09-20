@@ -18,19 +18,10 @@ namespace AutoVersionsDB.ConsoleApp
             Console.Title = "AutoVersionsDB";
 
 
-            return AutoVersionsDbAPI.CLIRun(args);
+            //return AutoVersionsDbAPI.CLIRun(args);
+            //  return AutoVersionsDbAPI.CLIRun("-h");
+            return AutoVersionsDbAPI.CLIRun("config -code=testp1 -desc=\"Test project 2\" --db-type=SqlServer -connstr=aaaa -connstrm=bbb -buf=ccc -dsf=ddd -def=eee -darf=fff");
         }
-
-
-
-
-
-       
-
-
-     
-
-
 
 
 

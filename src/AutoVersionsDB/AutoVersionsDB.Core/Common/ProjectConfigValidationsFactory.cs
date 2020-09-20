@@ -27,24 +27,24 @@ namespace AutoVersionsDB.Core.Common
 
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
-            ProjectCodeMandatory projectNameValidator = new ProjectCodeMandatory(projectConfig.ProjectCode);
+            ProjectCodeMandatory projectNameValidator = new ProjectCodeMandatory(projectConfig.Code);
             validationsGroup.Add(projectNameValidator);
 
-            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
+            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBType, _dbCommandsFactoryProvider);
             validationsGroup.Add(dbTypeValidator);
 
-            ConnStrValidator connStrValidator = new ConnStrValidator(nameof(projectConfig.ConnStr), projectConfig.ConnStr, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
+            ConnStrValidator connStrValidator = new ConnStrValidator(nameof(projectConfig.ConnectionString), projectConfig.ConnectionString, projectConfig.DBType, _dbCommandsFactoryProvider);
             validationsGroup.Add(connStrValidator);
 
-            ConnStrValidator connStrToMasterDBValidator = new ConnStrValidator(nameof(projectConfig.ConnStrToMasterDB), projectConfig.ConnStrToMasterDB, projectConfig.DBTypeCode, _dbCommandsFactoryProvider);
+            ConnStrValidator connStrToMasterDBValidator = new ConnStrValidator(nameof(projectConfig.ConnectionStringToMasterDB), projectConfig.ConnectionStringToMasterDB, projectConfig.DBType, _dbCommandsFactoryProvider);
             validationsGroup.Add(connStrToMasterDBValidator);
 
-            DBBackupFolderValidator dbBackupBaseFolderValidator = new DBBackupFolderValidator(projectConfig.DBBackupBaseFolder);
+            DBBackupFolderValidator dbBackupBaseFolderValidator = new DBBackupFolderValidator(projectConfig.BackupFolderPath);
             validationsGroup.Add(dbBackupBaseFolderValidator);
 
-            if (projectConfig.IsDevEnvironment)
+            if (projectConfig.DevEnvironment)
             {
-                DevScriptsBaseFolderPathValidator scriptsRootFolderPathValidator = new DevScriptsBaseFolderPathValidator(projectConfig.IsDevEnvironment, projectConfig.DevScriptsBaseFolderPath);
+                DevScriptsBaseFolderPathValidator scriptsRootFolderPathValidator = new DevScriptsBaseFolderPathValidator(projectConfig.DevEnvironment, projectConfig.DevScriptsBaseFolderPath);
                 validationsGroup.Add(scriptsRootFolderPathValidator);
 
                 if (!string.IsNullOrWhiteSpace(projectConfig.DevScriptsBaseFolderPath))

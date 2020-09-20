@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.DBVersions.ArtifactFile
 
         private void Extract()
         {
-            if (!_projectConfigItem.IsDevEnvironment)
+            if (!_projectConfigItem.DevEnvironment)
             {
                 if (!string.IsNullOrWhiteSpace(_projectConfigItem.DeliveryArtifactFolderPath)
                     && Directory.Exists(_projectConfigItem.DeliveryArtifactFolderPath))
@@ -78,7 +78,7 @@ namespace AutoVersionsDB.Core.DBVersions.ArtifactFile
             }
 
             //Comment: delete files is unmanage resource - so it is not in the disposing condition
-            if (!_projectConfigItem.IsDevEnvironment)
+            if (!_projectConfigItem.DevEnvironment)
             {
                 if (Directory.Exists(_projectConfigItem.DeliveryExtractedFilesArtifactFolder))
                 {

@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.Common.CLI;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace AutoVersionsDB.ConsoleApp
         private static void RegisterServices(IKernel kernel)
         {
             //  kernel.ThrowIfNull(nameof(kernel));
-            kernel.Bind<ConsoleHandler>().To<ConsoleHandler>().InSingletonScope();
+            kernel.Bind<IConsoleHandler>().To<ConsoleHandler>().InSingletonScope();
 
         }
 
