@@ -138,7 +138,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
                 if (notificationState != null)
                 {
-                    sbStrResults.AppendLine(notificationState.ToString(true, true));
+                    sbStrResults.AppendLine(notificationState.ToString(false, false));
                 }
 
                 //foreach (var notificationState in _statesHistory.Where(e => e.HasError).ToList())

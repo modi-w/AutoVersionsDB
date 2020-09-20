@@ -70,10 +70,11 @@ namespace AutoVersionsDB.ConsoleApp
                     //Console.ForegroundColor = ConsoleColor.White;
 
 
-                    SetErrorMessage("The process complete with errors:");
-                    SetErrorMessage("--------------------------------");
+                    SetErrorInstruction("The process complete with errors:");
+                    SetErrorInstruction("--------------------------------");
                     SetErrorMessage(processReults.GetOnlyErrorsHistoryAsString());
-                    SetErrorMessage(processReults.InstructionsMessage);
+                    
+                    SetErrorInstruction(processReults.InstructionsMessage);
 
                 }
                 else
