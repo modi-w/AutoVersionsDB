@@ -10,5 +10,10 @@ namespace AutoVersionsDB.Core.Common.CLI
         void StopSpinner();
 
         void SetErrorMessage(string message);
+
+        void SetErrorInstruction(string message);
+
+        void WriteLineInfo(string message);
+
     }
 }

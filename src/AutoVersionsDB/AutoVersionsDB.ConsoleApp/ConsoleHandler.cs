@@ -45,6 +45,13 @@ namespace AutoVersionsDB.ConsoleApp
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        public void WriteLineInfo(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine(message);
+        }
+
 
         public void ProcessComplete(ProcessTrace processReults)
         {

@@ -109,35 +109,35 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
         private static void overrideProjectConfigProperties(ProjectConfigItem existProjectConfig, ProjectConfigItem projectConfig)
         {
-            if (existProjectConfig.Description != null)
+            if (projectConfig.Description != null)
             {
                 existProjectConfig.Description = projectConfig.Description;
             }
-            if (existProjectConfig.DBType != null)
+            if (projectConfig.DBType != null)
             {
                 existProjectConfig.DBType = projectConfig.DBType;
             }
-            if (existProjectConfig.ConnectionString != null)
+            if (projectConfig.ConnectionString != null)
             {
                 existProjectConfig.ConnectionString = projectConfig.ConnectionString;
             }
-            if (existProjectConfig.ConnectionStringToMasterDB != null)
+            if (projectConfig.ConnectionStringToMasterDB != null)
             {
                 existProjectConfig.ConnectionStringToMasterDB = projectConfig.ConnectionStringToMasterDB;
             }
-            if (existProjectConfig.BackupFolderPath != null)
+            if (projectConfig.BackupFolderPath != null)
             {
                 existProjectConfig.BackupFolderPath = projectConfig.BackupFolderPath;
             }
-            if (existProjectConfig.DevScriptsBaseFolderPath != null)
+            if (projectConfig.DevScriptsBaseFolderPath != null)
             {
                 existProjectConfig.DevScriptsBaseFolderPath = projectConfig.DevScriptsBaseFolderPath;
             }
-            if (existProjectConfig.DeployArtifactFolderPath != null)
+            if (projectConfig.DeployArtifactFolderPath != null)
             {
                 existProjectConfig.DeployArtifactFolderPath = projectConfig.DeployArtifactFolderPath;
             }
-            if (existProjectConfig.DeliveryArtifactFolderPath != null)
+            if (projectConfig.DeliveryArtifactFolderPath != null)
             {
                 existProjectConfig.DeliveryArtifactFolderPath = projectConfig.DeliveryArtifactFolderPath;
             }

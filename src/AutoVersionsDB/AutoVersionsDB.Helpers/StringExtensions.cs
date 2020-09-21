@@ -18,5 +18,17 @@ namespace AutoVersionsDB.Helpers
                 return str.Trim().ToUpperInvariant();
             }
         }
+
+        public static string Ellipsis(this string str, int maxLength)
+        {
+            string resultsStr = str;
+
+            if (str.Length > maxLength)
+            {
+                resultsStr = $"{str.Substring(0, maxLength - 3)}...";
+            }
+
+            return resultsStr;
+        }
     }
 }
