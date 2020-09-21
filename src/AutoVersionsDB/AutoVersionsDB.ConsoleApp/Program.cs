@@ -25,7 +25,9 @@ namespace AutoVersionsDB.ConsoleApp
             // return AutoVersionsDbAPI.CLIRun("sync -code=testp1");
        //     return AutoVersionsDbAPI.CLIRun("config -code=testp -desc=\"Test project 2\"");
 
-            return AutoVersionsDbAPI.CLIRun("list");
+            //return AutoVersionsDbAPI.CLIRun("list");
+            return AutoVersionsDbAPI.CLIRun("info -code=rvp");
+            
         }
 
 

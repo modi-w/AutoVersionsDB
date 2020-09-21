@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Description = "show list of all projects";
 
             command.Handler = CommandHandler
-                .Create<string, string>((code, newCode) =>
+                .Create(() =>
              {
                  IEnumerable<ProjectConfigItem> projectsList = _projectConfigsAPI.GetProjectsList();
 

@@ -14,6 +14,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
 
         public ProjectConfigsCLIBuilder(ListCommandFactory listCommandFactory,
+                                        InfoCommandFactory infoCommandFactory,
                                         InitCommandFactory initCommandFactory,
                                         ConfigCommandFactory configCommandFactory,
                                         RemoveCommandFactory removeCommandFactory)
@@ -21,6 +22,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
             _cliCommandFactories = new List<CLICommandFactory>()
             {
                 listCommandFactory,
+                infoCommandFactory,
                 initCommandFactory,
                 configCommandFactory,
                 removeCommandFactory,
