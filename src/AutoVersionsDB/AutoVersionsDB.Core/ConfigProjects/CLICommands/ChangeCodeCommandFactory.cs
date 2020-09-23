@@ -47,10 +47,10 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                 .Create<string, string>((code, newCode) =>
              {
                  _consoleHandler.StartSpiiner();
-                 ProcessTrace processReults = _projectConfigsAPI.ChangeProjectCode(code, newCode, _consoleHandler.OnNotificationStateChanged);
+                 ProcessResults processResults = _projectConfigsAPI.ChangeProjectCode(code, newCode, _consoleHandler.OnNotificationStateChanged);
                  _consoleHandler.StopSpinner();
 
-                 _consoleHandler.ProcessComplete(processReults);
+                 _consoleHandler.ProcessComplete(processResults.Trace);
              });
 
             return command;

@@ -72,11 +72,21 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
             return ScriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
         }
 
+        public bool TryParseNextRuntimeScriptFileName(string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile)
+        {
+            return ScriptFileType.RuntimeScriptFileFactory.TryParseNextRuntimeScriptFileName(FolderPath, scriptName, prevRuntimeScriptFile, out newRuntimeScriptFile);
+        }
+
         public RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile)
         {
             scriptName.ThrowIfNull(nameof(scriptName));
 
-            RuntimeScriptFileBase newRuntimeScriptFile = ScriptFileType.RuntimeScriptFileFactory.CreateNextRuntimeScriptFileInstance(FolderPath, scriptName, prevRuntimeScriptFile);
+            RuntimeScriptFileBase newRuntimeScriptFile;
+            if (!ScriptFileType.RuntimeScriptFileFactory.TryParseNextRuntimeScriptFileName(FolderPath, scriptName, prevRuntimeScriptFile, out newRuntimeScriptFile))
+            {
+                string errorMessage = $"Filename '{newRuntimeScriptFile.Filename}' not valid for script type: '{ScriptFileType.FileTypeCode}'. Should be like the following pattern: '{ScriptFileType.FilenamePattern}'";
+                throw new Exception(errorMessage);
+            }
 
             File.AppendAllText(newRuntimeScriptFile.FileFullPath, "", Encoding.UTF8);
 

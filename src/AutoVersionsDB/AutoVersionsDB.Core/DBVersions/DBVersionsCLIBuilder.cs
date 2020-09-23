@@ -15,14 +15,16 @@ namespace AutoVersionsDB.Core.DBVersions
         public DBVersionsCLIBuilder(SyncCommandFactory syncCommandFactory,
                                     RecreateCommandFactory recreateCommandFactory,
                                     VirtualCommandFactory virtualCommandFactory,
-                                    DeployCommandFactory deployCommandFactory)
+                                    DeployCommandFactory deployCommandFactory,
+                                    CreateNewScriptFileCommandFactory createNewScriptFileCommandFactory)
         {
             _cliCommandFactories = new List<CLICommandFactory>()
             {
                 syncCommandFactory,
                 recreateCommandFactory,
                 virtualCommandFactory,
-                deployCommandFactory
+                deployCommandFactory,
+                createNewScriptFileCommandFactory
             };
         }
 

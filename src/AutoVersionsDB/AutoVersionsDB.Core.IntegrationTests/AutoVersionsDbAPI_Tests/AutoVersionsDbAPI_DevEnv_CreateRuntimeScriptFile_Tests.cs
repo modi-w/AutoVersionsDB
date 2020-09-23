@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Moq;
 
 namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 {
@@ -79,6 +80,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DevEnv_CreateRuntimeScriptFile_Incremental_IsCreated([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             if (File.Exists(_scriptFullPath_Incremental_scriptName1))
             {
                 File.Delete(_scriptFullPath_Incremental_scriptName1);
@@ -93,7 +96,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             try
             {
                 //Act
-                fileToDelete = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig, c_Incremental_scriptName1);
+                ProcessResults processResults = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig.Code, c_Incremental_scriptName1, null);
+                fileToDelete = (string)processResults.Results;
 
                 //Assert
                 Assert.That(File.Exists(_scriptFullPath_Incremental_scriptName1));
@@ -112,6 +116,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DevEnv_CreateRuntimeScriptFile_Incremental_CreateNextVersionSameDay([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             if (File.Exists(_scriptFullPath_Incremental_scriptName1))
             {
                 File.Delete(_scriptFullPath_Incremental_scriptName1);
@@ -127,8 +133,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             try
             {
                 //Act
-                fileToDelete1 = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig, c_Incremental_scriptName1);
-                fileToDelete2 = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig, c_Incremental_scriptName2);
+                fileToDelete1 = (string)AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig.Code, c_Incremental_scriptName1, null).Results;
+                fileToDelete2 = (string)AutoVersionsDbAPI.CreateNewIncrementalScriptFile(projectConfig.Code, c_Incremental_scriptName2, null).Results;
 
                 //Assert
                 Assert.That(File.Exists(_scriptFullPath_Incremental_scriptName1));
@@ -158,6 +164,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DevEnv_CreateRuntimeScriptFile_Repeatable_IsCreated([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             if (File.Exists(_scriptFullPath_Repeatable_scriptName1))
             {
                 File.Delete(_scriptFullPath_Repeatable_scriptName1);
@@ -172,7 +180,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             try
             {
                 //Act
-                fileToDelete = AutoVersionsDbAPI.CreateNewRepeatableScriptFile(projectConfig, c_Repeatable_scriptName1);
+                fileToDelete = (string)AutoVersionsDbAPI.CreateNewRepeatableScriptFile(projectConfig.Code, c_Repeatable_scriptName1, null).Results;
 
                 //Assert
                 Assert.That(File.Exists(_scriptFullPath_Repeatable_scriptName1));
@@ -192,6 +200,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DevEnv_CreateRuntimeScriptFile_DevDummyData_IsCreated([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             if (File.Exists(_scriptFullPath_DevDummyData_scriptName1))
             {
                 File.Delete(_scriptFullPath_DevDummyData_scriptName1);
@@ -206,7 +216,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             try
             {
                 //Act
-                fileToDelete = AutoVersionsDbAPI.CreateNewDevDummyDataScriptFile(projectConfig, c_DevDummyData_scriptName1);
+                fileToDelete = (string)AutoVersionsDbAPI.CreateNewDevDummyDataScriptFile(projectConfig.Code, c_DevDummyData_scriptName1, null).Results;
 
                 //Assert
                 Assert.That(File.Exists(_scriptFullPath_DevDummyData_scriptName1));

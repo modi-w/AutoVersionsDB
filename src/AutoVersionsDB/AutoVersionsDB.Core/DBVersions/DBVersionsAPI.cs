@@ -7,6 +7,9 @@ using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 
 namespace AutoVersionsDB.Core.DBVersions
 {
@@ -16,7 +19,11 @@ namespace AutoVersionsDB.Core.DBVersions
         private readonly NotificationProcessRunner<ProjectConfigValidationProcessDefinition, DBVersionsProcessContext> _projectConfigValidationRunner;
         private readonly NotificationProcessRunner<TargetStateScriptFileValidationProcessDefinition, DBVersionsProcessContext> _targetStateScriptFileValidationRunner;
 
-        private readonly NotificationProcessRunner<SyncDBProcessDefinition, DBVersionsProcessContext> _syncDBProcessRunner;
+        private readonly NotificationProcessRunner<CreateNextScriptFileProcessDefinition<IncrementalScriptFileType>, DBVersionsProcessContext> _createIncrementalNextScriptFileRunner;
+        private readonly NotificationProcessRunner<CreateNextScriptFileProcessDefinition<RepeatableScriptFileType>, DBVersionsProcessContext> _createRepeatableNextScriptFileRunner;
+        private readonly NotificationProcessRunner<CreateNextScriptFileProcessDefinition<DevDummyDataScriptFileType>, DBVersionsProcessContext> _createDevDummyDataNextScriptFileRunner;
+
+        private readonly NotificationProcessRunner<SyncDBProcessDefinition, DBVersionsProcessContext> _syncDBRunner;
         private readonly NotificationProcessRunner<RecreateDBFromScratchProcessDefinition, DBVersionsProcessContext> _recreateDBFromScratchRunner;
         private readonly NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> _syncDBToSpecificStateRunner;
         private readonly NotificationProcessRunner<CreateVirtualExecutionsProcessDefinition, DBVersionsProcessContext> _createVirtualExecutionsRunner;
@@ -30,7 +37,10 @@ namespace AutoVersionsDB.Core.DBVersions
         public DBVersionsAPI(NotificationProcessRunner<DBVersionsValidationsProcessDefinitions, DBVersionsProcessContext> dbVersionsValidationsRunner,
                                NotificationProcessRunner<ProjectConfigValidationProcessDefinition, DBVersionsProcessContext> projectConfigValidationRunner,
                                NotificationProcessRunner<TargetStateScriptFileValidationProcessDefinition, DBVersionsProcessContext> targetStateScriptFileValidationRunner,
-                               NotificationProcessRunner<SyncDBProcessDefinition, DBVersionsProcessContext> syncDBProcessRunner,
+                               NotificationProcessRunner<CreateNextScriptFileProcessDefinition<IncrementalScriptFileType>, DBVersionsProcessContext> createIncrementalNextScriptFileRunner,
+                               NotificationProcessRunner<CreateNextScriptFileProcessDefinition<RepeatableScriptFileType>, DBVersionsProcessContext> createRepeatableNextScriptFileRunner,
+                               NotificationProcessRunner<CreateNextScriptFileProcessDefinition<DevDummyDataScriptFileType>, DBVersionsProcessContext> createDevDummyDataNextScriptFileRunner,
+                               NotificationProcessRunner<SyncDBProcessDefinition, DBVersionsProcessContext> syncRunner,
                                NotificationProcessRunner<RecreateDBFromScratchProcessDefinition, DBVersionsProcessContext> recreateDBFromScratchRunner,
                                NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> syncDBToSpecificStateRunner,
                                NotificationProcessRunner<CreateVirtualExecutionsProcessDefinition, DBVersionsProcessContext> createVirtualExecutionsRunner,
@@ -40,8 +50,12 @@ namespace AutoVersionsDB.Core.DBVersions
             _dbVersionsValidationsRunner = dbVersionsValidationsRunner;
             _projectConfigValidationRunner = projectConfigValidationRunner;
             _targetStateScriptFileValidationRunner = targetStateScriptFileValidationRunner;
-            
-            _syncDBProcessRunner = syncDBProcessRunner;
+
+            _createIncrementalNextScriptFileRunner = createIncrementalNextScriptFileRunner;
+            _createRepeatableNextScriptFileRunner = createRepeatableNextScriptFileRunner;
+            _createDevDummyDataNextScriptFileRunner = createDevDummyDataNextScriptFileRunner;
+
+            _syncDBRunner = syncRunner;
             _recreateDBFromScratchRunner = recreateDBFromScratchRunner;
             _syncDBToSpecificStateRunner = syncDBToSpecificStateRunner;
             _createVirtualExecutionsRunner = createVirtualExecutionsRunner;
@@ -56,21 +70,21 @@ namespace AutoVersionsDB.Core.DBVersions
 
         #region Validation
 
-        public ProcessTrace ValidateDBVersions(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults ValidateDBVersions(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _dbVersionsValidationsRunner.Run(new DBVersionsProcessParams(projectCode, null), onNotificationStateChanged);
+            return _dbVersionsValidationsRunner.Run(new DBVersionsProcessParams(projectCode, null, null), onNotificationStateChanged);
         }
 
-        public ProcessTrace ValidateProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults ValidateProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _projectConfigValidationRunner.Run(new DBVersionsProcessParams(projectCode, null), onNotificationStateChanged);
+            return _projectConfigValidationRunner.Run(new DBVersionsProcessParams(projectCode, null, null), onNotificationStateChanged);
         }
 
 
         public bool ValdiateTargetStateAlreadyExecuted(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ProcessTrace processTrace = _targetStateScriptFileValidationRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename), onNotificationStateChanged);
-            return !processTrace.HasError;
+            ProcessResults processResults = _targetStateScriptFileValidationRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename, null), onNotificationStateChanged);
+            return !processResults.Trace.HasError;
         }
 
         #endregion
@@ -78,20 +92,20 @@ namespace AutoVersionsDB.Core.DBVersions
 
         #region Run Change Db State
 
-        public ProcessTrace SyncDB(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults SyncDB(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _syncDBProcessRunner.Run(new DBVersionsProcessParams(projectCode, null), onNotificationStateChanged);
+            return _syncDBRunner.Run(new DBVersionsProcessParams(projectCode, null, null), onNotificationStateChanged);
         }
 
-        public ProcessTrace RecreateDBFromScratch(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults RecreateDBFromScratch(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _recreateDBFromScratchRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename), onNotificationStateChanged);
+            return _recreateDBFromScratchRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename, null), onNotificationStateChanged);
         }
 
 
-        public ProcessTrace SetDBToSpecificState(string projectCode, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults SetDBToSpecificState(string projectCode, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ProcessTrace processTrace;
+            ProcessResults processTrace;
 
             if (isIgnoreHistoryWarning)
             {
@@ -99,16 +113,16 @@ namespace AutoVersionsDB.Core.DBVersions
             }
             else
             {
-                processTrace = _syncDBToSpecificStateRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename), onNotificationStateChanged);
+                processTrace = _syncDBToSpecificStateRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename, null), onNotificationStateChanged);
             }
 
             return processTrace;
         }
 
 
-        public ProcessTrace SetDBStateByVirtualExecution(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults SetDBStateByVirtualExecution(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _createVirtualExecutionsRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename), onNotificationStateChanged);
+            return _createVirtualExecutionsRunner.Run(new DBVersionsProcessParams(projectCode, targetStateScriptFilename, null), onNotificationStateChanged);
         }
 
 
@@ -117,9 +131,9 @@ namespace AutoVersionsDB.Core.DBVersions
 
         #region Deploy
 
-        public ProcessTrace Deploy(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults Deploy(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _deployVirtualExecutionsRunner.Run(new DBVersionsProcessParams(projectCode, null), onNotificationStateChanged);
+            return _deployVirtualExecutionsRunner.Run(new DBVersionsProcessParams(projectCode, null, null), onNotificationStateChanged);
         }
 
         #endregion
@@ -130,49 +144,26 @@ namespace AutoVersionsDB.Core.DBVersions
 
         public ScriptFilesState CreateScriptFilesState(ProjectConfigItem projectConfig)
         {
-            ScriptFilesState scriptFilesState;
+            ScriptFilesState scriptFilesState = _scriptFilesStateFactory.Create();
 
-            scriptFilesState = _scriptFilesStateFactory.Create();
             scriptFilesState.Reload(projectConfig);
 
             return scriptFilesState;
         }
 
-        public string CreateNewIncrementalScriptFile(ProjectConfigItem projectConfig, string scriptName)
+        public ProcessResults CreateNewIncrementalScriptFile(string projectCode, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            RuntimeScriptFileBase scriptFileItem;
-
-            ScriptFilesState scriptFilesState = this.CreateScriptFilesState(projectConfig);
-            scriptFileItem = scriptFilesState.IncrementalScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-
-            return scriptFileItem.FileFullPath;
+           return _createIncrementalNextScriptFileRunner.Run(new DBVersionsProcessParams(projectCode, null, scriptName), onNotificationStateChanged);
         }
 
-        public string CreateNewRepeatableScriptFile(ProjectConfigItem projectConfig, string scriptName)
+        public ProcessResults CreateNewRepeatableScriptFile(string projectCode, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            RuntimeScriptFileBase scriptFileItem;
-
-            ScriptFilesState scriptFilesState = this.CreateScriptFilesState(projectConfig);
-            scriptFileItem = scriptFilesState.RepeatableScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-
-            return scriptFileItem.FileFullPath;
+            return _createRepeatableNextScriptFileRunner.Run(new DBVersionsProcessParams(projectCode, null, scriptName), onNotificationStateChanged);
         }
 
-        public string CreateNewDevDummyDataScriptFile(ProjectConfigItem projectConfig, string scriptName)
+        public ProcessResults CreateNewDevDummyDataScriptFile(string projectCode, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            projectConfig.ThrowIfNull(nameof(projectConfig));
-
-            if (!projectConfig.DevEnvironment)
-            {
-                throw new Exception("DevdummyData Scripts not allow in Delivery environment");
-            }
-
-            RuntimeScriptFileBase scriptFileItem;
-
-            ScriptFilesState scriptFilesState = this.CreateScriptFilesState(projectConfig);
-            scriptFileItem = scriptFilesState.DevDummyDataScriptFilesComparer.CreateNextNewScriptFile(scriptName);
-
-            return scriptFileItem.FileFullPath;
+            return _createDevDummyDataNextScriptFileRunner.Run(new DBVersionsProcessParams(projectCode, null, scriptName), onNotificationStateChanged);
         }
 
 

@@ -57,10 +57,10 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                      existProjectConfig.DevEnvironment = dev;
 
                      _consoleHandler.StartSpiiner();
-                     ProcessTrace processReults = _projectConfigsAPI.UpdateProjectConfig(existProjectConfig, _consoleHandler.OnNotificationStateChanged);
+                     ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(existProjectConfig, _consoleHandler.OnNotificationStateChanged);
                      _consoleHandler.StopSpinner();
 
-                     _consoleHandler.ProcessComplete(processReults);
+                     _consoleHandler.ProcessComplete(processResults.Trace);
                  }
              });
 

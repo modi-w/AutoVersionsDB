@@ -98,6 +98,11 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         public abstract List<RuntimeScriptFileBase> GetPendingFilesToExecute(string targetScriptFilename);
 
 
+        public bool TryParseNextRuntimeScriptFileName(string scriptName, out RuntimeScriptFileBase newRuntimeScriptFile)
+        {
+            return FileSystemScriptFiles.TryParseNextRuntimeScriptFileName(scriptName, LastScriptFile, out newRuntimeScriptFile);
+        }
+
         public RuntimeScriptFileBase CreateNextNewScriptFile(string scriptName)
         {
             return FileSystemScriptFiles.CreateNextRuntimeScriptFileInstance(scriptName, LastScriptFile);

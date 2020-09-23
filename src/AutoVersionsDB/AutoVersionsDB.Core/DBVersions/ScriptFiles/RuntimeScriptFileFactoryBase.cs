@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {
     public abstract class RuntimeScriptFileFactoryBase
     {
-        public abstract RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string folderPath, string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile);
+        public abstract bool TryParseNextRuntimeScriptFileName(string folderPath, string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile);
 
         public abstract RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string folderPath, string fileFullPath);
     }
@@ -17,11 +17,11 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         where TRuntimeScriptFileBase : RuntimeScriptFileBase
     {
 
-        public override RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string folderPath, string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile)
+        public override bool TryParseNextRuntimeScriptFileName(string folderPath, string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile)
         {
-            return CreateNextRuntimeScriptFileInstance(folderPath, scriptName, prevRuntimeScriptFile as TRuntimeScriptFileBase);
+            return TryParseNextRuntimeScriptFileInstance(folderPath, scriptName, prevRuntimeScriptFile as TRuntimeScriptFileBase, out newRuntimeScriptFile);
         }
-        public abstract RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string folderPath, string scriptName, TRuntimeScriptFileBase prevRuntimeScriptFile);
+        public abstract bool TryParseNextRuntimeScriptFileInstance(string folderPath, string scriptName, TRuntimeScriptFileBase prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile);
 
     }
 

@@ -40,10 +40,10 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
             command.Handler = CommandHandler.Create<string, string>((code, target) =>
             {
                 _consoleHandler.StartSpiiner();
-                ProcessTrace processReults = _dbVersionsAPI.SetDBStateByVirtualExecution(code, target, _consoleHandler.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(code, target, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
 
-                _consoleHandler.ProcessComplete(processReults);
+                _consoleHandler.ProcessComplete(processResults.Trace);
             });
 
 

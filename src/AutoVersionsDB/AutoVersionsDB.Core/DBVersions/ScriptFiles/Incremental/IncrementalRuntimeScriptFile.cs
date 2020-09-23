@@ -34,6 +34,8 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
             ScriptName = scriptName;
             Date = date;
             Version = version;
+
+           
         }
 
         public IncrementalRuntimeScriptFile(string folderPath, string fileFullPath)

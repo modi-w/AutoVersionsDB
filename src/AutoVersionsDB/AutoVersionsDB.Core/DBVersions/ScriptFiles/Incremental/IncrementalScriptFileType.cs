@@ -10,6 +10,8 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 {
     public class IncrementalScriptFileType : ScriptFileTypeBase
     {
+        public static string IncrementalFileTypeCode => ScriptFileTypeBase.Create<IncrementalScriptFileType>().FileTypeCode;
+
         private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory;
         public override RuntimeScriptFileFactoryBase RuntimeScriptFileFactory
         {

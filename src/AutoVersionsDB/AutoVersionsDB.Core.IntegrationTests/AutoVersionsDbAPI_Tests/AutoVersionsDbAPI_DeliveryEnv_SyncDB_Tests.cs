@@ -27,10 +27,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
+            ProcessResults processResults = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
             //Assert
-            assertProccessErrors(processTrace);
+            assertProccessErrors(processResults.Trace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInFinalState_DeliveryEnv(projectConfig);
@@ -52,10 +52,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
+            ProcessResults processResults = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
             //Assert
-            assertProccessErrors(processTrace);
+            assertProccessErrors(processResults.Trace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInFinalState_DeliveryEnv(projectConfig);
@@ -77,11 +77,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
+            ProcessResults processResults = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
 
             //Assert
-            assertProccessErrors(processTrace);
+            assertProccessErrors(processResults.Trace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFullPath);
             assertDbInFinalState_DeliveryEnv(projectConfig);

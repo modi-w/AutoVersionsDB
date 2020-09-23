@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -106,9 +107,9 @@ namespace AutoVersionsDB.WinApp
 
                 ClearUIElementsErrors();
 
-                ProcessTrace processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectCode, notificationsControl1.OnNotificationStateChanged);
+                ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectCode, notificationsControl1.OnNotificationStateChanged);
 
-                handleProcessErrors(processResults);
+                handleProcessErrors(processResults.Trace);
             });
         }
 
@@ -415,21 +416,21 @@ namespace AutoVersionsDB.WinApp
             {
                 if (string.IsNullOrWhiteSpace(_projectCode))
                 {
-                    ProcessTrace processResults = AutoVersionsDbAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDbAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
 
-                    if (!processResults.HasError)
+                    if (!processResults.Trace.HasError)
                     {
                         _projectCode = projectConfig.Code;
                     }
 
-                    handleCompleteProcess(processResults);
+                    handleCompleteProcess(processResults.Trace);
 
                 }
                 else
                 {
-                    ProcessTrace processResults = AutoVersionsDbAPI.UpdateProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDbAPI.UpdateProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
 
-                    handleCompleteProcess(processResults);
+                    handleCompleteProcess(processResults.Trace);
                 }
             });
         }
@@ -450,15 +451,15 @@ namespace AutoVersionsDB.WinApp
 
             Task.Run(() =>
             {
-                ProcessTrace processResults = AutoVersionsDbAPI.ChangeProjectCode(_projectCode, tbProjectCode.Text, notificationsControl1.OnNotificationStateChanged);
+                ProcessResults processResults = AutoVersionsDbAPI.ChangeProjectCode(_projectCode, tbProjectCode.Text, notificationsControl1.OnNotificationStateChanged);
 
-                if (!processResults.HasError)
+                if (!processResults.Trace.HasError)
                 {
                     _projectCode = tbProjectCode.Text;
                 }
 
 
-                handleCompleteProcess(processResults);
+                handleCompleteProcess(processResults.Trace);
             });
         }
 

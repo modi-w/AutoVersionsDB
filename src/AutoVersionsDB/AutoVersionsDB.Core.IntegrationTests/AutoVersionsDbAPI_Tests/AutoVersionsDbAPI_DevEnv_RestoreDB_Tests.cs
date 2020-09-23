@@ -30,12 +30,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
+            ProcessResults processResults = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResults.Trace);
         }
 
         [Test]
@@ -51,12 +51,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.Code, c_targetStateFile_FinalState, false, null);
+            ProcessResults processResults = AutoVersionsDbAPI.SetDBToSpecificState(projectConfig.Code, c_targetStateFile_FinalState, false, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResults.Trace);
         }
 
         [Test]
@@ -72,11 +72,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.Code, null, null);
+            ProcessResults processResults = AutoVersionsDbAPI.RecreateDBFromScratch(projectConfig.Code, null, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResults.Trace);
         }
 
 

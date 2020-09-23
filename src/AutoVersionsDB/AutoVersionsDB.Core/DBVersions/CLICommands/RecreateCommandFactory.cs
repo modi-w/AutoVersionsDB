@@ -35,13 +35,11 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string>((code) =>
             {
-                ProcessTrace processReults;
-
                 _consoleHandler.StartSpiiner();
-                processReults = _dbVersionsAPI.RecreateDBFromScratch(code, null, _consoleHandler.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(code, null, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
 
-                _consoleHandler.ProcessComplete(processReults);
+                _consoleHandler.ProcessComplete(processResults.Trace);
             });
 
             return command;

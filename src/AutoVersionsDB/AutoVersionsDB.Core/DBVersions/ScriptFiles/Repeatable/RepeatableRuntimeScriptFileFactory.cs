@@ -9,9 +9,11 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable
     public class RepeatableRuntimeScriptFileFactory : RuntimeScriptFileFactoryBase<RepeatableRuntimeScriptFile>
     {
 
-        public override RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string folderPath, string scriptName, RepeatableRuntimeScriptFile prevRuntimeScriptFile)
+        public override bool TryParseNextRuntimeScriptFileInstance(string folderPath, string scriptName, RepeatableRuntimeScriptFile prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile)
         {
-            return RepeatableRuntimeScriptFile.CreateByScriptName(folderPath, scriptName);
+            newRuntimeScriptFile = RepeatableRuntimeScriptFile.CreateByScriptName(folderPath, scriptName);
+
+            return newRuntimeScriptFile.IsValidFileName;
         }
 
         public override RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string folderPath, string fileFullPath)

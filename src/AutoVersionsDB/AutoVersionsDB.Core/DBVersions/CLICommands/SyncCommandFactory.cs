@@ -37,10 +37,10 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
             command.Handler = CommandHandler.Create<string>((code) =>
             {
                 _consoleHandler.StartSpiiner();
-                ProcessTrace processReults = _dbVersionsAPI.SyncDB(code, _consoleHandler.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.SyncDB(code, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
 
-                _consoleHandler.ProcessComplete(processReults);
+                _consoleHandler.ProcessComplete(processResults.Trace);
             });
 
             return command;

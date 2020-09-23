@@ -3,9 +3,11 @@
     public class DevDummyDataRuntimeScriptFileFactory : RuntimeScriptFileFactoryBase<DevDummyDataRuntimeScriptFile>
     {
 
-        public override RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string folderPath, string scriptName, DevDummyDataRuntimeScriptFile prevRuntimeScriptFile)
+        public override bool TryParseNextRuntimeScriptFileInstance(string folderPath, string scriptName, DevDummyDataRuntimeScriptFile prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile)
         {
-            return DevDummyDataRuntimeScriptFile.CreateByScriptName(folderPath, scriptName);
+            newRuntimeScriptFile = DevDummyDataRuntimeScriptFile.CreateByScriptName(folderPath, scriptName);
+
+            return newRuntimeScriptFile.IsValidFileName;
         }
 
         public override RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string folderPath, string fileFullPath)

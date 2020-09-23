@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
@@ -17,6 +18,8 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
         public abstract string FolderPath { get; protected set; }
         public abstract string Filename { get; }
+        public bool IsValidFileName => Regex.IsMatch(Filename, ScriptFileType.RegexFilenamePattern);
+
         public string FileFullPath => Path.Combine(FolderPath, Filename);
 
         public string ComputedHash { get; set; }

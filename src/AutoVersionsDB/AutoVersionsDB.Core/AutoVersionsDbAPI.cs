@@ -77,7 +77,7 @@ namespace AutoVersionsDB.Core
 
 
 
-        public static ProcessTrace SaveNewProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults SaveNewProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -85,7 +85,7 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public static ProcessTrace UpdateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults UpdateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -93,7 +93,7 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public static ProcessTrace ChangeProjectCode(string prevProjectCode, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults ChangeProjectCode(string prevProjectCode, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -101,7 +101,7 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public static ProcessTrace RemoveProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults RemoveProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -119,7 +119,7 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
-        public static ProcessTrace ValidateDBVersions(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults ValidateDBVersions(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -127,7 +127,7 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public static ProcessTrace ValidateProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults ValidateProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -149,7 +149,7 @@ namespace AutoVersionsDB.Core
 
         #region Run Change Db State
 
-        public static ProcessTrace SyncDB(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults SyncDB(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -157,7 +157,7 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public static ProcessTrace RecreateDBFromScratch(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults RecreateDBFromScratch(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -166,7 +166,7 @@ namespace AutoVersionsDB.Core
         }
 
 
-        public static ProcessTrace SetDBToSpecificState(string projectCode, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults SetDBToSpecificState(string projectCode, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -175,7 +175,7 @@ namespace AutoVersionsDB.Core
         }
 
 
-        public static ProcessTrace SetDBStateByVirtualExecution(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults SetDBStateByVirtualExecution(string projectCode, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -189,7 +189,7 @@ namespace AutoVersionsDB.Core
 
         #region Deploy
 
-        public static ProcessTrace Deploy(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults Deploy(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
@@ -211,27 +211,27 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public static string CreateNewIncrementalScriptFile(ProjectConfigItem projectConfig, string scriptName)
+        public static ProcessResults CreateNewIncrementalScriptFile(string projectCode, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return GetNewInstanceForDBVersionsAPI().CreateNewIncrementalScriptFile(projectConfig, scriptName);
+                return GetNewInstanceForDBVersionsAPI().CreateNewIncrementalScriptFile(projectCode, scriptName, onNotificationStateChanged);
             }
         }
 
-        public static string CreateNewRepeatableScriptFile(ProjectConfigItem projectConfig, string scriptName)
+        public static ProcessResults CreateNewRepeatableScriptFile(string projectCode, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return GetNewInstanceForDBVersionsAPI().CreateNewRepeatableScriptFile(projectConfig, scriptName);
+                return GetNewInstanceForDBVersionsAPI().CreateNewRepeatableScriptFile(projectCode, scriptName, onNotificationStateChanged);
             }
         }
 
-        public static string CreateNewDevDummyDataScriptFile(ProjectConfigItem projectConfig, string scriptName)
+        public static ProcessResults CreateNewDevDummyDataScriptFile(string projectCode, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return GetNewInstanceForDBVersionsAPI().CreateNewDevDummyDataScriptFile(projectConfig, scriptName);
+                return GetNewInstanceForDBVersionsAPI().CreateNewDevDummyDataScriptFile(projectCode, scriptName, onNotificationStateChanged);
             }
         }
 

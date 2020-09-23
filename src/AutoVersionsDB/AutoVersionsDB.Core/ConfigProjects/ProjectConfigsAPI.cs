@@ -44,22 +44,22 @@ namespace AutoVersionsDB.Core.ConfigProjects
         }
 
 
-        public ProcessTrace SaveNewProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults SaveNewProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             return _saveNewProjectConfigRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
         }
 
-        public ProcessTrace UpdateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults UpdateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             return _updateProjectConfigRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
         }
 
-        public ProcessTrace ChangeProjectCode(string prevProjectCode, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults ChangeProjectCode(string prevProjectCode, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             return _changeProjectCodeRunner.Run(new ChangeProjectCodeProcessParams(prevProjectCode, newProjectCode), onNotificationStateChanged);
         }
 
-        public ProcessTrace RemoveProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults RemoveProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             return _removeProjectConfigProcessDefinition.Run(new ProjectConfigProcessParams(projectCode), onNotificationStateChanged);
         }

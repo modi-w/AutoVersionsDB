@@ -6,8 +6,10 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
     {
 
 
-        public override RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string folderPath, string scriptName, IncrementalRuntimeScriptFile prevRuntimeScriptFile)
+        public override bool TryParseNextRuntimeScriptFileInstance(string folderPath, string scriptName, IncrementalRuntimeScriptFile prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile)
         {
+            newRuntimeScriptFile = null;
+
             int nextFileVersion = 1;
             DateTime nextFileDate = DateTime.Today;
 
@@ -19,7 +21,9 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
                 }
             }
 
-            return new IncrementalRuntimeScriptFile(folderPath, scriptName, nextFileDate, nextFileVersion);
+            newRuntimeScriptFile = new IncrementalRuntimeScriptFile(folderPath, scriptName, nextFileDate, nextFileVersion);
+
+            return newRuntimeScriptFile.IsValidFileName;
         }
 
         public override RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string folderPath, string fileFullPath)

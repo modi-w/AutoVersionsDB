@@ -24,10 +24,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.Code, c_targetStateFile_MiddleState, null);
+            ProcessResults processResults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.Code, c_targetStateFile_MiddleState, null);
 
             //Assert
-            assertProccessErrors(processTrace);
+            assertProccessErrors(processResults.Trace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInEmptyStateExceptSystemTables(projectConfig);
@@ -49,10 +49,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.Code, c_targetStateFile_FinalState, null);
+            ProcessResults processResults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(projectConfig.Code, c_targetStateFile_FinalState, null);
 
             //Assert
-            assertProccessErrors(processTrace);
+            assertProccessErrors(processResults.Trace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             assertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(projectConfig, dbBackupFileFileFullPath);
             assertDbInMiddleState(projectConfig);

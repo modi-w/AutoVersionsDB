@@ -30,11 +30,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
+            ProcessResults processResults = AutoVersionsDbAPI.SyncDB(projectConfig.Code, null);
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            AssertRestore(projectConfig, dbBackupFileFileFullPath, processTrace);
+            AssertRestore(projectConfig, dbBackupFileFileFullPath, processResults.Trace);
 
         }
 
