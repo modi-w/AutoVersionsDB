@@ -37,7 +37,8 @@ namespace AutoVersionsDB.WinApp
         {
             ProjectConfig = projectConfig;
 
-            lblProjectCode.Text = ProjectConfig.ProjectFullName;
+            lblProjectCode.Text = ProjectConfig.Code;
+            lblProjectDesc.Text = ProjectConfig.Description;
         }
 
 

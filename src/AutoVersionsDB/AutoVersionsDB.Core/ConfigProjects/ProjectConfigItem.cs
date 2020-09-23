@@ -15,21 +15,6 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         public string Description { get; set; }
 
-        public string ProjectFullName
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(Description))
-                {
-                    return $"{Code} - {Description}";
-                }
-                else
-                {
-                    return Code;
-                }
-
-            }
-        }
 
         public string DBType { get; set; }
         public string ConnectionString { get; set; }

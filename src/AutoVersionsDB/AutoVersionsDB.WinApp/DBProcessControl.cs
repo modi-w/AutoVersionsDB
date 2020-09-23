@@ -688,10 +688,11 @@ namespace AutoVersionsDB.WinApp
 
         private void BindToUIElements(DBVersionsMangementViewType dbVersionsMangementViewType)
         {
+            string projectFullName = $"{_projectConfigItem.Code} - {_projectConfigItem.Description}";
 
             lblProjectName.BeginInvoke((MethodInvoker)(() =>
             {
-                lblProjectName.Text = _projectConfigItem.ProjectFullName;
+                lblProjectName.Text = projectFullName;
             }));
 
 
