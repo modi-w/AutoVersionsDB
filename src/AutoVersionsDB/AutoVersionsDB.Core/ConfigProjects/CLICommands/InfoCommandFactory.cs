@@ -44,6 +44,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create<string>((code) =>
              {
+                 _consoleHandler.StartProcessMessage("info", code);
+
                  ProjectConfigItem projectConfig = _projectConfigsAPI.GetProjectConfigByProjectCode(code);
 
                  if (projectConfig == null)
@@ -53,46 +55,46 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                  else
                  {
                      string message = $"{"Code".PadRight(c_paddingRightForCaprions)}: {projectConfig.Code}";
-                     _consoleHandler.WriteLineInfo(message);
+                     _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"Description".PadRight(c_paddingRightForCaprions)}: {projectConfig.Description}";
-                     _consoleHandler.WriteLineInfo(message);
+                     _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"DBType".PadRight(c_paddingRightForCaprions)}: {projectConfig.DBType}";
-                     _consoleHandler.WriteLineInfo(message);
+                     _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"Connection String".PadRight(c_paddingRightForCaprions)}: {projectConfig.ConnectionString}";
-                     _consoleHandler.WriteLineInfo(message);
+                     _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"Connection String To Master DB".PadRight(c_paddingRightForCaprions)}: {projectConfig.ConnectionStringToMasterDB}";
-                     _consoleHandler.WriteLineInfo(message);
+                     _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"Backup Folder Path".PadRight(c_paddingRightForCaprions)}: {projectConfig.BackupFolderPath}";
-                     _consoleHandler.WriteLineInfo(message);
+                     _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"Dev Environment".PadRight(c_paddingRightForCaprions)}: {projectConfig.DevEnvironment}";
-                     _consoleHandler.WriteLineInfo(message);
+                     _consoleHandler.SetInfoMessage(message);
 
                      if (projectConfig.DevEnvironment)
                      {
                          message = $"{"Scripts Base Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.DevScriptsBaseFolderPath}";
-                         _consoleHandler.WriteLineInfo(message);
+                         _consoleHandler.SetInfoMessage(message);
 
                          message = $"{" Incremental Scripts Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.IncrementalScriptsFolderPath}";
-                         _consoleHandler.WriteLineInfo(message);
+                         _consoleHandler.SetInfoMessage(message);
                          message = $"{" Repeatable Scripts Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.RepeatableScriptsFolderPath}";
-                         _consoleHandler.WriteLineInfo(message);
+                         _consoleHandler.SetInfoMessage(message);
                          message = $"{" Dev Dummy Data Scripts Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.DevDummyDataScriptsFolderPath}";
-                         _consoleHandler.WriteLineInfo(message);
+                         _consoleHandler.SetInfoMessage(message);
 
 
                          message = $"{"Deploy Artifact Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.DeployArtifactFolderPath}";
-                         _consoleHandler.WriteLineInfo(message);
+                         _consoleHandler.SetInfoMessage(message);
                      }
                      else
                      {
                          message = $"{"DeliveryArtifactFolderPath".PadRight(c_paddingRightForCaprions)}: {projectConfig.DeliveryArtifactFolderPath}";
-                         _consoleHandler.WriteLineInfo(message);
+                         _consoleHandler.SetInfoMessage(message);
                      }
 
 

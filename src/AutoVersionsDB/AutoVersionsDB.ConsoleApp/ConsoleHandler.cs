@@ -45,11 +45,32 @@ namespace AutoVersionsDB.ConsoleApp
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public void WriteLineInfo(string message)
+        public void SetInfoMessage(string message)
         {
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.WriteLine(message);
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void StartProcessMessage(string processName)
+        {
+            StartProcessMessage(processName);
+        }
+        public void StartProcessMessage(string processName, string paramsStr)
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+
+            if (!string.IsNullOrWhiteSpace(paramsStr))
+            {
+                Console.WriteLine($"> Run '{processName}' for '{paramsStr}'");
+            }
+            else
+            {
+                Console.WriteLine($"> Run '{processName}' (no params)");
+            }
+
         }
 
 
@@ -62,25 +83,10 @@ namespace AutoVersionsDB.ConsoleApp
 
                 if (processReults.HasError)
                 {
-                    //Console.ForegroundColor = ConsoleColor.Red;
-                    //Console.WriteLine("The process complete with errors:");
-                    //Console.WriteLine("--------------------------------");
-                    //Console.ForegroundColor = ConsoleColor.DarkRed;
-                    //Console.WriteLine(processReults.GetOnlyErrorsHistoryAsString());
-
-                    //if (!string.IsNullOrWhiteSpace(processReults.InstructionsMessage))
-                    //{
-                    //    Console.ForegroundColor = ConsoleColor.Red;
-                    //    Console.WriteLine(processReults.InstructionsMessage);
-                    //}
-
-                    //Console.ForegroundColor = ConsoleColor.White;
-
-
                     SetErrorInstruction("The process complete with errors:");
                     SetErrorInstruction("--------------------------------");
                     SetErrorMessage(processReults.GetOnlyErrorsHistoryAsString());
-                    
+
                     SetErrorInstruction(processReults.InstructionsMessage);
 
                 }
@@ -90,6 +96,8 @@ namespace AutoVersionsDB.ConsoleApp
                     Console.WriteLine("The process complete successfully");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
+
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
@@ -102,12 +110,16 @@ namespace AutoVersionsDB.ConsoleApp
 
                 int cursorTopStart = Console.CursorTop;
 
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+
                 Console.SetCursorPosition(3, Console.CursorTop);
                 Console.Write(notificationStateItem.ToString());
 
                 int cursorTopEnd = Console.CursorTop;
 
                 numberOfLineForLastMessage = cursorTopEnd - cursorTopStart + 1;
+
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 

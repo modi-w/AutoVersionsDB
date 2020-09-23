@@ -92,6 +92,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 }
 
                 ZipFile.CreateFromDirectory(tempFolderForDeploy, targetFileFullPath);
+
+                processContext.Results = targetFileFullPath;
             }
 
         }

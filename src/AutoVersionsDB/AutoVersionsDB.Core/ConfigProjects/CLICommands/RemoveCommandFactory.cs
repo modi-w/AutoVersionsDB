@@ -41,13 +41,15 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
             command.Handler = CommandHandler
                 .Create<string>((code) =>
-             {
-                 _consoleHandler.StartSpiiner();
-                 ProcessResults processResults = _projectConfigsAPI.RemoveProjectConfig(code, _consoleHandler.OnNotificationStateChanged);
-                 _consoleHandler.StopSpinner();
+                {
+                    _consoleHandler.StartProcessMessage("remove", code);
 
-                 _consoleHandler.ProcessComplete(processResults.Trace);
-             });
+                    _consoleHandler.StartSpiiner();
+                    ProcessResults processResults = _projectConfigsAPI.RemoveProjectConfig(code, _consoleHandler.OnNotificationStateChanged);
+                    _consoleHandler.StopSpinner();
+
+                    _consoleHandler.ProcessComplete(processResults.Trace);
+                });
 
             return command;
         }

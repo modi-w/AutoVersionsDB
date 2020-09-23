@@ -79,6 +79,8 @@ namespace AutoVersionsDB.ConsoleApp
 
             lock (ConsoleHandler.ConsolWriteSync)
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+
                 Console.SetCursorPosition(0, Console.CursorTop);
                 switch (_counter % 4)
                 {
@@ -87,6 +89,8 @@ namespace AutoVersionsDB.ConsoleApp
                     case 2: Console.Write("\\"); break;
                     case 3: Console.Write("|"); break;
                 }
+
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 

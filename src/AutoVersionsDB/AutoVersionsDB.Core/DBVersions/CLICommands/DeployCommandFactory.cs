@@ -35,11 +35,19 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string>((code) =>
             {
+                _consoleHandler.StartProcessMessage("deploy", code);
+
                 _consoleHandler.StartSpiiner();
                 ProcessResults processResults = _dbVersionsAPI.Deploy(code, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
 
                 _consoleHandler.ProcessComplete(processResults.Trace);
+
+                if (!processResults.Trace.HasError)
+                {
+                    string deployFilePath = (string)processResults.Results;
+                    _consoleHandler.SetInfoMessage($"Artifact file created: '{deployFilePath}'");
+                }
             });
 
             return command;

@@ -45,13 +45,15 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
             command.Handler = CommandHandler
                 .Create<string, string>((code, newCode) =>
-             {
-                 _consoleHandler.StartSpiiner();
-                 ProcessResults processResults = _projectConfigsAPI.ChangeProjectCode(code, newCode, _consoleHandler.OnNotificationStateChanged);
-                 _consoleHandler.StopSpinner();
+                {
+                    _consoleHandler.StartProcessMessage("change-code", code);
 
-                 _consoleHandler.ProcessComplete(processResults.Trace);
-             });
+                    _consoleHandler.StartSpiiner();
+                    ProcessResults processResults = _projectConfigsAPI.ChangeProjectCode(code, newCode, _consoleHandler.OnNotificationStateChanged);
+                    _consoleHandler.StopSpinner();
+
+                    _consoleHandler.ProcessComplete(processResults.Trace);
+                });
 
             return command;
         }

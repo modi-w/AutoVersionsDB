@@ -35,27 +35,29 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
             command.Handler = CommandHandler
                 .Create(() =>
-             {
-                 IEnumerable<ProjectConfigItem> projectsList = _projectConfigsAPI.GetProjectsList();
+                {
+                    _consoleHandler.StartProcessMessage("list");
+
+                    IEnumerable<ProjectConfigItem> projectsList = _projectConfigsAPI.GetProjectsList();
 
                  if (!projectsList.Any())
                  {
-                     _consoleHandler.WriteLineInfo("----  No projects found on this machine  ----");
+                     _consoleHandler.SetInfoMessage("----  No projects found on this machine  ----");
                  }
                  else
                  {
                      string captionsMessage = $"{"  Code".PadRight(31)} |  Description";
-                     _consoleHandler.WriteLineInfo(captionsMessage);
+                     _consoleHandler.SetInfoMessage(captionsMessage);
 
                      string captionsLineMessage = "-".PadRight(55, '-');
-                     _consoleHandler.WriteLineInfo(captionsLineMessage);
+                     _consoleHandler.SetInfoMessage(captionsLineMessage);
 
                      foreach (ProjectConfigItem projectConfig in projectsList)
                      {
                          string projectCode = projectConfig.Code.Ellipsis(30);
 
                          string projectLineMessage = $" {projectCode.PadRight(30)} | {projectConfig.Description}";
-                         _consoleHandler.WriteLineInfo(projectLineMessage);
+                         _consoleHandler.SetInfoMessage(projectLineMessage);
                      }
 
                  }

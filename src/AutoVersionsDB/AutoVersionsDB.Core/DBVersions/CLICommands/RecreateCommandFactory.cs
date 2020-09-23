@@ -35,6 +35,8 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string>((code) =>
             {
+                _consoleHandler.StartProcessMessage("recreate", code);
+
                 _consoleHandler.StartSpiiner();
                 ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(code, null, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();

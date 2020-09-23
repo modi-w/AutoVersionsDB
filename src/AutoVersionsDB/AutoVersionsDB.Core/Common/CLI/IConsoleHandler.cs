@@ -13,7 +13,9 @@ namespace AutoVersionsDB.Core.Common.CLI
 
         void SetErrorInstruction(string message);
 
-        void WriteLineInfo(string message);
+        void SetInfoMessage(string message);
 
+        void StartProcessMessage(string processName);
+        void StartProcessMessage(string processName, string paramsStr);
     }
 }

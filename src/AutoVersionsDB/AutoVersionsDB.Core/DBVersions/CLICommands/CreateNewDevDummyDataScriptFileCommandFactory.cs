@@ -39,6 +39,8 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string, string>((code, scriptName) =>
             {
+                _consoleHandler.StartProcessMessage("new ddd", code);
+
                 _consoleHandler.StartSpiiner();
                 ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(code, scriptName, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
@@ -48,7 +50,7 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
                 if (!processResults.Trace.HasError)
                 {
                     string newFilePath = (string)processResults.Results;
-                    _consoleHandler.WriteLineInfo($"The file: '{newFilePath}' is created.");
+                    _consoleHandler.SetInfoMessage($"The file: '{newFilePath}' is created.");
                 }
             });
 

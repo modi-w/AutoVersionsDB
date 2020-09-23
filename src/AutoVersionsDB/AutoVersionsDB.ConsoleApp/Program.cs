@@ -22,13 +22,15 @@ namespace AutoVersionsDB.ConsoleApp
             //  return AutoVersionsDbAPI.CLIRun("-h");
             //return AutoVersionsDbAPI.CLIRun("config -code=testp1 -desc=\"Test project 2\" --db-type=SqlServer -connstr=aaaa -connstrm=bbb -buf=ccc -dsf=ddd -def=eee -darf=fff");
             //  return AutoVersionsDbAPI.CLIRun("config environment -code=testp1 -dev=true");
-            // return AutoVersionsDbAPI.CLIRun("sync -code=testp1");
-       //     return AutoVersionsDbAPI.CLIRun("config -code=testp -desc=\"Test project 1\"");
+            //return AutoVersionsDbAPI.CLIRun("sync -code=testp");
+            //return AutoVersionsDbAPI.CLIRun("recreate -code=testp");
+            return AutoVersionsDbAPI.CLIRun("deploy -code=testp");
+            //     return AutoVersionsDbAPI.CLIRun("config -code=testp -desc=\"Test project 1\"");
 
             //return AutoVersionsDbAPI.CLIRun("list");
-        //    return AutoVersionsDbAPI.CLIRun("info -code=rvp");
+            //    return AutoVersionsDbAPI.CLIRun("info -code=rvp");
 
-            return AutoVersionsDbAPI.CLIRun("new incremental -code=testp --sn bbbb");
+            //   return AutoVersionsDbAPI.CLIRun("new incremental -code=testp --sn bbbb");
 
         }
 

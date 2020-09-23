@@ -39,6 +39,8 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string, string>((code, target) =>
             {
+                _consoleHandler.StartProcessMessage("virtual", code);
+
                 _consoleHandler.StartSpiiner();
                 ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(code, target, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();

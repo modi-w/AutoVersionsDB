@@ -77,6 +77,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
             {
+                _consoleHandler.StartProcessMessage("init", projectConfig.Code);
+
                 _consoleHandler.StartSpiiner();
                 ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(projectConfig, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();

@@ -45,8 +45,10 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
             command.Handler = CommandHandler
                 .Create<string, bool>((code, dev) =>
-             {
-                 ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigByProjectCode(code);
+                {
+                    _consoleHandler.StartProcessMessage("environment", code);
+
+                    ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigByProjectCode(code);
 
                  if (existProjectConfig == null)
                  {

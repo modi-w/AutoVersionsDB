@@ -36,6 +36,8 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string>((code) =>
             {
+                _consoleHandler.StartProcessMessage("sync", code);
+
                 _consoleHandler.StartSpiiner();
                 ProcessResults processResults = _dbVersionsAPI.SyncDB(code, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
