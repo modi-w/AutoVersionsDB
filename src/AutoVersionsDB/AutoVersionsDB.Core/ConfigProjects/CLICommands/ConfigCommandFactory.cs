@@ -17,9 +17,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private readonly IConsoleHandler _consoleHandler;
 
         private readonly EnvironmentCommandFactory _environmentCommandFactory;
-        private readonly ChangeCodeCommandFactory _changeCodeCommandFactory;
+        private readonly ChangeIdCommandFactory _changeIdCommandFactory;
 
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
         private readonly DescriptionCLIOption _descriptionOption;
         private readonly DBTypeCLIOption _dbTypeOption;
         private readonly ConnectionStringCLIOption _connectionStringOption;
@@ -34,8 +34,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         public ConfigCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                     IConsoleHandler consoleHandler,
                                     EnvironmentCommandFactory environmentCommandFactory,
-                                    ChangeCodeCommandFactory changeCodeCommandFactory,
-                                    CodeCLIOption codeOption,
+                                    ChangeIdCommandFactory changeIdCommandFactory,
+                                    IdCLIOption idOption,
                                     DescriptionCLIOption descriptionOption,
                                     DBTypeCLIOption dbTypeOption,
                                     ConnectionStringCLIOption connectionStringOption,
@@ -48,8 +48,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
             _environmentCommandFactory = environmentCommandFactory;
-            _changeCodeCommandFactory = changeCodeCommandFactory;
-            _codeOption = codeOption;
+            _changeIdCommandFactory = changeIdCommandFactory;
+            _idOption = idOption;
             _descriptionOption = descriptionOption;
             _dbTypeOption = dbTypeOption;
             _connectionStringOption = connectionStringOption;
@@ -64,7 +64,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         {
             Command command = new Command("config")
             {
-                _codeOption,
+                _idOption,
                 _descriptionOption,
                 _dbTypeOption,
                 _connectionStringOption,
@@ -80,13 +80,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
                 {
-                    _consoleHandler.StartProcessMessage("config", projectConfig.Code);
+                    _consoleHandler.StartProcessMessage("config", projectConfig.Id);
 
-                    ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigByProjectCode(projectConfig.Code);
+                    ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigById(projectConfig.Id);
 
                 if (existProjectConfig == null)
                 {
-                    _consoleHandler.SetErrorMessage($"Project Code: '{projectConfig.Code}' is not exist. You can use the 'init' command to define new project.");
+                    _consoleHandler.SetErrorMessage($"Id: '{projectConfig.Id}' is not exist. You can use the 'init' command to define new project.");
                 }
                 else
                 {
@@ -100,8 +100,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                 }
             });
 
-            Command changeCodeCommand = _changeCodeCommandFactory.Create();
-            command.Add(changeCodeCommand);
+            Command changeIdCommand = _changeIdCommandFactory.Create();
+            command.Add(changeIdCommand);
 
             Command environmentCommand = _environmentCommandFactory.Create();
             command.Add(environmentCommand);

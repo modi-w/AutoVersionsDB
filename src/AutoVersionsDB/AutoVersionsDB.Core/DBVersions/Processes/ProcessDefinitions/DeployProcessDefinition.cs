@@ -15,14 +15,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 
 
         public DeployProcessDefinition(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
-                                        ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+                                        ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                         SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                         ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                                         CreateScriptFilesStateStep createScriptFilesStateStep,
                                         ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,
                                         ValidationsStep<DBStateValidationsFactory> dbStateValidationStep,
                                         BuildDeployArtifactFileStep buildDeployArtifactFileStep)
-            : base(null, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
+            : base(null, idExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(projectConfigValidationStep);
             AddStep(checkDeliveryEnvValidationStep);

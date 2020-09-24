@@ -12,14 +12,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
     {
         public override string EngineTypeName => "DB Versions Validations";
 
-        public DBVersionsValidationsProcessDefinitions(ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+        public DBVersionsValidationsProcessDefinitions(ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                                         SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                                         ValidationsStep<ArtifactFileValidationsFactory> artifactFileValidationStep,
                                                         ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                                         CreateScriptFilesStateStep createScriptFilesStateStep,
                                                         ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,
                                                         ValidationsStep<DBStateValidationsFactory> dbStateValidationStep)
-         : base(null, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
+         : base(null, idExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(artifactFileValidationStep);
             AddStep(projectConfigValidationStep);

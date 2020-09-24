@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbProjectCode = new System.Windows.Forms.TextBox();
+            this.tbId = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbConnStr = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -60,9 +60,9 @@
             this.btnNavToProcess = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnCancelEditProjectCode = new System.Windows.Forms.Button();
-            this.btnSaveProjectCode = new System.Windows.Forms.Button();
-            this.btnEditProjectCode = new System.Windows.Forms.Button();
+            this.btnCancelEditId = new System.Windows.Forms.Button();
+            this.btnSaveId = new System.Windows.Forms.Button();
+            this.btnEditId = new System.Windows.Forms.Button();
             this.tbProjectDescription = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -113,18 +113,18 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(94, 36);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Code:";
+            this.label2.Text = "Id:";
             // 
-            // tbProjectCode
+            // tbId
             // 
-            this.tbProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbProjectCode.Location = new System.Drawing.Point(206, 26);
-            this.tbProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.tbProjectCode.Name = "tbProjectCode";
-            this.tbProjectCode.Size = new System.Drawing.Size(284, 30);
-            this.tbProjectCode.TabIndex = 2;
+            this.tbId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbId.Location = new System.Drawing.Point(206, 26);
+            this.tbId.Margin = new System.Windows.Forms.Padding(4);
+            this.tbId.Name = "tbId";
+            this.tbId.Size = new System.Drawing.Size(284, 30);
+            this.tbId.TabIndex = 2;
             // 
             // label5
             // 
@@ -509,13 +509,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.btnCancelEditProjectCode);
-            this.panel1.Controls.Add(this.btnSaveProjectCode);
-            this.panel1.Controls.Add(this.btnEditProjectCode);
+            this.panel1.Controls.Add(this.btnCancelEditId);
+            this.panel1.Controls.Add(this.btnSaveId);
+            this.panel1.Controls.Add(this.btnEditId);
             this.panel1.Controls.Add(this.tbProjectDescription);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label16);
-            this.panel1.Controls.Add(this.tbProjectCode);
+            this.panel1.Controls.Add(this.tbId);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Location = new System.Drawing.Point(27, 201);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
@@ -523,70 +523,70 @@
             this.panel1.Size = new System.Drawing.Size(995, 121);
             this.panel1.TabIndex = 70;
             // 
-            // btnCancelEditProjectCode
+            // btnCancelEditId
             // 
-            this.btnCancelEditProjectCode.BackColor = System.Drawing.Color.Transparent;
-            this.btnCancelEditProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelEditProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnCancelEditProjectCode.FlatAppearance.BorderSize = 0;
-            this.btnCancelEditProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelEditProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCancelEditProjectCode.ForeColor = System.Drawing.Color.Gray;
-            this.btnCancelEditProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancelEditProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCancelEditProjectCode.Location = new System.Drawing.Point(162, 23);
-            this.btnCancelEditProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancelEditProjectCode.Name = "btnCancelEditProjectCode";
-            this.btnCancelEditProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnCancelEditProjectCode.Size = new System.Drawing.Size(36, 39);
-            this.btnCancelEditProjectCode.TabIndex = 91;
-            this.btnCancelEditProjectCode.Text = "X";
-            this.btnCancelEditProjectCode.UseVisualStyleBackColor = false;
-            this.btnCancelEditProjectCode.Click += new System.EventHandler(this.btnCancelEditProjectCode_Click);
+            this.btnCancelEditId.BackColor = System.Drawing.Color.Transparent;
+            this.btnCancelEditId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelEditId.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCancelEditId.FlatAppearance.BorderSize = 0;
+            this.btnCancelEditId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelEditId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCancelEditId.ForeColor = System.Drawing.Color.Gray;
+            this.btnCancelEditId.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCancelEditId.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCancelEditId.Location = new System.Drawing.Point(162, 23);
+            this.btnCancelEditId.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelEditId.Name = "btnCancelEditId";
+            this.btnCancelEditId.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnCancelEditId.Size = new System.Drawing.Size(36, 39);
+            this.btnCancelEditId.TabIndex = 91;
+            this.btnCancelEditId.Text = "X";
+            this.btnCancelEditId.UseVisualStyleBackColor = false;
+            this.btnCancelEditId.Click += new System.EventHandler(this.btnCancelEditId_Click);
             // 
-            // btnSaveProjectCode
+            // btnSaveId
             // 
-            this.btnSaveProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveProjectCode.BackColor = System.Drawing.Color.Transparent;
-            this.btnSaveProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSaveProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnSaveProjectCode.FlatAppearance.BorderSize = 0;
-            this.btnSaveProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnSaveProjectCode.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnSaveProjectCode.Image = global::AutoVersionsDB.WinApp.Properties.Resources.SaveIcon;
-            this.btnSaveProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSaveProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSaveProjectCode.Location = new System.Drawing.Point(557, 17);
-            this.btnSaveProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSaveProjectCode.Name = "btnSaveProjectCode";
-            this.btnSaveProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnSaveProjectCode.Size = new System.Drawing.Size(51, 49);
-            this.btnSaveProjectCode.TabIndex = 90;
-            this.btnSaveProjectCode.UseVisualStyleBackColor = false;
-            this.btnSaveProjectCode.Click += new System.EventHandler(this.btnSaveProjectCode_Click);
+            this.btnSaveId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveId.BackColor = System.Drawing.Color.Transparent;
+            this.btnSaveId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSaveId.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnSaveId.FlatAppearance.BorderSize = 0;
+            this.btnSaveId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSaveId.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnSaveId.Image = global::AutoVersionsDB.WinApp.Properties.Resources.SaveIcon;
+            this.btnSaveId.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSaveId.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnSaveId.Location = new System.Drawing.Point(557, 17);
+            this.btnSaveId.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSaveId.Name = "btnSaveId";
+            this.btnSaveId.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnSaveId.Size = new System.Drawing.Size(51, 49);
+            this.btnSaveId.TabIndex = 90;
+            this.btnSaveId.UseVisualStyleBackColor = false;
+            this.btnSaveId.Click += new System.EventHandler(this.btnSaveId_Click);
             // 
-            // btnEditProjectCode
+            // btnEditId
             // 
-            this.btnEditProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditProjectCode.BackColor = System.Drawing.Color.Transparent;
-            this.btnEditProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEditProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnEditProjectCode.FlatAppearance.BorderSize = 0;
-            this.btnEditProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnEditProjectCode.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnEditProjectCode.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
-            this.btnEditProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnEditProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnEditProjectCode.Location = new System.Drawing.Point(498, 17);
-            this.btnEditProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.btnEditProjectCode.Name = "btnEditProjectCode";
-            this.btnEditProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnEditProjectCode.Size = new System.Drawing.Size(51, 49);
-            this.btnEditProjectCode.TabIndex = 89;
-            this.btnEditProjectCode.UseVisualStyleBackColor = false;
-            this.btnEditProjectCode.Click += new System.EventHandler(this.btnEditProjectCode_Click);
+            this.btnEditId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditId.BackColor = System.Drawing.Color.Transparent;
+            this.btnEditId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEditId.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnEditId.FlatAppearance.BorderSize = 0;
+            this.btnEditId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnEditId.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnEditId.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
+            this.btnEditId.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnEditId.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnEditId.Location = new System.Drawing.Point(498, 17);
+            this.btnEditId.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditId.Name = "btnEditId";
+            this.btnEditId.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnEditId.Size = new System.Drawing.Size(51, 49);
+            this.btnEditId.TabIndex = 89;
+            this.btnEditId.UseVisualStyleBackColor = false;
+            this.btnEditId.Click += new System.EventHandler(this.btnEditId_Click);
             // 
             // tbProjectDescription
             // 
@@ -1010,7 +1010,7 @@
         private System.Windows.Forms.TextBox tbDBBackupFolder;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbConnStr;
-        private System.Windows.Forms.TextBox tbProjectCode;
+        private System.Windows.Forms.TextBox tbId;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label16;
@@ -1052,8 +1052,8 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox tbProjectDescription;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnSaveProjectCode;
-        private System.Windows.Forms.Button btnEditProjectCode;
-        private System.Windows.Forms.Button btnCancelEditProjectCode;
+        private System.Windows.Forms.Button btnSaveId;
+        private System.Windows.Forms.Button btnEditId;
+        private System.Windows.Forms.Button btnCancelEditId;
     }
 }

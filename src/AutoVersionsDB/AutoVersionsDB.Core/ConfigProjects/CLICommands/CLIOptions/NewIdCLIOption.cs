@@ -5,10 +5,10 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ConfigProjects.CLICommands.CLIOptions
 {
-    public class NewCodeCLIOption : Option<string>
+    public class NewIdCLIOption : Option<string>
     {
-        public NewCodeCLIOption()
-            : base(new string[] { "--new-code", "-ncode" }, "The new project code")
+        public NewIdCLIOption()
+            : base(new string[] { "--new-id", "-nid" }, "The new project id")
         {
             IsRequired = true;
         }

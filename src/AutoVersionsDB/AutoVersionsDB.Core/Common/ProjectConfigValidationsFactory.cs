@@ -27,7 +27,7 @@ namespace AutoVersionsDB.Core.Common
 
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
-            ProjectCodeMandatory projectNameValidator = new ProjectCodeMandatory(projectConfig.Code);
+            IdMandatory projectNameValidator = new IdMandatory(projectConfig.Id);
             validationsGroup.Add(projectNameValidator);
 
             DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBType, _dbCommandsFactoryProvider);

@@ -13,17 +13,17 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly IConsoleHandler _consoleHandler;
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
         private readonly TargetCLIOption _targetCLIOption;
 
         public VirtualCommandFactory(DBVersionsAPI dbVersionsAPI,
                                         IConsoleHandler consoleHandler,
-                                        CodeCLIOption codeOption,
+                                        IdCLIOption idOption,
                                         TargetCLIOption targetCLIOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
+            _idOption = idOption;
             _targetCLIOption = targetCLIOption;
         }
 
@@ -31,18 +31,18 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
         {
             Command command = new Command("virtual")
             {
-                _codeOption,
+                _idOption,
                 _targetCLIOption,
             };
 
             command.Description = "Set the Database to specific state by virtually executions the scripts file. This command is useful when production database didnt use this tool yet. Insert into the 'Target' option the target script file name that you want to set the db state.";
 
-            command.Handler = CommandHandler.Create<string, string>((code, target) =>
+            command.Handler = CommandHandler.Create<string, string>((id, target) =>
             {
-                _consoleHandler.StartProcessMessage("virtual", code);
+                _consoleHandler.StartProcessMessage("virtual", id);
 
                 _consoleHandler.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(code, target, _consoleHandler.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(id, target, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
 
                 _consoleHandler.ProcessComplete(processResults.Trace);

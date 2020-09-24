@@ -11,45 +11,45 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 {
-    public class ChangeCodeCommandFactory : CLICommandFactory
+    public class ChangeIdCommandFactory : CLICommandFactory
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly IConsoleHandler _consoleHandler;
 
-        private readonly CodeCLIOption _codeOption;
-        private readonly NewCodeCLIOption _newCodeCLIOption;
+        private readonly IdCLIOption _IdOption;
+        private readonly NewIdCLIOption _newIdCLIOption;
 
 
 
 
-        public ChangeCodeCommandFactory(ProjectConfigsAPI projectConfigsAPI,
+        public ChangeIdCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                         IConsoleHandler consoleHandler,
-                                        CodeCLIOption codeOption,
-                                        NewCodeCLIOption newCodeCLIOption)
+                                        IdCLIOption IdOption,
+                                        NewIdCLIOption newIdCLIOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
-            _newCodeCLIOption = newCodeCLIOption;
+            _IdOption = IdOption;
+            _newIdCLIOption = newIdCLIOption;
         }
 
         public override Command Create()
         {
-            Command command = new Command("change-code")
+            Command command = new Command("change-id")
             {
-                _codeOption,
-                _newCodeCLIOption
+                _IdOption,
+                _newIdCLIOption
             };
 
-            command.Description = "Change project project code. Change the identifier of the project.";
+            command.Description = "Change project project id. Change the identifier of the project.";
 
             command.Handler = CommandHandler
-                .Create<string, string>((code, newCode) =>
+                .Create<string, string>((id, newId) =>
                 {
-                    _consoleHandler.StartProcessMessage("change-code", code);
+                    _consoleHandler.StartProcessMessage("change-id", id);
 
                     _consoleHandler.StartSpiiner();
-                    ProcessResults processResults = _projectConfigsAPI.ChangeProjectCode(code, newCode, _consoleHandler.OnNotificationStateChanged);
+                    ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(id, newId, _consoleHandler.OnNotificationStateChanged);
                     _consoleHandler.StopSpinner();
 
                     _consoleHandler.ProcessComplete(processResults.Trace);

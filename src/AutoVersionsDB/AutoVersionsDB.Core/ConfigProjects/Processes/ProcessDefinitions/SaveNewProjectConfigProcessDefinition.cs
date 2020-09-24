@@ -13,11 +13,11 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
         public override string EngineTypeName => "Save New Config Validation";
 
 
-        public SaveNewProjectConfigProcessDefinition(ValidationsStep<ProjectCodeNotExistValidationsFactory> projectCodeNotExistValidationStep,
+        public SaveNewProjectConfigProcessDefinition(ValidationsStep<IdNotExistValidationsFactory> idNotExistValidationStep,
                                                         SaveNewProjectConfigStep saveNewProjectConfigStep)
             : base()
         {
-            AddStep(projectCodeNotExistValidationStep);
+            AddStep(idNotExistValidationStep);
             AddStep(saveNewProjectConfigStep);
         }
     }

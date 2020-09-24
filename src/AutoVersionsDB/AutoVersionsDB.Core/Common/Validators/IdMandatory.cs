@@ -3,25 +3,25 @@ using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Common.Validators
 {
-    public class ProjectCodeMandatory : ValidatorBase
+    public class IdMandatory : ValidatorBase
     {
-        private readonly string _projectCode;
+        private readonly string _id;
 
-        public override string ValidatorName => "ProjectCodeMandatory";
+        public override string ValidatorName => "IdMandatory";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        public ProjectCodeMandatory(string projectCode)
+        public IdMandatory(string id)
         {
-            _projectCode = projectCode;
+            _id = id;
         }
 
         public override string Validate()
         {
-            if (string.IsNullOrWhiteSpace(_projectCode))
+            if (string.IsNullOrWhiteSpace(_id))
             {
-                string errorMsg = "Project Code is empty";
+                string errorMsg = "Id is empty";
                 return errorMsg;
             }
 

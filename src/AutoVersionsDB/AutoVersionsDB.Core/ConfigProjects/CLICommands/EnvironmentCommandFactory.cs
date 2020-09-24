@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly IConsoleHandler _consoleHandler;
 
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
         private readonly DevEnvironmentCLIOption _devEnvironmentOption;
 
 
@@ -24,12 +24,12 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
         public EnvironmentCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                     IConsoleHandler consoleHandler,
-                                    CodeCLIOption codeOption,
+                                    IdCLIOption idOption,
                                     DevEnvironmentCLIOption devEnvironmentOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
+            _idOption = idOption;
             _devEnvironmentOption = devEnvironmentOption;
         }
 
@@ -37,22 +37,22 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         {
             Command command = new Command("environment")
             {
-                _codeOption,
+                _idOption,
                 _devEnvironmentOption,
             };
 
             command.Description = "Change project environment configuration. Is run on dev environment (use scripts files) or on a delivery environment (use artifact file).";
 
             command.Handler = CommandHandler
-                .Create<string, bool>((code, dev) =>
+                .Create<string, bool>((id, dev) =>
                 {
-                    _consoleHandler.StartProcessMessage("environment", code);
+                    _consoleHandler.StartProcessMessage("environment", id);
 
-                    ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigByProjectCode(code);
+                    ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigById(id);
 
                  if (existProjectConfig == null)
                  {
-                     _consoleHandler.SetErrorMessage($"Project Code: '{code}' is not exist. You can use the 'init' command to define new project.");
+                     _consoleHandler.SetErrorMessage($"Id: '{id}' is not exist. You can use the 'init' command to define new project.");
                  }
                  else
                  {

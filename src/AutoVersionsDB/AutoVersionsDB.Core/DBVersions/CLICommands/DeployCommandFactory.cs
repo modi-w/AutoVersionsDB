@@ -13,32 +13,32 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly IConsoleHandler _consoleHandler;
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
 
         public DeployCommandFactory(DBVersionsAPI dbVersionsAPI,
                                     IConsoleHandler consoleHandler,
-                                    CodeCLIOption codeOption)
+                                    IdCLIOption idOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
+            _idOption = idOption;
         }
 
         public override Command Create()
         {
             Command command = new Command("deploy")
             {
-                _codeOption,
+                _idOption,
             };
 
             command.Description = "Deploy the project. Create an artifact file ready to use on delivery enviornment.";
 
-            command.Handler = CommandHandler.Create<string>((code) =>
+            command.Handler = CommandHandler.Create<string>((id) =>
             {
-                _consoleHandler.StartProcessMessage("deploy", code);
+                _consoleHandler.StartProcessMessage("deploy", id);
 
                 _consoleHandler.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.Deploy(code, _consoleHandler.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.Deploy(id, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
 
                 _consoleHandler.ProcessComplete(processResults.Trace);

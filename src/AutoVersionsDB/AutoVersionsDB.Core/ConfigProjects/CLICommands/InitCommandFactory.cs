@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly IConsoleHandler _consoleHandler;
 
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
         private readonly DescriptionCLIOption _descriptionOption;
         private readonly DBTypeCLIOption _dbTypeOption;
         private readonly ConnectionStringCLIOption _connectionStringOption;
@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
         public InitCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                     IConsoleHandler consoleHandler,
-                                    CodeCLIOption codeOption,
+                                    IdCLIOption idOption,
                                     DescriptionCLIOption descriptionOption,
                                     DBTypeCLIOption dbTypeOption,
                                     ConnectionStringCLIOption connectionStringOption,
@@ -44,7 +44,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         {
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
+            _idOption = idOption;
             _descriptionOption = descriptionOption;
             _dbTypeOption = dbTypeOption;
             _connectionStringOption = connectionStringOption;
@@ -60,7 +60,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         {
             Command command = new Command("init")
             {
-                _codeOption,
+                _idOption,
                 _descriptionOption,
                 _dbTypeOption,
                 _connectionStringOption,
@@ -77,7 +77,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
             {
-                _consoleHandler.StartProcessMessage("init", projectConfig.Code);
+                _consoleHandler.StartProcessMessage("init", projectConfig.Id);
 
                 _consoleHandler.StartSpiiner();
                 ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(projectConfig, _consoleHandler.OnNotificationStateChanged);

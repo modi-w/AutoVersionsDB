@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 
 
         public SyncDBToSpecificStateProcessDefinition(RestoreDatabaseStep rollbackStep,
-                                            ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+                                            ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                             SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                             ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                             ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
@@ -27,7 +27,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
                                             CreateBackupStep createBackupStep,
                                             ExecuteAllScriptsStep executeScriptsStep,
                                             FinalizeProcessStep finalizeProcessStep)
-            : base(rollbackStep, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
+            : base(rollbackStep, idExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(projectConfigValidationStep);
             AddStep(checkDeliveryEnvValidationStep);

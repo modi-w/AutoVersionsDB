@@ -37,7 +37,7 @@
             this.label25 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.lblProjectCode = new System.Windows.Forms.Label();
+            this.lblId = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblProjectDesc
@@ -152,22 +152,22 @@
             this.label2.TabIndex = 86;
             this.label2.Text = "DB Process";
             // 
-            // lblProjectCode
+            // lblId
             // 
-            this.lblProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblProjectCode.CausesValidation = false;
-            this.lblProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblProjectCode.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lblProjectCode.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblProjectCode.Location = new System.Drawing.Point(84, 2);
-            this.lblProjectCode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblProjectCode.Name = "lblProjectCode";
-            this.lblProjectCode.Size = new System.Drawing.Size(609, 43);
-            this.lblProjectCode.TabIndex = 87;
-            this.lblProjectCode.Text = "Code 1";
-            this.lblProjectCode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblId.CausesValidation = false;
+            this.lblId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblId.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblId.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblId.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblId.Location = new System.Drawing.Point(84, 2);
+            this.lblId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblId.Name = "lblId";
+            this.lblId.Size = new System.Drawing.Size(609, 43);
+            this.lblId.TabIndex = 87;
+            this.lblId.Text = "Id 1";
+            this.lblId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ProjectItemControl
             // 
@@ -175,7 +175,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.lblProjectCode);
+            this.Controls.Add(this.lblId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label25);
@@ -204,6 +204,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lblProjectCode;
+        private System.Windows.Forms.Label lblId;
     }
 }

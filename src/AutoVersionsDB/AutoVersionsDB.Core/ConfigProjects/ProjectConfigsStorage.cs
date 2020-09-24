@@ -20,16 +20,16 @@ namespace AutoVersionsDB.Core.ConfigProjects
             lock (_saveSync)
             {
                 projectConfig.ThrowIfNull(nameof(projectConfig));
-                projectConfig.Code.ThrowIfNull(nameof(projectConfig.Code));
+                projectConfig.Id.ThrowIfNull(nameof(projectConfig.Id));
 
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (dicAllProjectConfigs.ContainsKey(projectConfig.Code.ToTrimedInvariant()))
+                if (dicAllProjectConfigs.ContainsKey(projectConfig.Id.ToTrimedInvariant()))
                 {
-                    throw new Exception($"ProjectCode: '{projectConfig.Code}' is aready exist.");
+                    throw new Exception($"Id: '{projectConfig.Id}' is aready exist.");
                 }
 
-                dicAllProjectConfigs.Add(projectConfig.Code.ToTrimedInvariant(), projectConfig);
+                dicAllProjectConfigs.Add(projectConfig.Id.ToTrimedInvariant(), projectConfig);
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
@@ -41,55 +41,55 @@ namespace AutoVersionsDB.Core.ConfigProjects
             lock (_saveSync)
             {
                 projectConfig.ThrowIfNull(nameof(projectConfig));
-                projectConfig.Code.ThrowIfNull(nameof(projectConfig.Code));
+                projectConfig.Id.ThrowIfNull(nameof(projectConfig.Id));
 
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (!dicAllProjectConfigs.ContainsKey(projectConfig.Code.ToTrimedInvariant()))
+                if (!dicAllProjectConfigs.ContainsKey(projectConfig.Id.ToTrimedInvariant()))
                 {
-                    throw new Exception($"ProjectCode: '{projectConfig.Code}' is not exist.");
+                    throw new Exception($"Id: '{projectConfig.Id}' is not exist.");
                 }
 
 
-                dicAllProjectConfigs[projectConfig.Code.ToTrimedInvariant()] = projectConfig;
+                dicAllProjectConfigs[projectConfig.Id.ToTrimedInvariant()] = projectConfig;
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
         }
 
-        public void ChangeProjectCode(string prevProjectCode, string newProjectCode)
+        public void ChangeId(string prevId, string newId)
         {
             lock (_saveSync)
             {
-                prevProjectCode.ThrowIfNull(nameof(prevProjectCode));
-                newProjectCode.ThrowIfNull(nameof(newProjectCode));
+                prevId.ThrowIfNull(nameof(prevId));
+                newId.ThrowIfNull(nameof(newId));
 
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (!dicAllProjectConfigs.TryGetValue(prevProjectCode.ToTrimedInvariant(), out ProjectConfigItem projectConfig))
+                if (!dicAllProjectConfigs.TryGetValue(prevId.ToTrimedInvariant(), out ProjectConfigItem projectConfig))
                 {
-                    throw new Exception($"ProjectCode: '{projectConfig.Code}' is not exist.");
+                    throw new Exception($"Id: '{projectConfig.Id}' is not exist.");
                 }
 
-                projectConfig.Code = newProjectCode;
+                projectConfig.Id = newId;
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
         }
 
-        public void RemoveProjectConfig(string projectCode)
+        public void RemoveProjectConfig(string id)
         {
             lock (_saveSync)
             {
                 var dicAllProjectConfigs = GetAllProjectConfigs();
 
-                if (!dicAllProjectConfigs.ContainsKey(projectCode.ToTrimedInvariant()))
+                if (!dicAllProjectConfigs.ContainsKey(id.ToTrimedInvariant()))
                 {
-                    throw new Exception($"ProjectCode: '{projectCode}' is not exist.");
+                    throw new Exception($"Id: '{id}' is not exist.");
                 }
 
 
-                dicAllProjectConfigs.Remove(projectCode.ToTrimedInvariant());
+                dicAllProjectConfigs.Remove(id.ToTrimedInvariant());
 
                 SaveProjectConfigsFile(dicAllProjectConfigs);
             }
@@ -127,26 +127,26 @@ namespace AutoVersionsDB.Core.ConfigProjects
                 listAllProjectConfigs = new List<ProjectConfigItem>();
             }
 
-            listAllProjectConfigs.OrderBy(e => e.Code.ToTrimedInvariant()).ToList();
-            dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.Code.ToTrimedInvariant());
+            listAllProjectConfigs.OrderBy(e => e.Id.ToTrimedInvariant()).ToList();
+            dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.Id.ToTrimedInvariant());
 
             return dicAllProjectConfigs;
         }
 
-        public virtual ProjectConfigItem GetProjectConfigByProjectCode(string projectCode)
+        public virtual ProjectConfigItem GetProjectConfigById(string id)
         {
             var dicAllProjectConfigs = GetAllProjectConfigs();
 
-            dicAllProjectConfigs.TryGetValue( projectCode.ToTrimedInvariant(), out ProjectConfigItem resultProjectConfig);
+            dicAllProjectConfigs.TryGetValue( id.ToTrimedInvariant(), out ProjectConfigItem resultProjectConfig);
 
             return resultProjectConfig;
         }
 
-        public virtual bool IsProjectCodeExsit(string projectCode)
+        public virtual bool IsIdExsit(string id)
         {
             var dicAllProjectConfigs = GetAllProjectConfigs();
 
-            return dicAllProjectConfigs.ContainsKey(projectCode.ToTrimedInvariant());
+            return dicAllProjectConfigs.ContainsKey(id.ToTrimedInvariant());
         }
 
 

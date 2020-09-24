@@ -4,30 +4,30 @@ using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.Validators
 {
-    public class ProjectCodeNotExistValidator : ValidatorBase
+    public class IdNotExistValidator : ValidatorBase
     {
         private readonly ProjectConfigsStorage _projectConfigsStorage;
-        private readonly string _projectCode;
+        private readonly string _id;
 
-        public override string ValidatorName => "ProjectCodeNotExist";
+        public override string ValidatorName => "IdNotExist";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
-        public ProjectCodeNotExistValidator(string projectCode,
+        public IdNotExistValidator(string id,
                                                 ProjectConfigsStorage projectConfigsStorage)
         {
-            _projectCode = projectCode;
+            _id = id;
             _projectConfigsStorage = projectConfigsStorage;
         }
 
         public override string Validate()
         {
-            if (!string.IsNullOrWhiteSpace(_projectCode))
+            if (!string.IsNullOrWhiteSpace(_id))
             {
-                if (_projectConfigsStorage.IsProjectCodeExsit(_projectCode))
+                if (_projectConfigsStorage.IsIdExsit(_id))
                 {
-                    string errorMsg = $"Project Code: '{_projectCode}' is aready exist.";
+                    string errorMsg = $"Id: '{_id}' is aready exist.";
                     return errorMsg;
                 }
             }

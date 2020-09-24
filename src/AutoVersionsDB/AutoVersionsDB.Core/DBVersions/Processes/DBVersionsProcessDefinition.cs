@@ -13,11 +13,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
         public bool IsVirtualExecution { get; protected set; }
 
         public DBVersionsProcessDefinition(ActionStepBase rollbackStep,
-                                                ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+                                                ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                                 SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep)
             : base(rollbackStep)
         {
-            AddStep(projectCodeExistValidationStep);
+            AddStep(idExistValidationStep);
             AddStep(setProjectConfigInProcessContextStep);
         }
     }
