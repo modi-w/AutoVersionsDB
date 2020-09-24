@@ -17,16 +17,16 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public ProcessTrace Run(ProcessParams processParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults Run(ProcessParams processParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ProcessTrace results;
+            ProcessResults processResults;
 
             using (NotificationEngine engine = Create())
             {
-                results = engine.Run(processParams, onNotificationStateChanged);
+                processResults = engine.Run(processParams, onNotificationStateChanged);
             }
 
-            return results;
+            return processResults;
         }
 
 

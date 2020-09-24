@@ -1,5 +1,5 @@
 ﻿using System;
-using AutoVersionsDB.Common;
+using AutoVersionsDB.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -22,47 +22,54 @@ namespace AutoVersionsDB.WinApp
 
         public ProjectConfigItem ProjectConfig { get; private set; }
 
-        public ProjectItemControl(ProjectConfigItem projectConfigItem)
+        //public ProjectItemControl(ProjectConfigItem projectConfigItem)
+        public ProjectItemControl()
         {
-            
-            projectConfigItem.ThrowIfNull(nameof(projectConfigItem));
+
+            //projectConfigItem.ThrowIfNull(nameof(projectConfigItem));
 
             InitializeComponent();
 
-            ProjectConfig = projectConfigItem;
-
-            lblProjectName.Text = ProjectConfig.ProjectName;
 
         }
 
+        public void SetProjectConfig(ProjectConfigItem projectConfig)
+        {
+            ProjectConfig = projectConfig;
+
+            lblProjectCode.Text = ProjectConfig.Code;
+            lblProjectDesc.Text = ProjectConfig.Description;
+        }
+
+
         private void LblProjectName_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig);
+            OnNavToProcess?.Invoke(ProjectConfig.Code);
         }
 
         private void LblProjectIcon_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig);
+            OnNavToProcess?.Invoke(ProjectConfig.Code);
         }
 
         private void LblProcessLink_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig);
+            OnNavToProcess?.Invoke(ProjectConfig.Code);
         }
 
         private void LblEditProject_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(ProjectConfig);
+            OnEditProject?.Invoke(ProjectConfig.Code);
         }
 
         private void LblDeleteProject_Click(object sender, EventArgs e)
         {
-            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.ProjectName}'";
+            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.Code}'";
             bool results = MessageBox.Show(this, warningMessage, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes;
 
             if (results)
             {
-                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.ProjectGuid);
+                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.Code, null);
 
                 OnRefreshProjectList?.Invoke();
             }

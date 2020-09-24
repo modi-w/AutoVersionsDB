@@ -1,5 +1,5 @@
-﻿using AutoVersionsDB.Common;
-using AutoVersionsDB.DbCommands.Contract;
+﻿using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;

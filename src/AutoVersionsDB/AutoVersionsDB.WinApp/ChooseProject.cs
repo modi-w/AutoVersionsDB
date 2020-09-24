@@ -45,9 +45,10 @@ namespace AutoVersionsDB.WinApp
 
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
 
+
+                this.Load += ChooseProject_Load;
             }
-           
-            this.Load += ChooseProject_Load;
+
 
         }
 
@@ -67,8 +68,11 @@ namespace AutoVersionsDB.WinApp
 
         private void ChooseProject_Load(object sender, EventArgs e)
         {
-            //flowLayoutPanel1.Width = this.Width;
-            RefreshProjectList();
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                //flowLayoutPanel1.Width = this.Width;
+                RefreshProjectList();
+            }
         }
 
         private void TbSerchProject_LostFocus(object sender, EventArgs e)
@@ -107,32 +111,35 @@ namespace AutoVersionsDB.WinApp
             {
                 _allProjectsList = AutoVersionsDbAPI.GetProjectsList();
 
-                    List<ProjectConfigItem> filteredProjectList =
-                        _allProjectsList
-                        .Where(e => string.IsNullOrWhiteSpace(searchText) || e.ProjectName.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
-                        .OrderBy(e => e.ProjectName)
-                        .ToList();
+                List<ProjectConfigItem> filteredProjectList =
+                    _allProjectsList
+                    .Where(e => string.IsNullOrWhiteSpace(searchText) 
+                                || e.Code.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant())
+                                || e.Description.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
+                    .OrderBy(e => e.Code)
+                    .ToList();
 
-                    flowLayoutPanel1.Controls.Clear();
+                flowLayoutPanel1.Controls.Clear();
 
-                    foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
-                    {
-                        ProjectItemControl projectItem = new ProjectItemControl(projectConfigItem);
-                        projectItem.OnNavToProcess += ProjectItem_OnNavToProcess;
-                        projectItem.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
-                        projectItem.OnEditProject += ProjectItem_OnEditProject;
-                        flowLayoutPanel1.Controls.Add(projectItem);
-                    }
+                foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
+                {
+                    ProjectItemControl projectItemControl = new ProjectItemControl();
+                    projectItemControl.SetProjectConfig(projectConfigItem);
+                    projectItemControl.OnNavToProcess += ProjectItem_OnNavToProcess;
+                    projectItemControl.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
+                    projectItemControl.OnEditProject += ProjectItem_OnEditProject;
+                    flowLayoutPanel1.Controls.Add(projectItemControl);
+                }
 
-                    SetProjectItemsSize();
+                SetProjectItemsSize();
 
 
             }
         }
 
-        private void ProjectItem_OnEditProject(ProjectConfigItem projectConfigItem)
+        private void ProjectItem_OnEditProject(string projectCode)
         {
-            OnEditProject?.Invoke(projectConfigItem);
+            OnEditProject?.Invoke(projectCode);
         }
 
         private void ProjectItem_OnRefreshProjectList()
@@ -140,14 +147,14 @@ namespace AutoVersionsDB.WinApp
             RefreshProjectList();
         }
 
-        private void ProjectItem_OnNavToProcess(ProjectConfigItem projectConfigItem)
+        private void ProjectItem_OnNavToProcess(string projectCode)
         {
-            OnNavToProcess?.Invoke(projectConfigItem);
+            OnNavToProcess?.Invoke(projectCode);
         }
 
-      
 
-    
+
+
 
         private void TbSerchProject_TextChanged(object sender, EventArgs e)
         {

@@ -97,9 +97,11 @@
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\ProjectItemControl.cs">
       <Link>ProjectItemControl.cs</Link>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\ProjectItemControl.Designer.cs">
       <Link>ProjectItemControl.Designer.cs</Link>
+      <DependentUpon>ProjectItemControl.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Properties\Resources.Designer.cs">
       <Link>Properties\Resources.Designer.cs</Link>
@@ -143,6 +145,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ProjectItemControl.resx">
       <Link>ProjectItemControl.resx</Link>
+      <DependentUpon>ProjectItemControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Properties\Resources.resx">
       <Link>Properties\Resources.resx</Link>
@@ -170,10 +173,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoVersionsDB.Common\AutoVersionsDB.Common.csproj">
-      <Project>{87f9c789-bc33-4371-a367-70b37c2912ac}</Project>
-      <Name>AutoVersionsDB.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj">
       <Project>{D8E93FE9-2EBA-4A49-B713-899E45402AEA}</Project>
       <Name>AutoVersionsDB.Core</Name>
@@ -185,6 +184,10 @@
     <ProjectReference Include="..\AutoVersionsDB.DbCommands.Integration\AutoVersionsDB.DbCommands.Integration.csproj">
       <Project>{3D0091E6-44EB-474B-A77D-53DC984F5E88}</Project>
       <Name>AutoVersionsDB.DbCommands.Integration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoVersionsDB.Helpers\AutoVersionsDB.Helpers.csproj">
+      <Project>{06a9844c-f76f-4f6e-9e65-0f84b3fc8733}</Project>
+      <Name>AutoVersionsDB.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoVersionsDB.NotificationableEngine\AutoVersionsDB.NotificationableEngine.csproj">
       <Project>{38CCA5D1-3F7E-4282-8649-75990F1AF1E8}</Project>

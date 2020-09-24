@@ -1,8 +1,9 @@
-﻿using AutoVersionsDB.Common;
+﻿using AutoVersionsDB.Helpers;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
 using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using AutoVersionsDB.NotificationableEngine;
+using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -18,18 +19,22 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Arrange
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
-                IsDevEnvironment = false
+                Code = "aaa",
+                DevEnvironment = false
             };
+
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig, null);
+            ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig.Code, null);
 
 
             //Assert
-            List<StepNotificationState> notificationStatesHistory = processTrace.StatesHistory;
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ProjectName"));
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ConnStr"));
+            List<StepNotificationState> notificationStatesHistory = processResults.Trace.StatesHistory;
+            //Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ProjectCodeMandatory"));
+            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ConnectionString"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBBackupFolderPath"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBTypeCode"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DeliveryArtifactFolderPath"));
@@ -40,6 +45,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DeliveryEnv_ProjectConfigValidate_Valid([ValueSource("ProjectConfigItemArray_DeliveryEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
@@ -48,11 +55,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig, null);
+            ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig.Code, null);
 
 
             //Assert
-            assertProccessErrors(processTrace);
+            assertProccessErrors(processResults.Trace);
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
         }
 
@@ -61,6 +68,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DeliveryEnv_ValidateAll_Valid([ValueSource("ProjectConfigItemArray_DeliveryEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
@@ -69,12 +78,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig, null);
+            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Code, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            assertProccessErrors(processTrace);
+            assertProccessErrors(processResults.Trace);
         }
 
 
@@ -83,6 +92,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DeliveryEnv_IsHistoryExecutedFilesChanged_NotValid([ValueSource("ProjectConfigItemArray_DeliveryEnv_ChangedHistoryFiles_Incremental")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DeliveryEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
@@ -91,13 +102,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig, null);
+            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Code, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processTrace.HasError);
-            Assert.That(processTrace.ErrorCode == "IsHistoryExecutedFilesChanged");
+            Assert.That(processResults.Trace.HasError);
+            Assert.That(processResults.Trace.ErrorCode == "IsHistoryExecutedFilesChanged");
         }
 
 
@@ -105,6 +116,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DeliveryEnv_ScriptsFilesAndDBExecutionHistoryIsMatch_NotValid([ValueSource("ProjectConfigItemArray_DeliveryEnv_MissingFile")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DeliveryEnv.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
@@ -112,13 +125,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig, null);
+            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Code, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processTrace.HasError);
-            Assert.That(processTrace.ErrorCode == "IsHistoryExecutedFilesChanged");
+            Assert.That(processResults.Trace.HasError);
+            Assert.That(processResults.Trace.ErrorCode == "IsHistoryExecutedFilesChanged");
         }
 
 
@@ -126,6 +139,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DeliveryEnv_TablesExist_NotValid([ValueSource("ProjectConfigItemArray_DeliveryEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             RemoveArtifactTempFolder(projectConfig);
             string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_MissingSystemTables.bak");
             restoreDB(projectConfig, dbBackupFileFileFullPath);
@@ -134,13 +149,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig, null);
+            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Code, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processTrace.HasError);
-            Assert.That(processTrace.ErrorCode == "SystemTables");
+            Assert.That(processResults.Trace.HasError);
+            Assert.That(processResults.Trace.ErrorCode == "SystemTables");
         }
 
 
@@ -151,19 +166,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void DeliveryEnv_ValidateArtifactFile_NotValid([ValueSource("ProjectConfigItemArray_DeliveryEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+
             RemoveArtifactTempFolder(projectConfig);
             projectConfig.DeliveryArtifactFolderPath += "_NotExistFolderSuffix";
 
             NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
             //Act
-            ProcessTrace processTrace = AutoVersionsDbAPI.ValidateAll(projectConfig, null);
+            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Code, null);
 
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processTrace.HasError);
-            Assert.That(processTrace.ErrorCode == "ArtifactFile");
+            Assert.That(processResults.Trace.HasError);
+            Assert.That(processResults.Trace.ErrorCode == "ArtifactFile");
         }
 
 

@@ -15,10 +15,12 @@ namespace AutoVersionsDB.NotificationableEngine
         public NotificationProcessException()
         {
         }
-        public NotificationProcessException(string message) : base(message)
+        public NotificationProcessException(string message) 
+            : base(message)
         {
         }
-        public NotificationProcessException(string message, Exception innerException) : base(message, innerException)
+        public NotificationProcessException(string message, Exception innerException) 
+            : base(message, innerException)
         {
         }
 

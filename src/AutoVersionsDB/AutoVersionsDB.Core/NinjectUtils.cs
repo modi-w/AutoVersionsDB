@@ -1,6 +1,5 @@
-﻿using AutoVersionsDB.Common;
+﻿using AutoVersionsDB.Helpers;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ScriptFiles;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using Ninject;

@@ -19,7 +19,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        internal ProcessTrace Run(ProcessParams processParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        internal ProcessResults Run(ProcessParams processParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
 
             _processContext.ProcessParams = processParams;
@@ -43,7 +43,7 @@ namespace AutoVersionsDB.NotificationableEngine
             }
 
 
-            return _processTraceHandler.ProcessTrace;
+            return new ProcessResults(_processTraceHandler.ProcessTrace, _processContext.Results);
         }
 
 
@@ -149,7 +149,7 @@ namespace AutoVersionsDB.NotificationableEngine
             _disposed = true;
         }
 
-       
+
 
         #endregion
 
