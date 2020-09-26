@@ -3,6 +3,7 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
+using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System.IO;
 
@@ -15,11 +16,15 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         public string Description { get; set; }
 
-
         public string DBType { get; set; }
-        public string ConnectionString { get; set; }
+        public string Server { get; set; }
+        public string DBName { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
 
-        public string ConnectionStringToMasterDB { get; set; }
+        public DBConnectionInfo DBConnectionInfo =>
+            new DBConnectionInfo(this.DBType, this.Server, this.DBName, this.Username, this.Password);
+
 
         public string BackupFolderPath { get; set; }
 
@@ -31,8 +36,6 @@ namespace AutoVersionsDB.Core.ConfigProjects
     
         public string DeliveryArtifactFolderPath { get; set; }
 
-
-        public int DBCommandsTimeout { get; set; }
 
 
         public string DeliveryExtractedFilesArtifactFolder
@@ -118,8 +121,6 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         public ProjectConfigItem()
         {
-            DevEnvironment = true;
-            DBCommandsTimeout = 300;
         }
 
 

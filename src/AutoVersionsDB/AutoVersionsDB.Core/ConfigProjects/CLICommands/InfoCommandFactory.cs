@@ -63,10 +63,16 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                      message = $"{"DBType".PadRight(c_paddingRightForCaprions)}: {projectConfig.DBType}";
                      _consoleHandler.SetInfoMessage(message);
 
-                     message = $"{"Connection String".PadRight(c_paddingRightForCaprions)}: {projectConfig.ConnectionString}";
+                     message = $"{"ServerInstance".PadRight(c_paddingRightForCaprions)}: {projectConfig.Server}";
                      _consoleHandler.SetInfoMessage(message);
-
-                     message = $"{"Connection String To Master DB".PadRight(c_paddingRightForCaprions)}: {projectConfig.ConnectionStringToMasterDB}";
+                    
+                     message = $"{"DataBaseName".PadRight(c_paddingRightForCaprions)}: {projectConfig.DBName}";
+                     _consoleHandler.SetInfoMessage(message);
+                  
+                     message = $"{"DBUsername".PadRight(c_paddingRightForCaprions)}: {projectConfig.Username}";
+                     _consoleHandler.SetInfoMessage(message);
+                   
+                     message = $"{"DBPassword".PadRight(c_paddingRightForCaprions)}: {projectConfig.Password}";
                      _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"Backup Folder Path".PadRight(c_paddingRightForCaprions)}: {projectConfig.BackupFolderPath}";

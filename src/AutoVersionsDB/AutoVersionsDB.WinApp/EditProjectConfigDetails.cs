@@ -167,15 +167,15 @@ namespace AutoVersionsDB.WinApp
                             SetErrorInErrorProvider(cboConncectionType, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "ConnStr":
+                        //case "ConnStr":
 
-                            SetErrorInErrorProvider(tbConnStr, errorStateItem.LowLevelErrorMessage);
-                            break;
+                        //    SetErrorInErrorProvider(tbConnStr, errorStateItem.LowLevelErrorMessage);
+                        //    break;
 
-                        case "ConnStrToMasterDB":
+                        //case "ConnStrToMasterDB":
 
-                            SetErrorInErrorProvider(tbConnStrToMasterDB, errorStateItem.LowLevelErrorMessage);
-                            break;
+                        //    SetErrorInErrorProvider(tbConnStrToMasterDB, errorStateItem.LowLevelErrorMessage);
+                        //    break;
 
                         case "DBBackupFolderPath":
 
@@ -212,8 +212,10 @@ namespace AutoVersionsDB.WinApp
         {
             SetErrorInErrorProvider(tbId, null);
             SetErrorInErrorProvider(cboConncectionType, null);
-            SetErrorInErrorProvider(tbConnStr, null);
-            SetErrorInErrorProvider(tbConnStrToMasterDB, null);
+            SetErrorInErrorProvider(tbServer, null);
+            SetErrorInErrorProvider(tbDBName, null);
+            SetErrorInErrorProvider(tbUsername, null);
+            SetErrorInErrorProvider(tbPassword, null);
             SetErrorInErrorProvider(tbDBBackupFolder, null);
             SetErrorInErrorProvider(tbDevScriptsFolderPath, null);
             SetErrorInErrorProvider(lbllncrementalScriptsFolderPath, null);
@@ -262,14 +264,24 @@ namespace AutoVersionsDB.WinApp
             {
                 tbProjectDescription.Text = projectConfig.Description;
             }));
-            tbConnStr.BeginInvoke((MethodInvoker)(() =>
+            tbServer.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStr.Text = projectConfig.ConnectionString;
+                tbServer.Text = projectConfig.Server;
             }));
-            tbConnStrToMasterDB.BeginInvoke((MethodInvoker)(() =>
+            tbDBName.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStrToMasterDB.Text = projectConfig.ConnectionStringToMasterDB;
+                tbDBName.Text = projectConfig.DBName;
             }));
+            tbUsername.BeginInvoke((MethodInvoker)(() =>
+            {
+                tbUsername.Text = projectConfig.Username;
+            }));
+            tbPassword.BeginInvoke((MethodInvoker)(() =>
+            {
+                tbPassword.Text = projectConfig.Password;
+            }));
+
+
             tbDBBackupFolder.BeginInvoke((MethodInvoker)(() =>
             {
                 tbDBBackupFolder.Text = projectConfig.BackupFolderPath;
@@ -299,13 +311,7 @@ namespace AutoVersionsDB.WinApp
             }));
 
 
-            if (projectConfig.DBCommandsTimeout > 0)
-            {
-                tbConnectionTimeout.BeginInvoke((MethodInvoker)(() =>
-                {
-                    tbConnectionTimeout.Text = projectConfig.DBCommandsTimeout.ToString(CultureInfo.InvariantCulture);
-                }));
-            }
+         
 
             BindScriptsPathLabels(projectConfig);
 
@@ -356,19 +362,13 @@ namespace AutoVersionsDB.WinApp
             projectConfig.Id = tbId.Text;
             projectConfig.Description = tbProjectDescription.Text;
             projectConfig.DBType = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
-            projectConfig.ConnectionString = tbConnStr.Text;
-            projectConfig.ConnectionStringToMasterDB = tbConnStrToMasterDB.Text;
+            projectConfig.Server = tbServer.Text;
+            projectConfig.DBName = tbDBName.Text;
+            projectConfig.Username = tbUsername.Text;
+            projectConfig.Password = tbPassword.Text;
             projectConfig.BackupFolderPath = tbDBBackupFolder.Text;
 
             projectConfig.DevEnvironment = rbDevEnv.Checked;
-
-            //    _projectConfigItem.IsDevEnvironment = chkAllowDropDB.Checked;
-
-            if (int.TryParse(tbConnectionTimeout.Text, out int parsedInt)
-                && parsedInt > 0)
-            {
-                projectConfig.DBCommandsTimeout = parsedInt;
-            }
 
             projectConfig.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
             projectConfig.DeployArtifactFolderPath = tbDeployArtifactFolderPath.Text;
@@ -528,13 +528,14 @@ namespace AutoVersionsDB.WinApp
 
         private void SetAllControlsEnableDisable(bool isEnable)
         {
-            SetControlEnableOrDisable(tbConnectionTimeout, isEnable);
             SetControlEnableOrDisable(btnNavToProcess, isEnable);
-            SetControlEnableOrDisable(tbConnStrToMasterDB, isEnable);
             SetControlEnableOrDisable(cboConncectionType, isEnable);
+            SetControlEnableOrDisable(tbServer, isEnable);
+            SetControlEnableOrDisable(tbDBName, isEnable);
+            SetControlEnableOrDisable(tbUsername, isEnable);
+            SetControlEnableOrDisable(tbPassword, isEnable);
             SetControlEnableOrDisable(tbDevScriptsFolderPath, isEnable);
             SetControlEnableOrDisable(tbDBBackupFolder, isEnable);
-            SetControlEnableOrDisable(tbConnStr, isEnable);
             SetControlEnableOrDisable(tbId, isEnable);
             SetControlEnableOrDisable(rbDevEnv, isEnable);
             SetControlEnableOrDisable(rbDelEnv, isEnable);

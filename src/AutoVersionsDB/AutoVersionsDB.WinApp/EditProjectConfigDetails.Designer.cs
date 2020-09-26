@@ -31,16 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.tbId = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbConnStr = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tbDBBackupFolder = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.tbDevScriptsFolderPath = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cboConncectionType = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tbConnStrToMasterDB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errPrvProjectDetails = new System.Windows.Forms.ErrorProvider(this.components);
             this.label12 = new System.Windows.Forms.Label();
@@ -49,8 +45,6 @@
             this.label27 = new System.Windows.Forms.Label();
             this.lblDevDummyDataScriptsFolderPath = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.tbConnectionTimeout = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label28 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
@@ -91,6 +85,14 @@
             this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsControl();
             this.pnlDevEnvDeplyFolder = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
+            this.tbServer = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbDBName = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbUsername = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -111,7 +113,7 @@
             this.label2.Location = new System.Drawing.Point(25, 20);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 36);
+            this.label2.Size = new System.Drawing.Size(48, 36);
             this.label2.TabIndex = 1;
             this.label2.Text = "Id:";
             // 
@@ -125,31 +127,6 @@
             this.tbId.Name = "tbId";
             this.tbId.Size = new System.Drawing.Size(284, 30);
             this.tbId.TabIndex = 2;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label5.Location = new System.Drawing.Point(20, 73);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(262, 36);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Connection String:";
-            // 
-            // tbConnStr
-            // 
-            this.tbConnStr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbConnStr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbConnStr.Location = new System.Drawing.Point(27, 118);
-            this.tbConnStr.Margin = new System.Windows.Forms.Padding(4);
-            this.tbConnStr.Multiline = true;
-            this.tbConnStr.Name = "tbConnStr";
-            this.tbConnStr.Size = new System.Drawing.Size(945, 66);
-            this.tbConnStr.TabIndex = 11;
             // 
             // label9
             // 
@@ -226,31 +203,6 @@
             this.cboConncectionType.Name = "cboConncectionType";
             this.cboConncectionType.Size = new System.Drawing.Size(333, 37);
             this.cboConncectionType.TabIndex = 32;
-            // 
-            // label14
-            // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label14.Location = new System.Drawing.Point(23, 203);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(452, 36);
-            this.label14.TabIndex = 38;
-            this.label14.Text = "Connection String To Master DB:";
-            // 
-            // tbConnStrToMasterDB
-            // 
-            this.tbConnStrToMasterDB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbConnStrToMasterDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbConnStrToMasterDB.Location = new System.Drawing.Point(29, 249);
-            this.tbConnStrToMasterDB.Margin = new System.Windows.Forms.Padding(4);
-            this.tbConnStrToMasterDB.Multiline = true;
-            this.tbConnStrToMasterDB.Name = "tbConnStrToMasterDB";
-            this.tbConnStrToMasterDB.Size = new System.Drawing.Size(945, 66);
-            this.tbConnStrToMasterDB.TabIndex = 37;
             // 
             // label1
             // 
@@ -358,30 +310,6 @@
             this.label29.Size = new System.Drawing.Size(404, 25);
             this.label29.TabIndex = 67;
             this.label29.Text = "Dev Dummy Data Scripts Folder Path:";
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label13.Location = new System.Drawing.Point(580, 15);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(289, 36);
-            this.label13.TabIndex = 34;
-            this.label13.Text = "Connection Timeout:";
-            // 
-            // tbConnectionTimeout
-            // 
-            this.tbConnectionTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbConnectionTimeout.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbConnectionTimeout.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.tbConnectionTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.tbConnectionTimeout.Location = new System.Drawing.Point(877, 17);
-            this.tbConnectionTimeout.Margin = new System.Windows.Forms.Padding(4);
-            this.tbConnectionTimeout.Name = "tbConnectionTimeout";
-            this.tbConnectionTimeout.Size = new System.Drawing.Size(93, 34);
-            this.tbConnectionTimeout.TabIndex = 35;
             // 
             // panel5
             // 
@@ -629,19 +557,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.tbPassword);
+            this.panel2.Controls.Add(this.label14);
+            this.panel2.Controls.Add(this.tbUsername);
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Controls.Add(this.tbDBName);
+            this.panel2.Controls.Add(this.label10);
+            this.panel2.Controls.Add(this.tbServer);
+            this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label17);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.tbConnStr);
-            this.panel2.Controls.Add(this.label14);
-            this.panel2.Controls.Add(this.tbConnectionTimeout);
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label13);
-            this.panel2.Controls.Add(this.tbConnStrToMasterDB);
             this.panel2.Controls.Add(this.cboConncectionType);
             this.panel2.Location = new System.Drawing.Point(27, 330);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(995, 356);
+            this.panel2.Size = new System.Drawing.Size(995, 271);
             this.panel2.TabIndex = 71;
             // 
             // label17
@@ -652,7 +582,7 @@
             this.label17.Location = new System.Drawing.Point(0, 0);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(5, 356);
+            this.label17.Size = new System.Drawing.Size(5, 271);
             this.label17.TabIndex = 64;
             // 
             // panel3
@@ -670,7 +600,7 @@
             this.panel3.Controls.Add(this.rbDelEnv);
             this.panel3.Controls.Add(this.rbDevEnv);
             this.panel3.Controls.Add(this.label18);
-            this.panel3.Location = new System.Drawing.Point(27, 814);
+            this.panel3.Location = new System.Drawing.Point(27, 729);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(995, 142);
@@ -796,7 +726,7 @@
             this.pnlDevEnvFoldersFields.Controls.Add(this.tbDevScriptsFolderPath);
             this.pnlDevEnvFoldersFields.Controls.Add(this.lbllncrementalScriptsFolderPath);
             this.pnlDevEnvFoldersFields.Controls.Add(this.label12);
-            this.pnlDevEnvFoldersFields.Location = new System.Drawing.Point(27, 964);
+            this.pnlDevEnvFoldersFields.Location = new System.Drawing.Point(27, 879);
             this.pnlDevEnvFoldersFields.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDevEnvFoldersFields.Name = "pnlDevEnvFoldersFields";
             this.pnlDevEnvFoldersFields.Size = new System.Drawing.Size(995, 296);
@@ -848,7 +778,7 @@
             this.pnlDelEnvFields.Controls.Add(this.label7);
             this.pnlDelEnvFields.Controls.Add(this.tbDeliveryArtifactFolderPath);
             this.pnlDelEnvFields.Controls.Add(this.label8);
-            this.pnlDelEnvFields.Location = new System.Drawing.Point(27, 1399);
+            this.pnlDelEnvFields.Location = new System.Drawing.Point(27, 1314);
             this.pnlDelEnvFields.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDelEnvFields.Name = "pnlDelEnvFields";
             this.pnlDelEnvFields.Size = new System.Drawing.Size(995, 124);
@@ -900,7 +830,7 @@
             this.panel7.Controls.Add(this.label25);
             this.panel7.Controls.Add(this.label9);
             this.panel7.Controls.Add(this.tbDBBackupFolder);
-            this.panel7.Location = new System.Drawing.Point(27, 694);
+            this.panel7.Location = new System.Drawing.Point(27, 609);
             this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(995, 112);
@@ -936,7 +866,7 @@
             this.pnlDevEnvDeplyFolder.Controls.Add(this.label4);
             this.pnlDevEnvDeplyFolder.Controls.Add(this.tbDeployArtifactFolderPath);
             this.pnlDevEnvDeplyFolder.Controls.Add(this.label26);
-            this.pnlDevEnvDeplyFolder.Location = new System.Drawing.Point(27, 1268);
+            this.pnlDevEnvDeplyFolder.Location = new System.Drawing.Point(27, 1183);
             this.pnlDevEnvDeplyFolder.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDevEnvDeplyFolder.Name = "pnlDevEnvDeplyFolder";
             this.pnlDevEnvDeplyFolder.Size = new System.Drawing.Size(995, 124);
@@ -952,6 +882,102 @@
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(5, 123);
             this.label26.TabIndex = 64;
+            // 
+            // tbServer
+            // 
+            this.tbServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbServer.Location = new System.Drawing.Point(204, 74);
+            this.tbServer.Margin = new System.Windows.Forms.Padding(4);
+            this.tbServer.Name = "tbServer";
+            this.tbServer.Size = new System.Drawing.Size(464, 30);
+            this.tbServer.TabIndex = 68;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label5.Location = new System.Drawing.Point(23, 69);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 36);
+            this.label5.TabIndex = 67;
+            this.label5.Text = "Server:";
+            // 
+            // tbDBName
+            // 
+            this.tbDBName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbDBName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDBName.Location = new System.Drawing.Point(205, 115);
+            this.tbDBName.Margin = new System.Windows.Forms.Padding(4);
+            this.tbDBName.Name = "tbDBName";
+            this.tbDBName.Size = new System.Drawing.Size(464, 30);
+            this.tbDBName.TabIndex = 70;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label10.Location = new System.Drawing.Point(24, 110);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(141, 36);
+            this.label10.TabIndex = 69;
+            this.label10.Text = "DB Name";
+            // 
+            // tbDBUsername
+            // 
+            this.tbUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbUsername.Location = new System.Drawing.Point(205, 157);
+            this.tbUsername.Margin = new System.Windows.Forms.Padding(4);
+            this.tbUsername.Name = "tbDBUsername";
+            this.tbUsername.Size = new System.Drawing.Size(464, 30);
+            this.tbUsername.TabIndex = 72;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label13.Location = new System.Drawing.Point(24, 152);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(158, 36);
+            this.label13.TabIndex = 71;
+            this.label13.Text = "Username:";
+            // 
+            // tbDBPassword
+            // 
+            this.tbPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPassword.Location = new System.Drawing.Point(205, 200);
+            this.tbPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.tbPassword.Name = "tbDBPassword";
+            this.tbPassword.Size = new System.Drawing.Size(464, 30);
+            this.tbPassword.TabIndex = 74;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label14.Location = new System.Drawing.Point(24, 195);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(155, 36);
+            this.label14.TabIndex = 73;
+            this.label14.Text = "Password:";
             // 
             // EditProjectConfigDetails
             // 
@@ -994,22 +1020,16 @@
 
         #endregion
         private System.Windows.Forms.ErrorProvider errPrvProjectDetails;
-        private System.Windows.Forms.TextBox tbConnectionTimeout;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnNavToProcess;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox tbConnStrToMasterDB;
         private System.Windows.Forms.ComboBox cboConncectionType;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tbDevScriptsFolderPath;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbDBBackupFolder;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbConnStr;
         private System.Windows.Forms.TextBox tbId;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
@@ -1055,5 +1075,13 @@
         private System.Windows.Forms.Button btnSaveId;
         private System.Windows.Forms.Button btnEditId;
         private System.Windows.Forms.Button btnCancelEditId;
+        private System.Windows.Forms.TextBox tbPassword;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tbUsername;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox tbDBName;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tbServer;
+        private System.Windows.Forms.Label label5;
     }
 }

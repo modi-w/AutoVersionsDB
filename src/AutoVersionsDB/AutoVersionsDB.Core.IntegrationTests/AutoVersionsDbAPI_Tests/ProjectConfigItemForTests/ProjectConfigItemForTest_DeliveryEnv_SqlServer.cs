@@ -9,10 +9,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectCo
             : base(scriptFolderPath)
         {
             DBType = "SqlServer";
-            //ConnStr = IntegrationTestsSetting.SQLServer_ConnStr;
-            //ConnStrToMasterDB = IntegrationTestsSetting.SQLServer_ConnStrToMaster;
-            ConnectionString = $"{SqlServerInstanceHelpers.BaseConnStr};Database=AutoVersionsDB.Tests;";
-            ConnectionStringToMasterDB = $"{SqlServerInstanceHelpers.BaseConnStr};Database=Master;";
+            Server = SqlServerInstanceHelpers.ConnectionStringBuilder.DataSource;
+            Username = SqlServerInstanceHelpers.ConnectionStringBuilder.UserID;
+            Password = SqlServerInstanceHelpers.ConnectionStringBuilder.Password;
+            DBName = "AutoVersionsDB.Tests";
+            ////ConnStr = IntegrationTestsSetting.SQLServer_ConnStr;
+            ////ConnStrToMasterDB = IntegrationTestsSetting.SQLServer_ConnStrToMaster;
+            //ConnectionString = $"{SqlServerInstanceHelpers.BaseConnStr};Database=AutoVersionsDB.Tests;";
+            //ConnectionStringToMasterDB = $"{SqlServerInstanceHelpers.BaseConnStr};Database=Master;";
         }
 
 

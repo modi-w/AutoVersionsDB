@@ -14,6 +14,8 @@ namespace AutoVersionsDB.DbCommands.Contract
 
         string DataBaseName { get; }
 
+        string ConnectionString { get; }
+
 
     }
 }

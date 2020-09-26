@@ -30,14 +30,14 @@ namespace AutoVersionsDB.Core.Common
             IdMandatory projectNameValidator = new IdMandatory(projectConfig.Id);
             validationsGroup.Add(projectNameValidator);
 
-            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBType, _dbCommandsFactoryProvider);
+            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBConnectionInfo.DBType, _dbCommandsFactoryProvider);
             validationsGroup.Add(dbTypeValidator);
 
-            ConnStrValidator connStrValidator = new ConnStrValidator(nameof(projectConfig.ConnectionString), projectConfig.ConnectionString, projectConfig.DBType, _dbCommandsFactoryProvider);
-            validationsGroup.Add(connStrValidator);
+            ConnectionStringValidator connectionStringValidator = new ConnectionStringValidator(projectConfig.DBConnectionInfo, _dbCommandsFactoryProvider);
+            validationsGroup.Add(connectionStringValidator);
 
-            ConnStrValidator connStrToMasterDBValidator = new ConnStrValidator(nameof(projectConfig.ConnectionStringToMasterDB), projectConfig.ConnectionStringToMasterDB, projectConfig.DBType, _dbCommandsFactoryProvider);
-            validationsGroup.Add(connStrToMasterDBValidator);
+            AdminConnectionStringValidator adminConnectionStringValidator = new AdminConnectionStringValidator(projectConfig.DBConnectionInfo, _dbCommandsFactoryProvider);
+            validationsGroup.Add(adminConnectionStringValidator);
 
             DBBackupFolderValidator dbBackupBaseFolderValidator = new DBBackupFolderValidator(projectConfig.BackupFolderPath);
             validationsGroup.Add(dbBackupBaseFolderValidator);

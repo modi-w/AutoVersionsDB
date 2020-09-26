@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             //notificationExecutersProvider.SetStepStartManually(100, "Restore process");
 
-            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(processContext.ProjectConfig.DBType, processContext.ProjectConfig.ConnectionStringToMasterDB).AsDisposable())
+            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 DBProcessStatusNotifyerBase dbRestoreStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus.Instance) as DBRestoreStatusNotifyer;
 
@@ -70,9 +70,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
                     try
                     {
-                        using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBType, processContext.ProjectConfig.ConnectionString, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
+                        using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
                         {
-                            using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBType, processContext.ProjectConfig.ConnectionStringToMasterDB, processContext.ProjectConfig.DBCommandsTimeout).AsDisposable())
+                            using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
                             {
                                 dbBackupRestoreCommands.Instance.RestoreDbFromBackup(processContext.DBBackupFileFullPath, dbCommands.Instance.GetDataBaseName());
 
