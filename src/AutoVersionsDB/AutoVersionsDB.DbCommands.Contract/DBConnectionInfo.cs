@@ -12,6 +12,10 @@ namespace AutoVersionsDB.DbCommands.Contract
         public string Username { get; }
         public string Password { get; }
 
+        public bool HasValues => !string.IsNullOrWhiteSpace(DBType)
+                            && !string.IsNullOrWhiteSpace(Server)
+                            && !string.IsNullOrWhiteSpace(DBName);
+
         public DBConnectionInfo(string dbType,
                                 string serverInstance,
                                 string dataBaseName,
@@ -33,7 +37,7 @@ namespace AutoVersionsDB.DbCommands.Contract
 
         public string ToString(string databaseName)
         {
-            return $"DBType: '{DBType}', ServerInstance: '{Server}', DataBaseName: '{databaseName}', Username: '{Username}', DBType: '{Password}'";
+            return $"DBType: '{DBType}', ServerInstance: '{Server}', DataBaseName: '{databaseName}', Username: '{Username}', Password: '{Password}'";
         }
 
     }

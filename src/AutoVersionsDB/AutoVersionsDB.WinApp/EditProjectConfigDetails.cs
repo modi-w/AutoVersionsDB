@@ -166,9 +166,14 @@ namespace AutoVersionsDB.WinApp
                             SetErrorInErrorProvider(tbId, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "DBTypeCode":
+                        case "DBType":
 
                             SetErrorInErrorProvider(cboConncectionType, errorStateItem.LowLevelErrorMessage);
+                            break;
+
+                        case "DBName":
+
+                            SetErrorInErrorProvider(tbDBName, errorStateItem.LowLevelErrorMessage);
                             break;
 
                         //case "ConnStr":

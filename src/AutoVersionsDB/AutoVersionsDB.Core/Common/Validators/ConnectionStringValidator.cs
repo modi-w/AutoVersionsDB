@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Core.Common.Validators
 
 
         public ConnectionStringValidator(DBConnectionInfo dbConnectionInfo,
-                                DBCommandsFactoryProvider dbCommandsFactoryProvider)
+                                        DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
             _dbConnectionInfo = dbConnectionInfo;
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
@@ -26,12 +26,7 @@ namespace AutoVersionsDB.Core.Common.Validators
 
         public override string Validate()
         {
-            if (string.IsNullOrWhiteSpace(_dbConnectionInfo.DBName))
-            {
-                string errorMsg = "DataBaseName is empty";
-                return errorMsg;
-            }
-            else
+            if (_dbConnectionInfo.HasValues)
             {
                 using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo).AsDisposable())
                 {
@@ -44,8 +39,8 @@ namespace AutoVersionsDB.Core.Common.Validators
                         }
                     }
                 }
-
             }
+
 
             return "";
         }

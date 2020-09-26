@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "IdMandatory"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ConnectionString"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBBackupFolderPath"));
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBTypeCode"));
+            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBType"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DeliveryArtifactFolderPath"));
         }
 

@@ -33,6 +33,9 @@ namespace AutoVersionsDB.Core.Common
             DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBConnectionInfo.DBType, _dbCommandsFactoryProvider);
             validationsGroup.Add(dbTypeValidator);
 
+            DBNameValidator dbNameValidator = new DBNameValidator(projectConfig.DBConnectionInfo.DBName);
+            validationsGroup.Add(dbNameValidator);
+
             ConnectionStringValidator connectionStringValidator = new ConnectionStringValidator(projectConfig.DBConnectionInfo, _dbCommandsFactoryProvider);
             validationsGroup.Add(connectionStringValidator);
 

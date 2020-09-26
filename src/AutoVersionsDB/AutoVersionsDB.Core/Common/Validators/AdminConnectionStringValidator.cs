@@ -26,14 +26,17 @@ namespace AutoVersionsDB.Core.Common.Validators
 
         public override string Validate()
         {
-            using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo).AsDisposable())
+            if (_dbConnectionInfo.HasValues)
             {
-                if (dbConnection != null)
+                using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo).AsDisposable())
                 {
-                    if (!dbConnection.Instance.CheckConnection(out string exMessage))
+                    if (dbConnection != null)
                     {
-                        string errorMsg = $"Could not connect to the Database with the following connection String: '{dbConnection.Instance.ConnectionString}'. Error Message: '{exMessage}'";
-                        return errorMsg;
+                        if (!dbConnection.Instance.CheckConnection(out string exMessage))
+                        {
+                            string errorMsg = $"Could not connect to the Database with the following connection String: '{dbConnection.Instance.ConnectionString}'. Error Message: '{exMessage}'";
+                            return errorMsg;
+                        }
                     }
                 }
             }

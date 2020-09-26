@@ -76,7 +76,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
             if (string.IsNullOrWhiteSpace(dbConnectionInfo.Server))
             {
-                connectionStringBuilder.DataSource = ".";
+                connectionStringBuilder.DataSource = "(local)";
             }
             else
             {
@@ -85,7 +85,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
-            if (string.IsNullOrWhiteSpace(dbConnectionInfo.Username))
+            if (!string.IsNullOrWhiteSpace(dbConnectionInfo.Username))
             {
                 connectionStringBuilder.UserID = dbConnectionInfo.Username;
                 connectionStringBuilder.Password = dbConnectionInfo.Password;
