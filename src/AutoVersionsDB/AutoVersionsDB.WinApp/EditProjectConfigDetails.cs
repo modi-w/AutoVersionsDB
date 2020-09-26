@@ -69,7 +69,11 @@ namespace AutoVersionsDB.WinApp
 
             ClearUIElementsErrors();
 
-            BindToUIElements(new ProjectConfigItem());
+            ProjectConfigItem newProjectConfigItem = new ProjectConfigItem();
+            newProjectConfigItem.DevEnvironment = true;
+            newProjectConfigItem.SetDefaltValues();
+
+            BindToUIElements(newProjectConfigItem);
 
 
             ChangeViewType(EditProjectConfigDetailsViewType.New);
@@ -192,15 +196,11 @@ namespace AutoVersionsDB.WinApp
                             SetErrorInErrorProvider(tbDeployArtifactFolderPath, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "ScriptsFolderPath":
+                        case "DevScriptsBaseFolder":
 
                             SetErrorInErrorProvider(tbDevScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "InitStateFilePath":
-
-                            SetErrorInErrorProvider(lbllncrementalScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
-                            break;
 
 
                     }

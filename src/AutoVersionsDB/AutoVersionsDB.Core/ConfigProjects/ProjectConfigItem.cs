@@ -4,6 +4,7 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using System.IO;
 
@@ -33,7 +34,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         public string DevScriptsBaseFolderPath { get; set; }
 
         public string DeployArtifactFolderPath { get; set; }
-    
+
         public string DeliveryArtifactFolderPath { get; set; }
 
 
@@ -124,7 +125,29 @@ namespace AutoVersionsDB.Core.ConfigProjects
         }
 
 
+        public void SetDefaltValues()
+        {
+            if (string.IsNullOrWhiteSpace(DBType))
+            {
+                DBType = "SqlServer";
+            }
+            if (string.IsNullOrWhiteSpace(Server))
+            {
+                Server = "(local)";
+            }
+            if (string.IsNullOrWhiteSpace(BackupFolderPath))
+            {
+                string tempBackupFolderPath = @"[CommonApplicationData]\AutoVersionsDB\Backups";
 
+                if (!string.IsNullOrWhiteSpace(Id))
+                {
+                    tempBackupFolderPath += @"\Id";
+                }
+
+                BackupFolderPath = FileSystemPathUtils.ParsePathVaribles(tempBackupFolderPath);
+            }
+
+        }
 
     }
 }

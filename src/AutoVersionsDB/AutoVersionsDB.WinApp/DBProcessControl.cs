@@ -156,17 +156,18 @@ namespace AutoVersionsDB.WinApp
                     {
                         notificationsControl1.AfterComplete();
 
-                        if (processResults.Trace.ErrorCode == "SystemTables")
+                        if (processResults.Trace.ContainErrorCode("SystemTables"))
                         {
                             SetViewState(DBVersionsMangementViewType.MissingSystemTables);
                         }
-                        else if (processResults.Trace.ErrorCode == "IsHistoryExecutedFilesChanged")
+                        else if (processResults.Trace.ContainErrorCode("IsHistoryExecutedFilesChanged"))
                         {
                             SetViewState(DBVersionsMangementViewType.HistoryExecutedFilesChanged);
                         }
                         else
                         {
-                            if (processResults.Trace.ErrorCode == "DevScriptsBaseFolder")
+                            if (processResults.Trace.ContainErrorCode("DevScriptsBaseFolder")
+                                || processResults.Trace.ContainErrorCode("ConnectionString"))
                             {
                                 _scriptFilesState = null;
                             }

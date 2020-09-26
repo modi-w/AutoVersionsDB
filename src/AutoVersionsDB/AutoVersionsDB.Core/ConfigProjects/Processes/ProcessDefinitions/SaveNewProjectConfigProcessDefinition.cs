@@ -14,11 +14,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
 
 
         public SaveNewProjectConfigProcessDefinition(ValidationsStep<IdNotExistValidationsFactory> idNotExistValidationStep,
-                                                        SaveNewProjectConfigStep saveNewProjectConfigStep)
+                                                        SaveNewProjectConfigStep saveNewProjectConfigStep,
+                                                        CreateMissingFoldersStep createMissingFoldersStep)
             : base()
         {
             AddStep(idNotExistValidationStep);
             AddStep(saveNewProjectConfigStep);
+            AddStep(createMissingFoldersStep);
         }
     }
 }
