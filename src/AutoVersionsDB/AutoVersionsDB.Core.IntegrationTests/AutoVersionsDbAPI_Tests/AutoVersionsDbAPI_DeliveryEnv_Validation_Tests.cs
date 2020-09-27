@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             List<StepNotificationState> notificationStatesHistory = processResults.Trace.StatesHistory;
             //Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "IdMandatory"));
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "ConnectionString"));
+            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBName"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBBackupFolderPath"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBType"));
             Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DeliveryArtifactFolderPath"));
@@ -108,7 +108,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ErrorCode == "IsHistoryExecutedFilesChanged");
+            Assert.That(processResults.Trace.ContainErrorCode("IsHistoryExecutedFilesChanged"));
         }
 
 
@@ -131,7 +131,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ErrorCode == "IsHistoryExecutedFilesChanged");
+            Assert.That(processResults.Trace.ContainErrorCode("IsHistoryExecutedFilesChanged"));
         }
 
 
@@ -155,7 +155,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ErrorCode == "SystemTables");
+            Assert.That(processResults.Trace.ContainErrorCode("SystemTables"));
         }
 
 
@@ -180,7 +180,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ErrorCode == "ArtifactFile");
+            Assert.That(processResults.Trace.ContainErrorCode("ArtifactFile"));
         }
 
 

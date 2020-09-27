@@ -100,7 +100,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ErrorCode == "IsTargetScriptFiletAlreadyExecuted");
+            Assert.That(processResults.Trace.ContainErrorCode("IsTargetScriptFiletAlreadyExecuted"));
         }
 
         [Test]

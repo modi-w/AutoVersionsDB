@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processResults.Trace.ErrorCode == "DeliveryEnvironment");
+            Assert.That(processResults.Trace.ContainErrorCode("DeliveryEnvironment"));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processResults.Trace.ErrorCode == "DeliveryEnvironment");
+            Assert.That(processResults.Trace.ContainErrorCode("DeliveryEnvironment"));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processResults.Trace.ErrorCode == "DeliveryEnvironment");
+            Assert.That(processResults.Trace.ContainErrorCode("DeliveryEnvironment"));
         }
 
 
