@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 
 
         public CreateVirtualExecutionsProcessDefinition(RestoreDatabaseStep rollbackStep,
-                                                ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+                                                ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                                 SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                                 ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                                 CreateScriptFilesStateStep createScriptFilesStateStep,
@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
                                                 RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
                                                 ExecuteAllScriptsStep executeScriptsStep,
                                                 FinalizeProcessStep finalizeProcessStep)
-            : base(rollbackStep, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
+            : base(rollbackStep, idExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(projectConfigValidationStep);
             AddStep(createScriptFilesStateStep);

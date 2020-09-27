@@ -13,32 +13,32 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly IConsoleHandler _consoleHandler;
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
 
         public RecreateCommandFactory(DBVersionsAPI dbVersionsAPI,
                                         IConsoleHandler consoleHandler,
-                                        CodeCLIOption codeOption)
+                                        IdCLIOption idOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
+            _idOption = idOption;
         }
 
         public override Command Create()
         {
             Command command = new Command("recreate")
             {
-                _codeOption,
+                _idOption,
             };
 
             command.Description = "Recreate the database from scratch to the last state only by the scripts files";
 
-            command.Handler = CommandHandler.Create<string>((code) =>
+            command.Handler = CommandHandler.Create<string>((id) =>
             {
-                _consoleHandler.StartProcessMessage("recreate", code);
+                _consoleHandler.StartProcessMessage("recreate", id);
 
                 _consoleHandler.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(code, null, _consoleHandler.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(id, null, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
 
                 _consoleHandler.ProcessComplete(processResults.Trace);

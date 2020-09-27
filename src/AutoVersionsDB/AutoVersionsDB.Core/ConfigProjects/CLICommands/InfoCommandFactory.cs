@@ -19,42 +19,42 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly IConsoleHandler _consoleHandler;
 
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
 
 
         public InfoCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                     IConsoleHandler consoleHandler,
-                                    CodeCLIOption codeOption)
+                                    IdCLIOption idOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
 
-            _codeOption = codeOption;
+            _idOption = idOption;
         }
 
         public override Command Create()
         {
             Command command = new Command("info")
             {
-                _codeOption,
+                _idOption,
             };
 
             command.Description = "Show project details";
 
             command.Handler = CommandHandler
-                .Create<string>((code) =>
+                .Create<string>((id) =>
              {
-                 _consoleHandler.StartProcessMessage("info", code);
+                 _consoleHandler.StartProcessMessage("info", id);
 
-                 ProjectConfigItem projectConfig = _projectConfigsAPI.GetProjectConfigByProjectCode(code);
+                 ProjectConfigItem projectConfig = _projectConfigsAPI.GetProjectConfigById(id);
 
                  if (projectConfig == null)
                  {
-                     _consoleHandler.SetErrorInstruction($"Project Code '{code}' not exist. Try run list command to see the existing projects on this machine.");
+                     _consoleHandler.SetErrorInstruction($"Id '{id}' not exist. Try run list command to see the existing projects on this machine.");
                  }
                  else
                  {
-                     string message = $"{"Code".PadRight(c_paddingRightForCaprions)}: {projectConfig.Code}";
+                     string message = $"{"Id".PadRight(c_paddingRightForCaprions)}: {projectConfig.Id}";
                      _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"Description".PadRight(c_paddingRightForCaprions)}: {projectConfig.Description}";
@@ -63,10 +63,16 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                      message = $"{"DBType".PadRight(c_paddingRightForCaprions)}: {projectConfig.DBType}";
                      _consoleHandler.SetInfoMessage(message);
 
-                     message = $"{"Connection String".PadRight(c_paddingRightForCaprions)}: {projectConfig.ConnectionString}";
+                     message = $"{"ServerInstance".PadRight(c_paddingRightForCaprions)}: {projectConfig.Server}";
                      _consoleHandler.SetInfoMessage(message);
-
-                     message = $"{"Connection String To Master DB".PadRight(c_paddingRightForCaprions)}: {projectConfig.ConnectionStringToMasterDB}";
+                    
+                     message = $"{"DataBaseName".PadRight(c_paddingRightForCaprions)}: {projectConfig.DBName}";
+                     _consoleHandler.SetInfoMessage(message);
+                  
+                     message = $"{"DBUsername".PadRight(c_paddingRightForCaprions)}: {projectConfig.Username}";
+                     _consoleHandler.SetInfoMessage(message);
+                   
+                     message = $"{"DBPassword".PadRight(c_paddingRightForCaprions)}: {projectConfig.Password}";
                      _consoleHandler.SetInfoMessage(message);
 
                      message = $"{"Backup Folder Path".PadRight(c_paddingRightForCaprions)}: {projectConfig.BackupFolderPath}";

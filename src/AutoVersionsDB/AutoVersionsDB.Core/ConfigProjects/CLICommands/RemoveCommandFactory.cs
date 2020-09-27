@@ -16,36 +16,36 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly IConsoleHandler _consoleHandler;
 
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
 
 
 
 
         public RemoveCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                         IConsoleHandler consoleHandler,
-                                        CodeCLIOption codeOption)
+                                        IdCLIOption idOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
+            _idOption = idOption;
         }
 
         public override Command Create()
         {
             Command command = new Command("remove")
             {
-                _codeOption,
+                _idOption,
             };
 
             command.Description = "Remove project";
 
             command.Handler = CommandHandler
-                .Create<string>((code) =>
+                .Create<string>((id) =>
                 {
-                    _consoleHandler.StartProcessMessage("remove", code);
+                    _consoleHandler.StartProcessMessage("remove", id);
 
                     _consoleHandler.StartSpiiner();
-                    ProcessResults processResults = _projectConfigsAPI.RemoveProjectConfig(code, _consoleHandler.OnNotificationStateChanged);
+                    ProcessResults processResults = _projectConfigsAPI.RemoveProjectConfig(id, _consoleHandler.OnNotificationStateChanged);
                     _consoleHandler.StopSpinner();
 
                     _consoleHandler.ProcessComplete(processResults.Trace);

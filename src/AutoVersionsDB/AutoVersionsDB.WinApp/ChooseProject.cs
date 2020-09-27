@@ -114,9 +114,9 @@ namespace AutoVersionsDB.WinApp
                 List<ProjectConfigItem> filteredProjectList =
                     _allProjectsList
                     .Where(e => string.IsNullOrWhiteSpace(searchText) 
-                                || e.Code.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant())
+                                || e.Id.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant())
                                 || e.Description.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
-                    .OrderBy(e => e.Code)
+                    .OrderBy(e => e.Id)
                     .ToList();
 
                 flowLayoutPanel1.Controls.Clear();
@@ -137,9 +137,9 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void ProjectItem_OnEditProject(string projectCode)
+        private void ProjectItem_OnEditProject(string id)
         {
-            OnEditProject?.Invoke(projectCode);
+            OnEditProject?.Invoke(id);
         }
 
         private void ProjectItem_OnRefreshProjectList()
@@ -147,9 +147,9 @@ namespace AutoVersionsDB.WinApp
             RefreshProjectList();
         }
 
-        private void ProjectItem_OnNavToProcess(string projectCode)
+        private void ProjectItem_OnNavToProcess(string id)
         {
-            OnNavToProcess?.Invoke(projectCode);
+            OnNavToProcess?.Invoke(id);
         }
 
 

@@ -5,12 +5,13 @@ namespace AutoVersionsDB.DbCommands.Contract
     {
         DBType DBType { get; }
 
-        IDBConnection CreateDBConnection(string connectionString, int timeout);
+        IDBConnection CreateDBConnection(DBConnectionInfo dbConnectionInfo);
+        IDBConnection CreateAdminDBConnection(DBConnectionInfo dbConnectionInfo);
 
-        IDBCommands CreateDBCommands(string connectionString, int timeout);
+        IDBCommands CreateDBCommands(DBConnectionInfo dbConnectionInfo);
 
-        IDBBackupRestoreCommands CreateBackupRestoreCommands(string connectionString, int timeout);
+        IDBBackupRestoreCommands CreateBackupRestoreCommands(DBConnectionInfo dbConnectionInfo);
 
-        IDBQueryStatus CreateDBQueryStatus(string connectionString, int timeout);
+        IDBQueryStatus CreateDBQueryStatus(DBConnectionInfo dbConnectionInfo);
     }
 }

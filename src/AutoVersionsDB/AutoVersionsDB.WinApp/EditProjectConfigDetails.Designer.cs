@@ -30,17 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbProjectCode = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbConnStr = new System.Windows.Forms.TextBox();
+            this.tbId = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tbDBBackupFolder = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.tbDevScriptsFolderPath = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cboConncectionType = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tbConnStrToMasterDB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.errPrvProjectDetails = new System.Windows.Forms.ErrorProvider(this.components);
             this.label12 = new System.Windows.Forms.Label();
@@ -49,8 +45,6 @@
             this.label27 = new System.Windows.Forms.Label();
             this.lblDevDummyDataScriptsFolderPath = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.tbConnectionTimeout = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label28 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
@@ -60,9 +54,9 @@
             this.btnNavToProcess = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnCancelEditProjectCode = new System.Windows.Forms.Button();
-            this.btnSaveProjectCode = new System.Windows.Forms.Button();
-            this.btnEditProjectCode = new System.Windows.Forms.Button();
+            this.btnCancelEditId = new System.Windows.Forms.Button();
+            this.btnSaveId = new System.Windows.Forms.Button();
+            this.btnEditId = new System.Windows.Forms.Button();
             this.tbProjectDescription = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -91,6 +85,14 @@
             this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsControl();
             this.pnlDevEnvDeplyFolder = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
+            this.tbServer = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbDBName = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbUsername = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -111,45 +113,20 @@
             this.label2.Location = new System.Drawing.Point(25, 20);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 36);
+            this.label2.Size = new System.Drawing.Size(48, 36);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Code:";
+            this.label2.Text = "Id:";
             // 
-            // tbProjectCode
+            // tbId
             // 
-            this.tbProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbProjectCode.Location = new System.Drawing.Point(206, 26);
-            this.tbProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.tbProjectCode.Name = "tbProjectCode";
-            this.tbProjectCode.Size = new System.Drawing.Size(284, 30);
-            this.tbProjectCode.TabIndex = 2;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label5.Location = new System.Drawing.Point(20, 73);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(262, 36);
-            this.label5.TabIndex = 12;
-            this.label5.Text = "Connection String:";
-            // 
-            // tbConnStr
-            // 
-            this.tbConnStr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbConnStr.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbConnStr.Location = new System.Drawing.Point(27, 118);
-            this.tbConnStr.Margin = new System.Windows.Forms.Padding(4);
-            this.tbConnStr.Multiline = true;
-            this.tbConnStr.Name = "tbConnStr";
-            this.tbConnStr.Size = new System.Drawing.Size(945, 66);
-            this.tbConnStr.TabIndex = 11;
+            this.tbId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbId.Location = new System.Drawing.Point(206, 26);
+            this.tbId.Margin = new System.Windows.Forms.Padding(4);
+            this.tbId.Name = "tbId";
+            this.tbId.Size = new System.Drawing.Size(284, 30);
+            this.tbId.TabIndex = 2;
             // 
             // label9
             // 
@@ -226,31 +203,6 @@
             this.cboConncectionType.Name = "cboConncectionType";
             this.cboConncectionType.Size = new System.Drawing.Size(333, 37);
             this.cboConncectionType.TabIndex = 32;
-            // 
-            // label14
-            // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label14.Location = new System.Drawing.Point(23, 203);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(452, 36);
-            this.label14.TabIndex = 38;
-            this.label14.Text = "Connection String To Master DB:";
-            // 
-            // tbConnStrToMasterDB
-            // 
-            this.tbConnStrToMasterDB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbConnStrToMasterDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbConnStrToMasterDB.Location = new System.Drawing.Point(29, 249);
-            this.tbConnStrToMasterDB.Margin = new System.Windows.Forms.Padding(4);
-            this.tbConnStrToMasterDB.Multiline = true;
-            this.tbConnStrToMasterDB.Name = "tbConnStrToMasterDB";
-            this.tbConnStrToMasterDB.Size = new System.Drawing.Size(945, 66);
-            this.tbConnStrToMasterDB.TabIndex = 37;
             // 
             // label1
             // 
@@ -358,30 +310,6 @@
             this.label29.Size = new System.Drawing.Size(404, 25);
             this.label29.TabIndex = 67;
             this.label29.Text = "Dev Dummy Data Scripts Folder Path:";
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label13.Location = new System.Drawing.Point(580, 15);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(289, 36);
-            this.label13.TabIndex = 34;
-            this.label13.Text = "Connection Timeout:";
-            // 
-            // tbConnectionTimeout
-            // 
-            this.tbConnectionTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbConnectionTimeout.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.tbConnectionTimeout.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.tbConnectionTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.tbConnectionTimeout.Location = new System.Drawing.Point(877, 17);
-            this.tbConnectionTimeout.Margin = new System.Windows.Forms.Padding(4);
-            this.tbConnectionTimeout.Name = "tbConnectionTimeout";
-            this.tbConnectionTimeout.Size = new System.Drawing.Size(93, 34);
-            this.tbConnectionTimeout.TabIndex = 35;
             // 
             // panel5
             // 
@@ -509,13 +437,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.btnCancelEditProjectCode);
-            this.panel1.Controls.Add(this.btnSaveProjectCode);
-            this.panel1.Controls.Add(this.btnEditProjectCode);
+            this.panel1.Controls.Add(this.btnCancelEditId);
+            this.panel1.Controls.Add(this.btnSaveId);
+            this.panel1.Controls.Add(this.btnEditId);
             this.panel1.Controls.Add(this.tbProjectDescription);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label16);
-            this.panel1.Controls.Add(this.tbProjectCode);
+            this.panel1.Controls.Add(this.tbId);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Location = new System.Drawing.Point(27, 201);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
@@ -523,70 +451,70 @@
             this.panel1.Size = new System.Drawing.Size(995, 121);
             this.panel1.TabIndex = 70;
             // 
-            // btnCancelEditProjectCode
+            // btnCancelEditId
             // 
-            this.btnCancelEditProjectCode.BackColor = System.Drawing.Color.Transparent;
-            this.btnCancelEditProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelEditProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnCancelEditProjectCode.FlatAppearance.BorderSize = 0;
-            this.btnCancelEditProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelEditProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCancelEditProjectCode.ForeColor = System.Drawing.Color.Gray;
-            this.btnCancelEditProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCancelEditProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCancelEditProjectCode.Location = new System.Drawing.Point(162, 23);
-            this.btnCancelEditProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancelEditProjectCode.Name = "btnCancelEditProjectCode";
-            this.btnCancelEditProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnCancelEditProjectCode.Size = new System.Drawing.Size(36, 39);
-            this.btnCancelEditProjectCode.TabIndex = 91;
-            this.btnCancelEditProjectCode.Text = "X";
-            this.btnCancelEditProjectCode.UseVisualStyleBackColor = false;
-            this.btnCancelEditProjectCode.Click += new System.EventHandler(this.btnCancelEditProjectCode_Click);
+            this.btnCancelEditId.BackColor = System.Drawing.Color.Transparent;
+            this.btnCancelEditId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelEditId.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCancelEditId.FlatAppearance.BorderSize = 0;
+            this.btnCancelEditId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelEditId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCancelEditId.ForeColor = System.Drawing.Color.Gray;
+            this.btnCancelEditId.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCancelEditId.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCancelEditId.Location = new System.Drawing.Point(162, 23);
+            this.btnCancelEditId.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelEditId.Name = "btnCancelEditId";
+            this.btnCancelEditId.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnCancelEditId.Size = new System.Drawing.Size(36, 39);
+            this.btnCancelEditId.TabIndex = 91;
+            this.btnCancelEditId.Text = "X";
+            this.btnCancelEditId.UseVisualStyleBackColor = false;
+            this.btnCancelEditId.Click += new System.EventHandler(this.btnCancelEditId_Click);
             // 
-            // btnSaveProjectCode
+            // btnSaveId
             // 
-            this.btnSaveProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveProjectCode.BackColor = System.Drawing.Color.Transparent;
-            this.btnSaveProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSaveProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnSaveProjectCode.FlatAppearance.BorderSize = 0;
-            this.btnSaveProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnSaveProjectCode.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnSaveProjectCode.Image = global::AutoVersionsDB.WinApp.Properties.Resources.SaveIcon;
-            this.btnSaveProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSaveProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSaveProjectCode.Location = new System.Drawing.Point(557, 17);
-            this.btnSaveProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSaveProjectCode.Name = "btnSaveProjectCode";
-            this.btnSaveProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnSaveProjectCode.Size = new System.Drawing.Size(51, 49);
-            this.btnSaveProjectCode.TabIndex = 90;
-            this.btnSaveProjectCode.UseVisualStyleBackColor = false;
-            this.btnSaveProjectCode.Click += new System.EventHandler(this.btnSaveProjectCode_Click);
+            this.btnSaveId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveId.BackColor = System.Drawing.Color.Transparent;
+            this.btnSaveId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSaveId.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnSaveId.FlatAppearance.BorderSize = 0;
+            this.btnSaveId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSaveId.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnSaveId.Image = global::AutoVersionsDB.WinApp.Properties.Resources.SaveIcon;
+            this.btnSaveId.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSaveId.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnSaveId.Location = new System.Drawing.Point(557, 17);
+            this.btnSaveId.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSaveId.Name = "btnSaveId";
+            this.btnSaveId.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnSaveId.Size = new System.Drawing.Size(51, 49);
+            this.btnSaveId.TabIndex = 90;
+            this.btnSaveId.UseVisualStyleBackColor = false;
+            this.btnSaveId.Click += new System.EventHandler(this.btnSaveId_Click);
             // 
-            // btnEditProjectCode
+            // btnEditId
             // 
-            this.btnEditProjectCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditProjectCode.BackColor = System.Drawing.Color.Transparent;
-            this.btnEditProjectCode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEditProjectCode.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnEditProjectCode.FlatAppearance.BorderSize = 0;
-            this.btnEditProjectCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditProjectCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnEditProjectCode.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnEditProjectCode.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
-            this.btnEditProjectCode.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnEditProjectCode.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnEditProjectCode.Location = new System.Drawing.Point(498, 17);
-            this.btnEditProjectCode.Margin = new System.Windows.Forms.Padding(4);
-            this.btnEditProjectCode.Name = "btnEditProjectCode";
-            this.btnEditProjectCode.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnEditProjectCode.Size = new System.Drawing.Size(51, 49);
-            this.btnEditProjectCode.TabIndex = 89;
-            this.btnEditProjectCode.UseVisualStyleBackColor = false;
-            this.btnEditProjectCode.Click += new System.EventHandler(this.btnEditProjectCode_Click);
+            this.btnEditId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditId.BackColor = System.Drawing.Color.Transparent;
+            this.btnEditId.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEditId.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnEditId.FlatAppearance.BorderSize = 0;
+            this.btnEditId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnEditId.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnEditId.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
+            this.btnEditId.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnEditId.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnEditId.Location = new System.Drawing.Point(498, 17);
+            this.btnEditId.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditId.Name = "btnEditId";
+            this.btnEditId.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnEditId.Size = new System.Drawing.Size(51, 49);
+            this.btnEditId.TabIndex = 89;
+            this.btnEditId.UseVisualStyleBackColor = false;
+            this.btnEditId.Click += new System.EventHandler(this.btnEditId_Click);
             // 
             // tbProjectDescription
             // 
@@ -629,19 +557,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.tbPassword);
+            this.panel2.Controls.Add(this.label14);
+            this.panel2.Controls.Add(this.tbUsername);
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Controls.Add(this.tbDBName);
+            this.panel2.Controls.Add(this.label10);
+            this.panel2.Controls.Add(this.tbServer);
+            this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label17);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.tbConnStr);
-            this.panel2.Controls.Add(this.label14);
-            this.panel2.Controls.Add(this.tbConnectionTimeout);
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label13);
-            this.panel2.Controls.Add(this.tbConnStrToMasterDB);
             this.panel2.Controls.Add(this.cboConncectionType);
             this.panel2.Location = new System.Drawing.Point(27, 330);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(995, 356);
+            this.panel2.Size = new System.Drawing.Size(995, 271);
             this.panel2.TabIndex = 71;
             // 
             // label17
@@ -652,7 +582,7 @@
             this.label17.Location = new System.Drawing.Point(0, 0);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(5, 356);
+            this.label17.Size = new System.Drawing.Size(5, 271);
             this.label17.TabIndex = 64;
             // 
             // panel3
@@ -670,7 +600,7 @@
             this.panel3.Controls.Add(this.rbDelEnv);
             this.panel3.Controls.Add(this.rbDevEnv);
             this.panel3.Controls.Add(this.label18);
-            this.panel3.Location = new System.Drawing.Point(27, 814);
+            this.panel3.Location = new System.Drawing.Point(27, 729);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(995, 142);
@@ -796,7 +726,7 @@
             this.pnlDevEnvFoldersFields.Controls.Add(this.tbDevScriptsFolderPath);
             this.pnlDevEnvFoldersFields.Controls.Add(this.lbllncrementalScriptsFolderPath);
             this.pnlDevEnvFoldersFields.Controls.Add(this.label12);
-            this.pnlDevEnvFoldersFields.Location = new System.Drawing.Point(27, 964);
+            this.pnlDevEnvFoldersFields.Location = new System.Drawing.Point(27, 879);
             this.pnlDevEnvFoldersFields.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDevEnvFoldersFields.Name = "pnlDevEnvFoldersFields";
             this.pnlDevEnvFoldersFields.Size = new System.Drawing.Size(995, 296);
@@ -848,7 +778,7 @@
             this.pnlDelEnvFields.Controls.Add(this.label7);
             this.pnlDelEnvFields.Controls.Add(this.tbDeliveryArtifactFolderPath);
             this.pnlDelEnvFields.Controls.Add(this.label8);
-            this.pnlDelEnvFields.Location = new System.Drawing.Point(27, 1399);
+            this.pnlDelEnvFields.Location = new System.Drawing.Point(27, 1314);
             this.pnlDelEnvFields.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDelEnvFields.Name = "pnlDelEnvFields";
             this.pnlDelEnvFields.Size = new System.Drawing.Size(995, 124);
@@ -900,7 +830,7 @@
             this.panel7.Controls.Add(this.label25);
             this.panel7.Controls.Add(this.label9);
             this.panel7.Controls.Add(this.tbDBBackupFolder);
-            this.panel7.Location = new System.Drawing.Point(27, 694);
+            this.panel7.Location = new System.Drawing.Point(27, 609);
             this.panel7.Margin = new System.Windows.Forms.Padding(4);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(995, 112);
@@ -936,7 +866,7 @@
             this.pnlDevEnvDeplyFolder.Controls.Add(this.label4);
             this.pnlDevEnvDeplyFolder.Controls.Add(this.tbDeployArtifactFolderPath);
             this.pnlDevEnvDeplyFolder.Controls.Add(this.label26);
-            this.pnlDevEnvDeplyFolder.Location = new System.Drawing.Point(27, 1268);
+            this.pnlDevEnvDeplyFolder.Location = new System.Drawing.Point(27, 1183);
             this.pnlDevEnvDeplyFolder.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDevEnvDeplyFolder.Name = "pnlDevEnvDeplyFolder";
             this.pnlDevEnvDeplyFolder.Size = new System.Drawing.Size(995, 124);
@@ -952,6 +882,102 @@
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(5, 123);
             this.label26.TabIndex = 64;
+            // 
+            // tbServer
+            // 
+            this.tbServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbServer.Location = new System.Drawing.Point(204, 74);
+            this.tbServer.Margin = new System.Windows.Forms.Padding(4);
+            this.tbServer.Name = "tbServer";
+            this.tbServer.Size = new System.Drawing.Size(464, 30);
+            this.tbServer.TabIndex = 68;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label5.Location = new System.Drawing.Point(23, 69);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 36);
+            this.label5.TabIndex = 67;
+            this.label5.Text = "Server:";
+            // 
+            // tbDBName
+            // 
+            this.tbDBName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbDBName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDBName.Location = new System.Drawing.Point(205, 115);
+            this.tbDBName.Margin = new System.Windows.Forms.Padding(4);
+            this.tbDBName.Name = "tbDBName";
+            this.tbDBName.Size = new System.Drawing.Size(464, 30);
+            this.tbDBName.TabIndex = 70;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label10.Location = new System.Drawing.Point(24, 110);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(141, 36);
+            this.label10.TabIndex = 69;
+            this.label10.Text = "DB Name";
+            // 
+            // tbDBUsername
+            // 
+            this.tbUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbUsername.Location = new System.Drawing.Point(205, 157);
+            this.tbUsername.Margin = new System.Windows.Forms.Padding(4);
+            this.tbUsername.Name = "tbDBUsername";
+            this.tbUsername.Size = new System.Drawing.Size(464, 30);
+            this.tbUsername.TabIndex = 72;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label13.Location = new System.Drawing.Point(24, 152);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(158, 36);
+            this.label13.TabIndex = 71;
+            this.label13.Text = "Username:";
+            // 
+            // tbDBPassword
+            // 
+            this.tbPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPassword.Location = new System.Drawing.Point(205, 200);
+            this.tbPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.tbPassword.Name = "tbDBPassword";
+            this.tbPassword.Size = new System.Drawing.Size(464, 30);
+            this.tbPassword.TabIndex = 74;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label14.Location = new System.Drawing.Point(24, 195);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(155, 36);
+            this.label14.TabIndex = 73;
+            this.label14.Text = "Password:";
             // 
             // EditProjectConfigDetails
             // 
@@ -994,23 +1020,17 @@
 
         #endregion
         private System.Windows.Forms.ErrorProvider errPrvProjectDetails;
-        private System.Windows.Forms.TextBox tbConnectionTimeout;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnNavToProcess;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox tbConnStrToMasterDB;
         private System.Windows.Forms.ComboBox cboConncectionType;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tbDevScriptsFolderPath;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbDBBackupFolder;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbConnStr;
-        private System.Windows.Forms.TextBox tbProjectCode;
+        private System.Windows.Forms.TextBox tbId;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label16;
@@ -1052,8 +1072,16 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox tbProjectDescription;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnSaveProjectCode;
-        private System.Windows.Forms.Button btnEditProjectCode;
-        private System.Windows.Forms.Button btnCancelEditProjectCode;
+        private System.Windows.Forms.Button btnSaveId;
+        private System.Windows.Forms.Button btnEditId;
+        private System.Windows.Forms.Button btnCancelEditId;
+        private System.Windows.Forms.TextBox tbPassword;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tbUsername;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox tbDBName;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tbServer;
+        private System.Windows.Forms.Label label5;
     }
 }

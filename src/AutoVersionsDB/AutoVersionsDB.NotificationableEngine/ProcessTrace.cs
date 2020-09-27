@@ -35,23 +35,28 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        public string ErrorCode
+        //public string ErrorCode
+        //{
+        //    get
+        //    {
+        //        string outStr = "";
+
+        //        lock (_statesHistory)
+        //        {
+        //            var lastStateWithErrorCode = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelErrorCode));
+        //            if (lastStateWithErrorCode != null)
+        //            {
+        //                outStr = lastStateWithErrorCode.LowLevelErrorCode;
+        //            }
+        //        }
+
+        //        return outStr;
+        //    }
+        //}
+
+        public bool ContainErrorCode(string errorCode)
         {
-            get
-            {
-                string outStr = "";
-
-                lock (_statesHistory)
-                {
-                    var lastStateWithErrorCode = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelErrorCode));
-                    if (lastStateWithErrorCode != null)
-                    {
-                        outStr = lastStateWithErrorCode.LowLevelErrorCode;
-                    }
-                }
-
-                return outStr;
-            }
+            return _statesHistory.Any(e => e.LowLevelErrorCode == errorCode);
         }
 
 
@@ -134,17 +139,17 @@ namespace AutoVersionsDB.NotificationableEngine
 
             lock (_statesHistory)
             {
-                var notificationState = _statesHistory.Where(e => e.HasError).FirstOrDefault();
+                // var notificationState = _statesHistory.Where(e => e.HasError).FirstOrDefault();
 
-                if (notificationState != null)
-                {
-                    sbStrResults.AppendLine(notificationState.ToString(false, false));
-                }
-
-                //foreach (var notificationState in _statesHistory.Where(e => e.HasError).ToList())
+                //if (notificationState != null)
                 //{
-                //    sbStrResults.AppendLine(notificationState.ToString(true, true));
+                //    sbStrResults.AppendLine(notificationState.ToString(false, false));
                 //}
+
+                foreach (var notificationState in _statesHistory.Where(e => e.HasError).GroupBy(e => e.LowLevelErrorCode).Select(e => e.First()))
+                {
+                    sbStrResults.AppendLine(notificationState.ToString(true, true));
+                }
             }
 
 

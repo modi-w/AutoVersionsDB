@@ -9,7 +9,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         private readonly string _dbTypeCode;
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        public override string ValidatorName => "DBTypeCode";
+        public override string ValidatorName => "DBType";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 

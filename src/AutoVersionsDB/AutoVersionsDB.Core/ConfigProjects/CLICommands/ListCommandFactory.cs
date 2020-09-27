@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                  }
                  else
                  {
-                     string captionsMessage = $"{"  Code".PadRight(31)} |  Description";
+                     string captionsMessage = $"{"  Id".PadRight(31)} |  Description";
                      _consoleHandler.SetInfoMessage(captionsMessage);
 
                      string captionsLineMessage = "-".PadRight(55, '-');
@@ -54,9 +54,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
                      foreach (ProjectConfigItem projectConfig in projectsList)
                      {
-                         string projectCode = projectConfig.Code.Ellipsis(30);
+                         string id = projectConfig.Id.Ellipsis(30);
 
-                         string projectLineMessage = $" {projectCode.PadRight(30)} | {projectConfig.Description}";
+                         string projectLineMessage = $" {id.PadRight(30)} | {projectConfig.Description}";
                          _consoleHandler.SetInfoMessage(projectLineMessage);
                      }
 

@@ -6,14 +6,14 @@ using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFactories
 {
-    public class ProjectCodeExistValidationsFactory : ValidationsFactory
+    public class IdExistValidationsFactory : ValidationsFactory
     {
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public override string ValidationName => "ProjectCodeExist";
+        public override string ValidationName => "IdExist";
 
 
-        public ProjectCodeExistValidationsFactory(ProjectConfigsStorage projectConfigsStorage)
+        public IdExistValidationsFactory(ProjectConfigsStorage projectConfigsStorage)
         {
             _projectConfigsStorage = projectConfigsStorage;
         }
@@ -23,12 +23,12 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
         {
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
-            string projectCode = (processContext.ProcessParams as ProjectConfigProcessParams).ProjectCode;
+            string Id = (processContext.ProcessParams as ProjectConfigProcessParams).Id;
 
-            ProjectCodeMandatory projectCodeNotEmpty = new ProjectCodeMandatory(projectCode);
-            validationsGroup.Add(projectCodeNotEmpty);
+            IdMandatory idNotEmpty = new IdMandatory(Id);
+            validationsGroup.Add(idNotEmpty);
 
-            ProjectCodeExistValidator projectNameValidator = new ProjectCodeExistValidator(projectCode, _projectConfigsStorage);
+            IdExistValidator projectNameValidator = new IdExistValidator(Id, _projectConfigsStorage);
             validationsGroup.Add(projectNameValidator);
 
             return validationsGroup;

@@ -28,6 +28,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
+            processContext.ProjectConfig.SetDefaltValues();
             _projectConfigsStorage.SaveNewProjectConfig(processContext.ProjectConfig);
         }
 

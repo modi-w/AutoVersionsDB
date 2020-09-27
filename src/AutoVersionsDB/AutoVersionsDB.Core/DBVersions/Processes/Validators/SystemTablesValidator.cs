@@ -10,6 +10,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class SystemTablesValidator : ValidatorBase
     {
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly bool _isDevEnvironment;
+        private readonly DBConnectionInfo _dbConnectionInfo;
+
+
         public override string ValidatorName => "SystemTables";
 
         public override string ErrorInstructionsMessage
@@ -27,25 +32,20 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
             }
         }
 
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
-        private readonly string _connStr;
-        private readonly string _dbTypeCode;
-        private readonly bool _isDevEnvironment;
+
 
         public SystemTablesValidator(DBCommandsFactoryProvider dbCommandsFactoryProvider,
-                                        string connStr,
-                                        string dbTypeCode,
-                                        bool isDevEnvironment)
+                                        bool isDevEnvironment,
+                                        DBConnectionInfo dbConnectionInfo)
         {
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
-            _connStr = connStr;
-            _dbTypeCode = dbTypeCode;
             _isDevEnvironment = isDevEnvironment;
+            _dbConnectionInfo = dbConnectionInfo;
         }
 
         public override string Validate()
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbTypeCode, _connStr, 0).AsDisposable())
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbConnectionInfo).AsDisposable())
             {
 
                 if (!dbCommands.Instance.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName))

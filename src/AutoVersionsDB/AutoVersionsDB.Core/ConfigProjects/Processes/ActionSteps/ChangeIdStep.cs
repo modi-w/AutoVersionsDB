@@ -8,13 +8,13 @@ using System.IO.Compression;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
-    public class ChangeProjectCodeStep : ProjectConfigStep
+    public class ChangeIdStep : ProjectConfigStep
     {
-        public override string StepName => "Change Project Code";
+        public override string StepName => "Change Id";
 
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public ChangeProjectCodeStep(ProjectConfigsStorage projectConfigsStorage)
+        public ChangeIdStep(ProjectConfigsStorage projectConfigsStorage)
         {
             projectConfigsStorage.ThrowIfNull(nameof(projectConfigsStorage));
 
@@ -26,9 +26,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
-            ChangeProjectCodeProcessParams projectConfigProcessParams = processContext.ProcessParams as ChangeProjectCodeProcessParams;
+            ChangeIdProcessParams projectConfigProcessParams = processContext.ProcessParams as ChangeIdProcessParams;
 
-            _projectConfigsStorage.ChangeProjectCode(projectConfigProcessParams.ProjectCode, projectConfigProcessParams.NewProjectCode);
+            _projectConfigsStorage.ChangeId(projectConfigProcessParams.Id, projectConfigProcessParams.NewId);
         }
 
     }

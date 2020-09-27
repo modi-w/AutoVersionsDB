@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.Helpers
 {
     public class SqlServerInstanceHelpers
     {
-        private static string _baseConnStr= null;
+        private static string _baseConnStr = null;
         public static string BaseConnStr
         {
             get
@@ -18,11 +19,29 @@ namespace AutoVersionsDB.Core.IntegrationTests.Helpers
                 if (_baseConnStr == null)
                 {
                     _baseConnStr = initSqlLocalDB();
+                    ;
                 }
 
                 return _baseConnStr;
             }
         }
+
+        private static SqlConnectionStringBuilder _connectionStringBuilder = null;
+        public static SqlConnectionStringBuilder ConnectionStringBuilder
+        {
+            get
+            {
+                if (_connectionStringBuilder == null)
+                {
+                    _connectionStringBuilder = new SqlConnectionStringBuilder(BaseConnStr);
+                }
+
+                return _connectionStringBuilder;
+            }
+        }
+
+
+
 
         private static string initSqlLocalDB()
         {

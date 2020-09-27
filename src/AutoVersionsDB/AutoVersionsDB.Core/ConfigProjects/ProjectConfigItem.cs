@@ -3,6 +3,8 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
+using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using System.IO;
 
@@ -10,16 +12,20 @@ namespace AutoVersionsDB.Core.ConfigProjects
 {
     public class ProjectConfigItem
     {
-        public string Code { get; set; }
+        public string Id { get; set; }
 
 
         public string Description { get; set; }
 
-
         public string DBType { get; set; }
-        public string ConnectionString { get; set; }
+        public string Server { get; set; }
+        public string DBName { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
 
-        public string ConnectionStringToMasterDB { get; set; }
+        public DBConnectionInfo DBConnectionInfo =>
+            new DBConnectionInfo(this.DBType, this.Server, this.DBName, this.Username, this.Password);
+
 
         public string BackupFolderPath { get; set; }
 
@@ -28,11 +34,9 @@ namespace AutoVersionsDB.Core.ConfigProjects
         public string DevScriptsBaseFolderPath { get; set; }
 
         public string DeployArtifactFolderPath { get; set; }
-    
+
         public string DeliveryArtifactFolderPath { get; set; }
 
-
-        public int DBCommandsTimeout { get; set; }
 
 
         public string DeliveryExtractedFilesArtifactFolder
@@ -118,12 +122,32 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         public ProjectConfigItem()
         {
-            DevEnvironment = true;
-            DBCommandsTimeout = 300;
         }
 
 
+        public void SetDefaltValues()
+        {
+            if (string.IsNullOrWhiteSpace(DBType))
+            {
+                DBType = "SqlServer";
+            }
+            if (string.IsNullOrWhiteSpace(Server))
+            {
+                Server = "(local)";
+            }
+            if (string.IsNullOrWhiteSpace(BackupFolderPath))
+            {
+                string tempBackupFolderPath = @"[CommonApplicationData]\AutoVersionsDB\Backups";
 
+                if (!string.IsNullOrWhiteSpace(Id))
+                {
+                    tempBackupFolderPath += @"\Id";
+                }
+
+                BackupFolderPath = FileSystemPathUtils.ParsePathVaribles(tempBackupFolderPath);
+            }
+
+        }
 
     }
 }

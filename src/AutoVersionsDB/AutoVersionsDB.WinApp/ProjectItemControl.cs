@@ -37,39 +37,39 @@ namespace AutoVersionsDB.WinApp
         {
             ProjectConfig = projectConfig;
 
-            lblProjectCode.Text = ProjectConfig.Code;
+            lblId.Text = ProjectConfig.Id;
             lblProjectDesc.Text = ProjectConfig.Description;
         }
 
 
         private void LblProjectName_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.Code);
+            OnNavToProcess?.Invoke(ProjectConfig.Id);
         }
 
         private void LblProjectIcon_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.Code);
+            OnNavToProcess?.Invoke(ProjectConfig.Id);
         }
 
         private void LblProcessLink_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.Code);
+            OnNavToProcess?.Invoke(ProjectConfig.Id);
         }
 
         private void LblEditProject_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(ProjectConfig.Code);
+            OnEditProject?.Invoke(ProjectConfig.Id);
         }
 
         private void LblDeleteProject_Click(object sender, EventArgs e)
         {
-            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.Code}'";
+            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.Id}'";
             bool results = MessageBox.Show(this, warningMessage, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes;
 
             if (results)
             {
-                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.Code, null);
+                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.Id, null);
 
                 OnRefreshProjectList?.Invoke();
             }

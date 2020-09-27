@@ -17,11 +17,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         public void Deploy([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
         {
             //Arrange
-            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigByProjectCode(It.IsAny<string>())).Returns(projectConfig);
+            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
 
 
             //Act
-            ProcessResults processResults = AutoVersionsDbAPI.Deploy(projectConfig.Code, null);
+            ProcessResults processResults = AutoVersionsDbAPI.Deploy(projectConfig.Id, null);
 
 
             //Assert

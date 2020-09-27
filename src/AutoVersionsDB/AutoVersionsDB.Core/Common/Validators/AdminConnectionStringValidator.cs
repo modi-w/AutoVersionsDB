@@ -6,51 +6,41 @@ using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Common.Validators
 {
-    public class ConnStrValidator : ValidatorBase
+    public class AdminConnectionStringValidator : ValidatorBase
     {
-        private readonly string _connStr;
-        private readonly string _dbTypeCode;
+        private readonly DBConnectionInfo _dbConnectionInfo;
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
-        public override string ValidatorName { get; }
+        public override string ValidatorName => "AdminConnectionString";
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
 
 
-        public ConnStrValidator(string propertyName,
-                                string connStr,
-                                string dbTypeCode,
+        public AdminConnectionStringValidator(DBConnectionInfo dbConnectionInfo,
                                 DBCommandsFactoryProvider dbCommandsFactoryProvider)
         {
-            ValidatorName = propertyName;
-            _connStr = connStr;
-            _dbTypeCode = dbTypeCode;
+            _dbConnectionInfo = dbConnectionInfo;
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
         }
 
         public override string Validate()
         {
-            if (string.IsNullOrWhiteSpace(_connStr))
+            if (_dbConnectionInfo.HasValues)
             {
-                string errorMsg = "Connection String is empty";
-                return errorMsg;
-            }
-            else
-            {
-                using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbTypeCode, _connStr, 0).AsDisposable())
+                using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo).AsDisposable())
                 {
                     if (dbConnection != null)
                     {
                         if (!dbConnection.Instance.CheckConnection(out string exMessage))
                         {
-                            string errorMsg = $"Could not connect to the Database with the Connection String: '{_connStr}'. Error Message: '{exMessage}'";
+                            string errorMsg = $"Could not connect to the Database with the following connection String: '{dbConnection.Instance.ConnectionString}'. Error Message: '{exMessage}'";
                             return errorMsg;
                         }
                     }
                 }
-
             }
+
 
             return "";
         }

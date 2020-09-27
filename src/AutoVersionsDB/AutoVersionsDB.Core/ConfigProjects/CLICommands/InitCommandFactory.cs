@@ -16,11 +16,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly IConsoleHandler _consoleHandler;
 
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
         private readonly DescriptionCLIOption _descriptionOption;
         private readonly DBTypeCLIOption _dbTypeOption;
-        private readonly ConnectionStringCLIOption _connectionStringOption;
-        private readonly ConnectionStringToMasterDBCLIOption _connectionStringToMasterDBOption;
+        private readonly ServerCLIOption _serverOption;
+        private readonly DBNameCLIOption _dbNameOption;
+        private readonly UsernameCLIOption _usernameOption;
+        private readonly PasswordCLIOption _passwordOption;
         private readonly BackupFolderPathCLIOption _backupFolderPathOption;
         private readonly DevEnvironmentCLIOption _devEnvironmentOption;
         private readonly ScriptsBaseFolderPathCLIOption _scriptsBaseFolderPathOption;
@@ -31,12 +33,17 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
         public InitCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                     IConsoleHandler consoleHandler,
-                                    CodeCLIOption codeOption,
+                                    IdCLIOption idOption,
                                     DescriptionCLIOption descriptionOption,
                                     DBTypeCLIOption dbTypeOption,
-                                    ConnectionStringCLIOption connectionStringOption,
-                                    ConnectionStringToMasterDBCLIOption connectionStringToMasterDBOption,
-                                    BackupFolderPathCLIOption backupFolderPathOption,
+                                    ServerCLIOption serverCLIOption,
+                                    DBNameCLIOption dbNameCLIOption,
+                                    UsernameCLIOption usernameCLIOption,
+                                    PasswordCLIOption passwordCLIOption,
+
+
+
+        BackupFolderPathCLIOption backupFolderPathOption,
                                     DevEnvironmentCLIOption devEnvironmentOption,
                                     ScriptsBaseFolderPathCLIOption scriptsBaseFolderPathOption,
                                     DeployArtifactFolderPathCLIOption deployArtifactFolderPathOption,
@@ -44,11 +51,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         {
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
+            _idOption = idOption;
             _descriptionOption = descriptionOption;
             _dbTypeOption = dbTypeOption;
-            _connectionStringOption = connectionStringOption;
-            _connectionStringToMasterDBOption = connectionStringToMasterDBOption;
+            _serverOption = serverCLIOption;
+            _dbNameOption = dbNameCLIOption;
+            _usernameOption = usernameCLIOption;
+            _passwordOption = passwordCLIOption;
             _backupFolderPathOption = backupFolderPathOption;
             _devEnvironmentOption = devEnvironmentOption;
             _scriptsBaseFolderPathOption = scriptsBaseFolderPathOption;
@@ -60,11 +69,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         {
             Command command = new Command("init")
             {
-                _codeOption,
+                _idOption,
                 _descriptionOption,
                 _dbTypeOption,
-                _connectionStringOption,
-                _connectionStringToMasterDBOption,
+                _serverOption,
+                _dbNameOption,
+                _usernameOption,
+                _passwordOption,
                 _backupFolderPathOption,
                 _devEnvironmentOption,
                 _scriptsBaseFolderPathOption,
@@ -77,7 +88,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
             {
-                _consoleHandler.StartProcessMessage("init", projectConfig.Code);
+                _consoleHandler.StartProcessMessage("init", projectConfig.Id);
 
                 _consoleHandler.StartSpiiner();
                 ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(projectConfig, _consoleHandler.OnNotificationStateChanged);

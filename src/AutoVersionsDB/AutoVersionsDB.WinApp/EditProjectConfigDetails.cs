@@ -20,14 +20,14 @@ namespace AutoVersionsDB.WinApp
     {
         private readonly List<DBType> _dbTypesList;
 
-        private string _projectCode;
+        private string _id;
 
         public enum EditProjectConfigDetailsViewType
         {
             InPorcess,
             New,
             Update,
-            EditProjectCode,
+            EditId,
         }
 
         private EditProjectConfigDetailsViewType _viewType;
@@ -63,29 +63,33 @@ namespace AutoVersionsDB.WinApp
 
         public void CreateNewProjectConfig()
         {
-            _projectCode = null;
+            _id = null;
            
             notificationsControl1.Clear();
 
             ClearUIElementsErrors();
 
-            BindToUIElements(new ProjectConfigItem());
+            ProjectConfigItem newProjectConfigItem = new ProjectConfigItem();
+            newProjectConfigItem.DevEnvironment = true;
+            newProjectConfigItem.SetDefaltValues();
+
+            BindToUIElements(newProjectConfigItem);
 
 
             ChangeViewType(EditProjectConfigDetailsViewType.New);
         }
 
 
-        public void SetProjectConfigItem(string projectCode)
+        public void SetProjectConfigItem(string id)
         {
-            _projectCode = projectCode;
+            _id = id;
 
             RefreshForm();
         }
 
         private void RefreshForm()
         {
-            ProjectConfigItem projectConfig = AutoVersionsDbAPI.GetProjectConfigByProjectCode(_projectCode);
+            ProjectConfigItem projectConfig = AutoVersionsDbAPI.GetProjectConfigById(_id);
             BindToUIElements(projectConfig);
 
             ValidateAll();
@@ -107,7 +111,7 @@ namespace AutoVersionsDB.WinApp
 
                 ClearUIElementsErrors();
 
-                ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(_projectCode, notificationsControl1.OnNotificationStateChanged);
+                ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(_id, notificationsControl1.OnNotificationStateChanged);
 
                 handleProcessErrors(processResults.Trace);
             });
@@ -137,7 +141,7 @@ namespace AutoVersionsDB.WinApp
             SetControlVisableOrHide(btnNavToProcess, !processResults.HasError);
             SetControlVisableOrHide(lblDbProcess, !processResults.HasError);
 
-            if (string.IsNullOrWhiteSpace(_projectCode))
+            if (string.IsNullOrWhiteSpace(_id))
             {
                 ChangeViewType(EditProjectConfigDetailsViewType.New);
             }
@@ -157,25 +161,30 @@ namespace AutoVersionsDB.WinApp
                 {
                     switch (errorStateItem.LowLevelErrorCode)
                     {
-                        case "ProjectCodeMandatory":
+                        case "IdMandatory":
 
-                            SetErrorInErrorProvider(tbProjectCode, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbId, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "DBTypeCode":
+                        case "DBType":
 
                             SetErrorInErrorProvider(cboConncectionType, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "ConnStr":
+                        case "DBName":
 
-                            SetErrorInErrorProvider(tbConnStr, errorStateItem.LowLevelErrorMessage);
+                            SetErrorInErrorProvider(tbDBName, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "ConnStrToMasterDB":
+                        //case "ConnStr":
 
-                            SetErrorInErrorProvider(tbConnStrToMasterDB, errorStateItem.LowLevelErrorMessage);
-                            break;
+                        //    SetErrorInErrorProvider(tbConnStr, errorStateItem.LowLevelErrorMessage);
+                        //    break;
+
+                        //case "ConnStrToMasterDB":
+
+                        //    SetErrorInErrorProvider(tbConnStrToMasterDB, errorStateItem.LowLevelErrorMessage);
+                        //    break;
 
                         case "DBBackupFolderPath":
 
@@ -192,15 +201,11 @@ namespace AutoVersionsDB.WinApp
                             SetErrorInErrorProvider(tbDeployArtifactFolderPath, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "ScriptsFolderPath":
+                        case "DevScriptsBaseFolder":
 
                             SetErrorInErrorProvider(tbDevScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
                             break;
 
-                        case "InitStateFilePath":
-
-                            SetErrorInErrorProvider(lbllncrementalScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
-                            break;
 
 
                     }
@@ -210,10 +215,12 @@ namespace AutoVersionsDB.WinApp
 
         private void ClearUIElementsErrors()
         {
-            SetErrorInErrorProvider(tbProjectCode, null);
+            SetErrorInErrorProvider(tbId, null);
             SetErrorInErrorProvider(cboConncectionType, null);
-            SetErrorInErrorProvider(tbConnStr, null);
-            SetErrorInErrorProvider(tbConnStrToMasterDB, null);
+            SetErrorInErrorProvider(tbServer, null);
+            SetErrorInErrorProvider(tbDBName, null);
+            SetErrorInErrorProvider(tbUsername, null);
+            SetErrorInErrorProvider(tbPassword, null);
             SetErrorInErrorProvider(tbDBBackupFolder, null);
             SetErrorInErrorProvider(tbDevScriptsFolderPath, null);
             SetErrorInErrorProvider(lbllncrementalScriptsFolderPath, null);
@@ -254,22 +261,32 @@ namespace AutoVersionsDB.WinApp
                 }
             }
 
-            tbProjectCode.BeginInvoke((MethodInvoker)(() =>
+            tbId.BeginInvoke((MethodInvoker)(() =>
             {
-                tbProjectCode.Text = projectConfig.Code;
+                tbId.Text = projectConfig.Id;
             }));
             tbProjectDescription.BeginInvoke((MethodInvoker)(() =>
             {
                 tbProjectDescription.Text = projectConfig.Description;
             }));
-            tbConnStr.BeginInvoke((MethodInvoker)(() =>
+            tbServer.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStr.Text = projectConfig.ConnectionString;
+                tbServer.Text = projectConfig.Server;
             }));
-            tbConnStrToMasterDB.BeginInvoke((MethodInvoker)(() =>
+            tbDBName.BeginInvoke((MethodInvoker)(() =>
             {
-                tbConnStrToMasterDB.Text = projectConfig.ConnectionStringToMasterDB;
+                tbDBName.Text = projectConfig.DBName;
             }));
+            tbUsername.BeginInvoke((MethodInvoker)(() =>
+            {
+                tbUsername.Text = projectConfig.Username;
+            }));
+            tbPassword.BeginInvoke((MethodInvoker)(() =>
+            {
+                tbPassword.Text = projectConfig.Password;
+            }));
+
+
             tbDBBackupFolder.BeginInvoke((MethodInvoker)(() =>
             {
                 tbDBBackupFolder.Text = projectConfig.BackupFolderPath;
@@ -299,13 +316,7 @@ namespace AutoVersionsDB.WinApp
             }));
 
 
-            if (projectConfig.DBCommandsTimeout > 0)
-            {
-                tbConnectionTimeout.BeginInvoke((MethodInvoker)(() =>
-                {
-                    tbConnectionTimeout.Text = projectConfig.DBCommandsTimeout.ToString(CultureInfo.InvariantCulture);
-                }));
-            }
+         
 
             BindScriptsPathLabels(projectConfig);
 
@@ -353,22 +364,16 @@ namespace AutoVersionsDB.WinApp
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem();
 
-            projectConfig.Code = tbProjectCode.Text;
+            projectConfig.Id = tbId.Text;
             projectConfig.Description = tbProjectDescription.Text;
             projectConfig.DBType = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
-            projectConfig.ConnectionString = tbConnStr.Text;
-            projectConfig.ConnectionStringToMasterDB = tbConnStrToMasterDB.Text;
+            projectConfig.Server = tbServer.Text;
+            projectConfig.DBName = tbDBName.Text;
+            projectConfig.Username = tbUsername.Text;
+            projectConfig.Password = tbPassword.Text;
             projectConfig.BackupFolderPath = tbDBBackupFolder.Text;
 
             projectConfig.DevEnvironment = rbDevEnv.Checked;
-
-            //    _projectConfigItem.IsDevEnvironment = chkAllowDropDB.Checked;
-
-            if (int.TryParse(tbConnectionTimeout.Text, out int parsedInt)
-                && parsedInt > 0)
-            {
-                projectConfig.DBCommandsTimeout = parsedInt;
-            }
 
             projectConfig.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
             projectConfig.DeployArtifactFolderPath = tbDeployArtifactFolderPath.Text;
@@ -401,7 +406,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnNavToProcess_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(_projectCode);
+            OnNavToProcess?.Invoke(_id);
         }
 
 
@@ -414,13 +419,13 @@ namespace AutoVersionsDB.WinApp
 
             Task.Run(() =>
             {
-                if (string.IsNullOrWhiteSpace(_projectCode))
+                if (string.IsNullOrWhiteSpace(_id))
                 {
                     ProcessResults processResults = AutoVersionsDbAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
 
                     if (!processResults.Trace.HasError)
                     {
-                        _projectCode = projectConfig.Code;
+                        _id = projectConfig.Id;
                     }
 
                     handleCompleteProcess(processResults.Trace);
@@ -436,26 +441,26 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnEditProjectCode_Click(object sender, EventArgs e)
+        private void btnEditId_Click(object sender, EventArgs e)
         {
-            ChangeViewType(EditProjectConfigDetailsViewType.EditProjectCode);
+            ChangeViewType(EditProjectConfigDetailsViewType.EditId);
         }
-        private void btnCancelEditProjectCode_Click(object sender, EventArgs e)
+        private void btnCancelEditId_Click(object sender, EventArgs e)
         {
             RefreshForm();
         }
-        private void btnSaveProjectCode_Click(object sender, EventArgs e)
+        private void btnSaveId_Click(object sender, EventArgs e)
         {
             ChangeViewType(EditProjectConfigDetailsViewType.InPorcess);
 
 
             Task.Run(() =>
             {
-                ProcessResults processResults = AutoVersionsDbAPI.ChangeProjectCode(_projectCode, tbProjectCode.Text, notificationsControl1.OnNotificationStateChanged);
+                ProcessResults processResults = AutoVersionsDbAPI.ChangeProjectId(_id, tbId.Text, notificationsControl1.OnNotificationStateChanged);
 
                 if (!processResults.Trace.HasError)
                 {
-                    _projectCode = tbProjectCode.Text;
+                    _id = tbId.Text;
                 }
 
 
@@ -479,9 +484,9 @@ namespace AutoVersionsDB.WinApp
 
                     SetAllControlsEnableDisable(true);
 
-                    SetControlVisableOrHide(btnEditProjectCode, false);
-                    SetControlVisableOrHide(btnSaveProjectCode, false);
-                    SetControlVisableOrHide(btnCancelEditProjectCode, false);
+                    SetControlVisableOrHide(btnEditId, false);
+                    SetControlVisableOrHide(btnSaveId, false);
+                    SetControlVisableOrHide(btnCancelEditId, false);
 
                     break;
 
@@ -489,12 +494,12 @@ namespace AutoVersionsDB.WinApp
 
                     SetAllControlsEnableDisable(true);
 
-                    SetControlEnableOrDisable(tbProjectCode, false);
+                    SetControlEnableOrDisable(tbId, false);
 
-                    SetControlVisableOrHide(btnSaveProjectCode, false);
-                    SetControlVisableOrHide(btnCancelEditProjectCode, false);
-                    SetControlVisableOrHide(btnEditProjectCode, true);
-                    SetControlEnableOrDisable(btnEditProjectCode, true);
+                    SetControlVisableOrHide(btnSaveId, false);
+                    SetControlVisableOrHide(btnCancelEditId, false);
+                    SetControlVisableOrHide(btnEditId, true);
+                    SetControlEnableOrDisable(btnEditId, true);
 
                     this.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -503,20 +508,20 @@ namespace AutoVersionsDB.WinApp
 
                     break;
 
-                case EditProjectConfigDetailsViewType.EditProjectCode:
+                case EditProjectConfigDetailsViewType.EditId:
 
                     SetAllControlsEnableDisable(false);
 
-                    SetControlEnableOrDisable(tbProjectCode, true);
+                    SetControlEnableOrDisable(tbId, true);
 
-                    SetControlVisableOrHide(btnEditProjectCode, false);
-                    SetControlVisableOrHide(btnSaveProjectCode, true);
-                    SetControlEnableOrDisable(btnSaveProjectCode, true);
-                    SetControlVisableOrHide(btnCancelEditProjectCode, true);
-                    SetControlEnableOrDisable(btnCancelEditProjectCode, true);
+                    SetControlVisableOrHide(btnEditId, false);
+                    SetControlVisableOrHide(btnSaveId, true);
+                    SetControlEnableOrDisable(btnSaveId, true);
+                    SetControlVisableOrHide(btnCancelEditId, true);
+                    SetControlEnableOrDisable(btnCancelEditId, true);
 
 
-                    tbProjectCode.Focus();
+                    tbId.Focus();
 
 
                     break;
@@ -528,22 +533,23 @@ namespace AutoVersionsDB.WinApp
 
         private void SetAllControlsEnableDisable(bool isEnable)
         {
-            SetControlEnableOrDisable(tbConnectionTimeout, isEnable);
             SetControlEnableOrDisable(btnNavToProcess, isEnable);
-            SetControlEnableOrDisable(tbConnStrToMasterDB, isEnable);
             SetControlEnableOrDisable(cboConncectionType, isEnable);
+            SetControlEnableOrDisable(tbServer, isEnable);
+            SetControlEnableOrDisable(tbDBName, isEnable);
+            SetControlEnableOrDisable(tbUsername, isEnable);
+            SetControlEnableOrDisable(tbPassword, isEnable);
             SetControlEnableOrDisable(tbDevScriptsFolderPath, isEnable);
             SetControlEnableOrDisable(tbDBBackupFolder, isEnable);
-            SetControlEnableOrDisable(tbConnStr, isEnable);
-            SetControlEnableOrDisable(tbProjectCode, isEnable);
+            SetControlEnableOrDisable(tbId, isEnable);
             SetControlEnableOrDisable(rbDevEnv, isEnable);
             SetControlEnableOrDisable(rbDelEnv, isEnable);
             SetControlEnableOrDisable(tbDeployArtifactFolderPath, isEnable);
             SetControlEnableOrDisable(tbDeliveryArtifactFolderPath, isEnable);
             SetControlEnableOrDisable(btnSave, isEnable);
             SetControlEnableOrDisable(tbProjectDescription, isEnable);
-            SetControlEnableOrDisable(btnSaveProjectCode, isEnable);
-            SetControlEnableOrDisable(btnEditProjectCode, isEnable);
+            SetControlEnableOrDisable(btnSaveId, isEnable);
+            SetControlEnableOrDisable(btnEditId, isEnable);
         }
 
         private static void SetControlEnableOrDisable(Control control, bool isEnable)

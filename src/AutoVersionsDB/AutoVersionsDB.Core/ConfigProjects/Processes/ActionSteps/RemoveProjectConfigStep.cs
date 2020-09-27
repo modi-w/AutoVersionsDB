@@ -27,7 +27,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
         {
             ProjectConfigProcessParams projectConfigProcessParams = processContext.ProcessParams as ProjectConfigProcessParams;
 
-            _projectConfigsStorage.RemoveProjectConfig(projectConfigProcessParams.ProjectCode);
+            _projectConfigsStorage.RemoveProjectConfig(projectConfigProcessParams.Id);
         }
 
     }

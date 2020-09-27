@@ -17,13 +17,16 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private readonly IConsoleHandler _consoleHandler;
 
         private readonly EnvironmentCommandFactory _environmentCommandFactory;
-        private readonly ChangeCodeCommandFactory _changeCodeCommandFactory;
+        private readonly ChangeIdCommandFactory _changeIdCommandFactory;
 
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
         private readonly DescriptionCLIOption _descriptionOption;
         private readonly DBTypeCLIOption _dbTypeOption;
-        private readonly ConnectionStringCLIOption _connectionStringOption;
-        private readonly ConnectionStringToMasterDBCLIOption _connectionStringToMasterDBOption;
+        private readonly ServerCLIOption _serverInstanceOption;
+        private readonly DBNameCLIOption _dataBaseNameOption;
+        private readonly UsernameCLIOption _dbUsernameOption;
+        private readonly PasswordCLIOption _dbPasswordOption;
+
         private readonly BackupFolderPathCLIOption _backupFolderPathOption;
         private readonly ScriptsBaseFolderPathCLIOption _scriptsBaseFolderPathOption;
         private readonly DeployArtifactFolderPathCLIOption _deployArtifactFolderPathOption;
@@ -34,12 +37,14 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         public ConfigCommandFactory(ProjectConfigsAPI projectConfigsAPI,
                                     IConsoleHandler consoleHandler,
                                     EnvironmentCommandFactory environmentCommandFactory,
-                                    ChangeCodeCommandFactory changeCodeCommandFactory,
-                                    CodeCLIOption codeOption,
+                                    ChangeIdCommandFactory changeIdCommandFactory,
+                                    IdCLIOption idOption,
                                     DescriptionCLIOption descriptionOption,
                                     DBTypeCLIOption dbTypeOption,
-                                    ConnectionStringCLIOption connectionStringOption,
-                                    ConnectionStringToMasterDBCLIOption connectionStringToMasterDBOption,
+                                    ServerCLIOption serverInstanceOption,
+                                    DBNameCLIOption dataBaseNameOption,
+                                    UsernameCLIOption dbUsernameOption,
+                                    PasswordCLIOption dbPasswordOption,
                                     BackupFolderPathCLIOption backupFolderPathOption,
                                     ScriptsBaseFolderPathCLIOption scriptsBaseFolderPathOption,
                                     DeployArtifactFolderPathCLIOption deployArtifactFolderPathOption,
@@ -48,12 +53,14 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             _projectConfigsAPI = projectConfigsAPI;
             _consoleHandler = consoleHandler;
             _environmentCommandFactory = environmentCommandFactory;
-            _changeCodeCommandFactory = changeCodeCommandFactory;
-            _codeOption = codeOption;
+            _changeIdCommandFactory = changeIdCommandFactory;
+            _idOption = idOption;
             _descriptionOption = descriptionOption;
             _dbTypeOption = dbTypeOption;
-            _connectionStringOption = connectionStringOption;
-            _connectionStringToMasterDBOption = connectionStringToMasterDBOption;
+            _serverInstanceOption = serverInstanceOption;
+            _dataBaseNameOption = dataBaseNameOption;
+            _dbUsernameOption = dbUsernameOption;
+            _dbPasswordOption = dbPasswordOption;
             _backupFolderPathOption = backupFolderPathOption;
             _scriptsBaseFolderPathOption = scriptsBaseFolderPathOption;
             _deployArtifactFolderPathOption = deployArtifactFolderPathOption;
@@ -64,11 +71,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         {
             Command command = new Command("config")
             {
-                _codeOption,
+                _idOption,
                 _descriptionOption,
                 _dbTypeOption,
-                _connectionStringOption,
-                _connectionStringToMasterDBOption,
+                _serverInstanceOption,
+                _dataBaseNameOption,
+                _dbUsernameOption,
+                _dbPasswordOption,
                 _backupFolderPathOption,
                 _scriptsBaseFolderPathOption,
                 _deployArtifactFolderPathOption,
@@ -80,13 +89,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
                 {
-                    _consoleHandler.StartProcessMessage("config", projectConfig.Code);
+                    _consoleHandler.StartProcessMessage("config", projectConfig.Id);
 
-                    ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigByProjectCode(projectConfig.Code);
+                    ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigById(projectConfig.Id);
 
                 if (existProjectConfig == null)
                 {
-                    _consoleHandler.SetErrorMessage($"Project Code: '{projectConfig.Code}' is not exist. You can use the 'init' command to define new project.");
+                    _consoleHandler.SetErrorMessage($"Id: '{projectConfig.Id}' is not exist. You can use the 'init' command to define new project.");
                 }
                 else
                 {
@@ -100,8 +109,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                 }
             });
 
-            Command changeCodeCommand = _changeCodeCommandFactory.Create();
-            command.Add(changeCodeCommand);
+            Command changeIdCommand = _changeIdCommandFactory.Create();
+            command.Add(changeIdCommand);
 
             Command environmentCommand = _environmentCommandFactory.Create();
             command.Add(environmentCommand);
@@ -119,13 +128,21 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             {
                 existProjectConfig.DBType = projectConfig.DBType;
             }
-            if (projectConfig.ConnectionString != null)
+            if (projectConfig.Server != null)
             {
-                existProjectConfig.ConnectionString = projectConfig.ConnectionString;
+                existProjectConfig.Server= projectConfig.Server;
             }
-            if (projectConfig.ConnectionStringToMasterDB != null)
+            if (projectConfig.DBName != null)
             {
-                existProjectConfig.ConnectionStringToMasterDB = projectConfig.ConnectionStringToMasterDB;
+                existProjectConfig.DBName = projectConfig.DBName;
+            }
+            if (projectConfig.Username != null)
+            {
+                existProjectConfig.Username = projectConfig.Username;
+            }
+            if (projectConfig.Password != null)
+            {
+                existProjectConfig.Password = projectConfig.Password;
             }
             if (projectConfig.BackupFolderPath != null)
             {

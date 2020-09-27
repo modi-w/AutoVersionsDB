@@ -18,14 +18,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
         public override string EngineTypeName => "Create Next Script File";
 
 
-        public CreateNextScriptFileProcessDefinition(ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+        public CreateNextScriptFileProcessDefinition(ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                                     SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                                     ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                                     ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                                                     CreateScriptFilesStateStep createScriptFilesStateStep,
                                                     ValidationsStep<NextScriptFileNameValidationsFactory<TScriptFileType>> nextScriptFileNameValidations,
                                                     CreateNextScriptFileStep<TScriptFileType> createNextScriptFileStep)
-            : base(null, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
+            : base(null, idExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(projectConfigValidationStep);
             AddStep(checkDeliveryEnvValidationStep);

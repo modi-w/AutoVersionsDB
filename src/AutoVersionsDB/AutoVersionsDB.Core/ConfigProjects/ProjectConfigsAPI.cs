@@ -14,20 +14,20 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         private readonly NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> _saveNewProjectConfigRunner;
         private readonly NotificationProcessRunner<UpdateProjectConfigProcessDefinition, ProjectConfigProcessContext> _updateProjectConfigRunner;
-        private readonly NotificationProcessRunner<ChangeProjectCodeProcessDefinition, ProjectConfigProcessContext> _changeProjectCodeRunner;
+        private readonly NotificationProcessRunner<ChangeIdProcessDefinition, ProjectConfigProcessContext> _changeIdRunner;
         private readonly NotificationProcessRunner<RemoveProjectConfigProcessDefinition, ProjectConfigProcessContext> _removeProjectConfigProcessDefinition;
 
 
         public ProjectConfigsAPI(ProjectConfigsStorage projectConfigsStorage,
                                 NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> saveNewProjectConfigRunner,
                                 NotificationProcessRunner<UpdateProjectConfigProcessDefinition, ProjectConfigProcessContext> updateProjectConfigRunner,
-                                NotificationProcessRunner<ChangeProjectCodeProcessDefinition, ProjectConfigProcessContext> changeProjectCodeRunner,
+                                NotificationProcessRunner<ChangeIdProcessDefinition, ProjectConfigProcessContext> changeIdRunner,
                                 NotificationProcessRunner<RemoveProjectConfigProcessDefinition, ProjectConfigProcessContext> removeProjectConfigProcessDefinition)
         {
             _projectConfigsStorage = projectConfigsStorage;
             _saveNewProjectConfigRunner = saveNewProjectConfigRunner;
             _updateProjectConfigRunner = updateProjectConfigRunner;
-            _changeProjectCodeRunner = changeProjectCodeRunner;
+            _changeIdRunner = changeIdRunner;
             _removeProjectConfigProcessDefinition = removeProjectConfigProcessDefinition;
         }
 
@@ -38,9 +38,9 @@ namespace AutoVersionsDB.Core.ConfigProjects
             return _projectConfigsStorage.GetAllProjectConfigs().Values.ToList();
         }
 
-        public ProjectConfigItem GetProjectConfigByProjectCode(string projectCode)
+        public ProjectConfigItem GetProjectConfigById(string id)
         {
-            return _projectConfigsStorage.GetProjectConfigByProjectCode(projectCode);
+            return _projectConfigsStorage.GetProjectConfigById(id);
         }
 
 
@@ -54,14 +54,14 @@ namespace AutoVersionsDB.Core.ConfigProjects
             return _updateProjectConfigRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
         }
 
-        public ProcessResults ChangeProjectCode(string prevProjectCode, string newProjectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults ChangeProjectId(string prevId, string newId, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _changeProjectCodeRunner.Run(new ChangeProjectCodeProcessParams(prevProjectCode, newProjectCode), onNotificationStateChanged);
+            return _changeIdRunner.Run(new ChangeIdProcessParams(prevId, newId), onNotificationStateChanged);
         }
 
-        public ProcessResults RemoveProjectConfig(string projectCode, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults RemoveProjectConfig(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _removeProjectConfigProcessDefinition.Run(new ProjectConfigProcessParams(projectCode), onNotificationStateChanged);
+            return _removeProjectConfigProcessDefinition.Run(new ProjectConfigProcessParams(id), onNotificationStateChanged);
         }
 
     }

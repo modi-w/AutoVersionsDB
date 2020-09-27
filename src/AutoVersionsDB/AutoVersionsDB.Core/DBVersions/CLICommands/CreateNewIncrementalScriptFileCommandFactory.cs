@@ -13,17 +13,17 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly IConsoleHandler _consoleHandler;
-        private readonly CodeCLIOption _codeOption;
+        private readonly IdCLIOption _idOption;
         private readonly ScriptNameCLIOption _scriptNameOption;
 
         public CreateNewIncrementalScriptFileCommandFactory(DBVersionsAPI dbVersionsAPI,
                                     IConsoleHandler consoleHandler,
-                                    CodeCLIOption codeOption,
+                                    IdCLIOption idOption,
                                     ScriptNameCLIOption scriptNameOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
             _consoleHandler = consoleHandler;
-            _codeOption = codeOption;
+            _idOption = idOption;
             _scriptNameOption = scriptNameOption;
         }
 
@@ -31,18 +31,18 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
         {
             Command command = new Command("incremental")
             {
-                _codeOption,
+                _idOption,
                 _scriptNameOption,
             };
 
             command.Description = "Create new incremental script file";
 
-            command.Handler = CommandHandler.Create<string, string>((code, scriptName) =>
+            command.Handler = CommandHandler.Create<string, string>((id, scriptName) =>
             {
-                _consoleHandler.StartProcessMessage("new incremental", code);
+                _consoleHandler.StartProcessMessage("new incremental", id);
 
                 _consoleHandler.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.CreateNewIncrementalScriptFile(code, scriptName, _consoleHandler.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.CreateNewIncrementalScriptFile(id, scriptName, _consoleHandler.OnNotificationStateChanged);
                 _consoleHandler.StopSpinner();
 
                 _consoleHandler.ProcessComplete(processResults.Trace);

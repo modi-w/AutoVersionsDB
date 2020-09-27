@@ -17,7 +17,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 
 
         public SyncDBProcessDefinition(RestoreDatabaseStep rollbackStep,
-                                        ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+                                        ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                         SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                         ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
                                         ValidationsStep<ArtifactFileValidationsFactory> artifactFileValidationStep,
@@ -27,7 +27,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
                                         CreateBackupStep createBackupStep,
                                         ExecuteAllScriptsStep executeScriptsStep,
                                         FinalizeProcessStep finalizeProcessStep)
-            : base(rollbackStep, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
+            : base(rollbackStep, idExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(projectConfigValidationStep);
             AddStep(artifactFileValidationStep);

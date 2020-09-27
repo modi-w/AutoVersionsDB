@@ -13,11 +13,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
         public override string EngineTypeName => "Target State Script File Validation";
 
 
-        public TargetStateScriptFileValidationProcessDefinition(ValidationsStep<ProjectCodeExistDBVersionsValidationsFactory> projectCodeExistValidationStep,
+        public TargetStateScriptFileValidationProcessDefinition(ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                                                 SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                                                 CreateScriptFilesStateStep createScriptFilesStateStep,
                                                                 ValidationsStep<TargetStateScriptFileValidationsFactory> targetStateScriptFileValidationStep)
-            : base(null, projectCodeExistValidationStep, setProjectConfigInProcessContextStep)
+            : base(null, idExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(createScriptFilesStateStep);
             AddStep(targetStateScriptFileValidationStep);

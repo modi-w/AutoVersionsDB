@@ -8,17 +8,17 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
 {
-    public class ChangeProjectCodeProcessDefinition : ProjectConfigProcessDefinition
+    public class ChangeIdProcessDefinition : ProjectConfigProcessDefinition
     {
         public override string EngineTypeName => "Save New Config Validation";
 
 
-        public ChangeProjectCodeProcessDefinition(ValidationsStep<ProjectCodeExistValidationsFactory> projectCodeNotExistValidationStep,
-                                                        ChangeProjectCodeStep changeProjectCodeStep)
+        public ChangeIdProcessDefinition(ValidationsStep<IdExistValidationsFactory> idNotExistValidationStep,
+                                                        ChangeIdStep changeIdStep)
             : base()
         {
-            AddStep(projectCodeNotExistValidationStep);
-            AddStep(changeProjectCodeStep);
+            AddStep(idNotExistValidationStep);
+            AddStep(changeIdStep);
         }
     }
 }

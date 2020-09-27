@@ -7,17 +7,17 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes
     public class ProjectConfigProcessParams : ProcessParams
     {
         public ProjectConfigItem ProjectConfig { get; }
-        public string ProjectCode { get; }
+        public string Id { get; }
 
-        public ProjectConfigProcessParams(string projectCode)
+        public ProjectConfigProcessParams(string id)
         {
-            ProjectCode = projectCode;
+            Id = id;
         }
 
         public ProjectConfigProcessParams(ProjectConfigItem projectConfig)
         {
             ProjectConfig = projectConfig;
-            ProjectCode = projectConfig.Code;
+            Id = projectConfig.Id;
         }
     }
 }
