@@ -49,22 +49,37 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         public DeliveryEnv_SyncDB_DBInMiddleState_CLI(IConsoleProcessMessages consoleProcessMessages)
         {
             ConsoleProcessMessages = consoleProcessMessages;
+        }
 
+        public override TestContext Arrange(ProjectConfigItem projectConfig)
+        {
+            TestContext testContext = base.Arrange(projectConfig);
+
+            NinjectUtils_IntegrationTests.MockConsoleProcessMessages
+               .Setup(m => m.ProcessComplete(It.IsAny<ProcessResults>()))
+               .Callback<ProcessResults>((processResults) =>
+               {
+                   testContext.ProcessResults = processResults;
+               });
+
+
+            return testContext;
         }
 
 
         public override void Act(TestContext testContext)
         {
-            NinjectUtils_IntegrationTests.MockConsoleProcessMessages
-                .Setup(m => m.ProcessComplete(It.IsAny<ProcessResults>()))
-                .Callback<ProcessResults>((processResults) =>
-                {
-                    testContext.ProcessResults = processResults;
-                });
-
             AutoVersionsDbAPI.CLIRun($"sync -id={IntegrationTestsSetting.TestProjectId}");
+        }
 
 
+        public override void Assert(TestContext testContext)
+        {
+            base.Assert(testContext);
+
+            NinjectUtils_IntegrationTests.MockConsoleProcessMessages.Verify(m => m.StartProcessMessage("sync", IntegrationTestsSetting.TestProjectId), Times.Once);
+            NinjectUtils_IntegrationTests.MockConsoleProcessMessages.Verify(m => m.StartSpiiner(), Times.Once);
+            NinjectUtils_IntegrationTests.MockConsoleProcessMessages.Verify(m => m.StopSpinner(), Times.Once);
         }
     }
 }
