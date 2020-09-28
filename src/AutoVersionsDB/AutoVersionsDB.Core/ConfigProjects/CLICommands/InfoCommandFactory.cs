@@ -17,17 +17,17 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         private const int c_paddingRightForCaprions = 35;
 
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
 
         private readonly IdCLIOption _idOption;
 
 
         public InfoCommandFactory(ProjectConfigsAPI projectConfigsAPI,
-                                    IConsoleHandler consoleHandler,
+                                    IConsoleProcessMessages consoleProcessMessages,
                                     IdCLIOption idOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
 
             _idOption = idOption;
         }
@@ -44,63 +44,63 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create<string>((id) =>
              {
-                 _consoleHandler.StartProcessMessage("info", id);
+                 _consoleProcessMessages.StartProcessMessage("info", id);
 
                  ProjectConfigItem projectConfig = _projectConfigsAPI.GetProjectConfigById(id);
 
                  if (projectConfig == null)
                  {
-                     _consoleHandler.SetErrorInstruction($"Id '{id}' not exist. Try run list command to see the existing projects on this machine.");
+                     _consoleProcessMessages.SetErrorInstruction($"Id '{id}' not exist. Try run list command to see the existing projects on this machine.");
                  }
                  else
                  {
                      string message = $"{"Id".PadRight(c_paddingRightForCaprions)}: {projectConfig.Id}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
 
                      message = $"{"Description".PadRight(c_paddingRightForCaprions)}: {projectConfig.Description}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
 
                      message = $"{"DBType".PadRight(c_paddingRightForCaprions)}: {projectConfig.DBType}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
 
                      message = $"{"ServerInstance".PadRight(c_paddingRightForCaprions)}: {projectConfig.Server}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
                     
                      message = $"{"DataBaseName".PadRight(c_paddingRightForCaprions)}: {projectConfig.DBName}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
                   
                      message = $"{"DBUsername".PadRight(c_paddingRightForCaprions)}: {projectConfig.Username}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
                    
                      message = $"{"DBPassword".PadRight(c_paddingRightForCaprions)}: {projectConfig.Password}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
 
                      message = $"{"Backup Folder Path".PadRight(c_paddingRightForCaprions)}: {projectConfig.BackupFolderPath}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
 
                      message = $"{"Dev Environment".PadRight(c_paddingRightForCaprions)}: {projectConfig.DevEnvironment}";
-                     _consoleHandler.SetInfoMessage(message);
+                     _consoleProcessMessages.SetInfoMessage(message);
 
                      if (projectConfig.DevEnvironment)
                      {
                          message = $"{"Scripts Base Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.DevScriptsBaseFolderPath}";
-                         _consoleHandler.SetInfoMessage(message);
+                         _consoleProcessMessages.SetInfoMessage(message);
 
                          message = $"{" Incremental Scripts Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.IncrementalScriptsFolderPath}";
-                         _consoleHandler.SetInfoMessage(message);
+                         _consoleProcessMessages.SetInfoMessage(message);
                          message = $"{" Repeatable Scripts Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.RepeatableScriptsFolderPath}";
-                         _consoleHandler.SetInfoMessage(message);
+                         _consoleProcessMessages.SetInfoMessage(message);
                          message = $"{" Dev Dummy Data Scripts Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.DevDummyDataScriptsFolderPath}";
-                         _consoleHandler.SetInfoMessage(message);
+                         _consoleProcessMessages.SetInfoMessage(message);
 
 
                          message = $"{"Deploy Artifact Folder".PadRight(c_paddingRightForCaprions)}: {projectConfig.DeployArtifactFolderPath}";
-                         _consoleHandler.SetInfoMessage(message);
+                         _consoleProcessMessages.SetInfoMessage(message);
                      }
                      else
                      {
                          message = $"{"DeliveryArtifactFolderPath".PadRight(c_paddingRightForCaprions)}: {projectConfig.DeliveryArtifactFolderPath}";
-                         _consoleHandler.SetInfoMessage(message);
+                         _consoleProcessMessages.SetInfoMessage(message);
                      }
 
 

@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
     public class InitCommandFactory : CLICommandFactory
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
 
         private readonly IdCLIOption _idOption;
         private readonly DescriptionCLIOption _descriptionOption;
@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
 
         public InitCommandFactory(ProjectConfigsAPI projectConfigsAPI,
-                                    IConsoleHandler consoleHandler,
+                                    IConsoleProcessMessages consoleProcessMessages,
                                     IdCLIOption idOption,
                                     DescriptionCLIOption descriptionOption,
                                     DBTypeCLIOption dbTypeOption,
@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                                     DeliveryArtifactFolderPathCLIOption deliveryArtifactFolderPathOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
             _descriptionOption = descriptionOption;
             _dbTypeOption = dbTypeOption;
@@ -88,13 +88,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
             {
-                _consoleHandler.StartProcessMessage("init", projectConfig.Id);
+                _consoleProcessMessages.StartProcessMessage("init", projectConfig.Id);
 
-                _consoleHandler.StartSpiiner();
-                ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(projectConfig, _consoleHandler.OnNotificationStateChanged);
-                _consoleHandler.StopSpinner();
+                _consoleProcessMessages.StartSpiiner();
+                ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(projectConfig, _consoleProcessMessages.OnNotificationStateChanged);
+                _consoleProcessMessages.StopSpinner();
 
-                _consoleHandler.ProcessComplete(processResults.Trace);
+                _consoleProcessMessages.ProcessComplete(processResults);
             });
 
             return command;

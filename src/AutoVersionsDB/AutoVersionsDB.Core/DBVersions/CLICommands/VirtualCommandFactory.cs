@@ -12,17 +12,17 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     public class VirtualCommandFactory : CLICommandFactory
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
         private readonly IdCLIOption _idOption;
         private readonly TargetCLIOption _targetCLIOption;
 
         public VirtualCommandFactory(DBVersionsAPI dbVersionsAPI,
-                                        IConsoleHandler consoleHandler,
+                                        IConsoleProcessMessages consoleProcessMessages,
                                         IdCLIOption idOption,
                                         TargetCLIOption targetCLIOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
             _targetCLIOption = targetCLIOption;
         }
@@ -39,13 +39,13 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string, string>((id, target) =>
             {
-                _consoleHandler.StartProcessMessage("virtual", id);
+                _consoleProcessMessages.StartProcessMessage("virtual", id);
 
-                _consoleHandler.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(id, target, _consoleHandler.OnNotificationStateChanged);
-                _consoleHandler.StopSpinner();
+                _consoleProcessMessages.StartSpiiner();
+                ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(id, target, _consoleProcessMessages.OnNotificationStateChanged);
+                _consoleProcessMessages.StopSpinner();
 
-                _consoleHandler.ProcessComplete(processResults.Trace);
+                _consoleProcessMessages.ProcessComplete(processResults);
             });
 
 

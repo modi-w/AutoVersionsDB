@@ -12,15 +12,15 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     public class DeployCommandFactory : CLICommandFactory
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
         private readonly IdCLIOption _idOption;
 
         public DeployCommandFactory(DBVersionsAPI dbVersionsAPI,
-                                    IConsoleHandler consoleHandler,
+                                    IConsoleProcessMessages consoleProcessMessages,
                                     IdCLIOption idOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
         }
 
@@ -35,18 +35,18 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string>((id) =>
             {
-                _consoleHandler.StartProcessMessage("deploy", id);
+                _consoleProcessMessages.StartProcessMessage("deploy", id);
 
-                _consoleHandler.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.Deploy(id, _consoleHandler.OnNotificationStateChanged);
-                _consoleHandler.StopSpinner();
+                _consoleProcessMessages.StartSpiiner();
+                ProcessResults processResults = _dbVersionsAPI.Deploy(id, _consoleProcessMessages.OnNotificationStateChanged);
+                _consoleProcessMessages.StopSpinner();
 
-                _consoleHandler.ProcessComplete(processResults.Trace);
+                _consoleProcessMessages.ProcessComplete(processResults);
 
                 if (!processResults.Trace.HasError)
                 {
                     string deployFilePath = (string)processResults.Results;
-                    _consoleHandler.SetInfoMessage($"Artifact file created: '{deployFilePath}'");
+                    _consoleProcessMessages.SetInfoMessage($"Artifact file created: '{deployFilePath}'");
                 }
             });
 

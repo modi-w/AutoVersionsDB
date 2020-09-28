@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
     public class ChangeIdCommandFactory : CLICommandFactory
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
 
         private readonly IdCLIOption _IdOption;
         private readonly NewIdCLIOption _newIdCLIOption;
@@ -23,12 +23,12 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
 
         public ChangeIdCommandFactory(ProjectConfigsAPI projectConfigsAPI,
-                                        IConsoleHandler consoleHandler,
+                                        IConsoleProcessMessages consoleProcessMessages,
                                         IdCLIOption IdOption,
                                         NewIdCLIOption newIdCLIOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
             _IdOption = IdOption;
             _newIdCLIOption = newIdCLIOption;
         }
@@ -46,13 +46,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create<string, string>((id, newId) =>
                 {
-                    _consoleHandler.StartProcessMessage("change-id", id);
+                    _consoleProcessMessages.StartProcessMessage("change-id", id);
 
-                    _consoleHandler.StartSpiiner();
-                    ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(id, newId, _consoleHandler.OnNotificationStateChanged);
-                    _consoleHandler.StopSpinner();
+                    _consoleProcessMessages.StartSpiiner();
+                    ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(id, newId, _consoleProcessMessages.OnNotificationStateChanged);
+                    _consoleProcessMessages.StopSpinner();
 
-                    _consoleHandler.ProcessComplete(processResults.Trace);
+                    _consoleProcessMessages.ProcessComplete(processResults);
                 });
 
             return command;

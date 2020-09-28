@@ -53,7 +53,7 @@ namespace AutoVersionsDB.ConsoleApp
             //Comment: we wait here because the run process is run on another thread
             Thread.Sleep(IntervalInMs * 10);
 
-            lock (ConsoleHandler.ConsolWriteSync)
+            lock (ConsoleProcessMessages.ConsolWriteSync)
             {
                 Console.SetCursorPosition(0, Console.CursorTop);
                 Console.Write(" ");
@@ -77,7 +77,7 @@ namespace AutoVersionsDB.ConsoleApp
         {
             _counter++;
 
-            lock (ConsoleHandler.ConsolWriteSync)
+            lock (ConsoleProcessMessages.ConsolWriteSync)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
 

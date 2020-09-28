@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
     public class RemoveCommandFactory : CLICommandFactory
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
 
         private readonly IdCLIOption _idOption;
 
@@ -22,11 +22,11 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
 
         public RemoveCommandFactory(ProjectConfigsAPI projectConfigsAPI,
-                                        IConsoleHandler consoleHandler,
+                                        IConsoleProcessMessages consoleProcessMessages,
                                         IdCLIOption idOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
         }
 
@@ -42,13 +42,13 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create<string>((id) =>
                 {
-                    _consoleHandler.StartProcessMessage("remove", id);
+                    _consoleProcessMessages.StartProcessMessage("remove", id);
 
-                    _consoleHandler.StartSpiiner();
-                    ProcessResults processResults = _projectConfigsAPI.RemoveProjectConfig(id, _consoleHandler.OnNotificationStateChanged);
-                    _consoleHandler.StopSpinner();
+                    _consoleProcessMessages.StartSpiiner();
+                    ProcessResults processResults = _projectConfigsAPI.RemoveProjectConfig(id, _consoleProcessMessages.OnNotificationStateChanged);
+                    _consoleProcessMessages.StopSpinner();
 
-                    _consoleHandler.ProcessComplete(processResults.Trace);
+                    _consoleProcessMessages.ProcessComplete(processResults);
                 });
 
             return command;

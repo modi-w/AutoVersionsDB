@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
     public class EnvironmentCommandFactory : CLICommandFactory
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
 
         private readonly IdCLIOption _idOption;
         private readonly DevEnvironmentCLIOption _devEnvironmentOption;
@@ -23,12 +23,12 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
 
         public EnvironmentCommandFactory(ProjectConfigsAPI projectConfigsAPI,
-                                    IConsoleHandler consoleHandler,
+                                    IConsoleProcessMessages consoleProcessMessages,
                                     IdCLIOption idOption,
                                     DevEnvironmentCLIOption devEnvironmentOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
             _devEnvironmentOption = devEnvironmentOption;
         }
@@ -46,23 +46,23 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create<string, bool>((id, dev) =>
                 {
-                    _consoleHandler.StartProcessMessage("environment", id);
+                    _consoleProcessMessages.StartProcessMessage("environment", id);
 
                     ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigById(id);
 
                  if (existProjectConfig == null)
                  {
-                     _consoleHandler.SetErrorMessage($"Id: '{id}' is not exist. You can use the 'init' command to define new project.");
+                     _consoleProcessMessages.SetErrorMessage($"Id: '{id}' is not exist. You can use the 'init' command to define new project.");
                  }
                  else
                  {
                      existProjectConfig.DevEnvironment = dev;
 
-                     _consoleHandler.StartSpiiner();
-                     ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(existProjectConfig, _consoleHandler.OnNotificationStateChanged);
-                     _consoleHandler.StopSpinner();
+                     _consoleProcessMessages.StartSpiiner();
+                     ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(existProjectConfig, _consoleProcessMessages.OnNotificationStateChanged);
+                     _consoleProcessMessages.StopSpinner();
 
-                     _consoleHandler.ProcessComplete(processResults.Trace);
+                     _consoleProcessMessages.ProcessComplete(processResults);
                  }
              });
 
