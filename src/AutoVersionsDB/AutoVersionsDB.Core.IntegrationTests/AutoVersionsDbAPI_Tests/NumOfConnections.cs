@@ -5,6 +5,6 @@
         public string DBName { get; set; }
         public int NumOfConnectionsToDB { get; set; }
 
-        public int NumOfConnectionsToMasterDB { get; set; }
+        public int NumOfConnectionsToAdminDB { get; set; }
     }
 }

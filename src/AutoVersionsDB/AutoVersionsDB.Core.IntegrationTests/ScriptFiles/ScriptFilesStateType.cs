@@ -1,12 +1,16 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.IntegrationTests.Helpers;
+﻿using AutoVersionsDB;
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.IntegrationTests;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
+namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
 {
     public enum ScriptFilesStateType
     {

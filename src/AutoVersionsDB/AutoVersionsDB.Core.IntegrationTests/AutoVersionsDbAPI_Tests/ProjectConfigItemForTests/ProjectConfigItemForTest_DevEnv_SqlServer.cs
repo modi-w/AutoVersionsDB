@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.IntegrationTests.Helpers;
+﻿
+using AutoVersionsDB.Core.IntegrationTests.DB;
 
 namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests
 {
@@ -9,9 +10,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectCo
             : base(scriptFolderPath)
         {
             DBType = "SqlServer";
-            Server = SqlServerInstanceHelpers.ConnectionStringBuilder.DataSource;
-            Username = SqlServerInstanceHelpers.ConnectionStringBuilder.UserID;
-            Password = SqlServerInstanceHelpers.ConnectionStringBuilder.Password;
+            Server = SqlServerLocalDBConnection.ConnectionStringBuilder.DataSource;
+            Username = SqlServerLocalDBConnection.ConnectionStringBuilder.UserID;
+            Password = SqlServerLocalDBConnection.ConnectionStringBuilder.Password;
             DBName = "AutoVersionsDB.Tests";
             ////ConnStr = IntegrationTestsSetting.SQLServer_ConnStr;
             ////ConnStrToMasterDB = IntegrationTestsSetting.SQLServer_ConnStrToMaster;

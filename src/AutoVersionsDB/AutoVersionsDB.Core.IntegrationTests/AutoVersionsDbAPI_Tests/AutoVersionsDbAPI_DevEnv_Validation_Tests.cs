@@ -1,7 +1,6 @@
 ﻿using AutoVersionsDB.Helpers;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
-using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
 using NuGet.Frameworks;

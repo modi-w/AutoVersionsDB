@@ -1,7 +1,6 @@
 ﻿using AutoVersionsDB.Helpers;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
-using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System;
@@ -21,7 +20,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             get
             {
-                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal);
 
                 string scriptFilename = $"incScript_{DateTime.Today:yyyy-MM-dd}.001_{c_Incremental_scriptName1}.sql";
                 string script1FullPath = Path.Combine(devScriptsBaseFolderPath, c_RelFolder_Incremental, scriptFilename);
@@ -34,7 +33,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             get
             {
-                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal);
 
                 string scriptFilename = $"incScript_{DateTime.Today:yyyy-MM-dd}.002_{c_Incremental_scriptName2}.sql";
                 string script1FullPath = Path.Combine(devScriptsBaseFolderPath, c_RelFolder_Incremental, scriptFilename);
@@ -50,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             get
             {
-                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal);
 
                 string scriptFilename = $"rptScript_{c_Repeatable_scriptName1}.sql";
                 string script1FullPath = Path.Combine(devScriptsBaseFolderPath, c_RelFolder_Repeatable, scriptFilename);
@@ -66,7 +65,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         {
             get
             {
-                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal);
+                string devScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal);
 
                 string scriptFilename = $"dddScript_{c_DevDummyData_scriptName1}.sql";
                 string script1FullPath = Path.Combine(devScriptsBaseFolderPath, c_RelFolder_DevDummyData, scriptFilename);

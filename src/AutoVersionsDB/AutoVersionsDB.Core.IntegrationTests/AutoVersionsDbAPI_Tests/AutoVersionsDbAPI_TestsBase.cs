@@ -6,7 +6,6 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
-using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
@@ -67,7 +66,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
         [SetUp]
         public void Init()
         {
-            string dbBackupFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder);
+            string dbBackupFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackupBaseFolder);
             if (!Directory.Exists(dbBackupFolderPath))
             {
                 Directory.CreateDirectory(dbBackupFolderPath);
@@ -89,49 +88,49 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_ValidScripts = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_ChangedHistoryFiles_Incremental = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_ChangedHistoryFiles_Incremental),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsConsts.DevScriptsBaseFolderPath_ChangedHistoryFiles_Incremental),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_ChangedHistoryFiles_Repeatable = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_ChangedHistoryFiles_Repeatable),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsConsts.DevScriptsBaseFolderPath_ChangedHistoryFiles_Repeatable),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_MissingFile = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_MissingFile),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsConsts.DevScriptsBaseFolderPath_MissingFile),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DevEnv_ScriptError = new[]
         {
-           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsSetting.DevScriptsBaseFolderPath_ScriptError),
+           new ProjectConfigItemForTest_DevEnv_SqlServer(IntegrationTestsConsts.DevScriptsBaseFolderPath_ScriptError),
         };
 
 
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_ValidScripts = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_Normal),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsConsts.DeliveryArtifactFolderPath_Normal),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_ChangedHistoryFiles_Incremental = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_ChangedHistoryFiles_Incremental),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsConsts.DeliveryArtifactFolderPath_ChangedHistoryFiles_Incremental),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_ChangedHistoryFiles_Repeatable = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_ChangedHistoryFiles_Repeatable),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsConsts.DeliveryArtifactFolderPath_ChangedHistoryFiles_Repeatable),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_MissingFile = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_MissingFileh),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsConsts.DeliveryArtifactFolderPath_MissingFileh),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_ScriptError = new[]
         {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_ScriptError),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsConsts.DeliveryArtifactFolderPath_ScriptError),
         };
         protected static readonly IEnumerable<ProjectConfigItemForTestBase> ProjectConfigItemArray_DeliveryEnv_WithDevDummyDataFiles = new[]
 {
-           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsSetting.DeliveryArtifactFolderPath_WithDevDummyDataFiles),
+           new ProjectConfigItemForTest_DeliveryEnv_SqlServer(IntegrationTestsConsts.DeliveryArtifactFolderPath_WithDevDummyDataFiles),
         };
 
         #endregion
@@ -165,7 +164,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(projectConfig.DBConnectionInfo).AsDisposable())
             {
                 numOfConnectionsItem.NumOfConnectionsToDB = dbQueryStatus.Instance.GetNumOfOpenConnection(numOfConnectionsItem.DBName);
-                numOfConnectionsItem.NumOfConnectionsToMasterDB = dbQueryStatus.Instance.GetNumOfOpenConnection(masterDBName);
+                numOfConnectionsItem.NumOfConnectionsToAdminDB = dbQueryStatus.Instance.GetNumOfOpenConnection(masterDBName);
             }
 
             return numOfConnectionsItem;
@@ -176,7 +175,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             NumOfConnections numOfOpenConnections_After = getNumOfOpenConnection(projectConfig);
 
             Assert.That(numOfOpenConnections_Before.NumOfConnectionsToDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToDB));
-            Assert.That(numOfOpenConnections_Before.NumOfConnectionsToMasterDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToMasterDB));
+            Assert.That(numOfOpenConnections_Before.NumOfConnectionsToAdminDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToAdminDB));
         }
 
 

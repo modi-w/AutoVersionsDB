@@ -2,7 +2,6 @@
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
-using AutoVersionsDB.Core.IntegrationTests.Helpers;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
@@ -98,7 +97,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
             Assert.That(isRestoreExecuted, Is.EqualTo(true));
 
-            string tempBackupFileToCompare = Path.Combine(FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DBBackupBaseFolder), $"TempBackupFileToCompare_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")}");
+            string tempBackupFileToCompare = Path.Combine(FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackupBaseFolder), $"TempBackupFileToCompare_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")}");
 
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBConnectionInfo).AsDisposable())
             {

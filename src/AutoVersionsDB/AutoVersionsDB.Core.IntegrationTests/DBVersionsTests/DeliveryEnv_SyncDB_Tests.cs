@@ -1,5 +1,9 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.Core.IntegrationTests.Process;
+using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
@@ -26,29 +30,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_SyncDB_DBInMiddleState()
         {
-            RunTest<DeliveryEnv_SyncDB_DBInMiddleState_API, DeliveryEnv_SyncDB_DBInMiddleState_CLI>(false, ScriptFilesStateType.WithDevDummyDataFiles);
+            TestsRunner.RunTest<DeliveryEnv_SyncDB_DBInMiddleState_API, DeliveryEnv_SyncDB_DBInMiddleState_CLI>(false, ScriptFilesStateType.WithDevDummyDataFiles);
         }
 
-        protected void RunTest<T1, T2>(bool devEnvironment, ScriptFilesStateType scriptFilesStateType)
-            where T1 : TestDefinition
-            where T2 : TestDefinition
-        {
-            List<ProjectConfigItem> projectConfigs = ProjectConfigsFactory.Create(devEnvironment, scriptFilesStateType);
 
-            foreach (var projectConfig in projectConfigs)
-            {
-                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2>();
-
-                foreach (var test in tests)
-                {
-                    TestContext testContext = test.Arrange(projectConfig);
-
-                    test.Act(testContext);
-
-                    test.Assert(testContext);
-                }
-            }
-        }
 
     }
 }

@@ -28,14 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="DbBackupsForTests\AutoVersionsDB_AddDataAfterFinalState.bak" />
-    <None Remove="DbBackupsForTests\AutoVersionsDB_AfterRunInitStateScript.bak" />
-    <None Remove="DbBackupsForTests\AutoVersionsDB_EmptyDB.bak" />
-    <None Remove="DbBackupsForTests\AutoVersionsDB_EmptyDB_ExceptSystemTables.bak" />
-    <None Remove="DbBackupsForTests\AutoVersionsDB_FinalState_DeliveryEnv.bak" />
-    <None Remove="DbBackupsForTests\AutoVersionsDB_FinalState_DevEnv.bak" />
-    <None Remove="DbBackupsForTests\AutoVersionsDB_FinalState_MissingSystemTables.bak" />
-    <None Remove="DbBackupsForTests\AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak" />
     <None Remove="FilesForTests\SqlServer\Scripts\Delivery\AutoVersionsDB.Tests.avdb" />
     <None Remove="FilesForTests\SqlServer\Scripts\Delivery_ChangedHistoryFiles_Incremental\AutoVersionsDB.Tests_ChangedHistoryFiles_Incremental.avdb" />
     <None Remove="FilesForTests\SqlServer\Scripts\Delivery_ChangedHistoryFiles_Repeatable\Delivery_ChangedHistoryFiles_Repeatable.avdb" />
@@ -291,10 +283,6 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.Helpers\AutoVersionsDB.Helpers.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DbBackupsForTests\" />
   </ItemGroup>
 
 </Project>
