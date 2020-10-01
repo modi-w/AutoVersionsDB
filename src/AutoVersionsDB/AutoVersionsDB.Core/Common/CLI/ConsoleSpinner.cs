@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.CommandLine;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AutoVersionsDB.ConsoleApp
+namespace AutoVersionsDB.Core.Common.CLI
 {
     //https://stackoverflow.com/questions/888533/how-can-i-update-the-current-line-in-a-c-sharp-windows-console-app
 
-    public  class ConsoleSpinner :IDisposable
+    public class ConsoleSpinner
     {
-        private  int _counter;
+        private readonly IConsoleExtended _console;
+
+        private int _counter;
 
         public int IntervalInMs { get; private set; }
         public bool IsActive { get; private set; }
 
 
-        public ConsoleSpinner()
+        public ConsoleSpinner(IConsoleExtended console)
         {
-            IntervalInMs = 100;
+            _console = console;
 
-            Start();
+            IntervalInMs = 100;
         }
 
         public void Start()
@@ -55,8 +58,8 @@ namespace AutoVersionsDB.ConsoleApp
 
             lock (ConsoleProcessMessages.ConsolWriteSync)
             {
-                Console.SetCursorPosition(0, Console.CursorTop);
-                Console.Write(" ");
+                _console.SetCursorPosition(0, _console.CursorTop);
+                _console.Out.Write(" ");
             }
         }
 
@@ -73,24 +76,24 @@ namespace AutoVersionsDB.ConsoleApp
             }
         }
 
-        private  void Turn()
+        private void Turn()
         {
             _counter++;
 
             lock (ConsoleProcessMessages.ConsolWriteSync)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
+                _console.ForegroundColor = ConsoleColor.DarkGray;
 
-                Console.SetCursorPosition(0, Console.CursorTop);
+                _console.SetCursorPosition(0, _console.CursorTop);
                 switch (_counter % 4)
                 {
-                    case 0: Console.Write("/"); _counter = 0; break;
-                    case 1: Console.Write("-"); break;
-                    case 2: Console.Write("\\"); break;
-                    case 3: Console.Write("|"); break;
+                    case 0: _console.Out.Write("/"); _counter = 0; break;
+                    case 1: _console.Out.Write("-"); break;
+                    case 2: _console.Out.Write("\\"); break;
+                    case 3: _console.Out.Write("|"); break;
                 }
 
-                Console.ForegroundColor = ConsoleColor.White;
+                _console.ForegroundColor = ConsoleColor.White;
             }
         }
 

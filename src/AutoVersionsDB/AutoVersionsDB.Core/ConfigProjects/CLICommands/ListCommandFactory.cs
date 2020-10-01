@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
 
         public ListCommandFactory(ProjectConfigsAPI projectConfigsAPI,
-                                        IConsoleProcessMessages consoleProcessMessages)
+                                        ConsoleProcessMessages consoleProcessMessages)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _consoleProcessMessages = consoleProcessMessages;

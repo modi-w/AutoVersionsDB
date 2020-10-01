@@ -1,25 +1,35 @@
-﻿using AutoVersionsDB.Core.Common.CLI;
-using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
+using System.CommandLine;
+using System.CommandLine.IO;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace AutoVersionsDB.ConsoleApp
+namespace AutoVersionsDB.Core.Common.CLI
 {
-    public class ConsoleProcessMessages : IDisposable, IConsoleProcessMessages
+    public class ConsoleProcessMessages : IConsoleProcessMessages
     {
+        private IConsoleExtended _console;
+        private ConsoleSpinner _spinner;
+
         public static object ConsolWriteSync = new object();
 
 
         private int numberOfLineForLastMessage = 1;
 
-        private ConsoleSpinner _spinner;
+        //public ConsoleProcessMessages() { }
+        public ConsoleProcessMessages(IConsoleExtended console,
+                                        ConsoleSpinner spinner)
+        {
+            _console = console;
+            _spinner = spinner;
+        }
 
         public void StartSpiiner()
         {
-            _spinner = new ConsoleSpinner();
+            _spinner.Start();
         }
         public void StopSpinner()
         {
@@ -29,29 +39,29 @@ namespace AutoVersionsDB.ConsoleApp
 
         public void SetErrorMessage(string message)
         {
-            TextWriter errorWriter = Console.Error;
-            Console.ForegroundColor = ConsoleColor.Red;
+            IStandardStreamWriter errorWriter = _console.Error;
+            _console.ForegroundColor = ConsoleColor.Red;
             errorWriter.WriteLine(message);
 
-            Console.ForegroundColor = ConsoleColor.White;
+            _console.ForegroundColor = ConsoleColor.White;
         }
 
         public void SetErrorInstruction(string message)
         {
-            TextWriter errorWriter = Console.Error;
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            IStandardStreamWriter errorWriter = _console.Error;
+            _console.ForegroundColor = ConsoleColor.DarkRed;
             errorWriter.WriteLine(message);
 
-            Console.ForegroundColor = ConsoleColor.White;
+            _console.ForegroundColor = ConsoleColor.White;
         }
 
         public void SetInfoMessage(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Gray;
+            _console.ForegroundColor = ConsoleColor.Gray;
 
-            Console.WriteLine(message);
+            _console.Out.WriteLine(message);
 
-            Console.ForegroundColor = ConsoleColor.White;
+            _console.ForegroundColor = ConsoleColor.White;
         }
 
         public void StartProcessMessage(string processName)
@@ -60,25 +70,27 @@ namespace AutoVersionsDB.ConsoleApp
         }
         public void StartProcessMessage(string processName, string paramsStr)
         {
-            Console.ForegroundColor = ConsoleColor.Gray;
+            _console.ForegroundColor = ConsoleColor.Gray;
 
             if (!string.IsNullOrWhiteSpace(paramsStr))
             {
-                Console.WriteLine($"> Run '{processName}' for '{paramsStr}'");
+                _console.Out.WriteLine($"> Run '{processName}' for '{paramsStr}'");
             }
             else
             {
-                Console.WriteLine($"> Run '{processName}' (no params)");
+                _console.Out.WriteLine($"> Run '{processName}' (no params)");
             }
 
         }
 
 
+        
+
         public void ProcessComplete(ProcessResults processReults)
         {
             ClearConsoleLine(0);
 
-            lock (ConsoleProcessMessages.ConsolWriteSync)
+            lock (ConsolWriteSync)
             {
 
                 if (processReults.Trace.HasError)
@@ -92,34 +104,35 @@ namespace AutoVersionsDB.ConsoleApp
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("The process complete successfully");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    _console.ForegroundColor = ConsoleColor.Green;
+                    _console.Out.WriteLine("The process complete successfully");
+                    _console.ForegroundColor = ConsoleColor.White;
                 }
 
-                Console.ForegroundColor = ConsoleColor.White;
+                _console.ForegroundColor = ConsoleColor.White;
             }
+
         }
 
-
+    
         public void OnNotificationStateChanged(ProcessTrace processTrace, StepNotificationState notificationStateItem)
         {
-            lock (ConsoleProcessMessages.ConsolWriteSync)
+            lock (ConsolWriteSync)
             {
                 ClearConsoleLine(3);
 
-                int cursorTopStart = Console.CursorTop;
+                int cursorTopStart = _console.CursorTop;
 
-                Console.ForegroundColor = ConsoleColor.DarkGray;
+                _console.ForegroundColor = ConsoleColor.DarkGray;
 
-                Console.SetCursorPosition(3, Console.CursorTop);
-                Console.Write(notificationStateItem.ToString());
+                _console.SetCursorPosition(3, _console.CursorTop);
+                _console.Out.Write(notificationStateItem.ToString());
 
-                int cursorTopEnd = Console.CursorTop;
+                int cursorTopEnd = _console.CursorTop;
 
                 numberOfLineForLastMessage = cursorTopEnd - cursorTopStart + 1;
 
-                Console.ForegroundColor = ConsoleColor.White;
+                _console.ForegroundColor = ConsoleColor.White;
             }
         }
 
@@ -127,22 +140,22 @@ namespace AutoVersionsDB.ConsoleApp
 
         private void ClearConsoleLine(int cursorLeft)
         {
-            Console.SetCursorPosition(cursorLeft, Console.CursorTop - (numberOfLineForLastMessage - 1));
+            _console.SetCursorPosition(cursorLeft, _console.CursorTop - (numberOfLineForLastMessage - 1));
 
             for (int i = 0; i < numberOfLineForLastMessage; i++)
             {
-                Console.Write(new String(' ', Console.BufferWidth));
+                _console.Out.Write(new string(' ', _console.BufferWidth));
                 if (i == 0 && cursorLeft > 0)
                 {
-                    Console.SetCursorPosition(0, Console.CursorTop);
+                    _console.SetCursorPosition(0, _console.CursorTop);
                 }
                 else
                 {
-                    Console.SetCursorPosition(cursorLeft, Console.CursorTop + 1);
+                    _console.SetCursorPosition(cursorLeft, _console.CursorTop + 1);
                 }
             }
 
-            Console.SetCursorPosition(cursorLeft, Console.CursorTop - (numberOfLineForLastMessage));
+            _console.SetCursorPosition(cursorLeft, _console.CursorTop - numberOfLineForLastMessage);
         }
 
 

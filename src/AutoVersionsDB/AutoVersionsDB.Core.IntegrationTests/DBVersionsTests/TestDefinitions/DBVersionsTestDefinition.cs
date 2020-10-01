@@ -23,9 +23,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         private readonly DBAsserts _dbAsserts;
 
         public DBVersionsTestDefinition(DBHandler dbHandler,
-                                FoldersUtils foldersUtils,
-                                ProcessAsserts processAsserts,
-                                DBAsserts dbAsserts)
+                                        FoldersUtils foldersUtils,
+                                        ProcessAsserts processAsserts,
+                                        DBAsserts dbAsserts)
         {
             _dbHandler = dbHandler;
             _foldersUtils = foldersUtils;

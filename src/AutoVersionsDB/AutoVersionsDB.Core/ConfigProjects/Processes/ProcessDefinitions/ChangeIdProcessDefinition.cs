@@ -15,7 +15,6 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
 
         public ChangeIdProcessDefinition(ValidationsStep<IdExistValidationsFactory> idNotExistValidationStep,
                                                         ChangeIdStep changeIdStep)
-            : base()
         {
             AddStep(idNotExistValidationStep);
             AddStep(changeIdStep);

@@ -1,8 +1,9 @@
 ﻿using AutoVersionsDB.NotificationableEngine;
+using System;
 
 namespace AutoVersionsDB.Core.Common.CLI
 {
-    public interface IConsoleProcessMessages
+    public interface IConsoleProcessMessages : IDisposable
     {
         void OnNotificationStateChanged(ProcessTrace processTrace, StepNotificationState notificationStateItem);
         void ProcessComplete(ProcessResults processReults);

@@ -2,19 +2,22 @@
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
+using AutoVersionsDB.Core.IntegrationTests.CLI;
 using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 {
-    public class DeliveryEnv_SyncDB_DBInMiddleState_API  : ITestDefinition
+    public class DeliveryEnv_SyncDB_DBInMiddleState_API : ITestDefinition
     {
         private readonly DBVersionsTestDefinition _dbVersionsTest;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
@@ -45,7 +48,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         {
             _dbVersionsTest.Asserts(testContext);
 
-            _dbAsserts.AssertDbInFinalState_DeliveryEnv(GetType().Name,testContext.ProjectConfig.DBConnectionInfo);
+            _dbAsserts.AssertDbInFinalState_DeliveryEnv(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
             _scriptFilesAsserts.AssertThatAllFilesInFolderExistWithTheSameHashInTheDb_FinalState(GetType().Name, testContext.ProjectConfig);
         }
     }
@@ -53,22 +56,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
     public class DeliveryEnv_SyncDB_DBInMiddleState_CLI : ITestDefinition
     {
-        private readonly IConsoleProcessMessages _consoleProcessMessages;
+        private readonly CLiAsserts _cliAsserts;
 
         private readonly DeliveryEnv_SyncDB_DBInMiddleState_API _deliveryEnv_SyncDB_DBInMiddleState_API;
 
-        public DeliveryEnv_SyncDB_DBInMiddleState_CLI(IConsoleProcessMessages consoleProcessMessages,
+        public DeliveryEnv_SyncDB_DBInMiddleState_CLI(CLiAsserts cliAsserts,
                                                         DeliveryEnv_SyncDB_DBInMiddleState_API deliveryEnv_SyncDB_DBInMiddleState_API)
         {
-            _consoleProcessMessages = consoleProcessMessages;
+            _cliAsserts = cliAsserts;
             _deliveryEnv_SyncDB_DBInMiddleState_API = deliveryEnv_SyncDB_DBInMiddleState_API;
         }
 
         public TestContext Arrange(ProjectConfigItem projectConfig)
         {
             TestContext testContext = _deliveryEnv_SyncDB_DBInMiddleState_API.Arrange(projectConfig);
-            
+
             MockObjectsProvider.SetProcessCompleteCallbackToSetProcessResultsInTestContext(testContext);
+            MockObjectsProvider.SetConsoleOutputToTestContext(testContext);
 
             return testContext;
         }
@@ -84,9 +88,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         {
             _deliveryEnv_SyncDB_DBInMiddleState_API.Asserts(testContext);
 
-            MockObjectsProvider.MockConsoleProcessMessages.Verify(m => m.StartProcessMessage("sync", IntegrationTestsConsts.TestProjectId), Times.Once);
-            MockObjectsProvider.MockConsoleProcessMessages.Verify(m => m.StartSpiiner(), Times.Once);
-            MockObjectsProvider.MockConsoleProcessMessages.Verify(m => m.StopSpinner(), Times.Once);
+            List<string> finalConsoleOutLines = testContext.CurrentConsoleOut.Split(Environment.NewLine).ToList();
+
+            _cliAsserts.AssertConsoleFinalLineMessage(finalConsoleOutLines, 0, "> Run 'sync' for 'IntegrationTestProject'");
+            _cliAsserts.AssertConsoleFinalLineMessage(finalConsoleOutLines, 1, "The process complete successfully");
+
         }
+
     }
 }
