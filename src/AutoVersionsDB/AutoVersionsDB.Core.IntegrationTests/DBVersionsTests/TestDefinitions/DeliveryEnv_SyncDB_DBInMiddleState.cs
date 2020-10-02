@@ -56,14 +56,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
     public class DeliveryEnv_SyncDB_DBInMiddleState_CLI : ITestDefinition
     {
-        private readonly CLiAsserts _cliAsserts;
 
         private readonly DeliveryEnv_SyncDB_DBInMiddleState_API _deliveryEnv_SyncDB_DBInMiddleState_API;
 
-        public DeliveryEnv_SyncDB_DBInMiddleState_CLI(CLiAsserts cliAsserts,
-                                                        DeliveryEnv_SyncDB_DBInMiddleState_API deliveryEnv_SyncDB_DBInMiddleState_API)
+        public DeliveryEnv_SyncDB_DBInMiddleState_CLI(DeliveryEnv_SyncDB_DBInMiddleState_API deliveryEnv_SyncDB_DBInMiddleState_API)
         {
-            _cliAsserts = cliAsserts;
             _deliveryEnv_SyncDB_DBInMiddleState_API = deliveryEnv_SyncDB_DBInMiddleState_API;
         }
 
@@ -71,7 +68,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         {
             TestContext testContext = _deliveryEnv_SyncDB_DBInMiddleState_API.Arrange(projectConfig);
 
-            MockObjectsProvider.SetProcessCompleteCallbackToSetProcessResultsInTestContext(testContext);
+            MockObjectsProvider.SetProcessResultsToTestContext(testContext);
             MockObjectsProvider.SetConsoleOutputToTestContext(testContext);
 
             return testContext;
@@ -88,11 +85,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         {
             _deliveryEnv_SyncDB_DBInMiddleState_API.Asserts(testContext);
 
-            List<string> finalConsoleOutLines = testContext.CurrentConsoleOut.Split(Environment.NewLine).ToList();
-
-            _cliAsserts.AssertConsoleFinalLineMessage(finalConsoleOutLines, 0, "> Run 'sync' for 'IntegrationTestProject'");
-            _cliAsserts.AssertConsoleFinalLineMessage(finalConsoleOutLines, 1, "The process complete successfully");
-
+            AssertTextByLines assertTextByLines = new AssertTextByLines(this.GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
+            assertTextByLines.AssertLineMessage(0, "> Run 'sync' for 'IntegrationTestProject'");
+            assertTextByLines.AssertLineMessage(1, "The process complete successfully");
         }
 
     }

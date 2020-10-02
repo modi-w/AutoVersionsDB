@@ -56,7 +56,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        public static void SetProcessCompleteCallbackToSetProcessResultsInTestContext(TestContext testContext)
+        public static void SetProcessResultsToTestContext(TestContext testContext)
         {
             MockConsoleProcessMessages
              .Setup(m => m.ProcessCompleteForMockSniffer(It.IsAny<ProcessResults>()))

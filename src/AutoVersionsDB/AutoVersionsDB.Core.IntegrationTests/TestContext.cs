@@ -20,7 +20,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         private int _lastLengthForCurrentConsoleOnLineAppended;
 
         public string AllConsoleOut => _sbAllConsoleOut.ToString();
-        public string CurrentConsoleOut => _sbCurrentConsoleOut.ToString();
+        public string FinalConsoleOut => _sbCurrentConsoleOut.ToString();
 
         public ProjectConfigItem ProjectConfig { get; }
         public NumOfConnections NumOfConnectionsBefore { get; set; }
