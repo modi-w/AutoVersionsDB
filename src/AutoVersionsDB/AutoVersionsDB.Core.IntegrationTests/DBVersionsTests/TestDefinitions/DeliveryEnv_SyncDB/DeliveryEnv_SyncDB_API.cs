@@ -9,15 +9,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_SyncDB_API : ITestDefinition
     {
-        private readonly DBVersionsTestDefinition _dbVersionsTest;
+        private readonly DBVersionsValidTest _dbVersionsValidTest;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DeliveryEnv_SyncDB_API(DBVersionsTestDefinition dbVersionsTest,
+        public DeliveryEnv_SyncDB_API(DBVersionsValidTest dbVersionsValidTest,
                                         ScriptFilesAsserts scriptFilesAsserts,
                                         DBAsserts dbAsserts)
         {
-            _dbVersionsTest = dbVersionsTest;
+            _dbVersionsValidTest = dbVersionsValidTest;
             _scriptFilesAsserts = scriptFilesAsserts;
             _dbAsserts = dbAsserts;
         }
@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
         {
-            return _dbVersionsTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            return _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
         }
 
         public void Act(TestContext testContext)
@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Asserts(TestContext testContext)
         {
-            _dbVersionsTest.Asserts(testContext);
+            _dbVersionsValidTest.Asserts(testContext);
 
             _dbAsserts.AssertDbInFinalState_DeliveryEnv(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
 

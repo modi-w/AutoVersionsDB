@@ -15,21 +15,19 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 {
-    public class DBVersionsTestDefinition : ITestDefinition
+    public class DBVersionsTest : ITestDefinition
     {
         private readonly DBHandler _dbHandler;
         private readonly FoldersUtils _foldersUtils;
-        private readonly ProcessAsserts _processAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DBVersionsTestDefinition(DBHandler dbHandler,
+        public DBVersionsTest(DBHandler dbHandler,
                                         FoldersUtils foldersUtils,
                                         ProcessAsserts processAsserts,
                                         DBAsserts dbAsserts)
         {
             _dbHandler = dbHandler;
             _foldersUtils = foldersUtils;
-            _processAsserts = processAsserts;
             _dbAsserts = dbAsserts;
         }
 
@@ -53,7 +51,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
         public void Asserts(TestContext testContext)
         {
-            _processAsserts.AssertProccessErrors(GetType().Name, testContext.ProcessResults.Trace);
             _dbAsserts.AssertNumOfOpenDbConnection(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, testContext.NumOfConnectionsBefore);
             _dbAsserts.AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, DBBackupFileType.MiddleState);
         }
