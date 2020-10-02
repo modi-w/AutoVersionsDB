@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
     {
         None = 0,
         EmptyDB = 1,
-        ExceptSystemTables = 2,
+        EmptyDB_ExceptSystemTables = 2,
         AfterRunInitStateScript = 3,
         MiddleState = 4,
         FinalState_DevEnv = 5,

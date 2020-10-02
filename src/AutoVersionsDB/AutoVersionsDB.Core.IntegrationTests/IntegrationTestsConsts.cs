@@ -9,6 +9,11 @@ namespace AutoVersionsDB.Core.IntegrationTests
     {
         public const string TestProjectId = "IntegrationTestProject";
 
+        public const string TargetStateFile_MiddleState = "incScript_2020-02-25.102_CreateLookupTable2.sql";
+        public const string TargetStateFile_FinalState = "incScript_2020-03-02.101_CreateInvoiceTable1.sql";
+
+
+
         public const string  DBBackupBaseFolder  = @"[CommonApplicationData]\AutoVersionsDB.Core.IntegrationTests\Backups";
 
         //public const string  SQLServer_ConnStr  = @"Data Source=(localdb)\localtestdb; Database=AutoVersionsDB.Tests;";

@@ -11,16 +11,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
     public class DeliveryEnv_SyncDB_CLI : ITestDefinition
     {
 
-        private readonly DeliveryEnv_SyncDB_API _deliveryEnv_SyncDB_DBInMiddleState_API;
+        private readonly DeliveryEnv_SyncDB_API _deliveryEnv_SyncDB_API;
 
-        public DeliveryEnv_SyncDB_CLI(DeliveryEnv_SyncDB_API deliveryEnv_SyncDB_DBInMiddleState_API)
+        public DeliveryEnv_SyncDB_CLI(DeliveryEnv_SyncDB_API deliveryEnv_SyncDB_API)
         {
-            _deliveryEnv_SyncDB_DBInMiddleState_API = deliveryEnv_SyncDB_DBInMiddleState_API;
+            _deliveryEnv_SyncDB_API = deliveryEnv_SyncDB_API;
         }
 
         public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
         {
-            TestContext testContext = _deliveryEnv_SyncDB_DBInMiddleState_API.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _deliveryEnv_SyncDB_API.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
             
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Asserts(TestContext testContext)
         {
-            _deliveryEnv_SyncDB_DBInMiddleState_API.Asserts(testContext);
+            _deliveryEnv_SyncDB_API.Asserts(testContext);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(this.GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
             assertTextByLines.AssertLineMessage(0, "> Run 'sync' for 'IntegrationTestProject'");

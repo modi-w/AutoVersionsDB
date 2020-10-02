@@ -252,8 +252,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 
                 Assert.That(allSchemaTable.Rows.Count, Is.EqualTo(0));
             }
-
-
         }
 
 

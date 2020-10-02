@@ -52,6 +52,42 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
         }
 
 
+        public void AssertDbInEmptyStateExceptSystemTables(string testName, DBConnectionInfo dbConnectionInfo)
+        {
+            DataTable allSchemaTable = _dbHandler.GetAllDBSchemaExceptDBVersionSchema(dbConnectionInfo);
+
+            Assert.That(allSchemaTable.Rows.Count, Is.EqualTo(0), $"{testName} -> The DB should be empty except schema tables, but its not.");
+        }
+
+
+
+
+        public void AssertThatDbExecutedFilesAreInMiddleState(string testName, DBConnectionInfo dbConnectionInfo)
+        {
+            DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+            assertTableNumOfRows(testName, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, tableData, 3);
+            assertTableCellValue(testName, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, tableData, 0, "Filename", "incScript_2020-02-25.100_initState.sql");
+            assertTableCellValue(testName, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, tableData, 1, "Filename", "incScript_2020-02-25.101_CreateLookupTable1.sql");
+            assertTableCellValue(testName, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, tableData, 2, "Filename", "incScript_2020-02-25.102_CreateLookupTable2.sql");
+        }
+
+
+        public void AssertDbInMiddleState(string testName, DBConnectionInfo dbConnectionInfo)
+        {
+            AssertTable1ExistWithFullData(testName, dbConnectionInfo);
+
+            string tableName = "[Schema2].[LookupTable1]";
+            AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable1");
+            DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
+            assertTableNumOfRows(testName, tableName, tableData, 0);
+
+
+            AssertSpExsit(testName, dbConnectionInfo, "Schema1", "SpOnTable1");
+
+        }
+
+
+
 
         //Comment: Dev Dummy Data Scripts should not run on Delivery Environment
         public void AssertDbInFinalState_DeliveryEnv(string testName, DBConnectionInfo dbConnectionInfo)

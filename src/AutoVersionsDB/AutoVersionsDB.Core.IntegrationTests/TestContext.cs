@@ -24,14 +24,16 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public string AllConsoleOut => _sbAllConsoleOut.ToString();
         public string FinalConsoleOut => _sbCurrentConsoleOut.ToString();
 
+        public DBBackupFileType DBBackupFileType { get; }
         public ScriptFilesStateType ScriptFilesStateType { get; }
         public ProjectConfigItem ProjectConfig { get; }
         public NumOfConnections NumOfConnectionsBefore { get; set; }
         public ProcessResults ProcessResults { get; set; }
 
 
-        public TestContext(ScriptFilesStateType scriptFilesStateType, ProjectConfigItem projectConfig)
+        public TestContext(DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType, ProjectConfigItem projectConfig)
         {
+            DBBackupFileType = dbBackupFileType;
             ScriptFilesStateType = scriptFilesStateType;
             ProjectConfig = projectConfig;
 

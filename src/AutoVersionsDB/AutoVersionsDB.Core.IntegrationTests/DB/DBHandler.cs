@@ -101,5 +101,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
                 return dbCommands.Instance.CheckIfStoredProcedureExist(schemaName, spName);
             }
         }
+
+        public DataTable GetAllDBSchemaExceptDBVersionSchema(DBConnectionInfo dbConnectionInfo)
+        {
+            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo).AsDisposable())
+            {
+                return dbCommands.Instance.GetAllDBSchemaExceptDBVersionSchema();
+            }
+        }
+
+        
     }
 }

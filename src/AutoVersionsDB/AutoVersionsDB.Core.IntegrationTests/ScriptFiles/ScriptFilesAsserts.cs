@@ -19,9 +19,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
 {
     public class ScriptFilesAsserts
     {
-        private const string c_targetStateFile_MiddleState = "incScript_2020-02-25.102_CreateLookupTable2.sql";
-        private const string c_targetStateFile_FinalState = "incScript_2020-03-02.101_CreateInvoiceTable1.sql";
-
         private ScriptFileTypeBase _incrementalScriptFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
         private ScriptFileTypeBase _repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
         private ScriptFileTypeBase _devDummyDataScriptFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
@@ -38,6 +35,89 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
         }
 
 
+
+        public void AssertThatAllFilesInTheDbExistWithTheSameHashInTheFolder(string testName, ProjectConfigItem projectConfig)
+        {
+            ArtifactExtractor artifactExtractor = null;
+
+            if (!projectConfig.DevEnvironment)
+            {
+                artifactExtractor = new ArtifactExtractor(projectConfig);
+            }
+
+            DataTable dbScriptsExecutionHistoryFilesTable = _dbHandler.GetTable(projectConfig.DBConnectionInfo, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+
+
+            string[] arrIncAllScriptFiles = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+            Dictionary<string, FileInfo> incSctipFilesDictionary = arrIncAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+
+            List<DataRow> incExecutionHistoryFilesDBRows =
+                dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _incrementalScriptFileType.FileTypeCode).ToList();
+
+            foreach (DataRow executedScriptRow in incExecutionHistoryFilesDBRows)
+            {
+                string filename = Convert.ToString(executedScriptRow["Filename"]);
+
+                AssertFileFromDBExistInDictionaryFolderFiles(testName, incSctipFilesDictionary, filename);
+
+                FileInfo fiScriptFile = incSctipFilesDictionary[filename];
+
+                AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
+            }
+
+
+            string[] arrRptAllScriptFiles = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+            Dictionary<string, FileInfo> rptSctipFilesDictionary = arrRptAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+
+
+            List<DataRow> rptExecutionHistoryFilesDBRows =
+                dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _repeatableScriptFileType.FileTypeCode).ToList();
+
+            foreach (DataRow executedScriptRow in rptExecutionHistoryFilesDBRows)
+            {
+                string filename = Convert.ToString(executedScriptRow["Filename"]);
+
+                AssertFileFromDBExistInDictionaryFolderFiles(testName, rptSctipFilesDictionary, filename);
+
+                FileInfo fiScriptFile = rptSctipFilesDictionary[filename];
+
+                AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
+            }
+
+
+            if (projectConfig.DevEnvironment)
+            {
+                string[] arrDddAllScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+                Dictionary<string, FileInfo> dddSctipFilesDictionary = arrDddAllScriptFiles.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+
+
+                List<DataRow> dddExecutionHistoryFilesDBRows =
+                    dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["ScriptFileType"]) == _devDummyDataScriptFileType.FileTypeCode).ToList();
+
+                foreach (DataRow executedScriptRow in dddExecutionHistoryFilesDBRows)
+                {
+                    string filename = Convert.ToString(executedScriptRow["Filename"]);
+
+                    AssertFileFromDBExistInDictionaryFolderFiles(testName, dddSctipFilesDictionary, filename);
+
+                    FileInfo fiScriptFile = dddSctipFilesDictionary[filename];
+
+                    AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
+                }
+            }
+
+
+
+
+            if (artifactExtractor != null)
+            {
+                artifactExtractor.Dispose();
+                artifactExtractor = null;
+            }
+
+
+
+        }
 
         public void AssertThatAllFilesInFolderExistWithTheSameHashInTheDb_FinalState(string testName, ProjectConfigItem projectConfig)
         {
@@ -101,11 +181,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
 
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
-                Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} -> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
+          
+                AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
             }
         }
+
 
         public void AssertMatchRepeatableFilesWithDbExecuted(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
         {
@@ -118,9 +199,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
 
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
-                Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} -> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
+
+                AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
             }
         }
 
@@ -134,24 +215,24 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
 
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
 
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
                 if (fiScriptFile.Name == "rptScript_DataForLookupTable1.sql")
                 {
                     Assert.That(executedScriptRows.Count, Is.EqualTo(2), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 2 times.");
 
+                    string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
                     DataRow firstInstance = executedScriptRows[0];
                     Assert.That(firstInstance["ComputedFileHash"].ToString() != computedFileHash);
 
                     DataRow secondInstance = executedScriptRows[1];
-                    Assert.That(secondInstance["ComputedFileHash"], Is.EqualTo(computedFileHash));
+                    AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, secondInstance);
                 }
                 else
                 {
                     Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
 
                     DataRow executedScriptRow = executedScriptRows.First();
-                    Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} -> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
+                    AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
                 }
             }
         }
@@ -167,9 +248,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
                 Assert.That(executedScriptRows.Count, Is.EqualTo(1),$"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
 
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
                 DataRow executedScriptRow = executedScriptRows.First();
-                Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} -> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
+                AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
             }
         }
         public void AssertDevDummyDataFilesWithDbExecuted_DeliveryEnv(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
@@ -208,7 +288,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
                     Assert.That(firstInstance["ComputedFileHash"].ToString() != computedFileHash);
 
                     DataRow secondInstance = executedScriptRows[1];
-                    Assert.That(secondInstance["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} -> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
+                    AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, secondInstance);
                 }
                 else
                 {
@@ -216,10 +296,30 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
                     Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
                     DataRow executedScriptRow = executedScriptRows.First();
-                    Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} -> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
+                    AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
                 }
             }
         }
+
+
+      
+
+
+
+
+            private void AssertScriptFileAndDBRowHasSameHash(string testName, FileInfo fiScriptFile, DataRow executedScriptRow)
+        {
+            string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
+            Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} -> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
+        }
+
+
+        private static void AssertFileFromDBExistInDictionaryFolderFiles(string testName, Dictionary<string, FileInfo> incSctipFilesDictionary, string filename)
+        {
+            Assert.That(incSctipFilesDictionary.ContainsKey(filename), $"{testName} -> The file '{filename}' exist in the DB but not exsit in the scripts folder.");
+        }
+
+
 
     }
 }
