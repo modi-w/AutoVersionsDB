@@ -105,12 +105,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.Process
                         projectConfig.DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_ScriptError).Replace("[DBType]", projectConfig.DBType);
                         break;
 
-                    case ScriptFilesStateType.ChangedHistoryFiles_Incremental:
+                    case ScriptFilesStateType.IncrementalChanged:
 
                         projectConfig.DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_ChangedHistoryFiles_Incremental).Replace("[DBType]", projectConfig.DBType);
                         break;
 
-                    case ScriptFilesStateType.ChangedHistoryFiles_Repeatable:
+                    case ScriptFilesStateType.RepeatableChanged:
 
                         projectConfig.DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_ChangedHistoryFiles_Repeatable).Replace("[DBType]", projectConfig.DBType);
                         break;
@@ -138,12 +138,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.Process
                         projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ScriptError).Replace("[DBType]", projectConfig.DBType);
                         break;
 
-                    case ScriptFilesStateType.ChangedHistoryFiles_Incremental:
+                    case ScriptFilesStateType.IncrementalChanged:
 
                         projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ChangedHistoryFiles_Incremental).Replace("[DBType]", projectConfig.DBType);
                         break;
 
-                    case ScriptFilesStateType.ChangedHistoryFiles_Repeatable:
+                    case ScriptFilesStateType.RepeatableChanged:
 
                         projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ChangedHistoryFiles_Repeatable).Replace("[DBType]", projectConfig.DBType);
                         break;

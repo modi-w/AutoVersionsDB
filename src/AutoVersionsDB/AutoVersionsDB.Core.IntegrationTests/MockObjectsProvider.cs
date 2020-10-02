@@ -56,7 +56,15 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        public static void SetProcessResultsToTestContext(TestContext testContext)
+        public static void SetTestContextDataByMockCallbacks(TestContext testContext)
+        {
+            MockObjectsProvider.SetProcessResultsToTestContext(testContext);
+            MockObjectsProvider.SetConsoleOutputToTestContext(testContext);
+
+        }
+
+
+        private static void SetProcessResultsToTestContext(TestContext testContext)
         {
             MockConsoleProcessMessages
              .Setup(m => m.ProcessCompleteForMockSniffer(It.IsAny<ProcessResults>()))
@@ -66,7 +74,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
              });
         }
 
-        public static void SetConsoleOutputToTestContext(TestContext testContext)
+        private static void SetConsoleOutputToTestContext(TestContext testContext)
         {
             MockConsole
              .Setup(m => m.Out.Write(It.IsAny<string>()))

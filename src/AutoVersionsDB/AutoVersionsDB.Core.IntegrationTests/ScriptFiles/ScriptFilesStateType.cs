@@ -18,8 +18,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
         ValidScripts = 1,
         MissingFile = 2,
         ScriptError = 3,
-        ChangedHistoryFiles_Incremental = 4,
-        ChangedHistoryFiles_Repeatable = 5,
+        IncrementalChanged = 4,
+        RepeatableChanged= 5,
         WithDevDummyDataFiles = 6,
     }
 }

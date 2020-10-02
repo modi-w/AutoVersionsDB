@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.Process;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using System;
@@ -9,7 +10,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 {
     public static class TestsRunner
     {
-        public static void RunTest<T1, T2>(bool devEnvironment, ScriptFilesStateType scriptFilesStateType)
+        public static void RunTest<T1, T2>(bool devEnvironment, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
           where T1 : ITestDefinition
           where T2 : ITestDefinition
         {
@@ -21,7 +22,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
                 foreach (var test in tests)
                 {
-                    TestContext testContext = test.Arrange(projectConfig);
+                    TestContext testContext = test.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
 
                     test.Act(testContext);
 

@@ -33,12 +33,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
             _dbAsserts = dbAsserts;
         }
 
-        public TestContext Arrange(ProjectConfigItem projectConfig)
+        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
         {
-            TestContext testContext = new TestContext(projectConfig);
+            TestContext testContext = new TestContext(scriptFilesStateType, projectConfig);
 
             MockObjectsProvider.MockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(testContext.ProjectConfig);
-            _dbHandler.RestoreDB(testContext.ProjectConfig.DBConnectionInfo, DBBackupFileType.MiddleState);
+            _dbHandler.RestoreDB(testContext.ProjectConfig.DBConnectionInfo, dbBackupFileType);
             testContext.NumOfConnectionsBefore = _dbHandler.GetNumOfOpenConnection(testContext.ProjectConfig.DBConnectionInfo);
             _foldersUtils.RemoveArtifactTempFolder(testContext.ProjectConfig);
 

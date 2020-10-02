@@ -4,7 +4,9 @@ using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
+using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
@@ -22,13 +24,15 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public string AllConsoleOut => _sbAllConsoleOut.ToString();
         public string FinalConsoleOut => _sbCurrentConsoleOut.ToString();
 
+        public ScriptFilesStateType ScriptFilesStateType { get; }
         public ProjectConfigItem ProjectConfig { get; }
         public NumOfConnections NumOfConnectionsBefore { get; set; }
         public ProcessResults ProcessResults { get; set; }
 
 
-        public TestContext(ProjectConfigItem projectConfig)
+        public TestContext(ScriptFilesStateType scriptFilesStateType, ProjectConfigItem projectConfig)
         {
+            ScriptFilesStateType = scriptFilesStateType;
             ProjectConfig = projectConfig;
 
             _sbAllConsoleOut = new StringBuilder();

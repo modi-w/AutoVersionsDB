@@ -1,7 +1,9 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
+using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.Process;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using AutoVersionsDB.Helpers;
@@ -28,11 +30,22 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
         [Test]
-        public void DeliveryEnv_SyncDB_DBInMiddleState()
+        public void DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles()
         {
-            TestsRunner.RunTest<DeliveryEnv_SyncDB_DBInMiddleState_API, DeliveryEnv_SyncDB_DBInMiddleState_CLI>(false, ScriptFilesStateType.WithDevDummyDataFiles);
+            TestsRunner.RunTest<DeliveryEnv_SyncDB_API, DeliveryEnv_SyncDB_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.WithDevDummyDataFiles);
         }
 
+        [Test]
+        public void DeliveryEnv_SyncDB_DBInMiddleState_ValidScripts()
+        {
+            TestsRunner.RunTest<DeliveryEnv_SyncDB_API, DeliveryEnv_SyncDB_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+        }
+
+        [Test]
+        public void DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged()
+        {
+            TestsRunner.RunTest<DeliveryEnv_SyncDB_API, DeliveryEnv_SyncDB_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.RepeatableChanged);
+        }
 
 
     }
