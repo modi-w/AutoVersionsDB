@@ -3,7 +3,7 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
 using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Restore;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
@@ -22,7 +22,7 @@ using System.Text;
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 {
     [TestFixture]
-    public class DeliveryEnv_NotAollowMethods
+    public class DeliveryEnv_Restore
     {
         [SetUp]
         public void Init()
@@ -32,26 +32,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
 
-
         [Test]
-        public void DeliveryEnv_NotAollowMethods_Deploy()
+        public void DeliveryEnv_RestoreExecuted()
         {
-            TestsRunner.RunTest<DeliveryEnv_NotAllowMethods_Deploy_API, DeliveryEnv_NotAllowMethods_Deploy_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTest<DeliveryEnv_Restore_API, DeliveryEnv_Restore_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
         }
 
-
-        [Test]
-        public void DeliveryEnv_NotAollowMethods_Recreate()
-        {
-            TestsRunner.RunTest<DeliveryEnv_NotAllowMethods_Recreate_API, DeliveryEnv_NotAllowMethods_Recreate_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
-        }
-
-
-        [Test]
-        public void DeliveryEnv_NotAollowMethods_SetDBToSpecificState()
-        {
-            TestsRunner.RunTest<DeliveryEnv_NotAllowMethods_SetDBToSpecificState_API>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
-        }
 
     }
 }

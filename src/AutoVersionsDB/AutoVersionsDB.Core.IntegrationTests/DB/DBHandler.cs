@@ -49,6 +49,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
             }
         }
 
+
+        public void CreateDBBackup(DBConnectionInfo dbConnectionInfo, string targetFilePath)
+        {
+            using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(dbConnectionInfo).AsDisposable())
+            {
+                using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(dbConnectionInfo).AsDisposable())
+                {
+                    dbBackupRestoreCommands.Instance.CreateDbBackup(targetFilePath, dbConnectionInfo.DBName);
+                }
+            }
+        }
+
+
+
         public NumOfConnections GetNumOfOpenConnection(DBConnectionInfo dbConnectionInfo)
         {
             NumOfConnections numOfConnectionsItem = new NumOfConnections();

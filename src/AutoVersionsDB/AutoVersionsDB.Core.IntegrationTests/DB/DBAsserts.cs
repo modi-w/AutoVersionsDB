@@ -1,10 +1,15 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
 using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DB
@@ -12,10 +17,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
     public class DBAsserts
     {
         private readonly DBHandler _dbHandler;
+        private readonly DBBackupFilesProvider _dbBackupFilesProvider;
 
-        public DBAsserts(DBHandler dbHandler)
+        public DBAsserts(DBHandler dbHandler,
+                            DBBackupFilesProvider dbBackupFilesProvider)
         {
             _dbHandler = dbHandler;
+            _dbBackupFilesProvider = dbBackupFilesProvider;
         }
 
 
@@ -50,6 +58,34 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
             //Assert.That(fiOriginalDBFile.Length, Is.EqualTo(finNewBackupDBFile.Length));
 
         }
+
+
+        public void AssertRestore(string testName, DBConnectionInfo dbConnectionInfo, DBBackupFileType dbBackupFileType, ProcessTrace processTrace)
+        {
+            Assert.That(processTrace.HasError);
+
+            bool isRestoreExecuted =
+                processTrace
+                .StatesHistory.Any(e => e.InternalStepNotificationState != null
+                                        && !string.IsNullOrWhiteSpace(e.InternalStepNotificationState.StepName)
+                                        && e.InternalStepNotificationState.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
+
+            Assert.That(isRestoreExecuted, $"{testName} -> Restore step was not executed");
+
+
+
+            ////Comment: the following  check is not work because the original bak files was backup on diffrent sql server
+            //string tempBackupFileToCompare = Path.Combine(FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackupBaseFolder), $"TempBackupFileToCompare_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")}");
+            //_dbHandler.CreateDBBackup(dbConnectionInfo, tempBackupFileToCompare);
+
+            //string orginalDBBackupFilePathForTheTest = _dbBackupFilesProvider.GetDBBackupFilePath(dbBackupFileType, dbConnectionInfo.DBType);
+
+            //FileInfo fiOrginalDBBackupFilePathForTheTest = new FileInfo(orginalDBBackupFilePathForTheTest);
+            //FileInfo fiTempBackupFileToCompare = new FileInfo(tempBackupFileToCompare);
+
+            //Assert.That(fiOrginalDBBackupFilePathForTheTest.Length, Is.EqualTo(fiTempBackupFileToCompare.Length));
+        }
+
 
 
         public void AssertDbInEmptyStateExceptSystemTables(string testName, DBConnectionInfo dbConnectionInfo)
