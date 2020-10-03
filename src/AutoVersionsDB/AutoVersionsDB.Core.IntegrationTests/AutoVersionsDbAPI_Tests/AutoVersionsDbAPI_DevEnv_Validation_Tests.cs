@@ -105,7 +105,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ContainErrorCode("IsHistoryExecutedFilesChanged"));
+            Assert.That(processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"));
         }
 
 
@@ -127,7 +127,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
             //Assert
             assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
             Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ContainErrorCode("IsHistoryExecutedFilesChanged"));
+            Assert.That(processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"));
         }
 
 

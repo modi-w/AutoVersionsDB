@@ -70,13 +70,36 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
         [Test]
-        public void DeliveryEnv_Validate()
+        public void DeliveryEnv_Validate_Valid()
         {
             TestsRunner.RunTest<DeliveryEnv_Validate_Valid_API, DeliveryEnv_Validate_Valid_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
         }
 
-        
 
+        [Test]
+        public void DeliveryEnv_Validate_HistoryExecutedFilesChanged()
+        {
+            TestsRunner.RunTest<DeliveryEnv_Validate_HistoryExecutedFilesChanged_API, DeliveryEnv_Validate_HistoryExecutedFilesChanged_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.IncrementalChanged);
+        }
+
+        [Test]
+        public void DeliveryEnv_Validate_HistoryExecutedFileMissing()
+        {
+            TestsRunner.RunTest<DeliveryEnv_Validate_HistoryExecutedFilesChanged_API, DeliveryEnv_Validate_HistoryExecutedFilesChanged_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.MissingFile);
+        }
+
+        [Test]
+        public void DeliveryEnv_Validate_MissingSystemTables()
+        {
+            TestsRunner.RunTest<DeliveryEnv_Validate_MissingSystemTables_API, DeliveryEnv_Validate_MissingSystemTables_CLI>(false, DBBackupFileType.FinalState_MissingSystemTables, ScriptFilesStateType.ValidScripts);
+        }
+
+
+        [Test]
+        public void DeliveryEnv_Validate_ArtifactFile()
+        {
+            TestsRunner.RunTest<DeliveryEnv_Validate_ArtifactFile_API, DeliveryEnv_Validate_ArtifactFile_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
+        }
 
     }
 }

@@ -47,8 +47,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _deliveryEnv_Validate_API.Asserts(testContext);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertTextByLines.AssertLineMessage(0, "> Run 'validate' for 'IntegrationTestProject'");
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully");
+            assertTextByLines.AssertLineMessage(0, "> Run 'validate' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
+
         }
 
     }

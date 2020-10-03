@@ -5,17 +5,17 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
-    public class IsHistoryExecutedFilesChangedValidator : ValidatorBase
+    public class HistoryExecutedFilesChangedValidator : ValidatorBase
     {
         private readonly ScriptFilesState _scriptFilesState;
 
-        public override string ValidatorName => "IsHistoryExecutedFilesChanged";
+        public override string ValidatorName => "HistoryExecutedFilesChanged";
 
         public override string ErrorInstructionsMessage => "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";
 
 
 
-        public IsHistoryExecutedFilesChangedValidator(ScriptFilesState scriptFilesState)
+        public HistoryExecutedFilesChangedValidator(ScriptFilesState scriptFilesState)
         {
             _scriptFilesState = scriptFilesState;
         }
@@ -56,7 +56,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                 {
                     IEnumerable<string> notExistInFileSystemFilenamesList = _scriptFilesState.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Select(e => e.Filename);
 
-                    string errorMsg = $"The following files changed: '{string.Join(", ", notExistInFileSystemFilenamesList)}'";
+                    string errorMsg = $"The following files missing from the scripts folder: '{string.Join(", ", notExistInFileSystemFilenamesList)}'";
                     return errorMsg;
                 }
             }

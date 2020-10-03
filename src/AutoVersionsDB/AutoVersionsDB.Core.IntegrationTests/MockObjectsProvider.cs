@@ -83,13 +83,6 @@ namespace AutoVersionsDB.Core.IntegrationTests
                  testContext.AppendToConsoleOut(str);
              });
 
-            //MockConsole
-            // .Setup(m => m.Out.WriteLine(It.IsAny<string>()))
-            // .Callback<string>((str) =>
-            // {
-            //     testContext.AppendLineToConsoleOut(str);
-            // });
-
 
             MockConsole
              .Setup(m => m.SetCursorPosition(It.IsAny<int>(), It.IsAny<int>()))
@@ -98,7 +91,14 @@ namespace AutoVersionsDB.Core.IntegrationTests
                  testContext.ClearCurrentMessage(left);
              });
 
-            
+
+            MockConsole
+             .Setup(m => m.Error.Write(It.IsAny<string>()))
+             .Callback<string>((str) =>
+             {
+                 testContext.AppendToConsoleError(str);
+             });
+
         }
     }
 }

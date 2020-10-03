@@ -16,8 +16,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 
             DBVersionsProcessContext dbVersionsProcessContext = processContext as DBVersionsProcessContext;
 
-            IsHistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator =
-                new IsHistoryExecutedFilesChangedValidator(dbVersionsProcessContext.ScriptFilesState);
+            HistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator =
+                new HistoryExecutedFilesChangedValidator(dbVersionsProcessContext.ScriptFilesState);
             validationsGroup.Add(isHistoryExecutedFilesChangedValidator);
 
             return validationsGroup;

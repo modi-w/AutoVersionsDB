@@ -28,10 +28,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLI
             _finalConsoleOutLines = text.Split(Environment.NewLine).ToList();
         }
 
-        public void AssertLineMessage(int lineIndex, string expectedMessage)
+        public void AssertLineMessage(int lineIndex, string expectedMessage, bool isExact)
         {
             Assert.That(lineIndex < _finalConsoleOutLines.Count, $"{_testName}-> {_textType} -> Number of lines ({_finalConsoleOutLines.Count}) too small. should be at least: '{lineIndex + 1}'");
-            Assert.That(_finalConsoleOutLines[lineIndex] == expectedMessage, $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was finalConsoleOutLines[0].");
+            if (isExact)
+            {
+                Assert.That(_finalConsoleOutLines[lineIndex] == expectedMessage, $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was finalConsoleOutLines[0].");
+            }
+            else
+            {
+                Assert.That(_finalConsoleOutLines[lineIndex].Contains(expectedMessage), $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was finalConsoleOutLines[0].");
+            }
         }
 
 

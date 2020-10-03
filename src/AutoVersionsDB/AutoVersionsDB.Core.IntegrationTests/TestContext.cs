@@ -19,10 +19,14 @@ namespace AutoVersionsDB.Core.IntegrationTests
         private StringBuilder _sbAllConsoleOut;
         private StringBuilder _sbCurrentConsoleOut;
 
+        private StringBuilder _sbConsoleError;
+
         private int _lastLengthForCurrentConsoleOnLineAppended;
 
         public string AllConsoleOut => _sbAllConsoleOut.ToString();
         public string FinalConsoleOut => _sbCurrentConsoleOut.ToString();
+
+        public string ConsoleError => _sbConsoleError.ToString();
 
         public DBBackupFileType DBBackupFileType { get; }
         public ScriptFilesStateType ScriptFilesStateType { get; }
@@ -39,6 +43,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
             _sbAllConsoleOut = new StringBuilder();
             _sbCurrentConsoleOut = new StringBuilder();
+            _sbConsoleError = new StringBuilder();
         }
 
         public void AppendToConsoleOut(string str)
@@ -51,12 +56,6 @@ namespace AutoVersionsDB.Core.IntegrationTests
                 _lastLengthForCurrentConsoleOnLineAppended = _sbCurrentConsoleOut.Length;
             }
         }
-        //public void AppendLineToConsoleOut(string str)
-        //{
-        //    _sbAllConsoleOut.AppendLine(str);
-        //    _sbCurrentConsoleOut.AppendLine(str);
-
-        //}
 
         public void ClearCurrentMessage(int left)
         {
@@ -64,6 +63,12 @@ namespace AutoVersionsDB.Core.IntegrationTests
             {
                 _sbCurrentConsoleOut.Remove((_lastLengthForCurrentConsoleOnLineAppended + left), _sbCurrentConsoleOut.Length - (_lastLengthForCurrentConsoleOnLineAppended + left));
             }
+        }
+
+
+        public void AppendToConsoleError(string str)
+        {
+            _sbConsoleError.Append(str);
         }
 
     }

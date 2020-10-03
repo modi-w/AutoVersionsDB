@@ -160,7 +160,7 @@ namespace AutoVersionsDB.WinApp
                         {
                             SetViewState(DBVersionsMangementViewType.MissingSystemTables);
                         }
-                        else if (processResults.Trace.ContainErrorCode("IsHistoryExecutedFilesChanged"))
+                        else if (processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"))
                         {
                             SetViewState(DBVersionsMangementViewType.HistoryExecutedFilesChanged);
                         }
