@@ -285,8 +285,4 @@
     <ProjectReference Include="..\AutoVersionsDB.Helpers\AutoVersionsDB.Helpers.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DBVersionsTests\TestDefinitions\DeliveryEnv_Validations\" />
-  </ItemGroup>
-
 </Project>

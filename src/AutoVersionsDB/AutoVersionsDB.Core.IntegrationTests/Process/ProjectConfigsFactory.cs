@@ -27,6 +27,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.Process
         };
 
 
+        /// <summary>
+        /// Create an array of project config for each exist DBType.
+        /// </summary>
+        /// <param name="devEnvironment"></param>
+        /// <param name="scriptFilesStateType"></param>
+        /// <returns></returns>
         public static List<ProjectConfigItem> Create(bool devEnvironment, ScriptFilesStateType scriptFilesStateType)
         {
             List<ProjectConfigItem> projectConfigs = new List<ProjectConfigItem>();

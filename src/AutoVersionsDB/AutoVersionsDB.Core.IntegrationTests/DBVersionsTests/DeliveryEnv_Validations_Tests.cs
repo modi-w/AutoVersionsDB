@@ -4,6 +4,7 @@ using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
 using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.Process;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
@@ -31,7 +32,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
         [Test]
-        public void DeliveryEnv_ProjectConfigValidate_NotValid()
+        //Comment: For this test, we dont have value in DBType, so we dont need to use ProjectConfigsFactory (that create project config for each DBType);
+        //          And we dont have CLI Command for ProjectConfigValidation,
+        //          So we dont need to use TestsRunner.
+        public void DeliveryEnv_ProjectConfigValidation_NotValid()
         {
             //Arrange
             ProjectConfigItem projectConfig = new ProjectConfigItem()
@@ -58,6 +62,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         }
 
 
+        [Test]
+        public void DeliveryEnv_ProjectConfigValidation_Valid()
+        {
+            TestsRunner.RunTest<DeliveryEnv_ProjectConfigValidation_API>(false, DBBackupFileType.EmptyDB, ScriptFilesStateType.ValidScripts);
+        }
+
+
+        [Test]
+        public void DeliveryEnv_Validate()
+        {
+            TestsRunner.RunTest<DeliveryEnv_Validate_Valid_API, DeliveryEnv_Validate_Valid_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+        }
+
+        
 
 
     }

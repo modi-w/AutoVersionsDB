@@ -24,7 +24,7 @@ namespace AutoVersionsDB.ConsoleApp
             //  return AutoVersionsDbAPI.CLIRun("config environment -id=testp1 -dev=true");
             //return AutoVersionsDbAPI.CLIRun("sync -id=testp");
             //return AutoVersionsDbAPI.CLIRun("recreate -id=testp");
-            return AutoVersionsDbAPI.CLIRun("deploy -id=testp");
+            return AutoVersionsDbAPI.CLIRun("validate -id=testp");
             //     return AutoVersionsDbAPI.CLIRun("config -id=testp -desc=\"Test project 1\"");
 
             //return AutoVersionsDbAPI.CLIRun("list");

@@ -12,7 +12,8 @@ namespace AutoVersionsDB.Core.DBVersions
         private readonly List<CLICommandFactory> _cliCommandFactories;
 
 
-        public DBVersionsCLIBuilder(SyncCommandFactory syncCommandFactory,
+        public DBVersionsCLIBuilder(ValidateCommandFactory validateCommandFactory,
+                                    SyncCommandFactory syncCommandFactory,
                                     RecreateCommandFactory recreateCommandFactory,
                                     VirtualCommandFactory virtualCommandFactory,
                                     DeployCommandFactory deployCommandFactory,
@@ -20,6 +21,7 @@ namespace AutoVersionsDB.Core.DBVersions
         {
             _cliCommandFactories = new List<CLICommandFactory>()
             {
+                validateCommandFactory,
                 syncCommandFactory,
                 recreateCommandFactory,
                 virtualCommandFactory,

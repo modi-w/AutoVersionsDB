@@ -28,10 +28,11 @@ namespace AutoVersionsDB.ConsoleApp
         {
             //  kernel.ThrowIfNull(nameof(kernel));
             kernel.Bind<IConsoleExtended>().To<ConsoleExtended>();
+            kernel.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessages>();
         }
 
 
-        
+
 
     }
 }
