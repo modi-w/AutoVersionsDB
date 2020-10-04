@@ -122,6 +122,46 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
 
         }
 
+        public void AssertDbInFinalState_DevEnv(string testName, DBConnectionInfo dbConnectionInfo)
+        {
+            AssertTable1ExistWithFullData(testName, dbConnectionInfo);
+
+            string tableName = "[Schema2].[LookupTable1]";
+            AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable1");
+            DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
+            assertTableNumOfRows(testName, tableName, tableData, 2);
+            assertTableCellValue(testName, tableName, tableData, 0, "Lookup1Value", "Value1");
+            assertTableCellValue(testName, tableName, tableData, 1, "Lookup1Value", "Value2");
+
+
+            tableName = "[Schema2].[LookupTable2]";
+            AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable2");
+            tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
+            assertTableNumOfRows(testName, tableName, tableData, 3);
+            assertTableCellValue(testName, tableName, tableData, 0, "Lookup2Value", "Value3");
+            assertTableCellValue(testName, tableName, tableData, 1, "Lookup2Value", "Value4");
+            assertTableCellValue(testName, tableName, tableData, 2, "Lookup2Value", "Value5");
+
+
+            tableName = "[Schema3].[InvoiceTable1]";
+            AssertTableExsit(testName, dbConnectionInfo, "Schema3", "InvoiceTable1");
+            tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
+            assertTableNumOfRows(testName, tableName, tableData, 2);
+            assertTableCellValue(testName, tableName, tableData, 0, "Comments", "Comment 1");
+            assertTableCellValue(testName, tableName, tableData, 1, "Comments", "Comment 2");
+
+
+            tableName = "[Schema3].[TransTable1]";
+            AssertTableExsit(testName, dbConnectionInfo, "Schema3", "TransTable1");
+            tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
+            assertTableNumOfRows(testName, tableName, tableData, 2);
+            assertTableCellValue(testName, tableName, tableData, 0, "TotalPrice", 200);
+            assertTableCellValue(testName, tableName, tableData, 1, "TotalPrice", 1000);
+
+
+            AssertSpExsit(testName, dbConnectionInfo, "Schema1", "SpOnTable1");
+        }
+
 
 
 
@@ -191,6 +231,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
             AssertSpExsit(testName, dbConnectionInfo, "Schema1", "SpOnTable1");
 
         }
+
+
+
+
 
 
 
