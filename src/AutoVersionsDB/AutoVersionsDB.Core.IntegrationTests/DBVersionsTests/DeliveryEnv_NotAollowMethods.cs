@@ -53,5 +53,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
             TestsRunner.RunTest<DeliveryEnv_NotAllowMethods_SetDBToSpecificState_API>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
         }
 
+        [Test]
+        public void DeliveryEnv_NotAollowMethods_New_Incremental()
+        {
+            TestsRunner.RunTest<DeliveryEnv_NotAllowMethods_New_Incremental_API, DeliveryEnv_NotAllowMethods_New_Incremental_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
+        }
+        [Test]
+        public void DeliveryEnv_NotAollowMethods_New_Repeatable()
+        {
+            TestsRunner.RunTest<DeliveryEnv_NotAllowMethods_New_Repeatable_API, DeliveryEnv_NotAllowMethods_New_Repeatable_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
+        }
+        [Test]
+        public void DeliveryEnv_NotAollowMethods_New_DevDummyData()
+        {
+            TestsRunner.RunTest<DeliveryEnv_NotAllowMethods_New_DevDummyData_API, DeliveryEnv_NotAllowMethods_New_DevDummyData_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
+        }
+
     }
 }
