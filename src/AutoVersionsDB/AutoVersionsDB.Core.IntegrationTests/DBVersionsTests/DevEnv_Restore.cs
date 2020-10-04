@@ -23,7 +23,7 @@ using System.Text;
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 {
     [TestFixture]
-    public class DeliveryEnv_Restore
+    public class DevEnv_Restore
     {
         [SetUp]
         public void Init()
@@ -34,9 +34,22 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
         [Test]
-        public void DeliveryEnv_RestoreExecuted()
+        public void DevEnv_RestoreExecuted()
         {
-            TestsRunner.RunTest<DeliveryEnv_Restore_API, DeliveryEnv_Restore_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
+            TestsRunner.RunTest<DevEnv_Restore_SyncDB_API, DevEnv_Restore_SyncDB_CLI>(true, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
+        }
+
+        [Test]
+        public void DevEnv_Restore_Recreate()
+        {
+            TestsRunner.RunTest<DevEnv_Restore_Recreate_API, DevEnv_Restore_Recreate_CLI>(true, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
+        }
+
+
+        [Test]
+        public void DevEnv_RestoreExecuted_SetDBToSpecificState()
+        {
+            TestsRunner.RunTest<DevEnv_Restore_SetDBToSpecificState_API>(true, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
         }
 
 
