@@ -1,98 +1,98 @@
-﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
-using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
-using AutoVersionsDB.NotificationableEngine;
-using Moq;
-using NUnit.Framework;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
+﻿//using AutoVersionsDB.Core.DBVersions.ArtifactFile;
+//using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests.ProjectConfigItemForTests;
+//using AutoVersionsDB.NotificationableEngine;
+//using Moq;
+//using NUnit.Framework;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.IO.Compression;
+//using System.Linq;
 
-namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
-{
-    public class AutoVersionsDbAPI_DevEnv_Deploy_Tests : AutoVersionsDbAPI_TestsBase
-    {
+//namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
+//{
+//    public class AutoVersionsDbAPI_DevEnv_Deploy_Tests : AutoVersionsDbAPI_TestsBase
+//    {
 
-        [Test]
-        public void Deploy([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
-        {
-            //Arrange
-            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
-
-
-            //Act
-            ProcessResults processResults = AutoVersionsDbAPI.Deploy(projectConfig.Id, null);
+//        [Test]
+//        public void Deploy([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
+//        {
+//            //Arrange
+//            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
 
 
-            //Assert
-            assertProccessErrors(processResults.Trace);
-            assertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(projectConfig);
+//            //Act
+//            ProcessResults processResults = AutoVersionsDbAPI.Deploy(projectConfig.Id, null);
 
-        }
 
-        private void assertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(ProjectConfigItemForTestBase projectConfig)
-        {
-            string[] allArtifactFiles = Directory.GetFiles(projectConfig.DeployArtifactFolderPath, $"*{ArtifactExtractor.ArtifactFilenameExtension}", SearchOption.TopDirectoryOnly);
+//            //Assert
+//            assertProccessErrors(processResults.Trace);
+//            assertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(projectConfig);
 
-            Assert.That(allArtifactFiles.Length, Is.EqualTo(1));
+//        }
 
-            string artifactFile = allArtifactFiles[0];
+//        private void assertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(ProjectConfigItemForTestBase projectConfig)
+//        {
+//            string[] allArtifactFiles = Directory.GetFiles(projectConfig.DeployArtifactFolderPath, $"*{ArtifactExtractor.ArtifactFilenameExtension}", SearchOption.TopDirectoryOnly);
 
-            string tempFolder = Path.Combine(projectConfig.DeployArtifactFolderPath, "TempFolder");
+//            Assert.That(allArtifactFiles.Length, Is.EqualTo(1));
 
-            if (Directory.Exists(tempFolder))
-            {
-                Directory.Delete(tempFolder, true);
-            }
+//            string artifactFile = allArtifactFiles[0];
 
-            Directory.CreateDirectory(tempFolder);
+//            string tempFolder = Path.Combine(projectConfig.DeployArtifactFolderPath, "TempFolder");
 
-            try
-            {
-                ZipFile.ExtractToDirectory(artifactFile, tempFolder);
+//            if (Directory.Exists(tempFolder))
+//            {
+//                Directory.Delete(tempFolder, true);
+//            }
 
-                string[] incrementalScriptFilesFromDevFolder = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+//            Directory.CreateDirectory(tempFolder);
 
-                string incrementalTempFolder = Path.Combine(tempFolder, _incrementalScriptFileType.RelativeFolderName);
-                string[] incrementalScriptFilesExtractFolder = Directory.GetFiles(incrementalTempFolder, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+//            try
+//            {
+//                ZipFile.ExtractToDirectory(artifactFile, tempFolder);
 
-                compareTwoFoldersFiles(incrementalScriptFilesFromDevFolder, incrementalScriptFilesExtractFolder);
+//                string[] incrementalScriptFilesFromDevFolder = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
-                string[] repeatableScriptFilesFromDevFolder = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+//                string incrementalTempFolder = Path.Combine(tempFolder, _incrementalScriptFileType.RelativeFolderName);
+//                string[] incrementalScriptFilesExtractFolder = Directory.GetFiles(incrementalTempFolder, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
-                string repeatableTempFolder = Path.Combine(tempFolder, _repeatableScriptFileType.RelativeFolderName);
-                string[] repeatableScriptFilesExtractFolder = Directory.GetFiles(repeatableTempFolder, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+//                compareTwoFoldersFiles(incrementalScriptFilesFromDevFolder, incrementalScriptFilesExtractFolder);
 
-                compareTwoFoldersFiles(repeatableScriptFilesFromDevFolder, repeatableScriptFilesExtractFolder);
+//                string[] repeatableScriptFilesFromDevFolder = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
-                string devDummyDataTempFolder = Path.Combine(tempFolder, _devDummyDataScriptFileType.RelativeFolderName);
-                Assert.That(Directory.Exists(devDummyDataTempFolder), Is.EqualTo(false));
-            }
-            finally
-            {
-                Directory.Delete(tempFolder, true);
-            }
-        }
+//                string repeatableTempFolder = Path.Combine(tempFolder, _repeatableScriptFileType.RelativeFolderName);
+//                string[] repeatableScriptFilesExtractFolder = Directory.GetFiles(repeatableTempFolder, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
-        private void compareTwoFoldersFiles(string[] scriptFilesFromDevFolder, string[] scriptFilesExtractFolder)
-        {
-            Dictionary<string, FileInfo> devFolderFileInfosDictionary = scriptFilesFromDevFolder.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+//                compareTwoFoldersFiles(repeatableScriptFilesFromDevFolder, repeatableScriptFilesExtractFolder);
 
-            Dictionary<string, FileInfo> extractFolderFileInfosDictionary = scriptFilesExtractFolder.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
+//                string devDummyDataTempFolder = Path.Combine(tempFolder, _devDummyDataScriptFileType.RelativeFolderName);
+//                Assert.That(Directory.Exists(devDummyDataTempFolder), Is.EqualTo(false));
+//            }
+//            finally
+//            {
+//                Directory.Delete(tempFolder, true);
+//            }
+//        }
 
-            Assert.That(devFolderFileInfosDictionary.Count == extractFolderFileInfosDictionary.Count);
+//        private void compareTwoFoldersFiles(string[] scriptFilesFromDevFolder, string[] scriptFilesExtractFolder)
+//        {
+//            Dictionary<string, FileInfo> devFolderFileInfosDictionary = scriptFilesFromDevFolder.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
 
-            foreach (FileInfo devFolderFileInfo in devFolderFileInfosDictionary.Values)
-            {
-                Assert.That(extractFolderFileInfosDictionary.ContainsKey(devFolderFileInfo.Name));
+//            Dictionary<string, FileInfo> extractFolderFileInfosDictionary = scriptFilesExtractFolder.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
 
-                FileInfo extractFileInfo = extractFolderFileInfosDictionary[devFolderFileInfo.Name];
+//            Assert.That(devFolderFileInfosDictionary.Count == extractFolderFileInfosDictionary.Count);
 
-                string devFolderFileHash = _fileChecksum.GetHashByFilePath(devFolderFileInfo.FullName);
-                string extractFolderFileHash = _fileChecksum.GetHashByFilePath(extractFileInfo.FullName);
+//            foreach (FileInfo devFolderFileInfo in devFolderFileInfosDictionary.Values)
+//            {
+//                Assert.That(extractFolderFileInfosDictionary.ContainsKey(devFolderFileInfo.Name));
 
-                Assert.That(devFolderFileHash, Is.EqualTo(devFolderFileHash));
-            }
-        }
-    }
-}
+//                FileInfo extractFileInfo = extractFolderFileInfosDictionary[devFolderFileInfo.Name];
+
+//                string devFolderFileHash = _fileChecksum.GetHashByFilePath(devFolderFileInfo.FullName);
+//                string extractFolderFileHash = _fileChecksum.GetHashByFilePath(extractFileInfo.FullName);
+
+//                Assert.That(devFolderFileHash, Is.EqualTo(devFolderFileHash));
+//            }
+//        }
+//    }
+//}
