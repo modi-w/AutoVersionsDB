@@ -87,6 +87,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.Process
                     throw new Exception($"Invalid DBType: '{projectConfig.DBType}'");
             }
 
+
+            projectConfig.DeployArtifactFolderPath = projectConfig.DeployArtifactFolderPath.Replace("[DBType]", projectConfig.DBType);
+
             return projectConfig;
         }
 
