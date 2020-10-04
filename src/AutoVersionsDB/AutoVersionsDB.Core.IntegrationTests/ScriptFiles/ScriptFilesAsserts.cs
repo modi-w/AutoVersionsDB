@@ -35,6 +35,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
         }
 
 
+        public void AssertScriptFileExsit(string testName, string scriptFilename)
+        {
+            Assert.That(File.Exists(scriptFilename), $"{testName} -> The file: '{scriptFilename}', is missing");
+        }
+
 
         public void AssertThatAllFilesInTheDbExistWithTheSameHashInTheFolder(string testName, ProjectConfigItem projectConfig)
         {
