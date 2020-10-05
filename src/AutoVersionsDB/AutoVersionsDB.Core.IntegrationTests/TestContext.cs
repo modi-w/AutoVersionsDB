@@ -3,7 +3,6 @@ using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
 using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
@@ -31,7 +30,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public DBBackupFileType DBBackupFileType { get; }
         public ScriptFilesStateType ScriptFilesStateType { get; }
         public ProjectConfigItem ProjectConfig { get; }
-        public NumOfConnections NumOfConnectionsBefore { get; set; }
+        public NumOfDBConnections NumOfConnectionsBefore { get; set; }
         public ProcessResults ProcessResults { get; set; }
 
 

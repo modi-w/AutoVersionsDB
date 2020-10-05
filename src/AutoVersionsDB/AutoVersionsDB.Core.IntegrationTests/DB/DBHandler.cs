@@ -3,7 +3,6 @@ using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.ArtifactFile;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
 using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.DbCommands.Contract;
@@ -63,9 +62,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
 
 
 
-        public NumOfConnections GetNumOfOpenConnection(DBConnectionInfo dbConnectionInfo)
+        public NumOfDBConnections GetNumOfOpenConnection(DBConnectionInfo dbConnectionInfo)
         {
-            NumOfConnections numOfConnectionsItem = new NumOfConnections();
+            NumOfDBConnections numOfConnectionsItem = new NumOfDBConnections();
 
             string masterDBName;
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo).AsDisposable())

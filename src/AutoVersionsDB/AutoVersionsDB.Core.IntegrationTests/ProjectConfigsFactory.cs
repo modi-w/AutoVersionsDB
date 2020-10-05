@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.Process
+namespace AutoVersionsDB.Core.IntegrationTests
 {
 
     public static class ProjectConfigsFactory

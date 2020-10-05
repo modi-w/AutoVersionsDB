@@ -1,6 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
-using AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests;
+using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -27,9 +27,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
         }
 
 
-        public void AssertNumOfOpenDbConnection(string testName, DBConnectionInfo dbConnectionInfo, NumOfConnections numOfOpenConnections_Before)
+        public void AssertNumOfOpenDbConnection(string testName, DBConnectionInfo dbConnectionInfo, NumOfDBConnections numOfOpenConnections_Before)
         {
-            NumOfConnections numOfOpenConnections_After = _dbHandler.GetNumOfOpenConnection(dbConnectionInfo);
+            NumOfDBConnections numOfOpenConnections_After = _dbHandler.GetNumOfOpenConnection(dbConnectionInfo);
 
             Assert.That(numOfOpenConnections_Before.NumOfConnectionsToDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToDB), $"{testName} -> NumOfConnectionsToDB after '{numOfOpenConnections_After.NumOfConnectionsToDB}', is grater then before '{numOfOpenConnections_Before.NumOfConnectionsToDB}'");
             Assert.That(numOfOpenConnections_Before.NumOfConnectionsToAdminDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToAdminDB), $"{testName} -> NumOfConnectionsToAdminDB after '{numOfOpenConnections_After.NumOfConnectionsToAdminDB}', is grater then before '{numOfOpenConnections_Before.NumOfConnectionsToAdminDB}'");
