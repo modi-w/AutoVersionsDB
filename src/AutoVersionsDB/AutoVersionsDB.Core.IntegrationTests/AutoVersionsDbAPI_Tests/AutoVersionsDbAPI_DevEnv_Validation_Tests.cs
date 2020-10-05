@@ -13,144 +13,144 @@ namespace AutoVersionsDB.Core.IntegrationTests.AutoVersionsDbAPI_Tests
 {
     public class AutoVersionsDbAPI_DevEnv_Validation_Tests : AutoVersionsDbAPI_TestsBase
     {
-        [Test]
-        public void DevEnv_ProjectConfigValidate_NotValid()
-        {
-            //Arrange
-            ProjectConfigItem projectConfig = new ProjectConfigItem()
-            {
-                Id = "aaa",
-                DevEnvironment = true
-            };
+        //[Test]
+        //public void DevEnv_ProjectConfigValidate_NotValid()
+        //{
+        //    //Arrange
+        //    ProjectConfigItem projectConfig = new ProjectConfigItem()
+        //    {
+        //        Id = "aaa",
+        //        DevEnvironment = true
+        //    };
 
-            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
-
-
-            //Act
-            ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig.Id, null);
+        //    _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
 
 
-            //Assert
-            Assert.That(processResults.Trace.HasError);
-
-            List<StepNotificationState> notificationStatesHistory = processResults.Trace.StatesHistory;
-            //Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "IdMandatory"));
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBName"));
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBBackupFolderPath"));
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBType"));
-            Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DevScriptsBaseFolder"));
-        }
+        //    //Act
+        //    ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig.Id, null);
 
 
-        [Test]
-        public void DevEnv_ProjectConfigValidate_Valid([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
-        {
-            //Arrange
-            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
+        //    //Assert
+        //    Assert.That(processResults.Trace.HasError);
 
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
-            restoreDB(projectConfig, dbBackupFileFileFullPath);
-
-            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
-
-
-            //Act
-            ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig.Id, null);
+        //    List<StepNotificationState> notificationStatesHistory = processResults.Trace.StatesHistory;
+        //    //Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "IdMandatory"));
+        //    Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBName"));
+        //    Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBBackupFolderPath"));
+        //    Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DBType"));
+        //    Assert.That(notificationStatesHistory.Any(e => e.LowLevelErrorCode == "DevScriptsBaseFolder"));
+        //}
 
 
-            //Assert
-            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            assertProccessErrors(processResults.Trace);
-        }
+        //[Test]
+        //public void DevEnv_ProjectConfigValidate_Valid([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
+        //{
+        //    //Arrange
+        //    _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
+
+        //    string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_MiddleState__incScript_2020-02-25.102_CreateLookupTable2.bak");
+        //    restoreDB(projectConfig, dbBackupFileFileFullPath);
+
+        //    NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
 
-        [Test]
-        public void DevEnv_ValidateAll_Valid([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
-        {
-            //Arrange
-            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
-
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
-            restoreDB(projectConfig, dbBackupFileFileFullPath);
-
-            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+        //    //Act
+        //    ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig.Id, null);
 
 
-            //Act
-            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Id, null);
+        //    //Assert
+        //    assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+        //    assertProccessErrors(processResults.Trace);
+        //}
 
 
-            //Assert
-            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            assertProccessErrors(processResults.Trace);
-        }
+        //[Test]
+        //public void DevEnv_ValidateAll_Valid([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
+        //{
+        //    //Arrange
+        //    _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
+
+        //    string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
+        //    restoreDB(projectConfig, dbBackupFileFileFullPath);
+
+        //    NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+
+
+        //    //Act
+        //    ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Id, null);
+
+
+        //    //Assert
+        //    assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+        //    assertProccessErrors(processResults.Trace);
+        //}
 
 
 
-        [Test]
-        public void DevEnv_IsHistoryExecutedFilesChanged_NotValid([ValueSource("ProjectConfigItemArray_DevEnv_ChangedHistoryFiles_Incremental")] ProjectConfigItemForTestBase projectConfig)
-        {
-            //Arrange
-            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
+        //[Test]
+        //public void DevEnv_IsHistoryExecutedFilesChanged_NotValid([ValueSource("ProjectConfigItemArray_DevEnv_ChangedHistoryFiles_Incremental")] ProjectConfigItemForTestBase projectConfig)
+        //{
+        //    //Arrange
+        //    _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
 
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
-            restoreDB(projectConfig, dbBackupFileFileFullPath);
+        //    string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
+        //    restoreDB(projectConfig, dbBackupFileFileFullPath);
        
-            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+        //    NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
-            //Act
-            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Id, null);
-
-
-            //Assert
-            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"));
-        }
+        //    //Act
+        //    ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Id, null);
 
 
-        [Test]
-        public void DevEnv_ScriptsFilesAndDBExecutionHistoryIsMatch_NotValid([ValueSource("ProjectConfigItemArray_DevEnv_MissingFile")] ProjectConfigItemForTestBase projectConfig)
-        {
-            //Arrange
-            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
+        //    //Assert
+        //    assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+        //    Assert.That(processResults.Trace.HasError);
+        //    Assert.That(processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"));
+        //}
 
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
-            restoreDB(projectConfig, dbBackupFileFileFullPath);
+
+        //[Test]
+        //public void DevEnv_ScriptsFilesAndDBExecutionHistoryIsMatch_NotValid([ValueSource("ProjectConfigItemArray_DevEnv_MissingFile")] ProjectConfigItemForTestBase projectConfig)
+        //{
+        //    //Arrange
+        //    _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
+
+        //    string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_DevEnv.bak");
+        //    restoreDB(projectConfig, dbBackupFileFileFullPath);
          
-            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+        //    NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
 
-            //Act
-            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Id, null);
-
-
-            //Assert
-            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"));
-        }
+        //    //Act
+        //    ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Id, null);
 
 
-        [Test]
-        public void DevEnv_TablesExist_NotValid([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
-        {
-            //Arrange
-            _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
-
-            string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_MissingSystemTables.bak");
-            restoreDB(projectConfig, dbBackupFileFileFullPath);
-
-            NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
-
-            //Act
-            ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Id, null);
+        //    //Assert
+        //    assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+        //    Assert.That(processResults.Trace.HasError);
+        //    Assert.That(processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"));
+        //}
 
 
-            //Assert
-            assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
-            Assert.That(processResults.Trace.HasError);
-            Assert.That(processResults.Trace.ContainErrorCode("SystemTables"));
-        }
+        //[Test]
+        //public void DevEnv_TablesExist_NotValid([ValueSource("ProjectConfigItemArray_DevEnv_ValidScripts")] ProjectConfigItemForTestBase projectConfig)
+        //{
+        //    //Arrange
+        //    _mockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
+
+        //    string dbBackupFileFileFullPath = Path.Combine(FileSystemPathUtils.GetDllFolderFullPath(), "DbBackupsForTests", "AutoVersionsDB_FinalState_MissingSystemTables.bak");
+        //    restoreDB(projectConfig, dbBackupFileFileFullPath);
+
+        //    NumOfConnections numOfOpenConnections_Before = getNumOfOpenConnection(projectConfig);
+
+        //    //Act
+        //    ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(projectConfig.Id, null);
+
+
+        //    //Assert
+        //    assertNumOfOpenDbConnection(projectConfig, numOfOpenConnections_Before);
+        //    Assert.That(processResults.Trace.HasError);
+        //    Assert.That(processResults.Trace.ContainErrorCode("SystemTables"));
+        //}
 
 
         [Test]

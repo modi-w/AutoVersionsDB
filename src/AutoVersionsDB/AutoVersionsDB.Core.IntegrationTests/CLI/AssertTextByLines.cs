@@ -33,11 +33,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLI
             Assert.That(lineIndex < _finalConsoleOutLines.Count, $"{_testName}-> {_textType} -> Number of lines ({_finalConsoleOutLines.Count}) too small. should be at least: '{lineIndex + 1}'");
             if (isExact)
             {
-                Assert.That(_finalConsoleOutLines[lineIndex] == expectedMessage, $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was finalConsoleOutLines[0].");
+                Assert.That(_finalConsoleOutLines[lineIndex] == expectedMessage, $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was {_finalConsoleOutLines[lineIndex]}.");
             }
             else
             {
-                Assert.That(_finalConsoleOutLines[lineIndex].Contains(expectedMessage), $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was finalConsoleOutLines[0].");
+                Assert.That(_finalConsoleOutLines[lineIndex].Contains(expectedMessage), $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was {_finalConsoleOutLines[lineIndex]}.");
             }
         }
 
