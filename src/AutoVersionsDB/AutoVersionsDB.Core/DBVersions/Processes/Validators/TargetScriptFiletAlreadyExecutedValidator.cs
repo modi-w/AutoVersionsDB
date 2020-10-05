@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
-    public class IsTargetScriptFiletAlreadyExecutedValidator : ValidatorBase
+    public class TargetScriptFiletAlreadyExecutedValidator : ValidatorBase
     {
         private readonly ScriptFilesState _scriptFilesState;
         private readonly string _targetStateScriptFileName;
@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
 
 
-        public IsTargetScriptFiletAlreadyExecutedValidator(ScriptFilesState scriptFilesState,
+        public TargetScriptFiletAlreadyExecutedValidator(ScriptFilesState scriptFilesState,
                                                             string targetStateScriptFileName)
         {
             _scriptFilesState = scriptFilesState;

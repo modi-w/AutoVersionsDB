@@ -94,8 +94,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
             TestsRunner.RunTest<DevEnv_Validate_MissingSystemTables_API, DevEnv_Validate_MissingSystemTables_CLI>(true, DBBackupFileType.FinalState_MissingSystemTables, ScriptFilesStateType.ValidScripts);
         }
 
+        [Test]
+        public void DevEnv_Validate_TargetStateAlreadyExecuted_NotValid()
+        {
+            TestsRunner.RunTest<DevEnv_Validate_TargetStateAlreadyExecuted_NotValid_API>(true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+        }
 
-       
+        [Test]
+        public void DevEnv_Validate_TargetStateAlreadyExecuted_Valid()
+        {
+            TestsRunner.RunTest<DevEnv_Validate_TargetStateAlreadyExecuted_Valid_API>(true, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+        }
+
+
+
 
     }
 }

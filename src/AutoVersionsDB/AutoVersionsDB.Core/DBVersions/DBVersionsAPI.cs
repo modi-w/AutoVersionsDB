@@ -81,10 +81,9 @@ namespace AutoVersionsDB.Core.DBVersions
         }
 
 
-        public bool ValdiateTargetStateAlreadyExecuted(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults ValdiateTargetStateAlreadyExecuted(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ProcessResults processResults = _targetStateScriptFileValidationRunner.Run(new DBVersionsProcessParams(id, targetStateScriptFilename, null), onNotificationStateChanged);
-            return !processResults.Trace.HasError;
+            return _targetStateScriptFileValidationRunner.Run(new DBVersionsProcessParams(id, targetStateScriptFilename, null), onNotificationStateChanged);
         }
 
         #endregion

@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
             TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(dbVersionsProcessContext.ScriptFilesState, dbVersionsProcessParams.TargetStateScriptFileName);
             validationsGroup.Add(targetStateScriptFileExistValidator);
 
-            IsTargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new IsTargetScriptFiletAlreadyExecutedValidator(dbVersionsProcessContext.ScriptFilesState, dbVersionsProcessParams.TargetStateScriptFileName);
+            TargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new TargetScriptFiletAlreadyExecutedValidator(dbVersionsProcessContext.ScriptFilesState, dbVersionsProcessParams.TargetStateScriptFileName);
             validationsGroup.Add(isTargetScriptFiletAlreadyExecutedValidator);
 
             return validationsGroup;

@@ -391,7 +391,7 @@ namespace AutoVersionsDB.WinApp
         {
             bool isAllowRun = true;
 
-            if (!AutoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged))
+            if (AutoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged).Trace.HasError)
             {
                 string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
                 isAllowRun = MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
