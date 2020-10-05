@@ -49,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             //          The above method is called on DBVersionsTest.Asserts()
             _dbVersionsNotValidTest.Asserts(testContext);
 
-            Assert.That(false, testContext.ProcessResults.Trace.GetAllHistoryAsString());
+            //Assert.That(false, testContext.ProcessResults.Trace.GetAllHistoryAsString());
 
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DeliveryEnvironment");
 
