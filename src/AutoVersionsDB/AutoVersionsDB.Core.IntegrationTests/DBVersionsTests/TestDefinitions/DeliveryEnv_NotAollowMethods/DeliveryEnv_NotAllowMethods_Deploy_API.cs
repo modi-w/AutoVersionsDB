@@ -11,6 +11,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.Process;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -47,6 +48,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             //          Because in this process we dont create a backup file.
             //          The above method is called on DBVersionsTest.Asserts()
             _dbVersionsNotValidTest.Asserts(testContext);
+
+            Assert.That(false, testContext.ProcessResults.Trace.GetAllHistoryAsString());
 
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DeliveryEnvironment");
 
