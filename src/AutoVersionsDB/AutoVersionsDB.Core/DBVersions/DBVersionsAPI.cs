@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.DBVersions
         private readonly NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> _syncDBToSpecificStateRunner;
         private readonly NotificationProcessRunner<CreateVirtualExecutionsProcessDefinition, DBVersionsProcessContext> _createVirtualExecutionsRunner;
 
-        private readonly NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> _deployVirtualExecutionsRunner;
+        private readonly NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> _deployExecutionsRunner;
 
         private readonly ScriptFilesStateFactory _scriptFilesStateFactory;
 
@@ -60,7 +60,7 @@ namespace AutoVersionsDB.Core.DBVersions
             _syncDBToSpecificStateRunner = syncDBToSpecificStateRunner;
             _createVirtualExecutionsRunner = createVirtualExecutionsRunner;
 
-            _deployVirtualExecutionsRunner = deployVirtualExecutionsRunner;
+            _deployExecutionsRunner = deployVirtualExecutionsRunner;
 
             _scriptFilesStateFactory = scriptFilesStateFactory;
         }
@@ -81,10 +81,9 @@ namespace AutoVersionsDB.Core.DBVersions
         }
 
 
-        public bool ValdiateTargetStateAlreadyExecuted(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public ProcessResults ValdiateTargetStateAlreadyExecuted(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ProcessResults processResults = _targetStateScriptFileValidationRunner.Run(new DBVersionsProcessParams(id, targetStateScriptFilename, null), onNotificationStateChanged);
-            return !processResults.Trace.HasError;
+            return _targetStateScriptFileValidationRunner.Run(new DBVersionsProcessParams(id, targetStateScriptFilename, null), onNotificationStateChanged);
         }
 
         #endregion
@@ -133,7 +132,7 @@ namespace AutoVersionsDB.Core.DBVersions
 
         public ProcessResults Deploy(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _deployVirtualExecutionsRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
+            return _deployExecutionsRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
         }
 
         #endregion

@@ -136,7 +136,7 @@ namespace AutoVersionsDB.Core
         }
 
 
-        public static bool ValdiateTargetStateAlreadyExecuted(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults ValdiateTargetStateAlreadyExecuted(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {

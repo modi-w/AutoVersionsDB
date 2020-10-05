@@ -16,7 +16,6 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
         public UpdateProjectConfigProcessDefinition(ValidationsStep<IdExistValidationsFactory> idNotExistValidationStep,
                                                         UpdateProjectConfigStep updateProjectConfigStep,
                                                         CreateMissingFoldersStep createMissingFoldersStep)
-            : base()
         {
             AddStep(idNotExistValidationStep);
             AddStep(updateProjectConfigStep);

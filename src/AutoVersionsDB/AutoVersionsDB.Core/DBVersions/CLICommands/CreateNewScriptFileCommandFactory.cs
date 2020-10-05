@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     public class CreateNewScriptFileCommandFactory : CLICommandFactory
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
 
         private readonly CreateNewIncrementalScriptFileCommandFactory _createNewIncrementalScriptFileCommandFactory;
         private readonly CreateNewRepeatableScriptFileCommandFactory _createNewRepeatableScriptFileCommandFactory;
@@ -20,13 +20,13 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
 
         public CreateNewScriptFileCommandFactory(DBVersionsAPI dbVersionsAPI,
-                                                IConsoleHandler consoleHandler,
+                                                IConsoleProcessMessages consoleProcessMessages,
                                                 CreateNewIncrementalScriptFileCommandFactory createNewIncrementalScriptFileCommandFactory,
                                                 CreateNewRepeatableScriptFileCommandFactory createNewRepeatableScriptFileCommandFactory,
                                                 CreateNewDevDummyDataScriptFileCommandFactory createNewDevDummyDataScriptFileCommandFactory)
         {
             _dbVersionsAPI = dbVersionsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
 
             _createNewIncrementalScriptFileCommandFactory = createNewIncrementalScriptFileCommandFactory;
             _createNewRepeatableScriptFileCommandFactory = createNewRepeatableScriptFileCommandFactory;

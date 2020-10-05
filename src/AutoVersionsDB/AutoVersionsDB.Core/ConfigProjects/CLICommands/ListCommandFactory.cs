@@ -15,16 +15,16 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
     public class ListCommandFactory : CLICommandFactory
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
 
 
 
 
         public ListCommandFactory(ProjectConfigsAPI projectConfigsAPI,
-                                        IConsoleHandler consoleHandler)
+                                        ConsoleProcessMessages consoleProcessMessages)
         {
             _projectConfigsAPI = projectConfigsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
         }
 
         public override Command Create()
@@ -36,28 +36,28 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create(() =>
                 {
-                    _consoleHandler.StartProcessMessage("list");
+                    _consoleProcessMessages.StartProcessMessage("list");
 
                     IEnumerable<ProjectConfigItem> projectsList = _projectConfigsAPI.GetProjectsList();
 
                  if (!projectsList.Any())
                  {
-                     _consoleHandler.SetInfoMessage("----  No projects found on this machine  ----");
+                     _consoleProcessMessages.SetInfoMessage("----  No projects found on this machine  ----");
                  }
                  else
                  {
                      string captionsMessage = $"{"  Id".PadRight(31)} |  Description";
-                     _consoleHandler.SetInfoMessage(captionsMessage);
+                     _consoleProcessMessages.SetInfoMessage(captionsMessage);
 
                      string captionsLineMessage = "-".PadRight(55, '-');
-                     _consoleHandler.SetInfoMessage(captionsLineMessage);
+                     _consoleProcessMessages.SetInfoMessage(captionsLineMessage);
 
                      foreach (ProjectConfigItem projectConfig in projectsList)
                      {
                          string id = projectConfig.Id.Ellipsis(30);
 
                          string projectLineMessage = $" {id.PadRight(30)} | {projectConfig.Description}";
-                         _consoleHandler.SetInfoMessage(projectLineMessage);
+                         _consoleProcessMessages.SetInfoMessage(projectLineMessage);
                      }
 
                  }

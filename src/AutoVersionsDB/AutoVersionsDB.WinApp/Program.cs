@@ -19,7 +19,7 @@ namespace AutoVersionsDB.WinApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            NinjectManager.CreateKernel();
+            NinjectUtils_Winform.CreateKernel();
 
 
             using(var mainWindows = new Main())

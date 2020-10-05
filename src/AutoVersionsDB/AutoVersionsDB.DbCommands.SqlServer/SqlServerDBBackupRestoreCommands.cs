@@ -3,6 +3,7 @@ using AutoVersionsDB.Helpers;
 using System;
 using System.Data;
 using System.Globalization;
+using System.IO;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
@@ -127,10 +128,23 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
                         if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
                         {
+                            string mdfFilePath = Path.Combine(dbFilesBasePath, $"{dbName}.mdf");
+                            if (File.Exists(mdfFilePath))
+                            {
+                                File.Delete(mdfFilePath);
+                            }
+
+                            string ldfFilePath = Path.Combine(dbFilesBasePath, $"{dbName}.ldf");
+                            if (File.Exists(ldfFilePath))
+                            {
+                                File.Delete(ldfFilePath);
+                            }
+
+
                             sqlCmdStr2 += " ON ";
-                            sqlCmdStr2 += $@" ( NAME = '{dbName}_dat', FILENAME = '{dbFilesBasePath}\{dbName}.mdf') ";
+                            sqlCmdStr2 += $@" ( NAME = '{dbName}_dat', FILENAME = '{mdfFilePath}') ";
                             sqlCmdStr2 += " LOG ON ";
-                            sqlCmdStr2 += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
+                            sqlCmdStr2 += $@" (NAME = '{dbName}_log', FILENAME = '{ldfFilePath}') ";
                         }
 
                         _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);

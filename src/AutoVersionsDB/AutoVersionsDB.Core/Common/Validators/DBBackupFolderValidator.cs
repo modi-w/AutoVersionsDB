@@ -27,11 +27,13 @@ namespace AutoVersionsDB.Core.Common.Validators
             }
             else
             {
-                if (!Directory.Exists(_dbBackupBaseFolder))
-                {
-                    string errorMsg = $"DB Backup Folder '{_dbBackupBaseFolder}' is not exist";
-                    return errorMsg;
-                }
+
+                //Comment: We dont want to check if the folder is exist. 
+                // 1. we creating it if it dont exist
+                // 2. if it run on the first time on a machine (like on github action), the run will fall here.
+                //      and we dont have a way to create the folder
+
+
             }
 
             return "";

@@ -12,17 +12,17 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     public class CreateNewDevDummyDataScriptFileCommandFactory : CLICommandFactory
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
         private readonly IdCLIOption _idOption;
         private readonly ScriptNameCLIOption _scriptNameOption;
 
         public CreateNewDevDummyDataScriptFileCommandFactory(DBVersionsAPI dbVersionsAPI,
-                                    IConsoleHandler consoleHandler,
+                                    IConsoleProcessMessages consoleProcessMessages,
                                     IdCLIOption idOption,
                                     ScriptNameCLIOption scriptNameOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
             _scriptNameOption = scriptNameOption;
         }
@@ -39,18 +39,18 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
 
             command.Handler = CommandHandler.Create<string, string>((id, scriptName) =>
             {
-                _consoleHandler.StartProcessMessage("new ddd", id);
+                _consoleProcessMessages.StartProcessMessage("new ddd", id);
 
-                _consoleHandler.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(id, scriptName, _consoleHandler.OnNotificationStateChanged);
-                _consoleHandler.StopSpinner();
+                _consoleProcessMessages.StartSpiiner();
+                ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(id, scriptName, _consoleProcessMessages.OnNotificationStateChanged);
+                _consoleProcessMessages.StopSpinner();
 
-                _consoleHandler.ProcessComplete(processResults.Trace);
+                _consoleProcessMessages.ProcessComplete(processResults);
 
                 if (!processResults.Trace.HasError)
                 {
                     string newFilePath = (string)processResults.Results;
-                    _consoleHandler.SetInfoMessage($"The file: '{newFilePath}' is created.");
+                    _consoleProcessMessages.SetInfoMessage($"The file: '{newFilePath}' is created.");
                 }
             });
 

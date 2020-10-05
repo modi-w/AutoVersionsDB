@@ -13,18 +13,20 @@ namespace AutoVersionsDB.ConsoleApp
     {
         static int Main(string[] args)
         {
-            NinjectManager.CreateKernel();
+            NinjectUtils_Console.CreateKernel();
 
             Console.Title = "AutoVersionsDB";
 
 
-            //return AutoVersionsDbAPI.CLIRun(args);
+            return AutoVersionsDbAPI.CLIRun(args);
+
+
             //  return AutoVersionsDbAPI.CLIRun("-h");
             //return AutoVersionsDbAPI.CLIRun("config -id=testp1 -desc=\"Test project 2\" --db-type=SqlServer -connstr=aaaa -connstrm=bbb -buf=ccc -dsf=ddd -def=eee -darf=fff");
             //  return AutoVersionsDbAPI.CLIRun("config environment -id=testp1 -dev=true");
             //return AutoVersionsDbAPI.CLIRun("sync -id=testp");
             //return AutoVersionsDbAPI.CLIRun("recreate -id=testp");
-            return AutoVersionsDbAPI.CLIRun("deploy -id=testp");
+        //    return AutoVersionsDbAPI.CLIRun("validate -id=testp");
             //     return AutoVersionsDbAPI.CLIRun("config -id=testp -desc=\"Test project 1\"");
 
             //return AutoVersionsDbAPI.CLIRun("list");

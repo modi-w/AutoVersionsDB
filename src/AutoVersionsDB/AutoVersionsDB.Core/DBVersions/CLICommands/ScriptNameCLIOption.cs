@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.DBVersions.CLICommands
     public class ScriptNameCLIOption : Option<string>
     {
         public ScriptNameCLIOption()
-            : base(new string[] { "--sn", "-script-name" }, "New script name")
+            : base(new string[] { "-sn", "--script-name" }, "New script name")
         {
             IsRequired = true;
         }

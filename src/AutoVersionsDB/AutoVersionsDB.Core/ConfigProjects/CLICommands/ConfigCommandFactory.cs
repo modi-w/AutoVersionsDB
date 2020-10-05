@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
     public class ConfigCommandFactory : CLICommandFactory
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly IConsoleHandler _consoleHandler;
+        private readonly IConsoleProcessMessages _consoleProcessMessages;
 
         private readonly EnvironmentCommandFactory _environmentCommandFactory;
         private readonly ChangeIdCommandFactory _changeIdCommandFactory;
@@ -35,7 +35,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
 
         public ConfigCommandFactory(ProjectConfigsAPI projectConfigsAPI,
-                                    IConsoleHandler consoleHandler,
+                                    IConsoleProcessMessages consoleProcessMessages,
                                     EnvironmentCommandFactory environmentCommandFactory,
                                     ChangeIdCommandFactory changeIdCommandFactory,
                                     IdCLIOption idOption,
@@ -51,7 +51,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                                     DeliveryArtifactFolderPathCLIOption deliveryArtifactFolderPathOption)
         {
             _projectConfigsAPI = projectConfigsAPI;
-            _consoleHandler = consoleHandler;
+            _consoleProcessMessages = consoleProcessMessages;
             _environmentCommandFactory = environmentCommandFactory;
             _changeIdCommandFactory = changeIdCommandFactory;
             _idOption = idOption;
@@ -89,23 +89,23 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
                 {
-                    _consoleHandler.StartProcessMessage("config", projectConfig.Id);
+                    _consoleProcessMessages.StartProcessMessage("config", projectConfig.Id);
 
                     ProjectConfigItem existProjectConfig = _projectConfigsAPI.GetProjectConfigById(projectConfig.Id);
 
                 if (existProjectConfig == null)
                 {
-                    _consoleHandler.SetErrorMessage($"Id: '{projectConfig.Id}' is not exist. You can use the 'init' command to define new project.");
+                    _consoleProcessMessages.SetErrorMessage($"Id: '{projectConfig.Id}' is not exist. You can use the 'init' command to define new project.");
                 }
                 else
                 {
                     overrideProjectConfigProperties(existProjectConfig, projectConfig);
 
-                    _consoleHandler.StartSpiiner();
-                    ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(existProjectConfig, _consoleHandler.OnNotificationStateChanged);
-                    _consoleHandler.StopSpinner();
+                    _consoleProcessMessages.StartSpiiner();
+                    ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(existProjectConfig, _consoleProcessMessages.OnNotificationStateChanged);
+                    _consoleProcessMessages.StopSpinner();
 
-                    _consoleHandler.ProcessComplete(processResults.Trace);
+                    _consoleProcessMessages.ProcessComplete(processResults);
                 }
             });
 

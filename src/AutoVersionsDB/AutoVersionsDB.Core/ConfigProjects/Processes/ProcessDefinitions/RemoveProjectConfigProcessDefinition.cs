@@ -15,7 +15,6 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
 
         public RemoveProjectConfigProcessDefinition(ValidationsStep<IdExistValidationsFactory> idNotExistValidationStep,
                                                         RemoveProjectConfigStep removeProjectConfigStep)
-            : base()
         {
             AddStep(idNotExistValidationStep);
             AddStep(removeProjectConfigStep);
