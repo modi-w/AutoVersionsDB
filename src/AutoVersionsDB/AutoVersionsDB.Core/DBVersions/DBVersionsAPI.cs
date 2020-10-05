@@ -10,6 +10,7 @@ using System.Text;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
+using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 
 namespace AutoVersionsDB.Core.DBVersions
 {
@@ -18,6 +19,8 @@ namespace AutoVersionsDB.Core.DBVersions
         private readonly NotificationProcessRunner<DBVersionsValidationsProcessDefinitions, DBVersionsProcessContext> _dbVersionsValidationsRunner;
         private readonly NotificationProcessRunner<ProjectConfigValidationProcessDefinition, DBVersionsProcessContext> _projectConfigValidationRunner;
         private readonly NotificationProcessRunner<TargetStateScriptFileValidationProcessDefinition, DBVersionsProcessContext> _targetStateScriptFileValidationRunner;
+
+        private readonly NotificationProcessRunner<GetScriptFilesStateProcessDefinitions, DBVersionsProcessContext> _getScriptFilesStateRunner;
 
         private readonly NotificationProcessRunner<CreateNextScriptFileProcessDefinition<IncrementalScriptFileType>, DBVersionsProcessContext> _createIncrementalNextScriptFileRunner;
         private readonly NotificationProcessRunner<CreateNextScriptFileProcessDefinition<RepeatableScriptFileType>, DBVersionsProcessContext> _createRepeatableNextScriptFileRunner;
@@ -37,6 +40,7 @@ namespace AutoVersionsDB.Core.DBVersions
         public DBVersionsAPI(NotificationProcessRunner<DBVersionsValidationsProcessDefinitions, DBVersionsProcessContext> dbVersionsValidationsRunner,
                                NotificationProcessRunner<ProjectConfigValidationProcessDefinition, DBVersionsProcessContext> projectConfigValidationRunner,
                                NotificationProcessRunner<TargetStateScriptFileValidationProcessDefinition, DBVersionsProcessContext> targetStateScriptFileValidationRunner,
+                               NotificationProcessRunner<GetScriptFilesStateProcessDefinitions, DBVersionsProcessContext> getScriptFilesStateRunner,
                                NotificationProcessRunner<CreateNextScriptFileProcessDefinition<IncrementalScriptFileType>, DBVersionsProcessContext> createIncrementalNextScriptFileRunner,
                                NotificationProcessRunner<CreateNextScriptFileProcessDefinition<RepeatableScriptFileType>, DBVersionsProcessContext> createRepeatableNextScriptFileRunner,
                                NotificationProcessRunner<CreateNextScriptFileProcessDefinition<DevDummyDataScriptFileType>, DBVersionsProcessContext> createDevDummyDataNextScriptFileRunner,
@@ -50,6 +54,8 @@ namespace AutoVersionsDB.Core.DBVersions
             _dbVersionsValidationsRunner = dbVersionsValidationsRunner;
             _projectConfigValidationRunner = projectConfigValidationRunner;
             _targetStateScriptFileValidationRunner = targetStateScriptFileValidationRunner;
+
+            _getScriptFilesStateRunner = getScriptFilesStateRunner;
 
             _createIncrementalNextScriptFileRunner = createIncrementalNextScriptFileRunner;
             _createRepeatableNextScriptFileRunner = createRepeatableNextScriptFileRunner;
@@ -141,13 +147,10 @@ namespace AutoVersionsDB.Core.DBVersions
 
         #region Scripts
 
-        public ScriptFilesState CreateScriptFilesState(ProjectConfigItem projectConfig)
+        public ProcessResults GetScriptFilesState(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            ScriptFilesState scriptFilesState = _scriptFilesStateFactory.Create();
-
-            scriptFilesState.Reload(projectConfig);
-
-            return scriptFilesState;
+            
+           return _getScriptFilesStateRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
         }
 
         public ProcessResults CreateNewIncrementalScriptFile(string id, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)

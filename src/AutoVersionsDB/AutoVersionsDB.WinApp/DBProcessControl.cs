@@ -149,44 +149,47 @@ namespace AutoVersionsDB.WinApp
 
                 try
                 {
-                    ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
-
-
-                    if (processResults.Trace.HasError)
+                    if (RefreshScriptFilesState(true))
                     {
-                        notificationsControl1.AfterComplete();
 
-                        if (processResults.Trace.ContainErrorCode("SystemTables"))
+                        ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
+
+
+                        if (processResults.Trace.HasError)
                         {
-                            SetViewState(DBVersionsMangementViewType.MissingSystemTables);
-                        }
-                        else if (processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"))
-                        {
-                            SetViewState(DBVersionsMangementViewType.HistoryExecutedFilesChanged);
-                        }
-                        else
-                        {
-                            if (processResults.Trace.ContainErrorCode("DevScriptsBaseFolder")
-                                || processResults.Trace.ContainErrorCode("ConnectionString"))
+                            notificationsControl1.AfterComplete();
+
+                            if (processResults.Trace.ContainErrorCode("SystemTables"))
                             {
-                                _scriptFilesState = null;
+                                SetViewState(DBVersionsMangementViewType.MissingSystemTables);
+                            }
+                            else if (processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"))
+                            {
+                                SetViewState(DBVersionsMangementViewType.HistoryExecutedFilesChanged);
                             }
                             else
                             {
-                                RefreshScriptFilesState();
-                            }
+                             //   if (processResults.Trace.ContainErrorCode("DevScriptsBaseFolder")
+                             //       || processResults.Trace.ContainErrorCode("ConnectionString"))
+                             //   {
+                             //       _scriptFilesState = null;
+                             //   }
+                             //   else
+                             //   {
+                             ////       RefreshScriptFilesState();
+                             //   }
 
+                                SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
+                            }
+                        }
+                        else
+                        {
+                            //RefreshScriptFilesState();
+
+                            notificationsControl1.Clear();
                             SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
                         }
                     }
-                    else
-                    {
-                        RefreshScriptFilesState();
-
-                        notificationsControl1.Clear();
-                        SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
-                    }
-
                 }
                 catch (Exception ex)
                 {
@@ -370,7 +373,7 @@ namespace AutoVersionsDB.WinApp
 
                     ProcessResults processResults = AutoVersionsDbAPI.SyncDB(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
 
-                    RefreshScriptFilesState();
+                    RefreshScriptFilesState(false);
 
                     notificationsControl1.AfterComplete();
                     SetViewState_AfterProcessComplete(processResults.Trace);
@@ -385,7 +388,46 @@ namespace AutoVersionsDB.WinApp
             });
         }
 
-        private void RefreshScriptFilesState() => _scriptFilesState = AutoVersionsDbAPI.CreateScriptFilesState(_projectConfigItem);
+        private bool RefreshScriptFilesState(bool showTrace)
+        {
+            ProcessResults processResults;
+           
+            if (showTrace)
+            {
+                processResults = AutoVersionsDbAPI.GetScriptFilesState(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
+            }
+            else
+            {
+                processResults = AutoVersionsDbAPI.GetScriptFilesState(_projectConfigItem.Id, null);
+            }
+
+            if (processResults.Trace.HasError)
+            {
+                notificationsControl1.AfterComplete();
+
+                if (processResults.Trace.ContainErrorCode("SystemTables"))
+                {
+                    SetViewState(DBVersionsMangementViewType.MissingSystemTables);
+                }
+                else
+                {
+                    SetViewState_AfterProcessComplete(processResults.Trace);
+                }
+            }
+            else
+            {
+                _scriptFilesState = processResults.Results as ScriptFilesState;
+
+                if (showTrace)
+                {
+                    notificationsControl1.AfterComplete();
+
+                    SetViewState_AfterProcessComplete(processResults.Trace);
+                }
+            }
+
+            return !processResults.Trace.HasError;
+        }
 
         private bool CheckIsTargetStateHistory()
         {
@@ -418,7 +460,7 @@ namespace AutoVersionsDB.WinApp
                         notificationsControl1.BeforeStart();
 
                         ProcessResults processResults = AutoVersionsDbAPI.SetDBToSpecificState(_projectConfigItem.Id, TargetStateScriptFileName, true, notificationsControl1.OnNotificationStateChanged);
-                        RefreshScriptFilesState();
+                        RefreshScriptFilesState(false);
 
                         notificationsControl1.AfterComplete();
                         SetViewState_AfterProcessComplete(processResults.Trace);
@@ -443,7 +485,7 @@ namespace AutoVersionsDB.WinApp
                 notificationsControl1.BeforeStart();
 
                 ProcessResults processResults = AutoVersionsDbAPI.Deploy(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
-                RefreshScriptFilesState();
+                RefreshScriptFilesState(false);
 
                 notificationsControl1.AfterComplete();
                 SetViewState_AfterProcessComplete(processResults.Trace);
@@ -480,7 +522,7 @@ namespace AutoVersionsDB.WinApp
                         notificationsControl1.BeforeStart();
 
                         ProcessResults processResults = AutoVersionsDbAPI.RecreateDBFromScratch(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
-                        RefreshScriptFilesState();
+                        RefreshScriptFilesState(false);
 
                         notificationsControl1.AfterComplete();
                         SetViewState_AfterProcessComplete(processResults.Trace);
@@ -506,7 +548,7 @@ namespace AutoVersionsDB.WinApp
                     notificationsControl1.BeforeStart();
 
                     ProcessResults processResults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
-                    RefreshScriptFilesState();
+                    RefreshScriptFilesState(false);
 
                     notificationsControl1.AfterComplete();
                     SetViewState_AfterProcessComplete(processResults.Trace);
