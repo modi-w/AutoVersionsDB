@@ -37,7 +37,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDbAPI.SyncDB(testContext.ProjectConfig.Id, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.SyncDB(testContext.ProjectConfig.Id, null);
         }
 
 

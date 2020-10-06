@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            AutoVersionsDbAPI.CLIRun($"recreate -id={IntegrationTestsConsts.TestProjectId}");
+            AutoVersionsDBAPI.CLIRun($"recreate -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 

@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDbAPI.RecreateDBFromScratch(testContext.ProjectConfig.Id, null, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.RecreateDBFromScratch(testContext.ProjectConfig.Id, null, null);
         }
 
 

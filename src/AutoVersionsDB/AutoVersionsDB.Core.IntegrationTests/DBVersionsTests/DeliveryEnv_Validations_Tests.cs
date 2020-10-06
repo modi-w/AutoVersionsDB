@@ -48,7 +48,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
             //Act
-            ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(projectConfig.Id, null);
+            ProcessResults processResults = AutoVersionsDBAPI.ValidateProjectConfig(projectConfig.Id, null);
 
 
             //Assert

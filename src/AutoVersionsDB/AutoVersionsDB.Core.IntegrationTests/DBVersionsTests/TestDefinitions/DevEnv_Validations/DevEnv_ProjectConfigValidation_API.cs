@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDbAPI.ValidateProjectConfig(testContext.ProjectConfig.Id, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.ValidateProjectConfig(testContext.ProjectConfig.Id, null);
         }
 
 

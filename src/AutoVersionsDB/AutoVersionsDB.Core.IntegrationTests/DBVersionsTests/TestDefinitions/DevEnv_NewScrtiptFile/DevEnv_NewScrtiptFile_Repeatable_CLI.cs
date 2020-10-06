@@ -37,7 +37,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            AutoVersionsDbAPI.CLIRun($"new repeatable -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_Repeatable_API.ScriptName1}");
+            AutoVersionsDBAPI.CLIRun($"new repeatable -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_Repeatable_API.ScriptName1}");
         }
 
 

@@ -61,8 +61,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
-            testContext.ProcessResults = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(testContext.ProjectConfig.Id, ScriptName2, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.CreateNewIncrementalScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.CreateNewIncrementalScriptFile(testContext.ProjectConfig.Id, ScriptName2, null);
         }
 
 

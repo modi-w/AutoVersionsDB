@@ -114,7 +114,7 @@ namespace AutoVersionsDB.WinApp
 
         public void SetProjectConfigItem(string id)
         {
-            _projectConfigItem = AutoVersionsDbAPI.GetProjectConfigById(id);
+            _projectConfigItem = AutoVersionsDBAPI.GetProjectConfigById(id);
 
             RefreshAll();
         }
@@ -152,7 +152,7 @@ namespace AutoVersionsDB.WinApp
                     if (RefreshScriptFilesState(true))
                     {
 
-                        ProcessResults processResults = AutoVersionsDbAPI.ValidateDBVersions(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
+                        ProcessResults processResults = AutoVersionsDBAPI.ValidateDBVersions(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
 
 
                         if (processResults.Trace.HasError)
@@ -277,7 +277,7 @@ namespace AutoVersionsDB.WinApp
 
                 if (textInputWindow.IsApply)
                 {
-                    ProcessResults processResults = AutoVersionsDbAPI.CreateNewIncrementalScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDBAPI.CreateNewIncrementalScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
 
                     notificationsControl1.AfterComplete();
                     SetViewState_AfterProcessComplete(processResults.Trace);
@@ -307,7 +307,7 @@ namespace AutoVersionsDB.WinApp
 
                 if (textInputWindow.IsApply)
                 {
-                    ProcessResults processResults = AutoVersionsDbAPI.CreateNewRepeatableScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDBAPI.CreateNewRepeatableScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
 
                     notificationsControl1.AfterComplete();
                     SetViewState_AfterProcessComplete(processResults.Trace);
@@ -339,7 +339,7 @@ namespace AutoVersionsDB.WinApp
 
                 if (textInputWindow.IsApply)
                 {
-                    ProcessResults processResults = AutoVersionsDbAPI.CreateNewDevDummyDataScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDBAPI.CreateNewDevDummyDataScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
 
                     notificationsControl1.AfterComplete();
                     SetViewState_AfterProcessComplete(processResults.Trace);
@@ -371,7 +371,7 @@ namespace AutoVersionsDB.WinApp
                     SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
-                    ProcessResults processResults = AutoVersionsDbAPI.SyncDB(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDBAPI.SyncDB(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
 
                     RefreshScriptFilesState(false);
 
@@ -394,11 +394,11 @@ namespace AutoVersionsDB.WinApp
            
             if (showTrace)
             {
-                processResults = AutoVersionsDbAPI.GetScriptFilesState(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
+                processResults = AutoVersionsDBAPI.GetScriptFilesState(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
             }
             else
             {
-                processResults = AutoVersionsDbAPI.GetScriptFilesState(_projectConfigItem.Id, null);
+                processResults = AutoVersionsDBAPI.GetScriptFilesState(_projectConfigItem.Id, null);
             }
 
             if (processResults.Trace.HasError)
@@ -433,7 +433,7 @@ namespace AutoVersionsDB.WinApp
         {
             bool isAllowRun = true;
 
-            if (AutoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged).Trace.HasError)
+            if (AutoVersionsDBAPI.ValdiateTargetStateAlreadyExecuted(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged).Trace.HasError)
             {
                 string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
                 isAllowRun = MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
@@ -459,7 +459,7 @@ namespace AutoVersionsDB.WinApp
                         SetViewState(DBVersionsMangementViewType.InProcess);
                         notificationsControl1.BeforeStart();
 
-                        ProcessResults processResults = AutoVersionsDbAPI.SetDBToSpecificState(_projectConfigItem.Id, TargetStateScriptFileName, true, notificationsControl1.OnNotificationStateChanged);
+                        ProcessResults processResults = AutoVersionsDBAPI.SetDBToSpecificState(_projectConfigItem.Id, TargetStateScriptFileName, true, notificationsControl1.OnNotificationStateChanged);
                         RefreshScriptFilesState(false);
 
                         notificationsControl1.AfterComplete();
@@ -484,7 +484,7 @@ namespace AutoVersionsDB.WinApp
                 SetViewState(DBVersionsMangementViewType.InProcess);
                 notificationsControl1.BeforeStart();
 
-                ProcessResults processResults = AutoVersionsDbAPI.Deploy(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
+                ProcessResults processResults = AutoVersionsDBAPI.Deploy(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
                 RefreshScriptFilesState(false);
 
                 notificationsControl1.AfterComplete();
@@ -521,7 +521,7 @@ namespace AutoVersionsDB.WinApp
                         SetViewState(DBVersionsMangementViewType.InProcess);
                         notificationsControl1.BeforeStart();
 
-                        ProcessResults processResults = AutoVersionsDbAPI.RecreateDBFromScratch(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
+                        ProcessResults processResults = AutoVersionsDBAPI.RecreateDBFromScratch(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
                         RefreshScriptFilesState(false);
 
                         notificationsControl1.AfterComplete();
@@ -547,7 +547,7 @@ namespace AutoVersionsDB.WinApp
                     SetViewState(DBVersionsMangementViewType.InProcess);
                     notificationsControl1.BeforeStart();
 
-                    ProcessResults processResults = AutoVersionsDbAPI.SetDBStateByVirtualExecution(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDBAPI.SetDBStateByVirtualExecution(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
                     RefreshScriptFilesState(false);
 
                     notificationsControl1.AfterComplete();

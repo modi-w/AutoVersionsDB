@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            AutoVersionsDbAPI.CLIRun($"deploy -id={IntegrationTestsConsts.TestProjectId}");
+            AutoVersionsDBAPI.CLIRun($"deploy -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 

@@ -43,7 +43,7 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _dbTypesList = AutoVersionsDbAPI.GetDbTypesList();
+                _dbTypesList = AutoVersionsDBAPI.GetDbTypesList();
                 cboConncectionType.DataSource = _dbTypesList;
                 cboConncectionType.DisplayMember = "Name";
                 cboConncectionType.ValueMember = "Code";
@@ -89,7 +89,7 @@ namespace AutoVersionsDB.WinApp
 
         private void RefreshForm()
         {
-            ProjectConfigItem projectConfig = AutoVersionsDbAPI.GetProjectConfigById(_id);
+            ProjectConfigItem projectConfig = AutoVersionsDBAPI.GetProjectConfigById(_id);
             BindToUIElements(projectConfig);
 
             ValidateAll();
@@ -111,7 +111,7 @@ namespace AutoVersionsDB.WinApp
 
                 ClearUIElementsErrors();
 
-                ProcessResults processResults = AutoVersionsDbAPI.ValidateProjectConfig(_id, notificationsControl1.OnNotificationStateChanged);
+                ProcessResults processResults = AutoVersionsDBAPI.ValidateProjectConfig(_id, notificationsControl1.OnNotificationStateChanged);
 
                 handleProcessErrors(processResults.Trace);
             });
@@ -421,7 +421,7 @@ namespace AutoVersionsDB.WinApp
             {
                 if (string.IsNullOrWhiteSpace(_id))
                 {
-                    ProcessResults processResults = AutoVersionsDbAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDBAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
 
                     if (!processResults.Trace.HasError)
                     {
@@ -433,7 +433,7 @@ namespace AutoVersionsDB.WinApp
                 }
                 else
                 {
-                    ProcessResults processResults = AutoVersionsDbAPI.UpdateProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
+                    ProcessResults processResults = AutoVersionsDBAPI.UpdateProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
 
                     handleCompleteProcess(processResults.Trace);
                 }
@@ -456,7 +456,7 @@ namespace AutoVersionsDB.WinApp
 
             Task.Run(() =>
             {
-                ProcessResults processResults = AutoVersionsDbAPI.ChangeProjectId(_id, tbId.Text, notificationsControl1.OnNotificationStateChanged);
+                ProcessResults processResults = AutoVersionsDBAPI.ChangeProjectId(_id, tbId.Text, notificationsControl1.OnNotificationStateChanged);
 
                 if (!processResults.Trace.HasError)
                 {

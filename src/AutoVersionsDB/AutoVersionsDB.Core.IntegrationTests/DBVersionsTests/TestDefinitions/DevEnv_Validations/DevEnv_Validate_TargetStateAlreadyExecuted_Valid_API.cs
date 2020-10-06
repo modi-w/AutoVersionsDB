@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDbAPI.ValdiateTargetStateAlreadyExecuted(testContext.ProjectConfig.Id,IntegrationTestsConsts.TargetStateFile_FinalState, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.ValdiateTargetStateAlreadyExecuted(testContext.ProjectConfig.Id,IntegrationTestsConsts.TargetStateFile_FinalState, null);
         }
 
 

@@ -37,8 +37,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Act(TestContext testContext)
         {
-            AutoVersionsDbAPI.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_Incremental_API.ScriptName1}");
-            AutoVersionsDbAPI.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_Incremental_API.ScriptName2}");
+            AutoVersionsDBAPI.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_Incremental_API.ScriptName1}");
+            AutoVersionsDBAPI.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_Incremental_API.ScriptName2}");
         }
 
 

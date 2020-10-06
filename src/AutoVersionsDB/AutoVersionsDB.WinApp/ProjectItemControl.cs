@@ -69,7 +69,7 @@ namespace AutoVersionsDB.WinApp
 
             if (results)
             {
-                AutoVersionsDbAPI.RemoveProjectConfig(ProjectConfig.Id, null);
+                AutoVersionsDBAPI.RemoveProjectConfig(ProjectConfig.Id, null);
 
                 OnRefreshProjectList?.Invoke();
             }

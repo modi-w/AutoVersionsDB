@@ -15,7 +15,7 @@ using AutoVersionsDB.Core.DBVersions;
 
 namespace AutoVersionsDB.Core
 {
-    public static class AutoVersionsDbAPI
+    public static class AutoVersionsDBAPI
     {
 
         private static readonly object _processSyncLock = new object();

@@ -53,6 +53,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLI
             _consoleProcessMessages.SetInfoMessage(message);
         }
 
+        public void SetInlineInfoMessage(string message, ConsoleColor color)
+        {
+            _consoleProcessMessages.SetInlineInfoMessage(message, color);
+        }
+
+
         public void StartProcessMessage(string processName)
         {
             _consoleProcessMessages.SetInfoMessage(processName);

@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
         {
             Command command = new Command("list");
 
-            command.Description = "show list of all projects";
+            command.Description = "Show list of all projects";
 
             command.Handler = CommandHandler
                 .Create(() =>

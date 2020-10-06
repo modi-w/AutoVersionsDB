@@ -15,6 +15,7 @@ namespace AutoVersionsDB.Core.Common.CLI
         void SetErrorInstruction(string message);
 
         void SetInfoMessage(string message);
+        void SetInlineInfoMessage(string message, ConsoleColor color);
 
         void StartProcessMessage(string processName);
         void StartProcessMessage(string processName, string paramsStr);
