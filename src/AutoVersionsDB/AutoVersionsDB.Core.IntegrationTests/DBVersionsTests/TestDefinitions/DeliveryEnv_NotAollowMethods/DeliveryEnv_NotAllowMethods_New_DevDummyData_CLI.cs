@@ -60,5 +60,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         }
 
+
+        public void Release(TestContext testContext)
+        {
+            _deliveryEnv_New_DevDummyData_API.Release(testContext);
+        }
     }
 }

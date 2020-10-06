@@ -14,5 +14,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType);
         void Act(TestContext testContext);
         void Asserts(TestContext testContext);
+
+        void Release(TestContext testContext);
     }
 }

@@ -59,5 +59,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         }
 
+
+        public void Release(TestContext testContext)
+        {
+            _deliveryEnv_Validate_ArtifactFile_API.Release(testContext);
+        }
     }
 }

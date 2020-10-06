@@ -53,5 +53,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _dbAsserts.AssertRestore(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, testContext.DBBackupFileType, testContext.ProcessResults.Trace);
 
         }
+
+
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsNotValidTest.Release(testContext);
+        }
+
     }
 }

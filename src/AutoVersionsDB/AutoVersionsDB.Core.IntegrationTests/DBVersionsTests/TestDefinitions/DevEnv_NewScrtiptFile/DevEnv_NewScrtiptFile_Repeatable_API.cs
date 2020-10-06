@@ -45,14 +45,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             TestContext testContext = _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
 
-            if (File.Exists(GetScriptFullPath_Repeatable_scriptName1(projectConfig.DBConnectionInfo)))
-            {
-                File.Delete(GetScriptFullPath_Repeatable_scriptName1(projectConfig.DBConnectionInfo));
-            }
-
+            ClearScriptsFiles(testContext);
 
             return testContext;
         }
+
 
         public void Act(TestContext testContext)
         {
@@ -62,21 +59,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Asserts(TestContext testContext)
         {
-            try
-            {
-                _dbVersionsValidTest.Asserts(testContext);
+            _dbVersionsValidTest.Asserts(testContext);
 
-                _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
-            }
-            finally
-            {
-                if (File.Exists(GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
-                {
-                    File.Delete(GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
-                }
-            }
-
+            _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
         }
+
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsValidTest.Release(testContext);
+
+            ClearScriptsFiles(testContext);
+        }
+
+
 
 
 
@@ -91,7 +87,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             return script1FullPath;
         }
-        
+
+
+
+        private void ClearScriptsFiles(TestContext testContext)
+        {
+            if (File.Exists(GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
+            {
+                File.Delete(GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
+            }
+        }
+
 
     }
 }

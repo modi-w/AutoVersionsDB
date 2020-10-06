@@ -50,5 +50,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
         }
 
+
+
+        public void Release(TestContext testContext)
+        {
+            _devEnv_SyncDB_API.Release(testContext);
+        }
+
     }
 }

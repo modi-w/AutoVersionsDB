@@ -14,6 +14,7 @@ using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods
@@ -33,7 +34,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
         {
-            return _dbVersionsNotValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _dbVersionsNotValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+
+            ClearDeployFiles(testContext);
+
+            return testContext;
         }
 
         public void Act(TestContext testContext)
@@ -52,7 +57,32 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             //Assert.That(false, testContext.ProcessResults.Trace.GetAllHistoryAsString());
 
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DeliveryEnvironment");
+        }
 
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsNotValidTest.Release(testContext);
+
+            ClearDeployFiles(testContext);
+        }
+
+
+        private static void ClearDeployFiles(TestContext testContext)
+        {
+            if (testContext != null
+                && testContext.ProjectConfig != null)
+            {
+                string[] deployFiles = Directory.GetFiles(testContext.ProjectConfig.DeployArtifactFolderPath);
+
+                foreach (string file in deployFiles)
+                {
+                    if (File.Exists(file))
+                    {
+                        File.Delete(file);
+                    }
+                }
+            }
         }
     }
 }

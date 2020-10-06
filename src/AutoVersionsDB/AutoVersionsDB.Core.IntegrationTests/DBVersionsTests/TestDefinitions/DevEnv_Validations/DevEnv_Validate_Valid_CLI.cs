@@ -52,5 +52,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         }
 
+
+        public void Release(TestContext testContext)
+        {
+            _devEnv_Validate_API.Release(testContext);
+        }
+
     }
 }

@@ -54,9 +54,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
             assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
             assertErrorsTextByLines.AssertLineMessage(2, "incScript_2020-03-02.100_CreateTransTable1.sql 0% (0/1) -> Execute Script Block. Error: System.Exception: Error Message: 'Column, parameter, or variable #3: Cannot find data type nvarcharaaaa.', Script: ", false);
-
-
         }
 
+
+
+        public void Release(TestContext testContext)
+        {
+            _devEnv_Restore_SyncDB_API.Release(testContext);
+        }
     }
 }

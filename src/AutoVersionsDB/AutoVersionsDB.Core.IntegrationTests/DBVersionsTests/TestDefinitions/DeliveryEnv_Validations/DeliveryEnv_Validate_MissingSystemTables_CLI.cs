@@ -55,9 +55,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertErrorsTextByLines.AssertLineMessage(2, "SystemTables. Error: The table 'AutoVersionsDB.DBScriptsExecutionHistory' is not exist in the db", false);
             assertErrorsTextByLines.AssertLineMessage(3, "", true);
             assertErrorsTextByLines.AssertLineMessage(4, "The system tables has invalid structure. Please try to 'Set DB State by Virtual Execution'.", true);
-
-
         }
+
+
+
+        public void Release(TestContext testContext)
+        {
+            _deliveryEnv_Validate_MissingSystemTables_API.Release(testContext);
+        }
+
 
     }
 }

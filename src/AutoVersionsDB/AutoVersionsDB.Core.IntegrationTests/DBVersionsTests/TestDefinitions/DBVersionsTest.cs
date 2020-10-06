@@ -6,26 +6,32 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.Process;
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsForTests;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 {
     public class DBVersionsTest : ITestDefinition
     {
+        private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly DBHandler _dbHandler;
         private readonly FoldersUtils _foldersUtils;
         private readonly DBAsserts _dbAsserts;
 
-        public DBVersionsTest(DBHandler dbHandler,
-                                        FoldersUtils foldersUtils,
-                                        ProcessAsserts processAsserts,
-                                        DBAsserts dbAsserts)
+
+        public DBVersionsTest(ProjectConfigsStorageHelper projectConfigsStorageHelper,
+                                DBHandler dbHandler,
+                                FoldersUtils foldersUtils,
+                                ProcessAsserts processAsserts,
+                                DBAsserts dbAsserts)
         {
+            _projectConfigsStorageHelper = projectConfigsStorageHelper;
             _dbHandler = dbHandler;
             _foldersUtils = foldersUtils;
             _dbAsserts = dbAsserts;
@@ -35,7 +41,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         {
             TestContext testContext = new TestContext(dbBackupFileType, scriptFilesStateType, projectConfig);
 
-            MockObjectsProvider.MockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(testContext.ProjectConfig);
+            _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
+
             _dbHandler.RestoreDB(testContext.ProjectConfig.DBConnectionInfo, dbBackupFileType);
             testContext.NumOfConnectionsBefore = _dbHandler.GetNumOfOpenConnection(testContext.ProjectConfig.DBConnectionInfo);
             _foldersUtils.RemoveArtifactTempFolder(testContext.ProjectConfig);
@@ -56,7 +63,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         }
 
 
-
+        public void Release(TestContext testContext)
+        {
+            _projectConfigsStorageHelper.ClearAllProjects();
+        }
 
     }
 }

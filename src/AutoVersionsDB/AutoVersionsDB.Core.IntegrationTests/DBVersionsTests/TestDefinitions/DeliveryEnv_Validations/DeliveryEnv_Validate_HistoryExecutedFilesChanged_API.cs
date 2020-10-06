@@ -50,5 +50,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "HistoryExecutedFilesChanged");
 
         }
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsNotValidTest.Release(testContext);
+        }
     }
 }

@@ -52,5 +52,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage(2, $"The file: '{_devEnv_NewScrtiptFile_Repeatable_API.GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
         }
 
+
+
+        public void Release(TestContext testContext)
+        {
+            _devEnv_NewScrtiptFile_Repeatable_API.Release(testContext);
+        }
+
     }
 }

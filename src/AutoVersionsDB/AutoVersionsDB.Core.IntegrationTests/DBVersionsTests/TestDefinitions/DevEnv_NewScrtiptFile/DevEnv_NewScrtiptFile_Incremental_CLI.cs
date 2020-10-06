@@ -57,5 +57,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage(5, $"The file: '{_devEnv_NewScrtiptFile_Incremental_API.GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
         }
 
+
+
+        public void Release(TestContext testContext)
+        {
+            _devEnv_NewScrtiptFile_Incremental_API.Release(testContext);
+        }
+
     }
 }

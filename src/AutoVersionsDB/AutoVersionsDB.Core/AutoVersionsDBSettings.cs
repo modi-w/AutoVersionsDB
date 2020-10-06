@@ -4,15 +4,25 @@ using System.IO;
 
 namespace AutoVersionsDB.Core
 {
-    public static class AutoVersionsDBSettings
+    public class AutoVersionsDBSettings
     {
-        private static string AutoVersionsDBBaseFolder => FileSystemPathUtils.ParsePathVaribles(@"[CommonApplicationData]\AutoVersionsDB");
+        private readonly string _autoVersionsDBBaseFolder;
+
+        public AutoVersionsDBSettings()
+        {
+            _autoVersionsDBBaseFolder = FileSystemPathUtils.ParsePathVaribles(@"[CommonApplicationData]\AutoVersionsDB");
+        }
+
+        public AutoVersionsDBSettings(string autoVersionsDBBaseFolder)
+        {
+            _autoVersionsDBBaseFolder = autoVersionsDBBaseFolder;
+        }
 
 
-        public static string LogFileName => Path.Combine(AutoVersionsDBBaseFolder, "Logs", "AutoVersionsDBLog_{0:yyyy-MM-dd}.txt");
+        public string LogFileName => Path.Combine(_autoVersionsDBBaseFolder, "Logs", "AutoVersionsDBLog_{0:yyyy-MM-dd}.txt");
 
-        public static string ConfigProjectsFilePath => Path.Combine(AutoVersionsDBBaseFolder, "AutoVersionsDB_ConfigProjects.json");
+        public string ConfigProjectsFilePath => Path.Combine(_autoVersionsDBBaseFolder, "AutoVersionsDB_ConfigProjects.json");
 
-        public static string TempFolderPath => Path.Combine(AutoVersionsDBBaseFolder, "Temp");
+        public string TempFolderPath => Path.Combine(_autoVersionsDBBaseFolder, "Temp");
     }
 }

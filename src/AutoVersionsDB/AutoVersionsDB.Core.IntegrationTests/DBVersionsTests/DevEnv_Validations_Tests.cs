@@ -6,6 +6,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.Process;
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsForTests;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -22,10 +23,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
     [TestFixture]
     public class DevEnv_Validations_Tests
     {
+        private ProjectConfigsStorageHelper _projectConfigsStorageHelper;
+
+
         [SetUp]
         public void Init()
         {
             NinjectUtils_IntegrationTests.CreateKernel();
+            _projectConfigsStorageHelper = NinjectUtils_IntegrationTests.NinjectKernelContainer.Get<ProjectConfigsStorageHelper>();
         }
 
 
@@ -43,21 +48,26 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
                 DevEnvironment = false
             };
 
-            MockObjectsProvider.MockProjectConfigsStorage.Setup(m => m.GetProjectConfigById(It.IsAny<string>())).Returns(projectConfig);
+            _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
+
+            try
+            {
+                //Act
+                ProcessResults processResults = AutoVersionsDBAPI.ValidateProjectConfig(projectConfig.Id, null);
 
 
+                //Assert
+                ProcessAsserts processAsserts = NinjectUtils_IntegrationTests.NinjectKernelContainer.Get<ProcessAsserts>();
 
-            //Act
-            ProcessResults processResults = AutoVersionsDBAPI.ValidateProjectConfig(projectConfig.Id, null);
-
-
-            //Assert
-            ProcessAsserts processAsserts = NinjectUtils_IntegrationTests.NinjectKernelContainer.Get<ProcessAsserts>();
-
-            processAsserts.AssertContainError(this.GetType().Name, processResults.Trace, "DBType");
-            processAsserts.AssertContainError(this.GetType().Name, processResults.Trace, "DBName");
-            processAsserts.AssertContainError(this.GetType().Name, processResults.Trace, "DBBackupFolderPath");
-            processAsserts.AssertContainError(this.GetType().Name, processResults.Trace, "DeliveryArtifactFolderPath");
+                processAsserts.AssertContainError(this.GetType().Name, processResults.Trace, "DBType");
+                processAsserts.AssertContainError(this.GetType().Name, processResults.Trace, "DBName");
+                processAsserts.AssertContainError(this.GetType().Name, processResults.Trace, "DBBackupFolderPath");
+                processAsserts.AssertContainError(this.GetType().Name, processResults.Trace, "DeliveryArtifactFolderPath");
+            }
+            finally
+            {
+                _projectConfigsStorageHelper.ClearAllProjects();
+            }
         }
 
 

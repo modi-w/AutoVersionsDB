@@ -45,6 +45,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         }
 
 
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsTest.Release(testContext);
+        }
 
 
     }

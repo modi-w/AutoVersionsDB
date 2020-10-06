@@ -52,5 +52,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage(2, $"The file: '{_devEnv_NewScrtiptFile_DevDummyData_API.GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
         }
 
+
+
+        public void Release(TestContext testContext)
+        {
+            _devEnv_NewScrtiptFile_DevDummyData_API.Release(testContext);
+        }
     }
 }

@@ -332,7 +332,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
         {
             string[] allArtifactFiles = Directory.GetFiles(projectConfig.DeployArtifactFolderPath, $"*{ArtifactExtractor.ArtifactFilenameExtension}", SearchOption.TopDirectoryOnly);
 
-            Assert.That(allArtifactFiles.Length, Is.EqualTo(1), $"{testName} -> Found '{allArtifactFiles.Length}' Artifact Fils, Should be only 1");
+            Assert.That(allArtifactFiles.Length, Is.EqualTo(1), $"{testName} -> Found '{allArtifactFiles.Length}' Artifact Files, Should be only 1");
 
             string artifactFile = allArtifactFiles[0];
 

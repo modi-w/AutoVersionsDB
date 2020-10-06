@@ -51,5 +51,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage(2, @"Deploy\AutoVersionsDB.Tests.avdb'", false);
         }
 
+
+
+        public void Release(TestContext testContext)
+        {
+            _devEnv_Deploy_API.Release(testContext);
+        }
     }
 }

@@ -50,5 +50,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "TargetScriptFileAlreadyExecuted");
 
         }
+
+
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsNotValidTest.Release(testContext);
+        }
     }
 }

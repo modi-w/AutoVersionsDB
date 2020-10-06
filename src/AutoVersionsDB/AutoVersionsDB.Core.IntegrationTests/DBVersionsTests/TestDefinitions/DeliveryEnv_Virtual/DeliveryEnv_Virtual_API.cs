@@ -65,5 +65,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _scriptFilesAsserts.AssertThatAllFilesInTheDbExistWithTheSameHashInTheFolder(GetType().Name, testContext.ProjectConfig);
 
         }
+
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsValidTest.Release(testContext);
+        }
+
     }
 }

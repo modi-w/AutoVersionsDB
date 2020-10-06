@@ -22,14 +22,12 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
                 foreach (var test in tests)
                 {
-                    TestContext testContext = test.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
-
-                    test.Act(testContext);
-
-                    test.Asserts(testContext);
+                    RunSingleTest(dbBackupFileType, scriptFilesStateType, projectConfig, test);
                 }
             }
         }
+
+       
 
         public static void RunTest<T1, T2>(bool devEnvironment, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
           where T1 : ITestDefinition
@@ -43,12 +41,28 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
                 foreach (var test in tests)
                 {
-                    TestContext testContext = test.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
-
-                    test.Act(testContext);
-
-                    test.Asserts(testContext);
+                    RunSingleTest(dbBackupFileType, scriptFilesStateType, projectConfig, test);
                 }
+            }
+        }
+
+
+
+        private static void RunSingleTest(DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType, ProjectConfigItem projectConfig, ITestDefinition test)
+        {
+            TestContext testContext = null;
+
+            try
+            {
+                testContext = test.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+
+                test.Act(testContext);
+
+                test.Asserts(testContext);
+            }
+            finally
+            {
+                test.Release(testContext);
             }
         }
     }

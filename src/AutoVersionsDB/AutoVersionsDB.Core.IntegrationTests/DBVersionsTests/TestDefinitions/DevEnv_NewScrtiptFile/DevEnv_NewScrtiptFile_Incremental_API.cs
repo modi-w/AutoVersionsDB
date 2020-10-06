@@ -46,15 +46,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             TestContext testContext = _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
 
-            if (File.Exists(GetScriptFullPath_Incremental_scriptName1(projectConfig.DBConnectionInfo)))
-            {
-                File.Delete(GetScriptFullPath_Incremental_scriptName1(projectConfig.DBConnectionInfo));
-            }
-            if (File.Exists(GetScriptFullPath_Incremental_scriptName2(projectConfig.DBConnectionInfo)))
-            {
-                File.Delete(GetScriptFullPath_Incremental_scriptName2(projectConfig.DBConnectionInfo));
-            }
-
+            ClearScriptsFiles(testContext);
 
             return testContext;
         }
@@ -68,29 +60,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public void Asserts(TestContext testContext)
         {
-            try
-            {
-                _dbVersionsValidTest.Asserts(testContext);
+            _dbVersionsValidTest.Asserts(testContext);
 
-                _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
+            _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
 
-                //Comment: The second file is to check the change version in the filename for 2 scripts created in same day
-                _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo));
-            }
-            finally
-            {
-                if (File.Exists(GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
-                {
-                    File.Delete(GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
-                }
-                if (File.Exists(GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo)))
-                {
-                    File.Delete(GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo));
-                }
-
-            }
+            //Comment: The second file is to check that the version changed in the filename for 2 scripts created in same day
+            _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo));
 
         }
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsValidTest.Release(testContext);
+
+            ClearScriptsFiles(testContext); 
+        }
+
+
 
 
 
@@ -116,6 +102,22 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             return script1FullPath;
         }
+
+
+
+        private void ClearScriptsFiles(TestContext testContext)
+        {
+            if (File.Exists(GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
+            {
+                File.Delete(GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
+            }
+            if (File.Exists(GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo)))
+            {
+                File.Delete(GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo));
+            }
+        }
+
+
 
     }
 }

@@ -11,6 +11,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Deploy
@@ -33,7 +34,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
         {
-            return _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+
+            ClearDeployFiles(testContext);
+
+            return testContext;
         }
 
         public void Act(TestContext testContext)
@@ -47,6 +52,30 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _dbVersionsValidTest.Asserts(testContext);
 
             _scriptFilesAsserts.AssertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(GetType().Name, testContext.ProjectConfig);
+        }
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsValidTest.Release(testContext);
+            ClearDeployFiles(testContext);
+        }
+
+
+        private static void ClearDeployFiles(TestContext testContext)
+        {
+            if (testContext != null
+                && testContext.ProjectConfig != null)
+            {
+                string[] deployFiles = Directory.GetFiles(testContext.ProjectConfig.DeployArtifactFolderPath);
+
+                foreach (string file in deployFiles)
+                {
+                    if (File.Exists(file))
+                    {
+                        File.Delete(file);
+                    }
+                }
+            }
         }
     }
 }

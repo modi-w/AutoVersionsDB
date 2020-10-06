@@ -43,5 +43,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             //          The above method is called on DBVersionsTest.Asserts()
             _dbVersionsValidTest.Asserts(testContext);
         }
+
+
+
+        public void Release(TestContext testContext)
+        {
+            _dbVersionsValidTest.Release(testContext);
+        }
     }
 }
