@@ -39,6 +39,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                 {
                     _consoleProcessMessages.StartProcessMessage("dbtypes");
 
+                    _consoleProcessMessages.SetInfoMessage("");
+
                     string captionsMessage = $"{"  Code".PadRight(12)} |  Name";
                     _consoleProcessMessages.SetInfoMessage(captionsMessage);
 
@@ -48,18 +50,18 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
 
                     IEnumerable<DBType> dbTypesList = _projectConfigsAPI.GetDBTypesList();
 
-                     foreach (DBType dbType in dbTypesList)
-                     {
-                         string projectLineMessage = $"+ {dbType.Code.PadRight(10)} | {dbType.Name}";
-                         _consoleProcessMessages.SetInfoMessage(projectLineMessage);
-                     }
+                    foreach (DBType dbType in dbTypesList)
+                    {
+                        string projectLineMessage = $"+ {dbType.Code.PadRight(10)} | {dbType.Name}";
+                        _consoleProcessMessages.SetInfoMessage(projectLineMessage);
+                    }
 
 
-             });
+                });
 
             return command;
         }
 
-        
+
     }
 }

@@ -38,35 +38,37 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                 {
                     _consoleProcessMessages.StartProcessMessage("list");
 
+                    _consoleProcessMessages.SetInfoMessage("");
+
                     IEnumerable<ProjectConfigItem> projectsList = _projectConfigsAPI.GetProjectsList();
 
-                 if (!projectsList.Any())
-                 {
-                     _consoleProcessMessages.SetInfoMessage("----  No projects found on this machine  ----");
-                 }
-                 else
-                 {
-                     string captionsMessage = $"{"  Id".PadRight(31)} |  Description";
-                     _consoleProcessMessages.SetInfoMessage(captionsMessage);
+                    if (!projectsList.Any())
+                    {
+                        _consoleProcessMessages.SetInfoMessage("----  No projects found on this machine  ----");
+                    }
+                    else
+                    {
+                        string captionsMessage = $"{"  Id".PadRight(31)} |  Description";
+                        _consoleProcessMessages.SetInfoMessage(captionsMessage);
 
-                     string captionsLineMessage = "-".PadRight(55, '-');
-                     _consoleProcessMessages.SetInfoMessage(captionsLineMessage);
+                        string captionsLineMessage = "-".PadRight(55, '-');
+                        _consoleProcessMessages.SetInfoMessage(captionsLineMessage);
 
-                     foreach (ProjectConfigItem projectConfig in projectsList)
-                     {
-                         string id = projectConfig.Id.Ellipsis(30);
+                        foreach (ProjectConfigItem projectConfig in projectsList)
+                        {
+                            string id = projectConfig.Id.Ellipsis(30);
 
-                         string projectLineMessage = $" {id.PadRight(30)} | {projectConfig.Description}";
-                         _consoleProcessMessages.SetInfoMessage(projectLineMessage);
-                     }
+                            string projectLineMessage = $" {id.PadRight(30)} | {projectConfig.Description}";
+                            _consoleProcessMessages.SetInfoMessage(projectLineMessage);
+                        }
 
-                 }
+                    }
 
-             });
+                });
 
             return command;
         }
 
-        
+
     }
 }
