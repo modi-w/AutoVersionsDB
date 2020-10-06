@@ -1,5 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects.Processes;
 using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
+using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
     public class ProjectConfigsAPI
     {
         private readonly ProjectConfigsStorage _projectConfigsStorage;
+        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
         private readonly NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> _saveNewProjectConfigRunner;
         private readonly NotificationProcessRunner<UpdateProjectConfigProcessDefinition, ProjectConfigProcessContext> _updateProjectConfigRunner;
@@ -19,12 +22,14 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
 
         public ProjectConfigsAPI(ProjectConfigsStorage projectConfigsStorage,
+                                DBCommandsFactoryProvider dbCommandsFactoryProvider,
                                 NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> saveNewProjectConfigRunner,
                                 NotificationProcessRunner<UpdateProjectConfigProcessDefinition, ProjectConfigProcessContext> updateProjectConfigRunner,
                                 NotificationProcessRunner<ChangeIdProcessDefinition, ProjectConfigProcessContext> changeIdRunner,
                                 NotificationProcessRunner<RemoveProjectConfigProcessDefinition, ProjectConfigProcessContext> removeProjectConfigProcessDefinition)
         {
             _projectConfigsStorage = projectConfigsStorage;
+            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
             _saveNewProjectConfigRunner = saveNewProjectConfigRunner;
             _updateProjectConfigRunner = updateProjectConfigRunner;
             _changeIdRunner = changeIdRunner;
@@ -32,6 +37,10 @@ namespace AutoVersionsDB.Core.ConfigProjects
         }
 
 
+        public List<DBType> GetDBTypesList()
+        {
+            return _dbCommandsFactoryProvider.GetDBTypesList();
+        }
 
         public List<ProjectConfigItem> GetProjectsList()
         {

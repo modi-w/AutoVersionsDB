@@ -37,12 +37,6 @@ namespace AutoVersionsDB.Core
 
 
 
-        public static List<DBType> GetDbTypesList()
-        {
-            DBCommandsFactoryProvider dbCommandsFactoryProvider = NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>();
-
-            return dbCommandsFactoryProvider.GetDbTypesList();
-        }
 
 
 
@@ -58,6 +52,12 @@ namespace AutoVersionsDB.Core
 
 
         #region Config
+
+        public static List<DBType> GetDBTypesList()
+        {
+            return GetNewInstanceForProjectConfigsAPI().GetDBTypesList();
+        }
+
 
         public static List<ProjectConfigItem> GetProjectsList()
         {

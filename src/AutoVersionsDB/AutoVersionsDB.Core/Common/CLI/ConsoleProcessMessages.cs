@@ -75,7 +75,7 @@ namespace AutoVersionsDB.Core.Common.CLI
 
         public void StartProcessMessage(string processName)
         {
-            StartProcessMessage(processName);
+            StartProcessMessage(processName, "");
         }
         public void StartProcessMessage(string processName, string paramsStr)
         {
