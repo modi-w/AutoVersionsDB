@@ -43,7 +43,7 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _dbTypesList = AutoVersionsDBAPI.GetDBTypesList();
+                _dbTypesList = AutoVersionsDBAPI.GetDBTypes();
                 cboConncectionType.DataSource = _dbTypesList;
                 cboConncectionType.DisplayMember = "Name";
                 cboConncectionType.ValueMember = "Code";

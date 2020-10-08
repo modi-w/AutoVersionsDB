@@ -53,9 +53,9 @@ namespace AutoVersionsDB.Core
 
         #region Config
 
-        public static List<DBType> GetDBTypesList()
+        public static List<DBType> GetDBTypes()
         {
-            return GetNewInstanceForProjectConfigsAPI().GetDBTypesList();
+            return GetNewInstanceForProjectConfigsAPI().GetDBTypes();
         }
 
 

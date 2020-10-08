@@ -29,6 +29,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public string ConsoleError => _sbConsoleError.ToString();
 
 
+        public object Result { get; set; }
         public ProcessResults ProcessResults { get; set; }
 
 

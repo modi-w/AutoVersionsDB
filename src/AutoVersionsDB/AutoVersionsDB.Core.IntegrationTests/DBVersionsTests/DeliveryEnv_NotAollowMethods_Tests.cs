@@ -21,7 +21,7 @@ using System.Text;
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 {
     [TestFixture]
-    public class DeliveryEnv_NotAollowMethods
+    public class DeliveryEnv_NotAollowMethods_Tests
     {
         [SetUp]
         public void Init()
