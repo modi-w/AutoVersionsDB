@@ -23,7 +23,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
                     filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_EmptyDB).Replace("[DBType]", dbType);
                     break;
 
-                case DBBackupFileType.EmptyDB_ExceptSystemTables:
+                case DBBackupFileType.EmptyDBWithSystemTables:
 
                     filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_ExceptSystemTables).Replace("[DBType]", dbType);
                     break;

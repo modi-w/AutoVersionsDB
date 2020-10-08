@@ -15,36 +15,36 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate
 {
-    public class DevEnv_Recreate_API : ITestDefinition
+    public class DevEnv_Recreate_EmptyDB_API : TestDefinition<DBVersionsTestContext>
     {
-        private readonly DBVersionsValidTest _dbVersionsValidTest;
+        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DevEnv_Recreate_API(DBVersionsValidTest dbVersionsValidTest,
-                                        ScriptFilesAsserts scriptFilesAsserts,
-                                        DBAsserts dbAsserts)
+        public DevEnv_Recreate_EmptyDB_API(DBVersionsTestHelper dbVersionsTestHelper,
+                                            ScriptFilesAsserts scriptFilesAsserts,
+                                            DBAsserts dbAsserts)
         {
-            _dbVersionsValidTest = dbVersionsValidTest;
+            _dbVersionsTestHelper = dbVersionsTestHelper;
             _scriptFilesAsserts = scriptFilesAsserts;
             _dbAsserts = dbAsserts;
         }
 
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.EmptyDB, ScriptFilesStateType.ValidScripts);
         }
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.RecreateDBFromScratch(testContext.ProjectConfig.Id,null, null);
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            _dbVersionsValidTest.Asserts(testContext);
+            _dbVersionsTestHelper.Asserts(testContext, true);
 
             _dbAsserts.AssertDbInFinalState_DevEnv(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
             _scriptFilesAsserts.AssertThatAllFilesInFolderExistWithTheSameHashInTheDb_FinalState(GetType().Name, testContext.ProjectConfig);
@@ -52,9 +52,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
-            _dbVersionsValidTest.Release(testContext);
+            _dbVersionsTestHelper.Release(testContext);
         }
 
     }

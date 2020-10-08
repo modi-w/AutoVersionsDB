@@ -21,11 +21,11 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile
 {
-    public class DevEnv_NewScrtiptFile_Incremental_API : ITestDefinition
+    public class DevEnv_NewScrtiptFile_Incremental_API : TestDefinition<DBVersionsTestContext>
     {
         private string _relFolder_Incremental = "Incremental";
 
-        private readonly DBVersionsValidTest _dbVersionsValidTest;
+        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
@@ -34,33 +34,33 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public DevEnv_NewScrtiptFile_Incremental_API(DBVersionsValidTest dbVersionsValidTest,
+        public DevEnv_NewScrtiptFile_Incremental_API(DBVersionsTestHelper dbVersionsTestHelper,
                                                         ScriptFilesAsserts scriptFilesAsserts)
         {
-            _dbVersionsValidTest = dbVersionsValidTest;
+            _dbVersionsTestHelper = dbVersionsTestHelper;
             _scriptFilesAsserts = scriptFilesAsserts;
         }
 
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
 
-            ClearScriptsFiles(testContext);
+            ClearScriptsFiles(testContext as DBVersionsTestContext);
 
             return testContext;
         }
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.CreateNewIncrementalScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
             testContext.ProcessResults = AutoVersionsDBAPI.CreateNewIncrementalScriptFile(testContext.ProjectConfig.Id, ScriptName2, null);
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            _dbVersionsValidTest.Asserts(testContext);
+            _dbVersionsTestHelper.Asserts(testContext, true);
 
             _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
 
@@ -69,9 +69,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         }
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
-            _dbVersionsValidTest.Release(testContext);
+            _dbVersionsTestHelper.Release(testContext);
 
             ClearScriptsFiles(testContext); 
         }
@@ -105,7 +105,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        private void ClearScriptsFiles(TestContext testContext)
+        private void ClearScriptsFiles(DBVersionsTestContext testContext)
         {
             if (File.Exists(GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
             {

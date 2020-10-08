@@ -15,19 +15,19 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual
 {
-    public class DevEnv_Virtual_CLI : ITestDefinition
+    public class DevEnv_Virtual_EmptyDB_CLI : TestDefinition<DBVersionsTestContext>
     {
 
-        private readonly DevEnv_Virtual_API _devEnv_Virtual_API;
+        private readonly DevEnv_Virtual_EmptyDB_API _deliveryEnv_Virtual_API;
 
-        public DevEnv_Virtual_CLI(DevEnv_Virtual_API devEnv_Virtual_API)
+        public DevEnv_Virtual_EmptyDB_CLI(DevEnv_Virtual_EmptyDB_API deliveryEnv_Virtual_API)
         {
-            _devEnv_Virtual_API = devEnv_Virtual_API;
+            _deliveryEnv_Virtual_API = deliveryEnv_Virtual_API;
         }
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _devEnv_Virtual_API.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _deliveryEnv_Virtual_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -35,22 +35,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
-            if (testContext.DBBackupFileType == DBBackupFileType.MiddleState)
-            {
-                AutoVersionsDBAPI.CLIRun($"virtual -id={IntegrationTestsConsts.TestProjectId} -t={IntegrationTestsConsts.TargetStateFile_FinalState}");
-            }
-            else
-            {
-                AutoVersionsDBAPI.CLIRun($"virtual -id={IntegrationTestsConsts.TestProjectId} -t={IntegrationTestsConsts.TargetStateFile_MiddleState}");
-            }
+            AutoVersionsDBAPI.CLIRun($"virtual -id={IntegrationTestsConsts.TestProjectId} -t={IntegrationTestsConsts.TargetStateFile_MiddleState}");
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            _devEnv_Virtual_API.Asserts(testContext);
+            _deliveryEnv_Virtual_API.Asserts(testContext);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
             assertTextByLines.AssertLineMessage(0, "> Run 'virtual' for 'IntegrationTestProject'", true);
@@ -58,9 +51,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public void Release(TestContext testContext)
+
+        public override void Release(DBVersionsTestContext testContext)
         {
-            _devEnv_Virtual_API.Release(testContext);
+            _deliveryEnv_Virtual_API.Release(testContext);
         }
 
     }

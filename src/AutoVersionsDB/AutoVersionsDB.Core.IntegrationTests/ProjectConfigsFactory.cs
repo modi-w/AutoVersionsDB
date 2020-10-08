@@ -15,9 +15,9 @@ using System.Text;
 namespace AutoVersionsDB.Core.IntegrationTests
 {
 
-    public static class ProjectConfigsFactory
+    public class ProjectConfigsFactory
     {
-        private static List<DBConnectionInfo> _dbConnectionInfos = new List<DBConnectionInfo>()
+        private List<DBConnectionInfo> _dbConnectionInfos = new List<DBConnectionInfo>()
         {
             new DBConnectionInfo("SqlServer",
                                 SqlServerLocalDBConnection.ConnectionStringBuilder.DataSource,
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         /// <param name="devEnvironment"></param>
         /// <param name="scriptFilesStateType"></param>
         /// <returns></returns>
-        public static List<ProjectConfigItem> Create(bool devEnvironment, ScriptFilesStateType scriptFilesStateType)
+        public List<ProjectConfigItem> CreateProjectConfigsByDBTyps()
         {
             List<ProjectConfigItem> projectConfigs = new List<ProjectConfigItem>();
 
@@ -41,7 +41,6 @@ namespace AutoVersionsDB.Core.IntegrationTests
             {
                 ProjectConfigItem projectConfig = CreateBaseProjectConfig();
 
-                projectConfig.DevEnvironment = devEnvironment;
 
                 projectConfig.DBType = dbConnectionInfo.DBType;
                 projectConfig.Server = dbConnectionInfo.Server;
@@ -49,7 +48,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
                 projectConfig.Password = dbConnectionInfo.Password;
                 projectConfig.DBName = dbConnectionInfo.DBName;
 
-                SetScriptsFolderPath(ref projectConfig, scriptFilesStateType);
+                //projectConfig.DevEnvironment = devEnvironment;
+                //SetFoldersPatByDBType(ref projectConfig, scriptFilesStateType);
 
                 projectConfigs.Add(projectConfig);
             }
@@ -62,38 +62,28 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        private static ProjectConfigItem CreateBaseProjectConfig()
+        private ProjectConfigItem CreateBaseProjectConfig()
         {
             return new ProjectConfigItem()
             {
                 Id = IntegrationTestsConsts.TestProjectId,
-                //DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DevScriptsBaseFolderPath_Normal),
-                //DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsSetting.DeliveryArtifactFolderPath_Normal),
                 DeployArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeployArtifact_FolderPath),
                 BackupFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackupBaseFolder),
             };
         }
 
-        private static ProjectConfigItem SetScriptsFolderPath(ref ProjectConfigItem projectConfig, ScriptFilesStateType scriptFilesStateType)
+        public ProjectConfigItem SetFoldersPathByDBType(ref ProjectConfigItem projectConfig, ScriptFilesStateType scriptFilesStateType)
         {
-            switch (projectConfig.DBType)
-            {
-                case "SqlServer":
-
-                    SetScriptsFolderPathForSqlServer(ref projectConfig, scriptFilesStateType);
-                    break;
-
-                default:
-                    throw new Exception($"Invalid DBType: '{projectConfig.DBType}'");
-            }
-
+            SetScriptsFoldersPath(ref projectConfig, scriptFilesStateType);
 
             projectConfig.DeployArtifactFolderPath = projectConfig.DeployArtifactFolderPath.Replace("[DBType]", projectConfig.DBType);
 
             return projectConfig;
         }
 
-        private static void SetScriptsFolderPathForSqlServer(ref ProjectConfigItem projectConfig, ScriptFilesStateType scriptFilesStateType)
+
+
+        private void SetScriptsFoldersPath(ref ProjectConfigItem projectConfig, ScriptFilesStateType scriptFilesStateType)
         {
             if (projectConfig.DevEnvironment)
             {

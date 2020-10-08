@@ -14,45 +14,45 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB
 {
-    public class DevEnv_SyncDB_RepeatableChanged_API : ITestDefinition
+    public class DevEnv_SyncDB_RepeatableChanged_API : TestDefinition<DBVersionsTestContext>
     {
-        private readonly DBVersionsValidTest _dbVersionsValidTest;
+        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DevEnv_SyncDB_RepeatableChanged_API(DBVersionsValidTest dbVersionsValidTest,
+        public DevEnv_SyncDB_RepeatableChanged_API(DBVersionsTestHelper dbVersionsTestHelper,
                                         ScriptFilesAsserts scriptFilesAsserts,
                                         DBAsserts dbAsserts)
         {
-            _dbVersionsValidTest = dbVersionsValidTest;
+            _dbVersionsTestHelper = dbVersionsTestHelper;
             _scriptFilesAsserts = scriptFilesAsserts;
             _dbAsserts = dbAsserts;
         }
 
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.RepeatableChanged);
         }
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.SyncDB(testContext.ProjectConfig.Id, null);
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            _dbVersionsValidTest.Asserts(testContext);
+            _dbVersionsTestHelper.Asserts(testContext, true);
 
             _dbAsserts.AssertDbInFinalState_DevEnv(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
             _scriptFilesAsserts.AssertThatAllFilesInFolderExistWithTheSameHashInTheDb_RunAgainAfterRepetableFilesChanged(GetType().Name, testContext.ProjectConfig);
         }
 
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
-            _dbVersionsValidTest.Release(testContext);
+            _dbVersionsTestHelper.Release(testContext);
         }
     }
 }

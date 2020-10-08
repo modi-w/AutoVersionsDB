@@ -19,45 +19,42 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Restore
 {
-    public class DevEnv_Restore_Recreate_API : ITestDefinition
+    public class DevEnv_Restore_Recreate_API : TestDefinition<DBVersionsTestContext>
     {
-        private readonly DBVersionsNotValidTest _dbVersionsNotValidTest;
+        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly DBAsserts _dbAsserts;
 
-        public DevEnv_Restore_Recreate_API(DBVersionsNotValidTest dbVersionsNotValidTest,
+        public DevEnv_Restore_Recreate_API(DBVersionsTestHelper dbVersionsTestHelper,
                                         DBAsserts dbAsserts)
         {
-            _dbVersionsNotValidTest = dbVersionsNotValidTest;
+            _dbVersionsTestHelper = dbVersionsTestHelper;
             _dbAsserts = dbAsserts;
         }
 
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsNotValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
         }
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.RecreateDBFromScratch(testContext.ProjectConfig.Id, null, null);
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            //Comment: When we implement the  _dbAsserts.AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(), we should not call this method here.
-            //          Because in this process we dont create a backup file.
-            //          The above method is called on DBVersionsTest.Asserts()
-            _dbVersionsNotValidTest.Asserts(testContext);
+            _dbVersionsTestHelper.Asserts(testContext, false);
 
             _dbAsserts.AssertRestore(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, testContext.DBBackupFileType, testContext.ProcessResults.Trace);
 
         }
 
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
-            _dbVersionsNotValidTest.Release(testContext);
+            _dbVersionsTestHelper.Release(testContext);
         }
     }
 }

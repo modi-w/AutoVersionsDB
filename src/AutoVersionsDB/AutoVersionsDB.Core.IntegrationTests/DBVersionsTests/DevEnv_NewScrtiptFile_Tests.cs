@@ -32,19 +32,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DevEnv_New_Incremental()
         {
-            TestsRunner.RunTest<DevEnv_NewScrtiptFile_Incremental_API, DevEnv_NewScrtiptFile_Incremental_CLI>(true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DevEnv_NewScrtiptFile_Incremental_API, DevEnv_NewScrtiptFile_Incremental_CLI>();
         }
 
         [Test]
         public void DevEnv_New_Repeatable()
         {
-            TestsRunner.RunTest<DevEnv_NewScrtiptFile_Repeatable_API, DevEnv_NewScrtiptFile_Repeatable_CLI>(true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DevEnv_NewScrtiptFile_Repeatable_API, DevEnv_NewScrtiptFile_Repeatable_CLI>();
         }
 
         [Test]
         public void DevEnv_New_DevDummyData()
         {
-            TestsRunner.RunTest<DevEnv_NewScrtiptFile_DevDummyData_API, DevEnv_NewScrtiptFile_DevDummyData_CLI>(true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DevEnv_NewScrtiptFile_DevDummyData_API, DevEnv_NewScrtiptFile_DevDummyData_CLI>();
         }
 
 

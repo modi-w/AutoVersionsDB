@@ -9,12 +9,43 @@ using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 
 namespace AutoVersionsDB.Core.IntegrationTests
 {
-    public interface ITestDefinition
+    public abstract class TestDefinition
     {
-        TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType);
-        void Act(TestContext testContext);
-        void Asserts(TestContext testContext);
+        public abstract TestContext Arrange(TestArgs testArgs);
+        public abstract void Act(TestContext testContext);
+        public abstract void Asserts(TestContext testContext);
 
-        void Release(TestContext testContext);
+        public abstract void Release(TestContext testContext);
     }
+
+    public abstract class TestDefinition<TTestContext> : TestDefinition
+        where TTestContext : TestContext
+    {
+
+
+
+        public override void Act(TestContext testContext)
+        {
+            Act(testContext as TTestContext);
+        }
+        public abstract void Act(TTestContext testContext);
+
+
+        public override void Asserts(TestContext testContext)
+        {
+            Asserts(testContext as TTestContext);
+        }
+        public abstract void Asserts(TTestContext testContext);
+
+
+
+        public override void Release(TestContext testContext)
+        {
+            Release(testContext as TTestContext);
+        }
+        public abstract void Release(TTestContext testContext);
+
+
+    }
+
 }

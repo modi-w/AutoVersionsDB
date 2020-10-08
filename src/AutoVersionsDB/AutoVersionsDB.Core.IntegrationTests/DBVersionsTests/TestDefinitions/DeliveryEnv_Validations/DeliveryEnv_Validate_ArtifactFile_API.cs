@@ -9,54 +9,66 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.Process;
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsUtils;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_Validate_ArtifactFile_API : ITestDefinition
+    public class DeliveryEnv_Validate_ArtifactFile_API : TestDefinition<DBVersionsTestContext>
     {
-        private readonly DBVersionsNotValidTest _dbVersionsNotValidTest;
+        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProcessAsserts _processAsserts;
 
-        public DeliveryEnv_Validate_ArtifactFile_API(DBVersionsNotValidTest dbVersionsNotValidTest, 
-                                                                    ProcessAsserts processAsserts)
+        public DeliveryEnv_Validate_ArtifactFile_API(DBVersionsTestHelper dbVersionsTestHelper,
+                                                    ProjectConfigsStorageHelper projectConfigsStorageHelper,
+                                                    ProcessAsserts processAsserts)
         {
-            _dbVersionsNotValidTest = dbVersionsNotValidTest;
+            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigsStorageHelper = projectConfigsStorageHelper;
             _processAsserts = processAsserts;
         }
 
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            projectConfig.DeliveryArtifactFolderPath += "_NotExistFolderSuffix";
+            DBVersionsTestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts) as DBVersionsTestContext;
 
-            return _dbVersionsNotValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            testContext.ProjectConfig.DeliveryArtifactFolderPath += "_NotExistFolderSuffix";
+
+            if (Directory.Exists(testContext.ProjectConfig.DeliveryArtifactFolderPath))
+            {
+                Directory.Delete(testContext.ProjectConfig.DeliveryArtifactFolderPath);
+            }
+
+            _projectConfigsStorageHelper.PrepareTestProject(testContext.ProjectConfig);
+
+
+            return testContext;
         }
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.ValidateDBVersions(testContext.ProjectConfig.Id, null);
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            //Comment: When we implement the  _dbAsserts.AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(), we should not call this method here.
-            //          Because in this process we dont create a backup file.
-            //          The above method is called on DBVersionsTest.Asserts()
-            _dbVersionsNotValidTest.Asserts(testContext);
+            _dbVersionsTestHelper.Asserts(testContext, false);
 
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "ArtifactFile");
 
         }
 
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
-            _dbVersionsNotValidTest.Release(testContext);
+            _dbVersionsTestHelper.Release(testContext);
         }
 
     }

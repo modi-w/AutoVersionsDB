@@ -38,20 +38,20 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        public static IEnumerable<ITestDefinition> GetTestDefinitions<T1>()
-                where T1 : ITestDefinition
+        public static IEnumerable<TestDefinition> GetTestDefinitions<T1>()
+                where T1 : TestDefinition
         {
-            List<ITestDefinition> testDefinitions = new List<ITestDefinition>();
+            List<TestDefinition> testDefinitions = new List<TestDefinition>();
 
             testDefinitions.Add(NinjectKernelContainer.Get<T1>());
 
             return testDefinitions;
         }
-        public static IEnumerable<ITestDefinition> GetTestDefinitions<T1, T2>()
-            where T1 : ITestDefinition
-            where T2 : ITestDefinition
+        public static IEnumerable<TestDefinition> GetTestDefinitions<T1, T2>()
+            where T1 : TestDefinition
+            where T2 : TestDefinition
         {
-            List<ITestDefinition> testDefinitions = new List<ITestDefinition>();
+            List<TestDefinition> testDefinitions = new List<TestDefinition>();
 
             testDefinitions.Add(NinjectKernelContainer.Get<T1>());
             testDefinitions.Add(NinjectKernelContainer.Get<T2>());

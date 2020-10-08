@@ -3,6 +3,7 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.Process;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,58 +12,84 @@ namespace AutoVersionsDB.Core.IntegrationTests
 {
     public static class TestsRunner
     {
-        public static void RunTest<T1>(bool devEnvironment, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
-         where T1 : ITestDefinition
+        private static ProjectConfigsFactory _projectConfigsFactory = NinjectUtils_IntegrationTests.NinjectKernelContainer.Get<ProjectConfigsFactory>();
+
+
+        public static void RunTests<T1>()
+        where T1 : TestDefinition
         {
-            List<ProjectConfigItem> projectConfigs = ProjectConfigsFactory.Create(devEnvironment, scriptFilesStateType);
+            TestArgs testArgs = new ProjectConfigTestArgs(null);
+
+            var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1>();
+
+            RunTests(tests, testArgs);
+        }
+
+        public static void RunTests<T1, T2>()
+        where T1 : TestDefinition
+              where T2 : TestDefinition
+        {
+            TestArgs testArgs = new ProjectConfigTestArgs(null);
+
+            var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2>();
+
+            RunTests(tests, testArgs);
+        }
+
+
+        public static void RunTestsForeachDBType<T1>()
+         where T1 : TestDefinition
+        {
+            List<ProjectConfigItem> projectConfigs = _projectConfigsFactory.CreateProjectConfigsByDBTyps();
 
             foreach (var projectConfig in projectConfigs)
             {
+                TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
+
                 var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1>();
 
-                foreach (var test in tests)
-                {
-                    RunSingleTest(dbBackupFileType, scriptFilesStateType, projectConfig, test);
-                }
+                RunTests(tests, testArgs);
             }
         }
 
-       
 
-        public static void RunTest<T1, T2>(bool devEnvironment, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
-          where T1 : ITestDefinition
-          where T2 : ITestDefinition
+
+        public static void RunTestsForeachDBType<T1, T2>()
+          where T1 : TestDefinition
+          where T2 : TestDefinition
         {
-            List<ProjectConfigItem> projectConfigs = ProjectConfigsFactory.Create(devEnvironment, scriptFilesStateType);
+            List<ProjectConfigItem> projectConfigs = _projectConfigsFactory.CreateProjectConfigsByDBTyps();
 
             foreach (var projectConfig in projectConfigs)
             {
+                TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
+
                 var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2>();
 
-                foreach (var test in tests)
-                {
-                    RunSingleTest(dbBackupFileType, scriptFilesStateType, projectConfig, test);
-                }
+                RunTests(tests, testArgs);
             }
         }
 
 
 
-        private static void RunSingleTest(DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType, ProjectConfigItem projectConfig, ITestDefinition test)
+        private static void RunTests(IEnumerable<TestDefinition> tests, TestArgs testArgs)
         {
-            TestContext testContext = null;
-
-            try
+            foreach (var test in tests)
             {
-                testContext = test.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+                TestContext testContext = null;
 
-                test.Act(testContext);
+                try
+                {
+                    testContext = test.Arrange(testArgs);
 
-                test.Asserts(testContext);
-            }
-            finally
-            {
-                test.Release(testContext);
+                    test.Act(testContext);
+
+                    test.Asserts(testContext);
+                }
+                finally
+                {
+                    test.Release(testContext);
+                }
             }
         }
     }

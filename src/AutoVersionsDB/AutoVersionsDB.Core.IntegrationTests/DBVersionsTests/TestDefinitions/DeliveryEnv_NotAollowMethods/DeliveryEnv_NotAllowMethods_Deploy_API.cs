@@ -19,56 +19,51 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods
 {
-    public class DeliveryEnv_NotAllowMethods_Deploy_API : ITestDefinition
+    public class DeliveryEnv_NotAllowMethods_Deploy_API : TestDefinition<DBVersionsTestContext>
     {
-        private readonly DBVersionsNotValidTest _dbVersionsNotValidTest;
+        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ProcessAsserts _processAsserts;
 
-        public DeliveryEnv_NotAllowMethods_Deploy_API(DBVersionsNotValidTest dbVersionsNotValidTest,
+        public DeliveryEnv_NotAllowMethods_Deploy_API(DBVersionsTestHelper dbVersionsTestHelper,
                                                                     ProcessAsserts processAsserts)
         {
-            _dbVersionsNotValidTest = dbVersionsNotValidTest;
+            _dbVersionsTestHelper = dbVersionsTestHelper;
             _processAsserts = processAsserts;
         }
 
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsNotValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
 
-            ClearDeployFiles(testContext);
+            ClearDeployFiles(testContext as DBVersionsTestContext);
 
             return testContext;
         }
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.Deploy(testContext.ProjectConfig.Id, null);
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            //Comment: When we implement the  _dbAsserts.AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(), we should not call this method here.
-            //          Because in this process we dont create a backup file.
-            //          The above method is called on DBVersionsTest.Asserts()
-            _dbVersionsNotValidTest.Asserts(testContext);
-
-            //Assert.That(false, testContext.ProcessResults.Trace.GetAllHistoryAsString());
+            _dbVersionsTestHelper.Asserts(testContext, false);
 
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DeliveryEnvironment");
         }
 
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
-            _dbVersionsNotValidTest.Release(testContext);
+            _dbVersionsTestHelper.Release(testContext);
 
             ClearDeployFiles(testContext);
         }
 
 
-        private static void ClearDeployFiles(TestContext testContext)
+        private static void ClearDeployFiles(DBVersionsTestContext testContext)
         {
             if (testContext != null
                 && testContext.ProjectConfig != null)

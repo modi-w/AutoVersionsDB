@@ -34,14 +34,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DevEnv_SyncDB_DBInMiddleState()
         {
-            TestsRunner.RunTest<DevEnv_SyncDB_API, DevEnv_SyncDB_CLI>(true, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DevEnv_SyncDB_API, DevEnv_SyncDB_CLI>();
         }
 
 
         [Test]
         public void DevEnv_SyncDB_RepeatableChanged()
         {
-            TestsRunner.RunTest<DevEnv_SyncDB_RepeatableChanged_API, DevEnv_SyncDB_RepeatableChanged_CLI>(true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.RepeatableChanged);
+            TestsRunner.RunTestsForeachDBType<DevEnv_SyncDB_RepeatableChanged_API, DevEnv_SyncDB_RepeatableChanged_CLI>();
         }
 
 

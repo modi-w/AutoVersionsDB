@@ -15,19 +15,19 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual
 {
-    public class DeliveryEnv_Virtual_CLI : ITestDefinition
+    public class DeliveryEnv_Virtual_MiddleState_CLI : TestDefinition<DBVersionsTestContext>
     {
 
-        private readonly DeliveryEnv_Virtual_API _deliveryEnv_Virtual_API;
+        private readonly DeliveryEnv_Virtual_MiddleState_API _deliveryEnv_Virtual_API;
 
-        public DeliveryEnv_Virtual_CLI(DeliveryEnv_Virtual_API deliveryEnv_Virtual_API)
+        public DeliveryEnv_Virtual_MiddleState_CLI(DeliveryEnv_Virtual_MiddleState_API deliveryEnv_Virtual_API)
         {
             _deliveryEnv_Virtual_API = deliveryEnv_Virtual_API;
         }
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _deliveryEnv_Virtual_API.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _deliveryEnv_Virtual_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -35,20 +35,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
-            if (testContext.DBBackupFileType == DBBackupFileType.MiddleState)
-            {
-                AutoVersionsDBAPI.CLIRun($"virtual -id={IntegrationTestsConsts.TestProjectId} -t={IntegrationTestsConsts.TargetStateFile_FinalState}");
-            }
-            else
-            {
-                AutoVersionsDBAPI.CLIRun($"virtual -id={IntegrationTestsConsts.TestProjectId} -t={IntegrationTestsConsts.TargetStateFile_MiddleState}");
-            }
+            AutoVersionsDBAPI.CLIRun($"virtual -id={IntegrationTestsConsts.TestProjectId} -t={IntegrationTestsConsts.TargetStateFile_FinalState}");
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
             _deliveryEnv_Virtual_API.Asserts(testContext);
 
@@ -59,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
             _deliveryEnv_Virtual_API.Release(testContext);
         }

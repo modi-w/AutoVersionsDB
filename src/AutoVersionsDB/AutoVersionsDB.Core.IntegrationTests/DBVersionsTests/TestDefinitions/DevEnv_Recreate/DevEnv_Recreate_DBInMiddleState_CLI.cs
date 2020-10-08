@@ -15,19 +15,19 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate
 {
-    public class DevEnv_Recreate_CLI : ITestDefinition
+    public class DevEnv_Recreate_DBInMiddleState_CLI : TestDefinition<DBVersionsTestContext>
     {
 
-        private readonly DevEnv_Recreate_API _devEnv_Recreate_API;
+        private readonly DevEnv_Recreate_DBInMiddleState_API _devEnv_Recreate_API;
 
-        public DevEnv_Recreate_CLI(DevEnv_Recreate_API devEnv_Recreate_API)
+        public DevEnv_Recreate_DBInMiddleState_CLI(DevEnv_Recreate_DBInMiddleState_API devEnv_Recreate_API)
         {
             _devEnv_Recreate_API = devEnv_Recreate_API;
         }
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _devEnv_Recreate_API.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _devEnv_Recreate_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -35,13 +35,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"recreate -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
             _devEnv_Recreate_API.Asserts(testContext);
 
@@ -52,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
             _devEnv_Recreate_API.Release(testContext);
         }

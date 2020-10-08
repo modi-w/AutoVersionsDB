@@ -17,7 +17,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods
 {
-    public class DeliveryEnv_NotAllowMethods_New_Repeatable_CLI : ITestDefinition
+    public class DeliveryEnv_NotAllowMethods_New_Repeatable_CLI : TestDefinition<DBVersionsTestContext>
     {
 
         private readonly DeliveryEnv_NotAllowMethods_New_Repeatable_API _deliveryEnv_New_Repeatable_API;
@@ -27,9 +27,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _deliveryEnv_New_Repeatable_API = deliveryEnv_New_Repeatable_API;
         }
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _deliveryEnv_New_Repeatable_API.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _deliveryEnv_New_Repeatable_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -37,13 +37,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"new repeatable -id={IntegrationTestsConsts.TestProjectId} -sn={_deliveryEnv_New_Repeatable_API.ScriptName1}");
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
             _deliveryEnv_New_Repeatable_API.Asserts(testContext);
 
@@ -61,7 +61,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public void Release(TestContext testContext)
+        public override void Release(DBVersionsTestContext testContext)
         {
             _deliveryEnv_New_Repeatable_API.Release(testContext);
         }
