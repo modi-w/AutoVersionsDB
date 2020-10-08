@@ -68,15 +68,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             if (testContext != null
                 && testContext.ProjectConfig != null)
             {
-                string[] deployFiles = Directory.GetFiles(testContext.ProjectConfig.DeployArtifactFolderPath);
-
-                foreach (string file in deployFiles)
+                if (Directory.Exists(testContext.ProjectConfig.DeployArtifactFolderPath))
                 {
-                    if (File.Exists(file))
-                    {
-                        File.Delete(file);
-                    }
+                    Directory.Delete(testContext.ProjectConfig.DeployArtifactFolderPath, true);
                 }
+
             }
         }
     }
