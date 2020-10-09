@@ -99,7 +99,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.CLICommands
                      }
                      else
                      {
-                         message = $"{"DeliveryArtifactFolderPath".PadRight(c_paddingRightForCaprions)}: {projectConfig.DeliveryArtifactFolderPath}";
+                         message = $"{"Delivery Artifact Folder Path".PadRight(c_paddingRightForCaprions)}: {projectConfig.DeliveryArtifactFolderPath}";
                          _consoleProcessMessages.SetInfoMessage(message);
                      }
 
