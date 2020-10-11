@@ -18,9 +18,9 @@ namespace AutoVersionsDB.ConsoleApp
             Console.Title = "AutoVersionsDB";
 
 
-            //     return AutoVersionsDBAPI.CLIRun(args);
+            return AutoVersionsDBAPI.CLIRun(args);
 
-            return AutoVersionsDBAPI.CLIRun("recreate -id=Bandana");
+            //return AutoVersionsDBAPI.CLIRun("recreate -id=Bandana");
 
 
             //  return AutoVersionsDBAPI.CLIRun("-h");
