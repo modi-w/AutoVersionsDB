@@ -30,6 +30,11 @@ namespace AutoVersionsDB.Core.Common.CLI
         {
             IsActive = true;
 
+            lock (ConsoleProcessMessages.ConsolWriteSync)
+            {
+                _console.CursorVisible = false;
+            }
+
             Task.Run(() =>
             {
                 try
@@ -60,6 +65,8 @@ namespace AutoVersionsDB.Core.Common.CLI
             {
                 _console.SetCursorPosition(0, _console.CursorTop);
                 _console.Out.Write(" ");
+
+                _console.CursorVisible = true;
             }
         }
 

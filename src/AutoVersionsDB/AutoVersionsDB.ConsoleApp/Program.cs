@@ -18,15 +18,17 @@ namespace AutoVersionsDB.ConsoleApp
             Console.Title = "AutoVersionsDB";
 
 
-            return AutoVersionsDBAPI.CLIRun(args);
+            //     return AutoVersionsDBAPI.CLIRun(args);
+
+            return AutoVersionsDBAPI.CLIRun("recreate -id=Bandana");
 
 
             //  return AutoVersionsDBAPI.CLIRun("-h");
-           // return AutoVersionsDBAPI.CLIRun("dbtypes");
+            // return AutoVersionsDBAPI.CLIRun("dbtypes");
             //return AutoVersionsDBAPI.CLIRun("config -id=testp1 -desc=\"Test project 2\" --db-type=SqlServer -connstr=aaaa -connstrm=bbb -buf=ccc -dsf=ddd -def=eee -darf=fff");
             //  return AutoVersionsDBAPI.CLIRun("config environment -id=testp1 -dev=true");
             //return AutoVersionsDBAPI.CLIRun("sync -id=testp");
-            //return AutoVersionsDBAPI.CLIRun("recreate -id=testp");
+            //return AutoVersionsDBAPI.CLIRun("recreate -id=Bandana");
             //    return AutoVersionsDBAPI.CLIRun("validate -id=testp");
             //   return AutoVersionsDBAPI.CLIRun("files -id=testp");
             //     return AutoVersionsDBAPI.CLIRun("config -id=testp -desc=\"Test project 1\"");
