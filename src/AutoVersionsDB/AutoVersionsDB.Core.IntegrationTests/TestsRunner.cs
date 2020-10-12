@@ -70,6 +70,59 @@ namespace AutoVersionsDB.Core.IntegrationTests
             }
         }
 
+        public static void RunTestsForeachDBType<T1, T2, T3>()
+            where T1 : TestDefinition
+            where T2 : TestDefinition
+            where T3 : TestDefinition
+        {
+            List<ProjectConfigItem> projectConfigs = _projectConfigsFactory.CreateProjectConfigsByDBTyps();
+
+            foreach (var projectConfig in projectConfigs)
+            {
+                TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
+
+                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3>();
+
+                RunTests(tests, testArgs);
+            }
+        }
+
+        public static void RunTestsForeachDBType<T1, T2, T3, T4>()
+            where T1 : TestDefinition
+            where T2 : TestDefinition
+            where T3 : TestDefinition
+            where T4 : TestDefinition
+        {
+            List<ProjectConfigItem> projectConfigs = _projectConfigsFactory.CreateProjectConfigsByDBTyps();
+
+            foreach (var projectConfig in projectConfigs)
+            {
+                TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
+
+                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3, T4>();
+
+                RunTests(tests, testArgs);
+            }
+        }
+
+        public static void RunTestsForeachDBType<T1, T2, T3, T4, T5>()
+            where T1 : TestDefinition
+            where T2 : TestDefinition
+            where T3 : TestDefinition
+            where T4 : TestDefinition
+            where T5 : TestDefinition
+        {
+            List<ProjectConfigItem> projectConfigs = _projectConfigsFactory.CreateProjectConfigsByDBTyps();
+
+            foreach (var projectConfig in projectConfigs)
+            {
+                TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
+
+                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3, T4, T5>();
+
+                RunTests(tests, testArgs);
+            }
+        }
 
 
         private static void RunTests(IEnumerable<TestDefinition> tests, TestArgs testArgs)
