@@ -3,6 +3,7 @@ using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DB;
+using AutoVersionsDB.Core.IntegrationTests.Process;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.ChangeProjectId;
@@ -29,13 +30,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProjectConfigsStorage _projectConfigsStorage;
+        private readonly ProcessAsserts _processAsserts;
 
 
         public ChangeProjectId_API(ProjectConfigsStorageHelper projectConfigsStorageHelper,
-                                    ProjectConfigsStorage projectConfigsStorage)
+                                    ProjectConfigsStorage projectConfigsStorage,
+                                    ProcessAsserts processAsserts)
+
         {
             _projectConfigsStorageHelper = projectConfigsStorageHelper;
             _projectConfigsStorage = projectConfigsStorage;
+            _processAsserts = processAsserts;
         }
 
 
@@ -62,6 +67,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Asserts(TestContext testContext)
         {
+            _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
+
             ProjectConfigItem oldProjectByProjectId = _projectConfigsStorage.GetProjectConfigById(OldProjectId);
             Assert.That(oldProjectByProjectId == null, $"{this.GetType().Name} -> Shuold not find project with the old ProjectId.");
 

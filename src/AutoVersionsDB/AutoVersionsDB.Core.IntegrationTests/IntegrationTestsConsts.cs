@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -58,11 +59,11 @@ namespace AutoVersionsDB.Core.IntegrationTests
             DBName = "DummyDBName",
             Username = "DummyUsername",
             Password = "DummyPassword",
-            BackupFolderPath = "DummyBackupFolderPath",
-            DevEnvironment = true,                                
-            DevScriptsBaseFolderPath = "DummyDevScriptsBaseFolderPath",
-            DeployArtifactFolderPath = "DummyDeployArtifactFolderPath",
-            DeliveryArtifactFolderPath = "DummyDeliveryArtifactFolderPath",
+            BackupFolderPath = FileSystemPathUtils.ParsePathVaribles(@"[CommonApplicationData]\AutoVersionsDB.Core.IntegrationTests\DummyBackupFolderPath"),
+            DevEnvironment = true,
+            DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(@"[CommonApplicationData]\AutoVersionsDB.Core.IntegrationTests\DummyDevScriptsBaseFolderPath"),
+            DeployArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(@"[CommonApplicationData]\AutoVersionsDB.Core.IntegrationTests\DummyDeployArtifactFolderPath"),
+            DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(@"[CommonApplicationData]\AutoVersionsDB.Core.IntegrationTests\DummyDeliveryArtifactFolderPath"),
         };
     }
 }
