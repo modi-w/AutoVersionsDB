@@ -1,6 +1,10 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB;
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+using AutoVersionsDB.Core.IntegrationTests;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -12,7 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DB
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 {
     public class DBAsserts
     {

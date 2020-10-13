@@ -1,10 +1,15 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB;
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.IntegrationTests;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
+using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.Process
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process
 {
     public class ProcessAsserts
     {

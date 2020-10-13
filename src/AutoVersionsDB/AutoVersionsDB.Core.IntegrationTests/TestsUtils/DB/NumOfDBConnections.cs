@@ -1,9 +1,10 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.DB;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DB
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
+
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 {
     public class NumOfDBConnections
     {

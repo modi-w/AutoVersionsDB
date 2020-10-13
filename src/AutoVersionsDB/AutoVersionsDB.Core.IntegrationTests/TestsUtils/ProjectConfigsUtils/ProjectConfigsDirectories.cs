@@ -1,11 +1,16 @@
-﻿using AutoVersionsDB.Helpers;
+﻿using AutoVersionsDB;
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.IntegrationTests;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
+using AutoVersionsDB.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsUtils
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils
 {
     public class ProjectConfigsDirectories
     {
@@ -13,7 +18,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsUtils
 
         public void ClearAutoCreatedFolders()
         {
-            ResolveDeleteFolder(ProjectConfigsDirectories.DefaultBackupsFolder);
+            ResolveDeleteFolder(DefaultBackupsFolder);
             ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath);
             ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath);
             ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.IncrementalScriptsFolderPath);

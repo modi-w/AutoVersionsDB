@@ -2,8 +2,9 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.CLI;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.DbCommands.Contract;
 using NUnit.Framework;
 using System;
@@ -12,7 +13,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.CLI
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
 {
     public class AssertTextByLines
     {

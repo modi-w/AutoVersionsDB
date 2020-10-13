@@ -2,12 +2,13 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsUtils;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsUtils
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils
 {
 
     public class ProjectConfigsStorageHelper

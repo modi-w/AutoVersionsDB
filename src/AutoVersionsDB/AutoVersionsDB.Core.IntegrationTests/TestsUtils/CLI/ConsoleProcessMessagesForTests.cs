@@ -2,13 +2,14 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.Common.CLI;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.CLI;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.CLI
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
 {
     public class ConsoleProcessMessagesForTests : IConsoleProcessMessages
     {

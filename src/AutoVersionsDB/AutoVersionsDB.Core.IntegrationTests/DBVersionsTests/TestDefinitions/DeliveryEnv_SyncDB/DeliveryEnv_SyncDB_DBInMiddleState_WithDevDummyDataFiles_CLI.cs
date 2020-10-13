@@ -1,7 +1,8 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.IntegrationTests.CLI;
-using AutoVersionsDB.Core.IntegrationTests.DB;
-using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+
+
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
 using System.Text;

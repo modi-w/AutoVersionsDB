@@ -1,10 +1,15 @@
-﻿using NUnit.Framework;
+﻿using AutoVersionsDB;
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.IntegrationTests;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsUtils
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils
 {
     public class ProperiesAsserts
     {

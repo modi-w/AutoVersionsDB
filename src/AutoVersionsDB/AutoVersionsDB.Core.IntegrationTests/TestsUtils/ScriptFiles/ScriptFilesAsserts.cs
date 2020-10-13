@@ -1,10 +1,16 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB;
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.ArtifactFile;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+using AutoVersionsDB.Core.IntegrationTests;
+
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Helpers;
 using NUnit.Framework;
@@ -16,7 +22,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.ScriptFiles
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 {
     public class ScriptFilesAsserts
     {

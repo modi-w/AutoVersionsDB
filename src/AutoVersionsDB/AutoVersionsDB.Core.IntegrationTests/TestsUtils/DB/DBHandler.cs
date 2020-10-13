@@ -3,8 +3,9 @@ using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.ArtifactFile;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.Helpers;
@@ -15,7 +16,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DB
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 {
     public class DBHandler
     {
@@ -123,6 +124,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.DB
             }
         }
 
-        
+
     }
 }

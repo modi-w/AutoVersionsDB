@@ -1,7 +1,8 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using MartinCostello.SqlLocalDb;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DB
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 {
     public class SqlServerLocalDBConnection
     {
