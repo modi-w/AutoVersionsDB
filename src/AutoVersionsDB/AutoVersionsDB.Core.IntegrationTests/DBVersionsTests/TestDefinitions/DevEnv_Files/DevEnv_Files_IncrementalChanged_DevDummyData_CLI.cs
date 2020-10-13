@@ -16,12 +16,12 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
 {
-    public class DevEnv_Files_DevDummyData_IncrementalChanged_CLI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Files_IncrementalChanged_DevDummyData_CLI : TestDefinition<DBVersionsTestContext>
     {
 
         private readonly DevEnv_Files_IncrementalChanged_API _devEnv_Files_IncrementalChanged_API;
 
-        public DevEnv_Files_DevDummyData_IncrementalChanged_CLI(DevEnv_Files_IncrementalChanged_API devEnv_Files_IncrementalChanged_API)
+        public DevEnv_Files_IncrementalChanged_DevDummyData_CLI(DevEnv_Files_IncrementalChanged_API devEnv_Files_IncrementalChanged_API)
         {
             _devEnv_Files_IncrementalChanged_API = devEnv_Files_IncrementalChanged_API;
         }

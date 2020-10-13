@@ -16,19 +16,19 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
 {
-    public class DevEnv_Files_Incremental_IncrementalChanged_CLI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Files_RepeatableChanged_All_CLI : TestDefinition<DBVersionsTestContext>
     {
 
-        private readonly DevEnv_Files_IncrementalChanged_API _devEnv_Files_IncrementalChanged_API;
+        private readonly DevEnv_Files_RepeatableChanged_API _devEnv_Files_RepeatableChanged_API;
 
-        public DevEnv_Files_Incremental_IncrementalChanged_CLI(DevEnv_Files_IncrementalChanged_API devEnv_Files_IncrementalChanged_API)
+        public DevEnv_Files_RepeatableChanged_All_CLI(DevEnv_Files_RepeatableChanged_API devEnv_Files_RepeatableChanged_API)
         {
-            _devEnv_Files_IncrementalChanged_API = devEnv_Files_IncrementalChanged_API;
+            _devEnv_Files_RepeatableChanged_API = devEnv_Files_RepeatableChanged_API;
         }
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _devEnv_Files_IncrementalChanged_API.Arrange(testArgs);
+            TestContext testContext = _devEnv_Files_RepeatableChanged_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -38,13 +38,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(DBVersionsTestContext testContext)
         {
-            AutoVersionsDBAPI.CLIRun($"files incremental -id={IntegrationTestsConsts.TestProjectId}");
+            AutoVersionsDBAPI.CLIRun($"files -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
         public override void Asserts(DBVersionsTestContext testContext)
         {
-            _devEnv_Files_IncrementalChanged_API.Asserts(testContext);
+            _devEnv_Files_RepeatableChanged_API.Asserts(testContext);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
 
@@ -56,17 +56,28 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage(5, "-------------------------------------------------------", true);
             assertTextByLines.AssertLineMessage(6, "   sync    | incScript_2020-02-25.100_initState.sql", true);
             assertTextByLines.AssertLineMessage(7, "   sync    | incScript_2020-02-25.101_CreateLookupTable1.sql", true);
-            assertTextByLines.AssertLineMessage(8, "   changed | incScript_2020-02-25.102_CreateLookupTable2.sql", true);
-            assertTextByLines.AssertLineMessage(9, "           | incScript_2020-03-02.100_CreateTransTable1.sql", true);
-            assertTextByLines.AssertLineMessage(10, "           | incScript_2020-03-02.101_CreateInvoiceTable1.sql", true);
-
+            assertTextByLines.AssertLineMessage(8, "   sync    | incScript_2020-02-25.102_CreateLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage(9, "   sync    | incScript_2020-03-02.100_CreateTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage(10, "   sync    | incScript_2020-03-02.101_CreateInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage(11, "", true);
+            assertTextByLines.AssertLineMessage(12, "++ Repeatable Scripts:", true);
+            assertTextByLines.AssertLineMessage(13, "  Status   |  File", true);
+            assertTextByLines.AssertLineMessage(14, "-------------------------------------------------------", true);
+            assertTextByLines.AssertLineMessage(15, "   changed | rptScript_DataForLookupTable1.sql", true);
+            assertTextByLines.AssertLineMessage(16, "   sync    | rptScript_DataForLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage(17, "", true);
+            assertTextByLines.AssertLineMessage(18, "++ DevDummyData Scripts:", true);
+            assertTextByLines.AssertLineMessage(19, "  Status   |  File", true);
+            assertTextByLines.AssertLineMessage(20, "-------------------------------------------------------", true);
+            assertTextByLines.AssertLineMessage(21, "   sync    | dddScript_DataForInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage(22, "   changed | dddScript_DataForTransTable1.sql", true);
         }
 
 
 
         public override void Release(DBVersionsTestContext testContext)
         {
-            _devEnv_Files_IncrementalChanged_API.Release(testContext);
+            _devEnv_Files_RepeatableChanged_API.Release(testContext);
         }
 
     }
