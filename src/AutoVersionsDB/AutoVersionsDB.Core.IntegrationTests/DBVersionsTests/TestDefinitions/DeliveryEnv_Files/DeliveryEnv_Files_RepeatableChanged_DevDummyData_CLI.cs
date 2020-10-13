@@ -7,28 +7,27 @@ using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
+namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DevEnv_Files_IncrementalChanged_DevDummyData_CLI : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Files_RepeatableChanged_DevDummyData_CLI : TestDefinition<DBVersionsTestContext>
     {
 
-        private readonly DevEnv_Files_IncrementalChanged_API _files_IncrementalChanged_API;
+        private readonly DeliveryEnv_Files_RepeatableChanged_API _files_RepeatableChanged_API;
 
-        public DevEnv_Files_IncrementalChanged_DevDummyData_CLI(DevEnv_Files_IncrementalChanged_API devEnv_Files_IncrementalChanged_API)
+        public DeliveryEnv_Files_RepeatableChanged_DevDummyData_CLI(DeliveryEnv_Files_RepeatableChanged_API devEnv_Files_RepeatableChanged_API)
         {
-            _files_IncrementalChanged_API = devEnv_Files_IncrementalChanged_API;
+            _files_RepeatableChanged_API = devEnv_Files_RepeatableChanged_API;
         }
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _files_IncrementalChanged_API.Arrange(testArgs);
+            TestContext testContext = _files_RepeatableChanged_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -44,25 +43,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(DBVersionsTestContext testContext)
         {
-            _files_IncrementalChanged_API.Asserts(testContext);
+            _files_RepeatableChanged_API.Asserts(testContext);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
 
             assertTextByLines.AssertLineMessage(0, "> Run 'files ddd' for 'IntegrationTestProject'", true);
             assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
-            assertTextByLines.AssertLineMessage(2, "", true);
-            assertTextByLines.AssertLineMessage(3, "++ DevDummyData Scripts:", true);
-            assertTextByLines.AssertLineMessage(4, "  Status   |  File", true);
-            assertTextByLines.AssertLineMessage(5, "-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage(6, "           | dddScript_DataForInvoiceTable1.sql", true);
-            assertTextByLines.AssertLineMessage(7, "           | dddScript_DataForTransTable1.sql", true);
         }
 
 
 
         public override void Release(DBVersionsTestContext testContext)
         {
-            _files_IncrementalChanged_API.Release(testContext);
+            _files_RepeatableChanged_API.Release(testContext);
         }
 
     }

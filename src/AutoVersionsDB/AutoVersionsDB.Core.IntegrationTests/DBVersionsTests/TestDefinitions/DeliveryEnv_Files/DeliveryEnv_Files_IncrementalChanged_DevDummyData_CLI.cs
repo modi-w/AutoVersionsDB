@@ -7,21 +7,20 @@ using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
+namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DevEnv_Files_IncrementalChanged_DevDummyData_CLI : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Files_IncrementalChanged_DevDummyData_CLI : TestDefinition<DBVersionsTestContext>
     {
 
-        private readonly DevEnv_Files_IncrementalChanged_API _files_IncrementalChanged_API;
+        private readonly DeliveryEnv_Files_IncrementalChanged_API _files_IncrementalChanged_API;
 
-        public DevEnv_Files_IncrementalChanged_DevDummyData_CLI(DevEnv_Files_IncrementalChanged_API devEnv_Files_IncrementalChanged_API)
+        public DeliveryEnv_Files_IncrementalChanged_DevDummyData_CLI(DeliveryEnv_Files_IncrementalChanged_API devEnv_Files_IncrementalChanged_API)
         {
             _files_IncrementalChanged_API = devEnv_Files_IncrementalChanged_API;
         }
@@ -50,12 +49,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             assertTextByLines.AssertLineMessage(0, "> Run 'files ddd' for 'IntegrationTestProject'", true);
             assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
-            assertTextByLines.AssertLineMessage(2, "", true);
-            assertTextByLines.AssertLineMessage(3, "++ DevDummyData Scripts:", true);
-            assertTextByLines.AssertLineMessage(4, "  Status   |  File", true);
-            assertTextByLines.AssertLineMessage(5, "-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage(6, "           | dddScript_DataForInvoiceTable1.sql", true);
-            assertTextByLines.AssertLineMessage(7, "           | dddScript_DataForTransTable1.sql", true);
         }
 
 

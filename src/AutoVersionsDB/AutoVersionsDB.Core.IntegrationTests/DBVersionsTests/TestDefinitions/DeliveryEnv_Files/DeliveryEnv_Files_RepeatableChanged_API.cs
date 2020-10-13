@@ -10,8 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files;
 using AutoVersionsDB.Core.IntegrationTests.Process;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
@@ -22,15 +21,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
+namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DevEnv_Files_RepeatableChanged_API : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Files_RepeatableChanged_API : TestDefinition<DBVersionsTestContext>
     {
         private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public DevEnv_Files_RepeatableChanged_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_Files_RepeatableChanged_API(DBVersionsTestHelper dbVersionsTestHelper,
                                                     ScriptFilesAsserts scriptFilesAsserts)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;
@@ -40,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.RepeatableChanged);
+            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.RepeatableChanged);
 
 
             return testContext;
@@ -71,10 +70,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             rptfileStateListAssert.AssertFileState(0, "rptScript_DataForLookupTable1.sql", HashDiffType.Different);
             rptfileStateListAssert.AssertFileState(1, "rptScript_DataForLookupTable2.sql", HashDiffType.Equal);
 
-            FileStateListAssert dddfileStateListAssert = new FileStateListAssert(this.GetType().Name, scriptFilesState.DevDummyDataScriptFilesComparer);
-            dddfileStateListAssert.AssertNumOfFiles(2);
-            dddfileStateListAssert.AssertFileState(0, "dddScript_DataForInvoiceTable1.sql", HashDiffType.Equal);
-            dddfileStateListAssert.AssertFileState(1, "dddScript_DataForTransTable1.sql", HashDiffType.Different);
+            Assert.That(scriptFilesState.DevDummyDataScriptFilesComparer == null, $"{this.GetType().Name} -> DevDummyDataScriptFilesComparer should be null on delivery environment");
         }
 
         public override void Release(DBVersionsTestContext testContext)

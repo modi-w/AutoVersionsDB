@@ -7,21 +7,20 @@ using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files;
 using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
+namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DevEnv_Files_RepeatableChanged_Incremental_CLI : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Files_RepeatableChanged_Incremental_CLI : TestDefinition<DBVersionsTestContext>
     {
 
-        private readonly DevEnv_Files_RepeatableChanged_API _files_RepeatableChanged_API;
+        private readonly DeliveryEnv_Files_RepeatableChanged_API _files_RepeatableChanged_API;
 
-        public DevEnv_Files_RepeatableChanged_Incremental_CLI(DevEnv_Files_RepeatableChanged_API devEnv_Files_RepeatableChanged_API)
+        public DeliveryEnv_Files_RepeatableChanged_Incremental_CLI(DeliveryEnv_Files_RepeatableChanged_API devEnv_Files_RepeatableChanged_API)
         {
             _files_RepeatableChanged_API = devEnv_Files_RepeatableChanged_API;
         }

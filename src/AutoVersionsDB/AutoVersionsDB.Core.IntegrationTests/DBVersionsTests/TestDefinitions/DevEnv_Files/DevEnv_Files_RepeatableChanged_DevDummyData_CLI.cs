@@ -19,16 +19,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
     public class DevEnv_Files_RepeatableChanged_DevDummyData_CLI : TestDefinition<DBVersionsTestContext>
     {
 
-        private readonly DevEnv_Files_RepeatableChanged_API _devEnv_Files_RepeatableChanged_API;
+        private readonly DevEnv_Files_RepeatableChanged_API _files_RepeatableChanged_API;
 
         public DevEnv_Files_RepeatableChanged_DevDummyData_CLI(DevEnv_Files_RepeatableChanged_API devEnv_Files_RepeatableChanged_API)
         {
-            _devEnv_Files_RepeatableChanged_API = devEnv_Files_RepeatableChanged_API;
+            _files_RepeatableChanged_API = devEnv_Files_RepeatableChanged_API;
         }
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _devEnv_Files_RepeatableChanged_API.Arrange(testArgs);
+            TestContext testContext = _files_RepeatableChanged_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -44,7 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(DBVersionsTestContext testContext)
         {
-            _devEnv_Files_RepeatableChanged_API.Asserts(testContext);
+            _files_RepeatableChanged_API.Asserts(testContext);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
 
@@ -62,7 +62,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Release(DBVersionsTestContext testContext)
         {
-            _devEnv_Files_RepeatableChanged_API.Release(testContext);
+            _files_RepeatableChanged_API.Release(testContext);
         }
 
     }
