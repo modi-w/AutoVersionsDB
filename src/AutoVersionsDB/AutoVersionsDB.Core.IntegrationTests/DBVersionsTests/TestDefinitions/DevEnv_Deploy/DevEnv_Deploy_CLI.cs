@@ -45,11 +45,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_Deploy_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertTextByLines.AssertLineMessage(0, "> Run 'deploy' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
-            assertTextByLines.AssertLineMessage(2, "Artifact file created: ", false);
-            assertTextByLines.AssertLineMessage(2, @"Deploy\AutoVersionsDB.Tests.avdb'", false);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,3);
+            assertTextByLines.AssertLineMessage("> Run 'deploy' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage("Artifact file created: ", false,2);
+            assertTextByLines.AssertLineMessage(@"Deploy\AutoVersionsDB.Tests.avdb'", false,2);
         }
 
 

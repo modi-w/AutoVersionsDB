@@ -59,9 +59,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             config_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertTextByLines.AssertLineMessage(0, "> Run 'config' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,2);
+            assertTextByLines.AssertLineMessage("> Run 'config' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
 
         }
 

@@ -45,15 +45,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _deliveryEnv_New_Repeatable_API.Asserts(testContext);
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "> Run 'new repeatable' for 'IntegrationTestProject'", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("> Run 'new repeatable' for 'IntegrationTestProject'", true);
 
-            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
-            assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage(2, "DeliveryEnvironment. Error: Could not run this command on Delivery Environment", false);
-            assertErrorsTextByLines.AssertLineMessage(3, "", true);
-            assertErrorsTextByLines.AssertLineMessage(4, "Could not run this command on Delivery Environment", true);
+            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
+            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
+            assertErrorsTextByLines.AssertLineMessage("DeliveryEnvironment. Error: Could not run this command on Delivery Environment", false);
+            assertErrorsTextByLines.AssertLineMessage("", true);
+            assertErrorsTextByLines.AssertLineMessage("Could not run this command on Delivery Environment", true);
 
 
         }

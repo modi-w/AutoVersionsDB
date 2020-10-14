@@ -46,11 +46,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_NewScrtiptFile_Repeatable_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-          
-            assertTextByLines.AssertLineMessage(0, "> Run 'new repeatable' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
-            assertTextByLines.AssertLineMessage(2, $"The file: '{_devEnv_NewScrtiptFile_Repeatable_API.GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 3);
+
+            assertTextByLines.AssertLineMessage("> Run 'new repeatable' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage($"The file: '{_devEnv_NewScrtiptFile_Repeatable_API.GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
         }
 
 

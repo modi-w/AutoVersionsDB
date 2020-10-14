@@ -43,10 +43,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _files_IncrementalChanged_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 2);
 
-            assertTextByLines.AssertLineMessage(0, "> Run 'files ddd' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
+            assertTextByLines.AssertLineMessage("> Run 'files ddd' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
         }
 
 

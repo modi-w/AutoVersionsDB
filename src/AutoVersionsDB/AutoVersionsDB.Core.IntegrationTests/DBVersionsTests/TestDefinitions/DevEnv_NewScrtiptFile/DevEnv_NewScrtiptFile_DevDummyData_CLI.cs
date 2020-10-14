@@ -46,11 +46,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_NewScrtiptFile_DevDummyData_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,3);
           
-            assertTextByLines.AssertLineMessage(0, "> Run 'new ddd' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
-            assertTextByLines.AssertLineMessage(2, $"The file: '{_devEnv_NewScrtiptFile_DevDummyData_API.GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
+            assertTextByLines.AssertLineMessage("> Run 'new ddd' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage($"The file: '{_devEnv_NewScrtiptFile_DevDummyData_API.GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
         }
 
 

@@ -43,19 +43,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _files_RepeatableChanged_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,11);
 
-            assertTextByLines.AssertLineMessage(0, "> Run 'files' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
-            assertTextByLines.AssertLineMessage(2, "", true);
-            assertTextByLines.AssertLineMessage(3, "++ Incremental Scripts:", true);
-            assertTextByLines.AssertLineMessage(4, "  Status   |  File", true);
-            assertTextByLines.AssertLineMessage(5, "-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage(6, "   sync    | incScript_2020-02-25.100_initState.sql", true);
-            assertTextByLines.AssertLineMessage(7, "   sync    | incScript_2020-02-25.101_CreateLookupTable1.sql", true);
-            assertTextByLines.AssertLineMessage(8, "   sync    | incScript_2020-02-25.102_CreateLookupTable2.sql", true);
-            assertTextByLines.AssertLineMessage(9, "   sync    | incScript_2020-03-02.100_CreateTransTable1.sql", true);
-            assertTextByLines.AssertLineMessage(10, "   sync    | incScript_2020-03-02.101_CreateInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage("> Run 'files' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage("", true);
+            assertTextByLines.AssertLineMessage("++ Incremental Scripts:", true);
+            assertTextByLines.AssertLineMessage("  Status   |  File", true);
+            assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.100_initState.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.101_CreateLookupTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.102_CreateLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-03-02.100_CreateTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage( "   sync    | incScript_2020-03-02.101_CreateInvoiceTable1.sql", true);
 
         }
 

@@ -48,31 +48,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _deliveryEnv_Validate_HistoryExecutedFilesMissing_API.Asserts(testContext);
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "> Run 'validate' for 'IntegrationTestProject'", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,1);
+            assertConsoleOutTextByLines.AssertLineMessage("> Run 'validate' for 'IntegrationTestProject'", true);
 
-            if (testContext.ScriptFilesStateType == ScriptFilesStateType.IncrementalChanged)
-            {
-                AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-                assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
-                assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
-                assertErrorsTextByLines.AssertLineMessage(2, "HistoryExecutedFilesChanged. Error: The following files changed: 'incScript_2020-02-25.102_CreateLookupTable2.sql'", false);
-                assertErrorsTextByLines.AssertLineMessage(3, "", true);
-                assertErrorsTextByLines.AssertLineMessage(4, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'", true);
-            }
-            else if (testContext.ScriptFilesStateType == ScriptFilesStateType.MissingFile)
-            {
-                AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-                assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
-                assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
-                assertErrorsTextByLines.AssertLineMessage(2, "HistoryExecutedFilesChanged. Error: The following files missing from the scripts folder: 'incScript_2020-02-25.102_CreateLookupTable2.sql'", false);
-                assertErrorsTextByLines.AssertLineMessage(3, "", true);
-                assertErrorsTextByLines.AssertLineMessage(4, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'", true);
-            }
-            else
-            {
-                throw new Exception("Invalid Test");
-            }
+            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,5);
+            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
+            assertErrorsTextByLines.AssertLineMessage("HistoryExecutedFilesChanged. Error: The following files missing from the scripts folder: 'incScript_2020-02-25.102_CreateLookupTable2.sql'", false);
+            assertErrorsTextByLines.AssertLineMessage("", true);
+            assertErrorsTextByLines.AssertLineMessage("History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'", true);
 
         }
 

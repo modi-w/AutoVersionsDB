@@ -47,15 +47,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _deliveryEnv_Validate_ArtifactFile_API.Asserts(testContext);
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "> Run 'validate' for 'IntegrationTestProject'", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,1);
+            assertConsoleOutTextByLines.AssertLineMessage("> Run 'validate' for 'IntegrationTestProject'", true);
 
-            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
-            assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage(2, "ArtifactFile. Error: Delivery Foder not exist", false);
-            assertErrorsTextByLines.AssertLineMessage(3, "", true);
-            assertErrorsTextByLines.AssertLineMessage(4, "Artifact File not exist", true);
+            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,5);
+            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
+            assertErrorsTextByLines.AssertLineMessage("ArtifactFile. Error: Delivery Foder not exist", false);
+            assertErrorsTextByLines.AssertLineMessage("", true);
+            assertErrorsTextByLines.AssertLineMessage("Artifact File not exist", true);
 
 
         }

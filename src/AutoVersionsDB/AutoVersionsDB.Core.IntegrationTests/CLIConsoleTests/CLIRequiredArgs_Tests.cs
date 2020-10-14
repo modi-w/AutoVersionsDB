@@ -25,8 +25,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"info");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -38,22 +38,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"init");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,2);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--dev-environment' is required.", true);
         }
 
-        [Test]
-        public void Init_Dev_IsRequired()
-        {
-            //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
-
-            AutoVersionsDBAPI.CLIRun($"init -id={IntegrationTestsConsts.TestProjectId}");
-
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--dev-environment' is required.", true);
-        }
+       
 
         [Test]
         public void Config_ID_IsRequired()
@@ -64,8 +54,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"config");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -77,8 +67,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"remove");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -90,8 +80,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"validate");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -103,8 +93,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"files");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -116,8 +106,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"files incremental");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -129,8 +119,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"files repeatable");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -142,8 +132,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"files ddd");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
 
@@ -156,8 +146,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"sync");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -169,8 +159,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"recreate");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -182,8 +172,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"virtual");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
 
@@ -196,8 +186,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"deploy");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
         [Test]
@@ -209,22 +199,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"new incremental");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--script-name' is required.", true);
         }
 
-        [Test]
-        public void New_Incremental_ScriptName_IsRequired()
-        {
-            //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
-
-            AutoVersionsDBAPI.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId}");
-
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--script-name' is required.", true);
-        }
+      
 
         [Test]
         public void New_Repeatable_ID_IsRequired()
@@ -235,23 +215,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"new repeatable");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--script-name' is required.", true);
         }
 
-        [Test]
-        public void New_Repeatable_ScriptName_IsRequired()
-        {
-            //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
-
-            AutoVersionsDBAPI.CLIRun($"new repeatable -id={IntegrationTestsConsts.TestProjectId}");
-
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--script-name' is required.", true);
-        }
-
+       
         [Test]
         public void New_DDD_ID_IsRequired()
         {
@@ -261,22 +230,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
 
             AutoVersionsDBAPI.CLIRun($"new ddd");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--id' is required.", true);
-        }
-
-
-        [Test]
-        public void New_DDD_ScriptName_IsRequired()
-        {
-            //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
-
-            AutoVersionsDBAPI.CLIRun($"new ddd -id={IntegrationTestsConsts.TestProjectId}");
-
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "Option '--script-name' is required.", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
+            assertConsoleOutTextByLines.AssertLineMessage("Option '--script-name' is required.", true);
         }
 
 

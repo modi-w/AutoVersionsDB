@@ -47,15 +47,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_Validate_MissingSystemTables_API.Asserts(testContext);
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "> Run 'validate' for 'IntegrationTestProject'", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,1);
+            assertConsoleOutTextByLines.AssertLineMessage("> Run 'validate' for 'IntegrationTestProject'", true);
 
-            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
-            assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage(2, "SystemTables. Error: The table 'AutoVersionsDB.DBScriptsExecutionHistory' is not exist in the db", false);
-            assertErrorsTextByLines.AssertLineMessage(3, "", true);
-            assertErrorsTextByLines.AssertLineMessage(4, "The system tables has invalid structure. Please try to 'Recreate DB From Scratch' or 'Set DB State by Virtual Execution'.", true);
+            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,5);
+            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
+            assertErrorsTextByLines.AssertLineMessage("SystemTables. Error: The table 'AutoVersionsDB.DBScriptsExecutionHistory' is not exist in the db", false);
+            assertErrorsTextByLines.AssertLineMessage("", true);
+            assertErrorsTextByLines.AssertLineMessage("The system tables has invalid structure. Please try to 'Recreate DB From Scratch' or 'Set DB State by Virtual Execution'.", true);
 
 
         }

@@ -47,16 +47,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _files_IncrementalChanged_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,8);
 
-            assertTextByLines.AssertLineMessage(0, "> Run 'files ddd' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
-            assertTextByLines.AssertLineMessage(2, "", true);
-            assertTextByLines.AssertLineMessage(3, "++ DevDummyData Scripts:", true);
-            assertTextByLines.AssertLineMessage(4, "  Status   |  File", true);
-            assertTextByLines.AssertLineMessage(5, "-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage(6, "           | dddScript_DataForInvoiceTable1.sql", true);
-            assertTextByLines.AssertLineMessage(7, "           | dddScript_DataForTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage("> Run 'files ddd' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage("", true);
+            assertTextByLines.AssertLineMessage("++ DevDummyData Scripts:", true);
+            assertTextByLines.AssertLineMessage("  Status   |  File", true);
+            assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
+            assertTextByLines.AssertLineMessage("           | dddScript_DataForInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage("           | dddScript_DataForTransTable1.sql", true);
         }
 
 

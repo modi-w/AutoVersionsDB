@@ -48,13 +48,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_Restore_SyncDB_API.Asserts(testContext);
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "> Run 'sync' for 'IntegrationTestProject'", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 1);
+            assertConsoleOutTextByLines.AssertLineMessage("> Run 'sync' for 'IntegrationTestProject'", true);
 
-            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-            assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
-            assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage(2, "incScript_2020-03-02.100_CreateTransTable1.sql 0% (0/1) -> Execute Script Block. Error: System.Exception: Error Message: 'Column, parameter, or variable #3: Cannot find data type nvarcharaaaa.', Script: ", false);
+            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, null);
+            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
+            assertErrorsTextByLines.AssertLineMessage("incScript_2020-03-02.100_CreateTransTable1.sql 0% (0/1) -> Execute Script Block. Error: System.Exception: Error Message: 'Column, parameter, or variable #3: Cannot find data type nvarcharaaaa.', Script: ", false);
         }
 
 

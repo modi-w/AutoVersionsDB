@@ -46,18 +46,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             _getProjectConfigById_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertTextByLines.AssertLineMessage(0, "> Run 'info' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, $"Id                                 : {IntegrationTestsConsts.DummyProjectConfig.Id}", true);
-            assertTextByLines.AssertLineMessage(2, $"Description                        : {IntegrationTestsConsts.DummyProjectConfig.Description}", true);
-            assertTextByLines.AssertLineMessage(3, $"DBType                             : {IntegrationTestsConsts.DummyProjectConfig.DBType}", true);
-            assertTextByLines.AssertLineMessage(4, $"ServerInstance                     : {IntegrationTestsConsts.DummyProjectConfig.Server}", true);
-            assertTextByLines.AssertLineMessage(5, $"DataBaseName                       : {IntegrationTestsConsts.DummyProjectConfig.DBName}", true);
-            assertTextByLines.AssertLineMessage(6, $"DBUsername                         : {IntegrationTestsConsts.DummyProjectConfig.Username}", true);
-            assertTextByLines.AssertLineMessage(7, $"DBPassword                         : {IntegrationTestsConsts.DummyProjectConfig.Password}", true);
-            assertTextByLines.AssertLineMessage(8, $"Backup Folder Path                 : {IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath}", true);
-            assertTextByLines.AssertLineMessage(9, $"Dev Environment                    : {false}", true);
-            assertTextByLines.AssertLineMessage(10, $"Delivery Artifact Folder Path      : {IntegrationTestsConsts.DummyProjectConfig.DeliveryArtifactFolderPath}", true);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 11);
+            assertTextByLines.AssertLineMessage("> Run 'info' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage($"Id                                 : {IntegrationTestsConsts.DummyProjectConfig.Id}", true);
+            assertTextByLines.AssertLineMessage($"Description                        : {IntegrationTestsConsts.DummyProjectConfig.Description}", true);
+            assertTextByLines.AssertLineMessage($"DBType                             : {IntegrationTestsConsts.DummyProjectConfig.DBType}", true);
+            assertTextByLines.AssertLineMessage($"ServerInstance                     : {IntegrationTestsConsts.DummyProjectConfig.Server}", true);
+            assertTextByLines.AssertLineMessage($"DataBaseName                       : {IntegrationTestsConsts.DummyProjectConfig.DBName}", true);
+            assertTextByLines.AssertLineMessage($"DBUsername                         : {IntegrationTestsConsts.DummyProjectConfig.Username}", true);
+            assertTextByLines.AssertLineMessage($"DBPassword                         : {IntegrationTestsConsts.DummyProjectConfig.Password}", true);
+            assertTextByLines.AssertLineMessage($"Backup Folder Path                 : {IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath}", true);
+            assertTextByLines.AssertLineMessage($"Dev Environment                    : {false}", true);
+            assertTextByLines.AssertLineMessage($"Delivery Artifact Folder Path      : {IntegrationTestsConsts.DummyProjectConfig.DeliveryArtifactFolderPath}", true);
 
         }
 

@@ -44,12 +44,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override void Asserts(TestContext testContext)
         {
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertTextByLines.AssertLineMessage(0, "> Run 'dbtypes' (no params)", true);
-            assertTextByLines.AssertLineMessage(1, "", true);
-            assertTextByLines.AssertLineMessage(2, "  Code       |  Name", true);
-            assertTextByLines.AssertLineMessage(3, "--------------------", true);
-            assertTextByLines.AssertLineMessage(4, "+ SqlServer  | Sql Server", true);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,5);
+            assertTextByLines.AssertLineMessage("> Run 'dbtypes' (no params)", true);
+            assertTextByLines.AssertLineMessage("", true);
+            assertTextByLines.AssertLineMessage("  Code       |  Name", true);
+            assertTextByLines.AssertLineMessage("--------------------", true);
+            assertTextByLines.AssertLineMessage("+ SqlServer  | Sql Server", true);
 
         }
 

@@ -46,9 +46,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             _changeProjectId_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertTextByLines.AssertLineMessage(0, "> Run 'change-id' for 'TestProject_Old'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,2);
+            assertTextByLines.AssertLineMessage("> Run 'change-id' for 'TestProject_Old'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
 
         }
 

@@ -45,13 +45,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override void Asserts(TestContext testContext)
         {
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertTextByLines.AssertLineMessage(0, "> Run 'list' (no params)", true);
-            assertTextByLines.AssertLineMessage(1, "", true);
-            assertTextByLines.AssertLineMessage(2, "  Id                            |  Description", true);
-            assertTextByLines.AssertLineMessage(3, "-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage(4, " TestProject1                   | Test Project 1", true);
-            assertTextByLines.AssertLineMessage(5, " TestProject2                   | Test Project 2", true);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,6);
+            assertTextByLines.AssertLineMessage("> Run 'list' (no params)", true);
+            assertTextByLines.AssertLineMessage("", true);
+            assertTextByLines.AssertLineMessage("  Id                            |  Description", true);
+            assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
+            assertTextByLines.AssertLineMessage(" TestProject1                   | Test Project 1", true);
+            assertTextByLines.AssertLineMessage(" TestProject2                   | Test Project 2", true);
 
         }
 
