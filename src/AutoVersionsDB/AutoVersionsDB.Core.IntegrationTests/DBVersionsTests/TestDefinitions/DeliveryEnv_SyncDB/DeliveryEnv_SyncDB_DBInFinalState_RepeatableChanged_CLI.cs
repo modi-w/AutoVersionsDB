@@ -36,6 +36,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _deliveryEnv_SyncDB_API.Asserts(testContext);
 
+            AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
+
             AssertTextByLines assertTextByLines = new AssertTextByLines(this.GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,2);
             assertTextByLines.AssertLineMessage("> Run 'sync' for 'IntegrationTestProject'",true);
             assertTextByLines.AssertLineMessage("The process complete successfully", true);

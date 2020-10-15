@@ -45,6 +45,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override void Asserts(TestContext testContext)
         {
 
+            AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
+
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,6);
             assertTextByLines.AssertLineMessage("> Run 'list' (no params)", true);
             assertTextByLines.AssertLineMessage("", true);

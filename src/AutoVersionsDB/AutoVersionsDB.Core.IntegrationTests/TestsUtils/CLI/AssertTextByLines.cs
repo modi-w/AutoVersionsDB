@@ -73,5 +73,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
         }
 
 
+
+        public static void AssertEmpty(string testName, string textType, string text)
+        {
+            Assert.That(string.IsNullOrWhiteSpace(text), $"{testName}-> {textType} -> Should be empty, but was: {text}");
+        }
     }
 }

@@ -47,6 +47,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_NewScrtiptFile_Incremental_API.Asserts(testContext);
 
+            AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
+
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,6);
           
             assertTextByLines.AssertLineMessage("> Run 'new incremental' for 'IntegrationTestProject'", true);
