@@ -20,15 +20,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
         private readonly string _testName;
         private readonly string _textType;
         private readonly List<string> _finalConsoleOutLines;
-        private readonly int? _numOfExpectedLines;
+        private readonly int? _maxNumOfLines;
 
         private int _lineIndex;
 
-        public AssertTextByLines(string testName, string textType, string text, int? numOfExpectedLines)
+        public AssertTextByLines(string testName, string textType, string text, int? maxNumOfLines)
         {
             _testName = testName;
             _textType = textType;
-            _numOfExpectedLines = numOfExpectedLines;
+            _maxNumOfLines = maxNumOfLines;
 
             _finalConsoleOutLines = text.Trim(Environment.NewLine.ToCharArray()).Split(Environment.NewLine).ToList();
 
@@ -60,10 +60,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
 
             if (!forceLineIndex.HasValue)
             {
-                if (_numOfExpectedLines.HasValue 
-                    && _numOfExpectedLines <= _lineIndex+1)
+                if (_maxNumOfLines.HasValue 
+                    && _maxNumOfLines <= _lineIndex+1)
                 {
-                    Assert.That(_finalConsoleOutLines.Count == _numOfExpectedLines, $"{_testName}-> {_textType} -> Invalid number of lines, should be: {_numOfExpectedLines}, but was: {_finalConsoleOutLines.Count}");
+                    Assert.That(_finalConsoleOutLines.Count == _maxNumOfLines, $"{_testName}-> {_textType} -> Invalid number of lines, should be: {_maxNumOfLines}, but was: {_finalConsoleOutLines.Count}");
                 }
 
 

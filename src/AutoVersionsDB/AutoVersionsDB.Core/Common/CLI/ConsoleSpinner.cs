@@ -30,7 +30,7 @@ namespace AutoVersionsDB.Core.Common.CLI
         {
             IsActive = true;
 
-            lock (ConsoleProcessMessages.ConsolWriteSync)
+            lock (CLIConsts.ConsolWriteSync)
             {
                 _console.CursorVisible = false;
             }
@@ -61,7 +61,7 @@ namespace AutoVersionsDB.Core.Common.CLI
             //Comment: we wait here because the run process is run on another thread
             Thread.Sleep(IntervalInMs * 10);
 
-            lock (ConsoleProcessMessages.ConsolWriteSync)
+            lock (CLIConsts.ConsolWriteSync)
             {
                 _console.SetCursorPosition(0, _console.CursorTop);
                 _console.Out.Write(" ");
@@ -87,7 +87,7 @@ namespace AutoVersionsDB.Core.Common.CLI
         {
             _counter++;
 
-            lock (ConsoleProcessMessages.ConsolWriteSync)
+            lock (CLIConsts.ConsolWriteSync)
             {
                 _console.ForegroundColor = ConsoleColor.DarkGray;
 
