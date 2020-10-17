@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_dbBackupBaseFolder))
             {
-                string errorMsg = "DB Backup Folder Path is empty";
+                string errorMsg = "DB Backup Folder Path is mandatory";
                 return errorMsg;
             }
             else

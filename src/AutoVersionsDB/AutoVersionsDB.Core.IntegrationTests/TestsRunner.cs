@@ -6,6 +6,7 @@ using AutoVersionsDB.Core.IntegrationTests;
 using Ninject;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests
@@ -133,15 +134,33 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
                 try
                 {
+                    Console.WriteLine($"{test.GetType().Name} -> Start");
+                    Debug.WriteLine($"{test.GetType().Name} -> Start");
+
                     testContext = test.Arrange(testArgs);
 
                     test.Act(testContext);
 
                     test.Asserts(testContext);
                 }
+                catch 
+                {
+                    if (testContext != null
+                        && testContext.ProcessResults != null
+                        && testContext.ProcessResults.Trace != null)
+                    {
+                        Console.WriteLine(testContext.ProcessResults.Trace.GetAllHistoryAsString());
+                        Debug.WriteLine(testContext.ProcessResults.Trace.GetAllHistoryAsString());
+                    }
+
+                    throw;
+                }
                 finally
                 {
                     test.Release(testContext);
+
+                    Console.WriteLine($"{test.GetType().Name} -> Complete");
+                    Debug.WriteLine($"{test.GetType().Name} -> Complete");
                 }
             }
         }

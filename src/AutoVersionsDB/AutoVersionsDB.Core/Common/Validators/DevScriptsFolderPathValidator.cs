@@ -27,7 +27,7 @@ namespace AutoVersionsDB.Core.Common.Validators
             {
                 if (string.IsNullOrWhiteSpace(_devScriptsBaseFolderPath))
                 {
-                    string errorMsg = "Scripts Folder Path is empty";
+                    string errorMsg = "Scripts Folder Path is mandatory";
                     return errorMsg;
                 }
                 else

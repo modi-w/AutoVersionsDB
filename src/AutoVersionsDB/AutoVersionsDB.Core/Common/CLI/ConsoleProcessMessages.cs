@@ -14,7 +14,6 @@ namespace AutoVersionsDB.Core.Common.CLI
         private IConsoleExtended _console;
         private ConsoleSpinner _spinner;
 
-        public static object ConsolWriteSync = new object();
 
 
         private int numberOfLineForLastMessage = 1;
@@ -39,6 +38,8 @@ namespace AutoVersionsDB.Core.Common.CLI
 
         public void SetErrorMessage(string message)
         {
+            Environment.ExitCode = CLIConsts.ExistErrorCode;
+
             IStandardStreamWriter errorWriter = _console.Error;
             _console.ForegroundColor = ConsoleColor.Red;
             errorWriter.WriteLine(message);
@@ -99,7 +100,7 @@ namespace AutoVersionsDB.Core.Common.CLI
         {
             ClearConsoleLine(0);
 
-            lock (ConsolWriteSync)
+            lock (CLIConsts.ConsolWriteSync)
             {
 
                 if (processReults.Trace.HasError)
@@ -126,7 +127,7 @@ namespace AutoVersionsDB.Core.Common.CLI
     
         public void OnNotificationStateChanged(ProcessTrace processTrace, StepNotificationState notificationStateItem)
         {
-            lock (ConsolWriteSync)
+            lock (CLIConsts.ConsolWriteSync)
             {
                 ClearConsoleLine(3);
 

@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
             if (string.IsNullOrWhiteSpace(_scriptName))
             {
-                string errorMsg = "Script Name is empty";
+                string errorMsg = "Script Name is mandatory";
                 return errorMsg;
             }
             else if (!_scriptFilesComparer.TryParseNextRuntimeScriptFileName(_scriptName, out newRuntimeScriptFile))
