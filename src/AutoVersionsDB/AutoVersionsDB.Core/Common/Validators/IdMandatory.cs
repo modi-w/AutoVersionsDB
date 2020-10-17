@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_id))
             {
-                string errorMsg = "Id is empty";
+                string errorMsg = "Id is mandatory";
                 return errorMsg;
             }
 

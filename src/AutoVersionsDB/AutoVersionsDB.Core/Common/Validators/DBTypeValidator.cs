@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_dbTypeCode))
             {
-                string errorMsg = "DB Type is empty";
+                string errorMsg = "DB Type is mandatory";
                 return errorMsg;
             }
             else

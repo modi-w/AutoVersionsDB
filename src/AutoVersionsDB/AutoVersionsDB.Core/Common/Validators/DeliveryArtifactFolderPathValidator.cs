@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_deliveryArtifactFolderPath))
             {
-                string errorMsg = "Delivery Artifact Folder Path is empty";
+                string errorMsg = "Delivery Artifact Folder Path is mandatory";
                 return errorMsg;
             }
             else
