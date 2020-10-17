@@ -11,8 +11,16 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
     public class ProjectConfigsStorage
     {
+        private readonly AutoVersionsDBSettings _settings;
+
 
         private static object _saveSync = new object();
+
+
+        public ProjectConfigsStorage(AutoVersionsDBSettings settings)
+        {
+            _settings = settings;
+        }
 
 
         public void SaveNewProjectConfig(ProjectConfigItem projectConfig)
@@ -102,7 +110,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
             List<ProjectConfigItem> projectConfigs = dicAllProjectConfigs.Values.ToList();
             string projectConfigsListStr = SerializationUtils.JsonSerialize(projectConfigs);
 
-            string configProjectsFilePath = FileSystemPathUtils.ParsePathVaribles(AutoVersionsDBSettings.ConfigProjectsFilePath);
+            string configProjectsFilePath = FileSystemPathUtils.ParsePathVaribles(_settings.ConfigProjectsFilePath);
             FileSystemPathUtils.ResloveFilePath(configProjectsFilePath);
             File.WriteAllText(configProjectsFilePath, projectConfigsListStr);
         }
@@ -114,7 +122,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
             List<ProjectConfigItem> listAllProjectConfigs;
 
-            string configProjectsFilePath = FileSystemPathUtils.ParsePathVaribles(AutoVersionsDBSettings.ConfigProjectsFilePath);
+            string configProjectsFilePath = FileSystemPathUtils.ParsePathVaribles(_settings.ConfigProjectsFilePath);
 
             if (File.Exists(configProjectsFilePath))
             {

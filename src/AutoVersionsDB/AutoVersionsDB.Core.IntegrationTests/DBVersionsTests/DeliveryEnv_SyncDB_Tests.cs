@@ -1,10 +1,10 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.Process;
-using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+
+
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
@@ -29,21 +29,24 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
         [Test]
-        public void DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles()
+        public void DeliveryEnv_SyncDB_DBInMiddleState()
         {
-            TestsRunner.RunTest<DeliveryEnv_SyncDB_API, DeliveryEnv_SyncDB_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.WithDevDummyDataFiles);
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInMiddleState_API, DeliveryEnv_SyncDB_DBInMiddleState_CLI>();
         }
 
+
         [Test]
-        public void DeliveryEnv_SyncDB_DBInMiddleState_ValidScripts()
+        public void DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles()
         {
-            TestsRunner.RunTest<DeliveryEnv_SyncDB_API, DeliveryEnv_SyncDB_CLI>(false, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_API, DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_CLI>();
         }
+
+    
 
         [Test]
         public void DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged()
         {
-            TestsRunner.RunTest<DeliveryEnv_SyncDB_API, DeliveryEnv_SyncDB_CLI>(false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.RepeatableChanged);
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged_API, DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged_CLI>();
         }
 
 

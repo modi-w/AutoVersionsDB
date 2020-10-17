@@ -109,7 +109,7 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _allProjectsList = AutoVersionsDbAPI.GetProjectsList();
+                _allProjectsList = AutoVersionsDBAPI.GetProjectsList();
 
                 List<ProjectConfigItem> filteredProjectList =
                     _allProjectsList

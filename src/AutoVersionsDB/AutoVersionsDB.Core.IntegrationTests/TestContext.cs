@@ -3,9 +3,9 @@ using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests
 {
+
     public class TestContext
     {
         private StringBuilder _sbAllConsoleOut;
@@ -27,18 +28,17 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
         public string ConsoleError => _sbConsoleError.ToString();
 
-        public DBBackupFileType DBBackupFileType { get; }
-        public ScriptFilesStateType ScriptFilesStateType { get; }
-        public ProjectConfigItem ProjectConfig { get; }
-        public NumOfDBConnections NumOfConnectionsBefore { get; set; }
+
+        public object Result { get; set; }
         public ProcessResults ProcessResults { get; set; }
 
 
-        public TestContext(DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType, ProjectConfigItem projectConfig)
+        public TestArgs TestArgs { get; }
+
+
+        public TestContext(TestArgs testArgs)
         {
-            DBBackupFileType = dbBackupFileType;
-            ScriptFilesStateType = scriptFilesStateType;
-            ProjectConfig = projectConfig;
+            TestArgs = testArgs;
 
             _sbAllConsoleOut = new StringBuilder();
             _sbCurrentConsoleOut = new StringBuilder();
@@ -71,4 +71,18 @@ namespace AutoVersionsDB.Core.IntegrationTests
         }
 
     }
+
+    public class TestContext<TArgs> : TestContext
+        where TArgs : TestArgs
+    {
+
+        public TArgs TestArgs => base.TestArgs as TArgs;
+
+        public TestContext(TArgs testArgs)
+            : base(testArgs)
+        {
+
+        }
+    }
+
 }

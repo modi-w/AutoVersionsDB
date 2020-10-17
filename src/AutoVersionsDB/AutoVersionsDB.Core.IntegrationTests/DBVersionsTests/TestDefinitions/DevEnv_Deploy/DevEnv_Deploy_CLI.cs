@@ -2,19 +2,20 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.CLI;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Deploy;
-using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Deploy
 {
-    public class DevEnv_Deploy_CLI : ITestDefinition
+    public class DevEnv_Deploy_CLI : TestDefinition<DBVersionsTestContext>
     {
 
         private readonly DevEnv_Deploy_API _devEnv_Deploy_API;
@@ -24,9 +25,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_Deploy_API = devEnv_Deploy_API;
         }
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _devEnv_Deploy_API.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _devEnv_Deploy_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -34,22 +35,30 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
-            AutoVersionsDbAPI.CLIRun($"deploy -id={IntegrationTestsConsts.TestProjectId}");
+            AutoVersionsDBAPI.CLIRun($"deploy -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
             _devEnv_Deploy_API.Asserts(testContext);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertTextByLines.AssertLineMessage(0, "> Run 'deploy' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage(1, "The process complete successfully", true);
-            assertTextByLines.AssertLineMessage(2, "Artifact file created: ", false);
-            assertTextByLines.AssertLineMessage(2, @"Deploy\AutoVersionsDB.Tests.avdb'", false);
+            AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
+
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,3);
+            assertTextByLines.AssertLineMessage("> Run 'deploy' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage("Artifact file created: ", false,2);
+            assertTextByLines.AssertLineMessage(@"Deploy\AutoVersionsDB.Tests.avdb'", false,2);
         }
 
+
+
+        public override void Release(DBVersionsTestContext testContext)
+        {
+            _devEnv_Deploy_API.Release(testContext);
+        }
     }
 }

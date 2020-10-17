@@ -1,12 +1,12 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SetDBToSpecificState;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
-using AutoVersionsDB.Core.IntegrationTests.Process;
-using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+
+
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
@@ -30,29 +30,29 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
         [Test]
-        public void DevEnv_DBInMiddleState_TargetFinalState()
+        public void DevEnv_SetDBToSpecificState_DBInMiddleState_TargetFinalState()
         {
-            TestsRunner.RunTest<DevEnv_SetDBToSpecificState_DBInMiddleState_TargetFinalState_API>(true, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_DBInMiddleState_TargetFinalState_API>();
         }
 
 
         [Test]
         public void DevEnv_SetDBToSpecificState_TargetMiddleState()
         {
-            TestsRunner.RunTest<DevEnv_SetDBToSpecificState_TargetMiddleState_API>(true, DBBackupFileType.AfterRunInitStateScript, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_TargetMiddleState_API>();
         }
 
 
         [Test]
         public void DevEnv_SetDBToSpecificState_Warning()
         {
-            TestsRunner.RunTest<DevEnv_SetDBToSpecificState_Warning_API>(true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_Warning_API>();
         }
 
         [Test]
         public void DevEnv_SetDBToSpecificState_IgnoreWarning()
         {
-            TestsRunner.RunTest<DevEnv_SetDBToSpecificState_IgnoreWarning_API>(true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_IgnoreWarning_API>();
         }
 
         

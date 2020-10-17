@@ -18,21 +18,25 @@ namespace AutoVersionsDB.ConsoleApp
             Console.Title = "AutoVersionsDB";
 
 
-            return AutoVersionsDbAPI.CLIRun(args);
+            return AutoVersionsDBAPI.CLIRun(args);
+
+            //return AutoVersionsDBAPI.CLIRun("recreate -id=Bandana");
 
 
-            //  return AutoVersionsDbAPI.CLIRun("-h");
-            //return AutoVersionsDbAPI.CLIRun("config -id=testp1 -desc=\"Test project 2\" --db-type=SqlServer -connstr=aaaa -connstrm=bbb -buf=ccc -dsf=ddd -def=eee -darf=fff");
-            //  return AutoVersionsDbAPI.CLIRun("config environment -id=testp1 -dev=true");
-            //return AutoVersionsDbAPI.CLIRun("sync -id=testp");
-            //return AutoVersionsDbAPI.CLIRun("recreate -id=testp");
-        //    return AutoVersionsDbAPI.CLIRun("validate -id=testp");
-            //     return AutoVersionsDbAPI.CLIRun("config -id=testp -desc=\"Test project 1\"");
+            //  return AutoVersionsDBAPI.CLIRun("-h");
+            // return AutoVersionsDBAPI.CLIRun("dbtypes");
+            //return AutoVersionsDBAPI.CLIRun("config -id=testp1 -desc=\"Test project 2\" --db-type=SqlServer -connstr=aaaa -connstrm=bbb -buf=ccc -dsf=ddd -def=eee -darf=fff");
+            //  return AutoVersionsDBAPI.CLIRun("config environment -id=testp1 -dev=true");
+            //return AutoVersionsDBAPI.CLIRun("sync -id=testp");
+            //return AutoVersionsDBAPI.CLIRun("recreate -id=Bandana");
+            //    return AutoVersionsDBAPI.CLIRun("validate -id=testp");
+            //   return AutoVersionsDBAPI.CLIRun("files -id=testp");
+            //     return AutoVersionsDBAPI.CLIRun("config -id=testp -desc=\"Test project 1\"");
 
-            //return AutoVersionsDbAPI.CLIRun("list");
-            //    return AutoVersionsDbAPI.CLIRun("info -id=rvp");
+            //return AutoVersionsDBAPI.CLIRun("list");
+            //    return AutoVersionsDBAPI.CLIRun("info -id=rvp");
 
-            //   return AutoVersionsDbAPI.CLIRun("new incremental -id=testp --sn bbbb");
+            //   return AutoVersionsDBAPI.CLIRun("new incremental -id=testp --sn bbbb");
 
         }
 

@@ -4,8 +4,9 @@ using AutoVersionsDB.Core.Common.CLI;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.CLI;
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
 using Ninject;
@@ -22,7 +23,6 @@ namespace AutoVersionsDB.Core.IntegrationTests
     {
         private static StandardKernel _ninjectKernelContainer;
 
-        public static Mock<ProjectConfigsStorage> MockProjectConfigsStorage { get; private set; }
 
         public static Mock<IStandardStreamWriter> MockConsoleError { get; private set; }
         public static Mock<IStandardStreamWriter> MockConsoleOut { get; private set; }
@@ -32,10 +32,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
         public static void Init(IKernel kernel)
         {
-            MockProjectConfigsStorage = new Mock<ProjectConfigsStorage>();
-            MockProjectConfigsStorage.Setup(m => m.IsIdExsit(IntegrationTestsConsts.TestProjectId)).Returns(true);
-
-            kernel.Bind<ProjectConfigsStorage>().ToConstant(MockProjectConfigsStorage.Object);
+            AutoVersionsDBSettings setting = new AutoVersionsDBSettings(@"[CommonApplicationData]\AutoVersionsDB.IntegrationTests");
+            kernel.Bind<AutoVersionsDBSettings>().ToConstant(setting);
 
 
             MockConsoleError = new Mock<IStandardStreamWriter>();

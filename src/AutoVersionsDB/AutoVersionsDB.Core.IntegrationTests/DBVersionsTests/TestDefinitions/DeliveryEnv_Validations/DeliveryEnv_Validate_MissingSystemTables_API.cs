@@ -2,53 +2,58 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.DB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-using AutoVersionsDB.Core.IntegrationTests.Process;
-using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_Validate_MissingSystemTables_API : ITestDefinition
+    public class DeliveryEnv_Validate_MissingSystemTables_API : TestDefinition<DBVersionsTestContext>
     {
-        private readonly DBVersionsNotValidTest _dbVersionsNotValidTest;
+        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ProcessAsserts _processAsserts;
 
-        public DeliveryEnv_Validate_MissingSystemTables_API(DBVersionsNotValidTest dbVersionsNotValidTest, 
+        public DeliveryEnv_Validate_MissingSystemTables_API(DBVersionsTestHelper dbVersionsTestHelper,
                                                                     ProcessAsserts processAsserts)
         {
-            _dbVersionsNotValidTest = dbVersionsNotValidTest;
+            _dbVersionsTestHelper = dbVersionsTestHelper;
             _processAsserts = processAsserts;
         }
 
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsNotValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            return _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_MissingSystemTables, ScriptFilesStateType.ValidScripts);
         }
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDbAPI.ValidateDBVersions(testContext.ProjectConfig.Id, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.ValidateDBVersions(testContext.ProjectConfig.Id, null);
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            //Comment: When we implement the  _dbAsserts.AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(), we should not call this method here.
-            //          Because in this process we dont create a backup file.
-            //          The above method is called on DBVersionsTest.Asserts()
-            _dbVersionsNotValidTest.Asserts(testContext);
+            _dbVersionsTestHelper.Asserts(testContext, false);
 
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "SystemTables");
 
         }
+
+
+
+        public override void Release(DBVersionsTestContext testContext)
+        {
+            _dbVersionsTestHelper.Release(testContext);
+        }
+
     }
 }

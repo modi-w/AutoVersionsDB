@@ -3,6 +3,8 @@ using AutoVersionsDB.Core.Common.Validators;
 using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
+using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
+using System;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFactories
 {
@@ -23,7 +25,19 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
         {
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
-            string Id = (processContext.ProcessParams as ProjectConfigProcessParams).Id;
+            string Id = null;
+            if (processContext.ProcessParams is ProjectConfigProcessParams)
+            {
+                Id = (processContext.ProcessParams as ProjectConfigProcessParams).Id;
+            }
+            else if (processContext.ProcessParams is ChangeIdProcessParams)
+            {
+                Id = (processContext.ProcessParams as ChangeIdProcessParams).Id;
+            }
+            else
+            {
+                throw new Exception("Invalid 'ProcessParams' type");
+            }
 
             IdMandatory idNotEmpty = new IdMandatory(Id);
             validationsGroup.Add(idNotEmpty);

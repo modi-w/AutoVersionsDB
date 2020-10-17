@@ -37,6 +37,13 @@ namespace AutoVersionsDB.ConsoleApp
             set => Console.ForegroundColor = value;
         }
 
+        public bool CursorVisible
+        {
+            get => Console.CursorVisible;
+            set => Console.CursorVisible = value;
+        }
+
+
         public IStandardStreamWriter Out => _systemConsole.Out;
 
         public bool IsOutputRedirected => _systemConsole.IsOutputRedirected;

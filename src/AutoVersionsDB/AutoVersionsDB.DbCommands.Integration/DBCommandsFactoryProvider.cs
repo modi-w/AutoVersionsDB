@@ -15,7 +15,7 @@ namespace AutoVersionsDB.DbCommands.Integration
         }
 
 
-        public List<DBType> GetDbTypesList()
+        public List<DBType> GetDBTypes()
         {
 
             return _dbCommandsFactoryDictionary

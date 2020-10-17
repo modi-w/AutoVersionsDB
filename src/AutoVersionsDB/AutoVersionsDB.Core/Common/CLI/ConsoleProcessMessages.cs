@@ -64,9 +64,18 @@ namespace AutoVersionsDB.Core.Common.CLI
             _console.ForegroundColor = ConsoleColor.White;
         }
 
+        public void SetInlineInfoMessage(string message, ConsoleColor color)
+        {
+            _console.ForegroundColor = color;
+
+            _console.Out.Write(message);
+
+            _console.ForegroundColor = ConsoleColor.White;
+        }
+
         public void StartProcessMessage(string processName)
         {
-            StartProcessMessage(processName);
+            StartProcessMessage(processName, "");
         }
         public void StartProcessMessage(string processName, string paramsStr)
         {

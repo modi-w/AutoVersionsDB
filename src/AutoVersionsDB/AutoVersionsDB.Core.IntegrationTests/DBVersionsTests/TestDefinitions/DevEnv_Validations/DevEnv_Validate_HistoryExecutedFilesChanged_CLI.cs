@@ -2,21 +2,23 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.CLI;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
-using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations
 {
-    public class DevEnv_Validate_HistoryExecutedFilesChanged_CLI : ITestDefinition
+    public class DevEnv_Validate_HistoryExecutedFilesChanged_CLI : TestDefinition<DBVersionsTestContext>
     {
 
         private readonly DevEnv_Validate_HistoryExecutedFilesChanged_API _devEnv_Validate_HistoryExecutedFilesChanged_API;
@@ -26,9 +28,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_Validate_HistoryExecutedFilesChanged_API = devEnv_Validate_HistoryExecutedFilesChanged_API;
         }
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _devEnv_Validate_HistoryExecutedFilesChanged_API.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _devEnv_Validate_HistoryExecutedFilesChanged_API.Arrange(testArgs);
 
             MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
 
@@ -36,42 +38,32 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
-            AutoVersionsDbAPI.CLIRun($"validate -id={IntegrationTestsConsts.TestProjectId}");
+            AutoVersionsDBAPI.CLIRun($"validate -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
             _devEnv_Validate_HistoryExecutedFilesChanged_API.Asserts(testContext);
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut);
-            assertConsoleOutTextByLines.AssertLineMessage(0, "> Run 'validate' for 'IntegrationTestProject'", true);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,1);
+            assertConsoleOutTextByLines.AssertLineMessage("> Run 'validate' for 'IntegrationTestProject'", true);
 
-            if (testContext.ScriptFilesStateType == ScriptFilesStateType.IncrementalChanged)
-            {
-                AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-                assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
-                assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
-                assertErrorsTextByLines.AssertLineMessage(2, "HistoryExecutedFilesChanged. Error: The following files changed: 'incScript_2020-02-25.102_CreateLookupTable2.sql'", false);
-                assertErrorsTextByLines.AssertLineMessage(3, "", true);
-                assertErrorsTextByLines.AssertLineMessage(4, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'", true);
-            }
-            else if (testContext.ScriptFilesStateType == ScriptFilesStateType.MissingFile)
-            {
-                AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError);
-                assertErrorsTextByLines.AssertLineMessage(0, "The process complete with errors:", true);
-                assertErrorsTextByLines.AssertLineMessage(1, "--------------------------------", true);
-                assertErrorsTextByLines.AssertLineMessage(2, "HistoryExecutedFilesChanged. Error: The following files missing from the scripts folder: 'incScript_2020-02-25.102_CreateLookupTable2.sql'", false);
-                assertErrorsTextByLines.AssertLineMessage(3, "", true);
-                assertErrorsTextByLines.AssertLineMessage(4, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'", true);
-            }
-            else
-            {
-                throw new Exception("Invalid Test");
-            }
+            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,5);
+            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
+            assertErrorsTextByLines.AssertLineMessage("HistoryExecutedFilesChanged. Error: The following files changed: 'incScript_2020-02-25.102_CreateLookupTable2.sql'", false);
+            assertErrorsTextByLines.AssertLineMessage("", true);
+            assertErrorsTextByLines.AssertLineMessage("History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'", true);
 
+        }
+
+
+        public override void Release(DBVersionsTestContext testContext)
+        {
+            _devEnv_Validate_HistoryExecutedFilesChanged_API.Release(testContext);
         }
 
     }

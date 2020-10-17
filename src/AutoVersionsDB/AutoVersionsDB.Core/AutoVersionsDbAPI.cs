@@ -15,7 +15,7 @@ using AutoVersionsDB.Core.DBVersions;
 
 namespace AutoVersionsDB.Core
 {
-    public static class AutoVersionsDbAPI
+    public static class AutoVersionsDBAPI
     {
 
         private static readonly object _processSyncLock = new object();
@@ -37,12 +37,6 @@ namespace AutoVersionsDB.Core
 
 
 
-        public static List<DBType> GetDbTypesList()
-        {
-            DBCommandsFactoryProvider dbCommandsFactoryProvider = NinjectUtils.KernelInstance.Get<DBCommandsFactoryProvider>();
-
-            return dbCommandsFactoryProvider.GetDbTypesList();
-        }
 
 
 
@@ -58,6 +52,12 @@ namespace AutoVersionsDB.Core
 
 
         #region Config
+
+        public static List<DBType> GetDBTypes()
+        {
+            return GetNewInstanceForProjectConfigsAPI().GetDBTypes();
+        }
+
 
         public static List<ProjectConfigItem> GetProjectsList()
         {
@@ -203,11 +203,11 @@ namespace AutoVersionsDB.Core
 
         #region Scripts
 
-        public static ScriptFilesState CreateScriptFilesState(ProjectConfigItem projectConfig)
+        public static ProcessResults GetScriptFilesState(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return GetNewInstanceForDBVersionsAPI().CreateScriptFilesState(projectConfig);
+                return GetNewInstanceForDBVersionsAPI().GetScriptFilesState(id, onNotificationStateChanged);
             }
         }
 

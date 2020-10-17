@@ -141,7 +141,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 if (!string.IsNullOrWhiteSpace(Id))
                 {
-                    tempBackupFolderPath += @"\Id";
+                    tempBackupFolderPath += $@"\{Id}";
                 }
 
                 BackupFolderPath = FileSystemPathUtils.ParsePathVaribles(tempBackupFolderPath);

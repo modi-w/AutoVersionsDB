@@ -2,7 +2,7 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests.DB;
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods;
@@ -10,8 +10,10 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
-using AutoVersionsDB.Core.IntegrationTests.Process;
-using AutoVersionsDB.Core.IntegrationTests.ScriptFiles;
+
+
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Helpers;
 using System;
@@ -21,11 +23,11 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile
 {
-    public class DevEnv_NewScrtiptFile_DevDummyData_API : ITestDefinition
+    public class DevEnv_NewScrtiptFile_DevDummyData_API : TestDefinition<DBVersionsTestContext>
     {
         private string _relFolder_DevDummyData = "DevDummyData";
 
-        private readonly DBVersionsValidTest _dbVersionsValidTest;
+        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
@@ -33,50 +35,46 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public DevEnv_NewScrtiptFile_DevDummyData_API(DBVersionsValidTest dbVersionsValidTest,
+        public DevEnv_NewScrtiptFile_DevDummyData_API(DBVersionsTestHelper dbVersionsTestHelper,
                                                         ScriptFilesAsserts scriptFilesAsserts)
         {
-            _dbVersionsValidTest = dbVersionsValidTest;
+            _dbVersionsTestHelper = dbVersionsTestHelper;
             _scriptFilesAsserts = scriptFilesAsserts;
         }
 
 
-        public TestContext Arrange(ProjectConfigItem projectConfig, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsValidTest.Arrange(projectConfig, dbBackupFileType, scriptFilesStateType);
+            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
 
-            if (File.Exists(GetScriptFullPath_DevDummyData_scriptName1(projectConfig.DBConnectionInfo)))
-            {
-                File.Delete(GetScriptFullPath_DevDummyData_scriptName1(projectConfig.DBConnectionInfo));
-            }
-
+            ClearScriptsFiles(testContext as DBVersionsTestContext);
 
             return testContext;
         }
 
-        public void Act(TestContext testContext)
+        public override void Act(DBVersionsTestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDbAPI.CreateNewDevDummyDataScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.CreateNewDevDummyDataScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
         }
 
 
-        public void Asserts(TestContext testContext)
+        public override void Asserts(DBVersionsTestContext testContext)
         {
-            try
-            {
-                _dbVersionsValidTest.Asserts(testContext);
+            _dbVersionsTestHelper.Asserts(testContext, true);
 
-                _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
-            }
-            finally
-            {
-                if (File.Exists(GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
-                {
-                    File.Delete(GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
-                }
-            }
+            _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
 
         }
+
+
+        public override void Release(DBVersionsTestContext testContext)
+        {
+            _dbVersionsTestHelper.Release(testContext);
+
+            ClearScriptsFiles(testContext);
+        }
+
+
 
 
 
@@ -91,7 +89,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             return script1FullPath;
         }
-        
 
+
+
+        private void ClearScriptsFiles(DBVersionsTestContext testContext)
+        {
+            if (File.Exists(GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
+            {
+                File.Delete(GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
+            }
+        }
     }
 }
