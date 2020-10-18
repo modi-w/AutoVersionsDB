@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.UI;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -11,8 +12,9 @@ namespace AutoVersionsDB.WinApp
     public delegate void OnEditProjectHandler(string id);
 
 
-    public partial class Main : Form
+    public partial class Main : Form, IMainView, IViewContainer
     {
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
         public new void SuspendLayout()
         {
@@ -21,6 +23,13 @@ namespace AutoVersionsDB.WinApp
         }
 
 
+        public bool BtnChooseProjectVisible
+        {
+            get => lnkBtnChooseProject.Visible;
+            set => lnkBtnChooseProject.Visible = value;
+        }
+
+        public IView CurrentView { get; private set; }
 
         public Main()
         {
@@ -52,15 +61,33 @@ namespace AutoVersionsDB.WinApp
 
             tabMainLayout.Selected += TabMainLayout_Selected;
 
-     //       tabMainLayout.Width = this.Width - 50;
+            //       tabMainLayout.Width = this.Width - 50;
         }
+
+
+        public void SetView(IView view)
+        {
+            if (view is IChooseProjectView)
+            {
+                tabMainLayout.SelectTab(tbChooseProject);
+            }
+            else if (view is IEditProjectConfigView)
+            {
+                tabMainLayout.SelectTab(tbEditProjectConfig);
+            }
+            else if (view is IDBVersionsView)
+            {
+                tabMainLayout.SelectTab(tbDBVersionsMangement);
+            }
+        }
+
 
         private void EditProjectConfigDetails1_OnNavToProcess(string id)
         {
             tabMainLayout.SelectTab(tbDBVersionsMangement);
 
-            Task.Run(() => {
-
+            Task.Run(() =>
+            {
                 dbVersionsMangement1.SetProjectConfigItem(id);
             });
         }
@@ -68,19 +95,21 @@ namespace AutoVersionsDB.WinApp
         private void ChooseProject1_OnEditProject(string id)
         {
             tabMainLayout.SelectedTab = tbEditProjectConfig;
-        
-            Task.Run(() => {
+
+            Task.Run(() =>
+            {
 
                 editProjectConfigDetails1.SetProjectConfigItem(id);
             });
         }
-    
+
 
         private void DbVersionsMangement1_OnEditProject(string id)
         {
             tabMainLayout.SelectedTab = tbEditProjectConfig;
 
-            Task.Run(() => {
+            Task.Run(() =>
+            {
 
                 editProjectConfigDetails1.SetProjectConfigItem(id);
             });
@@ -115,7 +144,8 @@ namespace AutoVersionsDB.WinApp
         {
             tabMainLayout.SelectTab(tbDBVersionsMangement);
 
-            Task.Run(() => {
+            Task.Run(() =>
+            {
 
                 dbVersionsMangement1.SetProjectConfigItem(id);
             });
@@ -132,5 +162,7 @@ namespace AutoVersionsDB.WinApp
         {
             tabMainLayout.SelectedTab = tbChooseProject;
         }
+
+      
     }
 }
