@@ -96,7 +96,7 @@
             this.tbSerchProject.Name = "tbSerchProject";
             this.tbSerchProject.Size = new System.Drawing.Size(689, 32);
             this.tbSerchProject.TabIndex = 31;
-            this.tbSerchProject.TextChanged += new System.EventHandler(this.TbSerchProject_TextChanged);
+           // this.tbSerchProject.TextChanged += new System.EventHandler(this.TbSerchProject_TextChanged);
             // 
             // btnNewProject
             // 

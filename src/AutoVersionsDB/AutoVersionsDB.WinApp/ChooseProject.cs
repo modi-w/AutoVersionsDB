@@ -7,26 +7,41 @@ using System.Linq;
 using System.Windows.Forms;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.UI;
+using AutoVersionsDB.WinApp.Utils;
+using Ninject;
 
 namespace AutoVersionsDB.WinApp
 {
-    public partial class ChooseProject : UserControl
+    public partial class ChooseProject : UserControleNinjectBase //UserControl
     {
-        private const string c_SearchPlaceHolderText = "Search Project...";
+        private ChooseProjectViewModel _viewModel;
+        [Inject]
+        public ChooseProjectViewModel ViewModel
+        {
+            get
+            {
+                return _viewModel;
+            }
+            set
+            {
+                if (_viewModel == null)
+                {
+                    _viewModel = value;
 
-        private List<ProjectConfigItem> _allProjectsList;
-
-        public event EventHandler OnSetNewProject;
-        public event OnNavToProcessHandler OnNavToProcess;
-        public event OnEditProjectHandler OnEditProject;
-
-
-        //private double dummy
-
+                }
+            }
+        }
 
         public ChooseProject()
         {
             InitializeComponent();
+
+
+            ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+
+            SetDataBindings();
+
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
@@ -36,7 +51,6 @@ namespace AutoVersionsDB.WinApp
                 //lblProjectName.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
                 //lblProjectName.DataBindings.Add(new Binding("Text", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectName"));
 
-                tbSerchProject.Text = c_SearchPlaceHolderText;
                 tbSerchProject.ForeColor = Color.DimGray;
 
                 tbSerchProject.GotFocus += TbSerchProject_GotFocus;
@@ -46,16 +60,68 @@ namespace AutoVersionsDB.WinApp
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
 
 
-                this.Load += ChooseProject_Load;
+                renderProjectList();
+
+                //this.Load += ChooseProject_Load;
             }
 
 
         }
 
+        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(ViewModel.FilteredProjectList):
+
+                    renderProjectList();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+        private void SetDataBindings()
+        {
+            this.tbSerchProject.DataBindings.Clear();
+            this.tbSerchProject.DataBindings.Add(
+                nameof(tbSerchProject.Text),
+                ViewModel,
+                nameof(ViewModel.SerchProjectText),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+        }
+
+
         private void FlowLayoutPanel1_Resize(object sender, EventArgs e)
         {
             SetProjectItemsSize();
         }
+
+        private void renderProjectList()
+        {
+            flowLayoutPanel1.Controls.Clear();
+
+            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //{
+
+            foreach (ProjectConfigItem projectConfigItem in ViewModel.FilteredProjectList)
+            {
+                ProjectItemControl projectItemControl = new ProjectItemControl();
+                projectItemControl.SetProjectConfig(projectConfigItem);
+                projectItemControl.OnNavToProcess += ProjectItem_OnNavToProcess;
+                projectItemControl.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
+                projectItemControl.OnEditProject += ProjectItem_OnEditProject;
+                flowLayoutPanel1.Controls.Add(projectItemControl);
+            }
+
+            SetProjectItemsSize();
+            // }
+        }
+
+
 
         private void SetProjectItemsSize()
         {
@@ -66,106 +132,67 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void ChooseProject_Load(object sender, EventArgs e)
-        {
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                //flowLayoutPanel1.Width = this.Width;
-                RefreshProjectList();
-            }
-        }
+        //private void ChooseProject_Load(object sender, EventArgs e)
+        //{
+        //    if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+        //    {
+        //        //flowLayoutPanel1.Width = this.Width;
+        //        RefreshProjectList();
+        //    }
+        //}
 
         private void TbSerchProject_LostFocus(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(tbSerchProject.Text))
+           ViewModel.ResolveSerchProjectTextPlaceHolder();
+
+            if (ViewModel.IsSerchProjectTextEmpty)
             {
-                tbSerchProject.Text = c_SearchPlaceHolderText;
                 tbSerchProject.ForeColor = Color.DimGray;
             }
         }
 
         private void TbSerchProject_GotFocus(object sender, EventArgs e)
         {
-            if (tbSerchProject.Text == c_SearchPlaceHolderText)
+            ViewModel.ResolveSerchProjectTextOnFocus();
+
+            if (ViewModel.IsSerchProjectTextEmpty)
             {
-                tbSerchProject.Text = "";
                 tbSerchProject.ForeColor = Color.Black;
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
-        public void RefreshProjectList()
-        {
-            string searchText = "";
-            if (tbSerchProject.Text == c_SearchPlaceHolderText)
-            {
-                searchText = "";
-            }
-            else
-            {
-                searchText = tbSerchProject.Text;
-            }
-
-
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                _allProjectsList = AutoVersionsDBAPI.GetProjectsList();
-
-                List<ProjectConfigItem> filteredProjectList =
-                    _allProjectsList
-                    .Where(e => string.IsNullOrWhiteSpace(searchText) 
-                                || e.Id.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant())
-                                || e.Description.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
-                    .OrderBy(e => e.Id)
-                    .ToList();
-
-                flowLayoutPanel1.Controls.Clear();
-
-                foreach (ProjectConfigItem projectConfigItem in filteredProjectList)
-                {
-                    ProjectItemControl projectItemControl = new ProjectItemControl();
-                    projectItemControl.SetProjectConfig(projectConfigItem);
-                    projectItemControl.OnNavToProcess += ProjectItem_OnNavToProcess;
-                    projectItemControl.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
-                    projectItemControl.OnEditProject += ProjectItem_OnEditProject;
-                    flowLayoutPanel1.Controls.Add(projectItemControl);
-                }
-
-                SetProjectItemsSize();
-
-
-            }
-        }
 
         private void ProjectItem_OnEditProject(string id)
         {
-            OnEditProject?.Invoke(id);
+            ViewModel.NavToEditProjectConfig(id);
         }
 
         private void ProjectItem_OnRefreshProjectList()
         {
-            RefreshProjectList();
+            ViewModel.RefreshProjectList();
         }
 
         private void ProjectItem_OnNavToProcess(string id)
         {
-            OnNavToProcess?.Invoke(id);
+            ViewModel.NavToDBVersions(id);
         }
 
 
 
 
 
-        private void TbSerchProject_TextChanged(object sender, EventArgs e)
-        {
-            RefreshProjectList();
-        }
+        //private void TbSerchProject_TextChanged(object sender, EventArgs e)
+        //{
+        //    ViewModel.RefreshProjectList();
+        //}
 
 
         private void BtnNewProject_Click(object sender, EventArgs e)
         {
-            OnSetNewProject?.Invoke(sender, e);
+            ViewModel.NavToCreateNewProjectConfig();
         }
+
+
 
 
         #region Dispose

@@ -4,13 +4,12 @@ using System.Text;
 
 namespace AutoVersionsDB.UI
 {
-    public class DBVersionsController
+    public class DBVersionsViewModel
     {
-        public IDBVersionsView View { get; }
+        internal ViewRouter ViewRouter { get; set; }
 
-        public DBVersionsController(IDBVersionsView view)
+        public DBVersionsViewModel()
         {
-            View = view;
         }
 
         public void SetProjectConfig(string id)

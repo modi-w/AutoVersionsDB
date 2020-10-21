@@ -12,7 +12,7 @@ namespace AutoVersionsDB.WinApp
     public delegate void OnEditProjectHandler(string id);
 
 
-    public partial class Main : Form, IMainView, IViewContainer
+    public partial class Main : Form, IViewContainer
     {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
@@ -22,31 +22,41 @@ namespace AutoVersionsDB.WinApp
             //  And because that we cant set ignore to ths method to the auto generate code, we implement nothing.
         }
 
+        public ViewType CurrentView { get; private set; }
 
-        public bool BtnChooseProjectVisible
-        {
-            get => lnkBtnChooseProject.Visible;
-            set => lnkBtnChooseProject.Visible = value;
-        }
+        private readonly MainViewModel _viewModel;
 
-        public IView CurrentView { get; private set; }
 
-        public Main()
+        public Main(MainViewModel viewModel)
         {
             InitializeComponent();
 
             this.Load += Main_Load;
 
+            _viewModel = viewModel;
+
+            SetDataBindings();
 
 
-            chooseProject1.OnSetNewProject += ChooseProject1_OnSetNewProject1;
-            chooseProject1.OnNavToProcess += ChooseProject1_OnNavToProcess;
-            chooseProject1.OnEditProject += ChooseProject1_OnEditProject;
+            //chooseProject1.OnSetNewProject += ChooseProject1_OnSetNewProject1;
+            //chooseProject1.OnNavToProcess += ChooseProject1_OnNavToProcess;
+            //chooseProject1.OnEditProject += ChooseProject1_OnEditProject;
 
-            editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
-            dbVersionsMangement1.OnEditProject += DbVersionsMangement1_OnEditProject;
+            //editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
+            //dbVersionsMangement1.OnEditProject += DbVersionsMangement1_OnEditProject;
 
             lnkBtnChooseProject.Visible = false;
+        }
+
+        private void SetDataBindings()
+        {
+            this.lnkBtnChooseProject.DataBindings.Clear();
+            this.lnkBtnChooseProject.DataBindings.Add(
+                nameof(lnkBtnChooseProject.Visible),
+                _viewModel, 
+                nameof(_viewModel.BtnChooseProjectVisible),
+                false, 
+                DataSourceUpdateMode.OnPropertyChanged);
         }
 
 
@@ -59,68 +69,41 @@ namespace AutoVersionsDB.WinApp
             tabMainLayout.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabMainLayout.DrawItem += TabMainLayout_DrawItem;
 
-            tabMainLayout.Selected += TabMainLayout_Selected;
+            //tabMainLayout.Selected += TabMainLayout_Selected;
 
             //       tabMainLayout.Width = this.Width - 50;
         }
 
 
-        public void SetView(IView view)
+        public void SetView(ViewType viewType)
         {
-            if (view is IChooseProjectView)
+            switch (viewType)
             {
-                tabMainLayout.SelectTab(tbChooseProject);
+                case ViewType.ChooseProject:
+
+                    tabMainLayout.SelectTab(tbChooseProject);
+                    CurrentView = viewType;
+                    break;
+
+                case ViewType.EditProjectConfig:
+
+                    tabMainLayout.SelectTab(tbEditProjectConfig);
+                    CurrentView = viewType;
+                    break;
+          
+                case ViewType.DBVersions:
+
+                    tabMainLayout.SelectTab(tbDBVersionsMangement);
+                    CurrentView = viewType;
+                 
+                    break;
+
+                default:
+                    break;
             }
-            else if (view is IEditProjectConfigView)
-            {
-                tabMainLayout.SelectTab(tbEditProjectConfig);
-            }
-            else if (view is IDBVersionsView)
-            {
-                tabMainLayout.SelectTab(tbDBVersionsMangement);
-            }
         }
 
 
-        private void EditProjectConfigDetails1_OnNavToProcess(string id)
-        {
-            tabMainLayout.SelectTab(tbDBVersionsMangement);
-
-            Task.Run(() =>
-            {
-                dbVersionsMangement1.SetProjectConfigItem(id);
-            });
-        }
-
-        private void ChooseProject1_OnEditProject(string id)
-        {
-            tabMainLayout.SelectedTab = tbEditProjectConfig;
-
-            Task.Run(() =>
-            {
-
-                editProjectConfigDetails1.SetProjectConfigItem(id);
-            });
-        }
-
-
-        private void DbVersionsMangement1_OnEditProject(string id)
-        {
-            tabMainLayout.SelectedTab = tbEditProjectConfig;
-
-            Task.Run(() =>
-            {
-
-                editProjectConfigDetails1.SetProjectConfigItem(id);
-            });
-        }
-
-
-
-        private void TabMainLayout_Selected(object sender, TabControlEventArgs e)
-        {
-            lnkBtnChooseProject.Visible = tabMainLayout.SelectedTab != tbChooseProject;
-        }
 
         private void TabMainLayout_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -132,35 +115,11 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void ChooseProject1_OnSetNewProject1(object sender, EventArgs e)
-        {
-            editProjectConfigDetails1.CreateNewProjectConfig();
 
-            tabMainLayout.SelectedTab = tbEditProjectConfig;
-        }
-
-
-        private void ChooseProject1_OnNavToProcess(string id)
-        {
-            tabMainLayout.SelectTab(tbDBVersionsMangement);
-
-            Task.Run(() =>
-            {
-
-                dbVersionsMangement1.SetProjectConfigItem(id);
-            });
-
-        }
-
-        private void LnkBtnChooseProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-
-
-        }
-
+     
         private void LnkBtnChooseProject_Click(object sender, EventArgs e)
         {
-            tabMainLayout.SelectedTab = tbChooseProject;
+            _viewModel.NavToChooseProject();
         }
 
       

@@ -12,6 +12,7 @@ using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.NotificationableEngine;
 using System.Threading.Tasks;
 using System.Globalization;
+using AutoVersionsDB.UI;
 
 namespace AutoVersionsDB.WinApp
 {

@@ -9,23 +9,28 @@ namespace AutoVersionsDB.UI
     {
         private readonly IViewContainer _viewContainer;
 
-        private readonly MainController _mainController;
-        private readonly ChooseProjectController _chooseProjectController;
-        private readonly EditProjectConfigController _editProjectConfigDetailsController;
-        private readonly DBVersionsController _dbVersionsController;
-        
+        private readonly MainViewModel _mainViewModel;
+        private readonly ChooseProjectViewModel _chooseProjectViewModel;
+        private readonly EditProjectViewModel _editProjectConfigDetailsViewModel;
+        private readonly DBVersionsViewModel _dbVersionsViewModel;
+
 
         public ViewRouter(IViewContainer viewContainer,
-                            MainController mainController,
-                            ChooseProjectController chooseProjectController,
-                            EditProjectConfigController editProjectConfigDetailsController,
-                            DBVersionsController dbVersionsController)
+                            MainViewModel mainViewModel,
+                            ChooseProjectViewModel chooseProjectViewModel,
+                            EditProjectViewModel editProjectConfigDetailsViewModel,
+                            DBVersionsViewModel dbVersionsViewModel)
         {
             _viewContainer = viewContainer;
-            _mainController = mainController;
-            _chooseProjectController = chooseProjectController;
-            _editProjectConfigDetailsController = editProjectConfigDetailsController;
-            _dbVersionsController = dbVersionsController;
+            _mainViewModel = mainViewModel;
+            _chooseProjectViewModel = chooseProjectViewModel;
+            _editProjectConfigDetailsViewModel = editProjectConfigDetailsViewModel;
+            _dbVersionsViewModel = dbVersionsViewModel;
+
+            _mainViewModel.ViewRouter = this;
+            _chooseProjectViewModel.ViewRouter = this;
+            _editProjectConfigDetailsViewModel.ViewRouter = this;
+            _dbVersionsViewModel.ViewRouter = this;
 
             DefaultView();
         }
@@ -38,7 +43,7 @@ namespace AutoVersionsDB.UI
 
         public void NavToChooseProject()
         {
-            _viewContainer.SetView(_chooseProjectController.View);
+            _viewContainer.SetView(ViewType.ChooseProject);
 
             SetBtnChooseProjectVisibility();
 
@@ -46,17 +51,17 @@ namespace AutoVersionsDB.UI
 
         public void NavToEditProjectConfig(string id)
         {
-            _viewContainer.SetView(_editProjectConfigDetailsController.View);
+            _viewContainer.SetView(ViewType.EditProjectConfig);
 
             Task.Run(() =>
             {
                 if (string.IsNullOrWhiteSpace(id))
                 {
-                    _editProjectConfigDetailsController.CreateNewProjectConfig();
+                    _editProjectConfigDetailsViewModel.CreateNewProjectConfig();
                 }
                 else
                 {
-                    _editProjectConfigDetailsController.SetProjectConfig(id);
+                    _editProjectConfigDetailsViewModel.SetProjectConfig(id);
                 }
             });
 
@@ -68,11 +73,11 @@ namespace AutoVersionsDB.UI
 
         public void NavToDBVersions(string id)
         {
-            _viewContainer.SetView(_dbVersionsController.View);
+            _viewContainer.SetView(ViewType.DBVersions);
 
             Task.Run(() =>
             {
-                _dbVersionsController.SetProjectConfig(id);
+                _dbVersionsViewModel.SetProjectConfig(id);
             });
 
             SetBtnChooseProjectVisibility();
@@ -83,7 +88,7 @@ namespace AutoVersionsDB.UI
 
         private void SetBtnChooseProjectVisibility()
         {
-            _mainController.View.BtnChooseProjectVisible = _viewContainer.CurrentView != _chooseProjectController.View;
+            _mainViewModel.BtnChooseProjectVisible = _viewContainer.CurrentView != ViewType.ChooseProject;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
@@ -22,10 +23,8 @@ namespace AutoVersionsDB.WinApp
             NinjectUtils_Winform.CreateKernel();
 
 
-            using(var mainWindows = new Main())
-            {
-                Application.Run(mainWindows);
-            }
+            Main mainFrame = NinjectUtils_Winform.NinjectKernelContainer.Get<Main>();
+            Application.Run(mainFrame);
         }
 
 

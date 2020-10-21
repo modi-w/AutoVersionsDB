@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.UI;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
 using System;
@@ -9,7 +10,7 @@ using System.Text;
 namespace AutoVersionsDB.WinApp
 {
     public static class NinjectUtils_Winform
-    { 
+    {
         /* https://github.com/ninject/Ninject.Web/blob/master/src/Ninject.Web/WebServiceBase.cs
          * 
          * https://stackoverflow.com/questions/14127763/dependency-injection-in-winforms-using-ninject-and-entity-framework
@@ -17,7 +18,6 @@ namespace AutoVersionsDB.WinApp
          */
 
 
-        // TODO: When using winapp -> call to CreateKernel(), when using unit tests -> call to CreateKenrelForTests
 
         public static IKernel NinjectKernelContainer { get; private set; }
 
@@ -27,31 +27,38 @@ namespace AutoVersionsDB.WinApp
             NinjectKernelContainer = new StandardKernel();
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            RegisterServices(NinjectKernelContainer);
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
+            RegisterServices(NinjectKernelContainer);
         }
 
         private static void RegisterServices(IKernel kernel)
         {
-          //  kernel.ThrowIfNull(nameof(kernel));
+            //  kernel.ThrowIfNull(nameof(kernel));
 
+            Main mainForm = kernel.Get<Main>();
+            kernel.Bind<IViewContainer>().ToConstant(mainForm);
+
+
+            kernel.Bind<ViewRouter>().To<ViewRouter>().InSingletonScope();
+
+            
         }
 
 
-        public static void CreateKernelForTests()
-        {
-            NinjectKernelContainer = new StandardKernel();
-            NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
+        //public static void CreateKernelForTests()
+        //{
+        //    NinjectKernelContainer = new StandardKernel();
+        //    NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            RegisterServicesForTests(NinjectKernelContainer);
-        }
+        //    RegisterServicesForTests(NinjectKernelContainer);
+        //}
 
-        private static void RegisterServicesForTests(IKernel kernel)
-        {
-           // kernel.ThrowIfNull(nameof(kernel));
+        //private static void RegisterServicesForTests(IKernel kernel)
+        //{
+        //   // kernel.ThrowIfNull(nameof(kernel));
 
-            //TODO: register Mock services
+        //    //TODO: register Mock services
 
-        }
+        //}
     }
 }

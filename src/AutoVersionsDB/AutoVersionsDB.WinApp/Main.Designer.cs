@@ -1,4 +1,6 @@
-﻿namespace AutoVersionsDB.WinApp
+﻿using Ninject;
+
+namespace AutoVersionsDB.WinApp
 {
     partial class Main
     {
@@ -31,7 +33,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabMainLayout = new System.Windows.Forms.TabControl();
             this.tbChooseProject = new System.Windows.Forms.TabPage();
-            this.chooseProject1 = new AutoVersionsDB.WinApp.ChooseProject();
+            this.chooseProject1 = new ChooseProject();
             this.tbEditProjectConfig = new System.Windows.Forms.TabPage();
             this.editProjectConfigDetails1 = new AutoVersionsDB.WinApp.EditProjectConfigDetails();
             this.tbDBVersionsMangement = new System.Windows.Forms.TabPage();
@@ -46,8 +48,8 @@
             // 
             // tabMainLayout
             // 
-            this.tabMainLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabMainLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMainLayout.Controls.Add(this.tbChooseProject);
             this.tabMainLayout.Controls.Add(this.tbEditProjectConfig);
@@ -72,8 +74,8 @@
             // 
             // chooseProject1
             // 
-            this.chooseProject1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.chooseProject1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseProject1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chooseProject1.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -138,7 +140,6 @@
             this.lnkBtnChooseProject.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lnkBtnChooseProject.Size = new System.Drawing.Size(37, 27);
             this.lnkBtnChooseProject.TabIndex = 2;
-            this.lnkBtnChooseProject.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LnkBtnChooseProject_LinkClicked);
             this.lnkBtnChooseProject.Click += new System.EventHandler(this.LnkBtnChooseProject_Click);
             // 
             // label1

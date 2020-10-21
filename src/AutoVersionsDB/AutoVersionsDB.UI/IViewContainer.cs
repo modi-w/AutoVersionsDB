@@ -6,8 +6,7 @@ namespace AutoVersionsDB.UI
 {
     public interface IViewContainer
     {
-        IView CurrentView { get; }
-
-        void SetView(IView view);
+        ViewType CurrentView { get; }
+        void SetView(ViewType viewType);
     }
 }

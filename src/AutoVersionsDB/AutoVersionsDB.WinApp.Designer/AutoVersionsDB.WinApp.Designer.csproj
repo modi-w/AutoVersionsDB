@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -87,6 +90,9 @@
       <Link>MessageWindow.Designer.cs</Link>
       <DependentUpon>MessageWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\NinjectUtils_Winform.cs">
+      <Link>NinjectUtils_Winform.cs</Link>
+    </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\NotificationsControl.cs">
       <Link>NotificationsControl.cs</Link>
       <SubType>UserControl</SubType>
@@ -114,8 +120,16 @@
       <Link>TextInputWindow.Designer.cs</Link>
       <DependentUpon>TextInputWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\FromNinjectBase.cs">
+      <Link>Utils\FromNinjectBase.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Utils\OsProcessUtils.cs">
       <Link>Utils\OsProcessUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\UserControleNinjectBase.cs">
+      <Link>Utils\UserControleNinjectBase.cs</Link>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -159,6 +173,7 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,6 +207,10 @@
     <ProjectReference Include="..\AutoVersionsDB.NotificationableEngine\AutoVersionsDB.NotificationableEngine.csproj">
       <Project>{38CCA5D1-3F7E-4282-8649-75990F1AF1E8}</Project>
       <Name>AutoVersionsDB.NotificationableEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoVersionsDB.UI\AutoVersionsDB.UI.csproj">
+      <Project>{4C4DE6A7-2AE3-49D0-AA6C-A4D93CBDE190}</Project>
+      <Name>AutoVersionsDB.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
