@@ -13,28 +13,33 @@ using AutoVersionsDB.NotificationableEngine;
 using System.Threading.Tasks;
 using System.Globalization;
 using AutoVersionsDB.UI;
+using Ninject;
+using AutoVersionsDB.WinApp.Utils;
+using AutoVersionsDB.UI.EditProject;
 
 namespace AutoVersionsDB.WinApp
 {
 
-    public partial class EditProjectConfigDetails : UserControl
+    public partial class EditProjectConfigDetails : UserControlNinjectBase
     {
-        private readonly List<DBType> _dbTypesList;
-
-        private string _id;
-
-        public enum EditProjectConfigDetailsViewType
+        private EditProjectViewModel _viewModel;
+        [Inject]
+        public EditProjectViewModel ViewModel
         {
-            InPorcess,
-            New,
-            Update,
-            EditId,
+            get
+            {
+                return _viewModel;
+            }
+            set
+            {
+                _viewModel = value;
+
+                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+
+                notificationsControl1.ViewModel = _viewModel.NotificationsViewModel;
+            }
         }
-
-        private EditProjectConfigDetailsViewType _viewType;
-
-
-        public event OnNavToProcessHandler OnNavToProcess;
 
 
 
@@ -42,190 +47,452 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                _dbTypesList = AutoVersionsDBAPI.GetDBTypes();
-                cboConncectionType.DataSource = _dbTypesList;
-                cboConncectionType.DisplayMember = "Name";
-                cboConncectionType.ValueMember = "Code";
-            }
 
             errPrvProjectDetails.BlinkStyle = ErrorBlinkStyle.NeverBlink;
 
-            btnNavToProcess.Visible = false;
-            lblDbProcess.Visible = false;
-
             imgError.Location = new Point(imgValid.Location.X, imgValid.Location.Y);
             pnlDelEnvFields.Location = new Point(pnlDevEnvFoldersFields.Location.X, pnlDevEnvFoldersFields.Location.Y);
-
-            imgValid.Visible = false;
-            imgError.Visible = false;
-        }
-
-        public void CreateNewProjectConfig()
-        {
-            _id = null;
-           
-            notificationsControl1.Clear();
-
-            ClearUIElementsErrors();
-
-            ProjectConfigItem newProjectConfigItem = new ProjectConfigItem();
-            newProjectConfigItem.DevEnvironment = true;
-            newProjectConfigItem.SetDefaltValues();
-
-            BindToUIElements(newProjectConfigItem);
-
-
-            ChangeViewType(EditProjectConfigDetailsViewType.New);
         }
 
 
-        public void SetProjectConfigItem(string id)
+        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            _id = id;
+            errorMessageChanged(e);
 
-            RefreshForm();
-        }
-
-        private void RefreshForm()
-        {
-            ProjectConfigItem projectConfig = AutoVersionsDBAPI.GetProjectConfigById(_id);
-            BindToUIElements(projectConfig);
-
-            ValidateAll();
-
-            ChangeViewType(EditProjectConfigDetailsViewType.Update);
-        }
-
-
-
-        #region Validation
-
-        private void ValidateAll()
-        {
-            ChangeViewType(EditProjectConfigDetailsViewType.InPorcess);
-
-            Task.Run(() =>
+            switch (e.PropertyName)
             {
-                notificationsControl1.Clear();
+                case nameof(ViewModel.ProjectConfig):
 
-                ClearUIElementsErrors();
+                    bindProjectConfig();
+                    break;
 
-                ProcessResults processResults = AutoVersionsDBAPI.ValidateProjectConfig(_id, notificationsControl1.OnNotificationStateChanged);
-
-                handleProcessErrors(processResults.Trace);
-            });
-        }
-
-        private void handleCompleteProcess(ProcessTrace processResults)
-        {
-            if (processResults.HasError)
-            {
-                handleProcessErrors(processResults);
-            }
-            else
-            {
-                RefreshForm();
+                default:
+                    break;
             }
         }
 
-
-        private void handleProcessErrors(ProcessTrace processResults)
+        private void bindProjectConfig()
         {
-            notificationsControl1.AfterComplete();
+            
 
-            SetErrorsToUiElements(processResults);
+            this.tbId.DataBindings.Clear();
+            this.tbId.DataBindings.Add(
+                nameof(tbId.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.Id),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
 
-            SetControlVisableOrHide(imgError, processResults.HasError);
-            SetControlVisableOrHide(imgValid, !processResults.HasError);
-            SetControlVisableOrHide(btnNavToProcess, !processResults.HasError);
-            SetControlVisableOrHide(lblDbProcess, !processResults.HasError);
+            this.tbProjectDescription.DataBindings.Clear();
+            this.tbProjectDescription.DataBindings.Add(
+                nameof(tbProjectDescription.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.Description),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
 
-            if (string.IsNullOrWhiteSpace(_id))
+            this.cboConncectionType.DataBindings.Clear();
+            this.cboConncectionType.DataBindings.Add(
+                nameof(cboConncectionType.SelectedValue),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.DBType),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbServer.DataBindings.Clear();
+            this.tbServer.DataBindings.Add(
+                nameof(tbServer.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.Server),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDBName.DataBindings.Clear();
+            this.tbDBName.DataBindings.Add(
+                nameof(tbServer.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.DBName),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbUsername.DataBindings.Clear();
+            this.tbUsername.DataBindings.Add(
+                nameof(tbServer.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.Username),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbPassword.DataBindings.Clear();
+            this.tbPassword.DataBindings.Add(
+                nameof(tbPassword.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.Password),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDBBackupFolder.DataBindings.Clear();
+            this.tbDBBackupFolder.DataBindings.Add(
+                nameof(tbDBBackupFolder.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.BackupFolderPath),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.rbDevEnv.DataBindings.Clear();
+            this.rbDevEnv.DataBindings.Add(
+                nameof(rbDevEnv.Checked),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.DevEnvironment),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.rbDelEnv.DataBindings.Clear();
+            this.rbDelEnv.DataBindings.Add(
+                nameof(rbDelEnv.Checked),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.DeliveryEnvironment),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDevScriptsFolderPath.DataBindings.Clear();
+            this.tbDevScriptsFolderPath.DataBindings.Add(
+                nameof(tbDevScriptsFolderPath.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.DevScriptsBaseFolderPath),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.lblIncrementalScriptsFolderPath.DataBindings.Clear();
+            this.lblIncrementalScriptsFolderPath.DataBindings.Add(
+                nameof(lblIncrementalScriptsFolderPath.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.IncrementalScriptsFolderPath),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.lblRepeatableScriptsFolderPath.DataBindings.Clear();
+            this.lblRepeatableScriptsFolderPath.DataBindings.Add(
+                nameof(lblRepeatableScriptsFolderPath.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.RepeatableScriptsFolderPath),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.lblDevDummyDataScriptsFolderPath.DataBindings.Clear();
+            this.lblDevDummyDataScriptsFolderPath.DataBindings.Add(
+                nameof(lblDevDummyDataScriptsFolderPath.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.DevDummyDataScriptsFolderPath),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDeployArtifactFolderPath.DataBindings.Clear();
+            this.tbDeployArtifactFolderPath.DataBindings.Add(
+                nameof(tbDeployArtifactFolderPath.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.DeployArtifactFolderPath),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDeliveryArtifactFolderPath.DataBindings.Clear();
+            this.tbDeliveryArtifactFolderPath.DataBindings.Add(
+                nameof(tbDeliveryArtifactFolderPath.Text),
+                ViewModel.ProjectConfig,
+                nameof(ViewModel.ProjectConfig.DeliveryArtifactFolderPath),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+        }
+
+        private void errorMessageChanged(PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
             {
-                ChangeViewType(EditProjectConfigDetailsViewType.New);
-            }
-            else
-            {
-                ChangeViewType(EditProjectConfigDetailsViewType.Update);
+                case nameof(ViewModel.ProjectConfigErrorMessages.IdErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.IdErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfigErrorMessages.DBTypeCodeErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DBTypeCodeErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfigErrorMessages.ServerErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.ServerErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfigErrorMessages.DBNameErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DBNameErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfigErrorMessages.UsernameErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.UsernameErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfigErrorMessages.PasswordErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.PasswordErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfigErrorMessages.BackupFolderPathErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.BackupFolderPathErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfigErrorMessages.DeployArtifactFolderPathErrorMessage):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DeployArtifactFolderPathErrorMessage);
+                    break;
+
+                case nameof(ViewModel.ProjectConfig.DeliveryArtifactFolderPath):
+
+                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage);
+                    break;
+
+                default:
+                    break;
             }
         }
 
-        private void SetErrorsToUiElements(ProcessTrace processResults)
+        private void SetDataBindings()
         {
-            if (processResults.HasError)
-            {
-                List<StepNotificationState> errorStates = processResults.StatesHistory.Where(e => e.HasError).ToList();
-
-                foreach (StepNotificationState errorStateItem in errorStates)
-                {
-                    switch (errorStateItem.LowLevelErrorCode)
-                    {
-                        case "IdMandatory":
-
-                            SetErrorInErrorProvider(tbId, errorStateItem.LowLevelErrorMessage);
-                            break;
-
-                        case "DBType":
-
-                            SetErrorInErrorProvider(cboConncectionType, errorStateItem.LowLevelErrorMessage);
-                            break;
-
-                        case "DBName":
-
-                            SetErrorInErrorProvider(tbDBName, errorStateItem.LowLevelErrorMessage);
-                            break;
-
-                        //case "ConnStr":
-
-                        //    SetErrorInErrorProvider(tbConnStr, errorStateItem.LowLevelErrorMessage);
-                        //    break;
-
-                        //case "ConnStrToMasterDB":
-
-                        //    SetErrorInErrorProvider(tbConnStrToMasterDB, errorStateItem.LowLevelErrorMessage);
-                        //    break;
-
-                        case "DBBackupFolderPath":
-
-                            SetErrorInErrorProvider(tbDBBackupFolder, errorStateItem.LowLevelErrorMessage);
-                            break;
-
-                        case "DeliveryArtifactFolderPath":
-
-                            SetErrorInErrorProvider(tbDeliveryArtifactFolderPath, errorStateItem.LowLevelErrorMessage);
-                            break;
-
-                        case "DeployArtifactFolderPath":
-
-                            SetErrorInErrorProvider(tbDeployArtifactFolderPath, errorStateItem.LowLevelErrorMessage);
-                            break;
-
-                        case "DevScriptsBaseFolder":
-
-                            SetErrorInErrorProvider(tbDevScriptsFolderPath, errorStateItem.LowLevelErrorMessage);
-                            break;
+            cboConncectionType.DataSource = ViewModel.DBTypes;
+            cboConncectionType.DisplayMember = "Name";
+            cboConncectionType.ValueMember = "Code";
 
 
+            this.imgError.DataBindings.Clear();
+            this.imgError.DataBindings.Add(
+                nameof(imgError.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.ImgErrorVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
 
-                    }
-                }
-            }
+            this.imgValid.DataBindings.Clear();
+            this.imgValid.DataBindings.Add(
+                nameof(imgValid.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.ImgValidVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+            this.btnSave.DataBindings.Clear();
+            this.btnSave.DataBindings.Add(
+                nameof(btnSave.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnSaveEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.btnSave.DataBindings.Add(
+                nameof(btnSave.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnSaveVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.btnEditId.DataBindings.Clear();
+            this.btnEditId.DataBindings.Add(
+                nameof(btnEditId.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnEditIdEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.btnEditId.DataBindings.Add(
+                nameof(btnEditId.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnEditIdVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+            this.btnSaveId.DataBindings.Clear();
+            this.btnSaveId.DataBindings.Add(
+                nameof(btnSaveId.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnSaveIdEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.btnSaveId.DataBindings.Add(
+                nameof(btnSaveId.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnSaveIdVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.btnCancelEditId.DataBindings.Clear();
+            this.btnCancelEditId.DataBindings.Add(
+                nameof(btnCancelEditId.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnCancelEditIdEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.btnCancelEditId.DataBindings.Add(
+                nameof(btnCancelEditId.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnCancelEditIdVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+
+
+            this.btnNavToProcess.DataBindings.Clear();
+            this.btnNavToProcess.DataBindings.Add(
+                nameof(btnNavToProcess.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnNavToProcessVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.btnNavToProcess.DataBindings.Add(
+                nameof(btnNavToProcess.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnNavToProcessEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+
+
+            this.btnNavToProcess.DataBindings.Clear();
+            this.btnNavToProcess.DataBindings.Add(
+                nameof(btnNavToProcess.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnNavToProcessVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.btnNavToProcess.DataBindings.Add(
+                nameof(btnNavToProcess.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnNavToProcessEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+            this.lblDbProcess.DataBindings.Clear();
+            this.lblDbProcess.DataBindings.Add(
+                nameof(lblDbProcess.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.BtnNavToProcessVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.cboConncectionType.DataBindings.Clear();
+            this.cboConncectionType.DataBindings.Add(
+                nameof(cboConncectionType.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.CboConncectionTypeEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbServer.DataBindings.Clear();
+            this.tbServer.DataBindings.Add(
+                nameof(tbServer.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbServerEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+            this.tbDBName.DataBindings.Clear();
+            this.tbDBName.DataBindings.Add(
+                nameof(tbDBName.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbDBNameEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbUsername.DataBindings.Clear();
+            this.tbUsername.DataBindings.Add(
+                nameof(tbUsername.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbUsernameEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbPassword.DataBindings.Clear();
+            this.tbPassword.DataBindings.Add(
+                nameof(tbPassword.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbPasswordEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDevScriptsFolderPath.DataBindings.Clear();
+            this.tbDevScriptsFolderPath.DataBindings.Add(
+                nameof(tbDevScriptsFolderPath.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbDevScriptsFolderPathEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDBBackupFolder.DataBindings.Clear();
+            this.tbDBBackupFolder.DataBindings.Add(
+                nameof(tbDBBackupFolder.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbDBBackupFolderEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbId.DataBindings.Clear();
+            this.tbId.DataBindings.Add(
+                nameof(tbId.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbIdEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.rbDevEnv.DataBindings.Clear();
+            this.rbDevEnv.DataBindings.Add(
+                nameof(rbDevEnv.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.RbDevEnvEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.rbDelEnv.DataBindings.Clear();
+            this.rbDelEnv.DataBindings.Add(
+                nameof(rbDelEnv.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.RbDelEnvEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDeployArtifactFolderPath.DataBindings.Clear();
+            this.tbDeployArtifactFolderPath.DataBindings.Add(
+                nameof(tbDeployArtifactFolderPath.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbDeployArtifactFolderPathEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbDeliveryArtifactFolderPath.DataBindings.Clear();
+            this.tbDeliveryArtifactFolderPath.DataBindings.Add(
+                nameof(tbDeliveryArtifactFolderPath.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbDeliveryArtifactFolderPathEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.tbProjectDescription.DataBindings.Clear();
+            this.tbProjectDescription.DataBindings.Add(
+                nameof(tbProjectDescription.Enabled),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.TbProjectDescriptionEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        private void ClearUIElementsErrors()
-        {
-            SetErrorInErrorProvider(tbId, null);
-            SetErrorInErrorProvider(cboConncectionType, null);
-            SetErrorInErrorProvider(tbServer, null);
-            SetErrorInErrorProvider(tbDBName, null);
-            SetErrorInErrorProvider(tbUsername, null);
-            SetErrorInErrorProvider(tbPassword, null);
-            SetErrorInErrorProvider(tbDBBackupFolder, null);
-            SetErrorInErrorProvider(tbDevScriptsFolderPath, null);
-            SetErrorInErrorProvider(lbllncrementalScriptsFolderPath, null);
-        }
 
 
         private void SetErrorInErrorProvider(Control control, string message)
@@ -238,336 +505,34 @@ namespace AutoVersionsDB.WinApp
 
 
 
-        #endregion
 
-
-        #region Binding To UIElements
-
-        private void BindToUIElements(ProjectConfigItem projectConfig)
-        {
-            cboConncectionType.BeginInvoke((MethodInvoker)(() =>
-            {
-                cboConncectionType.SelectedIndex = -1;
-            }));
-
-            if (!string.IsNullOrWhiteSpace(projectConfig.DBType))
-            {
-                DBType currSelectedItem = _dbTypesList.FirstOrDefault(e => e.Code == projectConfig.DBType);
-                if (currSelectedItem != null)
-                {
-                    cboConncectionType.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        cboConncectionType.SelectedIndex = cboConncectionType.Items.IndexOf(currSelectedItem);
-                    }));
-                }
-            }
-
-            tbId.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbId.Text = projectConfig.Id;
-            }));
-            tbProjectDescription.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbProjectDescription.Text = projectConfig.Description;
-            }));
-            tbServer.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbServer.Text = projectConfig.Server;
-            }));
-            tbDBName.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbDBName.Text = projectConfig.DBName;
-            }));
-            tbUsername.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbUsername.Text = projectConfig.Username;
-            }));
-            tbPassword.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbPassword.Text = projectConfig.Password;
-            }));
-
-
-            tbDBBackupFolder.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbDBBackupFolder.Text = projectConfig.BackupFolderPath;
-            }));
-
-            tbDevScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbDevScriptsFolderPath.Text = projectConfig.DevScriptsBaseFolderPath;
-            }));
-            tbDeployArtifactFolderPath.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbDeployArtifactFolderPath.Text = projectConfig.DeployArtifactFolderPath;
-            }));
-            tbDeliveryArtifactFolderPath.BeginInvoke((MethodInvoker)(() =>
-            {
-                tbDeliveryArtifactFolderPath.Text = projectConfig.DeliveryArtifactFolderPath;
-            }));
-
-
-            rbDevEnv.BeginInvoke((MethodInvoker)(() =>
-            {
-                rbDevEnv.Checked = projectConfig.DevEnvironment;
-            }));
-            rbDelEnv.BeginInvoke((MethodInvoker)(() =>
-            {
-                rbDelEnv.Checked = !projectConfig.DevEnvironment;
-            }));
-
-
-         
-
-            BindScriptsPathLabels(projectConfig);
-
-            ResolveShowDevEnvAndDelEnvFileds();
-        }
-
-
-        private void ResolveShowDevEnvAndDelEnvFileds()
-        {
-            pnlDevEnvFoldersFields.BeginInvoke((MethodInvoker)(() =>
-            {
-                pnlDevEnvFoldersFields.Visible = rbDevEnv.Checked;
-            }));
-            pnlDevEnvDeplyFolder.BeginInvoke((MethodInvoker)(() =>
-            {
-                pnlDevEnvDeplyFolder.Visible = rbDevEnv.Checked;
-            }));
-            pnlDelEnvFields.BeginInvoke((MethodInvoker)(() =>
-            {
-                pnlDelEnvFields.Visible = !rbDevEnv.Checked;
-            }));
-        }
-
-        private void BindScriptsPathLabels(ProjectConfigItem projectConfig)
-        {
-            lbllncrementalScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
-            {
-                lbllncrementalScriptsFolderPath.Text = projectConfig.IncrementalScriptsFolderPath;
-            }));
-            lblRepeatableScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblRepeatableScriptsFolderPath.Text = projectConfig.RepeatableScriptsFolderPath;
-            }));
-            lblDevDummyDataScriptsFolderPath.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblDevDummyDataScriptsFolderPath.Text = projectConfig.DevDummyDataScriptsFolderPath;
-            }));
-        }
-
-        #endregion
-
-        #region Binding From UIElements
-
-        private ProjectConfigItem BindFromUIElements()
-        {
-            ProjectConfigItem projectConfig = new ProjectConfigItem();
-
-            projectConfig.Id = tbId.Text;
-            projectConfig.Description = tbProjectDescription.Text;
-            projectConfig.DBType = Convert.ToString(cboConncectionType.SelectedValue, CultureInfo.InvariantCulture);
-            projectConfig.Server = tbServer.Text;
-            projectConfig.DBName = tbDBName.Text;
-            projectConfig.Username = tbUsername.Text;
-            projectConfig.Password = tbPassword.Text;
-            projectConfig.BackupFolderPath = tbDBBackupFolder.Text;
-
-            projectConfig.DevEnvironment = rbDevEnv.Checked;
-
-            projectConfig.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
-            projectConfig.DeployArtifactFolderPath = tbDeployArtifactFolderPath.Text;
-            projectConfig.DeliveryArtifactFolderPath = tbDeliveryArtifactFolderPath.Text;
-
-            return projectConfig;
-        }
-
-
-
-        #endregion
-
-        private void RbDevEnv_CheckedChanged(object sender, EventArgs e)
-        {
-            ResolveShowDevEnvAndDelEnvFileds();
-        }
-
-        private void RbDelEnv_CheckedChanged(object sender, EventArgs e)
-        {
-            ResolveShowDevEnvAndDelEnvFileds();
-        }
-
-
-        private void TbScriptsRootFolderPath_TextChanged(object sender, EventArgs e)
-        {
-            ProjectConfigItem projectConfig = new ProjectConfigItem();
-            projectConfig.DevScriptsBaseFolderPath = tbDevScriptsFolderPath.Text;
-            BindScriptsPathLabels(projectConfig);
-        }
 
         private void BtnNavToProcess_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(_id);
+            _viewModel.NavToDBVersionsCommand.Execute(null);
         }
 
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            ChangeViewType(EditProjectConfigDetailsViewType.InPorcess);
-
-
-            ProjectConfigItem projectConfig = BindFromUIElements();
-
-            Task.Run(() =>
-            {
-                if (string.IsNullOrWhiteSpace(_id))
-                {
-                    ProcessResults processResults = AutoVersionsDBAPI.SaveNewProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
-
-                    if (!processResults.Trace.HasError)
-                    {
-                        _id = projectConfig.Id;
-                    }
-
-                    handleCompleteProcess(processResults.Trace);
-
-                }
-                else
-                {
-                    ProcessResults processResults = AutoVersionsDBAPI.UpdateProjectConfig(projectConfig, notificationsControl1.OnNotificationStateChanged);
-
-                    handleCompleteProcess(processResults.Trace);
-                }
-            });
+            _viewModel.SaveCommand.Execute(null);
         }
 
 
         private void btnEditId_Click(object sender, EventArgs e)
         {
-            ChangeViewType(EditProjectConfigDetailsViewType.EditId);
+            _viewModel.SetEditIdStateCommand.Execute(null);
         }
         private void btnCancelEditId_Click(object sender, EventArgs e)
         {
-            RefreshForm();
+            _viewModel.CancelEditIdCommand.Execute(null);
         }
         private void btnSaveId_Click(object sender, EventArgs e)
         {
-            ChangeViewType(EditProjectConfigDetailsViewType.InPorcess);
-
-
-            Task.Run(() =>
-            {
-                ProcessResults processResults = AutoVersionsDBAPI.ChangeProjectId(_id, tbId.Text, notificationsControl1.OnNotificationStateChanged);
-
-                if (!processResults.Trace.HasError)
-                {
-                    _id = tbId.Text;
-                }
-
-
-                handleCompleteProcess(processResults.Trace);
-            });
+            _viewModel.SaveChangeIdCommand.Execute(null);
         }
 
 
-        private void ChangeViewType(EditProjectConfigDetailsViewType viewType)
-        {
-            _viewType = viewType;
-
-            switch (_viewType)
-            {
-                case EditProjectConfigDetailsViewType.InPorcess:
-
-                    SetAllControlsEnableDisable(false);
-                    break;
-
-                case EditProjectConfigDetailsViewType.New:
-
-                    SetAllControlsEnableDisable(true);
-
-                    SetControlVisableOrHide(btnEditId, false);
-                    SetControlVisableOrHide(btnSaveId, false);
-                    SetControlVisableOrHide(btnCancelEditId, false);
-
-                    break;
-
-                case EditProjectConfigDetailsViewType.Update:
-
-                    SetAllControlsEnableDisable(true);
-
-                    SetControlEnableOrDisable(tbId, false);
-
-                    SetControlVisableOrHide(btnSaveId, false);
-                    SetControlVisableOrHide(btnCancelEditId, false);
-                    SetControlVisableOrHide(btnEditId, true);
-                    SetControlEnableOrDisable(btnEditId, true);
-
-                    this.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        this.VerticalScroll.Value = 0;
-                    }));
-
-                    break;
-
-                case EditProjectConfigDetailsViewType.EditId:
-
-                    SetAllControlsEnableDisable(false);
-
-                    SetControlEnableOrDisable(tbId, true);
-
-                    SetControlVisableOrHide(btnEditId, false);
-                    SetControlVisableOrHide(btnSaveId, true);
-                    SetControlEnableOrDisable(btnSaveId, true);
-                    SetControlVisableOrHide(btnCancelEditId, true);
-                    SetControlEnableOrDisable(btnCancelEditId, true);
-
-
-                    tbId.Focus();
-
-
-                    break;
-                default:
-                    break;
-            }
-        }
-
-
-        private void SetAllControlsEnableDisable(bool isEnable)
-        {
-            SetControlEnableOrDisable(btnNavToProcess, isEnable);
-            SetControlEnableOrDisable(cboConncectionType, isEnable);
-            SetControlEnableOrDisable(tbServer, isEnable);
-            SetControlEnableOrDisable(tbDBName, isEnable);
-            SetControlEnableOrDisable(tbUsername, isEnable);
-            SetControlEnableOrDisable(tbPassword, isEnable);
-            SetControlEnableOrDisable(tbDevScriptsFolderPath, isEnable);
-            SetControlEnableOrDisable(tbDBBackupFolder, isEnable);
-            SetControlEnableOrDisable(tbId, isEnable);
-            SetControlEnableOrDisable(rbDevEnv, isEnable);
-            SetControlEnableOrDisable(rbDelEnv, isEnable);
-            SetControlEnableOrDisable(tbDeployArtifactFolderPath, isEnable);
-            SetControlEnableOrDisable(tbDeliveryArtifactFolderPath, isEnable);
-            SetControlEnableOrDisable(btnSave, isEnable);
-            SetControlEnableOrDisable(tbProjectDescription, isEnable);
-            SetControlEnableOrDisable(btnSaveId, isEnable);
-            SetControlEnableOrDisable(btnEditId, isEnable);
-        }
-
-        private static void SetControlEnableOrDisable(Control control, bool isEnable)
-        {
-            control.BeginInvoke((MethodInvoker)(() =>
-            {
-                control.Enabled = isEnable;
-            }));
-        }
-
-        private static void SetControlVisableOrHide(Control control, bool isVisible)
-        {
-            control.BeginInvoke((MethodInvoker)(() =>
-            {
-                control.Visible = isVisible;
-            }));
-        }
 
 
         #region Dispose
@@ -578,6 +543,7 @@ namespace AutoVersionsDB.WinApp
         // Protected implementation of Dispose pattern.
         protected override void Dispose(bool disposing)
         {
+
             if (_disposed)
             {
                 return;
@@ -604,6 +570,6 @@ namespace AutoVersionsDB.WinApp
 
         #endregion
 
-       
+
     }
 }

@@ -149,8 +149,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
                         && testContext.ProcessResults != null
                         && testContext.ProcessResults.Trace != null)
                     {
-                        Console.WriteLine(testContext.ProcessResults.Trace.GetAllHistoryAsString());
-                        Debug.WriteLine(testContext.ProcessResults.Trace.GetAllHistoryAsString());
+                        Console.WriteLine(testContext.ProcessResults.Trace.GetAllStatesLogAsString());
+                        Debug.WriteLine(testContext.ProcessResults.Trace.GetAllStatesLogAsString());
                     }
 
                     throw;

@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process
     {
         public void AssertProccessValid(string testName, ProcessTrace processTrace)
         {
-            Assert.IsFalse(processTrace.HasError, $"{testName} -> {processTrace.GetOnlyErrorsHistoryAsString()}");
+            Assert.IsFalse(processTrace.HasError, $"{testName} -> {processTrace.GetOnlyErrorsStatesLogAsString()}");
         }
 
         public void AssertProccessHasErrors(string testName, ProcessTrace processTrace)

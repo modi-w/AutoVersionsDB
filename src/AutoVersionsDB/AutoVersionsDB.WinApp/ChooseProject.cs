@@ -13,7 +13,7 @@ using Ninject;
 
 namespace AutoVersionsDB.WinApp
 {
-    public partial class ChooseProject : UserControleNinjectBase //UserControl
+    public partial class ChooseProject : UserControlNinjectBase //UserControl
     {
         private ChooseProjectViewModel _viewModel;
         [Inject]
@@ -25,26 +25,22 @@ namespace AutoVersionsDB.WinApp
             }
             set
             {
-                if (_viewModel == null)
-                {
-                    _viewModel = value;
+                _viewModel = value;
 
-                }
+                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
             }
         }
+
 
         public ChooseProject()
         {
             InitializeComponent();
 
 
-            ViewModel.PropertyChanged += _viewModel_PropertyChanged;
-
-            SetDataBindings();
-
-
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
+
                 //lblProjectIcon.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
                 //lblDeleteProject.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
 

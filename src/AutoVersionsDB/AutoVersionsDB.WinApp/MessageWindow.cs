@@ -4,65 +4,76 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using AutoVersionsDB.Helpers;
-
+using AutoVersionsDB.UI;
+using System.ComponentModel;
 
 namespace AutoVersionsDB.WinApp
 {
     public partial class MessageWindow : Form
     {
+        public StatesLogViewModel ViewModel { get; }
 
-        public ProcessTrace ProcessTrace { get; private set; }
-
-        public MessageWindow(ProcessTrace processTrace)
+        public MessageWindow(StatesLogViewModel viewModel)
         {
-            processTrace.ThrowIfNull(nameof(processTrace));
-
-
             InitializeComponent();
 
-            ProcessTrace = processTrace;
 
-            chkShowOnlyErrors.Checked = ProcessTrace.HasError;
-            UpdateMessage();
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                ViewModel = viewModel;
+
+                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+
+                SetDataBindings();
+            }
         }
 
-
-        private void ChkShowOnlyErrors_CheckedChanged(object sender, EventArgs e)
+        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            UpdateMessage();
+            switch (e.PropertyName)
+            {
+                default:
+                    break;
+            }
         }
 
 
-        private void UpdateMessage()
+        private void SetDataBindings()
         {
-            rtbMessages.Clear();
+            this.chkShowOnlyErrors.DataBindings.Clear();
+            this.chkShowOnlyErrors.DataBindings.Add(
+                nameof(chkShowOnlyErrors.Checked),
+                ViewModel,
+                nameof(ViewModel.ShowOnlyErrors),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
 
-            if (ProcessTrace.HasError)
-            {
-                Text = "Errors";
-                lblMessageType.Text = "Errors";
-               // imgMsgType.Image = Properties.Resources.error2_32_32;
-                lblMessageType.ForeColor = Color.DarkRed;
-            }
-            else
-            {
-                Text = "Process Messages";
-                lblMessageType.Text = "Process Messages";
-             //   imgMsgType.Image = Properties.Resources.info2_32_32;
-                lblMessageType.ForeColor = Color.Black;
-            }
+            this.lblMessageType.DataBindings.Clear();
+            this.lblMessageType.DataBindings.Add(
+                nameof(lblMessageType.Text),
+                ViewModel,
+                nameof(ViewModel.Caption),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.lblMessageType.DataBindings.Add(
+                nameof(lblMessageType.ForeColor),
+                ViewModel,
+                nameof(ViewModel.CaptionColor),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
 
-            if (chkShowOnlyErrors.Checked)
-            {
-                string errorMessage = ProcessTrace.GetOnlyErrorsHistoryAsString();
-                rtbMessages.AppendText(errorMessage);
-            }
-            else
-            {
-                string processMessage = ProcessTrace.GetAllHistoryAsString();
-                rtbMessages.AppendText(processMessage);
-            }
+            this.rtbMessages.DataBindings.Clear();
+            this.rtbMessages.DataBindings.Add(
+                nameof(rtbMessages.Text),
+                ViewModel,
+                nameof(ViewModel.StatesLogText),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
         }
+
+
+
 
     }
 }

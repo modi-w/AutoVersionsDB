@@ -70,7 +70,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
             bool isRestoreExecuted =
                 processTrace
-                .StatesHistory.Any(e => e.InternalStepNotificationState != null
+                .StatesLog.Any(e => e.InternalStepNotificationState != null
                                         && !string.IsNullOrWhiteSpace(e.InternalStepNotificationState.StepName)
                                         && e.InternalStepNotificationState.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 

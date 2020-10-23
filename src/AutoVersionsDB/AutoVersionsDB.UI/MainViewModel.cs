@@ -15,17 +15,36 @@ namespace AutoVersionsDB.UI
             set => SetField(ref _btnChooseProjectVisible, value);
         }
 
-        public ViewRouter ViewRouter { get; set; }
+        public RelayCommand NavToChooseProjectCommand { get; private set; }
 
-        public MainViewModel()
+
+        private ViewRouter _viewRouter;
+        public ViewRouter ViewRouter
         {
-
+            get
+            {
+                return _viewRouter;
+            }
+            set
+            {
+                _viewRouter = value;
+                SetRouteCommands();
+            }
         }
 
 
-        public void NavToChooseProject()
+
+
+        public MainViewModel()
         {
-            ViewRouter.NavToChooseProject();
+         
+        }
+
+
+
+        private void SetRouteCommands()
+        {
+            NavToChooseProjectCommand = new RelayCommand(_viewRouter.NavToChooseProject);
         }
 
 

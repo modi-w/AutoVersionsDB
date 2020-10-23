@@ -119,7 +119,7 @@ namespace AutoVersionsDB.WinApp
      
         private void LnkBtnChooseProject_Click(object sender, EventArgs e)
         {
-            _viewModel.NavToChooseProject();
+            _viewModel.NavToChooseProjectCommand.Execute(null);
         }
 
       

@@ -40,7 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.errPrvProjectDetails = new System.Windows.Forms.ErrorProvider(this.components);
             this.label12 = new System.Windows.Forms.Label();
-            this.lbllncrementalScriptsFolderPath = new System.Windows.Forms.Label();
+            this.lblIncrementalScriptsFolderPath = new System.Windows.Forms.Label();
             this.lblRepeatableScriptsFolderPath = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.lblDevDummyDataScriptsFolderPath = new System.Windows.Forms.Label();
@@ -237,18 +237,18 @@
             // 
             // lbllncrementalScriptsFolderPath
             // 
-            this.lbllncrementalScriptsFolderPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblIncrementalScriptsFolderPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbllncrementalScriptsFolderPath.AutoEllipsis = true;
-            this.lbllncrementalScriptsFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.lbllncrementalScriptsFolderPath.ForeColor = System.Drawing.Color.DimGray;
-            this.errPrvProjectDetails.SetIconAlignment(this.lbllncrementalScriptsFolderPath, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
-            this.lbllncrementalScriptsFolderPath.Location = new System.Drawing.Point(19, 128);
-            this.lbllncrementalScriptsFolderPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbllncrementalScriptsFolderPath.Name = "lbllncrementalScriptsFolderPath";
-            this.lbllncrementalScriptsFolderPath.Size = new System.Drawing.Size(915, 30);
-            this.lbllncrementalScriptsFolderPath.TabIndex = 24;
-            this.lbllncrementalScriptsFolderPath.Text = "C:\\Projects\\DBAutoVersions\\Code\\DBAutoVersions\\DBAutoVersions.BL.IntegrationTests" +
+            this.lblIncrementalScriptsFolderPath.AutoEllipsis = true;
+            this.lblIncrementalScriptsFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.lblIncrementalScriptsFolderPath.ForeColor = System.Drawing.Color.DimGray;
+            this.errPrvProjectDetails.SetIconAlignment(this.lblIncrementalScriptsFolderPath, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
+            this.lblIncrementalScriptsFolderPath.Location = new System.Drawing.Point(19, 128);
+            this.lblIncrementalScriptsFolderPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblIncrementalScriptsFolderPath.Name = "lbllncrementalScriptsFolderPath";
+            this.lblIncrementalScriptsFolderPath.Size = new System.Drawing.Size(915, 30);
+            this.lblIncrementalScriptsFolderPath.TabIndex = 24;
+            this.lblIncrementalScriptsFolderPath.Text = "C:\\Projects\\DBAutoVersions\\Code\\DBAutoVersions\\DBAutoVersions.BL.IntegrationTests" +
     "\\ScriptsFilesForTests\\StartState\\db_initState.sql";
             // 
             // lblRepeatableScriptsFolderPath
@@ -724,7 +724,7 @@
             this.pnlDevEnvFoldersFields.Controls.Add(this.label30);
             this.pnlDevEnvFoldersFields.Controls.Add(this.label11);
             this.pnlDevEnvFoldersFields.Controls.Add(this.tbDevScriptsFolderPath);
-            this.pnlDevEnvFoldersFields.Controls.Add(this.lbllncrementalScriptsFolderPath);
+            this.pnlDevEnvFoldersFields.Controls.Add(this.lblIncrementalScriptsFolderPath);
             this.pnlDevEnvFoldersFields.Controls.Add(this.label12);
             this.pnlDevEnvFoldersFields.Location = new System.Drawing.Point(27, 879);
             this.pnlDevEnvFoldersFields.Margin = new System.Windows.Forms.Padding(4);
@@ -1050,7 +1050,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbDeployArtifactFolderPath;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label lbllncrementalScriptsFolderPath;
+        private System.Windows.Forms.Label lblIncrementalScriptsFolderPath;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel pnlDelEnvFields;
         private System.Windows.Forms.Label label7;

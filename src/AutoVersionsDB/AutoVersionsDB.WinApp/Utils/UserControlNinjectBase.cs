@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp.Utils
 {
-    public class UserControleNinjectBase : UserControl
+    public class UserControlNinjectBase : UserControl
     {
-        public UserControleNinjectBase()
+        public UserControlNinjectBase()
         {
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
