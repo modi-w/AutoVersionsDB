@@ -17,11 +17,12 @@ namespace AutoVersionsDB.UI.EditProject
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly DBVersionsAPI _dbVersionsAPI;
+        private readonly NotificationsViewModel _notificationsViewModel;
+
+        private readonly EditProjectViewSateManager _editProjectViewSateManager;
 
 
 
-
-        public NotificationsViewModel NotificationsViewModel { get; }
         public List<DBType> DBTypes { get; }
 
         private ViewRouter _viewRouter;
@@ -49,12 +50,10 @@ namespace AutoVersionsDB.UI.EditProject
             set
             {
                 SetField(ref _projectConfig, value);
+
+                _projectConfig.PropertyChanged += _projectConfig_PropertyChanged;
             }
         }
-
-
-
-
 
 
         public RelayCommand NavToChooseProjectCommand { get; private set; }
@@ -64,16 +63,24 @@ namespace AutoVersionsDB.UI.EditProject
 
         public EditProjectViewModel(ProjectConfigsAPI projectConfigsAPI,
                                     DBVersionsAPI dbVersionsAPI,
+                                    EditProjectViewSateManager editProjectViewSateManager,
                                     NotificationsViewModel notificationsViewModel)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _dbVersionsAPI = dbVersionsAPI;
-            NotificationsViewModel = notificationsViewModel;
+            _editProjectViewSateManager = editProjectViewSateManager;
+            _notificationsViewModel = notificationsViewModel;
 
             ProjectConfigErrorMessages = new ProjectConfigErrorMessages();
             EditProjectControls = new EditProjectControls();
 
             DBTypes = _projectConfigsAPI.GetDBTypes();
+
+            SaveCommand = new RelayCommand(Save);
+            SetEditIdStateCommand = new RelayCommand(SetEditIdState);
+            CancelEditIdCommand = new RelayCommand(CancelEditId);
+            SaveChangeIdCommand = new RelayCommand(SaveChangeId);
+
         }
 
 
@@ -82,9 +89,9 @@ namespace AutoVersionsDB.UI.EditProject
 
         public void CreateNewProjectConfig()
         {
-            NotificationsViewModel.WaitingForUser();
+            _notificationsViewModel.WaitingForUser();
 
-            ProjectConfigErrorMessages.ClearUIElementsErrors();
+            _editProjectViewSateManager.ClearUIElementsErrors();
 
             ProjectConfigItem newProjectConfigItem = new ProjectConfigItem();
             newProjectConfigItem.DevEnvironment = true;
@@ -93,10 +100,22 @@ namespace AutoVersionsDB.UI.EditProject
             ProjectConfig = new ObservableProjectConfig(newProjectConfigItem);
             //ProjectConfig.PropertyChanged += ProjectConfig_PropertyChanged;
 
-            EditProjectControls.ChangeViewState(EditProjectViewStateType.New);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.New);
 
         }
 
+
+        private void _projectConfig_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(ProjectConfig.DevEnvironment):
+
+                    _editProjectViewSateManager.ShowHideEnvFields(ProjectConfig.DevEnvironment);
+
+                    break;
+            }
+        }
 
 
         public void SetProjectConfig(string id)
@@ -117,7 +136,7 @@ namespace AutoVersionsDB.UI.EditProject
 
             ValidateAll();
 
-            EditProjectControls.ChangeViewState(EditProjectViewStateType.Update);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.Update);
         }
 
 
@@ -125,12 +144,6 @@ namespace AutoVersionsDB.UI.EditProject
         {
             NavToChooseProjectCommand = new RelayCommand(_viewRouter.NavToChooseProject);
             NavToDBVersionsCommand = new RelayCommand(NavToDBVersions);
-            SaveCommand = new RelayCommand(Save);
-            SetEditIdStateCommand = new RelayCommand(SetEditIdState);
-            CancelEditIdCommand = new RelayCommand(CancelEditId);
-            SaveChangeIdCommand = new RelayCommand(SaveChangeId);
-
-
         }
 
 
@@ -143,21 +156,21 @@ namespace AutoVersionsDB.UI.EditProject
 
         private void Save()
         {
-            EditProjectControls.ChangeViewState(EditProjectViewStateType.InPorcess);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InPorcess);
 
 
             Task.Run(() =>
             {
                 if (string.IsNullOrWhiteSpace(ProjectConfig.Id))
                 {
-                    ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(ProjectConfig.ActualProjectConfig, NotificationsViewModel.OnNotificationStateChanged);
+                    ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
 
                     handleCompleteProcess(processResults.Trace);
 
                 }
                 else
                 {
-                    ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(ProjectConfig.ActualProjectConfig, NotificationsViewModel.OnNotificationStateChanged);
+                    ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
 
                     handleCompleteProcess(processResults.Trace);
                 }
@@ -172,12 +185,12 @@ namespace AutoVersionsDB.UI.EditProject
         public RelayCommand SetEditIdStateCommand { get; private set; }
         public RelayCommand CancelEditIdCommand { get; private set; }
         public RelayCommand SaveChangeIdCommand { get; private set; }
-        
+
 
         private void SetEditIdState()
         {
             _prevId = ProjectConfig.Id;
-            EditProjectControls.ChangeViewState(EditProjectViewStateType.EditId);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.EditId);
         }
 
         private void CancelEditId()
@@ -187,12 +200,12 @@ namespace AutoVersionsDB.UI.EditProject
 
         private void SaveChangeId()
         {
-            EditProjectControls.ChangeViewState(EditProjectViewStateType.InPorcess);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InPorcess);
 
 
             Task.Run(() =>
             {
-                ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(_prevId, ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(_prevId, ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
 
                 handleCompleteProcess(processResults.Trace);
             });
@@ -210,19 +223,17 @@ namespace AutoVersionsDB.UI.EditProject
 
         private void ValidateAll()
         {
-
-
-            EditProjectControls.ChangeViewState(EditProjectViewStateType.InPorcess);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InPorcess);
 
             Task.Run(() =>
             {
-                NotificationsViewModel.WaitingForUser();
+                _notificationsViewModel.WaitingForUser();
 
-                ProjectConfigErrorMessages.ClearUIElementsErrors();
+                _editProjectViewSateManager.ClearUIElementsErrors();
 
-                ProcessResults processResults = _dbVersionsAPI.ValidateProjectConfig(ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.ValidateProjectConfig(ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
 
-                handleProcessErrors(processResults.Trace);
+                _editProjectViewSateManager.handleProcessErrors(ProjectConfig.Id, processResults.Trace);
             });
         }
 
@@ -230,7 +241,7 @@ namespace AutoVersionsDB.UI.EditProject
         {
             if (processResults.HasError)
             {
-                handleProcessErrors(processResults);
+                _editProjectViewSateManager.handleProcessErrors(ProjectConfig.Id, processResults);
             }
             else
             {
@@ -239,25 +250,7 @@ namespace AutoVersionsDB.UI.EditProject
         }
 
 
-        private void handleProcessErrors(ProcessTrace processResults)
-        {
-            NotificationsViewModel.AfterComplete();
 
-            ProjectConfigErrorMessages.SetErrorsToUiElements(processResults);
-
-            EditProjectControls.ImgErrorVisible = processResults.HasError;
-            EditProjectControls.ImgValidVisible = !processResults.HasError;
-            EditProjectControls.BtnNavToProcessVisible = !processResults.HasError;
-
-            if (string.IsNullOrWhiteSpace(ProjectConfig.Id))
-            {
-                EditProjectControls.ChangeViewState(EditProjectViewStateType.New);
-            }
-            else
-            {
-                EditProjectControls.ChangeViewState(EditProjectViewStateType.Update);
-            }
-        }
 
 
 

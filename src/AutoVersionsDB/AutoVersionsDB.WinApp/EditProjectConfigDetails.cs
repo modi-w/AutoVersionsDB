@@ -36,8 +36,6 @@ namespace AutoVersionsDB.WinApp
 
                 _viewModel.PropertyChanged += _viewModel_PropertyChanged;
                 SetDataBindings();
-
-                notificationsControl1.ViewModel = _viewModel.NotificationsViewModel;
             }
         }
 
@@ -269,6 +267,29 @@ namespace AutoVersionsDB.WinApp
             cboConncectionType.DisplayMember = "Name";
             cboConncectionType.ValueMember = "Code";
 
+            this.pnlDevEnvFoldersFields.DataBindings.Clear();
+            this.pnlDevEnvFoldersFields.DataBindings.Add(
+                nameof(pnlDevEnvFoldersFields.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.PnlDevEnvFoldersFieldsVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+       
+            this.pnlDevEnvDeplyFolder.DataBindings.Clear();
+            this.pnlDevEnvDeplyFolder.DataBindings.Add(
+                nameof(pnlDevEnvDeplyFolder.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.PnlDevEnvDeplyFolderVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.pnlDelEnvFields.DataBindings.Clear();
+            this.pnlDevEnvDeplyFolder.DataBindings.Add(
+                nameof(pnlDevEnvDeplyFolder.Visible),
+                ViewModel.EditProjectControls,
+                nameof(ViewModel.EditProjectControls.PnlDelEnvFieldsVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
 
             this.imgError.DataBindings.Clear();
             this.imgError.DataBindings.Add(

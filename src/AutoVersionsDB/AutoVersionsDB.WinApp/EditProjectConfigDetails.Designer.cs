@@ -179,7 +179,6 @@
             this.tbDevScriptsFolderPath.Name = "tbDevScriptsFolderPath";
             this.tbDevScriptsFolderPath.Size = new System.Drawing.Size(953, 34);
             this.tbDevScriptsFolderPath.TabIndex = 21;
-            this.tbDevScriptsFolderPath.TextChanged += new System.EventHandler(this.TbScriptsRootFolderPath_TextChanged);
             // 
             // label6
             // 
@@ -684,7 +683,6 @@
             this.rbDelEnv.TabStop = true;
             this.rbDelEnv.Text = "Delivery Enviroment";
             this.rbDelEnv.UseVisualStyleBackColor = true;
-            this.rbDelEnv.CheckedChanged += new System.EventHandler(this.RbDelEnv_CheckedChanged);
             // 
             // rbDevEnv
             // 
@@ -698,7 +696,6 @@
             this.rbDevEnv.TabStop = true;
             this.rbDevEnv.Text = "Development Enviroment";
             this.rbDevEnv.UseVisualStyleBackColor = true;
-            this.rbDevEnv.CheckedChanged += new System.EventHandler(this.RbDevEnv_CheckedChanged);
             // 
             // label18
             // 

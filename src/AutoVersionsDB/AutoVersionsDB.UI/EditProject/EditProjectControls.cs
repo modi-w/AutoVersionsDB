@@ -9,7 +9,6 @@ namespace AutoVersionsDB.UI.EditProject
 
     public class EditProjectControls : INotifyPropertyChanged
     {
-        private EditProjectViewStateType _viewType;
 
 
 
@@ -131,6 +130,36 @@ namespace AutoVersionsDB.UI.EditProject
                 SetField(ref _btnCancelEditIdEnabled, value);
             }
         }
+
+
+        private bool _pnlDevEnvFoldersFieldsVisible;
+        public bool PnlDevEnvFoldersFieldsVisible//
+        {
+            get => _pnlDevEnvFoldersFieldsVisible;
+            set
+            {
+                SetField(ref _pnlDevEnvFoldersFieldsVisible, value);
+            }
+        }
+        private bool _pnlDevEnvDeplyFolderVisible;
+        public bool PnlDevEnvDeplyFolderVisible//
+        {
+            get => _pnlDevEnvDeplyFolderVisible;
+            set
+            {
+                SetField(ref _pnlDevEnvDeplyFolderVisible, value);
+            }
+        }
+        private bool _pnlDelEnvFieldsVisible;
+        public bool PnlDelEnvFieldsVisible
+        {
+            get => _pnlDelEnvFieldsVisible;
+            set
+            {
+                SetField(ref _pnlDelEnvFieldsVisible, value);
+            }
+        }
+
 
 
 
@@ -258,78 +287,6 @@ namespace AutoVersionsDB.UI.EditProject
         }
 
 
-        public void ChangeViewState(EditProjectViewStateType viewType)
-        {
-            _viewType = viewType;
-
-            switch (_viewType)
-            {
-                case EditProjectViewStateType.InPorcess:
-
-                    SetAllControlsEnableDisable(false);
-                    break;
-
-                case EditProjectViewStateType.New:
-
-                    SetAllControlsEnableDisable(true);
-
-                    BtnEditIdVisible = false;
-                    BtnSaveIdVisible = false;
-                    BtnCancelEditIdVisible = false;
-                    break;
-
-                case EditProjectViewStateType.Update:
-
-                    SetAllControlsEnableDisable(true);
-
-                    TbIdEnabled = false;
-
-
-                    BtnSaveIdVisible = false;
-                    BtnCancelEditIdVisible = false;
-                    BtnEditIdVisible = true;
-                    BtnEditIdEnabled = true;
-                    break;
-
-                case EditProjectViewStateType.EditId:
-
-                    SetAllControlsEnableDisable(false);
-
-                    TbIdEnabled = true;
-
-                    BtnEditIdVisible = false;
-                    BtnSaveIdVisible = true;
-                    BtnSaveIdEnabled = true;
-                    BtnCancelEditIdVisible = true;
-                    BtnCancelEditIdEnabled = true;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-
-
-        private void SetAllControlsEnableDisable(bool isEnable)
-        {
-            BtnNavToProcessEnabled = isEnable;
-            CboConncectionTypeEnabled = isEnable;
-            TbServerEnabled = isEnable;
-            TbDBNameEnabled = isEnable;
-            TbUsernameEnabled = isEnable;
-            TbPasswordEnabled = isEnable;
-            TbDevScriptsFolderPathEnabled = isEnable;
-            TbDBBackupFolderEnabled = isEnable;
-            TbIdEnabled = isEnable;
-            RbDevEnvEnabled = isEnable;
-            RbDelEnvEnabled = isEnable;
-            TbDeployArtifactFolderPathEnabled = isEnable;
-            TbDeliveryArtifactFolderPathEnabled = isEnable;
-            BtnSaveEnabled = isEnable;
-            TbProjectDescriptionEnabled = isEnable;
-            BtnSaveIdEnabled = isEnable;
-            BtnEditIdEnabled = isEnable;
-        }
 
 
 

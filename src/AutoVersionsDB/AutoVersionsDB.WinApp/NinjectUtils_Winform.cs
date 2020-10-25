@@ -28,6 +28,8 @@ namespace AutoVersionsDB.WinApp
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
+            NinjectUtils_UI.SetKernelInstance(NinjectKernelContainer);
+
             RegisterServices(NinjectKernelContainer);
         }
 
@@ -37,10 +39,6 @@ namespace AutoVersionsDB.WinApp
 
             Main mainForm = kernel.Get<Main>();
             kernel.Bind<IViewContainer>().ToConstant(mainForm);
-
-
-            kernel.Bind<ViewRouter>().To<ViewRouter>().InSingletonScope();
-
             
         }
 

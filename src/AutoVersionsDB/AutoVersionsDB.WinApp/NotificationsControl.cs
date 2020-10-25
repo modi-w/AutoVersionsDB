@@ -15,6 +15,7 @@ namespace AutoVersionsDB.WinApp
     public partial class NotificationsControl : UserControl// UserControleNinjectBase
     {
         private NotificationsViewModel _viewModel { get; set; }
+        [Inject]
         public NotificationsViewModel ViewModel
         {
             get
