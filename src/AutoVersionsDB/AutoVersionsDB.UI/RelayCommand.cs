@@ -27,6 +27,10 @@ namespace AutoVersionsDB.UI
             }
         }
 
+        public void Execute()
+        {
+            Execute(null);
+        }
         public void Execute(object parameter)
         {
             _execute();

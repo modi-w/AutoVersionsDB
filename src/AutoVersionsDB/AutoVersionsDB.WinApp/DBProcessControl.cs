@@ -3,11 +3,15 @@ using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.WinApp.Utils;
+using Ninject;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -17,27 +21,27 @@ using System.Windows.Forms;
 namespace AutoVersionsDB.WinApp
 {
 
-    public partial class DBProcessControl : UserControl
+    public partial class DBProcessControl : UserControlNinjectBase// UserControl
     {
-        private ProjectConfigItem _projectConfigItem;
-        private ScriptFilesState _scriptFilesState;
-
-        public enum DBVersionsMangementViewType
+        private DBVersionsViewModel _viewModel;
+        [Inject]
+        public DBVersionsViewModel ViewModel
         {
-            ReadyToRunSync,
-            ReadyToSyncToSpecificState,
-            MissingSystemTables,
-            HistoryExecutedFilesChanged,
-            SetDBStateManually,
-            InProcess,
-            RestoreDatabaseError
+            get
+            {
+                return _viewModel;
+            }
+            set
+            {
+                _viewModel = value;
+
+                ViewModel.OnException += ViewModel_OnException;
+                ViewModel.OnConfirm += ViewModel_OnConfirm;
+                ViewModel.OnTextInput += ViewModel_OnTextInput;
+                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+            }
         }
-
-
-
-        public event OnEditProjectHandler OnEditProject;
-
-        public string TargetStateScriptFileName { get; private set; }
 
 
         public DBProcessControl()
@@ -96,110 +100,282 @@ namespace AutoVersionsDB.WinApp
             })
             {
                 // Set up the ToolTip text with the controls.
-                tooltipControl.SetToolTip(this.btnRefresh, "Refresh");
-                tooltipControl.SetToolTip(this.btnRunSync, "Sync the db with the missing scripts");
-                tooltipControl.SetToolTip(this.btnRecreateDbFromScratchMain, "Recreate DB From Scratch");
-                tooltipControl.SetToolTip(this.btnRecreateDbFromScratch2, "Recreate DB From Scratch");
-                tooltipControl.SetToolTip(this.btnDeploy, "Create Deploy Package");
-                tooltipControl.SetToolTip(this.btnSetDBToSpecificState, "Set DB To Specific State");
-                tooltipControl.SetToolTip(this.btnVirtualExecution, "Set DB to specific state virtually. Use it if your DB is not empty but you never use our migration tool on it yet.");
-                tooltipControl.SetToolTip(this.btnShowHistoricalBackups, "Open the backup history folder.");
+                tooltipControl.SetToolTip(this.btnRefresh, ViewModel.DBVersionsControls.BtnRefreshTooltip);
+                tooltipControl.SetToolTip(this.btnRunSync, ViewModel.DBVersionsControls.BtnRunSyncTooltip);
+                tooltipControl.SetToolTip(this.btnRecreateDbFromScratchMain, ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainTooltip);
+                tooltipControl.SetToolTip(this.btnRecreateDbFromScratch2, ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainTooltip);
+                tooltipControl.SetToolTip(this.btnDeploy, ViewModel.DBVersionsControls.BtnDeployTooltip);
+                tooltipControl.SetToolTip(this.btnSetDBToSpecificState, ViewModel.DBVersionsControls.BtnSetDBToSpecificStateTooltip);
+                tooltipControl.SetToolTip(this.btnVirtualExecution, ViewModel.DBVersionsControls.BtnVirtualExecutionTooltip);
+                tooltipControl.SetToolTip(this.btnShowHistoricalBackups, ViewModel.DBVersionsControls.BtnShowHistoricalBackupsTooltip);
             }
 
         }
 
+        private void ViewModel_OnException(object sender, string exceptionMessage)
+        {
+            MessageBox.Show(exceptionMessage);
+        }
+        private bool ViewModel_OnConfirm(object sender, string confirmMessage)
+        {
+           return MessageBox.Show(this, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+        }
+
+        private TextInputResults ViewModel_OnTextInput(object sender, string instructionMessageText)
+        {
+            TextInputWindow textInputWindow = NinjectUtils_Winform.NinjectKernelContainer.Get<TextInputWindow>();
+            textInputWindow.ShowDialog();
+
+            return new TextInputResults()
+            {
+                ResultText = textInputWindow.ResultText,
+                IsApply = textInputWindow.IsApply,
+            };
+        }
+
+
+        private void ViewModel_OnShowTextInput(object sender, EventArgs e)
+        {
+        }
+
+
+       
+
+        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(ViewModel.DBVersionsViewModelData.IncrementalScriptFiles):
+
+                    BindGridDataSource(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.IncrementalScriptFiles);
+                    break;
+
+                case nameof(ViewModel.DBVersionsViewModelData.RepeatableScriptFiles):
+
+                    BindGridDataSource(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.RepeatableScriptFiles);
+                    break;
+
+                case nameof(ViewModel.DBVersionsViewModelData.DevDummyDataScriptFiles):
+
+                    BindGridDataSource(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.DevDummyDataScriptFiles);
+                    break;
+
+                case nameof(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled):
+
+                    EnableDisableGridToSelectTargetState(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled);
+                    break;
+
+
+                default:
+                    break;
+            }
+        }
+
+
+        private void SetDataBindings()
+        {
+            this.lblProjectName.DataBindings.Clear();
+            this.lblProjectName.DataBindings.Add(
+                nameof(lblProjectName.Text),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.LblProjectNameText),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.pnlMainActions.DataBindings.Clear();
+            this.pnlMainActions.DataBindings.Add(
+                nameof(pnlMainActions.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.PnlMainActionsVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.pnlSyncToSpecificState.DataBindings.Clear();
+            this.pnlSyncToSpecificState.DataBindings.Add(
+                nameof(pnlSyncToSpecificState.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.PnlSyncToSpecificStateVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.pnlMissingSystemTables.DataBindings.Clear();
+            this.pnlMissingSystemTables.DataBindings.Add(
+                nameof(pnlMissingSystemTables.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.pnlMissingSystemTables.DataBindings.Add(
+                nameof(pnlMissingSystemTables.Enabled),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.pnlSetDBStateManually.DataBindings.Clear();
+            this.pnlSetDBStateManually.DataBindings.Add(
+                nameof(pnlSetDBStateManually.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.PnlSetDBStateManuallyVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.pnlSetDBStateManually.DataBindings.Add(
+                nameof(pnlSetDBStateManually.Enabled),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.PnlSetDBStateManuallyEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+
+            this.pnlDevDummyDataFiles.DataBindings.Clear();
+            this.pnlDevDummyDataFiles.DataBindings.Add(
+                nameof(pnlDevDummyDataFiles.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.PnlDevDummyDataFilesVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.pnlRestoreDbError.DataBindings.Clear();
+            this.pnlRestoreDbError.DataBindings.Add(
+                nameof(pnlRestoreDbError.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.PnlRestoreDbErrorVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+
+            this.dgIncrementalScriptsFiles.DataBindings.Clear();
+            this.dgIncrementalScriptsFiles.DataBindings.Add(
+                nameof(dgIncrementalScriptsFiles.Enabled),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.IncrementalScriptsGridEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+
+            this.btnRefresh.DataBindings.Clear();
+            this.btnRefresh.DataBindings.Add(
+                nameof(btnRefresh.Enabled),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnRefreshEnable),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+            this.btnRecreateDbFromScratchMain.DataBindings.Clear();
+            this.btnRecreateDbFromScratchMain.DataBindings.Add(
+                nameof(btnRecreateDbFromScratchMain.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+            this.lblRecreateDbFromScratchMain.DataBindings.Clear();
+            this.lblRecreateDbFromScratchMain.DataBindings.Add(
+                nameof(lblRecreateDbFromScratchMain.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.btnRecreateDbFromScratch2.DataBindings.Clear();
+            this.btnRecreateDbFromScratch2.DataBindings.Add(
+                nameof(btnRecreateDbFromScratch2.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchSecondaryVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.lblRecreateDbFromScratch2.DataBindings.Clear();
+            this.lblRecreateDbFromScratch2.DataBindings.Add(
+                nameof(lblRecreateDbFromScratch2.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchSecondaryVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+            this.btnDeploy.DataBindings.Clear();
+            this.btnDeploy.DataBindings.Add(
+                nameof(btnDeploy.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnDeployVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.btnDeploy.DataBindings.Clear();
+            this.btnDeploy.DataBindings.Add(
+                nameof(btnDeploy.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnDeployVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.btnShowHistoricalBackups.DataBindings.Clear();
+            this.btnShowHistoricalBackups.DataBindings.Add(
+                nameof(btnShowHistoricalBackups.Enabled),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnShowHistoricalBackupsEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+            this.btnCreateNewIncrementalScriptFile.DataBindings.Clear();
+            this.btnCreateNewIncrementalScriptFile.DataBindings.Add(
+                nameof(btnCreateNewIncrementalScriptFile.Enabled),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnCreateNewIncrementalScriptFileEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.btnCreateNewRepeatableScriptFile.DataBindings.Clear();
+            this.btnCreateNewRepeatableScriptFile.DataBindings.Add(
+                nameof(btnCreateNewRepeatableScriptFile.Enabled),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnCreateNewRepeatableScriptFileEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.btnCreateNewDevDummyDataScriptFile.DataBindings.Clear();
+            this.btnCreateNewDevDummyDataScriptFile.DataBindings.Add(
+                nameof(btnCreateNewDevDummyDataScriptFile.Enabled),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.BtnCreateNewDevDummyDataScriptFileEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+            this.lblColorTargetState_Square.DataBindings.Clear();
+            this.lblColorTargetState_Square.DataBindings.Add(
+                nameof(lblColorTargetState_Square.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.LblColorTargetState_SquareVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.lblColorTargetState_Caption.DataBindings.Clear();
+            this.lblColorTargetState_Caption.DataBindings.Add(
+                nameof(lblColorTargetState_Caption.Visible),
+                ViewModel.DBVersionsControls,
+                nameof(ViewModel.DBVersionsControls.LblColorTargetState_CaptionVisible),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+
+        }
 
 
 
         #region Refresh
 
-        public void SetProjectConfigItem(string id)
-        {
-            _projectConfigItem = AutoVersionsDBAPI.GetProjectConfigById(id);
-
-            RefreshAll();
-        }
 
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
-            RefreshAll();
+            ViewModel.RefreshAllCommand.Execute();
         }
 
-        private void RefreshAll()
-        {
-            TargetStateScriptFileName = null;
-
-            pnlDevDummyDataFiles.BeginInvoke((MethodInvoker)(() =>
-            {
-                pnlDevDummyDataFiles.Visible = _projectConfigItem.DevEnvironment;
-            }));
-
-
-            HideAllActionPanels();
-
-            notificationsControl1.PreparingMesage();
-
-
-
-            Task.Run(() =>
-            {
-                notificationsControl1.BeforeStart();
-
-
-                //      bindToUIElements();
-
-                try
-                {
-                    if (RefreshScriptFilesState(true))
-                    {
-
-                        ProcessResults processResults = AutoVersionsDBAPI.ValidateDBVersions(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
-
-
-                        if (processResults.Trace.HasError)
-                        {
-                            notificationsControl1.AfterComplete();
-
-                            if (processResults.Trace.ContainErrorCode("SystemTables"))
-                            {
-                                SetViewState(DBVersionsMangementViewType.MissingSystemTables);
-                            }
-                            else if (processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"))
-                            {
-                                SetViewState(DBVersionsMangementViewType.HistoryExecutedFilesChanged);
-                            }
-                            else
-                            {
-                             //   if (processResults.Trace.ContainErrorCode("DevScriptsBaseFolder")
-                             //       || processResults.Trace.ContainErrorCode("ConnectionString"))
-                             //   {
-                             //       _scriptFilesState = null;
-                             //   }
-                             //   else
-                             //   {
-                             ////       RefreshScriptFilesState();
-                             //   }
-
-                                SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
-                            }
-                        }
-                        else
-                        {
-                            //RefreshScriptFilesState();
-
-                            notificationsControl1.Clear();
-                            SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //LogManagerObj.AddExceptionMessageToLog(ex, "refreshAll()");
-                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            });
-        }
 
         #endregion
 
@@ -222,25 +398,24 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnShowHistoricalBackups_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_projectConfigItem.BackupFolderPath);
+            ViewModel.ShowHistoricalBackupsCommand.Execute();
         }
 
         private void BtnCancelSyncSpecificState_Click(object sender, EventArgs e)
         {
-            notificationsControl1.Clear();
-            SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
+            ViewModel.CancelSyncToSpecificStateCommand.Execute();
         }
 
         private void BtnSetDBToSpecificState_Click(object sender, EventArgs e)
         {
-            SetViewState(DBVersionsMangementViewType.ReadyToSyncToSpecificState);
+            ViewModel.SetDBToSpecificStateCommand.Execute();
         }
 
 
 
         private void BtnNavToEdit_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(_projectConfigItem.Id);
+            ViewModel.NavToChooseProjectCommand.Execute();
         }
 
 
@@ -253,108 +428,45 @@ namespace AutoVersionsDB.WinApp
             {
                 RuntimeScriptFileBase currScriptFileInfo = (dgIncrementalScriptsFiles.DataSource as List<RuntimeScriptFileBase>)[e.RowIndex];
 
-                TargetStateScriptFileName = currScriptFileInfo.Filename;
+                ViewModel.SelectTargetStateScriptFileNameCommand.Execute(currScriptFileInfo.Filename);
 
-                MarkUnMarkSelectedTargetInGrid();
+                //MarkUnMarkSelectedTargetInGrid();
             }
 
         }
 
         private void BtnCancelSetDBStateManually_Click(object sender, EventArgs e)
         {
-            SetViewState(DBVersionsMangementViewType.MissingSystemTables);
+            ViewModel.CancelSetDBStateManuallyCommand.Execute();
         }
 
 
         private void BtnOpenIncrementalScriptsFolder_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_projectConfigItem.IncrementalScriptsFolderPath);
+            ViewModel.OpenIncrementalScriptsFolderCommand.Execute();
         }
         private void BtnCreateNewIncrementalScriptFile_Click(object sender, EventArgs e)
         {
-            using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
-            {
-                textInputWindow.ShowDialog();
-
-                if (textInputWindow.IsApply)
-                {
-                    ProcessResults processResults = AutoVersionsDBAPI.CreateNewIncrementalScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
-
-                    notificationsControl1.AfterComplete();
-                    SetViewState_AfterProcessComplete(processResults.Trace);
-
-                    if (!processResults.Trace.HasError)
-                    {
-                        string newFileFullPath = (string)processResults.Results;
-
-                        RefreshAll();
-
-                        OsProcessUtils.StartOsProcess(newFileFullPath);
-                    }
-                }
-            }
-
+            ViewModel.CreateNewIncrementalScriptFileCommand.Execute();
         }
 
         private void BtnOpenRepeatableScriptsFolder_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_projectConfigItem.RepeatableScriptsFolderPath);
+            ViewModel.OpenRepeatableScriptsFolderCommand.Execute();
         }
         private void BtnCreateNewRepeatableScriptFile_Click(object sender, EventArgs e)
         {
-            using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
-            {
-                textInputWindow.ShowDialog();
-
-                if (textInputWindow.IsApply)
-                {
-                    ProcessResults processResults = AutoVersionsDBAPI.CreateNewRepeatableScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
-
-                    notificationsControl1.AfterComplete();
-                    SetViewState_AfterProcessComplete(processResults.Trace);
-
-                    if (!processResults.Trace.HasError)
-                    {
-                        string newFileFullPath = (string)processResults.Results;
-
-                        RefreshAll();
-
-                        OsProcessUtils.StartOsProcess(newFileFullPath);
-                    }
-
-                }
-            }
-
+            ViewModel.CreateNewRepeatableScriptFileCommand.Execute();
         }
 
 
         private void BtnOpenDevDummyDataScriptsFolder_Click(object sender, EventArgs e)
         {
-            OsProcessUtils.StartOsProcess(_projectConfigItem.DevDummyDataScriptsFolderPath);
+            ViewModel.OpenDevDummyDataScriptsFolderCommand.Execute();
         }
         private void BtnCreateNewDevDummyDataScriptFile_Click(object sender, EventArgs e)
         {
-            using (TextInputWindow textInputWindow = new TextInputWindow("Create new script script file, insert the script name:"))
-            {
-                textInputWindow.ShowDialog();
-
-                if (textInputWindow.IsApply)
-                {
-                    ProcessResults processResults = AutoVersionsDBAPI.CreateNewDevDummyDataScriptFile(_projectConfigItem.Id, textInputWindow.ResultText, notificationsControl1.OnNotificationStateChanged);
-
-                    notificationsControl1.AfterComplete();
-                    SetViewState_AfterProcessComplete(processResults.Trace);
-
-                    if (!processResults.Trace.HasError)
-                    {
-                        string newFileFullPath = (string)processResults.Results;
-
-                        RefreshAll();
-
-                        OsProcessUtils.StartOsProcess(newFileFullPath);
-                    }
-                }
-            }
+            ViewModel.CreateNewDevDummyDataScriptFileCommand.Execute();
 
         }
         #endregion
@@ -365,202 +477,43 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnRunSync_Click(object sender, EventArgs e)
         {
-            Task.Run(() =>
-            {
-                try
-                {
-                    SetViewState(DBVersionsMangementViewType.InProcess);
-                    notificationsControl1.BeforeStart();
-
-                    ProcessResults processResults = AutoVersionsDBAPI.SyncDB(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
-
-                    RefreshScriptFilesState(false);
-
-                    notificationsControl1.AfterComplete();
-                    SetViewState_AfterProcessComplete(processResults.Trace);
-                }
-                catch (Exception ex)
-                {
-                    //LogManagerObj.AddExceptionMessageToLog(ex, "btnRunSync_Click()");
-                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-
-            });
+            ViewModel.RunSyncCommand.Execute();
         }
 
-        private bool RefreshScriptFilesState(bool showTrace)
-        {
-            ProcessResults processResults;
-           
-            if (showTrace)
-            {
-                processResults = AutoVersionsDBAPI.GetScriptFilesState(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
-            }
-            else
-            {
-                processResults = AutoVersionsDBAPI.GetScriptFilesState(_projectConfigItem.Id, null);
-            }
-
-            if (processResults.Trace.HasError)
-            {
-                notificationsControl1.AfterComplete();
-
-                if (processResults.Trace.ContainErrorCode("SystemTables"))
-                {
-                    SetViewState(DBVersionsMangementViewType.MissingSystemTables);
-                }
-                else
-                {
-                    SetViewState_AfterProcessComplete(processResults.Trace);
-                }
-            }
-            else
-            {
-                _scriptFilesState = processResults.Results as ScriptFilesState;
-
-                if (showTrace)
-                {
-                    notificationsControl1.AfterComplete();
-
-                    SetViewState_AfterProcessComplete(processResults.Trace);
-                }
-            }
-
-            return !processResults.Trace.HasError;
-        }
-
-        private bool CheckIsTargetStateHistory()
-        {
-            bool isAllowRun = true;
-
-            if (AutoVersionsDBAPI.ValdiateTargetStateAlreadyExecuted(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged).Trace.HasError)
-            {
-                string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
-                isAllowRun = MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-            }
-
-            return isAllowRun;
-        }
 
         private void BtnRecreateDbFromScratchMain_Click(object sender, EventArgs e)
         {
-            RunRecreateDBFromScratch();
+            ViewModel.RecreateDbFromScratchCommand.Execute();
         }
 
 
         private void BtnApplySyncSpecificState_Click(object sender, EventArgs e)
         {
-            if (CheckIsTargetStateHistory())
-            {
-                Task.Run(() =>
-                {
-                    try
-                    {
-                        SetViewState(DBVersionsMangementViewType.InProcess);
-                        notificationsControl1.BeforeStart();
-
-                        ProcessResults processResults = AutoVersionsDBAPI.SetDBToSpecificState(_projectConfigItem.Id, TargetStateScriptFileName, true, notificationsControl1.OnNotificationStateChanged);
-                        RefreshScriptFilesState(false);
-
-                        notificationsControl1.AfterComplete();
-                        SetViewState_AfterProcessComplete(processResults.Trace);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        //LogManagerObj.AddExceptionMessageToLog(ex, "btnApplySyncSpecificState_Click()");
-                        MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-
-                });
-            }
+            ViewModel.ApplySyncSpecificStateCommand.Execute();
         }
 
 
         private void BtnDeploy_Click(object sender, EventArgs e)
         {
-            try
-            {
-                SetViewState(DBVersionsMangementViewType.InProcess);
-                notificationsControl1.BeforeStart();
-
-                ProcessResults processResults = AutoVersionsDBAPI.Deploy(_projectConfigItem.Id, notificationsControl1.OnNotificationStateChanged);
-                RefreshScriptFilesState(false);
-
-                notificationsControl1.AfterComplete();
-                SetViewState_AfterProcessComplete(processResults.Trace);
-
-                OsProcessUtils.StartOsProcess(_projectConfigItem.DeployArtifactFolderPath);
-            }
-            catch (Exception ex)
-            {
-                //LogManagerObj.AddExceptionMessageToLog(ex, "deployToolStripMenuItem_Click()");
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            ViewModel.DeployCommand.Execute();
         }
 
         private void BtnVirtualExecution_Click(object sender, EventArgs e)
         {
-            SetViewState(DBVersionsMangementViewType.SetDBStateManually);
+            ViewModel.SetDBStateManuallyViewStateCommand.Execute();
         }
 
         private void BtnRecreateDbFromScratch2_Click(object sender, EventArgs e)
         {
-            RunRecreateDBFromScratch();
+            ViewModel.RecreateDbFromScratchCommand.Execute();
         }
 
-        private void RunRecreateDBFromScratch()
-        {
-            string warningMessage = $"This action will drop the Database and recreate it only by the scripts, you may loose Data. Are you sure?";
-            if (MessageBox.Show(this, warningMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
-            {
-                Task.Run(() =>
-                {
-                    try
-                    {
-                        SetViewState(DBVersionsMangementViewType.InProcess);
-                        notificationsControl1.BeforeStart();
-
-                        ProcessResults processResults = AutoVersionsDBAPI.RecreateDBFromScratch(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
-                        RefreshScriptFilesState(false);
-
-                        notificationsControl1.AfterComplete();
-                        SetViewState_AfterProcessComplete(processResults.Trace);
-                    }
-                    catch (Exception ex)
-                    {
-                        //LogManagerObj.AddExceptionMessageToLog(ex, "runRecreateDBFromScratch()");
-                        MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-
-                });
-            }
-        }
+       
 
 
         private void BtnRunSetDBStateManally_Click(object sender, EventArgs e)
         {
-            Task.Run(() =>
-            {
-                try
-                {
-                    SetViewState(DBVersionsMangementViewType.InProcess);
-                    notificationsControl1.BeforeStart();
-
-                    ProcessResults processResults = AutoVersionsDBAPI.SetDBStateByVirtualExecution(_projectConfigItem.Id, TargetStateScriptFileName, notificationsControl1.OnNotificationStateChanged);
-                    RefreshScriptFilesState(false);
-
-                    notificationsControl1.AfterComplete();
-                    SetViewState_AfterProcessComplete(processResults.Trace);
-                }
-                catch (Exception ex)
-                {
-                    //LogManagerObj.AddExceptionMessageToLog(ex, "btnRunSetDBStateManally_Click()");
-                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            });
+            ViewModel.RunSetDBStateManallyCommand.Execute();
         }
 
 
@@ -571,237 +524,6 @@ namespace AutoVersionsDB.WinApp
 
 
         #region Set View State
-
-        private void SetViewState(DBVersionsMangementViewType dbVersionsMangementViewType)
-        {
-            BindToUIElements(dbVersionsMangementViewType);
-
-            HideAllActionPanels();
-
-            SetControlHideOrVisible(pnlRepeatableFiles, true);
-            if (_projectConfigItem.DevEnvironment)
-            {
-                SetControlHideOrVisible(pnlDevDummyDataFiles, true);
-            }
-
-
-            switch (dbVersionsMangementViewType)
-            {
-                case DBVersionsMangementViewType.ReadyToRunSync:
-
-                    SetControlHideOrVisible(pnlMainActions, true);
-                    SetControlHideOrVisible(lblColorTargetState_Square, false);
-                    SetControlHideOrVisible(lblColorTargetState_Caption, false);
-
-
-
-                    dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        if (dgIncrementalScriptsFiles.DataSource is List<RuntimeScriptFileBase> scriptFileList
-                            && scriptFileList.Count > 0)
-                        {
-                            TargetStateScriptFileName = scriptFileList.Last().Filename;
-                        }
-                    }));
-
-                    EnableDisableGridToSelectTargetState(false);
-
-                    EnanbleDisableForm(true);
-
-                    break;
-
-                case DBVersionsMangementViewType.ReadyToSyncToSpecificState:
-
-                    SetControlHideOrVisible(pnlSyncToSpecificState, true);
-                    SetControlHideOrVisible(lblColorTargetState_Square, true);
-                    SetControlHideOrVisible(lblColorTargetState_Caption, true);
-
-                    SetControlHideOrVisible(pnlRepeatableFiles, false);
-                    SetControlHideOrVisible(pnlDevDummyDataFiles, false);
-
-
-                    notificationsControl1.SetAttentionMessage("Select the target Database State, and click on Apply");
-
-                    EnableDisableGridToSelectTargetState(true);
-
-                    EnanbleDisableForm(true);
-
-
-                    break;
-
-                case DBVersionsMangementViewType.MissingSystemTables:
-                case DBVersionsMangementViewType.HistoryExecutedFilesChanged:
-
-                    SetControlHideOrVisible(pnlMissingSystemTables, true);
-                    SetControlHideOrVisible(lblColorTargetState_Square, false);
-                    SetControlHideOrVisible(lblColorTargetState_Caption, false);
-
-                    dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
-                    {
-                        if (dgIncrementalScriptsFiles.DataSource is List<RuntimeScriptFileBase> scriptFileList
-                            && scriptFileList.Count > 0)
-                        {
-                            TargetStateScriptFileName = scriptFileList.Last().Filename;
-                        }
-                    }));
-
-                    EnableDisableGridToSelectTargetState(false);
-
-                    EnanbleDisableForm(true);
-
-                    break;
-
-
-
-
-                case DBVersionsMangementViewType.SetDBStateManually:
-
-                    SetControlHideOrVisible(pnlSetDBStateManually, true);
-                    SetControlHideOrVisible(lblColorTargetState_Square, true);
-                    SetControlHideOrVisible(lblColorTargetState_Caption, true);
-
-                    SetControlHideOrVisible(pnlRepeatableFiles, false);
-                    SetControlHideOrVisible(pnlDevDummyDataFiles, false);
-
-                    notificationsControl1.SetAttentionMessage("Select the Target Database State to virtually mark, and click on Apply");
-
-                    EnableDisableGridToSelectTargetState(true);
-
-                    EnanbleDisableForm(true);
-
-                    break;
-
-                case DBVersionsMangementViewType.InProcess:
-
-                    EnanbleDisableForm(false);
-
-                    break;
-
-                case DBVersionsMangementViewType.RestoreDatabaseError:
-
-                    EnanbleDisableForm(false);
-                    SetControlEnableOrDisable(btnShowHistoricalBackups, true);
-
-                    SetControlHideOrVisible(pnlRestoreDbError, true);
-                    SetControlHideOrVisible(lblColorTargetState_Square, false);
-                    SetControlHideOrVisible(lblColorTargetState_Caption, false);
-
-                    break;
-
-                default:
-                    break;
-            }
-
-            btnRecreateDbFromScratchMain.BeginInvoke((MethodInvoker)(() =>
-            {
-                btnRecreateDbFromScratchMain.Visible = _projectConfigItem.DevEnvironment;
-            }));
-            lblRecreateDbFromScratchMain.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblRecreateDbFromScratchMain.Visible = _projectConfigItem.DevEnvironment;
-            }));
-
-            btnDeploy.BeginInvoke((MethodInvoker)(() =>
-            {
-                btnDeploy.Visible = _projectConfigItem.DevEnvironment;
-            }));
-            lblDeploy.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblDeploy.Visible = _projectConfigItem.DevEnvironment;
-            }));
-
-            btnRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
-            {
-                btnRecreateDbFromScratch2.Visible = _projectConfigItem.DevEnvironment;
-            }));
-            lblRecreateDbFromScratch2.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblRecreateDbFromScratch2.Visible = _projectConfigItem.DevEnvironment;
-            }));
-
-        }
-
-        private void HideAllActionPanels()
-        {
-            SetControlHideOrVisible(pnlMainActions, false);
-            SetControlHideOrVisible(pnlSyncToSpecificState, false);
-            SetControlHideOrVisible(pnlMissingSystemTables, false);
-            SetControlHideOrVisible(pnlSetDBStateManually, false);
-            SetControlHideOrVisible(pnlRestoreDbError, false);
-        }
-
-        private void BindToUIElements(DBVersionsMangementViewType dbVersionsMangementViewType)
-        {
-            string projectFullName = $"{_projectConfigItem.Id} - {_projectConfigItem.Description}";
-
-            lblProjectName.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblProjectName.Text = projectFullName;
-            }));
-
-
-            BindIncrementalGrid(dbVersionsMangementViewType);
-            BindRepeatableGrid();
-            BindDevDummyDataGrid();
-
-        }
-
-
-        private void BindIncrementalGrid(DBVersionsMangementViewType dbVersionsMangementViewType)
-        {
-            List<RuntimeScriptFileBase> allIncrementalScriptFiles;
-            if (_scriptFilesState == null)
-            {
-                allIncrementalScriptFiles = new List<RuntimeScriptFileBase>();
-            }
-            else
-            {
-                allIncrementalScriptFiles = _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
-
-                if (dbVersionsMangementViewType == DBVersionsMangementViewType.ReadyToSyncToSpecificState
-                    || dbVersionsMangementViewType == DBVersionsMangementViewType.SetDBStateManually)
-                {
-                    RuntimeScriptFileBase emptyDBTargetState = new EmptyDbStateRuntimeScriptFile();
-                    allIncrementalScriptFiles.Insert(0, emptyDBTargetState);
-                }
-            }
-
-            BindGridDataSource(dgIncrementalScriptsFiles, allIncrementalScriptFiles);
-        }
-
-        private void BindRepeatableGrid()
-        {
-            List<RuntimeScriptFileBase> allRepeatableScriptFiles;
-            if (_scriptFilesState == null)
-            {
-                allRepeatableScriptFiles = new List<RuntimeScriptFileBase>();
-            }
-            else
-            {
-                allRepeatableScriptFiles = _scriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
-            }
-
-            BindGridDataSource(dgRepeatableScriptsFiles, allRepeatableScriptFiles);
-        }
-
-        private void BindDevDummyDataGrid()
-        {
-            if (_projectConfigItem.DevEnvironment)
-            {
-                List<RuntimeScriptFileBase> allDevDummyDataScriptFiles;
-                if (_scriptFilesState == null)
-                {
-                    allDevDummyDataScriptFiles = new List<RuntimeScriptFileBase>();
-                }
-                else
-                {
-                    allDevDummyDataScriptFiles = _scriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
-                }
-
-                BindGridDataSource(dgDevDummyDataScriptsFiles, allDevDummyDataScriptFiles);
-            }
-
-        }
 
 
         private static void BindGridDataSource(DataGridView dataGridView, List<RuntimeScriptFileBase> scriptFilesList)
@@ -862,7 +584,7 @@ namespace AutoVersionsDB.WinApp
 
                     RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
 
-                    if (currRowFileInfo.Filename.Trim().ToUpperInvariant() == TargetStateScriptFileName.Trim().ToUpperInvariant())
+                    if (currRowFileInfo.Filename.Trim().ToUpperInvariant() == _viewModel.DBVersionsViewModelData.TargetStateScriptFileName.Trim().ToUpperInvariant())
                     {
                         currGridRow.Cells[2].Style.BackColor = Color.Yellow;
                     }
@@ -875,48 +597,9 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void EnanbleDisableForm(bool isEnable)
-        {
-            SetControlEnableOrDisable(pnlMainActions, isEnable);
-            SetControlEnableOrDisable(pnlMissingSystemTables, isEnable);
-            SetControlEnableOrDisable(pnlSetDBStateManually, isEnable);
-            SetControlEnableOrDisable(btnRefresh, isEnable);
-            SetControlEnableOrDisable(dgIncrementalScriptsFiles, isEnable);
-            SetControlEnableOrDisable(btnShowHistoricalBackups, isEnable);
-            SetControlEnableOrDisable(btnCreateNewIncrementalScriptFile, isEnable);
-            SetControlEnableOrDisable(btnCreateNewRepeatableScriptFile, isEnable);
-            SetControlEnableOrDisable(btnCreateNewDevDummyDataScriptFile, isEnable);
-        }
 
-        private static void SetControlEnableOrDisable(Control control, bool isEnable)
-        {
-            control.BeginInvoke((MethodInvoker)(() =>
-            {
-                control.Enabled = isEnable;
-            }));
-        }
 
-        private static void SetControlHideOrVisible(Control control, bool isVisible)
-        {
-            control.BeginInvoke((MethodInvoker)(() =>
-            {
-                control.Visible = isVisible;
-            }));
-        }
 
-        private void SetViewState_AfterProcessComplete(ProcessTrace processResults)
-        {
-            if (processResults.HasError
-                && !string.IsNullOrWhiteSpace(processResults.InstructionsMessageStepName)
-                && string.CompareOrdinal(processResults.InstructionsMessageStepName, RestoreDatabaseStep.StepNameStr) == 0)
-            {
-                SetViewState(DBVersionsMangementViewType.RestoreDatabaseError);
-            }
-            else
-            {
-                SetViewState(DBVersionsMangementViewType.ReadyToRunSync);
-            }
-        }
 
 
 

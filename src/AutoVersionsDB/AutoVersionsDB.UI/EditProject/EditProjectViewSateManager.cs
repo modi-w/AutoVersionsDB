@@ -12,7 +12,6 @@ namespace AutoVersionsDB.UI.EditProject
         private readonly NotificationsViewModel _notificationsViewModel;
 
 
-        private EditProjectViewStateType _viewType;
 
         public EditProjectViewSateManager(EditProjectControls editProjectControls,
                                             ProjectConfigErrorMessages projectConfigErrorMessages,
@@ -34,9 +33,8 @@ namespace AutoVersionsDB.UI.EditProject
 
         public void ChangeViewState(EditProjectViewStateType viewType)
         {
-            _viewType = viewType;
 
-            switch (_viewType)
+            switch (viewType)
             {
                 case EditProjectViewStateType.InPorcess:
 

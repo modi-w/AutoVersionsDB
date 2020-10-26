@@ -124,13 +124,6 @@
       <Link>Utils\FromNinjectBase.cs</Link>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\Utils\OsProcessUtils.cs">
-      <Link>Utils\OsProcessUtils.cs</Link>
-    </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\Utils\UserControleNinjectBase.cs">
-      <Link>Utils\UserControleNinjectBase.cs</Link>
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ChooseProject.resx">

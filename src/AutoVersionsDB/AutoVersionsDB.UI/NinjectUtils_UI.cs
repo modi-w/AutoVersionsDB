@@ -4,6 +4,7 @@ using AutoVersionsDB.DbCommands.Integration;
 using AutoVersionsDB.NotificationableEngine;
 using Ninject;
 using AutoVersionsDB.UI.EditProject;
+using AutoVersionsDB.UI.DBVersions;
 
 namespace AutoVersionsDB.UI
 {
@@ -24,10 +25,15 @@ namespace AutoVersionsDB.UI
 
             kernel.Bind<ViewRouter>().To<ViewRouter>().InSingletonScope();
             kernel.Bind<NotificationsViewModel>().To<NotificationsViewModel>().InSingletonScope();
+            kernel.Bind<TextInputViewModel>().To<TextInputViewModel>().InSingletonScope();
+            
 
             kernel.Bind<EditProjectControls>().To<EditProjectControls>().InSingletonScope();
             kernel.Bind<ProjectConfigErrorMessages>().To<ProjectConfigErrorMessages>().InSingletonScope();
-            
+
+            kernel.Bind<DBVersionsViewModelData>().To<DBVersionsViewModelData>().InSingletonScope();
+            kernel.Bind<DBVersionsControls>().To<DBVersionsControls>().InSingletonScope();
+
         }
     }
 }

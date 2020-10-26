@@ -64,15 +64,17 @@ namespace AutoVersionsDB.UI.EditProject
         public EditProjectViewModel(ProjectConfigsAPI projectConfigsAPI,
                                     DBVersionsAPI dbVersionsAPI,
                                     EditProjectViewSateManager editProjectViewSateManager,
-                                    NotificationsViewModel notificationsViewModel)
+                                    NotificationsViewModel notificationsViewModel,
+                                    EditProjectControls editProjectControls,
+                                    ProjectConfigErrorMessages projectConfigErrorMessages)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _dbVersionsAPI = dbVersionsAPI;
             _editProjectViewSateManager = editProjectViewSateManager;
             _notificationsViewModel = notificationsViewModel;
 
-            ProjectConfigErrorMessages = new ProjectConfigErrorMessages();
-            EditProjectControls = new EditProjectControls();
+            EditProjectControls = editProjectControls;
+            ProjectConfigErrorMessages = projectConfigErrorMessages;
 
             DBTypes = _projectConfigsAPI.GetDBTypes();
 
