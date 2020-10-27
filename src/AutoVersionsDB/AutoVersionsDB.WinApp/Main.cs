@@ -1,6 +1,8 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.UI;
+using AutoVersionsDB.WinApp.Utils;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +14,7 @@ namespace AutoVersionsDB.WinApp
     public delegate void OnEditProjectHandler(string id);
 
 
-    public partial class Main : Form, IViewContainer
+    public partial class Main : Form
     {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
@@ -21,8 +23,6 @@ namespace AutoVersionsDB.WinApp
             //Comment: In .net core, this method cause to layout to the window to be too big respect to its children controls.
             //  And because that we cant set ignore to ths method to the auto generate code, we implement nothing.
         }
-
-        public ViewType CurrentView { get; private set; }
 
         private readonly MainViewModel _viewModel;
 
@@ -35,7 +35,6 @@ namespace AutoVersionsDB.WinApp
 
             _viewModel = viewModel;
 
-            SetDataBindings();
 
 
             //chooseProject1.OnSetNewProject += ChooseProject1_OnSetNewProject1;
@@ -48,20 +47,42 @@ namespace AutoVersionsDB.WinApp
             lnkBtnChooseProject.Visible = false;
         }
 
+        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(_viewModel.CurrentView):
+
+                    SetView(_viewModel.CurrentView);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         private void SetDataBindings()
         {
             this.lnkBtnChooseProject.DataBindings.Clear();
             this.lnkBtnChooseProject.DataBindings.Add(
-                nameof(lnkBtnChooseProject.Visible),
-                _viewModel, 
-                nameof(_viewModel.BtnChooseProjectVisible),
-                false, 
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    lnkBtnChooseProject,
+                    nameof(lnkBtnChooseProject.Visible),
+                    _viewModel,
+                    nameof(_viewModel.BtnChooseProjectVisible)
+                )
+            );
         }
 
 
         private void Main_Load(object sender, EventArgs e)
         {
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+            }
+
             //tabMainLayout.Appearance = TabAppearance.FlatButtons;
             tabMainLayout.ItemSize = new Size(0, 1);
             tabMainLayout.SizeMode = TabSizeMode.Fixed;
@@ -82,20 +103,17 @@ namespace AutoVersionsDB.WinApp
                 case ViewType.ChooseProject:
 
                     tabMainLayout.SelectTab(tbChooseProject);
-                    CurrentView = viewType;
                     break;
 
                 case ViewType.EditProjectConfig:
 
                     tabMainLayout.SelectTab(tbEditProjectConfig);
-                    CurrentView = viewType;
                     break;
-          
+
                 case ViewType.DBVersions:
 
                     tabMainLayout.SelectTab(tbDBVersionsMangement);
-                    CurrentView = viewType;
-                 
+
                     break;
 
                 default:
@@ -116,12 +134,12 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-     
+
         private void LnkBtnChooseProject_Click(object sender, EventArgs e)
         {
             _viewModel.NavToChooseProjectCommand.Execute(null);
         }
 
-      
+
     }
 }

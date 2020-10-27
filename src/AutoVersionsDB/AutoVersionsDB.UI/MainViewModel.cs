@@ -8,6 +8,13 @@ namespace AutoVersionsDB.UI
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private ViewType _currentView;
+        public ViewType CurrentView
+    {
+            get => _currentView;
+            set => SetField(ref _currentView, value);
+        }
+
         private bool _btnChooseProjectVisible;
         public bool BtnChooseProjectVisible
         {

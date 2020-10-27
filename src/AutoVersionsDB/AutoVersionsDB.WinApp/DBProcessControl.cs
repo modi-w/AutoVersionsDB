@@ -23,30 +23,18 @@ namespace AutoVersionsDB.WinApp
 
     public partial class DBProcessControl : UserControlNinjectBase// UserControl
     {
-        private DBVersionsViewModel _viewModel;
         [Inject]
-        public DBVersionsViewModel ViewModel
-        {
-            get
-            {
-                return _viewModel;
-            }
-            set
-            {
-                _viewModel = value;
+        public DBVersionsViewModel ViewModel { get; set; }
 
-                ViewModel.OnException += ViewModel_OnException;
-                ViewModel.OnConfirm += ViewModel_OnConfirm;
-                ViewModel.OnTextInput += ViewModel_OnTextInput;
-                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
-                SetDataBindings();
-            }
-        }
 
 
         public DBProcessControl()
         {
             InitializeComponent();
+
+            this.Load += DBProcessControl_Load;
+
+
 
             dgIncrementalScriptsFiles.AutoGenerateColumns = false;
             dgIncrementalScriptsFiles.SelectionChanged += DgIncrementalScriptsFiles_SelectionChanged;
@@ -78,6 +66,18 @@ namespace AutoVersionsDB.WinApp
             //#endif
 
             SetToolTips();
+        }
+
+        private void DBProcessControl_Load(object sender, EventArgs e)
+        {
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                ViewModel.OnException += ViewModel_OnException;
+                ViewModel.OnConfirm += ViewModel_OnConfirm;
+                ViewModel.OnTextInput += ViewModel_OnTextInput;
+                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+            }
         }
 
         private void ChangeButtonsPanelsLocation(Panel panelToMove)
@@ -118,7 +118,7 @@ namespace AutoVersionsDB.WinApp
         }
         private bool ViewModel_OnConfirm(object sender, string confirmMessage)
         {
-           return MessageBox.Show(this, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+            return MessageBox.Show(this, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
         }
 
         private TextInputResults ViewModel_OnTextInput(object sender, string instructionMessageText)
@@ -139,7 +139,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-       
+
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -176,192 +176,231 @@ namespace AutoVersionsDB.WinApp
         {
             this.lblProjectName.DataBindings.Clear();
             this.lblProjectName.DataBindings.Add(
-                nameof(lblProjectName.Text),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.LblProjectNameText),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    lblProjectName,
+                    nameof(lblProjectName.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblProjectNameText)
+                    )
+                );
+
 
             this.pnlMainActions.DataBindings.Clear();
             this.pnlMainActions.DataBindings.Add(
-                nameof(pnlMainActions.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.PnlMainActionsVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    pnlMainActions,
+                    nameof(pnlMainActions.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlMainActionsVisible)
+                    )
+                );
 
             this.pnlSyncToSpecificState.DataBindings.Clear();
             this.pnlSyncToSpecificState.DataBindings.Add(
-                nameof(pnlSyncToSpecificState.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.PnlSyncToSpecificStateVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    pnlSyncToSpecificState,
+                    nameof(pnlSyncToSpecificState.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlSyncToSpecificStateVisible)
+                    )
+                );
 
             this.pnlMissingSystemTables.DataBindings.Clear();
             this.pnlMissingSystemTables.DataBindings.Add(
-                nameof(pnlMissingSystemTables.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    pnlMissingSystemTables,
+                    nameof(pnlMissingSystemTables.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesVisible)
+                    )
+                );
             this.pnlMissingSystemTables.DataBindings.Add(
-                nameof(pnlMissingSystemTables.Enabled),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesEnabled),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    pnlMissingSystemTables,
+                    nameof(pnlMissingSystemTables.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesEnabled)
+                    )
+                );
 
             this.pnlSetDBStateManually.DataBindings.Clear();
             this.pnlSetDBStateManually.DataBindings.Add(
-                nameof(pnlSetDBStateManually.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.PnlSetDBStateManuallyVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    pnlSetDBStateManually,
+                    nameof(pnlSetDBStateManually.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlSetDBStateManuallyVisible)
+                    )
+                );
             this.pnlSetDBStateManually.DataBindings.Add(
-                nameof(pnlSetDBStateManually.Enabled),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.PnlSetDBStateManuallyEnabled),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
-
+                AsyncBindingHelper.GetBinding(
+                    pnlSetDBStateManually,
+                    nameof(pnlSetDBStateManually.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlSetDBStateManuallyEnabled)
+                    )
+                );
 
             this.pnlDevDummyDataFiles.DataBindings.Clear();
             this.pnlDevDummyDataFiles.DataBindings.Add(
-                nameof(pnlDevDummyDataFiles.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.PnlDevDummyDataFilesVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    pnlDevDummyDataFiles,
+                    nameof(pnlDevDummyDataFiles.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlDevDummyDataFilesVisible)
+                    )
+                );
 
             this.pnlRestoreDbError.DataBindings.Clear();
             this.pnlRestoreDbError.DataBindings.Add(
-                nameof(pnlRestoreDbError.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.PnlRestoreDbErrorVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
-
+                AsyncBindingHelper.GetBinding(
+                    pnlRestoreDbError,
+                    nameof(pnlRestoreDbError.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlRestoreDbErrorVisible)
+                    )
+                );
 
             this.dgIncrementalScriptsFiles.DataBindings.Clear();
             this.dgIncrementalScriptsFiles.DataBindings.Add(
-                nameof(dgIncrementalScriptsFiles.Enabled),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.IncrementalScriptsGridEnabled),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
-
+                AsyncBindingHelper.GetBinding(
+                    dgIncrementalScriptsFiles,
+                    nameof(dgIncrementalScriptsFiles.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.IncrementalScriptsGridEnabled)
+                    )
+                );
 
             this.btnRefresh.DataBindings.Clear();
             this.btnRefresh.DataBindings.Add(
-                nameof(btnRefresh.Enabled),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnRefreshEnable),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
+                AsyncBindingHelper.GetBinding(
+                    btnRefresh,
+                    nameof(btnRefresh.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnRefreshEnable)
+                    )
+                );
 
             this.btnRecreateDbFromScratchMain.DataBindings.Clear();
             this.btnRecreateDbFromScratchMain.DataBindings.Add(
-                nameof(btnRecreateDbFromScratchMain.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    btnRecreateDbFromScratchMain,
+                    nameof(btnRecreateDbFromScratchMain.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainVisible)
+                    )
+                );
+
             this.lblRecreateDbFromScratchMain.DataBindings.Clear();
             this.lblRecreateDbFromScratchMain.DataBindings.Add(
-                nameof(lblRecreateDbFromScratchMain.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    lblRecreateDbFromScratchMain,
+                    nameof(lblRecreateDbFromScratchMain.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainVisible)
+                    )
+                );
 
             this.btnRecreateDbFromScratch2.DataBindings.Clear();
             this.btnRecreateDbFromScratch2.DataBindings.Add(
-                nameof(btnRecreateDbFromScratch2.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchSecondaryVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    btnRecreateDbFromScratch2,
+                    nameof(btnRecreateDbFromScratch2.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchSecondaryVisible)
+                    )
+                );
 
             this.lblRecreateDbFromScratch2.DataBindings.Clear();
             this.lblRecreateDbFromScratch2.DataBindings.Add(
-                nameof(lblRecreateDbFromScratch2.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchSecondaryVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
-
-            this.btnDeploy.DataBindings.Clear();
-            this.btnDeploy.DataBindings.Add(
-                nameof(btnDeploy.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnDeployVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    lblRecreateDbFromScratch2,
+                    nameof(lblRecreateDbFromScratch2.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchSecondaryVisible)
+                    )
+                );
 
             this.btnDeploy.DataBindings.Clear();
             this.btnDeploy.DataBindings.Add(
-                nameof(btnDeploy.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnDeployVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    btnDeploy,
+                    nameof(btnDeploy.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnDeployVisible)
+                    )
+                );
+
+            this.lblDeploy.DataBindings.Clear();
+            this.lblDeploy.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblDeploy,
+                    nameof(lblDeploy.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnDeployVisible)
+                    )
+                );
 
             this.btnShowHistoricalBackups.DataBindings.Clear();
             this.btnShowHistoricalBackups.DataBindings.Add(
-                nameof(btnShowHistoricalBackups.Enabled),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnShowHistoricalBackupsEnabled),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
+                AsyncBindingHelper.GetBinding(
+                    btnShowHistoricalBackups,
+                    nameof(btnShowHistoricalBackups.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnShowHistoricalBackupsEnabled)
+                    )
+                );
 
             this.btnCreateNewIncrementalScriptFile.DataBindings.Clear();
             this.btnCreateNewIncrementalScriptFile.DataBindings.Add(
-                nameof(btnCreateNewIncrementalScriptFile.Enabled),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnCreateNewIncrementalScriptFileEnabled),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    btnCreateNewIncrementalScriptFile,
+                    nameof(btnCreateNewIncrementalScriptFile.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnCreateNewIncrementalScriptFileEnabled)
+                    )
+                );
 
             this.btnCreateNewRepeatableScriptFile.DataBindings.Clear();
             this.btnCreateNewRepeatableScriptFile.DataBindings.Add(
-                nameof(btnCreateNewRepeatableScriptFile.Enabled),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnCreateNewRepeatableScriptFileEnabled),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    btnCreateNewRepeatableScriptFile,
+                    nameof(btnCreateNewRepeatableScriptFile.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnCreateNewRepeatableScriptFileEnabled)
+                    )
+                );
 
             this.btnCreateNewDevDummyDataScriptFile.DataBindings.Clear();
             this.btnCreateNewDevDummyDataScriptFile.DataBindings.Add(
-                nameof(btnCreateNewDevDummyDataScriptFile.Enabled),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.BtnCreateNewDevDummyDataScriptFileEnabled),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
+                AsyncBindingHelper.GetBinding(
+                    btnCreateNewDevDummyDataScriptFile,
+                    nameof(btnCreateNewDevDummyDataScriptFile.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnCreateNewDevDummyDataScriptFileEnabled)
+                    )
+                );
 
             this.lblColorTargetState_Square.DataBindings.Clear();
             this.lblColorTargetState_Square.DataBindings.Add(
-                nameof(lblColorTargetState_Square.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.LblColorTargetState_SquareVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    lblColorTargetState_Square,
+                    nameof(lblColorTargetState_Square.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblColorTargetState_SquareVisible)
+                    )
+                );
 
             this.lblColorTargetState_Caption.DataBindings.Clear();
             this.lblColorTargetState_Caption.DataBindings.Add(
-                nameof(lblColorTargetState_Caption.Visible),
-                ViewModel.DBVersionsControls,
-                nameof(ViewModel.DBVersionsControls.LblColorTargetState_CaptionVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    lblColorTargetState_Caption,
+                    nameof(lblColorTargetState_Caption.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblColorTargetState_CaptionVisible)
+                    )
+                );
+
 
 
         }
@@ -508,7 +547,7 @@ namespace AutoVersionsDB.WinApp
             ViewModel.RecreateDbFromScratchCommand.Execute();
         }
 
-       
+
 
 
         private void BtnRunSetDBStateManally_Click(object sender, EventArgs e)
@@ -584,7 +623,7 @@ namespace AutoVersionsDB.WinApp
 
                     RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
 
-                    if (currRowFileInfo.Filename.Trim().ToUpperInvariant() == _viewModel.DBVersionsViewModelData.TargetStateScriptFileName.Trim().ToUpperInvariant())
+                    if (currRowFileInfo.Filename.Trim().ToUpperInvariant() == ViewModel.DBVersionsViewModelData.TargetStateScriptFileName.Trim().ToUpperInvariant())
                     {
                         currGridRow.Cells[2].Style.BackColor = Color.Yellow;
                     }

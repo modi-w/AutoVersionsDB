@@ -12,24 +12,10 @@ using Ninject;
 
 namespace AutoVersionsDB.WinApp
 {
-    public partial class NotificationsControl : UserControl// UserControleNinjectBase
+    public partial class NotificationsControl : UserControlNinjectBase
     {
-        private NotificationsViewModel _viewModel { get; set; }
         [Inject]
-        public NotificationsViewModel ViewModel
-        {
-            get
-            {
-                return _viewModel;
-            }
-            set
-            {
-                _viewModel = value;
-
-                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
-                SetDataBindings();
-            }
-        }
+        public NotificationsViewModel ViewModel { get; set; }
 
 
 
@@ -37,10 +23,18 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-         
+            this.Load += NotificationsControl_Load;
+
         }
 
-
+        private void NotificationsControl_Load(object sender, EventArgs e)
+        {
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+            }
+        }
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -61,25 +55,32 @@ namespace AutoVersionsDB.WinApp
         {
             this.lblProcessStatusMessage.DataBindings.Clear();
             this.lblProcessStatusMessage.DataBindings.Add(
-                nameof(lblProcessStatusMessage.Text),
-                ViewModel,
-                nameof(ViewModel.ProcessStatusMessage),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    lblProcessStatusMessage,
+                    nameof(lblProcessStatusMessage.Text),
+                    ViewModel,
+                    nameof(ViewModel.ProcessStatusMessage)
+                    )
+                );
             this.lblProcessStatusMessage.DataBindings.Add(
-                nameof(lblProcessStatusMessage.ForeColor),
-                ViewModel,
-                nameof(ViewModel.ProcessStatusMessageColor),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    lblProcessStatusMessage,
+                    nameof(lblProcessStatusMessage.ForeColor),
+                    ViewModel,
+                    nameof(ViewModel.ProcessStatusMessageColor)
+                    )
+                );
 
             this.pbStatus.DataBindings.Clear();
             this.pbStatus.DataBindings.Add(
-                nameof(pbStatus.Visible),
-                ViewModel,
-                nameof(ViewModel.StatusImageVisible),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    pbStatus,
+                    nameof(pbStatus.Visible),
+                    ViewModel,
+                    nameof(ViewModel.StatusImageVisible)
+                    )
+                );
+
 
         }
 
@@ -114,7 +115,7 @@ namespace AutoVersionsDB.WinApp
                 }
             }));
 
-        
+
         }
 
 

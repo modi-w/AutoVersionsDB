@@ -120,9 +120,16 @@
       <Link>TextInputWindow.Designer.cs</Link>
       <DependentUpon>TextInputWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\AsyncBindingHelper.cs">
+      <Link>Utils\AsyncBindingHelper.cs</Link>
+    </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Utils\FromNinjectBase.cs">
       <Link>Utils\FromNinjectBase.cs</Link>
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\UserControlNinjectBase.cs">
+      <Link>Utils\UserControlNinjectBase.cs</Link>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -162,6 +169,10 @@
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\TextInputWindow.resx">
       <Link>TextInputWindow.resx</Link>
       <DependentUpon>TextInputWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Utils\UserControlNinjectBase.resx">
+      <Link>Utils\UserControlNinjectBase.resx</Link>
+      <DependentUpon>UserControlNinjectBase.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>

@@ -37,8 +37,6 @@ namespace AutoVersionsDB.WinApp
         {
             //  kernel.ThrowIfNull(nameof(kernel));
 
-            Main mainForm = kernel.Get<Main>();
-            kernel.Bind<IViewContainer>().ToConstant(mainForm);
             
         }
 

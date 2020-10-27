@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace AutoVersionsDB.UI
-{
-    public interface IViewContainer
-    {
-        ViewType CurrentView { get; }
-        void SetView(ViewType viewType);
-    }
-}
+//namespace AutoVersionsDB.UI
+//{
+//    public interface IViewContainer
+//    {
+//    }
+//}

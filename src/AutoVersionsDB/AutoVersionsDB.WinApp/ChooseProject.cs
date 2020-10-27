@@ -15,31 +15,19 @@ namespace AutoVersionsDB.WinApp
 {
     public partial class ChooseProject : UserControlNinjectBase //UserControl
     {
-        private ChooseProjectViewModel _viewModel;
         [Inject]
-        public ChooseProjectViewModel ViewModel
-        {
-            get
-            {
-                return _viewModel;
-            }
-            set
-            {
-                _viewModel = value;
-
-                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
-                SetDataBindings();
-            }
-        }
+        public ChooseProjectViewModel ViewModel { get; set; }
 
 
         public ChooseProject()
         {
             InitializeComponent();
 
+            this.Load += ChooseProject_Load;
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
+
 
                 //lblProjectIcon.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
                 //lblDeleteProject.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
@@ -64,6 +52,15 @@ namespace AutoVersionsDB.WinApp
 
         }
 
+        private void ChooseProject_Load(object sender, EventArgs e)
+        {
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+            }
+        }
+
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -83,11 +80,13 @@ namespace AutoVersionsDB.WinApp
         {
             this.tbSerchProject.DataBindings.Clear();
             this.tbSerchProject.DataBindings.Add(
-                nameof(tbSerchProject.Text),
-                ViewModel,
-                nameof(ViewModel.SerchProjectText),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+                AsyncBindingHelper.GetBinding(
+                    tbSerchProject,
+                    nameof(tbSerchProject.Text),
+                    ViewModel,
+                    nameof(ViewModel.SerchProjectText)
+                )
+            );
         }
 
 
@@ -139,7 +138,7 @@ namespace AutoVersionsDB.WinApp
 
         private void TbSerchProject_LostFocus(object sender, EventArgs e)
         {
-           ViewModel.ResolveSerchProjectTextPlaceHolder();
+            ViewModel.ResolveSerchProjectTextPlaceHolder();
 
             if (ViewModel.IsSerchProjectTextEmpty)
             {

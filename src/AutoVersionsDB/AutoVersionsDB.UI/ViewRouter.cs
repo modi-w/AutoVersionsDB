@@ -9,7 +9,6 @@ namespace AutoVersionsDB.UI
 {
     public class ViewRouter
     {
-        private readonly IViewContainer _viewContainer;
 
         private readonly MainViewModel _mainViewModel;
         private readonly ChooseProjectViewModel _chooseProjectViewModel;
@@ -17,13 +16,11 @@ namespace AutoVersionsDB.UI
         private readonly DBVersionsViewModel _dbVersionsViewModel;
 
 
-        public ViewRouter(IViewContainer viewContainer,
-                            MainViewModel mainViewModel,
+        public ViewRouter(MainViewModel mainViewModel,
                             ChooseProjectViewModel chooseProjectViewModel,
                             EditProjectViewModel editProjectConfigDetailsViewModel,
                             DBVersionsViewModel dbVersionsViewModel)
         {
-            _viewContainer = viewContainer;
             _mainViewModel = mainViewModel;
             _chooseProjectViewModel = chooseProjectViewModel;
             _editProjectConfigDetailsViewModel = editProjectConfigDetailsViewModel;
@@ -45,7 +42,7 @@ namespace AutoVersionsDB.UI
 
         public void NavToChooseProject()
         {
-            _viewContainer.SetView(ViewType.ChooseProject);
+            _mainViewModel.CurrentView = ViewType.ChooseProject;
 
             SetBtnChooseProjectVisibility();
 
@@ -53,7 +50,7 @@ namespace AutoVersionsDB.UI
 
         public void NavToEditProjectConfig(string id)
         {
-            _viewContainer.SetView(ViewType.EditProjectConfig);
+           _mainViewModel.CurrentView = ViewType.EditProjectConfig;
 
             Task.Run(() =>
             {
@@ -75,7 +72,7 @@ namespace AutoVersionsDB.UI
 
         public void NavToDBVersions(string id)
         {
-            _viewContainer.SetView(ViewType.DBVersions);
+           _mainViewModel.CurrentView = ViewType.DBVersions;
 
             Task.Run(() =>
             {
@@ -90,7 +87,7 @@ namespace AutoVersionsDB.UI
 
         private void SetBtnChooseProjectVisibility()
         {
-            _mainViewModel.BtnChooseProjectVisible = _viewContainer.CurrentView != ViewType.ChooseProject;
+            _mainViewModel.BtnChooseProjectVisible = _mainViewModel.CurrentView != ViewType.ChooseProject;
         }
     }
 }

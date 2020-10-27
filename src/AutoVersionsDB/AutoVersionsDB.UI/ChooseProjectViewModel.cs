@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

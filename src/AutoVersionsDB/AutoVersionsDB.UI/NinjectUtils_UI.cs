@@ -23,16 +23,22 @@ namespace AutoVersionsDB.UI
         {
             kernel.ThrowIfNull(nameof(kernel));
 
-            kernel.Bind<ViewRouter>().To<ViewRouter>().InSingletonScope();
             kernel.Bind<NotificationsViewModel>().To<NotificationsViewModel>().InSingletonScope();
-            kernel.Bind<TextInputViewModel>().To<TextInputViewModel>().InSingletonScope();
-            
+
+            kernel.Bind<MainViewModel>().To<MainViewModel>().InSingletonScope();
+
+            kernel.Bind<ChooseProjectViewModel>().To<ChooseProjectViewModel>().InSingletonScope();
+
 
             kernel.Bind<EditProjectControls>().To<EditProjectControls>().InSingletonScope();
             kernel.Bind<ProjectConfigErrorMessages>().To<ProjectConfigErrorMessages>().InSingletonScope();
 
             kernel.Bind<DBVersionsViewModelData>().To<DBVersionsViewModelData>().InSingletonScope();
             kernel.Bind<DBVersionsControls>().To<DBVersionsControls>().InSingletonScope();
+
+            ViewRouter viewRouter = kernel.Get<ViewRouter>();
+            kernel.Bind<ViewRouter>().ToConstant(viewRouter);
+
 
         }
     }
