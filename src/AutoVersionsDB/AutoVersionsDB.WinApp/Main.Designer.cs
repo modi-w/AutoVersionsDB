@@ -33,11 +33,11 @@ namespace AutoVersionsDB.WinApp
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabMainLayout = new System.Windows.Forms.TabControl();
             this.tbChooseProject = new System.Windows.Forms.TabPage();
-            this.chooseProject1 = new ChooseProject();
+            this.chooseProject1 = new ChooseProjectView();
             this.tbEditProjectConfig = new System.Windows.Forms.TabPage();
-            this.editProjectConfigDetails1 = new AutoVersionsDB.WinApp.EditProjectConfigDetails();
+            this.editProjectConfigDetails1 = new AutoVersionsDB.WinApp.EditProjectView();
             this.tbDBVersionsMangement = new System.Windows.Forms.TabPage();
-            this.dbVersionsMangement1 = new AutoVersionsDB.WinApp.DBProcessControl();
+            this.dbVersionsMangement1 = new AutoVersionsDB.WinApp.DBVersionsView();
             this.lnkBtnChooseProject = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.tabMainLayout.SuspendLayout();
@@ -179,12 +179,12 @@ namespace AutoVersionsDB.WinApp
         private System.Windows.Forms.TabControl tabMainLayout;
         private System.Windows.Forms.TabPage tbChooseProject;
         private System.Windows.Forms.TabPage tbEditProjectConfig;
-        private EditProjectConfigDetails editProjectConfigDetails1;
-        private ChooseProject chooseProject1;
+        private EditProjectView editProjectConfigDetails1;
+        private ChooseProjectView chooseProject1;
         private System.Windows.Forms.LinkLabel lnkBtnChooseProject;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage tbDBVersionsMangement;
-        private DBProcessControl dbVersionsMangement1;
+        private DBVersionsView dbVersionsMangement1;
     }
 }
 

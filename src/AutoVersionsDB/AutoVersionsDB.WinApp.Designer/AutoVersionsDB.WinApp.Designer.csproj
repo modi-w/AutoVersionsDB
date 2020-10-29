@@ -50,29 +50,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AutoVersionsDB.WinApp\ChooseProject.cs">
-      <Link>ChooseProject.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\ChooseProjectView.cs">
+      <Link>ChooseProjectView.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\ChooseProject.Designer.cs">
-      <Link>ChooseProject.Designer.cs</Link>
-      <DependentUpon>ChooseProject.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\ChooseProjectView.Designer.cs">
+      <Link>ChooseProjectView.Designer.cs</Link>
+      <DependentUpon>ChooseProjectView.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\DBProcessControl.cs">
-      <Link>DBProcessControl.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\DBVersionsView.cs">
+      <Link>DBVersionsView.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\DBProcessControl.Designer.cs">
-      <Link>DBProcessControl.Designer.cs</Link>
-      <DependentUpon>DBProcessControl.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\DBVersionsView.Designer.cs">
+      <Link>DBVersionsView.Designer.cs</Link>
+      <DependentUpon>DBVersionsView.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\EditProjectConfigDetails.cs">
-      <Link>EditProjectConfigDetails.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\EditProjectView.cs">
+      <Link>EditProjectView.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\EditProjectConfigDetails.Designer.cs">
-      <Link>EditProjectConfigDetails.Designer.cs</Link>
-      <DependentUpon>EditProjectConfigDetails.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\EditProjectView.Designer.cs">
+      <Link>EditProjectView.Designer.cs</Link>
+      <DependentUpon>EditProjectView.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Main.cs">
       <Link>Main.cs</Link>
@@ -133,17 +133,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ChooseProject.resx">
-      <Link>ChooseProject.resx</Link>
-      <DependentUpon>ChooseProject.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ChooseProjectView.resx">
+      <Link>ChooseProjectView.resx</Link>
+      <DependentUpon>ChooseProjectView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\DBProcessControl.resx">
-      <Link>DBProcessControl.resx</Link>
-      <DependentUpon>DBProcessControl.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\DBVersionsView.resx">
+      <Link>DBVersionsView.resx</Link>
+      <DependentUpon>DBVersionsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\EditProjectConfigDetails.resx">
-      <Link>EditProjectConfigDetails.resx</Link>
-      <DependentUpon>EditProjectConfigDetails.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\EditProjectView.resx">
+      <Link>EditProjectView.resx</Link>
+      <DependentUpon>EditProjectView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Main.resx">
       <Link>Main.resx</Link>
