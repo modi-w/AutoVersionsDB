@@ -11,69 +11,91 @@ using System.Windows.Forms;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.WinApp.Utils;
+using AutoVersionsDB.UI;
 
 namespace AutoVersionsDB.WinApp
 {
     public partial class ProjectItemControl : UserControl
     {
-        public event OnNavToProcessHandler OnNavToProcess;
-        public event OnRefreshProjectListHandler OnRefreshProjectList;
-        public event OnEditProjectHandler OnEditProject;
+        private readonly ChooseProjectViewModel _viewModel;
+
 
         public ProjectConfigItem ProjectConfig { get; private set; }
 
         //public ProjectItemControl(ProjectConfigItem projectConfigItem)
-        public ProjectItemControl()
+        public ProjectItemControl(ChooseProjectViewModel viewModel, ProjectConfigItem projectConfig)
         {
-
-            //projectConfigItem.ThrowIfNull(nameof(projectConfigItem));
-
             InitializeComponent();
 
+            _viewModel = viewModel;
+            ProjectConfig = projectConfig;
+
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                _viewModel.OnException += _viewModel_OnException;
+                _viewModel.OnConfirm += _viewModel_OnConfirm;
+                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+            }
 
         }
 
-        public void SetProjectConfig(ProjectConfigItem projectConfig)
-        {
-            ProjectConfig = projectConfig;
 
+
+        private void _viewModel_OnException(object sender, string exceptionMessage)
+        {
+            MessageBox.Show(exceptionMessage);
+        }
+        private bool _viewModel_OnConfirm(object sender, string confirmMessage)
+        {
+            return MessageBox.Show(this, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+        }
+
+        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                default:
+                    break;
+            }
+        }
+
+
+        private void SetDataBindings()
+        {
             lblId.Text = ProjectConfig.Id;
             lblProjectDesc.Text = ProjectConfig.Description;
         }
 
 
+
         private void LblProjectName_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.Id);
+            _viewModel.NavToDBVersionsCommand.Execute(ProjectConfig.Id);
         }
 
         private void LblProjectIcon_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.Id);
+            _viewModel.NavToDBVersionsCommand.Execute(ProjectConfig.Id);
         }
 
         private void LblProcessLink_Click(object sender, EventArgs e)
         {
-            OnNavToProcess?.Invoke(ProjectConfig.Id);
+            _viewModel.NavToDBVersionsCommand.Execute(ProjectConfig.Id);
         }
 
         private void LblEditProject_Click(object sender, EventArgs e)
         {
-            OnEditProject?.Invoke(ProjectConfig.Id);
+            _viewModel.NavToEditProjectConfigCommand.Execute(ProjectConfig.Id);
         }
 
         private void LblDeleteProject_Click(object sender, EventArgs e)
         {
-            string warningMessage = $"Are you sure you want to delete the configurration for the project: '{ProjectConfig.Id}'";
-            bool results = MessageBox.Show(this, warningMessage, "Delete Project", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes;
-
-            if (results)
-            {
-                AutoVersionsDBAPI.RemoveProjectConfig(ProjectConfig.Id, null);
-
-                OnRefreshProjectList?.Invoke();
-            }
+            _viewModel.DeleteProjectCommand.Execute(ProjectConfig.Id);
         }
+
+
+
 
         #region Dispose
 

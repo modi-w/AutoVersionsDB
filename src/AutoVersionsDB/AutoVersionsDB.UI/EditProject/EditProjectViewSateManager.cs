@@ -106,7 +106,7 @@ namespace AutoVersionsDB.UI.EditProject
 
 
 
-        public void handleProcessErrors(string projectId, ProcessTrace processResults)
+        public void HandleProcessErrors(string projectId, ProcessTrace processResults)
         {
             _notificationsViewModel.AfterComplete();
 

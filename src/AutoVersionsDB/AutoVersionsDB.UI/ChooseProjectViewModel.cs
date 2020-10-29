@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AutoVersionsDB.UI
 {
@@ -17,11 +18,19 @@ namespace AutoVersionsDB.UI
         private List<ProjectConfigItem> _allProjectsList;
 
 
-        public const string SearchPlaceHolderText = "Search Project...";
-
-        internal ViewRouter ViewRouter { get; set; }
-
-
+        private ViewRouter _viewRouter;
+        public ViewRouter ViewRouter
+        {
+            get
+            {
+                return _viewRouter;
+            }
+            set
+            {
+                _viewRouter = value;
+                SetRouteCommands();
+            }
+        }
 
 
 
@@ -37,9 +46,6 @@ namespace AutoVersionsDB.UI
             }
         }
 
-        public bool IsSerchProjectTextEmpty => string.IsNullOrWhiteSpace(SerchProjectText) || SerchProjectText == SearchPlaceHolderText;
-
-
         private List<ProjectConfigItem> _filteredProjectList;
         public List<ProjectConfigItem> FilteredProjectList
         {
@@ -48,77 +54,119 @@ namespace AutoVersionsDB.UI
         }
 
 
+        public event OnExceptionEventHandler OnException;
+        public event OnConfirmEventHandler OnConfirm;
+
+
+        public RelayCommand NavToCreateNewProjectConfigCommand { get; private set; }
+        public RelayCommand<string> NavToEditProjectConfigCommand { get; private set; }
+        public RelayCommand<string> NavToDBVersionsCommand { get; private set; }
+
+
+        public RelayCommand<string> DeleteProjectCommand { get; private set; }
+
+
 
         public ChooseProjectViewModel(ProjectConfigsAPI projectConfigsAPI)
         {
             _projectConfigsAPI = projectConfigsAPI;
 
-            SerchProjectText = SearchPlaceHolderText;
-            RefreshProjectList();
+            DeleteProjectCommand = new RelayCommand<string>(DeleteProject);
+
+            SerchProjectText = "";
         }
 
 
 
         public void RefreshProjectList()
         {
-            string searchText = "";
-            if (SerchProjectText == SearchPlaceHolderText)
-            {
-                searchText = "";
-            }
-            else
-            {
-                searchText = SerchProjectText;
-            }
-
-
             _allProjectsList = _projectConfigsAPI.GetProjectsList();
 
             FilteredProjectList =
                 _allProjectsList
-                .Where(e => string.IsNullOrWhiteSpace(searchText)
-                            || e.Id.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant())
-                            || e.Description.Trim().ToUpperInvariant().Contains(searchText.Trim().ToUpperInvariant()))
+                .Where(e => string.IsNullOrWhiteSpace(SerchProjectText)
+                            || e.Id.Trim().ToUpperInvariant().Contains(SerchProjectText.Trim().ToUpperInvariant())
+                            || e.Description.Trim().ToUpperInvariant().Contains(SerchProjectText.Trim().ToUpperInvariant()))
                 .OrderBy(e => e.Id)
                 .ToList();
         }
 
 
-        public void ResolveSerchProjectTextPlaceHolder()
-        {
-            if (string.IsNullOrWhiteSpace(SerchProjectText))
-            {
-                SerchProjectText = SearchPlaceHolderText;
-            }
-        }
 
-        public void ResolveSerchProjectTextOnFocus()
+        private void SetRouteCommands()
         {
-            if (SerchProjectText == SearchPlaceHolderText)
-            {
-                SerchProjectText = "";
-            }
+            NavToCreateNewProjectConfigCommand = new RelayCommand(NavToCreateNewProjectConfig);
+            NavToEditProjectConfigCommand = new RelayCommand<string>(NavToEditProjectConfig);
+            NavToDBVersionsCommand = new RelayCommand<string>(NavToDBVersions);
         }
 
 
-        public void NavToCreateNewProjectConfig()
+        private void NavToCreateNewProjectConfig()
         {
             ViewRouter.NavToEditProjectConfig(null);
         }
 
 
-        public void NavToEditProjectConfig(string id)
+        private void NavToEditProjectConfig(string id)
         {
             ViewRouter.NavToEditProjectConfig(id);
         }
 
 
 
-        public void NavToDBVersions(string id)
+        private void NavToDBVersions(string id)
         {
             ViewRouter.NavToDBVersions(id);
         }
 
+
+
+        private void DeleteProject(string id)
+        {
+            bool isAllowRun = fireOnConfirm($"Are you sure you want to delete the configurration for the project: '{id}'");
+
+            if (isAllowRun)
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        _projectConfigsAPI.RemoveProjectConfig(id, null);
+
+                        RefreshProjectList();
+                    }
+                    catch (Exception ex)
+                    {
+                        fireOnException(ex);
+                    }
+                });
+
+            }
+        }
+
+
+
+
+
+        private void fireOnException(Exception ex)
+        {
+            if (OnException == null)
+            {
+                throw new Exception($"Bind method to 'OnException' event is mandatory");
+            }
+
+            OnException(this, ex.ToString());
+        }
+
+        private bool fireOnConfirm(string confirmMessage)
+        {
+            if (OnConfirm == null)
+            {
+                throw new Exception($"Bind method to 'OnConfirm' event is mandatory");
+            }
+
+            return OnConfirm(this, confirmMessage);
+        }
 
 
 

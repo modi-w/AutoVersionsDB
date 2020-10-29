@@ -31,9 +31,16 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            this.Load += Main_Load;
 
             _viewModel = viewModel;
+
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+            }
+
+            this.Load += Main_Load;
 
 
 
@@ -43,8 +50,6 @@ namespace AutoVersionsDB.WinApp
 
             //editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
             //dbVersionsMangement1.OnEditProject += DbVersionsMangement1_OnEditProject;
-
-            lnkBtnChooseProject.Visible = false;
         }
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -77,12 +82,6 @@ namespace AutoVersionsDB.WinApp
 
         private void Main_Load(object sender, EventArgs e)
         {
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
-                SetDataBindings();
-            }
-
             //tabMainLayout.Appearance = TabAppearance.FlatButtons;
             tabMainLayout.ItemSize = new Size(0, 1);
             tabMainLayout.SizeMode = TabSizeMode.Fixed;

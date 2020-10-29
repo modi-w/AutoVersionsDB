@@ -24,43 +24,18 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            this.Load += ChooseProject_Load;
-
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-
-
-                //lblProjectIcon.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
-                //lblDeleteProject.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
-
-                //lblProjectName.DataBindings.Add(new Binding("Tag", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectGuid"));
-                //lblProjectName.DataBindings.Add(new Binding("Text", _autoVersionsDbAPI.ConfigProjectsManager.ProjectConfigsList, "ProjectName"));
-
-                tbSerchProject.ForeColor = Color.DimGray;
-
-                tbSerchProject.GotFocus += TbSerchProject_GotFocus;
-                tbSerchProject.LostFocus += TbSerchProject_LostFocus;
-
-
-                flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
-
-
-                renderProjectList();
-
-                //this.Load += ChooseProject_Load;
-            }
-
-
-        }
-
-        private void ChooseProject_Load(object sender, EventArgs e)
-        {
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
                 ViewModel.PropertyChanged += _viewModel_PropertyChanged;
                 SetDataBindings();
+
+                flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
+
+                renderProjectList();
             }
         }
+
+      
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -88,12 +63,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.SerchProjectText)
                 )
             );
-        }
 
-
-        private void FlowLayoutPanel1_Resize(object sender, EventArgs e)
-        {
-            SetProjectItemsSize();
         }
 
         private void renderProjectList()
@@ -103,18 +73,20 @@ namespace AutoVersionsDB.WinApp
             //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             //{
 
-            foreach (ProjectConfigItem projectConfigItem in ViewModel.FilteredProjectList)
+            foreach (ProjectConfigItem projectConfig in ViewModel.FilteredProjectList)
             {
-                ProjectItemControl projectItemControl = new ProjectItemControl();
-                projectItemControl.SetProjectConfig(projectConfigItem);
-                projectItemControl.OnNavToProcess += ProjectItem_OnNavToProcess;
-                projectItemControl.OnRefreshProjectList += ProjectItem_OnRefreshProjectList;
-                projectItemControl.OnEditProject += ProjectItem_OnEditProject;
+                ProjectItemControl projectItemControl = new ProjectItemControl(ViewModel, projectConfig);
                 flowLayoutPanel1.Controls.Add(projectItemControl);
             }
 
             SetProjectItemsSize();
             // }
+        }
+
+
+        private void BtnNewProject_Click(object sender, EventArgs e)
+        {
+            ViewModel.NavToCreateNewProjectConfigCommand.Execute();
         }
 
 
@@ -128,65 +100,13 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        //private void ChooseProject_Load(object sender, EventArgs e)
-        //{
-        //    if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-        //    {
-        //        //flowLayoutPanel1.Width = this.Width;
-        //        RefreshProjectList();
-        //    }
-        //}
-
-        private void TbSerchProject_LostFocus(object sender, EventArgs e)
+        private void FlowLayoutPanel1_Resize(object sender, EventArgs e)
         {
-            ViewModel.ResolveSerchProjectTextPlaceHolder();
-
-            if (ViewModel.IsSerchProjectTextEmpty)
-            {
-                tbSerchProject.ForeColor = Color.DimGray;
-            }
-        }
-
-        private void TbSerchProject_GotFocus(object sender, EventArgs e)
-        {
-            ViewModel.ResolveSerchProjectTextOnFocus();
-
-            if (ViewModel.IsSerchProjectTextEmpty)
-            {
-                tbSerchProject.ForeColor = Color.Black;
-            }
-        }
-
-
-        private void ProjectItem_OnEditProject(string id)
-        {
-            ViewModel.NavToEditProjectConfig(id);
-        }
-
-        private void ProjectItem_OnRefreshProjectList()
-        {
-            ViewModel.RefreshProjectList();
-        }
-
-        private void ProjectItem_OnNavToProcess(string id)
-        {
-            ViewModel.NavToDBVersions(id);
+            SetProjectItemsSize();
         }
 
 
 
-
-
-        //private void TbSerchProject_TextChanged(object sender, EventArgs e)
-        //{
-        //    ViewModel.RefreshProjectList();
-        //}
-
-
-        private void BtnNewProject_Click(object sender, EventArgs e)
-        {
-            ViewModel.NavToCreateNewProjectConfig();
-        }
 
 
 

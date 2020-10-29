@@ -23,18 +23,15 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            this.Load += NotificationsControl_Load;
-
-        }
-
-        private void NotificationsControl_Load(object sender, EventArgs e)
-        {
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
                 ViewModel.PropertyChanged += _viewModel_PropertyChanged;
                 SetDataBindings();
             }
+
         }
+
+  
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

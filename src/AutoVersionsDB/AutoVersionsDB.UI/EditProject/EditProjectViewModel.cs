@@ -51,6 +51,8 @@ namespace AutoVersionsDB.UI.EditProject
             {
                 SetField(ref _projectConfig, value);
 
+                _editProjectViewSateManager.ShowHideEnvFields(ProjectConfig.DevEnvironment);
+
                 _projectConfig.PropertyChanged += _projectConfig_PropertyChanged;
             }
         }
@@ -112,6 +114,7 @@ namespace AutoVersionsDB.UI.EditProject
             switch (e.PropertyName)
             {
                 case nameof(ProjectConfig.DevEnvironment):
+                case nameof(ProjectConfig.DeliveryEnvironment):
 
                     _editProjectViewSateManager.ShowHideEnvFields(ProjectConfig.DevEnvironment);
 
@@ -235,7 +238,7 @@ namespace AutoVersionsDB.UI.EditProject
 
                 ProcessResults processResults = _dbVersionsAPI.ValidateProjectConfig(ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
 
-                _editProjectViewSateManager.handleProcessErrors(ProjectConfig.Id, processResults.Trace);
+                _editProjectViewSateManager.HandleProcessErrors(ProjectConfig.Id, processResults.Trace);
             });
         }
 
@@ -243,7 +246,7 @@ namespace AutoVersionsDB.UI.EditProject
         {
             if (processResults.HasError)
             {
-                _editProjectViewSateManager.handleProcessErrors(ProjectConfig.Id, processResults);
+                _editProjectViewSateManager.HandleProcessErrors(ProjectConfig.Id, processResults);
             }
             else
             {

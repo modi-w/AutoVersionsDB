@@ -35,11 +35,6 @@ namespace AutoVersionsDB.WinApp
             {
                 ViewModel.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
-
-                //            ViewModel.
-
-                var a = NinjectUtils_Winform.NinjectKernelContainer.Get<EditProjectViewModel>();
-                //             var b = a.PropertyChanged;
             }
 
             errPrvProjectDetails.BlinkStyle = ErrorBlinkStyle.NeverBlink;

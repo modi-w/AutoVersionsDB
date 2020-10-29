@@ -22,8 +22,6 @@ namespace AutoVersionsDB.UI
             set => SetField(ref _btnChooseProjectVisible, value);
         }
 
-        public RelayCommand NavToChooseProjectCommand { get; private set; }
-
 
         private ViewRouter _viewRouter;
         public ViewRouter ViewRouter
@@ -38,6 +36,9 @@ namespace AutoVersionsDB.UI
                 SetRouteCommands();
             }
         }
+
+
+        public RelayCommand NavToChooseProjectCommand { get; private set; }
 
 
 

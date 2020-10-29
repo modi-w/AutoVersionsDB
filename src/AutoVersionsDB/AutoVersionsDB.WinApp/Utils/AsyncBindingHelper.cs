@@ -34,7 +34,7 @@ namespace AutoVersionsDB.WinApp.Utils
 
             AsyncBindingHelper helper
               = new AsyncBindingHelper(bindingControl, bindingSource, dataMember);
-            return new Binding(propertyName, helper, "Value");
+            return new Binding(propertyName, helper, "Value", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         Control bindingControl;
