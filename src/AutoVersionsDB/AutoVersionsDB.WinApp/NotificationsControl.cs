@@ -27,12 +27,12 @@ namespace AutoVersionsDB.WinApp
             {
                 if (!ViewModel.IsEventsBinded)
                 {
-                    ViewModel.PropertyChanged += _viewModel_PropertyChanged;
                     ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog;
 
                     ViewModel.IsEventsBinded = true;
                 }
 
+                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
                 SetDataBindings();
 
             }
@@ -124,7 +124,7 @@ namespace AutoVersionsDB.WinApp
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
-                        pbStatus.Image = Resources.info2_32_32;
+                        pbStatus.Image = Resources.succeed;
                     }));
                     break;
 
