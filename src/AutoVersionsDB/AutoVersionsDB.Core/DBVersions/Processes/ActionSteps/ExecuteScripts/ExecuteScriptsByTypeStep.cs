@@ -2,6 +2,7 @@
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
 using System.Collections.Generic;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {
@@ -40,6 +41,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
             List<RuntimeScriptFileBase> scriptFilesList = scriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
 
+            List<ActionStepBase> internalSteps = new List<ActionStepBase>();
+
             foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
             {
                 string ignoreStr = "";
@@ -52,10 +55,10 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
                 ExecuteSingleFileScriptStep executeSingleFileScriptStep = _executeSingleFileScriptStepFactory.Create(_dbCommands, stepName, scriptFile);
 
-                AddInternalStep(executeSingleFileScriptStep);
+                internalSteps.Add(executeSingleFileScriptStep);
             }
 
-            ExecuteInternalSteps(false);
+            ExecuteInternalSteps(internalSteps, false);
 
         }
 

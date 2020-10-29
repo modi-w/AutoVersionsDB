@@ -66,26 +66,12 @@ namespace AutoVersionsDB.NotificationableEngine
                     }
                 }
 
-
-                disposStepsList(this.ProcessSteps);
             }
 
             _disposed = true;
         }
 
-        private static void disposStepsList(IEnumerable<ActionStepBase> processStepsToDispose)
-        {
-            foreach (var processStep in processStepsToDispose)
-            {
-                disposStepsList(processStep.ReadOnlyInternalSteps);
-
-                IDisposable disposeStep = processStep as IDisposable;
-                if (disposeStep != null)
-                {
-                    disposeStep.Dispose();
-                }
-            }
-        }
+        
 
         #endregion
 

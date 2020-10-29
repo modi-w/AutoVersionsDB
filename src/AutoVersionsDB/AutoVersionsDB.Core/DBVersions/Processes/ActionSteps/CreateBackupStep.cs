@@ -55,10 +55,12 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
             {
                 DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus.Instance) as DBBackupStatusNotifyer;
 
+                List<ActionStepBase> internalSteps = new List<ActionStepBase>();
+
                 for (int internalStepNumber = 1; internalStepNumber <= 100; internalStepNumber++)
                 {
                     ExternalProcessStatusStep externalProcessStatusStep = new ExternalProcessStatusStep(internalStepNumber);
-                    AddInternalStep(externalProcessStatusStep);
+                    internalSteps.Add(externalProcessStatusStep);
                 }
 
                 Exception processExpetion = null;
@@ -69,7 +71,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 {
                     //notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
 
-                    foreach (ExternalProcessStatusStep step in ReadOnlyInternalSteps)
+                    foreach (ExternalProcessStatusStep step in internalSteps)
                     {
                         if (!step.IsCompleted)
                         {
@@ -88,7 +90,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                             {
                                 dbBackupRestoreCommands.Instance.CreateDbBackup(targetFileFullPath, dbCommands.Instance.GetDataBaseName());
 
-                                foreach (ExternalProcessStatusStep step in ReadOnlyInternalSteps)
+                                foreach (ExternalProcessStatusStep step in internalSteps)
                                 {
                                     if (!step.IsCompleted)
                                     {
@@ -105,7 +107,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
                 });
 
-                ExecuteInternalSteps(false);
+                ExecuteInternalSteps(internalSteps, false);
 
 
 
