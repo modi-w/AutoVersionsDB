@@ -32,8 +32,19 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            this.Load += DBProcessControl_Load;
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                ViewModel.OnException += ViewModel_OnException;
+                ViewModel.OnConfirm += ViewModel_OnConfirm;
+                ViewModel.OnTextInput += ViewModel_OnTextInput;
+                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                ViewModel.DBVersionsViewModelData.PropertyChanged += DBVersionsViewModelData_PropertyChanged;
+                ViewModel.DBVersionsControls.PropertyChanged += DBVersionsControls_PropertyChanged;
+                SetDataBindings();
 
+
+                EnableDisableGridToSelectTargetState(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled);
+            }
 
 
             dgIncrementalScriptsFiles.AutoGenerateColumns = false;
@@ -66,19 +77,51 @@ namespace AutoVersionsDB.WinApp
             //#endif
 
             SetToolTips();
+
+
         }
 
-        private void DBProcessControl_Load(object sender, EventArgs e)
+        private void DBVersionsControls_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            switch (e.PropertyName)
             {
-                ViewModel.OnException += ViewModel_OnException;
-                ViewModel.OnConfirm += ViewModel_OnConfirm;
-                ViewModel.OnTextInput += ViewModel_OnTextInput;
-                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
-                SetDataBindings();
+                case nameof(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled):
+
+                    EnableDisableGridToSelectTargetState(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled);
+                    break;
+
+
+                default:
+                    break;
             }
         }
+
+        private void DBVersionsViewModelData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(ViewModel.DBVersionsViewModelData.IncrementalScriptFiles):
+
+                    BindGridDataSource(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.IncrementalScriptFiles);
+                    break;
+
+                case nameof(ViewModel.DBVersionsViewModelData.RepeatableScriptFiles):
+
+                    BindGridDataSource(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.RepeatableScriptFiles);
+                    break;
+
+                case nameof(ViewModel.DBVersionsViewModelData.DevDummyDataScriptFiles):
+
+                    BindGridDataSource(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.DevDummyDataScriptFiles);
+                    break;
+
+
+                default:
+                    break;
+            }
+        }
+
+
 
         private void ChangeButtonsPanelsLocation(Panel panelToMove)
         {
@@ -143,32 +186,7 @@ namespace AutoVersionsDB.WinApp
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
-            {
-                case nameof(ViewModel.DBVersionsViewModelData.IncrementalScriptFiles):
 
-                    BindGridDataSource(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.IncrementalScriptFiles);
-                    break;
-
-                case nameof(ViewModel.DBVersionsViewModelData.RepeatableScriptFiles):
-
-                    BindGridDataSource(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.RepeatableScriptFiles);
-                    break;
-
-                case nameof(ViewModel.DBVersionsViewModelData.DevDummyDataScriptFiles):
-
-                    BindGridDataSource(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.DevDummyDataScriptFiles);
-                    break;
-
-                case nameof(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled):
-
-                    EnableDisableGridToSelectTargetState(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled);
-                    break;
-
-
-                default:
-                    break;
-            }
         }
 
 
@@ -603,36 +621,39 @@ namespace AutoVersionsDB.WinApp
 
         private void EnableDisableGridToSelectTargetState(bool isEnable)
         {
-            dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+            if (dgIncrementalScriptsFiles.InvokeRequired)
             {
-                dgIncrementalScriptsFiles.Columns[2].Visible = isEnable;
-            }));
-
-            MarkUnMarkSelectedTargetInGrid();
+                dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+                {
+                    MarkUnMarkSelectedTargetInGrid(isEnable);
+                }));
+            }
+            else
+            {
+                MarkUnMarkSelectedTargetInGrid(isEnable);
+            }
         }
 
-        private void MarkUnMarkSelectedTargetInGrid()
+        private void MarkUnMarkSelectedTargetInGrid(bool isEnable)
         {
-            dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+            dgIncrementalScriptsFiles.Columns[2].Visible = isEnable;
+
+            foreach (DataGridViewRow currGridRow in dgIncrementalScriptsFiles.Rows)
             {
+                currGridRow.Cells[0].Value = (currGridRow.Index + 1).ToString(CultureInfo.InvariantCulture);
+                currGridRow.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                foreach (DataGridViewRow currGridRow in dgIncrementalScriptsFiles.Rows)
+                RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
+
+                if (currRowFileInfo.Filename.Trim().ToUpperInvariant() == ViewModel.DBVersionsViewModelData.TargetStateScriptFileName.Trim().ToUpperInvariant())
                 {
-                    currGridRow.Cells[0].Value = (currGridRow.Index + 1).ToString(CultureInfo.InvariantCulture);
-                    currGridRow.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-                    RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
-
-                    if (currRowFileInfo.Filename.Trim().ToUpperInvariant() == ViewModel.DBVersionsViewModelData.TargetStateScriptFileName.Trim().ToUpperInvariant())
-                    {
-                        currGridRow.Cells[2].Style.BackColor = Color.Yellow;
-                    }
-                    else
-                    {
-                        currGridRow.Cells[2].Style.BackColor = Color.White;
-                    }
+                    currGridRow.Cells[2].Style.BackColor = Color.Yellow;
                 }
-            }));
+                else
+                {
+                    currGridRow.Cells[2].Style.BackColor = Color.White;
+                }
+            }
 
         }
 

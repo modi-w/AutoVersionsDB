@@ -19,8 +19,6 @@ namespace AutoVersionsDB.UI.DBVersions
         private readonly NotificationsViewModel _notificationsViewModel;
 
 
-        private ProjectConfigItem _projectConfig;
-        private ScriptFilesState _scriptFilesState;
 
 
         public DBVersionsViewSateManager(DBVersionsViewModelData dbVersionsViewModelData,
@@ -31,12 +29,6 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls = dbVersionsControls;
             _notificationsViewModel = notificationsViewModel;
         }
-
-        public void SetProjectConfig(ProjectConfigItem projectConfig)
-        {
-            _projectConfig = projectConfig;
-        }
-
 
 
         public void ChangeViewState_AfterProcessComplete(ProcessTrace processResults)
@@ -55,9 +47,9 @@ namespace AutoVersionsDB.UI.DBVersions
 
         public void ChangeViewState(DBVersionsViewStateType viewType)
         {
-            _dbVersionsControls.LblProjectNameText = $"{_projectConfig.Id} - {_projectConfig.Description}";
+            _dbVersionsControls.LblProjectNameText = $"{_dbVersionsViewModelData.ProjectConfig.Id} - {_dbVersionsViewModelData.ProjectConfig.Description}";
 
-            if (_scriptFilesState == null)
+            if (_dbVersionsViewModelData.ScriptFilesState == null)
             {
                 _dbVersionsViewModelData.IncrementalScriptFiles = new List<RuntimeScriptFileBase>();
                 _dbVersionsViewModelData.RepeatableScriptFiles = new List<RuntimeScriptFileBase>();
@@ -65,9 +57,9 @@ namespace AutoVersionsDB.UI.DBVersions
             }
             else
             {
-                _dbVersionsViewModelData.IncrementalScriptFiles = _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
-                _dbVersionsViewModelData.RepeatableScriptFiles = _scriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
-                _dbVersionsViewModelData.DevDummyDataScriptFiles = _scriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                _dbVersionsViewModelData.IncrementalScriptFiles = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                _dbVersionsViewModelData.RepeatableScriptFiles = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                _dbVersionsViewModelData.DevDummyDataScriptFiles = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
             }
 
 
@@ -75,7 +67,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
             _dbVersionsControls.PnlRepeatableFilesVisible = true;
 
-            if (_projectConfig.DevEnvironment)
+            if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
             {
                 _dbVersionsControls.PnlDevDummyDataFilesVisible = true;
             }
@@ -177,9 +169,9 @@ namespace AutoVersionsDB.UI.DBVersions
                     break;
             }
 
-            _dbVersionsControls.BtnRecreateDbFromScratchMainVisible = _projectConfig.DevEnvironment;
-            _dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible = _projectConfig.DevEnvironment;
-            _dbVersionsControls.BtnDeployVisible = _projectConfig.DevEnvironment;
+            _dbVersionsControls.BtnRecreateDbFromScratchMainVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
+            _dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
+            _dbVersionsControls.BtnDeployVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
 
         }
 
@@ -211,7 +203,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void AppendEmptyDBTargetStateToIncremental()
         {
-            List<RuntimeScriptFileBase> incScripts = _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            List<RuntimeScriptFileBase> incScripts = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
             RuntimeScriptFileBase emptyDBTargetState = new EmptyDbStateRuntimeScriptFile();
             incScripts.Insert(0, emptyDBTargetState);

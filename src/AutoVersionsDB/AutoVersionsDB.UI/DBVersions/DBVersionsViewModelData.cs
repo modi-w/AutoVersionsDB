@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,29 @@ namespace AutoVersionsDB.UI.DBVersions
 {
     public class DBVersionsViewModelData : INotifyPropertyChanged
     {
-        
+
+        private ProjectConfigItem _projectConfig;
+        public ProjectConfigItem ProjectConfig
+        {
+            get => _projectConfig;
+            set
+            {
+                SetField(ref _projectConfig, value);
+            }
+        }
+
+        private ScriptFilesState _scriptFilesState;
+        public ScriptFilesState ScriptFilesState
+        {
+            get => _scriptFilesState;
+            set
+            {
+                SetField(ref _scriptFilesState, value);
+            }
+        }
+
+
+
         private string _targetStateScriptFileName;
         public string TargetStateScriptFileName
         {
