@@ -38,3 +38,6 @@ Thumbs.db
 # Project Specific
 !gems/bin
 
+/src/AutoVersionsDB/AutoVersionsDB.WinApp/StatesLogView.resx
+/src/AutoVersionsDB/AutoVersionsDB.WinApp/StatesLogView.Designer.cs
+/src/AutoVersionsDB/AutoVersionsDB.WinApp/StatesLogView.cs

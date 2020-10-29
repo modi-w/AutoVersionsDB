@@ -38,6 +38,7 @@ namespace AutoVersionsDB.UI
         private ProcessTrace _processTrace;
 
 
+
         public StatesLogViewModel StatesLogViewModel { get; }
 
 
@@ -95,13 +96,26 @@ namespace AutoVersionsDB.UI
             }
         }
 
+        public bool IsEventsBinded { get; set; }
+
+        public event OnShowStatesLogEventHandler OnShowStatesLog;
 
 
-        public NotificationsViewModel(StatesLogViewModel statesLogViewModel)
+        public RelayCommand ShowStatesLogViewCommand { get; private set; }
+
+
+
+
+        public NotificationsViewModel()
         {
-            StatesLogViewModel = statesLogViewModel;
+            ShowStatesLogViewCommand = new RelayCommand(ShowStatesLogView);
         }
 
+
+        private void ShowStatesLogView()
+        {
+            fireOnShowStatesLog(_processTrace);
+        }
 
 
 
@@ -162,7 +176,10 @@ namespace AutoVersionsDB.UI
         {
             _processTrace = processTrace;
 
-            NotificationStatus = eNotificationStatus.InProgress;
+            if (NotificationStatus!= eNotificationStatus.InProgress)
+            {
+                NotificationStatus = eNotificationStatus.InProgress;
+            }
 
             if (!string.IsNullOrWhiteSpace(notificationStateItem.LowLevelInstructionsMessage))
             {
@@ -178,6 +195,8 @@ namespace AutoVersionsDB.UI
 
         public void WaitingForUser()
         {
+            System.Threading.Thread.Sleep(500);
+
             NotificationStatus = eNotificationStatus.WaitingForUser;
             ProcessStatusMessage = "Waiting for your command.";
         }
@@ -191,6 +210,8 @@ namespace AutoVersionsDB.UI
 
         public void SetAttentionMessage(string message)
         {
+            System.Threading.Thread.Sleep(500);
+
             NotificationStatus = eNotificationStatus.Attention;
             ProcessStatusMessage = message;
         }
@@ -223,13 +244,20 @@ namespace AutoVersionsDB.UI
 
 
 
-        public void UpdateStatesLogViewModel()
+
+
+
+        private void fireOnShowStatesLog(ProcessTrace processTrace)
         {
-            StatesLogViewModel.SetProcessTrace(_processTrace);
+            if (OnShowStatesLog == null)
+            {
+                throw new Exception($"Bind method to 'OnShowStatesLog' event is mandatory");
+            }
+
+            StatesLogViewModel statesLogViewModel = new StatesLogViewModel(processTrace);
+
+            OnShowStatesLog(this, statesLogViewModel);
         }
-
-
-
 
 
 
@@ -245,7 +273,6 @@ namespace AutoVersionsDB.UI
 
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
             OnPropertyChanged(propertyName);
             return true;

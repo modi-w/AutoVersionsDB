@@ -8,6 +8,9 @@ namespace AutoVersionsDB.UI
   
     public delegate bool OnConfirmEventHandler(object sender, string confirmMessage);
 
+    public delegate void OnShowStatesLogEventHandler(object sender, StatesLogViewModel statesLogViewModel);
+
+
 
     public delegate TextInputResults OnTextInputEventHandler(object sender, string instructionMessageText);
 

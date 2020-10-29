@@ -37,7 +37,6 @@ namespace AutoVersionsDB.WinApp
         {
             //  kernel.ThrowIfNull(nameof(kernel));
 
-            
         }
 
 

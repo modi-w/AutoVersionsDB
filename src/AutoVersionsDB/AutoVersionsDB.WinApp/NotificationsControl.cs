@@ -25,13 +25,25 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                if (!ViewModel.IsEventsBinded)
+                {
+                    ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                    ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog;
+
+                    ViewModel.IsEventsBinded = true;
+                }
+
                 SetDataBindings();
+
             }
 
         }
 
-  
+        private void ViewModel_OnShowStatesLog(object sender, StatesLogViewModel statesLogViewModel)
+        {
+            StatesLogView statesLogView = new StatesLogView(statesLogViewModel);
+            statesLogView.ShowDialog();
+        }
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -84,33 +96,39 @@ namespace AutoVersionsDB.WinApp
 
         private void StatusImageTypeChanged()
         {
-            pbStatus.BeginInvoke((MethodInvoker)(() =>
+            switch (ViewModel.StatusImageType)
             {
-                switch (ViewModel.StatusImageType)
-                {
-                    case NotificationsViewModel.eStatusImageType.Spinner:
+                case NotificationsViewModel.eStatusImageType.Spinner:
 
+                    pbStatus.BeginInvoke((MethodInvoker)(() =>
+                    {
                         pbStatus.Image = Resources.Spinner3_32;
-                        break;
+                    }));
+                    break;
 
-                    case NotificationsViewModel.eStatusImageType.Warning:
+                case NotificationsViewModel.eStatusImageType.Warning:
 
-                        //TODO: add image
-                        //pbStatus.Image = Resources.W;
-                        break;
+                    //TODO: add image
+                    //pbStatus.Image = Resources.W;
+                    break;
 
-                    case NotificationsViewModel.eStatusImageType.Error:
+                case NotificationsViewModel.eStatusImageType.Error:
 
+                    pbStatus.BeginInvoke((MethodInvoker)(() =>
+                    {
                         pbStatus.Image = Resources.StopIcon_32;
-                        break;
+                    }));
+                    break;
 
-                    case NotificationsViewModel.eStatusImageType.Succeed:
+                case NotificationsViewModel.eStatusImageType.Succeed:
 
+                    pbStatus.BeginInvoke((MethodInvoker)(() =>
+                    {
                         pbStatus.Image = Resources.info2_32_32;
-                        break;
+                    }));
+                    break;
 
-                }
-            }));
+            }
 
 
         }
@@ -120,45 +138,19 @@ namespace AutoVersionsDB.WinApp
 
         private void PbStatus_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow();
+            ViewModel.ShowStatesLogViewCommand.Execute();
         }
 
-        private void ShowMessageWindow()
-        {
-            ViewModel.UpdateStatesLogViewModel();
-            using (MessageWindow messageWindow = new MessageWindow(ViewModel.StatesLogViewModel))
-            {
-                messageWindow.ShowDialog();
-            }
-        }
 
-        //private void resolveMessageLocation()
-        //{
-        //    lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-        //    {
-        //        if (pbStatus.Visible)
-        //        {
-
-        //            lblProcessStatusMessage.Location = new Point(120, 17);
-        //        }
-        //        else
-        //        {
-        //            lblProcessStatusMessage.Location = new Point(10, 17);
-
-        //        }
-        //    }));
-
-
-        //}
 
         private void LblPrecents_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow();
+            ViewModel.ShowStatesLogViewCommand.Execute();
         }
 
         private void LblProcessStatusMessage_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow();
+            ViewModel.ShowStatesLogViewCommand.Execute();
         }
 
 

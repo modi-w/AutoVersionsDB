@@ -82,14 +82,6 @@
       <Link>Main.Designer.cs</Link>
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\MessageWindow.cs">
-      <Link>MessageWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\MessageWindow.Designer.cs">
-      <Link>MessageWindow.Designer.cs</Link>
-      <DependentUpon>MessageWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\NinjectUtils_Winform.cs">
       <Link>NinjectUtils_Winform.cs</Link>
     </Compile>
@@ -111,6 +103,14 @@
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Properties\Resources.Designer.cs">
       <Link>Properties\Resources.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\StatesLogView.cs">
+      <Link>StatesLogView.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\StatesLogView.Designer.cs">
+      <Link>StatesLogView.Designer.cs</Link>
+      <DependentUpon>StatesLogView.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\TextInputWindow.cs">
       <Link>TextInputWindow.cs</Link>
@@ -149,10 +149,6 @@
       <Link>Main.resx</Link>
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\MessageWindow.resx">
-      <Link>MessageWindow.resx</Link>
-      <DependentUpon>MessageWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\NotificationsControl.resx">
       <Link>NotificationsControl.resx</Link>
       <DependentUpon>NotificationsControl.cs</DependentUpon>
@@ -165,6 +161,10 @@
       <Link>Properties\Resources.resx</Link>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\StatesLogView.resx">
+      <Link>StatesLogView.resx</Link>
+      <DependentUpon>StatesLogView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\TextInputWindow.resx">
       <Link>TextInputWindow.resx</Link>

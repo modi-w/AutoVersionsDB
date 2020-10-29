@@ -166,7 +166,7 @@ namespace AutoVersionsDB.WinApp
 
         private TextInputResults ViewModel_OnTextInput(object sender, string instructionMessageText)
         {
-            TextInputWindow textInputWindow = NinjectUtils_Winform.NinjectKernelContainer.Get<TextInputWindow>();
+            TextInputWindow textInputWindow = new TextInputWindow(instructionMessageText);
             textInputWindow.ShowDialog();
 
             return new TextInputResults()
@@ -472,7 +472,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnNavToEdit_Click(object sender, EventArgs e)
         {
-            ViewModel.NavToChooseProjectCommand.Execute();
+            ViewModel.NavToEditProjectConfigCommand.Execute();
         }
 
 

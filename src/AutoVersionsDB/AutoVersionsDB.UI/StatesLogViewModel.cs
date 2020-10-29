@@ -62,13 +62,7 @@ namespace AutoVersionsDB.UI
 
 
 
-        public StatesLogViewModel()
-        {
-        }
-
-
-
-        public void SetProcessTrace(ProcessTrace processTrace)
+        public StatesLogViewModel(ProcessTrace processTrace)
         {
             _processTrace = processTrace;
 
@@ -76,6 +70,8 @@ namespace AutoVersionsDB.UI
 
             ShowOnlyErrors = _processTrace.HasError;
         }
+
+
 
 
         private void UpdateCaption()
@@ -121,7 +117,6 @@ namespace AutoVersionsDB.UI
 
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
             OnPropertyChanged(propertyName);
             return true;
