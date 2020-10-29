@@ -9,7 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.Notifications;
 
 namespace AutoVersionsDB.UI.EditProject
 {

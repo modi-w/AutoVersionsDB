@@ -1,5 +1,7 @@
-﻿using AutoVersionsDB.UI.DBVersions;
+﻿using AutoVersionsDB.UI.ChooseProject;
+using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.UI.EditProject;
+using AutoVersionsDB.UI.Main;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,7 +44,7 @@ namespace AutoVersionsDB.UI
 
         public void NavToChooseProject()
         {
-            _mainViewModel.CurrentView = ViewType.ChooseProject;
+            _mainViewModel.MainViewModelData.CurrentView = ViewType.ChooseProject;
             _chooseProjectViewModel.Clear();
 
             SetBtnChooseProjectVisibility();
@@ -51,7 +53,7 @@ namespace AutoVersionsDB.UI
 
         public void NavToEditProjectConfig(string id)
         {
-            _mainViewModel.CurrentView = ViewType.EditProjectConfig;
+            _mainViewModel.MainViewModelData.CurrentView = ViewType.EditProjectConfig;
 
             Task.Run(() =>
             {
@@ -73,7 +75,7 @@ namespace AutoVersionsDB.UI
 
         public void NavToDBVersions(string id)
         {
-            _mainViewModel.CurrentView = ViewType.DBVersions;
+            _mainViewModel.MainViewModelData.CurrentView = ViewType.DBVersions;
 
             Task.Run(() =>
             {
@@ -88,7 +90,7 @@ namespace AutoVersionsDB.UI
 
         private void SetBtnChooseProjectVisibility()
         {
-            _mainViewModel.BtnChooseProjectVisible = _mainViewModel.CurrentView != ViewType.ChooseProject;
+            _mainViewModel.MainControls.BtnChooseProjectVisible = _mainViewModel.MainViewModelData.CurrentView != ViewType.ChooseProject;
         }
     }
 }

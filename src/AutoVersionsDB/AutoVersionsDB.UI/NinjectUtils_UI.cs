@@ -5,6 +5,9 @@ using AutoVersionsDB.NotificationableEngine;
 using Ninject;
 using AutoVersionsDB.UI.EditProject;
 using AutoVersionsDB.UI.DBVersions;
+using AutoVersionsDB.UI.ChooseProject;
+using AutoVersionsDB.UI.Main;
+using AutoVersionsDB.UI.Notifications;
 
 namespace AutoVersionsDB.UI
 {
@@ -23,11 +26,30 @@ namespace AutoVersionsDB.UI
         {
             kernel.ThrowIfNull(nameof(kernel));
 
+
+
+            var notificationsControls = kernel.Get<NotificationsControls>();
+            kernel.Bind<NotificationsControls>().ToConstant(notificationsControls);
+
+            var notificationsViewModelData = kernel.Get<NotificationsViewModelData>();
+            kernel.Bind<NotificationsViewModelData>().ToConstant(notificationsViewModelData);
+
             var notificationsViewModel = kernel.Get<NotificationsViewModel>();
             kernel.Bind<NotificationsViewModel>().ToConstant(notificationsViewModel);
 
+
+            var mainControls = kernel.Get<MainControls>();
+            kernel.Bind<MainControls>().ToConstant(mainControls);
+
+            var mainViewModelData = kernel.Get<MainViewModelData>();
+            kernel.Bind<MainViewModelData>().ToConstant(mainViewModelData);
+
             var mainViewModel = kernel.Get<MainViewModel>();
             kernel.Bind<MainViewModel>().ToConstant(mainViewModel);
+
+
+            var chooseProjectViewModelData = kernel.Get<ChooseProjectViewModelData>();
+            kernel.Bind<ChooseProjectViewModelData>().ToConstant(chooseProjectViewModelData);
 
             var chooseProjectViewModel = kernel.Get<ChooseProjectViewModel>();
             kernel.Bind<ChooseProjectViewModel>().ToConstant(chooseProjectViewModel);

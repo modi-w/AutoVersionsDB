@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.Main;
 using AutoVersionsDB.WinApp.Utils;
 using System;
 using System.ComponentModel;
@@ -36,7 +37,7 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
+                _viewModel.MainViewModelData.PropertyChanged += _viewModel_PropertyChanged;
                 SetDataBindings();
             }
 
@@ -56,9 +57,9 @@ namespace AutoVersionsDB.WinApp
         {
             switch (e.PropertyName)
             {
-                case nameof(_viewModel.CurrentView):
+                case nameof(_viewModel.MainViewModelData.CurrentView):
 
-                    SetView(_viewModel.CurrentView);
+                    SetView(_viewModel.MainViewModelData.CurrentView);
                     break;
 
                 default:
@@ -73,8 +74,8 @@ namespace AutoVersionsDB.WinApp
                 AsyncBindingHelper.GetBinding(
                     lnkBtnChooseProject,
                     nameof(lnkBtnChooseProject.Visible),
-                    _viewModel,
-                    nameof(_viewModel.BtnChooseProjectVisible)
+                    _viewModel.MainControls,
+                    nameof(_viewModel.MainControls.BtnChooseProjectVisible)
                 )
             );
         }

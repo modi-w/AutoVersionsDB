@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.WinApp.Utils;
-using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.ChooseProject;
 
 namespace AutoVersionsDB.WinApp
 {

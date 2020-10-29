@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoVersionsDB.UI
+namespace AutoVersionsDB.UI.ChooseProject
 {
     public class ChooseProjectViewModel : INotifyPropertyChanged
     {
@@ -35,23 +35,9 @@ namespace AutoVersionsDB.UI
 
 
 
-        private string _serchProjectText;
-        public string SerchProjectText
-        {
-            get => _serchProjectText;
-            set
-            {
-                SetField(ref _serchProjectText, value);
-                RefreshProjectList();
-            }
-        }
 
-        private List<ProjectConfigItem> _filteredProjectList;
-        public List<ProjectConfigItem> FilteredProjectList
-        {
-            get => _filteredProjectList;
-            set => SetField(ref _filteredProjectList, value);
-        }
+        public ChooseProjectViewModelData ChooseProjectViewModelData { get; }
+
 
 
         public event OnExceptionEventHandler OnException;
@@ -67,17 +53,34 @@ namespace AutoVersionsDB.UI
 
 
 
-        public ChooseProjectViewModel(ProjectConfigsAPI projectConfigsAPI)
+        public ChooseProjectViewModel(ProjectConfigsAPI projectConfigsAPI,
+                                    ChooseProjectViewModelData chooseProjectViewModelData)
         {
             _projectConfigsAPI = projectConfigsAPI;
+            ChooseProjectViewModelData = chooseProjectViewModelData;
 
             DeleteProjectCommand = new RelayCommand<string>(DeleteProject);
 
+            ChooseProjectViewModelData.PropertyChanged += ChooseProjectViewModelData_PropertyChanged;
+        }
+
+        private void ChooseProjectViewModelData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(ChooseProjectViewModelData.SerchProjectText):
+
+                    RefreshProjectList();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public void Clear()
         {
-            SerchProjectText = "";
+            ChooseProjectViewModelData.SerchProjectText = "";
             RefreshProjectList();
         }
 
@@ -86,11 +89,11 @@ namespace AutoVersionsDB.UI
         {
             _allProjectsList = _projectConfigsAPI.GetProjectsList();
 
-            FilteredProjectList =
+            ChooseProjectViewModelData.FilteredProjectList =
                 _allProjectsList
-                .Where(e => string.IsNullOrWhiteSpace(SerchProjectText)
-                            || e.Id.Trim().ToUpperInvariant().Contains(SerchProjectText.Trim().ToUpperInvariant())
-                            || e.Description.Trim().ToUpperInvariant().Contains(SerchProjectText.Trim().ToUpperInvariant()))
+                .Where(e => string.IsNullOrWhiteSpace(ChooseProjectViewModelData.SerchProjectText)
+                            || e.Id.Trim().ToUpperInvariant().Contains(ChooseProjectViewModelData.SerchProjectText.Trim().ToUpperInvariant())
+                            || e.Description.Trim().ToUpperInvariant().Contains(ChooseProjectViewModelData.SerchProjectText.Trim().ToUpperInvariant()))
                 .OrderBy(e => e.Id)
                 .ToList();
         }
@@ -177,14 +180,14 @@ namespace AutoVersionsDB.UI
 
         #region INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string? propertyName)
+        protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             field = value;
             OnPropertyChanged(propertyName);

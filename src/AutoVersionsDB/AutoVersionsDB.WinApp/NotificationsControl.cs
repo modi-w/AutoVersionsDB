@@ -5,7 +5,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.NotificationableEngine;
-using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.Notifications;
+using AutoVersionsDB.UI.StatesLog;
 using AutoVersionsDB.WinApp.Properties;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
@@ -32,7 +33,7 @@ namespace AutoVersionsDB.WinApp
                     ViewModel.IsEventsBinded = true;
                 }
 
-                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                ViewModel.NotificationsViewModelData.PropertyChanged += _viewModel_PropertyChanged;
                 SetDataBindings();
 
             }
@@ -49,7 +50,7 @@ namespace AutoVersionsDB.WinApp
         {
             switch (e.PropertyName)
             {
-                case nameof(ViewModel.StatusImageType):
+                case nameof(ViewModel.NotificationsViewModelData.StatusImageType):
 
                     StatusImageTypeChanged();
                     break;
@@ -67,16 +68,16 @@ namespace AutoVersionsDB.WinApp
                 AsyncBindingHelper.GetBinding(
                     lblProcessStatusMessage,
                     nameof(lblProcessStatusMessage.Text),
-                    ViewModel,
-                    nameof(ViewModel.ProcessStatusMessage)
+                    ViewModel.NotificationsViewModelData,
+                    nameof(ViewModel.NotificationsViewModelData.ProcessStatusMessage)
                     )
                 );
             this.lblProcessStatusMessage.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblProcessStatusMessage,
                     nameof(lblProcessStatusMessage.ForeColor),
-                    ViewModel,
-                    nameof(ViewModel.ProcessStatusMessageColor)
+                    ViewModel.NotificationsControls,
+                    nameof(ViewModel.NotificationsControls.ProcessStatusMessageColor)
                     )
                 );
 
@@ -85,8 +86,8 @@ namespace AutoVersionsDB.WinApp
                 AsyncBindingHelper.GetBinding(
                     pbStatus,
                     nameof(pbStatus.Visible),
-                    ViewModel,
-                    nameof(ViewModel.StatusImageVisible)
+                    ViewModel.NotificationsControls,
+                    nameof(ViewModel.NotificationsControls.StatusImageVisible)
                     )
                 );
 
@@ -96,9 +97,9 @@ namespace AutoVersionsDB.WinApp
 
         private void StatusImageTypeChanged()
         {
-            switch (ViewModel.StatusImageType)
+            switch (ViewModel.NotificationsViewModelData.StatusImageType)
             {
-                case NotificationsViewModel.eStatusImageType.Spinner:
+                case eStatusImageType.Spinner:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -106,13 +107,13 @@ namespace AutoVersionsDB.WinApp
                     }));
                     break;
 
-                case NotificationsViewModel.eStatusImageType.Warning:
+                case eStatusImageType.Warning:
 
                     //TODO: add image
                     //pbStatus.Image = Resources.W;
                     break;
 
-                case NotificationsViewModel.eStatusImageType.Error:
+                case eStatusImageType.Error:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -120,7 +121,7 @@ namespace AutoVersionsDB.WinApp
                     }));
                     break;
 
-                case NotificationsViewModel.eStatusImageType.Succeed:
+                case eStatusImageType.Succeed:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {

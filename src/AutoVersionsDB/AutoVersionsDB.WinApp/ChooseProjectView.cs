@@ -7,10 +7,9 @@ using System.Linq;
 using System.Windows.Forms;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.UI;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
-
+using AutoVersionsDB.UI.ChooseProject;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -28,7 +27,7 @@ namespace AutoVersionsDB.WinApp
             {
                 ViewModel.OnException += ViewModel_OnException;
                 ViewModel.OnConfirm += ViewModel_OnConfirm;
-                ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+                ViewModel.ChooseProjectViewModelData.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
 
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
@@ -50,7 +49,7 @@ namespace AutoVersionsDB.WinApp
         {
             switch (e.PropertyName)
             {
-                case nameof(ViewModel.FilteredProjectList):
+                case nameof(ViewModel.ChooseProjectViewModelData.FilteredProjectList):
 
                     renderProjectList();
                     break;
@@ -68,8 +67,8 @@ namespace AutoVersionsDB.WinApp
                 AsyncBindingHelper.GetBinding(
                     tbSerchProject,
                     nameof(tbSerchProject.Text),
-                    ViewModel,
-                    nameof(ViewModel.SerchProjectText)
+                    ViewModel.ChooseProjectViewModelData,
+                    nameof(ViewModel.ChooseProjectViewModelData.SerchProjectText)
                 )
             );
 
@@ -83,7 +82,7 @@ namespace AutoVersionsDB.WinApp
                 {
                     flowLayoutPanel1.Controls.Clear();
 
-                    foreach (ProjectConfigItem projectConfig in ViewModel.FilteredProjectList)
+                    foreach (ProjectConfigItem projectConfig in ViewModel.ChooseProjectViewModelData.FilteredProjectList)
                     {
                         ProjectItemControl projectItemControl = new ProjectItemControl(ViewModel, projectConfig);
                         flowLayoutPanel1.Controls.Add(projectItemControl);
@@ -98,7 +97,7 @@ namespace AutoVersionsDB.WinApp
             {
                 flowLayoutPanel1.Controls.Clear();
 
-                foreach (ProjectConfigItem projectConfig in ViewModel.FilteredProjectList)
+                foreach (ProjectConfigItem projectConfig in ViewModel.ChooseProjectViewModelData.FilteredProjectList)
                 {
                     ProjectItemControl projectItemControl = new ProjectItemControl(ViewModel, projectConfig);
                     flowLayoutPanel1.Controls.Add(projectItemControl);

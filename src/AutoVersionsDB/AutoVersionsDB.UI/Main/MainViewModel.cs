@@ -4,24 +4,14 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace AutoVersionsDB.UI
+namespace AutoVersionsDB.UI.Main
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private ViewType _currentView;
-        public ViewType CurrentView
-    {
-            get => _currentView;
-            set => SetField(ref _currentView, value);
-        }
-
-        private bool _btnChooseProjectVisible;
-        public bool BtnChooseProjectVisible
-        {
-            get => _btnChooseProjectVisible;
-            set => SetField(ref _btnChooseProjectVisible, value);
-        }
-
+        
+        public MainViewModelData MainViewModelData { get; }
+        public MainControls MainControls { get; }
+        
 
         private ViewRouter _viewRouter;
         public ViewRouter ViewRouter
@@ -43,9 +33,11 @@ namespace AutoVersionsDB.UI
 
 
 
-        public MainViewModel()
+        public MainViewModel(MainViewModelData mainViewModelData,
+                                MainControls mainControls)
         {
-         
+            MainViewModelData = mainViewModelData;
+            MainControls = mainControls;
         }
 
 
@@ -60,14 +52,14 @@ namespace AutoVersionsDB.UI
 
         #region INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string? propertyName)
+        protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             field = value;
             OnPropertyChanged(propertyName);
