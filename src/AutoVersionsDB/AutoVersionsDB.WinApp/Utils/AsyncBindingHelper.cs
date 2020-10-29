@@ -30,6 +30,8 @@ namespace AutoVersionsDB.WinApp.Utils
                                           INotifyPropertyChanged bindingSource,
                                           string dataMember)
         {
+            //return new Binding(propertyName, bindingSource, dataMember,false, DataSourceUpdateMode.OnPropertyChanged);
+
             AsyncBindingHelper helper
               = new AsyncBindingHelper(bindingControl, bindingSource, dataMember);
             return new Binding(propertyName, helper, "Value");
@@ -54,6 +56,8 @@ namespace AutoVersionsDB.WinApp.Utils
         {
             if (PropertyChanged != null && e.PropertyName == dataMember)
             {
+
+
                 if (bindingControl.InvokeRequired)
                 {
                     bindingControl.BeginInvoke(
@@ -75,6 +79,10 @@ namespace AutoVersionsDB.WinApp.Utils
             {
                 return bindingSource.GetType().GetProperty(dataMember)
                   .GetValue(bindingSource, null);
+            }
+            set
+            {
+                bindingSource.GetType().GetProperty(dataMember).SetValue(bindingSource, value, null);
             }
         }
         #region INotifyPropertyChanged Members

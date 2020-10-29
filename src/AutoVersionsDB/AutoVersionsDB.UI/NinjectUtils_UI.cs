@@ -23,18 +23,34 @@ namespace AutoVersionsDB.UI
         {
             kernel.ThrowIfNull(nameof(kernel));
 
-            kernel.Bind<NotificationsViewModel>().To<NotificationsViewModel>().InSingletonScope();
+            var notificationsViewModel = kernel.Get<NotificationsViewModel>();
+            kernel.Bind<NotificationsViewModel>().ToConstant(notificationsViewModel);
 
-            kernel.Bind<MainViewModel>().To<MainViewModel>().InSingletonScope();
+            var mainViewModel = kernel.Get<MainViewModel>();
+            kernel.Bind<MainViewModel>().ToConstant(mainViewModel);
 
-            kernel.Bind<ChooseProjectViewModel>().To<ChooseProjectViewModel>().InSingletonScope();
+            var chooseProjectViewModel = kernel.Get<ChooseProjectViewModel>();
+            kernel.Bind<ChooseProjectViewModel>().ToConstant(chooseProjectViewModel);
+
+            var editProjectControls = kernel.Get<EditProjectControls>();
+            kernel.Bind<EditProjectControls>().ToConstant(editProjectControls);
+
+            var projectConfigErrorMessages = kernel.Get<ProjectConfigErrorMessages>();
+            kernel.Bind<ProjectConfigErrorMessages>().ToConstant(projectConfigErrorMessages);
+
+            var editProjectViewModel = kernel.Get<EditProjectViewModel>();
+            kernel.Bind<EditProjectViewModel>().ToConstant(editProjectViewModel);
 
 
-            kernel.Bind<EditProjectControls>().To<EditProjectControls>().InSingletonScope();
-            kernel.Bind<ProjectConfigErrorMessages>().To<ProjectConfigErrorMessages>().InSingletonScope();
+            var dbVersionsViewModelData = kernel.Get<DBVersionsViewModelData>();
+            kernel.Bind<DBVersionsViewModelData>().ToConstant(dbVersionsViewModelData);
 
-            kernel.Bind<DBVersionsViewModelData>().To<DBVersionsViewModelData>().InSingletonScope();
-            kernel.Bind<DBVersionsControls>().To<DBVersionsControls>().InSingletonScope();
+            var dbVersionsControls = kernel.Get<DBVersionsControls>();
+            kernel.Bind<DBVersionsControls>().ToConstant(dbVersionsControls);
+
+            var dbVersionsViewModel = kernel.Get<DBVersionsViewModel>();
+            kernel.Bind<DBVersionsViewModel>().ToConstant(dbVersionsViewModel);
+
 
             ViewRouter viewRouter = kernel.Get<ViewRouter>();
             kernel.Bind<ViewRouter>().ToConstant(viewRouter);

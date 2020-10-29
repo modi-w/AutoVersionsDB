@@ -62,15 +62,15 @@ namespace AutoVersionsDB.UI.EditProject
                 SetField(ref _btnSaveEnabled, value);
             }
         }
-        private bool _btnSaveVisible;
-        public bool BtnSaveVisible
-        {
-            get => _btnSaveVisible;
-            set
-            {
-                SetField(ref _btnSaveVisible, value);
-            }
-        }
+        //private bool _btnSaveVisible;
+        //public bool BtnSaveVisible
+        //{
+        //    get => _btnSaveVisible;
+        //    set
+        //    {
+        //        SetField(ref _btnSaveVisible, value);
+        //    }
+        //}
 
 
         private bool _btnEditIdEnabled;
@@ -299,6 +299,13 @@ namespace AutoVersionsDB.UI.EditProject
         protected void OnPropertyChanged(string? propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+            var a = PropertyChanged.GetInvocationList();
+
+            foreach (var item in PropertyChanged.GetInvocationList())
+            {
+
+            }
         }
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {

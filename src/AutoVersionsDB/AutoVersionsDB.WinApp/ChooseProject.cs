@@ -11,6 +11,7 @@ using AutoVersionsDB.UI;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
 
+
 namespace AutoVersionsDB.WinApp
 {
     public partial class ChooseProject : UserControlNinjectBase //UserControl
