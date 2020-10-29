@@ -78,7 +78,7 @@ namespace AutoVersionsDB.UI.DBVersions
         public RelayCommand ApplySyncSpecificStateCommand { get; private set; }
         public RelayCommand DeployCommand { get; private set; }
         public RelayCommand RunSetDBStateManallyCommand { get; private set; }
-        
+
 
 
         public DBVersionsViewModel(ProjectConfigsAPI projectConfigsAPI,
@@ -212,19 +212,31 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
-                ProcessResults processResults = _dbVersionsAPI.CreateNewIncrementalScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
-
-                _notificationsViewModel.AfterComplete();
-                _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
-
-                if (!processResults.Trace.HasError)
+                Task.Run(() =>
                 {
-                    string newFileFullPath = (string)processResults.Results;
+                    try
+                    {
 
-                    RefreshAll();
+                        ProcessResults processResults = _dbVersionsAPI.CreateNewIncrementalScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
 
-                    OsProcessUtils.StartOsProcess(newFileFullPath);
-                }
+                        _notificationsViewModel.AfterComplete();
+                        _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+
+                        if (!processResults.Trace.HasError)
+                        {
+                            string newFileFullPath = (string)processResults.Results;
+
+                            RefreshAll();
+
+                            OsProcessUtils.StartOsProcess(newFileFullPath);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        fireOnException(ex);
+                    }
+                });
+
             }
         }
         private void CreateNewRepeatableScriptFile()
@@ -233,21 +245,33 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
-                ProcessResults processResults = _dbVersionsAPI.CreateNewRepeatableScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
-
-                _notificationsViewModel.AfterComplete();
-                _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
-
-                if (!processResults.Trace.HasError)
+                Task.Run(() =>
                 {
-                    string newFileFullPath = (string)processResults.Results;
+                    try
+                    {
+                        ProcessResults processResults = _dbVersionsAPI.CreateNewRepeatableScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
 
-                    RefreshAll();
+                        _notificationsViewModel.AfterComplete();
+                        _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
 
-                    OsProcessUtils.StartOsProcess(newFileFullPath);
-                }
+                        if (!processResults.Trace.HasError)
+                        {
+                            string newFileFullPath = (string)processResults.Results;
+
+                            RefreshAll();
+
+                            OsProcessUtils.StartOsProcess(newFileFullPath);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        fireOnException(ex);
+                    }
+                });
+
             }
         }
+
         private void CreateNewDevDummyDataScriptFile()
         {
             TextInputResults results = fireOnTextInput("Create new script script file, insert the script name:");
@@ -255,19 +279,30 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
-                ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
-
-                _notificationsViewModel.AfterComplete();
-                _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
-
-                if (!processResults.Trace.HasError)
+                Task.Run(() =>
                 {
-                    string newFileFullPath = (string)processResults.Results;
+                    try
+                    {
+                        ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
 
-                    RefreshAll();
+                        _notificationsViewModel.AfterComplete();
+                        _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
 
-                    OsProcessUtils.StartOsProcess(newFileFullPath);
-                }
+                        if (!processResults.Trace.HasError)
+                        {
+                            string newFileFullPath = (string)processResults.Results;
+
+                            RefreshAll();
+
+                            OsProcessUtils.StartOsProcess(newFileFullPath);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        fireOnException(ex);
+                    }
+                });
+
             }
         }
 

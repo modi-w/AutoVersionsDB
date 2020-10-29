@@ -59,6 +59,10 @@ namespace AutoVersionsDB.UI.EditProject
         }
 
 
+        public event OnExceptionEventHandler OnException;
+        public event OnConfirmEventHandler OnConfirm;
+
+
         public RelayCommand NavToChooseProjectCommand { get; private set; }
         public RelayCommand NavToDBVersionsCommand { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
@@ -171,24 +175,33 @@ namespace AutoVersionsDB.UI.EditProject
 
             Task.Run(() =>
             {
-                if (_isNewProjectConfig)
+                try
                 {
-                    ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
 
-                    handleCompleteProcess(processResults.Trace);
-
-                    if (!processResults.Trace.HasError)
+                    if (_isNewProjectConfig)
                     {
-                        _isNewProjectConfig = false;
+                        ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
+
+                        handleCompleteProcess(processResults.Trace);
+
+                        if (!processResults.Trace.HasError)
+                        {
+                            _isNewProjectConfig = false;
+                        }
+
                     }
+                    else
+                    {
+                        ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
 
+                        handleCompleteProcess(processResults.Trace);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
-
-                    handleCompleteProcess(processResults.Trace);
+                    fireOnException(ex);
                 }
+
             });
         }
 
@@ -220,9 +233,16 @@ namespace AutoVersionsDB.UI.EditProject
 
             Task.Run(() =>
             {
-                ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(_prevId, ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
+                try
+                {
+                    ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(_prevId, ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
 
-                handleCompleteProcess(processResults.Trace);
+                    handleCompleteProcess(processResults.Trace);
+                }
+                catch (Exception ex)
+                {
+                    fireOnException(ex);
+                }
             });
         }
 
@@ -242,13 +262,20 @@ namespace AutoVersionsDB.UI.EditProject
 
             Task.Run(() =>
             {
-                _notificationsViewModel.WaitingForUser();
+                try
+                {
+                    _notificationsViewModel.WaitingForUser();
 
-                _editProjectViewSateManager.ClearUIElementsErrors();
+                    _editProjectViewSateManager.ClearUIElementsErrors();
 
-                ProcessResults processResults = _dbVersionsAPI.ValidateProjectConfig(ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
+                    ProcessResults processResults = _dbVersionsAPI.ValidateProjectConfig(ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
 
-                _editProjectViewSateManager.HandleProcessErrors(_isNewProjectConfig, processResults.Trace);
+                    _editProjectViewSateManager.HandleProcessErrors(_isNewProjectConfig, processResults.Trace);
+                }
+                catch (Exception ex)
+                {
+                    fireOnException(ex);
+                }
             });
         }
 
@@ -272,6 +299,27 @@ namespace AutoVersionsDB.UI.EditProject
         #endregion
 
 
+
+
+        private void fireOnException(Exception ex)
+        {
+            if (OnException == null)
+            {
+                throw new Exception($"Bind method to 'OnException' event is mandatory");
+            }
+
+            OnException(this, ex.ToString());
+        }
+
+        private bool fireOnConfirm(string confirmMessage)
+        {
+            if (OnConfirm == null)
+            {
+                throw new Exception($"Bind method to 'OnConfirm' event is mandatory");
+            }
+
+            return OnConfirm(this, confirmMessage);
+        }
 
 
         #region INotifyPropertyChanged
