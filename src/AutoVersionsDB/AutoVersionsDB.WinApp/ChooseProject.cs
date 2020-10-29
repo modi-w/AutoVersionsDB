@@ -26,7 +26,9 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                ViewModel.OnException += ViewModel_OnException;
+                ViewModel.OnConfirm += ViewModel_OnConfirm;
+                ViewModel.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
 
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
@@ -35,9 +37,16 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-      
+        private void ViewModel_OnException(object sender, string exceptionMessage)
+        {
+            MessageBox.Show(exceptionMessage);
+        }
+        private bool ViewModel_OnConfirm(object sender, string confirmMessage)
+        {
+            return MessageBox.Show(this, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+        }
 
-        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -68,19 +77,38 @@ namespace AutoVersionsDB.WinApp
 
         private void renderProjectList()
         {
-            flowLayoutPanel1.Controls.Clear();
-
-            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            //{
-
-            foreach (ProjectConfigItem projectConfig in ViewModel.FilteredProjectList)
+            if (flowLayoutPanel1.InvokeRequired)
             {
-                ProjectItemControl projectItemControl = new ProjectItemControl(ViewModel, projectConfig);
-                flowLayoutPanel1.Controls.Add(projectItemControl);
+                flowLayoutPanel1.BeginInvoke((MethodInvoker)(() =>
+                {
+                    flowLayoutPanel1.Controls.Clear();
+
+                    foreach (ProjectConfigItem projectConfig in ViewModel.FilteredProjectList)
+                    {
+                        ProjectItemControl projectItemControl = new ProjectItemControl(ViewModel, projectConfig);
+                        flowLayoutPanel1.Controls.Add(projectItemControl);
+                    }
+
+                    SetProjectItemsSize();
+
+                }));
+
+            }
+            else
+            {
+                flowLayoutPanel1.Controls.Clear();
+
+                foreach (ProjectConfigItem projectConfig in ViewModel.FilteredProjectList)
+                {
+                    ProjectItemControl projectItemControl = new ProjectItemControl(ViewModel, projectConfig);
+                    flowLayoutPanel1.Controls.Add(projectItemControl);
+                }
+
+                SetProjectItemsSize();
+
             }
 
-            SetProjectItemsSize();
-            // }
+
         }
 
 

@@ -21,6 +21,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         private readonly EditProjectViewSateManager _editProjectViewSateManager;
 
+        private bool _isNewProjectConfig = false;
 
 
         public List<DBType> DBTypes { get; }
@@ -104,6 +105,8 @@ namespace AutoVersionsDB.UI.EditProject
             ProjectConfig = new ObservableProjectConfig(newProjectConfigItem);
             //ProjectConfig.PropertyChanged += ProjectConfig_PropertyChanged;
 
+            _isNewProjectConfig = true;
+
             _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.New);
 
         }
@@ -125,6 +128,8 @@ namespace AutoVersionsDB.UI.EditProject
 
         public void SetProjectConfig(string id)
         {
+            _isNewProjectConfig = false;
+
             Refresh(id);
         }
 
@@ -166,11 +171,16 @@ namespace AutoVersionsDB.UI.EditProject
 
             Task.Run(() =>
             {
-                if (string.IsNullOrWhiteSpace(ProjectConfig.Id))
+                if (_isNewProjectConfig)
                 {
                     ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
 
                     handleCompleteProcess(processResults.Trace);
+
+                    if (!processResults.Trace.HasError)
+                    {
+                        _isNewProjectConfig = false;
+                    }
 
                 }
                 else
@@ -238,7 +248,7 @@ namespace AutoVersionsDB.UI.EditProject
 
                 ProcessResults processResults = _dbVersionsAPI.ValidateProjectConfig(ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
 
-                _editProjectViewSateManager.HandleProcessErrors(ProjectConfig.Id, processResults.Trace);
+                _editProjectViewSateManager.HandleProcessErrors(_isNewProjectConfig, processResults.Trace);
             });
         }
 
@@ -246,7 +256,7 @@ namespace AutoVersionsDB.UI.EditProject
         {
             if (processResults.HasError)
             {
-                _editProjectViewSateManager.HandleProcessErrors(ProjectConfig.Id, processResults);
+                _editProjectViewSateManager.HandleProcessErrors(_isNewProjectConfig, processResults);
             }
             else
             {

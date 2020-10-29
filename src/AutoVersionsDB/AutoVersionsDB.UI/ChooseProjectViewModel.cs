@@ -73,9 +73,13 @@ namespace AutoVersionsDB.UI
 
             DeleteProjectCommand = new RelayCommand<string>(DeleteProject);
 
-            SerchProjectText = "";
         }
 
+        public void Clear()
+        {
+            SerchProjectText = "";
+            RefreshProjectList();
+        }
 
 
         public void RefreshProjectList()

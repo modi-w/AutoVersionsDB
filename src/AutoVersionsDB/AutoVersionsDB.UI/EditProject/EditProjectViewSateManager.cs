@@ -106,7 +106,7 @@ namespace AutoVersionsDB.UI.EditProject
 
 
 
-        public void HandleProcessErrors(string projectId, ProcessTrace processResults)
+        public void HandleProcessErrors(bool isNewProjectConfig, ProcessTrace processResults)
         {
             _notificationsViewModel.AfterComplete();
 
@@ -116,7 +116,7 @@ namespace AutoVersionsDB.UI.EditProject
             _editProjectControls.ImgValidVisible = !processResults.HasError;
             _editProjectControls.BtnNavToProcessVisible = !processResults.HasError;
 
-            if (string.IsNullOrWhiteSpace(projectId))
+            if (isNewProjectConfig)
             {
                 ChangeViewState(EditProjectViewStateType.New);
             }
@@ -131,6 +131,10 @@ namespace AutoVersionsDB.UI.EditProject
 
         public void ClearUIElementsErrors()
         {
+            _editProjectControls.ImgErrorVisible = false;
+            _editProjectControls.ImgValidVisible = false;
+            _editProjectControls.BtnNavToProcessVisible = false;
+
             _projectConfigErrorMessages.IdErrorMessage = null;
             _projectConfigErrorMessages.DBTypeCodeErrorMessage = null;
             _projectConfigErrorMessages.ServerErrorMessage = null;

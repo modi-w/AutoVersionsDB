@@ -32,8 +32,6 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _viewModel.OnException += _viewModel_OnException;
-                _viewModel.OnConfirm += _viewModel_OnConfirm;
                 _viewModel.PropertyChanged += _viewModel_PropertyChanged;
                 SetDataBindings();
             }
@@ -42,14 +40,7 @@ namespace AutoVersionsDB.WinApp
 
 
 
-        private void _viewModel_OnException(object sender, string exceptionMessage)
-        {
-            MessageBox.Show(exceptionMessage);
-        }
-        private bool _viewModel_OnConfirm(object sender, string confirmMessage)
-        {
-            return MessageBox.Show(this, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-        }
+   
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
