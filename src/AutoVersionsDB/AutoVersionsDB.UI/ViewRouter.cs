@@ -55,17 +55,14 @@ namespace AutoVersionsDB.UI
         {
             _mainViewModel.MainViewModelData.CurrentView = ViewType.EditProjectConfig;
 
-            Task.Run(() =>
+            if (string.IsNullOrWhiteSpace(id))
             {
-                if (string.IsNullOrWhiteSpace(id))
-                {
-                    _editProjectConfigDetailsViewModel.CreateNewProjectConfig();
-                }
-                else
-                {
-                    _editProjectConfigDetailsViewModel.SetProjectConfig(id);
-                }
-            });
+                _editProjectConfigDetailsViewModel.CreateNewProjectConfig();
+            }
+            else
+            {
+                _editProjectConfigDetailsViewModel.SetProjectConfig(id);
+            }
 
 
             SetBtnChooseProjectVisibility();
@@ -77,10 +74,7 @@ namespace AutoVersionsDB.UI
         {
             _mainViewModel.MainViewModelData.CurrentView = ViewType.DBVersions;
 
-            Task.Run(() =>
-            {
-                _dbVersionsViewModel.SetProjectConfig(id);
-            });
+            _dbVersionsViewModel.SetProjectConfig(id);
 
             SetBtnChooseProjectVisibility();
         }

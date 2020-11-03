@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"info");
 
@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"init");
 
@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"config");
 
@@ -63,7 +63,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"remove");
 
@@ -76,7 +76,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"validate");
 
@@ -89,7 +89,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"files");
 
@@ -102,7 +102,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"files incremental");
 
@@ -115,7 +115,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"files repeatable");
 
@@ -128,7 +128,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"files ddd");
 
@@ -142,7 +142,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"sync");
 
@@ -155,7 +155,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"recreate");
 
@@ -168,7 +168,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"virtual");
 
@@ -182,7 +182,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"deploy");
 
@@ -195,7 +195,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"new incremental");
 
@@ -211,7 +211,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"new repeatable");
 
@@ -226,7 +226,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         {
             //Arrange
             TestContext testContext = new TestContext(new TestArgs());
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"new ddd");
 

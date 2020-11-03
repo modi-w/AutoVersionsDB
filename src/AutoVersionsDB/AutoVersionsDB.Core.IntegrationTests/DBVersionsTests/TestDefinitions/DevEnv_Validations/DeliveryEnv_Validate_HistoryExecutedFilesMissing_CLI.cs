@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             TestContext testContext = _deliveryEnv_Validate_HistoryExecutedFilesMissing_API.Arrange(testArgs);
 
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;
         }

@@ -39,11 +39,6 @@ namespace AutoVersionsDB.UI.ChooseProject
         public ChooseProjectViewModelData ChooseProjectViewModelData { get; }
 
 
-
-        public event OnExceptionEventHandler OnException;
-        public event OnConfirmEventHandler OnConfirm;
-
-
         public RelayCommand NavToCreateNewProjectConfigCommand { get; private set; }
         public RelayCommand<string> NavToEditProjectConfigCommand { get; private set; }
         public RelayCommand<string> NavToDBVersionsCommand { get; private set; }
@@ -130,24 +125,13 @@ namespace AutoVersionsDB.UI.ChooseProject
 
         private void DeleteProject(string id)
         {
-            bool isAllowRun = fireOnConfirm($"Are you sure you want to delete the configurration for the project: '{id}'");
+            bool isAllowRun = UIGeneralEvents.FireOnConfirm(this,$"Are you sure you want to delete the configurration for the project: '{id}'");
 
             if (isAllowRun)
             {
-                Task.Run(() =>
-                {
-                    try
-                    {
-                        _projectConfigsAPI.RemoveProjectConfig(id, null);
+                _projectConfigsAPI.RemoveProjectConfig(id, null);
 
-                        RefreshProjectList();
-                    }
-                    catch (Exception ex)
-                    {
-                        fireOnException(ex);
-                    }
-                });
-
+                RefreshProjectList();
             }
         }
 
@@ -155,26 +139,7 @@ namespace AutoVersionsDB.UI.ChooseProject
 
 
 
-        private void fireOnException(Exception ex)
-        {
-            if (OnException == null)
-            {
-                throw new Exception($"Bind method to 'OnException' event is mandatory");
-            }
-
-            OnException(this, ex.ToString());
-        }
-
-        private bool fireOnConfirm(string confirmMessage)
-        {
-            if (OnConfirm == null)
-            {
-                throw new Exception($"Bind method to 'OnConfirm' event is mandatory");
-            }
-
-            return OnConfirm(this, confirmMessage);
-        }
-
+  
 
 
 

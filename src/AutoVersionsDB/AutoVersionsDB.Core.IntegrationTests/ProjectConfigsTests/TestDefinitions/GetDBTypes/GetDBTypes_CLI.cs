@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             TestContext testContext = new TestContext(testArgs);
 
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;
         }

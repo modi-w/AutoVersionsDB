@@ -1,4 +1,6 @@
-﻿namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
+﻿using System;
+
+namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 {
     public class EmptyDbStateRuntimeScriptFile : IncrementalRuntimeScriptFile
     {
@@ -12,7 +14,7 @@
 
 
         public EmptyDbStateRuntimeScriptFile()
-            : base(null, null)
+            : base(null, null, DateTime.MinValue, 0)
         {
         }
 

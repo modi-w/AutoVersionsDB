@@ -17,14 +17,14 @@ namespace AutoVersionsDB.UI.DBVersions
     {
         private readonly DBVersionsViewModelData _dbVersionsViewModelData;
         private readonly DBVersionsControls _dbVersionsControls;
-        private readonly NotificationsViewModel _notificationsViewModel;
+        private readonly INotificationsViewModel _notificationsViewModel;
 
 
 
 
         public DBVersionsViewSateManager(DBVersionsViewModelData dbVersionsViewModelData,
                                             DBVersionsControls dbVersionsControls,
-                                            NotificationsViewModel notificationsViewModel)
+                                            INotificationsViewModel notificationsViewModel)
         {
             _dbVersionsViewModelData = dbVersionsViewModelData;
             _dbVersionsControls = dbVersionsControls;

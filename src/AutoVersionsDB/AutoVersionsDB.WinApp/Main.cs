@@ -10,10 +10,6 @@ using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
-    public delegate void OnNavToProcessHandler(string id);
-    public delegate void OnRefreshProjectListHandler();
-    public delegate void OnEditProjectHandler(string id);
-
 
     public partial class Main : Form
     {
@@ -98,27 +94,31 @@ namespace AutoVersionsDB.WinApp
 
         public void SetView(ViewType viewType)
         {
-            switch (viewType)
+            tabMainLayout.BeginInvoke((MethodInvoker)(() =>
             {
-                case ViewType.ChooseProject:
 
-                    tabMainLayout.SelectTab(tbChooseProject);
-                    break;
+                switch (viewType)
+                {
+                    case ViewType.ChooseProject:
 
-                case ViewType.EditProjectConfig:
+                        tabMainLayout.SelectTab(tbChooseProject);
+                        break;
 
-                    tabMainLayout.SelectTab(tbEditProjectConfig);
-                    break;
+                    case ViewType.EditProjectConfig:
 
-                case ViewType.DBVersions:
+                        tabMainLayout.SelectTab(tbEditProjectConfig);
+                        break;
 
-                    tabMainLayout.SelectTab(tbDBVersionsMangement);
+                    case ViewType.DBVersions:
 
-                    break;
+                        tabMainLayout.SelectTab(tbDBVersionsMangement);
 
-                default:
-                    break;
-            }
+                        break;
+
+                    default:
+                        break;
+                }
+            }));
         }
 
 

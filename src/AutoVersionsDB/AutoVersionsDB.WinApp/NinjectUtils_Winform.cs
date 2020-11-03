@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core;
 using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.Notifications;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
 using System;
@@ -26,6 +27,10 @@ namespace AutoVersionsDB.WinApp
         {
             NinjectKernelContainer = new StandardKernel();
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
+
+            var notificationsViewModel = NinjectKernelContainer.Get<NotificationsViewModel>();
+            NinjectKernelContainer.Bind<INotificationsViewModel>().ToConstant(notificationsViewModel);
+
 
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
             NinjectUtils_UI.SetKernelInstance(NinjectKernelContainer);

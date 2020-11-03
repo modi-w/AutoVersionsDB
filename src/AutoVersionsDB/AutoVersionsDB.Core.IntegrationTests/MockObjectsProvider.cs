@@ -8,6 +8,7 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.UI.Notifications;
 using Moq;
 using Ninject;
 using System;
@@ -30,6 +31,9 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
         public static Mock<ConsoleProcessMessagesForTests> MockConsoleProcessMessages { get; private set; }
 
+        public static Mock<NotificationsViewModelForTests> MockNotificationsViewModel { get; private set; }
+
+
         public static void Init(IKernel kernel)
         {
             AutoVersionsDBSettings setting = new AutoVersionsDBSettings(@"[CommonApplicationData]\AutoVersionsDB.IntegrationTests");
@@ -46,23 +50,37 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
             ConsoleProcessMessages internalConsoleProcessMessages = kernel.Get<ConsoleProcessMessages>();
-
             MockConsoleProcessMessages = new Mock<ConsoleProcessMessagesForTests>(MockBehavior.Strict, internalConsoleProcessMessages);
             kernel.Bind<IConsoleProcessMessages>().ToConstant(MockConsoleProcessMessages.Object);
+
+            NotificationsViewModel internalNotificationsViewModel = kernel.Get<NotificationsViewModel>();
+            MockNotificationsViewModel = new Mock<NotificationsViewModelForTests>(MockBehavior.Strict, internalNotificationsViewModel);
+            kernel.Bind<INotificationsViewModel>().ToConstant(MockNotificationsViewModel.Object);
+        }
+
+
+        public static void SetTestContextDataByMockCallbacksForUI(TestContext testContext)
+        {
+            MockNotificationsViewModel
+             .Setup(m => m.AfterCompleteForMockSniffer(It.IsAny<ProcessResults>()))
+             .Callback<ProcessResults>((processResults) =>
+             {
+                 testContext.ProcessResults = processResults;
+             });
 
         }
 
 
-
-        public static void SetTestContextDataByMockCallbacks(TestContext testContext)
+        public static void SetTestContextDataByMockCallbacksForCLI(TestContext testContext)
         {
-            MockObjectsProvider.SetProcessResultsToTestContext(testContext);
+            MockObjectsProvider.SetProcessResultsToTestContextForCLI(testContext);
             MockObjectsProvider.SetConsoleOutputToTestContext(testContext);
 
         }
 
+       
 
-        private static void SetProcessResultsToTestContext(TestContext testContext)
+        private static void SetProcessResultsToTestContextForCLI(TestContext testContext)
         {
             MockConsoleProcessMessages
              .Setup(m => m.ProcessCompleteForMockSniffer(It.IsAny<ProcessResults>()))

@@ -11,13 +11,13 @@ namespace AutoVersionsDB.UI.EditProject
     {
         private readonly EditProjectControls _editProjectControls;
         private readonly ProjectConfigErrorMessages _projectConfigErrorMessages;
-        private readonly NotificationsViewModel _notificationsViewModel;
+        private readonly INotificationsViewModel _notificationsViewModel;
 
 
 
         public EditProjectViewSateManager(EditProjectControls editProjectControls,
                                             ProjectConfigErrorMessages projectConfigErrorMessages,
-                                            NotificationsViewModel notificationsViewModel)
+                                            INotificationsViewModel notificationsViewModel)
         {
             _editProjectControls = editProjectControls;
             _projectConfigErrorMessages = projectConfigErrorMessages;
@@ -107,15 +107,15 @@ namespace AutoVersionsDB.UI.EditProject
 
 
 
-        public void HandleProcessErrors(bool isNewProjectConfig, ProcessTrace processResults)
+        public void HandleProcessErrors(bool isNewProjectConfig, ProcessResults processResults)
         {
-            _notificationsViewModel.AfterComplete();
+            _notificationsViewModel.AfterComplete(processResults);
 
-            SetErrorsToUiElements(processResults);
+            SetErrorsToUiElements(processResults.Trace);
 
-            _editProjectControls.ImgErrorVisible = processResults.HasError;
-            _editProjectControls.ImgValidVisible = !processResults.HasError;
-            _editProjectControls.BtnNavToProcessVisible = !processResults.HasError;
+            _editProjectControls.ImgErrorVisible = processResults.Trace.HasError;
+            _editProjectControls.ImgValidVisible = !processResults.Trace.HasError;
+            _editProjectControls.BtnNavToProcessVisible = !processResults.Trace.HasError;
 
             if (isNewProjectConfig)
             {

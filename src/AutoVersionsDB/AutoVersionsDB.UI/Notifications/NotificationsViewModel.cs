@@ -12,14 +12,15 @@ using System.Text;
 
 namespace AutoVersionsDB.UI.Notifications
 {
+    public delegate void OnShowStatesLogEventHandler(object sender, StatesLogViewModel statesLogViewModel);
 
 
-    public partial class NotificationsViewModel : INotifyPropertyChanged
+    public class NotificationsViewModel : INotificationsViewModel
     {
 
         private ProcessTrace _processTrace;
 
-        
+
         public NotificationsViewModelData NotificationsViewModelData { get; }
         public NotificationsControls NotificationsControls { get; }
 
@@ -78,7 +79,7 @@ namespace AutoVersionsDB.UI.Notifications
             {
                 case eNotificationStatus.WaitingForUser:
 
-                   NotificationsControls.StatusImageVisible = false;
+                    NotificationsControls.StatusImageVisible = false;
 
                     NotificationsControls.ProcessStatusMessageColor = Color.Black;
 
@@ -177,8 +178,10 @@ namespace AutoVersionsDB.UI.Notifications
             NotificationsViewModelData.ProcessStatusMessage = "Prepare...";
         }
 
-        public void AfterComplete()
+        public void AfterComplete(ProcessResults processResults)
         {
+            _processTrace = processResults.Trace;
+
             System.Threading.Thread.Sleep(500);
 
 

@@ -3,6 +3,7 @@ using AutoVersionsDB.Core.Common.CLI;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.UI;
 using Moq;
 using Ninject;
 using System;
@@ -28,6 +29,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
             RegisterServices(NinjectKernelContainer);
 
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
+            NinjectUtils_UI.SetKernelInstance(NinjectKernelContainer);
+
         }
 
         private static void RegisterServices(IKernel kernel)

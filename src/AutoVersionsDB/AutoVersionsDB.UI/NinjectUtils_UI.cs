@@ -34,8 +34,8 @@ namespace AutoVersionsDB.UI
             var notificationsViewModelData = kernel.Get<NotificationsViewModelData>();
             kernel.Bind<NotificationsViewModelData>().ToConstant(notificationsViewModelData);
 
-            var notificationsViewModel = kernel.Get<NotificationsViewModel>();
-            kernel.Bind<NotificationsViewModel>().ToConstant(notificationsViewModel);
+            //var notificationsViewModel = kernel.Get<NotificationsViewModel>();
+            //kernel.Bind<NotificationsViewModel>().ToConstant(notificationsViewModel);
 
 
             var mainControls = kernel.Get<MainControls>();

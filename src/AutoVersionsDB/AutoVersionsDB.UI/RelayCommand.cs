@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AutoVersionsDB.UI
@@ -29,11 +30,28 @@ namespace AutoVersionsDB.UI
 
         public void Execute()
         {
-            Execute(null);
+            ExecuteWrapped();
         }
         public void Execute(object parameter)
         {
-            _execute();
+            ExecuteWrapped();
+        }
+
+        public Task ExecuteWrapped()
+        {
+            var results = Task.Run(() =>
+                {
+                    try
+                    {
+                        _execute();
+                    }
+                    catch (Exception ex)
+                    {
+                        UIGeneralEvents.FireOnException(this, ex);
+                    }
+                });
+
+            return results;
         }
 
         public RelayCommand(Action execute) : this(execute, null)
@@ -81,12 +99,32 @@ namespace AutoVersionsDB.UI
 
         public void Execute(object parameter)
         {
-            _execute((T)parameter);
+            ExecuteWrapped(parameter);
         }
+
+        public Task ExecuteWrapped(object parameter)
+        {
+            var results = Task.Run(() =>
+            {
+                try
+                {
+                    _execute((T)parameter);
+                }
+                catch (Exception ex)
+                {
+                    UIGeneralEvents.FireOnException(this, ex);
+                }
+            });
+
+            return results;
+        }
+
 
         public RelayCommand(Action<T> execute) : this(execute, null)
         {
         }
+
+
 
         public RelayCommand(Action<T> execute, Func<T, bool> canExecute)
         {

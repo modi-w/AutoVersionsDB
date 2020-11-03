@@ -10,27 +10,32 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.UI.DBVersions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB
 {
-    public class DevEnv_SyncDB_CLI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_SyncDB_UI : TestDefinition<DBVersionsTestContext>
     {
 
         private readonly DevEnv_SyncDB_API _devEnv_SyncDB_API;
+        private readonly DBVersionsViewModel _dbVersionsViewModel;
 
-        public DevEnv_SyncDB_CLI(DevEnv_SyncDB_API devEnv_SyncDB_API)
+        public DevEnv_SyncDB_UI(DevEnv_SyncDB_API devEnv_SyncDB_API, DBVersionsViewModel dbVersionsViewModel)
         {
             _devEnv_SyncDB_API = devEnv_SyncDB_API;
+            _dbVersionsViewModel = dbVersionsViewModel;
         }
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _devEnv_SyncDB_API.Arrange(testArgs);
+            DBVersionsTestContext testContext = _devEnv_SyncDB_API.Arrange(testArgs) as DBVersionsTestContext;
 
-            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
+
+            _dbVersionsViewModel.SetProjectConfig(testContext.ProjectConfig.Id);
 
             return testContext;
         }
@@ -38,7 +43,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(DBVersionsTestContext testContext)
         {
-            AutoVersionsDBAPI.CLIRun($"sync -id={IntegrationTestsConsts.TestProjectId}");
+            var task = _dbVersionsViewModel.RunSyncCommand.ExecuteWrapped();
+            task.Wait();
         }
 
 
@@ -46,11 +52,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_SyncDB_API.Asserts(testContext);
 
-            AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
+            //AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 2);
-            assertTextByLines.AssertLineMessage("> Run 'sync' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            //AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 2);
+            //assertTextByLines.AssertLineMessage("> Run 'sync' for 'IntegrationTestProject'", true);
+            //assertTextByLines.AssertLineMessage("The process complete successfully", true);
         }
 
 
