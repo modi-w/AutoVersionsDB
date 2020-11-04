@@ -286,8 +286,4 @@
     <ProjectReference Include="..\AutoVersionsDB.UI\AutoVersionsDB.UI.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CLIConsoleTests\TestDefinitions\" />
-  </ItemGroup>
-
 </Project>
