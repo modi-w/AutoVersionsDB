@@ -20,6 +20,7 @@ namespace AutoVersionsDB.UI.DBVersions
         private readonly INotificationsViewModel _notificationsViewModel;
 
 
+        public DBVersionsViewStateType LastViewState { get; private set; }
 
 
         public DBVersionsViewSateManager(DBVersionsViewModelData dbVersionsViewModelData,
@@ -48,6 +49,8 @@ namespace AutoVersionsDB.UI.DBVersions
 
         public void ChangeViewState(DBVersionsViewStateType viewType)
         {
+            LastViewState = viewType;
+
             _dbVersionsControls.LblProjectNameText = $"{_dbVersionsViewModelData.ProjectConfig.Id} - {_dbVersionsViewModelData.ProjectConfig.Description}";
 
             if (_dbVersionsViewModelData.ScriptFilesState == null)

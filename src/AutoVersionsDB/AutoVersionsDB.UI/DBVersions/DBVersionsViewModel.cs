@@ -15,21 +15,13 @@ using System.Threading.Tasks;
 
 namespace AutoVersionsDB.UI.DBVersions
 {
-    public delegate TextInputResults OnTextInputEventHandler(object sender, string instructionMessageText);
-
-    public class TextInputResults
-    {
-        public string ResultText { get; set; }
-        public bool IsApply { get; set; }
-    }
-
-
     public class DBVersionsViewModel : INotifyPropertyChanged
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly DBVersionsViewSateManager _dbVersionsViewSateManager;
-        private readonly INotificationsViewModel _notificationsViewModel;
+
+        public INotificationsViewModel NotificationsViewModel { get; }
 
         public DBVersionsViewModelData DBVersionsViewModelData { get; }
         public DBVersionsControls DBVersionsControls { get; }
@@ -98,7 +90,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _projectConfigsAPI = projectConfigsAPI;
             _dbVersionsAPI = dbVersionsAPI;
             _dbVersionsViewSateManager = dbVersionsViewSateManager;
-            _notificationsViewModel = notificationsViewModel;
+            NotificationsViewModel = notificationsViewModel;
 
             DBVersionsViewModelData = dbVersionsViewModelData;
             DBVersionsControls = dbVersionsControls;
@@ -176,7 +168,7 @@ namespace AutoVersionsDB.UI.DBVersions
         }
         private void CancelSyncToSpecificState()
         {
-            _notificationsViewModel.WaitingForUser();
+            NotificationsViewModel.WaitingForUser();
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
         }
 
@@ -218,9 +210,9 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
-                ProcessResults processResults = _dbVersionsAPI.CreateNewIncrementalScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.CreateNewIncrementalScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
-                _notificationsViewModel.AfterComplete(processResults);
+                NotificationsViewModel.AfterComplete(processResults);
                 _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
 
                 if (!processResults.Trace.HasError)
@@ -239,9 +231,9 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
-                ProcessResults processResults = _dbVersionsAPI.CreateNewRepeatableScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.CreateNewRepeatableScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
-                _notificationsViewModel.AfterComplete(processResults);
+                NotificationsViewModel.AfterComplete(processResults);
                 _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
 
                 if (!processResults.Trace.HasError)
@@ -263,9 +255,9 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
-                ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, _notificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
-                _notificationsViewModel.AfterComplete(processResults);
+                NotificationsViewModel.AfterComplete(processResults);
                 _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
 
                 if (!processResults.Trace.HasError)
@@ -286,17 +278,17 @@ namespace AutoVersionsDB.UI.DBVersions
 
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
 
-            _notificationsViewModel.BeforeStartProcess();
+            NotificationsViewModel.BeforeStartProcess();
 
             if (RefreshScriptFilesState(true))
             {
 
-                ProcessResults processResults = _dbVersionsAPI.ValidateDBVersions(DBVersionsViewModelData.ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.ValidateDBVersions(DBVersionsViewModelData.ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
 
 
                 if (processResults.Trace.HasError)
                 {
-                    _notificationsViewModel.AfterComplete(processResults);
+                    NotificationsViewModel.AfterComplete(processResults);
 
                     if (processResults.Trace.ContainErrorCode("SystemTables"))
                     {
@@ -325,7 +317,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 {
                     //RefreshScriptFilesState();
 
-                    _notificationsViewModel.WaitingForUser();
+                    NotificationsViewModel.WaitingForUser();
                     _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
                 }
             }
@@ -335,13 +327,13 @@ namespace AutoVersionsDB.UI.DBVersions
         private void RunSync()
         {
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
-            _notificationsViewModel.BeforeStartProcess();
+            NotificationsViewModel.BeforeStartProcess();
 
-            ProcessResults processResults = _dbVersionsAPI.SyncDB(DBVersionsViewModelData.ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
+            ProcessResults processResults = _dbVersionsAPI.SyncDB(DBVersionsViewModelData.ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
 
             RefreshScriptFilesState(false);
 
-            _notificationsViewModel.AfterComplete(processResults);
+            NotificationsViewModel.AfterComplete(processResults);
             _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
         }
 
@@ -353,12 +345,12 @@ namespace AutoVersionsDB.UI.DBVersions
             if (isAllowRun)
             {
                 _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
-                _notificationsViewModel.BeforeStartProcess();
+                NotificationsViewModel.BeforeStartProcess();
 
-                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, _notificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, NotificationsViewModel.OnNotificationStateChanged);
                 RefreshScriptFilesState(false);
 
-                _notificationsViewModel.AfterComplete(processResults);
+                NotificationsViewModel.AfterComplete(processResults);
                 _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
             }
         }
@@ -368,12 +360,12 @@ namespace AutoVersionsDB.UI.DBVersions
             if (CheckIsTargetStateHistory())
             {
                 _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
-                _notificationsViewModel.BeforeStartProcess();
+                NotificationsViewModel.BeforeStartProcess();
 
-                ProcessResults processResults = _dbVersionsAPI.SetDBToSpecificState(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, true, _notificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.SetDBToSpecificState(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, true, NotificationsViewModel.OnNotificationStateChanged);
                 RefreshScriptFilesState(false);
 
-                _notificationsViewModel.AfterComplete(processResults);
+                NotificationsViewModel.AfterComplete(processResults);
                 _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
             }
         }
@@ -382,12 +374,12 @@ namespace AutoVersionsDB.UI.DBVersions
         private void Deploy()
         {
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
-            _notificationsViewModel.BeforeStartProcess();
+            NotificationsViewModel.BeforeStartProcess();
 
-            ProcessResults processResults = _dbVersionsAPI.Deploy(DBVersionsViewModelData.ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
+            ProcessResults processResults = _dbVersionsAPI.Deploy(DBVersionsViewModelData.ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
             RefreshScriptFilesState(false);
 
-            _notificationsViewModel.AfterComplete(processResults);
+            NotificationsViewModel.AfterComplete(processResults);
             _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
 
             OsProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.DeployArtifactFolderPath);
@@ -396,12 +388,12 @@ namespace AutoVersionsDB.UI.DBVersions
         private void RunSetDBStateManally()
         {
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
-            _notificationsViewModel.BeforeStartProcess();
+            NotificationsViewModel.BeforeStartProcess();
 
-            ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, _notificationsViewModel.OnNotificationStateChanged);
+            ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, NotificationsViewModel.OnNotificationStateChanged);
             RefreshScriptFilesState(false);
 
-            _notificationsViewModel.AfterComplete(processResults);
+            NotificationsViewModel.AfterComplete(processResults);
             _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
         }
 
@@ -415,7 +407,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (showTrace)
             {
-                processResults = _dbVersionsAPI.GetScriptFilesState(DBVersionsViewModelData.ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
+                processResults = _dbVersionsAPI.GetScriptFilesState(DBVersionsViewModelData.ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
             }
             else
             {
@@ -424,7 +416,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (processResults.Trace.HasError)
             {
-                _notificationsViewModel.AfterComplete(processResults);
+                NotificationsViewModel.AfterComplete(processResults);
 
                 if (processResults.Trace.ContainErrorCode("SystemTables"))
                 {
@@ -441,7 +433,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                 if (showTrace)
                 {
-                    _notificationsViewModel.AfterComplete(processResults);
+                    NotificationsViewModel.AfterComplete(processResults);
 
                     _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
                 }
@@ -456,7 +448,7 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             bool isAllowRun = true;
 
-            if (_dbVersionsAPI.ValdiateTargetStateAlreadyExecuted(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, _notificationsViewModel.OnNotificationStateChanged).Trace.HasError)
+            if (_dbVersionsAPI.ValdiateTargetStateAlreadyExecuted(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, NotificationsViewModel.OnNotificationStateChanged).Trace.HasError)
             {
                 isAllowRun = UIGeneralEvents.FireOnConfirm(this, $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?");
             }
