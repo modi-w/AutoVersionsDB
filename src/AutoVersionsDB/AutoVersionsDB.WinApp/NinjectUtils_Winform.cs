@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core;
 using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.UI.Notifications;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
@@ -28,22 +29,34 @@ namespace AutoVersionsDB.WinApp
             NinjectKernelContainer = new StandardKernel();
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            var notificationsViewModel = NinjectKernelContainer.Get<NotificationsViewModel>();
-            NinjectKernelContainer.Bind<INotificationsViewModel>().ToConstant(notificationsViewModel);
+            //var notificationsViewModel = NinjectKernelContainer.Get<NotificationsViewModel>();
+            //NinjectKernelContainer.Bind<INotificationsViewModel>().ToConstant(notificationsViewModel);
 
+            //var dbVersionsViewSateManager = NinjectKernelContainer.Get<DBVersionsViewSateManager>();
+            //NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().ToConstant(dbVersionsViewSateManager);
+
+
+            RegisterServices();
 
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
             NinjectUtils_UI.SetKernelInstance(NinjectKernelContainer);
 
-            RegisterServices(NinjectKernelContainer);
+            ComposeObjects();
         }
 
-        private static void RegisterServices(IKernel kernel)
+        private static void RegisterServices()
         {
-            //  kernel.ThrowIfNull(nameof(kernel));
-
+            NinjectKernelContainer.Bind<INotificationsViewModel>().To<NotificationsViewModel>().InSingletonScope();
+            NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManager>().InSingletonScope();
         }
 
+
+        private static void ComposeObjects()
+        {
+            ViewRouter viewRouter = NinjectKernelContainer.Get<ViewRouter>();
+            NinjectKernelContainer.Bind<ViewRouter>().ToConstant(viewRouter);
+
+        }
 
         //public static void CreateKernelForTests()
         //{

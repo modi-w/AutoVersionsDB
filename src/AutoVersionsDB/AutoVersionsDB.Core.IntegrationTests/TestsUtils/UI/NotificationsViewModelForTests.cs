@@ -1,7 +1,10 @@
-﻿using AutoVersionsDB.Core;
+﻿using AutoVersionsDB;
+using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.Notifications;
 using AutoVersionsDB.UI.StatesLog;
 using System;
 using System.Collections.Generic;
@@ -11,7 +14,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace AutoVersionsDB.UI.Notifications
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI
 {
 
 

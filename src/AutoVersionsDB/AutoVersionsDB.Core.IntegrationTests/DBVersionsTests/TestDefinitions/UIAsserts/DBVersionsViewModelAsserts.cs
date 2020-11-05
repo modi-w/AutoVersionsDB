@@ -28,14 +28,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _dbVersionsViewStateAsserts = dbVersionsViewStateAsserts;
         }
 
-        public void AssertCompleteSuccessfully(DBVersionsViewModel dbVersionsViewModel)
+        public void AssertCompleteSuccessfully(string testName,DBVersionsViewModel dbVersionsViewModel)
         {
-            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataCompleteSuccessfully(GetType().Name, dbVersionsViewModel.DBVersionsViewModelData);
-            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(GetType().Name, dbVersionsViewModel.DBVersionsControls);
-            _dbVersionsViewStateAsserts.AssertNotificationsViewModelCompleteSuccessfully(GetType().Name, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsViewModelData);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
 
+        public void AssertProcessViewStates(string testName, IList<DBVersionsViewStateType> viewStateHistory, DBVersionsViewStateType finalViewState)
+        {
+            Assert.That(viewStateHistory.Count == 2, $"{testName} -> Number of process ViewStates should be 2");
+            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}");
+            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {finalViewState}");
 
+        }
 
 
 

@@ -12,17 +12,20 @@ namespace AutoVersionsDB.Core
 
         public static void SetKernelInstance(IKernel kernel)
         {
-            RegisterServices(kernel) ;
-
             KernelInstance = kernel;
+
+            RegisterServices();
+            
+            ComposeObjects();
         }
 
-        public static void RegisterServices(IKernel kernel)
+        public static void RegisterServices()
         {
-            kernel.ThrowIfNull(nameof(kernel));
+            KernelInstance.Bind<DBCommandsFactoryProvider>().To<DBCommandsFactoryProvider>().InSingletonScope();
+        }
 
-            kernel.Bind<DBCommandsFactoryProvider>().To<DBCommandsFactoryProvider>().InSingletonScope();
-            
+        private static void ComposeObjects()
+        {
         }
     }
 }

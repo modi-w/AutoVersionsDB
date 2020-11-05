@@ -3,7 +3,11 @@ using AutoVersionsDB.Core.Common.CLI;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI;
 using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.DBVersions;
+using AutoVersionsDB.UI.Notifications;
 using Moq;
 using Ninject;
 using System;
@@ -26,16 +30,35 @@ namespace AutoVersionsDB.Core.IntegrationTests
             NinjectKernelContainer = new StandardKernel();
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            RegisterServices(NinjectKernelContainer);
+
+            RegisterServices();
 
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
+
             NinjectUtils_UI.SetKernelInstance(NinjectKernelContainer);
+
+
+
+            ComposeObjects();
+        }
+
+        private static void RegisterServices()
+        {
+
+            NinjectKernelContainer.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessagesForTests>().InSingletonScope();
+            NinjectKernelContainer.Bind<INotificationsViewModel>().To<NotificationsViewModelForTests>().InSingletonScope();
+            NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManagerForTests>().InSingletonScope();
 
         }
 
-        private static void RegisterServices(IKernel kernel)
+        private static void ComposeObjects()
         {
-            MockObjectsProvider.Init(kernel);
+            MockObjectsProvider.Init(NinjectKernelContainer);
+
+            ViewRouter viewRouter = NinjectKernelContainer.Get<ViewRouter>();
+            NinjectKernelContainer.Bind<ViewRouter>().ToConstant(viewRouter);
+
+
         }
 
 

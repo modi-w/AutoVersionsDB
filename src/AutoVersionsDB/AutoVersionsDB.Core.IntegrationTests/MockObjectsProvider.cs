@@ -6,8 +6,11 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.UI.Notifications;
 using Moq;
 using Ninject;
@@ -33,6 +36,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
         public static Mock<NotificationsViewModelForTests> MockNotificationsViewModel { get; private set; }
 
+        public static Mock<DBVersionsViewSateManagerForTests> MockDBVersionsViewSateManagerFotTests { get; private set; }
+
 
         public static void Init(IKernel kernel)
         {
@@ -51,11 +56,18 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
             ConsoleProcessMessages internalConsoleProcessMessages = kernel.Get<ConsoleProcessMessages>();
             MockConsoleProcessMessages = new Mock<ConsoleProcessMessagesForTests>(MockBehavior.Strict, internalConsoleProcessMessages);
-            kernel.Bind<IConsoleProcessMessages>().ToConstant(MockConsoleProcessMessages.Object);
+            kernel.Rebind<IConsoleProcessMessages>().ToConstant(MockConsoleProcessMessages.Object);
+
 
             NotificationsViewModel internalNotificationsViewModel = kernel.Get<NotificationsViewModel>();
             MockNotificationsViewModel = new Mock<NotificationsViewModelForTests>(MockBehavior.Strict, internalNotificationsViewModel);
-            kernel.Bind<INotificationsViewModel>().ToConstant(MockNotificationsViewModel.Object);
+            kernel.Rebind<INotificationsViewModel>().ToConstant(MockNotificationsViewModel.Object);
+
+            DBVersionsViewSateManager internalDBVersionsViewSateManager = kernel.Get<DBVersionsViewSateManager>();
+            MockDBVersionsViewSateManagerFotTests = new Mock<DBVersionsViewSateManagerForTests>(MockBehavior.Strict, internalDBVersionsViewSateManager);
+            kernel.Rebind<IDBVersionsViewSateManager>().ToConstant(MockDBVersionsViewSateManagerFotTests.Object);
+
+
         }
 
 
@@ -68,7 +80,22 @@ namespace AutoVersionsDB.Core.IntegrationTests
                  testContext.ProcessResults = processResults;
              });
 
+            if (testContext is DBVersionsTestContext)
+            {
+                DBVersionsTestContext dbVersionsTestContext = testContext as DBVersionsTestContext;
+
+                MockDBVersionsViewSateManagerFotTests
+                 .Setup(m => m.ChangeViewStateForMockSniffer(It.IsAny<DBVersionsViewStateType>()))
+                 .Callback<DBVersionsViewStateType>((viewType) =>
+                 {
+                     dbVersionsTestContext.ViewStatesHistory.Add(viewType);
+                 });
+
+            }
         }
+
+
+
 
 
         public static void SetTestContextDataByMockCallbacksForCLI(TestContext testContext)
@@ -78,7 +105,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
         }
 
-       
+
 
         private static void SetProcessResultsToTestContextForCLI(TestContext testContext)
         {
@@ -102,10 +129,10 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
             MockConsole
              .Setup(m => m.SetCursorPosition(It.IsAny<int>(), It.IsAny<int>()))
-             .Callback<int,int>((left,top) =>
-             {
-                 testContext.ClearCurrentMessage(left);
-             });
+             .Callback<int, int>((left, top) =>
+              {
+                  testContext.ClearCurrentMessage(left);
+              });
 
 
             MockConsole

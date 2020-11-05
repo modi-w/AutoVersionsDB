@@ -57,6 +57,9 @@ namespace AutoVersionsDB.UI.ChooseProject
             DeleteProjectCommand = new RelayCommand<string>(DeleteProject);
 
             ChooseProjectViewModelData.PropertyChanged += ChooseProjectViewModelData_PropertyChanged;
+
+            RefreshProjectList();
+
         }
 
         private void ChooseProjectViewModelData_PropertyChanged(object sender, PropertyChangedEventArgs e)

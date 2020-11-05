@@ -28,54 +28,41 @@ namespace AutoVersionsDB.UI
 
 
 
-            var notificationsControls = kernel.Get<NotificationsControls>();
-            kernel.Bind<NotificationsControls>().ToConstant(notificationsControls);
+            kernel.Bind<NotificationsControls>().To<NotificationsControls>().InSingletonScope();
 
-            var notificationsViewModelData = kernel.Get<NotificationsViewModelData>();
-            kernel.Bind<NotificationsViewModelData>().ToConstant(notificationsViewModelData);
+            kernel.Bind<NotificationsViewModelData>().To<NotificationsViewModelData>().InSingletonScope();
 
-            //var notificationsViewModel = kernel.Get<NotificationsViewModel>();
-            //kernel.Bind<NotificationsViewModel>().ToConstant(notificationsViewModel);
+            //kernel.Bind<INotificationsViewModel>().To<INotificationsViewModel>().InSingletonScope();
 
 
-            var mainControls = kernel.Get<MainControls>();
-            kernel.Bind<MainControls>().ToConstant(mainControls);
+            kernel.Bind<MainControls>().To<MainControls>().InSingletonScope();
 
-            var mainViewModelData = kernel.Get<MainViewModelData>();
-            kernel.Bind<MainViewModelData>().ToConstant(mainViewModelData);
+            kernel.Bind<MainViewModelData>().To<MainViewModelData>().InSingletonScope();
 
-            var mainViewModel = kernel.Get<MainViewModel>();
-            kernel.Bind<MainViewModel>().ToConstant(mainViewModel);
+            kernel.Bind<MainViewModel>().To<MainViewModel>().InSingletonScope();
 
 
-            var chooseProjectViewModelData = kernel.Get<ChooseProjectViewModelData>();
-            kernel.Bind<ChooseProjectViewModelData>().ToConstant(chooseProjectViewModelData);
+            kernel.Bind<ChooseProjectViewModelData>().To<ChooseProjectViewModelData>().InSingletonScope();
 
-            var chooseProjectViewModel = kernel.Get<ChooseProjectViewModel>();
-            kernel.Bind<ChooseProjectViewModel>().ToConstant(chooseProjectViewModel);
+            kernel.Bind<ChooseProjectViewModel>().To<ChooseProjectViewModel>().InSingletonScope();
 
-            var editProjectControls = kernel.Get<EditProjectControls>();
-            kernel.Bind<EditProjectControls>().ToConstant(editProjectControls);
+            kernel.Bind<EditProjectControls>().To<EditProjectControls>().InSingletonScope();
 
-            var projectConfigErrorMessages = kernel.Get<ProjectConfigErrorMessages>();
-            kernel.Bind<ProjectConfigErrorMessages>().ToConstant(projectConfigErrorMessages);
+            kernel.Bind<ProjectConfigErrorMessages>().To<ProjectConfigErrorMessages>().InSingletonScope();
 
-            var editProjectViewModel = kernel.Get<EditProjectViewModel>();
-            kernel.Bind<EditProjectViewModel>().ToConstant(editProjectViewModel);
+            kernel.Bind<EditProjectViewModel>().To<EditProjectViewModel>().InSingletonScope();
 
 
-            var dbVersionsViewModelData = kernel.Get<DBVersionsViewModelData>();
-            kernel.Bind<DBVersionsViewModelData>().ToConstant(dbVersionsViewModelData);
+            kernel.Bind<DBVersionsViewModelData>().To<DBVersionsViewModelData>().InSingletonScope();
 
-            var dbVersionsControls = kernel.Get<DBVersionsControls>();
-            kernel.Bind<DBVersionsControls>().ToConstant(dbVersionsControls);
+            kernel.Bind<DBVersionsControls>().To<DBVersionsControls>().InSingletonScope();
 
-            var dbVersionsViewModel = kernel.Get<DBVersionsViewModel>();
-            kernel.Bind<DBVersionsViewModel>().ToConstant(dbVersionsViewModel);
+            //kernel.Bind<IDBVersionsViewSateManager>().To<IDBVersionsViewSateManager>().InSingletonScope();
 
 
-            ViewRouter viewRouter = kernel.Get<ViewRouter>();
-            kernel.Bind<ViewRouter>().ToConstant(viewRouter);
+            kernel.Bind<DBVersionsViewModel>().To<DBVersionsViewModel>().InSingletonScope();
+
+
 
 
         }

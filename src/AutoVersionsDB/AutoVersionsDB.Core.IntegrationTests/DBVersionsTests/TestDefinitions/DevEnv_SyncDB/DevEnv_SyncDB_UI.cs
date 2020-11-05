@@ -44,6 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
             _dbVersionsViewModel.SetProjectConfig(testContext.ProjectConfig.Id);
+            testContext.ClearProcessData();
 
             return testContext;
         }
@@ -60,7 +61,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_SyncDB_API.Asserts(testContext);
 
-            _dbVersionsViewModelAsserts.AssertCompleteSuccessfully(_dbVersionsViewModel);
+            _dbVersionsViewModelAsserts.AssertCompleteSuccessfully(this.GetType().Name ,_dbVersionsViewModel);
+            _dbVersionsViewModelAsserts.AssertProcessViewStates(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
         }
 
 

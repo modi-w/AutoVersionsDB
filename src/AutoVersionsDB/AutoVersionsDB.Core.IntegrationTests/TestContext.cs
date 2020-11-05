@@ -70,6 +70,20 @@ namespace AutoVersionsDB.Core.IntegrationTests
             _sbConsoleError.Append(str);
         }
 
+
+        public virtual void ClearProcessData()
+        {
+            _sbAllConsoleOut.Clear();
+            _sbConsoleError.Clear();
+            _sbCurrentConsoleOut.Clear();
+
+            _lastLengthForCurrentConsoleOnLineAppended = 0;
+
+            this.Result = null;
+            this.ProcessResults = null;
+
+        }
+
     }
 
     public class TestContext<TArgs> : TestContext

@@ -19,7 +19,7 @@ namespace AutoVersionsDB.UI.DBVersions
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly DBVersionsAPI _dbVersionsAPI;
-        private readonly DBVersionsViewSateManager _dbVersionsViewSateManager;
+        private readonly IDBVersionsViewSateManager _dbVersionsViewSateManager;
 
         public INotificationsViewModel NotificationsViewModel { get; }
 
@@ -82,7 +82,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         public DBVersionsViewModel(ProjectConfigsAPI projectConfigsAPI,
                                     DBVersionsAPI dbVersionsAPI,
-                                    DBVersionsViewSateManager dbVersionsViewSateManager,
+                                    IDBVersionsViewSateManager dbVersionsViewSateManager,
                                     INotificationsViewModel notificationsViewModel,
                                     DBVersionsViewModelData dbVersionsViewModelData,
                                     DBVersionsControls dbVersionsControls)

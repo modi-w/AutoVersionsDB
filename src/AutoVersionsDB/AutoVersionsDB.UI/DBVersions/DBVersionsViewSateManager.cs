@@ -13,7 +13,7 @@ using System.Text;
 
 namespace AutoVersionsDB.UI.DBVersions
 {
-    public class DBVersionsViewSateManager
+    public class DBVersionsViewSateManager : IDBVersionsViewSateManager
     {
         private readonly DBVersionsViewModelData _dbVersionsViewModelData;
         private readonly DBVersionsControls _dbVersionsControls;
@@ -186,7 +186,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls.PnlMissingSystemTablesEnabled = isEnable;
             _dbVersionsControls.PnlSetDBStateManuallyEnabled = isEnable;
             _dbVersionsControls.BtnRefreshEnable = isEnable;
-            _dbVersionsControls.IncrementalScriptsGridEnabled= isEnable;
+            _dbVersionsControls.IncrementalScriptsGridEnabled = isEnable;
             _dbVersionsControls.BtnShowHistoricalBackupsEnabled = isEnable;
             _dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled = isEnable;
             _dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled = isEnable;
