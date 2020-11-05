@@ -33,13 +33,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DevEnv_Recreate_EmptyDB()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Recreate_EmptyDB_API, DevEnv_Recreate_EmptyDB_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Recreate_EmptyDB_API, DevEnv_Recreate_EmptyDB_CLI, DevEnv_Recreate_EmptyDB_UI>();
         }
 
         [Test]
         public void DevEnv_Recreate_DBInMiddleState()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Recreate_DBInMiddleState_API, DevEnv_Recreate_DBInMiddleState_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Recreate_DBInMiddleState_API, DevEnv_Recreate_DBInMiddleState_CLI, DevEnv_Recreate_DBInMiddleState_UI>();
         }
 
 

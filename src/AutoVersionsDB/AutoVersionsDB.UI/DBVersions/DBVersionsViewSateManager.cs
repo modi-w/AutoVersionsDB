@@ -63,18 +63,19 @@ namespace AutoVersionsDB.UI.DBVersions
             {
                 _dbVersionsViewModelData.IncrementalScriptFiles = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
                 _dbVersionsViewModelData.RepeatableScriptFiles = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
-                _dbVersionsViewModelData.DevDummyDataScriptFiles = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+
+                if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
+                {
+                    _dbVersionsViewModelData.DevDummyDataScriptFiles = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                }
+                else
+                {
+                    _dbVersionsViewModelData.DevDummyDataScriptFiles = new List<RuntimeScriptFileBase>();
+                }
             }
 
 
             HideAllActionPanels();
-
-            _dbVersionsControls.PnlRepeatableFilesVisible = true;
-
-            if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
-            {
-                _dbVersionsControls.PnlDevDummyDataFilesVisible = true;
-            }
 
 
 
@@ -173,9 +174,15 @@ namespace AutoVersionsDB.UI.DBVersions
                     break;
             }
 
+            _dbVersionsControls.PnlRepeatableFilesVisible = true;
+            _dbVersionsControls.PnlDevDummyDataFilesVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
+
             _dbVersionsControls.BtnRecreateDbFromScratchMainVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
             _dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
             _dbVersionsControls.BtnDeployVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
+
+            _dbVersionsControls.BtnCreateNewDevDummyDataScriptFileEnabled = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
+
 
         }
 

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace AutoVersionsDB.Helpers
 {
-    public static class OsProcessUtils
+    public class OsProcessUtils
     {
-        public static void StartOsProcess(string filename)
+        public virtual void StartOsProcess(string filename)
         {
             using (var osProcess = new Process())
             {

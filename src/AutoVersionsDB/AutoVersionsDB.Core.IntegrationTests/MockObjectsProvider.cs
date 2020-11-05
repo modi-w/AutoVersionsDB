@@ -9,7 +9,9 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.UI;
 using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.UI.Notifications;
 using Moq;
@@ -18,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.IO;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 
@@ -37,6 +40,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public static Mock<NotificationsViewModelForTests> MockNotificationsViewModel { get; private set; }
 
         public static Mock<DBVersionsViewSateManagerForTests> MockDBVersionsViewSateManagerFotTests { get; private set; }
+
+        public static Mock<OsProcessUtils> MockOsProcessUtils { get; private set; }
 
 
         public static void Init(IKernel kernel)
@@ -68,8 +73,35 @@ namespace AutoVersionsDB.Core.IntegrationTests
             kernel.Rebind<IDBVersionsViewSateManager>().ToConstant(MockDBVersionsViewSateManagerFotTests.Object);
 
 
+            MockOsProcessUtils = new Mock<OsProcessUtils>();
+            kernel.Bind<OsProcessUtils>().ToConstant(MockOsProcessUtils.Object);
+
+            MockOsProcessUtils
+                .Setup(m=> m.StartOsProcess(It.IsAny<string>()))
+             .Callback<string>((filename) =>
+             {
+               //Do nothing
+             });
+
+            UIGeneralEvents.OnException += UIGeneralEvents_OnException;
+            UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
+
         }
 
+       
+
+        private static void UIGeneralEvents_OnException(object sender, string exceptionMessage)
+        {
+            Console.WriteLine(exceptionMessage);
+            Debug.WriteLine(exceptionMessage);
+
+            throw new Exception(exceptionMessage);
+        }
+
+        private static bool UIGeneralEvents_OnConfirm(object sender, string confirmMessage)
+        {
+            return true;
+        }
 
         public static void SetTestContextDataByMockCallbacksForUI(TestContext testContext)
         {

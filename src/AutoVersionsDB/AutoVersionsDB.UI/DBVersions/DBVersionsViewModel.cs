@@ -20,6 +20,7 @@ namespace AutoVersionsDB.UI.DBVersions
         private readonly ProjectConfigsAPI _projectConfigsAPI;
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly IDBVersionsViewSateManager _dbVersionsViewSateManager;
+        private readonly OsProcessUtils _osProcessUtils;
 
         public INotificationsViewModel NotificationsViewModel { get; }
 
@@ -85,11 +86,14 @@ namespace AutoVersionsDB.UI.DBVersions
                                     IDBVersionsViewSateManager dbVersionsViewSateManager,
                                     INotificationsViewModel notificationsViewModel,
                                     DBVersionsViewModelData dbVersionsViewModelData,
-                                    DBVersionsControls dbVersionsControls)
+                                    DBVersionsControls dbVersionsControls,
+                                    OsProcessUtils osProcessUtils)
         {
             _projectConfigsAPI = projectConfigsAPI;
             _dbVersionsAPI = dbVersionsAPI;
             _dbVersionsViewSateManager = dbVersionsViewSateManager;
+            _osProcessUtils = osProcessUtils;
+
             NotificationsViewModel = notificationsViewModel;
 
             DBVersionsViewModelData = dbVersionsViewModelData;
@@ -159,7 +163,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void ShowHistoricalBackups()
         {
-            OsProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.BackupFolderPath);
+            _osProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.BackupFolderPath);
         }
 
         private void SetDBToSpecificState()
@@ -192,15 +196,15 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void OpenIncrementalScriptsFolder()
         {
-            OsProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.IncrementalScriptsFolderPath);
+            _osProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.IncrementalScriptsFolderPath);
         }
         private void OpenRepeatableScriptsFolder()
         {
-            OsProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.RepeatableScriptsFolderPath);
+            _osProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.RepeatableScriptsFolderPath);
         }
         private void OpenDevDummyDataScriptsFolder()
         {
-            OsProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.DevDummyDataScriptsFolderPath);
+            _osProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.DevDummyDataScriptsFolderPath);
         }
 
 
@@ -221,7 +225,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                     RefreshAll();
 
-                    OsProcessUtils.StartOsProcess(newFileFullPath);
+                    _osProcessUtils.StartOsProcess(newFileFullPath);
                 }
             }
         }
@@ -242,7 +246,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                     RefreshAll();
 
-                    OsProcessUtils.StartOsProcess(newFileFullPath);
+                    _osProcessUtils.StartOsProcess(newFileFullPath);
                 }
 
             }
@@ -266,7 +270,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                     RefreshAll();
 
-                    OsProcessUtils.StartOsProcess(newFileFullPath);
+                    _osProcessUtils.StartOsProcess(newFileFullPath);
                 }
             }
         }
@@ -382,7 +386,7 @@ namespace AutoVersionsDB.UI.DBVersions
             NotificationsViewModel.AfterComplete(processResults);
             _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
 
-            OsProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.DeployArtifactFolderPath);
+            _osProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.DeployArtifactFolderPath);
         }
 
         private void RunSetDBStateManally()

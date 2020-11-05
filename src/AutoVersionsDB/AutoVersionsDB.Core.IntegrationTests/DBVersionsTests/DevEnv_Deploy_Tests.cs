@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DevEnv_Deploy()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Deploy_API, DevEnv_Deploy_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Deploy_API, DevEnv_Deploy_CLI, DevEnv_Deploy_UI>();
         }
 
 

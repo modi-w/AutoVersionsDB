@@ -28,10 +28,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _dbVersionsViewStateAsserts = dbVersionsViewStateAsserts;
         }
 
-        public void AssertCompleteSuccessfully(string testName,DBVersionsViewModel dbVersionsViewModel)
+        public void AssertCompleteSuccessfully(string testName,DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
-            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsViewModelData);
-            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls);
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             _dbVersionsViewStateAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
 
