@@ -38,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DevEnv_SyncDB_RepeatableChanged()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_SyncDB_RepeatableChanged_API, DevEnv_SyncDB_RepeatableChanged_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_SyncDB_RepeatableChanged_API, DevEnv_SyncDB_RepeatableChanged_CLI, DevEnv_SyncDB_RepeatableChanged_UI>();
         }
 
 
