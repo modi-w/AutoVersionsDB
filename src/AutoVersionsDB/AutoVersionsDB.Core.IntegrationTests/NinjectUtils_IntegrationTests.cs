@@ -134,6 +134,25 @@ namespace AutoVersionsDB.Core.IntegrationTests
             return testDefinitions;
         }
 
+        public static IEnumerable<TestDefinition> GetTestDefinitions<T1, T2, T3, T4, T5,T6>()
+          where T1 : TestDefinition
+          where T2 : TestDefinition
+          where T3 : TestDefinition
+          where T4 : TestDefinition
+          where T5 : TestDefinition
+          where T6 : TestDefinition
+        {
+            List<TestDefinition> testDefinitions = new List<TestDefinition>();
+
+            testDefinitions.Add(NinjectKernelContainer.Get<T1>());
+            testDefinitions.Add(NinjectKernelContainer.Get<T2>());
+            testDefinitions.Add(NinjectKernelContainer.Get<T3>());
+            testDefinitions.Add(NinjectKernelContainer.Get<T4>());
+            testDefinitions.Add(NinjectKernelContainer.Get<T5>());
+            testDefinitions.Add(NinjectKernelContainer.Get<T6>());
+
+            return testDefinitions;
+        }
 
 
     }

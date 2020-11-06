@@ -320,6 +320,8 @@ namespace AutoVersionsDB.UI.DBVersions
                 else
                 {
                     //RefreshScriptFilesState();
+                    NotificationsViewModel.AfterComplete(processResults);
+
 
                     NotificationsViewModel.WaitingForUser();
                     _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
@@ -435,12 +437,12 @@ namespace AutoVersionsDB.UI.DBVersions
             {
                 DBVersionsViewModelData.ScriptFilesState = processResults.Results as ScriptFilesState;
 
-                if (showTrace)
-                {
-                    NotificationsViewModel.AfterComplete(processResults);
+                //if (showTrace)
+                //{
+                //    NotificationsViewModel.AfterComplete(processResults);
 
-                    _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
-                }
+                //    _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+                //}
             }
 
             return !processResults.Trace.HasError;

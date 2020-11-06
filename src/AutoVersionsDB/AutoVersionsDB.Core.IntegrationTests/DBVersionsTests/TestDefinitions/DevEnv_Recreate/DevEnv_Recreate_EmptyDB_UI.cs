@@ -56,7 +56,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_Recreate_API.Asserts(testContext);
 
-            _dbVersionsViewModelAsserts.AssertCompleteSuccessfully(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
+            _dbVersionsViewModelAsserts.AssertCompleteSuccessfullyAllFilesSync(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
             _dbVersionsViewModelAsserts.AssertProcessViewStates(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
         }
 

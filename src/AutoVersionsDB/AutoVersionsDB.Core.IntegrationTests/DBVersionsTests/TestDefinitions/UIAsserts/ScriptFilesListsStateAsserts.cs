@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 {
     public class ScriptFilesListsStateAsserts
     {
-        public void AssertDBVersionsViewModelDataCompleteSuccessfully(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public void AssertDBVersionsViewModelDataAllSync(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFilesListHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles, HashDiffType.Equal);
@@ -33,6 +33,57 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
                 AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 0);
             }
         }
+
+        public void AssertDBVersionsViewModelDataRepeatableChanged(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        {
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0],  HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[1], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[2], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[3], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[4], HashDiffType.Equal);
+
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 2);
+            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[0], HashDiffType.Different);
+            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[1], HashDiffType.Equal);
+
+            if (isDevEnv)
+            {
+                AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 2);
+                AssertFileHashState(testName, dbVersionsViewModelData.DevDummyDataScriptFiles[0], HashDiffType.Equal);
+                AssertFileHashState(testName, dbVersionsViewModelData.DevDummyDataScriptFiles[1], HashDiffType.Different);
+            }
+            else
+            {
+                AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 0);
+            }
+        }
+
+        public void AssertDBVersionsViewModelDataIncrementalChanged(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        {
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[1], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[2], HashDiffType.Different);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[3], HashDiffType.NotExist);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[4], HashDiffType.NotExist);
+
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 2);
+            AssertFilesListHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles, HashDiffType.NotExist);
+
+            if (isDevEnv)
+            {
+                AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 2);
+                AssertFilesListHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles, HashDiffType.NotExist);
+            }
+            else
+            {
+                AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 0);
+            }
+        }
+
+
+
 
         private void AssertFilesListSize(string testName, string listName, IList<RuntimeScriptFileBase> runtimeFiles, int targetSize)
         {
