@@ -8,6 +8,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.UI;
 using AutoVersionsDB.UI.DBVersions;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _dbVersionsViewModel.SetProjectConfig(testContext.ProjectConfig.Id);
             testContext.ClearProcessData();
 
+            UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
+
+
             return testContext;
         }
 
@@ -62,7 +66,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Release(DBVersionsTestContext testContext)
         {
+            UIGeneralEvents.OnConfirm -= UIGeneralEvents_OnConfirm;
+
             _devEnv_Recreate_API.Release(testContext);
         }
+
+
+
+        private bool UIGeneralEvents_OnConfirm(object sender, string confirmMessage)
+        {
+            return true;
+        }
+
     }
 }

@@ -214,6 +214,8 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
+                _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
+
                 ProcessResults processResults = _dbVersionsAPI.CreateNewIncrementalScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
                 NotificationsViewModel.AfterComplete(processResults);
@@ -235,6 +237,8 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
+                _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
+
                 ProcessResults processResults = _dbVersionsAPI.CreateNewRepeatableScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
                 NotificationsViewModel.AfterComplete(processResults);
@@ -259,6 +263,8 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (results.IsApply)
             {
+                _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
+
                 ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
                 NotificationsViewModel.AfterComplete(processResults);

@@ -84,7 +84,6 @@ namespace AutoVersionsDB.Core.IntegrationTests
              });
 
             UIGeneralEvents.OnException += UIGeneralEvents_OnException;
-            UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
 
         }
 
@@ -96,11 +95,6 @@ namespace AutoVersionsDB.Core.IntegrationTests
             Debug.WriteLine(exceptionMessage);
 
             throw new Exception(exceptionMessage);
-        }
-
-        private static bool UIGeneralEvents_OnConfirm(object sender, string confirmMessage)
-        {
-            return true;
         }
 
         public static void SetTestContextDataByMockCallbacksForUI(TestContext testContext)
