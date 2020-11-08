@@ -35,20 +35,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DevEnv_Restore_SyncDB()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Restore_SyncDB_API, DevEnv_Restore_SyncDB_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Restore_SyncDB_API, DevEnv_Restore_SyncDB_CLI, DevEnv_Restore_SyncDB_UI>();
         }
 
         [Test]
         public void DevEnv_Restore_Recreate()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Restore_Recreate_API, DevEnv_Restore_Recreate_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Restore_Recreate_API, DevEnv_Restore_Recreate_CLI, DevEnv_Restore_Recreate_UI>();
         }
 
 
         [Test]
-        public void DevEnv_RestoreExecuted_SetDBToSpecificState()
+        public void DevEnv_Restore_SetDBToSpecificState()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Restore_SetDBToSpecificState_API>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Restore_SetDBToSpecificState_API, DevEnv_Restore_SetDBToSpecificState_UI>();
         }
 
 

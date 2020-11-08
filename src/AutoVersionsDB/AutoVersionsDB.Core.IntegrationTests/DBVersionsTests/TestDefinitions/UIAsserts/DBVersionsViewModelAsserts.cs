@@ -71,6 +71,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         }
 
 
+        public void AssertScriptError(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMiddleState(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelPRocessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+        }
+
+
 
         public void AssertProcessViewStates(string testName, IList<DBVersionsViewStateType> viewStateHistory, DBVersionsViewStateType finalViewState)
         {

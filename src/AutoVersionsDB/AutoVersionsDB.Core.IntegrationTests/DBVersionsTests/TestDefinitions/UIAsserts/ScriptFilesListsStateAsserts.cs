@@ -34,6 +34,31 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             }
         }
 
+
+        public void AssertDBVersionsViewModelDataMiddleState(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        {
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[1], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[2], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[3], HashDiffType.NotExist);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[4], HashDiffType.NotExist);
+
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 2);
+            AssertFilesListHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles, HashDiffType.NotExist);
+
+            if (isDevEnv)
+            {
+                AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 2);
+                AssertFilesListHashState(testName, dbVersionsViewModelData.DevDummyDataScriptFiles, HashDiffType.NotExist);
+            }
+            else
+            {
+                AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 0);
+            }
+        }
+
+
         public void AssertDBVersionsViewModelDataNewIncScriptsFiles(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 7);
