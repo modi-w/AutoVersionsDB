@@ -32,14 +32,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DevEnv_SetDBToSpecificState_DBInMiddleState_TargetFinalState()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_DBInMiddleState_TargetFinalState_API>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_DBInMiddleState_TargetFinalState_API, DevEnv_SetDBToSpecificState_DBInMiddleState_TargetFinalState_UI>();
         }
 
 
         [Test]
         public void DevEnv_SetDBToSpecificState_TargetMiddleState()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_TargetMiddleState_API>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_TargetMiddleState_API, DevEnv_SetDBToSpecificState_TargetMiddleState_UI>();
         }
 
 
@@ -52,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DevEnv_SetDBToSpecificState_IgnoreWarning()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_IgnoreWarning_API>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_IgnoreWarning_API, DevEnv_SetDBToSpecificState_IgnoreWarning_UI>();
         }
 
         

@@ -35,6 +35,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _dbVersionsViewStateAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
 
+        public void AssertCompleteSuccessForMiddleState(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMiddleState(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+        }
+
         public void AssertNewIncScriptsFiles(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewIncScriptsFiles(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
@@ -71,14 +78,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         }
 
 
-        public void AssertScriptError(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        public void AssertScriptErrorForMiddleState(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMiddleState(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             _dbVersionsViewStateAsserts.AssertNotificationsViewModelPRocessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
 
-
+        public void AssertDBSpecificStateWarning(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataAllSync(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelPRocessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+        }
 
         public void AssertProcessViewStates(string testName, IList<DBVersionsViewStateType> viewStateHistory, DBVersionsViewStateType finalViewState)
         {
