@@ -114,7 +114,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         }
 
 
-        public void AssertNotificationsViewModelPRocessError(string testName, NotificationsViewModelData notificationsViewModelData)
+        public void AssertNotificationsViewModelProcessError(string testName, NotificationsViewModelData notificationsViewModelData)
         {
             _propertiesAsserts.AssertPropertyState(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), eNotificationStatus.Error.ToString());
             _propertiesAsserts.AssertPropertyState(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, "Error occurred during the process.");

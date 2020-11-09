@@ -35,6 +35,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _dbVersionsViewStateAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
 
+        public void AssertWaitingForUserAllFilesSync(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataAllSync(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelWaitingForUser(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+        }
+
+
         public void AssertCompleteSuccessForMiddleState(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMiddleState(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
@@ -70,6 +78,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             _dbVersionsViewStateAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'");
         }
+        public void AssertIncrementalMissing(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataIncrementalMissing(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'");
+        }
+
+
+
+        public void AssertMissingSystemTables(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMissingSystemTables(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "The system tables has invalid structure. Please try to 'Recreate DB From Scratch' or 'Set DB State by Virtual Execution'.");
+        }
+
+
         public void AssertRepeatableChanged(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataRepeatableChanged(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
@@ -82,14 +107,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMiddleState(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
-            _dbVersionsViewStateAsserts.AssertNotificationsViewModelPRocessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelProcessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
+
+        //public void AssertScriptProcessErrorForDFinalState(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        //{
+        //    _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataAllSync(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+        //    _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+        //    _dbVersionsViewStateAsserts.AssertNotificationsViewModelProcessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+        //}
 
         public void AssertDBSpecificStateWarning(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataAllSync(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
-            _dbVersionsViewStateAsserts.AssertNotificationsViewModelPRocessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+            _dbVersionsViewStateAsserts.AssertNotificationsViewModelProcessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
 
         public void AssertProcessViewStates(string testName, IList<DBVersionsViewStateType> viewStateHistory, DBVersionsViewStateType finalViewState)
