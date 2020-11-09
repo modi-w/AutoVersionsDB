@@ -5,9 +5,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
-
-
-
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -34,20 +32,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
             _projectConfigsStorageHelper = NinjectUtils_IntegrationTests.NinjectKernelContainer.Get<ProjectConfigsStorageHelper>();
         }
 
-
-
-        [Test]
-        public void DevEnv_ProjectConfigValidation_NotValid()
-        {
-            TestsRunner.RunTests<DevEnv_ProjectConfigValidation_NotValid_API>();
-        }
-
-
-        [Test]
-        public void DevEnv_ProjectConfigValidation_Valid()
-        {
-            TestsRunner.RunTestsForeachDBType<DevEnv_ProjectConfigValidation_Valid_API>();
-        }
 
 
         [Test]

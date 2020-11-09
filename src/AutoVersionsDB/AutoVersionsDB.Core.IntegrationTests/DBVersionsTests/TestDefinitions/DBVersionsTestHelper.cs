@@ -49,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
         public TestContext Arrange(TestArgs testArgs, bool devEnvironment, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
         {
-            DBVersionsTestContext testContext = new DBVersionsTestContext(testArgs as ProjectConfigTestArgs, dbBackupFileType, scriptFilesStateType);
+            DBVersionsAPITestContext testContext = new DBVersionsAPITestContext(testArgs as ProjectConfigTestArgs, dbBackupFileType, scriptFilesStateType);
 
             testContext.ProjectConfig.DevEnvironment = devEnvironment;
 
@@ -71,7 +71,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         }
 
 
-        public void Asserts(DBVersionsTestContext testContext, bool processSucceed)
+        public void Asserts(DBVersionsAPITestContext testContext, bool processSucceed)
         {
             if (testContext.DBBackupFileType != DBBackupFileType.None)
             {
@@ -86,7 +86,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         }
 
 
-        public void Release(TestContext<ProjectConfigTestArgs> testContext)
+        public void Release(ProjectConfigTestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
 

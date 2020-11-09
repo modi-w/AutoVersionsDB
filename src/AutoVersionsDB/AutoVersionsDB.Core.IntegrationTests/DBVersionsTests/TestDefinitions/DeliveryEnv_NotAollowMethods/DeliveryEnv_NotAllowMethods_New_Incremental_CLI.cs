@@ -18,7 +18,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods
 {
-    public class DeliveryEnv_NotAllowMethods_New_Incremental_CLI : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_NotAllowMethods_New_Incremental_CLI : TestDefinition<DBVersionsAPITestContext>
     {
 
         private readonly DeliveryEnv_NotAllowMethods_New_Incremental_API _deliveryEnv_New_Incremental_API;
@@ -38,13 +38,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={_deliveryEnv_New_Incremental_API.ScriptName1}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _deliveryEnv_New_Incremental_API.Asserts(testContext);
 
@@ -63,7 +63,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _deliveryEnv_New_Incremental_API.Release(testContext);
         }

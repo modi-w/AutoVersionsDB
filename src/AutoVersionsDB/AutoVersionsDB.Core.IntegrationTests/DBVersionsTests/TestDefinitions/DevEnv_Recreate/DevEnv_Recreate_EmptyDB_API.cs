@@ -17,7 +17,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate
 {
-    public class DevEnv_Recreate_EmptyDB_API : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Recreate_EmptyDB_API : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
@@ -38,13 +38,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.EmptyDB, ScriptFilesStateType.ValidScripts);
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.RecreateDBFromScratch(testContext.ProjectConfig.Id,null, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Asserts(testContext, true);
 
@@ -54,7 +54,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
         }

@@ -19,7 +19,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations
 {
-    public class DevEnv_Validate_HistoryExecutedFilesChanged_API : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Validate_HistoryExecutedFilesChanged_API : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ProcessAsserts _processAsserts;
@@ -37,13 +37,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.IncrementalChanged);
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.ValidateDBVersions(testContext.ProjectConfig.Id, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Asserts(testContext,false);
 
@@ -52,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
         }

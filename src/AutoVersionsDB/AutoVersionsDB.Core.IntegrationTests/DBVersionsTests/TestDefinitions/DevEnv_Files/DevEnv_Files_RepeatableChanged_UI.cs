@@ -21,7 +21,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
 {
-    public class DevEnv_Files_RepeatableChanged_UI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Files_RepeatableChanged_UI : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ProcessAsserts _processAsserts;
@@ -41,7 +41,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsTestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.RepeatableChanged) as DBVersionsTestContext;
+            DBVersionsAPITestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.RepeatableChanged) as DBVersionsAPITestContext;
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -52,14 +52,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             var task = _dbVersionsViewModel.RefreshAllCommand.ExecuteWrapped();
             task.Wait();
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Asserts(testContext, true);
 
@@ -69,7 +69,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
         }

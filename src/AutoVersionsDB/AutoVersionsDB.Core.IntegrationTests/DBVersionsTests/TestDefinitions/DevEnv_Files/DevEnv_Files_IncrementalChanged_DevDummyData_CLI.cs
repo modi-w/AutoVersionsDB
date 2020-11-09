@@ -17,7 +17,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
 {
-    public class DevEnv_Files_IncrementalChanged_DevDummyData_CLI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Files_IncrementalChanged_DevDummyData_CLI : TestDefinition<DBVersionsAPITestContext>
     {
 
         private readonly DevEnv_Files_IncrementalChanged_API _files_IncrementalChanged_API;
@@ -37,13 +37,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"files ddd -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _files_IncrementalChanged_API.Asserts(testContext);
 
@@ -63,7 +63,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _files_IncrementalChanged_API.Release(testContext);
         }

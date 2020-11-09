@@ -22,7 +22,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_Validate_ArtifactFile_API : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Validate_ArtifactFile_API : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DBVersionsTestHelper _dbVersionsTestHelper;
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
@@ -40,7 +40,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsTestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts) as DBVersionsTestContext;
+            DBVersionsAPITestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts) as DBVersionsAPITestContext;
 
             testContext.ProjectConfig.DeliveryArtifactFolderPath += "_NotExistFolderSuffix";
 
@@ -55,13 +55,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             return testContext;
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.ValidateDBVersions(testContext.ProjectConfig.Id, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Asserts(testContext, false);
 
@@ -70,7 +70,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
         }

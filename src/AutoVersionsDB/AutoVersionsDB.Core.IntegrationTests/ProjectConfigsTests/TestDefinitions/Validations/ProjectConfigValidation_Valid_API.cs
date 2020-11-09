@@ -8,20 +8,20 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations
+namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations
 {
-    public class DevEnv_ProjectConfigValidation_Valid_API : TestDefinition<DBVersionsTestContext>
+    public class ProjectConfigValidation_Valid_API : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DBVersionsTestHelper _dbVersionsTestHelper;
 
-        public DevEnv_ProjectConfigValidation_Valid_API(DBVersionsTestHelper dbVersionsTestHelper)
+        public ProjectConfigValidation_Valid_API(DBVersionsTestHelper dbVersionsTestHelper)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;
         }
@@ -32,19 +32,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.EmptyDB, ScriptFilesStateType.ValidScripts);
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDBAPI.ValidateProjectConfig(testContext.ProjectConfig.Id, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.ValidateProjectConfig(testContext.ProjectConfig, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext,true);
+            _dbVersionsTestHelper.Asserts(testContext, true);
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
         }

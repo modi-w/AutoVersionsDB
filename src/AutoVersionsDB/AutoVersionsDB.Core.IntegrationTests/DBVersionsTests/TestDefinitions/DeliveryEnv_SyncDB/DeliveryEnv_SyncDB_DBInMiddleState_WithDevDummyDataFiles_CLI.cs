@@ -9,7 +9,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB
 {
-    public class DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_CLI : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_CLI : TestDefinition<DBVersionsAPITestContext>
     {
 
         private readonly DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_API _deliveryEnv_SyncDB_API;
@@ -29,13 +29,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"sync -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _deliveryEnv_SyncDB_API.Asserts(testContext);
 
@@ -48,7 +48,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _deliveryEnv_SyncDB_API.Release(testContext);
         }

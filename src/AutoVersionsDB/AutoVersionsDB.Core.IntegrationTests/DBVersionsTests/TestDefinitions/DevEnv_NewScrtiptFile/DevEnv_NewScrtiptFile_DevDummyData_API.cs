@@ -23,7 +23,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile
 {
-    public class DevEnv_NewScrtiptFile_DevDummyData_API : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_NewScrtiptFile_DevDummyData_API : TestDefinition<DBVersionsAPITestContext>
     {
         private string _relFolder_DevDummyData = "DevDummyData";
 
@@ -47,18 +47,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
 
-            ClearScriptsFiles(testContext as DBVersionsTestContext);
+            ClearScriptsFiles(testContext as DBVersionsAPITestContext);
 
             return testContext;
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.CreateNewDevDummyDataScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Asserts(testContext, true);
 
@@ -67,7 +67,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
 
@@ -92,7 +92,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        private void ClearScriptsFiles(DBVersionsTestContext testContext)
+        private void ClearScriptsFiles(DBVersionsAPITestContext testContext)
         {
             if (File.Exists(GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
             {

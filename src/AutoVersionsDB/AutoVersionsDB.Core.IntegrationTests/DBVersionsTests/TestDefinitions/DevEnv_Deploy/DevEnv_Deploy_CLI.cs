@@ -15,7 +15,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Deploy
 {
-    public class DevEnv_Deploy_CLI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Deploy_CLI : TestDefinition<DBVersionsAPITestContext>
     {
 
         private readonly DevEnv_Deploy_API _devEnv_Deploy_API;
@@ -35,13 +35,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"deploy -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _devEnv_Deploy_API.Asserts(testContext);
 
@@ -56,7 +56,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _devEnv_Deploy_API.Release(testContext);
         }

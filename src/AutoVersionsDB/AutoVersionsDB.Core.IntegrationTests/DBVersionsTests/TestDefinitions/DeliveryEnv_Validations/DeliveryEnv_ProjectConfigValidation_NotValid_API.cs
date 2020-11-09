@@ -21,7 +21,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_ProjectConfigValidation_NotValid_API : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_ProjectConfigValidation_NotValid_API : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProcessAsserts _processAsserts;
@@ -43,19 +43,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             };
 
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
-            DBVersionsTestContext testContext = new DBVersionsTestContext(overrideTestArgs as ProjectConfigTestArgs, DBBackupFileType.None, ScriptFilesStateType.None);
+            DBVersionsAPITestContext testContext = new DBVersionsAPITestContext(overrideTestArgs as ProjectConfigTestArgs, DBBackupFileType.None, ScriptFilesStateType.None);
             _projectConfigsStorageHelper.PrepareTestProject(testContext.ProjectConfig);
 
             return testContext;
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDBAPI.ValidateProjectConfig(testContext.ProjectConfig.Id, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.ValidateProjectConfig(testContext.ProjectConfig, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "DBType");
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "DBName");
@@ -64,7 +64,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
         }

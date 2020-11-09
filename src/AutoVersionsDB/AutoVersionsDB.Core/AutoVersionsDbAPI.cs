@@ -112,6 +112,14 @@ namespace AutoVersionsDB.Core
 
         #region Validation
 
+        public static ProcessResults ValidateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        {
+            lock (_processSyncLock)
+            {
+                return _projectConfigsAPI.ValidateProjectConfig(projectConfig, onNotificationStateChanged);
+            }
+        }
+
         public static ProcessResults ValidateDBVersions(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
@@ -119,15 +127,6 @@ namespace AutoVersionsDB.Core
                 return _dbVersionsAPI.ValidateDBVersions(id, onNotificationStateChanged);
             }
         }
-
-        public static ProcessResults ValidateProjectConfig(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-        {
-            lock (_processSyncLock)
-            {
-                return _dbVersionsAPI.ValidateProjectConfig(id, onNotificationStateChanged);
-            }
-        }
-
 
         public static ProcessResults ValdiateTargetStateAlreadyExecuted(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {

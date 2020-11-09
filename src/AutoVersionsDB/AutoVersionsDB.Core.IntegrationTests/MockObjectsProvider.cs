@@ -106,9 +106,9 @@ namespace AutoVersionsDB.Core.IntegrationTests
                  testContext.ProcessResults = processResults;
              });
 
-            if (testContext is DBVersionsTestContext)
+            if (testContext is DBVersionsAPITestContext)
             {
-                DBVersionsTestContext dbVersionsTestContext = testContext as DBVersionsTestContext;
+                DBVersionsAPITestContext dbVersionsTestContext = testContext as DBVersionsAPITestContext;
 
                 MockDBVersionsViewSateManagerFotTests
                  .Setup(m => m.ChangeViewStateForMockSniffer(It.IsAny<DBVersionsViewStateType>()))

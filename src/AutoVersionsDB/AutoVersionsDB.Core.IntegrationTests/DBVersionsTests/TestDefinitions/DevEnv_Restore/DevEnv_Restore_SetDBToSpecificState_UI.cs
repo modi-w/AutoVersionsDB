@@ -17,7 +17,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAss
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Restore
 {
-    public class DevEnv_Restore_SetDBToSpecificState_UI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Restore_SetDBToSpecificState_UI : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DevEnv_Restore_SetDBToSpecificState_API _devEnv_Restore_SetDBToSpecificState_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsTestContext testContext = _devEnv_Restore_SetDBToSpecificState_API.Arrange(testArgs) as DBVersionsTestContext;
+            DBVersionsAPITestContext testContext = _devEnv_Restore_SetDBToSpecificState_API.Arrange(testArgs) as DBVersionsAPITestContext;
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -45,14 +45,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             var task1 = _dbVersionsViewModel.RunSyncCommand.ExecuteWrapped();
             task1.Wait();
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _devEnv_Restore_SetDBToSpecificState_API.Asserts(testContext);
 
@@ -62,7 +62,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _devEnv_Restore_SetDBToSpecificState_API.Release(testContext);
         }

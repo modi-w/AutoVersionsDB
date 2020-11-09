@@ -18,7 +18,7 @@ using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Restore
 {
-    public class DevEnv_Restore_Recreate_CLI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Restore_Recreate_CLI : TestDefinition<DBVersionsAPITestContext>
     {
 
         private readonly DevEnv_Restore_Recreate_API _devEnv_Restore_Recreate_API;
@@ -38,13 +38,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"recreate -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _devEnv_Restore_Recreate_API.Asserts(testContext);
 
@@ -58,7 +58,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _devEnv_Restore_Recreate_API.Release(testContext);
         }

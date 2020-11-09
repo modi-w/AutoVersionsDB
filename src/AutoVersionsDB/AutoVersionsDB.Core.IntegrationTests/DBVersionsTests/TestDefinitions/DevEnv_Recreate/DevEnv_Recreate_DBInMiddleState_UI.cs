@@ -16,7 +16,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate
 {
-    public class DevEnv_Recreate_DBInMiddleState_UI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Recreate_DBInMiddleState_UI : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DevEnv_Recreate_DBInMiddleState_API _devEnv_Recreate_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsTestContext testContext = _devEnv_Recreate_API.Arrange(testArgs) as DBVersionsTestContext;
+            DBVersionsAPITestContext testContext = _devEnv_Recreate_API.Arrange(testArgs) as DBVersionsAPITestContext;
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -47,14 +47,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             var task = _dbVersionsViewModel.RecreateDbFromScratchCommand.ExecuteWrapped();
             task.Wait();
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _devEnv_Recreate_API.Asserts(testContext);
 
@@ -64,7 +64,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             UIGeneralEvents.OnConfirm -= UIGeneralEvents_OnConfirm;
 

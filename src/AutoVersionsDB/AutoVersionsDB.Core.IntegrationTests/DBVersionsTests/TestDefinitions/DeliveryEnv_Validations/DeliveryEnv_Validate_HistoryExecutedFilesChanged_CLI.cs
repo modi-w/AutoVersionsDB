@@ -18,7 +18,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_Validate_HistoryExecutedFilesChanged_CLI : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Validate_HistoryExecutedFilesChanged_CLI : TestDefinition<DBVersionsAPITestContext>
     {
 
         private readonly DeliveryEnv_Validate_HistoryExecutedFilesChanged_API _deliveryEnv_Validate_HistoryExecutedFilesChanged_API;
@@ -38,13 +38,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"validate -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _deliveryEnv_Validate_HistoryExecutedFilesChanged_API.Asserts(testContext);
 
@@ -63,7 +63,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _deliveryEnv_Validate_HistoryExecutedFilesChanged_API.Release(testContext);
         }

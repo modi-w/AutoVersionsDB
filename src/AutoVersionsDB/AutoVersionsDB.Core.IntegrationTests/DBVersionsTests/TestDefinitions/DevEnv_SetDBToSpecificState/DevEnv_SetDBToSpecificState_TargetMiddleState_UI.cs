@@ -20,7 +20,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SetDBToSpecificState
 {
-    public class DevEnv_SetDBToSpecificState_TargetMiddleState_UI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_SetDBToSpecificState_TargetMiddleState_UI : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DevEnv_SetDBToSpecificState_TargetMiddleState_API _devEnv_SetDBToSpecificState_TargetMiddleState_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsTestContext testContext = _devEnv_SetDBToSpecificState_TargetMiddleState_API.Arrange(testArgs) as DBVersionsTestContext;
+            DBVersionsAPITestContext testContext = _devEnv_SetDBToSpecificState_TargetMiddleState_API.Arrange(testArgs) as DBVersionsAPITestContext;
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -51,7 +51,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             return testContext;
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             _dbVersionsViewModel.DBVersionsViewModelData.TargetStateScriptFileName = IntegrationTestsConsts.TargetStateFile_MiddleState;
             var task1 = _dbVersionsViewModel.ApplySyncSpecificStateCommand.ExecuteWrapped();
@@ -59,7 +59,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _devEnv_SetDBToSpecificState_TargetMiddleState_API.Asserts(testContext);
 
@@ -68,7 +68,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             UIGeneralEvents.OnConfirm -= UIGeneralEvents_OnConfirm;
 

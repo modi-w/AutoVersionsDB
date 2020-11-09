@@ -21,7 +21,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB
 {
-    public class DevEnv_SyncDB_UI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_SyncDB_UI : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DevEnv_SyncDB_API _devEnv_SyncDB_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -38,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsTestContext testContext = _devEnv_SyncDB_API.Arrange(testArgs) as DBVersionsTestContext;
+            DBVersionsAPITestContext testContext = _devEnv_SyncDB_API.Arrange(testArgs) as DBVersionsAPITestContext;
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -49,14 +49,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             var task = _dbVersionsViewModel.RunSyncCommand.ExecuteWrapped();
             task.Wait();
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _devEnv_SyncDB_API.Asserts(testContext);
 
@@ -67,7 +67,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _devEnv_SyncDB_API.Release(testContext);
         }

@@ -24,7 +24,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Config
 {
-    public class Config_DevEnv_API : TestDefinition<TestContext<ProjectConfigTestArgs>>
+    public class Config_DevEnv_API : TestDefinition<ProjectConfigTestContext>
     {
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProjectConfigsStorage _projectConfigsStorage;
@@ -62,11 +62,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
 
-            return new TestContext<ProjectConfigTestArgs>(overrideTestArgs);
+            return new ProjectConfigTestContext(overrideTestArgs);
         }
 
 
-        public override void Act(TestContext<ProjectConfigTestArgs> testContext)
+        public override void Act(ProjectConfigTestContext testContext)
         {
             testContext.TestArgs.ProjectConfig.Description = IntegrationTestsConsts.DummyProjectConfig.Description;
             testContext.TestArgs.ProjectConfig.DBType = IntegrationTestsConsts.DummyProjectConfig.DBType;
@@ -82,7 +82,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Asserts(TestContext<ProjectConfigTestArgs> testContext)
+        public override void Asserts(ProjectConfigTestContext testContext)
         {
             ProjectConfigItem newProjectConfig = _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfig.Id);
             Assert.That(newProjectConfig != null, $"{GetType().Name} -> Could not find project with the new ProjectId.");
@@ -107,7 +107,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath);
         }
 
-        public override void Release(TestContext<ProjectConfigTestArgs> testContext)
+        public override void Release(ProjectConfigTestContext testContext)
         {
             _projectConfigsDirectoriesCleaner.ClearAutoCreatedFolders();
 

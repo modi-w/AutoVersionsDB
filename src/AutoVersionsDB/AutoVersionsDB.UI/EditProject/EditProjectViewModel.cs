@@ -237,7 +237,7 @@ namespace AutoVersionsDB.UI.EditProject
 
             _editProjectViewSateManager.ClearUIElementsErrors();
 
-            ProcessResults processResults = _dbVersionsAPI.ValidateProjectConfig(ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
+            ProcessResults processResults = _projectConfigsAPI.ValidateProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
 
             _editProjectViewSateManager.HandleProcessErrors(_isNewProjectConfig, processResults);
         }

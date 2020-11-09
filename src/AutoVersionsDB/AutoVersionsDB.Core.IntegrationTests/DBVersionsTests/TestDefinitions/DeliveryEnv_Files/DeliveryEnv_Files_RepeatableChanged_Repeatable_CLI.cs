@@ -14,7 +14,7 @@ using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DeliveryEnv_Files_RepeatableChanged_Repeatable_CLI : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Files_RepeatableChanged_Repeatable_CLI : TestDefinition<DBVersionsAPITestContext>
     {
 
         private readonly DeliveryEnv_Files_RepeatableChanged_API _files_RepeatableChanged_API;
@@ -34,13 +34,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"files repeatable -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _files_RepeatableChanged_API.Asserts(testContext);
 
@@ -61,7 +61,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _files_RepeatableChanged_API.Release(testContext);
         }

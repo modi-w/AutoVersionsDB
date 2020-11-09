@@ -16,7 +16,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB
 {
-    public class DevEnv_SyncDB_RepeatableChanged_CLI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_SyncDB_RepeatableChanged_CLI : TestDefinition<DBVersionsAPITestContext>
     {
 
         private readonly DevEnv_SyncDB_RepeatableChanged_API _devEnv_SyncDB_RepeatableChanged_API;
@@ -36,13 +36,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"sync -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _devEnv_SyncDB_RepeatableChanged_API.Asserts(testContext);
 
@@ -54,7 +54,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _devEnv_SyncDB_RepeatableChanged_API.Release(testContext);
         }

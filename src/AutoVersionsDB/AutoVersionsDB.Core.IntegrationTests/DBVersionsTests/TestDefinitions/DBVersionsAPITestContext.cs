@@ -17,21 +17,14 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions
 {
-    public class DBVersionsTestContext : TestContext<ProjectConfigTestArgs>
-    {
-        public DBBackupFileType DBBackupFileType { get; }
-        public ScriptFilesStateType ScriptFilesStateType { get; }
-        public ProjectConfigItem ProjectConfig => (TestArgs as ProjectConfigTestArgs).ProjectConfig;
-        public NumOfDBConnections NumOfConnectionsBefore { get; set; }
 
+    public class DBVersionsAPITestContext : ProjectConfigWithDBTestContext
+    {
         public List<DBVersionsViewStateType> ViewStatesHistory { get; set; }
 
-        public DBVersionsTestContext(ProjectConfigTestArgs projectConfigTestArgs, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
-            : base(projectConfigTestArgs)
+        public DBVersionsAPITestContext(ProjectConfigTestArgs projectConfigTestArgs, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+            : base(projectConfigTestArgs, dbBackupFileType, scriptFilesStateType)
         {
-            DBBackupFileType = dbBackupFileType;
-            ScriptFilesStateType = scriptFilesStateType;
-
             ViewStatesHistory = new List<DBVersionsViewStateType>();
         }
 

@@ -15,7 +15,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile
 {
-    public class DevEnv_NewScrtiptFile_Incremental_UI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_NewScrtiptFile_Incremental_UI : TestDefinition<DBVersionsAPITestContext>
     {
         private readonly DevEnv_NewScrtiptFile_Incremental_API _devEnv_NewScrtiptFile_Incremental_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsTestContext testContext = _devEnv_NewScrtiptFile_Incremental_API.Arrange(testArgs) as DBVersionsTestContext;
+            DBVersionsAPITestContext testContext = _devEnv_NewScrtiptFile_Incremental_API.Arrange(testArgs) as DBVersionsAPITestContext;
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -43,7 +43,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(DBVersionsAPITestContext testContext)
         {
             _dbVersionsViewModel.OnTextInput += _dbVersionsViewModel_OnTextInputScript1;
             var task1 = _dbVersionsViewModel.CreateNewIncrementalScriptFileCommand.ExecuteWrapped();
@@ -58,7 +58,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(DBVersionsAPITestContext testContext)
         {
             _devEnv_NewScrtiptFile_Incremental_API.Asserts(testContext);
 
@@ -68,7 +68,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(DBVersionsAPITestContext testContext)
         {
             _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInputScript1;
             _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInputScript2;
