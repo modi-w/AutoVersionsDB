@@ -8,8 +8,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
@@ -21,10 +20,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_Validate_HistoryExecutedFilesMissing_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ProcessAsserts _processAsserts;
 
-        public DeliveryEnv_Validate_HistoryExecutedFilesMissing_API(DBVersionsTestHelper dbVersionsTestHelper, 
+        public DeliveryEnv_Validate_HistoryExecutedFilesMissing_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper, 
                                                                     ProcessAsserts processAsserts)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;

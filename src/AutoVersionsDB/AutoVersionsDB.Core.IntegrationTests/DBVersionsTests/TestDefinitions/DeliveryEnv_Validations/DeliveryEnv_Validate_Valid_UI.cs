@@ -5,46 +5,40 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.UI.DBVersions;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
+namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_Files_RepeatableChanged_UI : TestDefinition<DBVersionsAPITestContext>
+    public class DeliveryEnv_Validate_Valid_UI : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
-        private readonly ProcessAsserts _processAsserts;
+        private readonly DeliveryEnv_Validate_Valid_API _devEnv_Validate_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
         private readonly DBVersionsViewModelAsserts _dbVersionsViewModelAsserts;
 
-        public DeliveryEnv_Files_RepeatableChanged_UI(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
-                                                        ProcessAsserts processAsserts,
-                                                        DBVersionsViewModel dbVersionsViewModel,
-                                                        DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
+        public DeliveryEnv_Validate_Valid_UI(DeliveryEnv_Validate_Valid_API devEnv_Validate_API,
+                                        DBVersionsViewModel dbVersionsViewModel,
+                                        DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
-            _processAsserts = processAsserts;
+            _devEnv_Validate_API = devEnv_Validate_API;
             _dbVersionsViewModel = dbVersionsViewModel;
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsAPITestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.RepeatableChanged) as DBVersionsAPITestContext;
+            DBVersionsAPITestContext testContext = _devEnv_Validate_API.Arrange(testArgs) as DBVersionsAPITestContext;
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
             _dbVersionsViewModel.SetProjectConfig(testContext.ProjectConfig.Id);
             testContext.ClearProcessData();
+
 
             return testContext;
         }
@@ -59,17 +53,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(DBVersionsAPITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, true);
+            _devEnv_Validate_API.Asserts(testContext);
 
-            _dbVersionsViewModelAsserts.AssertRepeatableChanged(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
+            _dbVersionsViewModelAsserts.AssertWaitingForUserAllFilesSync(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
             _dbVersionsViewModelAsserts.AssertProcessViewStates(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
         }
 
 
-
         public override void Release(DBVersionsAPITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _devEnv_Validate_API.Release(testContext);
         }
 
     }

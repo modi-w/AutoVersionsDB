@@ -6,9 +6,7 @@ using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
-
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
@@ -20,9 +18,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
 {
-    public class DBVersionsTestHelper
+    public class ProjectConfigWithDBArrangeAndAssert
     {
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly DBHandler _dbHandler;
@@ -32,7 +30,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         private readonly ProjectConfigsFactory _projectConfigsFactory;
 
 
-        public DBVersionsTestHelper(ProjectConfigsStorageHelper projectConfigsStorageHelper,
+        public ProjectConfigWithDBArrangeAndAssert(ProjectConfigsStorageHelper projectConfigsStorageHelper,
                                     DBHandler dbHandler,
                                     FoldersUtils foldersUtils,
                                     ProcessAsserts processAsserts,

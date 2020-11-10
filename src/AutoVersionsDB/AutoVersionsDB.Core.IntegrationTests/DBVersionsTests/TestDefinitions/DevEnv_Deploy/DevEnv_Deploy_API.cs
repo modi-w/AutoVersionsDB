@@ -8,7 +8,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Deploy;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate;
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -20,11 +20,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_Deploy_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DevEnv_Deploy_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DevEnv_Deploy_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                     ScriptFilesAsserts scriptFilesAsserts,
                                     DBAsserts dbAsserts)
         {

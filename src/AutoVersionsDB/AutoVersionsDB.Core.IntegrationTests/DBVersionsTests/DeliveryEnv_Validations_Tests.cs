@@ -5,9 +5,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
-
-
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -53,26 +51,26 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_Validate_Valid()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_Valid_API, DeliveryEnv_Validate_Valid_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_Valid_API, DeliveryEnv_Validate_Valid_CLI, DeliveryEnv_Validate_Valid_UI>();
         }
 
 
         [Test]
         public void DeliveryEnv_Validate_HistoryExecutedFilesChanged()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_HistoryExecutedFilesChanged_API, DeliveryEnv_Validate_HistoryExecutedFilesChanged_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_HistoryExecutedFilesChanged_API, DeliveryEnv_Validate_HistoryExecutedFilesChanged_CLI, DeliveryEnv_Validate_HistoryExecutedFilesChanged_UI>();
         }
 
         [Test]
         public void DeliveryEnv_Validate_HistoryExecutedFileMissing()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_HistoryExecutedFilesMissing_API, DeliveryEnv_Validate_HistoryExecutedFilesMissing_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_HistoryExecutedFilesMissing_API, DeliveryEnv_Validate_HistoryExecutedFilesMissing_CLI, DeliveryEnv_Validate_HistoryExecutedFilesMissing_UI>();
         }
 
         [Test]
         public void DeliveryEnv_Validate_MissingSystemTables()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_MissingSystemTables_API, DeliveryEnv_Validate_MissingSystemTables_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_MissingSystemTables_API, DeliveryEnv_Validate_MissingSystemTables_CLI, DeliveryEnv_Validate_MissingSystemTables_UI>();
         }
 
 

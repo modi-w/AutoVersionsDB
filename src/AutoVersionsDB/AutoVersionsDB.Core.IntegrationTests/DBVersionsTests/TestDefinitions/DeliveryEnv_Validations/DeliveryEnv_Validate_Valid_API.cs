@@ -8,7 +8,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -19,9 +19,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_Validate_Valid_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
 
-        public DeliveryEnv_Validate_Valid_API(DBVersionsTestHelper dbVersionsTestHelper)
+        public DeliveryEnv_Validate_Valid_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;
         }
@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+            return _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
         }
 
         public override void Act(DBVersionsAPITestContext testContext)

@@ -1,8 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using Ninject;
 using System;
 using System.Collections.Generic;

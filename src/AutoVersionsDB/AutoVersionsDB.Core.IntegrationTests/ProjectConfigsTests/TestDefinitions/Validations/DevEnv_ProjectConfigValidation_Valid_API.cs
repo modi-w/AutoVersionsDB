@@ -5,23 +5,24 @@ using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
+namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations
 {
-    public class DeliveryEnv_ProjectConfigValidation_Valid_API : TestDefinition<DBVersionsAPITestContext>
+    public class DevEnv_ProjectConfigValidation_Valid_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
 
-        public DeliveryEnv_ProjectConfigValidation_Valid_API(DBVersionsTestHelper dbVersionsTestHelper)
+        public DevEnv_ProjectConfigValidation_Valid_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;
         }
@@ -29,7 +30,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.EmptyDB, ScriptFilesStateType.ValidScripts);
+            return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.EmptyDB, ScriptFilesStateType.ValidScripts);
         }
 
         public override void Act(DBVersionsAPITestContext testContext)

@@ -11,8 +11,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Restore;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -23,10 +22,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_Restore_Recreate_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly DBAsserts _dbAsserts;
 
-        public DevEnv_Restore_Recreate_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DevEnv_Restore_Recreate_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                         DBAsserts dbAsserts)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;

@@ -12,8 +12,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
@@ -28,11 +27,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_Files_RepeatableChanged_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public DevEnv_Files_RepeatableChanged_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DevEnv_Files_RepeatableChanged_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                                     ScriptFilesAsserts scriptFilesAsserts)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;

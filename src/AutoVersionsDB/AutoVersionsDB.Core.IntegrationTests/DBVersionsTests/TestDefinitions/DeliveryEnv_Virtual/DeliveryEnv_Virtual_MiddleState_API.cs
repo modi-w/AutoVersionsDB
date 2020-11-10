@@ -7,7 +7,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -18,11 +18,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_Virtual_MiddleState_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DeliveryEnv_Virtual_MiddleState_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_Virtual_MiddleState_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                                     ScriptFilesAsserts scriptFilesAsserts,
                                                     DBAsserts dbAsserts)
         {

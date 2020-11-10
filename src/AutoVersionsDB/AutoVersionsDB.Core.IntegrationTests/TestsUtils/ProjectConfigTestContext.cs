@@ -6,7 +6,7 @@ using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
@@ -15,19 +15,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
 {
-    public class ProjectConfigWithDBTestContext : ProjectConfigTestContext
+    public class ProjectConfigTestContext : TestContext<ProjectConfigTestArgs>
     {
-        public DBBackupFileType DBBackupFileType { get; }
-        public ScriptFilesStateType ScriptFilesStateType { get; }
-        public NumOfDBConnections NumOfConnectionsBefore { get; set; }
+        public ProjectConfigItem ProjectConfig => (TestArgs as ProjectConfigTestArgs).ProjectConfig;
 
-        public ProjectConfigWithDBTestContext(ProjectConfigTestArgs projectConfigTestArgs, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public ProjectConfigTestContext(ProjectConfigTestArgs projectConfigTestArgs)
             : base(projectConfigTestArgs)
         {
-            DBBackupFileType = dbBackupFileType;
-            ScriptFilesStateType = scriptFilesStateType;
         }
     }
 }

@@ -24,14 +24,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests
         [Test]
         public void ProjectConfigValidation_NotValid()
         {
-            TestsRunner.RunTests<ProjectConfigValidation_NotValid_API>();
+            TestsRunner.RunTests<DevEnv_ProjectConfigValidation_NotValid_API, DeliveryEnv_ProjectConfigValidation_NotValid_API>();
         }
 
 
         [Test]
         public void ProjectConfigValidation_Valid()
         {
-            TestsRunner.RunTestsForeachDBType<ProjectConfigValidation_Valid_API>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_ProjectConfigValidation_Valid_API, DeliveryEnv_ProjectConfigValidation_Valid_API>();
         }
 
 

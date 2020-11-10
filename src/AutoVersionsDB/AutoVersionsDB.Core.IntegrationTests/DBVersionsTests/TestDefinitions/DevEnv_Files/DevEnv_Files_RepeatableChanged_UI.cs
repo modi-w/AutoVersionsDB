@@ -10,6 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
@@ -23,12 +24,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_Files_RepeatableChanged_UI : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ProcessAsserts _processAsserts;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
         private readonly DBVersionsViewModelAsserts _dbVersionsViewModelAsserts;
 
-        public DevEnv_Files_RepeatableChanged_UI(DBVersionsTestHelper dbVersionsTestHelper,
+        public DevEnv_Files_RepeatableChanged_UI(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                                         ProcessAsserts processAsserts,
                                                         DBVersionsViewModel dbVersionsViewModel,
                                                         DBVersionsViewModelAsserts dbVersionsViewModelAsserts)

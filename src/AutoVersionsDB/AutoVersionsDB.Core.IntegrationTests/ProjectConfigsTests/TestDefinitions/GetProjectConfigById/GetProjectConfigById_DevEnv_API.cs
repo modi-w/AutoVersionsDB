@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using NuGet.Frameworks;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectConfigById
 {

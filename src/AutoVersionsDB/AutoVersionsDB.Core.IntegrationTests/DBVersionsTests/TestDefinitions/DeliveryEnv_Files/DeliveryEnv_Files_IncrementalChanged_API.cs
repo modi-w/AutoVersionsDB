@@ -19,16 +19,17 @@ using System.IO;
 using System.Text;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
     public class DeliveryEnv_Files_IncrementalChanged_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public DeliveryEnv_Files_IncrementalChanged_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_Files_IncrementalChanged_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                                     ScriptFilesAsserts scriptFilesAsserts)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;

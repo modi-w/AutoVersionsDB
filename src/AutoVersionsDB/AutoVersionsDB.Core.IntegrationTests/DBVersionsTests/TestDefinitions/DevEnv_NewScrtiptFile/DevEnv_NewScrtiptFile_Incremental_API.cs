@@ -10,8 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
@@ -27,7 +26,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
     {
         private string _relFolder_Incremental = "Incremental";
 
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
@@ -36,7 +35,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public DevEnv_NewScrtiptFile_Incremental_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DevEnv_NewScrtiptFile_Incremental_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                                         ScriptFilesAsserts scriptFilesAsserts)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;

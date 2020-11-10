@@ -5,41 +5,36 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.UI.DBVersions;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
+namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_Files_IncrementalChanged_UI : TestDefinition<DBVersionsAPITestContext>
+    public class DeliveryEnv_Validate_HistoryExecutedFilesMissing_UI : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
-        private readonly ProcessAsserts _processAsserts;
+        private readonly DeliveryEnv_Validate_HistoryExecutedFilesMissing_API _devEnv_Validate_HistoryExecutedFilesMissing_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
         private readonly DBVersionsViewModelAsserts _dbVersionsViewModelAsserts;
 
-        public DeliveryEnv_Files_IncrementalChanged_UI(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
-                                                        ProcessAsserts processAsserts,
-                                                        DBVersionsViewModel dbVersionsViewModel,
-                                                        DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
+        public DeliveryEnv_Validate_HistoryExecutedFilesMissing_UI(DeliveryEnv_Validate_HistoryExecutedFilesMissing_API devEnv_Validate_HistoryExecutedFilesMissing_API,
+                                                                DBVersionsViewModel dbVersionsViewModel,
+                                                                DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
-            _processAsserts = processAsserts;
+            _devEnv_Validate_HistoryExecutedFilesMissing_API = devEnv_Validate_HistoryExecutedFilesMissing_API;
             _dbVersionsViewModel = dbVersionsViewModel;
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsAPITestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.MiddleState, ScriptFilesStateType.IncrementalChanged) as DBVersionsAPITestContext;
+            DBVersionsAPITestContext testContext = _devEnv_Validate_HistoryExecutedFilesMissing_API.Arrange(testArgs) as DBVersionsAPITestContext;
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -59,19 +54,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(DBVersionsAPITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, false);
-            _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "HistoryExecutedFilesChanged");
+            _devEnv_Validate_HistoryExecutedFilesMissing_API.Asserts(testContext);
 
-
-            _dbVersionsViewModelAsserts.AssertIncrementalChanged(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
+            _dbVersionsViewModelAsserts.AssertIncrementalMissing(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
             _dbVersionsViewModelAsserts.AssertProcessViewStates(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.HistoryExecutedFilesChanged);
         }
 
 
-
         public override void Release(DBVersionsAPITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _devEnv_Validate_HistoryExecutedFilesMissing_API.Release(testContext);
         }
 
     }

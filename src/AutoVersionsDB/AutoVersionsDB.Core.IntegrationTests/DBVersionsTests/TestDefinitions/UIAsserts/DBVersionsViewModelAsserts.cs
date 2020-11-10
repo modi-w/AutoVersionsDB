@@ -91,7 +91,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMissingSystemTables(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
-            _dbVersionsViewStateAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "The system tables has invalid structure. Please try to 'Recreate DB From Scratch' or 'Set DB State by Virtual Execution'.");
+            if (isDevEnv)
+            {
+                _dbVersionsViewStateAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "The system tables has invalid structure. Please try to 'Recreate DB From Scratch' or 'Set DB State by Virtual Execution'.");
+            }
+            else
+            {
+                _dbVersionsViewStateAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "The system tables has invalid structure. Please try to 'Set DB State by Virtual Execution'.");
+            }
+            
         }
 
 

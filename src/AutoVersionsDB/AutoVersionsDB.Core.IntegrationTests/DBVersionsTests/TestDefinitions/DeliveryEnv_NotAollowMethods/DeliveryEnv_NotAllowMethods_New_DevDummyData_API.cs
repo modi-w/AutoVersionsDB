@@ -9,8 +9,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
@@ -39,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             }
         }
 
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ProcessAsserts _processAsserts;
 
 
@@ -47,7 +46,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         public string ScriptName1 => "TestDddScript1";
 
 
-        public DeliveryEnv_NotAllowMethods_New_DevDummyData_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_NotAllowMethods_New_DevDummyData_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                                                     ProcessAsserts processAsserts)
         {
             _dbVersionsTestHelper = dbVersionsTestHelper;

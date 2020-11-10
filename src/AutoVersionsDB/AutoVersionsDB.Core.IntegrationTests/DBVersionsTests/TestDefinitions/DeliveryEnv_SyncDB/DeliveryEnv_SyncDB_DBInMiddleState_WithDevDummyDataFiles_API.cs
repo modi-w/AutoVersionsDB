@@ -1,6 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -11,11 +10,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_API : TestDefinition<DBVersionsAPITestContext>
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
                                                                             ScriptFilesAsserts scriptFilesAsserts,
                                                                             DBAsserts dbAsserts)
         {
