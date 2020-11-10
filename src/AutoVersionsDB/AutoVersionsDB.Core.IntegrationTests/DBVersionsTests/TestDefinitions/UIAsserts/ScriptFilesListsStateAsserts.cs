@@ -199,7 +199,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
                 AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 0);
             }
         }
-        
+
+        public void AssertDBVersionsViewModelDataNoFiles(string testName, DBVersionsViewModelData dbVersionsViewModelData)
+        {
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 0);
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 0);
+            AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 0);
+
+        }
 
         public void AssertDBVersionsViewModelDataMissingSystemTables(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {

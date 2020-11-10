@@ -35,18 +35,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
        
 
-        [Test]
-        public void DeliveryEnv_ProjectConfigValidation_Valid()
-        {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_ProjectConfigValidation_Valid_API>();
-        }
-
-        [Test]
-        public void DeliveryEnv_ProjectConfigValidation_NotValid()
-        {
-            TestsRunner.RunTests<DeliveryEnv_ProjectConfigValidation_NotValid_API>();
-        }
-
 
         [Test]
         public void DeliveryEnv_Validate_Valid()
@@ -77,7 +65,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_Validate_ArtifactFile()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_ArtifactFile_API, DeliveryEnv_Validate_ArtifactFile_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_ArtifactFile_API, DeliveryEnv_Validate_ArtifactFile_CLI, DeliveryEnv_Validate_ArtifactFile_UI>();
         }
 
     }
