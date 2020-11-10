@@ -31,21 +31,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_Virtual_EmptyDB()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Virtual_EmptyDB_API, DeliveryEnv_Virtual_EmptyDB_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Virtual_EmptyDB_API, DeliveryEnv_Virtual_EmptyDB_CLI, DeliveryEnv_Virtual_EmptyDB_UI>();
         }
 
 
         [Test]
         public void DeliveryEnv_Virtual_EmptyDBExceptSystemTables()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Virtual_EmptyDBWithSystemTables_API, DeliveryEnv_Virtual_EmptyDBWithSystemTables_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Virtual_EmptyDBWithSystemTables_API, DeliveryEnv_Virtual_EmptyDBWithSystemTables_CLI, DeliveryEnv_Virtual_EmptyDBWithSystemTables_UI>();
         }
 
 
         [Test]
         public void DeliveryEnv_Virtual_MiddleState()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Virtual_MiddleState_API, DeliveryEnv_Virtual_MiddleState_API>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Virtual_MiddleState_API, DeliveryEnv_Virtual_MiddleState_CLI, DeliveryEnv_Virtual_MiddleState_UI>();
         }
 
 
