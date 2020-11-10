@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 {
     public class ScriptFilesListsStateAsserts
     {
-        public void AssertDBVersionsViewModelDataAllSync(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public void AssertDBVersionsViewModelDataDBFinalState(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFilesListHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles, HashDiffType.Equal);

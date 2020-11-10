@@ -35,37 +35,37 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_NotAollowMethods_Deploy()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_Deploy_API, DeliveryEnv_NotAllowMethods_Deploy_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_Deploy_API, DeliveryEnv_NotAllowMethods_Deploy_CLI, DeliveryEnv_NotAllowMethods_Deploy_UI>();
         }
 
 
         [Test]
         public void DeliveryEnv_NotAollowMethods_Recreate()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_Recreate_API, DeliveryEnv_NotAllowMethods_Recreate_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_Recreate_API, DeliveryEnv_NotAllowMethods_Recreate_CLI, DeliveryEnv_NotAllowMethods_Recreate_UI>();
         }
 
 
         [Test]
         public void DeliveryEnv_NotAollowMethods_SetDBToSpecificState()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_SetDBToSpecificState_API>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_SetDBToSpecificState_API, DeliveryEnv_NotAllowMethods_SetDBToSpecificState_UI>();
         }
 
         [Test]
         public void DeliveryEnv_NotAollowMethods_New_Incremental()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_New_Incremental_API, DeliveryEnv_NotAllowMethods_New_Incremental_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_New_Incremental_API, DeliveryEnv_NotAllowMethods_New_Incremental_CLI, DeliveryEnv_NotAllowMethods_New_Incremental_UI>();
         }
         [Test]
         public void DeliveryEnv_NotAollowMethods_New_Repeatable()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_New_Repeatable_API, DeliveryEnv_NotAllowMethods_New_Repeatable_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_New_Repeatable_API, DeliveryEnv_NotAllowMethods_New_Repeatable_CLI, DeliveryEnv_NotAllowMethods_New_Repeatable_UI>();
         }
         [Test]
         public void DeliveryEnv_NotAollowMethods_New_DevDummyData()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_New_DevDummyData_API, DeliveryEnv_NotAllowMethods_New_DevDummyData_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_New_DevDummyData_API, DeliveryEnv_NotAllowMethods_New_DevDummyData_CLI, DeliveryEnv_NotAllowMethods_New_DevDummyData_UI>();
         }
 
     }
