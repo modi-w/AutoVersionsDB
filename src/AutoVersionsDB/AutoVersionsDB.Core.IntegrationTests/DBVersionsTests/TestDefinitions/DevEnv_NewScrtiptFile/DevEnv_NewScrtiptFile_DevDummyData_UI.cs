@@ -57,7 +57,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_NewScrtiptFile_DevDummyData_API.Asserts(testContext);
 
             _dbVersionsViewModelAsserts.AssertNewDDDScriptFile(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
-            _dbVersionsViewModelAsserts.AssertProcessViewStatesForNewSingleScriptFile(this.GetType().Name, testContext.ViewStatesHistory);
+            _dbVersionsViewModelAsserts.AssertViewStateHistoryForNewSingleScriptFile(this.GetType().Name, testContext.ViewStatesHistory);
         }
 
 

@@ -1,10 +1,16 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB;
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.IntegrationTests;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.DBVersions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI
+namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts
 {
     public class DBVersionsViewSateManagerForTests : IDBVersionsViewSateManager
     {

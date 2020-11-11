@@ -59,7 +59,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_NewScrtiptFile_Repeatable_API.Asserts(testContext);
 
             _dbVersionsViewModelAsserts.AssertNewRptScriptFile(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
-            _dbVersionsViewModelAsserts.AssertProcessViewStatesForNewSingleScriptFile(this.GetType().Name, testContext.ViewStatesHistory);
+            _dbVersionsViewModelAsserts.AssertViewStateHistoryForNewSingleScriptFile(this.GetType().Name, testContext.ViewStatesHistory);
         }
 
 

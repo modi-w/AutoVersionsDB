@@ -167,7 +167,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         private void Save()
         {
-            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InPorcess);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InProcess);
 
             if (_isNewProjectConfig)
             {
@@ -212,7 +212,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         private void SaveChangeId()
         {
-            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InPorcess);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InProcess);
 
             ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(_prevId, ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
 
@@ -231,7 +231,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         private void ValidateAll()
         {
-            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InPorcess);
+            _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InProcess);
 
             _notificationsViewModel.WaitingForUser();
 

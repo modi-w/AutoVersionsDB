@@ -1,7 +1,8 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.IntegrationTests;
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using NUnit.Framework;
 using System;
@@ -9,9 +10,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils
+namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
 {
-    public class ProperiesAsserts
+    public class PropertiesAsserts
     {
 
         public void AssertProperty(string testName, string propertyName, string expectedValue, string actualValue)

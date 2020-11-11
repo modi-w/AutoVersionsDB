@@ -2,7 +2,7 @@
 {
     public enum EditProjectViewStateType
     {
-        InPorcess,
+        InProcess,
         New,
         Update,
         EditId,

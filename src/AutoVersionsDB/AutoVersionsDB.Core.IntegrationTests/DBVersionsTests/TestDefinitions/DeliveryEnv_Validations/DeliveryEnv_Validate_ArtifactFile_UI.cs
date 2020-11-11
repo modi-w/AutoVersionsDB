@@ -57,7 +57,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_Validate_ArtifactFile_API.Asserts(testContext);
 
             _dbVersionsViewModelAsserts.AssertValidateArtifact(this.GetType().Name, _dbVersionsViewModel);
-            _dbVersionsViewModelAsserts.AssertProcessViewStates(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
+            _dbVersionsViewModelAsserts.AssertViewStateHistory(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
         }
 
 

@@ -63,7 +63,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_NewScrtiptFile_Incremental_API.Asserts(testContext);
 
             _dbVersionsViewModelAsserts.AssertNewIncScriptsFiles(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
-            _dbVersionsViewModelAsserts.AssertProcessViewStatesForNewTwoScriptFiles(this.GetType().Name, testContext.ViewStatesHistory);
+            _dbVersionsViewModelAsserts.AssertViewStateHistoryForNewTwoScriptFiles(this.GetType().Name, testContext.ViewStatesHistory);
         }
 
 

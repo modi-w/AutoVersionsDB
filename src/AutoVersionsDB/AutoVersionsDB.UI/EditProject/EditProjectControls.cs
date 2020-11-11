@@ -113,7 +113,7 @@ namespace AutoVersionsDB.UI.EditProject
 
 
         private bool _btnCancelEditIdVisible;
-        public bool BtnCancelEditIdVisible//
+        public bool BtnCancelEditIdVisible
         {
             get => _btnCancelEditIdVisible;
             set
@@ -122,7 +122,7 @@ namespace AutoVersionsDB.UI.EditProject
             }
         }
         private bool _btnCancelEditIdEnabled;
-        public bool BtnCancelEditIdEnabled//
+        public bool BtnCancelEditIdEnabled
         {
             get => _btnCancelEditIdEnabled;
             set

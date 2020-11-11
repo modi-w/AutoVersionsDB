@@ -55,7 +55,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_NotAllowMethods_Deploy_API.Asserts(testContext);
 
             _dbVersionsViewModelAsserts.AssertNotAllowMethodDBMiddleState(GetType().Name, _dbVersionsViewModel);
-            _dbVersionsViewModelAsserts.AssertProcessViewStates(GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
+            _dbVersionsViewModelAsserts.AssertViewStateHistory(GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
         }
 
 

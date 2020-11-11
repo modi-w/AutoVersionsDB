@@ -38,7 +38,7 @@ namespace AutoVersionsDB.UI.EditProject
 
             switch (viewType)
             {
-                case EditProjectViewStateType.InPorcess:
+                case EditProjectViewStateType.InProcess:
 
                     SetAllControlsEnableDisable(false);
                     break;
