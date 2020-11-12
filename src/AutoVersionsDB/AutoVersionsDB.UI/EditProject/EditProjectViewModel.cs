@@ -19,7 +19,7 @@ namespace AutoVersionsDB.UI.EditProject
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly INotificationsViewModel _notificationsViewModel;
 
-        private readonly EditProjectViewSateManager _editProjectViewSateManager;
+        private readonly IEditProjectViewSateManager _editProjectViewSateManager;
 
         private bool _isNewProjectConfig = false;
 
@@ -67,7 +67,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         public EditProjectViewModel(ProjectConfigsAPI projectConfigsAPI,
                                     DBVersionsAPI dbVersionsAPI,
-                                    EditProjectViewSateManager editProjectViewSateManager,
+                                    IEditProjectViewSateManager editProjectViewSateManager,
                                     INotificationsViewModel notificationsViewModel,
                                     EditProjectControls editProjectControls,
                                     ProjectConfigErrorMessages projectConfigErrorMessages)

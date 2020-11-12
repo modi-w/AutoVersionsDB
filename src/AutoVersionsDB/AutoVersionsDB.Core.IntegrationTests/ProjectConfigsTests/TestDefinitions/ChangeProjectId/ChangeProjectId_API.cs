@@ -9,8 +9,7 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.ChangeProjectId;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.DbCommands.Contract;
@@ -23,7 +22,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.ChangeProjectId
 {
-    public class ChangeProjectId_API : TestDefinition
+    public class ChangeProjectId_API : TestDefinition<EditProjectAPITestContext>
     {
         public const string OldProjectId = "TestProject_Old";
         public const string NewProjectId = "TestProject_New";
@@ -48,26 +47,37 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override TestContext Arrange(TestArgs testArgs)
         {
-            ProjectConfigItem projectConfig1 = new ProjectConfigItem()
+            ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
                 Id = OldProjectId,
                 Description = ProjectDesc,
+                BackupFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath,
+                DBName = IntegrationTestsConsts.DummyProjectConfig.DBName,
+                DBType = IntegrationTestsConsts.DummyProjectConfig.DBType,
+                DeliveryArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath,
+                DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath,
+                DevScriptsBaseFolderPath= IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath,
+                DevEnvironment = true,
+                Password = IntegrationTestsConsts.DummyProjectConfig.Password,
+                Server = IntegrationTestsConsts.DummyProjectConfig.Server,
+                Username = IntegrationTestsConsts.DummyProjectConfig.Username,
             };
 
-            _projectConfigsStorageHelper.PrepareTestProject(projectConfig1);
+            _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
 
+            ProjectConfigTestArgs projectConfigTestArgs = new ProjectConfigTestArgs(projectConfig);
 
-            return new TestContext(testArgs);
+            return new EditProjectAPITestContext(projectConfigTestArgs);
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(EditProjectAPITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.ChangeProjectId(OldProjectId, NewProjectId, null);
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(EditProjectAPITestContext testContext)
         {
             _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
 
@@ -80,7 +90,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             Assert.That(newProjectByProjectId.Description == ProjectDesc, $"{this.GetType().Name} -> Project Description should be: '{ProjectDesc}', but was:'{newProjectByProjectId.Description}'.");
         }
 
-        public override void Release(TestContext testContext)
+        public override void Release(EditProjectAPITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
         }

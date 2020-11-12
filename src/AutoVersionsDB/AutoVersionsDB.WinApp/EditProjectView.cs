@@ -356,25 +356,25 @@ namespace AutoVersionsDB.WinApp
                     SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DBTypeCodeErrorMessage);
                     break;
 
-                case nameof(ViewModel.ProjectConfigErrorMessages.ServerErrorMessage):
+                //case nameof(ViewModel.ProjectConfigErrorMessages.ServerErrorMessage):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.ServerErrorMessage);
-                    break;
+                //    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.ServerErrorMessage);
+                //    break;
 
                 case nameof(ViewModel.ProjectConfigErrorMessages.DBNameErrorMessage):
 
                     SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DBNameErrorMessage);
                     break;
 
-                case nameof(ViewModel.ProjectConfigErrorMessages.UsernameErrorMessage):
+                //case nameof(ViewModel.ProjectConfigErrorMessages.UsernameErrorMessage):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.UsernameErrorMessage);
-                    break;
+                //    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.UsernameErrorMessage);
+                //    break;
 
-                case nameof(ViewModel.ProjectConfigErrorMessages.PasswordErrorMessage):
+                //case nameof(ViewModel.ProjectConfigErrorMessages.PasswordErrorMessage):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.PasswordErrorMessage);
-                    break;
+                //    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.PasswordErrorMessage);
+                //    break;
 
                 case nameof(ViewModel.ProjectConfigErrorMessages.BackupFolderPathErrorMessage):
 

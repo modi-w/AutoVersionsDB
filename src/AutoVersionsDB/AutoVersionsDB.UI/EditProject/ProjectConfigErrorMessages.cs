@@ -29,15 +29,15 @@ namespace AutoVersionsDB.UI.EditProject
                 SetField(ref _dbTypeCodeErrorMessage, value);
             }
         }
-        private string _serverErrorMessage;
-        public string ServerErrorMessage
-        {
-            get => _serverErrorMessage;
-            set
-            {
-                SetField(ref _serverErrorMessage, value);
-            }
-        }
+        //private string _serverErrorMessage;
+        //public string ServerErrorMessage
+        //{
+        //    get => _serverErrorMessage;
+        //    set
+        //    {
+        //        SetField(ref _serverErrorMessage, value);
+        //    }
+        //}
         private string _dbNameErrorMessage;
         public string DBNameErrorMessage
         {
@@ -47,24 +47,24 @@ namespace AutoVersionsDB.UI.EditProject
                 SetField(ref _dbNameErrorMessage, value);
             }
         }
-        private string _usernameErrorMessage;
-        public string UsernameErrorMessage
-        {
-            get => _usernameErrorMessage;
-            set
-            {
-                SetField(ref _usernameErrorMessage, value);
-            }
-        }
-        private string _passwordErrorMessage;
-        public string PasswordErrorMessage
-        {
-            get => _passwordErrorMessage;
-            set
-            {
-                SetField(ref _passwordErrorMessage, value);
-            }
-        }
+        //private string _usernameErrorMessage;
+        //public string UsernameErrorMessage
+        //{
+        //    get => _usernameErrorMessage;
+        //    set
+        //    {
+        //        SetField(ref _usernameErrorMessage, value);
+        //    }
+        //}
+        //private string _passwordErrorMessage;
+        //public string PasswordErrorMessage
+        //{
+        //    get => _passwordErrorMessage;
+        //    set
+        //    {
+        //        SetField(ref _passwordErrorMessage, value);
+        //    }
+        //}
         private string _backupFolderPathErrorMessage;
         public string BackupFolderPathErrorMessage
         {

@@ -34,6 +34,19 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
             RunTests(tests, testArgs);
         }
+        public static void RunTests<T1, T2, T3>()
+        where T1 : TestDefinition
+        where T2 : TestDefinition
+        where T3 : TestDefinition
+        {
+            TestArgs testArgs = new ProjectConfigTestArgs(null);
+
+            var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3>();
+
+            RunTests(tests, testArgs);
+        }
+
+
 
 
         public static void RunTestsForeachDBType<T1>()

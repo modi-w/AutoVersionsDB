@@ -7,12 +7,13 @@ using System.Text;
 
 namespace AutoVersionsDB.UI.EditProject
 {
-    public class EditProjectViewSateManager
+    public class EditProjectViewSateManager : IEditProjectViewSateManager
     {
         private readonly EditProjectControls _editProjectControls;
         private readonly ProjectConfigErrorMessages _projectConfigErrorMessages;
         private readonly INotificationsViewModel _notificationsViewModel;
 
+        public EditProjectViewStateType LastViewState { get; private set; }
 
 
         public EditProjectViewSateManager(EditProjectControls editProjectControls,
@@ -35,6 +36,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         public void ChangeViewState(EditProjectViewStateType viewType)
         {
+            LastViewState = viewType;
 
             switch (viewType)
             {
@@ -138,10 +140,7 @@ namespace AutoVersionsDB.UI.EditProject
 
             _projectConfigErrorMessages.IdErrorMessage = null;
             _projectConfigErrorMessages.DBTypeCodeErrorMessage = null;
-            _projectConfigErrorMessages.ServerErrorMessage = null;
             _projectConfigErrorMessages.DBNameErrorMessage = null;
-            _projectConfigErrorMessages.UsernameErrorMessage = null;
-            _projectConfigErrorMessages.PasswordErrorMessage = null;
             _projectConfigErrorMessages.BackupFolderPathErrorMessage = null;
             _projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage = null;
             _projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage = null;

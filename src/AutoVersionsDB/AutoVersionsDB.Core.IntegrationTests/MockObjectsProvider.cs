@@ -8,12 +8,15 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI;
 using AutoVersionsDB.UI.DBVersions;
+using AutoVersionsDB.UI.EditProject;
 using AutoVersionsDB.UI.Notifications;
 using Moq;
 using Ninject;
@@ -42,6 +45,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
         public static Mock<DBVersionsViewSateManagerForTests> MockDBVersionsViewSateManagerFotTests { get; private set; }
 
+        public static Mock<EditProjectViewSateManagerForTests> MockEditProjectViewSateManagerFotTests { get; private set; }
         public static Mock<OsProcessUtils> MockOsProcessUtils { get; private set; }
 
 
@@ -73,22 +77,27 @@ namespace AutoVersionsDB.Core.IntegrationTests
             MockDBVersionsViewSateManagerFotTests = new Mock<DBVersionsViewSateManagerForTests>(MockBehavior.Strict, internalDBVersionsViewSateManager);
             kernel.Rebind<IDBVersionsViewSateManager>().ToConstant(MockDBVersionsViewSateManagerFotTests.Object);
 
+            EditProjectViewSateManager internalEditProjectViewSateManager = kernel.Get<EditProjectViewSateManager>();
+            MockEditProjectViewSateManagerFotTests = new Mock<EditProjectViewSateManagerForTests>(MockBehavior.Strict, internalEditProjectViewSateManager);
+            kernel.Rebind<IEditProjectViewSateManager>().ToConstant(MockEditProjectViewSateManagerFotTests.Object);
+
+
 
             MockOsProcessUtils = new Mock<OsProcessUtils>();
             kernel.Bind<OsProcessUtils>().ToConstant(MockOsProcessUtils.Object);
 
             MockOsProcessUtils
-                .Setup(m=> m.StartOsProcess(It.IsAny<string>()))
+                .Setup(m => m.StartOsProcess(It.IsAny<string>()))
              .Callback<string>((filename) =>
              {
-               //Do nothing
+                 //Do nothing
              });
 
             UIGeneralEvents.OnException += UIGeneralEvents_OnException;
 
         }
 
-       
+
 
         private static void UIGeneralEvents_OnException(object sender, string exceptionMessage)
         {
@@ -116,6 +125,19 @@ namespace AutoVersionsDB.Core.IntegrationTests
                  .Callback<DBVersionsViewStateType>((viewType) =>
                  {
                      dbVersionsTestContext.ViewStatesHistory.Add(viewType);
+                 });
+
+            }
+
+            if (testContext is EditProjectAPITestContext)
+            {
+                EditProjectAPITestContext editProjectAPITestContext = testContext as EditProjectAPITestContext;
+
+                MockEditProjectViewSateManagerFotTests
+                 .Setup(m => m.ChangeViewStateForMockSniffer(It.IsAny<EditProjectViewStateType>()))
+                 .Callback<EditProjectViewStateType>((viewType) =>
+                 {
+                     editProjectAPITestContext.ViewStatesHistory.Add(viewType);
                  });
 
             }

@@ -4,10 +4,12 @@ using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI;
 using AutoVersionsDB.UI;
 using AutoVersionsDB.UI.DBVersions;
+using AutoVersionsDB.UI.EditProject;
 using AutoVersionsDB.UI.Notifications;
 using Moq;
 using Ninject;
@@ -49,7 +51,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
             NinjectKernelContainer.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessagesForTests>().InSingletonScope();
             NinjectKernelContainer.Bind<INotificationsViewModel>().To<NotificationsViewModelForTests>().InSingletonScope();
             NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManagerForTests>().InSingletonScope();
-
+            NinjectKernelContainer.Bind<IEditProjectViewSateManager>().To<EditProjectViewSateManagerForTests>().InSingletonScope();
+            
         }
 
         private static void ComposeObjects()
