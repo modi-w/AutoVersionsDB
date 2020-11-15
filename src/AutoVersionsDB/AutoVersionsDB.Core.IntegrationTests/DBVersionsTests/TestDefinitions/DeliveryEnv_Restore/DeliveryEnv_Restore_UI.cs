@@ -10,6 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.UI.DBVersions;
 using System;
@@ -18,7 +19,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Restore
 {
-    public class DeliveryEnv_Restore_UI : TestDefinition<DBVersionsAPITestContext>
+    public class DeliveryEnv_Restore_UI : TestDefinition<DBVersionsUITestContext>
     {
         private readonly DeliveryEnv_Restore_API _deliveryEnv_Restore_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -33,9 +34,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsAPITestContext testContext = _deliveryEnv_Restore_API.Arrange(testArgs) as DBVersionsAPITestContext;
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_deliveryEnv_Restore_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -46,14 +47,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(DBVersionsUITestContext testContext)
         {
             var task1 = _dbVersionsViewModel.RunSyncCommand.ExecuteWrapped();
             task1.Wait();
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(DBVersionsUITestContext testContext)
         {
             _deliveryEnv_Restore_API.Asserts(testContext);
 
@@ -63,7 +64,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(DBVersionsUITestContext testContext)
         {
             _deliveryEnv_Restore_API.Release(testContext);
         }

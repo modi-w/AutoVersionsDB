@@ -6,7 +6,7 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
 using NUnit.Framework;
@@ -25,19 +25,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            return new TestContext(testArgs);
+            return new ProcessTestContext(testArgs);
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.Result = AutoVersionsDBAPI.GetDBTypes();
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             List<DBType> dbTypesResults = testContext.Result as List<DBType>;
 
@@ -48,7 +48,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             Assert.That(firstDBType.Name == "Sql Server", $"{GetType().Name} -> The first DBType Name should be: 'Sql Server', but was: '{firstDBType.Name}'");
         }
 
-        public override void Release(TestContext testContext)
+        public override void Release(ITestContext testContext)
         {
         }
     }

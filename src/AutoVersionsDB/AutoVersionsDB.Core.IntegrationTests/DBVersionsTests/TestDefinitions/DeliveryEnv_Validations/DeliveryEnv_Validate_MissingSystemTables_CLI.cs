@@ -9,7 +9,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_Validate_MissingSystemTables_CLI : TestDefinition<DBVersionsAPITestContext>
+    public class DeliveryEnv_Validate_MissingSystemTables_CLI : TestDefinition<CLITestContext>
     {
 
         private readonly DeliveryEnv_Validate_MissingSystemTables_API _deliveryEnv_Validate_MissingSystemTables_API;
@@ -27,9 +27,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _deliveryEnv_Validate_MissingSystemTables_API = deliveryEnv_Validate_MissingSystemTables_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _deliveryEnv_Validate_MissingSystemTables_API.Arrange(testArgs);
+            CLITestContext testContext = new CLITestContext(_deliveryEnv_Validate_MissingSystemTables_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
@@ -37,13 +37,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"validate -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _deliveryEnv_Validate_MissingSystemTables_API.Asserts(testContext);
 
@@ -60,7 +60,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _deliveryEnv_Validate_MissingSystemTables_API.Release(testContext);
         }

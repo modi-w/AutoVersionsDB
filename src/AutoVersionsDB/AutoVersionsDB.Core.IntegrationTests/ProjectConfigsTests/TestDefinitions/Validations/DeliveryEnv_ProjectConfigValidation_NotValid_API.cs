@@ -9,6 +9,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
@@ -20,7 +21,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations
 {
-    public class DeliveryEnv_ProjectConfigValidation_NotValid_API : TestDefinition<ProjectConfigWithDBTestContext>
+    public class DeliveryEnv_ProjectConfigValidation_NotValid_API : TestDefinition
     {
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProcessAsserts _processAsserts;
@@ -33,7 +34,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
@@ -42,19 +43,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             };
 
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
-            ProjectConfigWithDBTestContext testContext = new ProjectConfigWithDBTestContext(overrideTestArgs as ProjectConfigTestArgs, DBBackupFileType.None, ScriptFilesStateType.None);
+            ITestContext testContext = new ProcessTestContext(overrideTestArgs as ProjectConfigTestArgs, DBBackupFileType.None, ScriptFilesStateType.None);
             _projectConfigsStorageHelper.PrepareTestProject(testContext.ProjectConfig);
 
             return testContext;
         }
 
-        public override void Act(ProjectConfigWithDBTestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.ValidateProjectConfig(testContext.ProjectConfig, null);
         }
 
 
-        public override void Asserts(ProjectConfigWithDBTestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DBType");
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DBName");
@@ -63,7 +64,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Release(ProjectConfigWithDBTestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
         }

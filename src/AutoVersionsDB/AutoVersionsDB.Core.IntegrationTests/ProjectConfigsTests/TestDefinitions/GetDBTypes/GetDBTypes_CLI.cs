@@ -10,7 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -18,16 +18,16 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes
 {
-    public class GetDBTypes_CLI : TestDefinition
+    public class GetDBTypes_CLI : TestDefinition<CLITestContext>
     {
 
         public GetDBTypes_CLI()
         {
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = new TestContext(testArgs);
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
@@ -35,13 +35,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"dbtypes");
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
 
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
@@ -56,7 +56,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Release(TestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
         }
 

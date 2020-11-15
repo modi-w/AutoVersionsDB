@@ -7,6 +7,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.UI.DBVersions;
 using System;
@@ -15,7 +16,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual
 {
-    public class DevEnv_Virtual_MiddleState_UI : TestDefinition<DBVersionsAPITestContext>
+    public class DevEnv_Virtual_MiddleState_UI : TestDefinition<DBVersionsUITestContext>
     {
         private readonly DevEnv_Virtual_MiddleState_API _deliveryEnv_Virtual_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -30,9 +31,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsAPITestContext testContext = _deliveryEnv_Virtual_API.Arrange(testArgs) as DBVersionsAPITestContext;
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_deliveryEnv_Virtual_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -43,7 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(DBVersionsUITestContext testContext)
         {
             _dbVersionsViewModel.DBVersionsViewModelData.TargetStateScriptFileName = IntegrationTestsConsts.TargetStateFile_FinalState;
             var task = _dbVersionsViewModel.RunSetDBStateManallyCommand.ExecuteWrapped();
@@ -51,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(DBVersionsUITestContext testContext)
         {
             _deliveryEnv_Virtual_API.Asserts(testContext);
 
@@ -61,7 +62,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(DBVersionsUITestContext testContext)
         {
             _deliveryEnv_Virtual_API.Release(testContext);
         }

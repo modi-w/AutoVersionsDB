@@ -9,7 +9,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Init
 {
-    public class Init_DevEnv_AllProperties_CLI : TestDefinition
+    public class Init_DevEnv_AllProperties_CLI : TestDefinition<CLITestContext>
     {
         private readonly Init_DevEnv_AllProperties_API _init_AllProperties_API;
 
@@ -26,16 +26,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _init_AllProperties_API = init_AllProperties_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _init_AllProperties_API.Arrange(testArgs);
+            CLITestContext testContext = new CLITestContext(_init_AllProperties_API.Arrange(testArgs));
+
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             string args = $"-id={IntegrationTestsConsts.DummyProjectConfig.Id} ";
             args+= $"-desc={IntegrationTestsConsts.DummyProjectConfig.Description} ";
@@ -53,7 +54,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _init_AllProperties_API.Asserts(testContext);
 
@@ -66,7 +67,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Release(TestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _init_AllProperties_API.Release(testContext);
 

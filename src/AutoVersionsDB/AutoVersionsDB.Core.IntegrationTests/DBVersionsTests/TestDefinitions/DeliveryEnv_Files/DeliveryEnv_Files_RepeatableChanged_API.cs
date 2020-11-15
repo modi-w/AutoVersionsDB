@@ -21,10 +21,11 @@ using System.Text;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DeliveryEnv_Files_RepeatableChanged_API : TestDefinition<DBVersionsAPITestContext>
+    public class DeliveryEnv_Files_RepeatableChanged_API : TestDefinition
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
@@ -38,21 +39,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.RepeatableChanged);
+            ITestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.RepeatableChanged);
 
 
             return testContext;
         }
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.GetScriptFilesState(testContext.ProjectConfig.Id, null);
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             _dbVersionsTestHelper.Asserts(testContext, true);
 
@@ -74,7 +75,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             Assert.That(scriptFilesState.DevDummyDataScriptFilesComparer == null, $"{this.GetType().Name} -> DevDummyDataScriptFilesComparer should be null on delivery environment");
         }
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
         }

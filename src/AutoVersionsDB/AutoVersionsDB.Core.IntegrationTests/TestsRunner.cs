@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using Ninject;
 using System;
@@ -162,7 +163,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             foreach (var test in tests)
             {
-                TestContext testContext = null;
+                ITestContext testContext = null;
 
                 try
                 {

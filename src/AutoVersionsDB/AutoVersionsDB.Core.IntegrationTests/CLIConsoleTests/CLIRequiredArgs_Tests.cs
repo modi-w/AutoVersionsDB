@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+﻿using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Info_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"info");
@@ -33,28 +34,28 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Init_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"init");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,2);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--dev-environment' is required.", true);
         }
 
-       
+
 
         [Test]
         public void Config_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"config");
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,1);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
         }
 
@@ -62,7 +63,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Remove_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"remove");
@@ -75,7 +76,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Validate_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"validate");
@@ -88,7 +89,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Files_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"files");
@@ -101,7 +102,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Files_Incremental_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"files incremental");
@@ -114,7 +115,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Files_Repeatablel_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"files repeatable");
@@ -127,7 +128,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Files_DDD_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"files ddd");
@@ -141,7 +142,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Sync_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"sync");
@@ -154,7 +155,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Recreate_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"recreate");
@@ -167,7 +168,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Virtual_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"virtual");
@@ -181,7 +182,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void Deploy_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"deploy");
@@ -194,7 +195,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         public void New_Incremental_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"new incremental");
@@ -204,13 +205,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             assertConsoleOutTextByLines.AssertLineMessage("Option '--script-name' is required.", true);
         }
 
-      
+
 
         [Test]
         public void New_Repeatable_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"new repeatable");
@@ -220,12 +221,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             assertConsoleOutTextByLines.AssertLineMessage("Option '--script-name' is required.", true);
         }
 
-       
+
         [Test]
         public void New_DDD_ID_IsRequired()
         {
             //Arrange
-            TestContext testContext = new TestContext(new TestArgs());
+            CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             AutoVersionsDBAPI.CLIRun($"new ddd");

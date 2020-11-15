@@ -11,6 +11,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Restore;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
@@ -20,7 +21,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Restore
 {
-    public class DevEnv_Restore_SetDBToSpecificState_API : TestDefinition<DBVersionsAPITestContext>
+    public class DevEnv_Restore_SetDBToSpecificState_API : TestDefinition
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly DBAsserts _dbAsserts;
@@ -33,18 +34,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
         }
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.SetDBToSpecificState(testContext.ProjectConfig.Id, IntegrationTestsConsts.TargetStateFile_FinalState, false, null);
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
               _dbVersionsTestHelper.Asserts(testContext, false);
 
@@ -53,7 +54,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
         }

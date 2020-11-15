@@ -14,10 +14,11 @@ using System.Text;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Restore
 {
-    public class DevEnv_Restore_SyncDB_UI : TestDefinition<DBVersionsAPITestContext>
+    public class DevEnv_Restore_SyncDB_UI : TestDefinition<DBVersionsUITestContext>
     {
         private readonly DevEnv_Restore_SyncDB_API _devEnv_Restore_SyncDB_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -32,9 +33,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsAPITestContext testContext = _devEnv_Restore_SyncDB_API.Arrange(testArgs) as DBVersionsAPITestContext;
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_devEnv_Restore_SyncDB_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -45,14 +46,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(DBVersionsUITestContext testContext)
         {
             var task1 = _dbVersionsViewModel.RunSyncCommand.ExecuteWrapped();
             task1.Wait();
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(DBVersionsUITestContext testContext)
         {
             _devEnv_Restore_SyncDB_API.Asserts(testContext);
 
@@ -62,7 +63,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(DBVersionsUITestContext testContext)
         {
             _devEnv_Restore_SyncDB_API.Release(testContext);
         }

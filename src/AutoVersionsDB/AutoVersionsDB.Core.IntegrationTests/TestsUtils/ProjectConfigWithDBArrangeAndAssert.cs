@@ -6,6 +6,7 @@ using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
@@ -45,9 +46,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
             _projectConfigsFactory = projectConfigsFactory;
         }
 
-        public TestContext Arrange(TestArgs testArgs, bool devEnvironment, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
+        public ITestContext Arrange(TestArgs testArgs, bool devEnvironment, DBBackupFileType dbBackupFileType, ScriptFilesStateType scriptFilesStateType)
         {
-            DBVersionsAPITestContext testContext = new DBVersionsAPITestContext(testArgs as ProjectConfigTestArgs, dbBackupFileType, scriptFilesStateType);
+            ITestContext testContext = new ProcessTestContext(testArgs as ProjectConfigTestArgs, dbBackupFileType, scriptFilesStateType);
 
             testContext.ProjectConfig.DevEnvironment = devEnvironment;
 
@@ -69,7 +70,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
         }
 
 
-        public void Asserts(DBVersionsAPITestContext testContext, bool processSucceed)
+        public void Asserts(ITestContext testContext, bool processSucceed)
         {
             if (testContext.DBBackupFileType != DBBackupFileType.None)
             {
@@ -84,7 +85,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
         }
 
 
-        public void Release(ProjectConfigTestContext testContext)
+        public void Release(ITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
 

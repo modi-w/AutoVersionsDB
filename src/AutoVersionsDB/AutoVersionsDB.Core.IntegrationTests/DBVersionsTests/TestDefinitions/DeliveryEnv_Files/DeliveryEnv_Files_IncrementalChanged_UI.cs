@@ -16,10 +16,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DeliveryEnv_Files_IncrementalChanged_UI : TestDefinition<DBVersionsAPITestContext>
+    public class DeliveryEnv_Files_IncrementalChanged_UI : TestDefinition<DBVersionsUITestContext>
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
         private readonly ProcessAsserts _processAsserts;
@@ -37,9 +38,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsAPITestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.MiddleState, ScriptFilesStateType.IncrementalChanged) as DBVersionsAPITestContext;
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.MiddleState, ScriptFilesStateType.IncrementalChanged));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -50,14 +51,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(DBVersionsUITestContext testContext)
         {
             var task = _dbVersionsViewModel.RefreshAllCommand.ExecuteWrapped();
             task.Wait();
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(DBVersionsUITestContext testContext)
         {
             _dbVersionsTestHelper.Asserts(testContext, false);
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "HistoryExecutedFilesChanged");
@@ -69,7 +70,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(DBVersionsUITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
         }

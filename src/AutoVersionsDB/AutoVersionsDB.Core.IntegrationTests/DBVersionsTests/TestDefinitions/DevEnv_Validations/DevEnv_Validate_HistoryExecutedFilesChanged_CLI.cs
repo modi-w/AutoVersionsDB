@@ -9,7 +9,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -18,7 +18,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations
 {
-    public class DevEnv_Validate_HistoryExecutedFilesChanged_CLI : TestDefinition<DBVersionsAPITestContext>
+    public class DevEnv_Validate_HistoryExecutedFilesChanged_CLI : TestDefinition<CLITestContext>
     {
 
         private readonly DevEnv_Validate_HistoryExecutedFilesChanged_API _devEnv_Validate_HistoryExecutedFilesChanged_API;
@@ -28,9 +28,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_Validate_HistoryExecutedFilesChanged_API = devEnv_Validate_HistoryExecutedFilesChanged_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _devEnv_Validate_HistoryExecutedFilesChanged_API.Arrange(testArgs);
+            CLITestContext testContext = new CLITestContext(_devEnv_Validate_HistoryExecutedFilesChanged_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
@@ -38,13 +38,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"validate -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _devEnv_Validate_HistoryExecutedFilesChanged_API.Asserts(testContext);
 
@@ -61,7 +61,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _devEnv_Validate_HistoryExecutedFilesChanged_API.Release(testContext);
         }

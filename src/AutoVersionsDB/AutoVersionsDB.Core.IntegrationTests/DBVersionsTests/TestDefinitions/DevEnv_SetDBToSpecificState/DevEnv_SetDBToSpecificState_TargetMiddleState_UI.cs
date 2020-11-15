@@ -9,6 +9,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SetDBToSpecificState;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
@@ -20,7 +21,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SetDBToSpecificState
 {
-    public class DevEnv_SetDBToSpecificState_TargetMiddleState_UI : TestDefinition<DBVersionsAPITestContext>
+    public class DevEnv_SetDBToSpecificState_TargetMiddleState_UI : TestDefinition<DBVersionsUITestContext>
     {
         private readonly DevEnv_SetDBToSpecificState_TargetMiddleState_API _devEnv_SetDBToSpecificState_TargetMiddleState_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -37,9 +38,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsAPITestContext testContext = _devEnv_SetDBToSpecificState_TargetMiddleState_API.Arrange(testArgs) as DBVersionsAPITestContext;
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_devEnv_SetDBToSpecificState_TargetMiddleState_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -51,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             return testContext;
         }
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(DBVersionsUITestContext testContext)
         {
             _dbVersionsViewModel.DBVersionsViewModelData.TargetStateScriptFileName = IntegrationTestsConsts.TargetStateFile_MiddleState;
             var task1 = _dbVersionsViewModel.ApplySyncSpecificStateCommand.ExecuteWrapped();
@@ -59,7 +60,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(DBVersionsUITestContext testContext)
         {
             _devEnv_SetDBToSpecificState_TargetMiddleState_API.Asserts(testContext);
 
@@ -68,7 +69,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(DBVersionsUITestContext testContext)
         {
             UIGeneralEvents.OnConfirm -= UIGeneralEvents_OnConfirm;
 

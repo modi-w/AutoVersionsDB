@@ -2,14 +2,13 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-
-
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.ChangeProjectId;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Config;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
@@ -23,7 +22,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Config
 {
-    public class Config_DevEnv_API : TestDefinition<ProjectConfigTestContext>
+    public class Config_DevEnv_API : TestDefinition
     {
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProjectConfigsStorage _projectConfigsStorage;
@@ -47,7 +46,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             _projectConfigsDirectoriesCleaner.ClearAutoCreatedFolders();
 
@@ -61,27 +60,27 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
 
-            return new ProjectConfigTestContext(overrideTestArgs);
+            return new ProcessTestContext(overrideTestArgs);
         }
 
 
-        public override void Act(ProjectConfigTestContext testContext)
+        public override void Act(ITestContext testContext)
         {
-            testContext.TestArgs.ProjectConfig.Description = IntegrationTestsConsts.DummyProjectConfig.Description;
-            testContext.TestArgs.ProjectConfig.DBType = IntegrationTestsConsts.DummyProjectConfig.DBType;
-            testContext.TestArgs.ProjectConfig.Server = IntegrationTestsConsts.DummyProjectConfig.Server;
-            testContext.TestArgs.ProjectConfig.DBName = IntegrationTestsConsts.DummyProjectConfig.DBName;
-            testContext.TestArgs.ProjectConfig.Username = IntegrationTestsConsts.DummyProjectConfig.Username;
-            testContext.TestArgs.ProjectConfig.Password = IntegrationTestsConsts.DummyProjectConfig.Password;
-            testContext.TestArgs.ProjectConfig.BackupFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath;
-            testContext.TestArgs.ProjectConfig.DevScriptsBaseFolderPath = IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath;
-            testContext.TestArgs.ProjectConfig.DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath;
+            testContext.ProjectConfig.Description = IntegrationTestsConsts.DummyProjectConfig.Description;
+            testContext.ProjectConfig.DBType = IntegrationTestsConsts.DummyProjectConfig.DBType;
+            testContext.ProjectConfig.Server = IntegrationTestsConsts.DummyProjectConfig.Server;
+            testContext.ProjectConfig.DBName = IntegrationTestsConsts.DummyProjectConfig.DBName;
+            testContext.ProjectConfig.Username = IntegrationTestsConsts.DummyProjectConfig.Username;
+            testContext.ProjectConfig.Password = IntegrationTestsConsts.DummyProjectConfig.Password;
+            testContext.ProjectConfig.BackupFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath;
+            testContext.ProjectConfig.DevScriptsBaseFolderPath = IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath;
+            testContext.ProjectConfig.DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath;
 
-            testContext.ProcessResults = AutoVersionsDBAPI.UpdateProjectConfig(testContext.TestArgs.ProjectConfig, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.UpdateProjectConfig(testContext.ProjectConfig, null);
         }
 
 
-        public override void Asserts(ProjectConfigTestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             ProjectConfigItem newProjectConfig = _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfig.Id);
             Assert.That(newProjectConfig != null, $"{GetType().Name} -> Could not find project with the new ProjectId.");
@@ -106,7 +105,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath);
         }
 
-        public override void Release(ProjectConfigTestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsDirectoriesCleaner.ClearAutoCreatedFolders();
 

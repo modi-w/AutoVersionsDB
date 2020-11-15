@@ -15,10 +15,11 @@ using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.UI;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Restore
 {
-    public class DevEnv_Restore_Recreate_UI : TestDefinition<DBVersionsAPITestContext>
+    public class DevEnv_Restore_Recreate_UI : TestDefinition<DBVersionsUITestContext>
     {
         private readonly DevEnv_Restore_Recreate_API _devEnv_Restore_Recreate_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
@@ -34,9 +35,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsAPITestContext testContext = _devEnv_Restore_Recreate_API.Arrange(testArgs) as DBVersionsAPITestContext;
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_devEnv_Restore_Recreate_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -49,14 +50,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(DBVersionsUITestContext testContext)
         {
             var task1 = _dbVersionsViewModel.RecreateDbFromScratchCommand.ExecuteWrapped();
             task1.Wait();
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(DBVersionsUITestContext testContext)
         {
             _devEnv_Restore_Recreate_API.Asserts(testContext);
             
@@ -65,7 +66,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(DBVersionsUITestContext testContext)
         {
             UIGeneralEvents.OnConfirm -= UIGeneralEvents_OnConfirm;
 

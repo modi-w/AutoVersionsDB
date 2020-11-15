@@ -10,6 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
@@ -22,7 +23,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile
 {
-    public class DevEnv_NewScrtiptFile_Repeatable_API : TestDefinition<DBVersionsAPITestContext>
+    public class DevEnv_NewScrtiptFile_Repeatable_API : TestDefinition
     {
         private string _relFolder_Repeatable = "Repeatable";
 
@@ -42,23 +43,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+            ITestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
 
-            ClearScriptsFiles(testContext as DBVersionsAPITestContext);
+            ClearScriptsFiles(testContext);
 
             return testContext;
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.CreateNewRepeatableScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             _dbVersionsTestHelper.Asserts(testContext, true);
 
@@ -66,7 +67,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _dbVersionsTestHelper.Release(testContext);
 
@@ -91,7 +92,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        private void ClearScriptsFiles(DBVersionsAPITestContext testContext)
+        private void ClearScriptsFiles(ITestContext testContext)
         {
             if (File.Exists(GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
             {

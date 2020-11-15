@@ -11,6 +11,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.ChangeProjectId;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.UI.ChooseProject;
@@ -21,13 +22,13 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.ChangeProjectId
 {
-    public class ChangeProjectId_UI : TestDefinition<EditProjectAPITestContext>
+    public class ChangeProjectId_UI : TestDefinition<EditProjectUITestContext>
     {
         private readonly ChangeProjectId_API _changeProjectId_API;
         private readonly EditProjectViewModel _editProjectViewModel;
         private readonly EditProjectViewModelAsserts _editProjectViewModelAsserts;
         private readonly EditProjectViewStateAsserts _editProjectViewStateAsserts;
-        
+
 
         public ChangeProjectId_UI(ChangeProjectId_API changeProjectId_API,
                                     EditProjectViewModel editProjectViewModel,
@@ -40,9 +41,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _editProjectViewStateAsserts = editProjectViewStateAsserts;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            EditProjectAPITestContext testContext = _changeProjectId_API.Arrange(testArgs) as EditProjectAPITestContext;
+            EditProjectUITestContext testContext = new EditProjectUITestContext(_changeProjectId_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -53,7 +54,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Act(EditProjectAPITestContext testContext)
+        public override void Act(EditProjectUITestContext testContext)
         {
             var task = _editProjectViewModel.SetEditIdStateCommand.ExecuteWrapped();
             task.Wait();
@@ -65,7 +66,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Asserts(EditProjectAPITestContext testContext)
+        public override void Asserts(EditProjectUITestContext testContext)
         {
             _changeProjectId_API.Asserts(testContext);
 
@@ -76,7 +77,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Release(EditProjectAPITestContext testContext)
+        public override void Release(EditProjectUITestContext testContext)
         {
             _changeProjectId_API.Release(testContext);
 

@@ -7,8 +7,7 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
@@ -37,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             ProjectConfigItem projectConfig1 = new ProjectConfigItem()
             {
@@ -54,17 +53,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _projectConfigsStorageHelper.PrepareTestProject(projectConfig1, projectConfig2);
 
 
-            return new TestContext(testArgs);
+            return new ProcessTestContext(testArgs);
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.Result = AutoVersionsDBAPI.GetProjectsList();
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             List<ProjectConfigItem> projectConfigsResults = testContext.Result as List<ProjectConfigItem>;
 
@@ -79,7 +78,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             Assert.That(projectConfig2.Description == _testProjectDesc2, $"{GetType().Name} -> ProjectConfig2 Description should be: '{_testProjectDesc2}', but was: '{projectConfig2.Description}'");
         }
 
-        public override void Release(TestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
         }

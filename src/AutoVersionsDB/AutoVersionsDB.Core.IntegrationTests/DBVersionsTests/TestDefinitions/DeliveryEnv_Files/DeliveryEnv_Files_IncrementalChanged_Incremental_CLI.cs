@@ -13,10 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DeliveryEnv_Files_IncrementalChanged_Incremental_CLI : TestDefinition<DBVersionsAPITestContext>
+    public class DeliveryEnv_Files_IncrementalChanged_Incremental_CLI : TestDefinition<CLITestContext>
     {
 
         private readonly DeliveryEnv_Files_IncrementalChanged_API _files_IncrementalChanged_API;
@@ -26,9 +27,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _files_IncrementalChanged_API = devEnv_Files_IncrementalChanged_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _files_IncrementalChanged_API.Arrange(testArgs);
+            CLITestContext testContext = new CLITestContext(_files_IncrementalChanged_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
@@ -36,13 +37,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"files incremental -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _files_IncrementalChanged_API.Asserts(testContext);
 
@@ -66,7 +67,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _files_IncrementalChanged_API.Release(testContext);
         }

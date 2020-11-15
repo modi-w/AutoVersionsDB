@@ -10,7 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods
 {
-    public class DeliveryEnv_NotAllowMethods_New_DevDummyData_CLI : TestDefinition<DBVersionsAPITestContext>
+    public class DeliveryEnv_NotAllowMethods_New_DevDummyData_CLI : TestDefinition<CLITestContext>
     {
 
         private readonly DeliveryEnv_NotAllowMethods_New_DevDummyData_API _deliveryEnv_New_DevDummyData_API;
@@ -28,9 +28,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _deliveryEnv_New_DevDummyData_API = deliveryEnv_New_DevDummyData_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _deliveryEnv_New_DevDummyData_API.Arrange(testArgs);
+            CLITestContext testContext = new CLITestContext(_deliveryEnv_New_DevDummyData_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
@@ -38,13 +38,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Act(DBVersionsAPITestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"new ddd -id={IntegrationTestsConsts.TestProjectId} -sn={_deliveryEnv_New_DevDummyData_API.ScriptName1}");
         }
 
 
-        public override void Asserts(DBVersionsAPITestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _deliveryEnv_New_DevDummyData_API.Asserts(testContext);
 
@@ -62,7 +62,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsAPITestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _deliveryEnv_New_DevDummyData_API.Release(testContext);
         }

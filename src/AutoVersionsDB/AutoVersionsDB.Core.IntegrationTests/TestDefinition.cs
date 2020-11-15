@@ -5,33 +5,32 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests
 {
     public abstract class TestDefinition
     {
-        public abstract TestContext Arrange(TestArgs testArgs);
-        public abstract void Act(TestContext testContext);
-        public abstract void Asserts(TestContext testContext);
+        public abstract ITestContext Arrange(TestArgs testArgs);
+        public abstract void Act(ITestContext testContext);
+        public abstract void Asserts(ITestContext testContext);
 
-        public abstract void Release(TestContext testContext);
+        public abstract void Release(ITestContext testContext);
     }
 
+
     public abstract class TestDefinition<TTestContext> : TestDefinition
-        where TTestContext : TestContext
+        where TTestContext : class, ITestContext
     {
 
-
-
-        public override void Act(TestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             Act(testContext as TTestContext);
         }
         public abstract void Act(TTestContext testContext);
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             Asserts(testContext as TTestContext);
         }
@@ -39,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        public override void Release(TestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             Release(testContext as TTestContext);
         }

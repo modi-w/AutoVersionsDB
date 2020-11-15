@@ -10,6 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.UIAsserts;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI;
 using AutoVersionsDB.Helpers;
@@ -107,7 +108,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             throw new Exception(exceptionMessage);
         }
 
-        public static void SetTestContextDataByMockCallbacksForUI(TestContext testContext)
+        public static void SetTestContextDataByMockCallbacksForUI(ITestContext testContext)
         {
             MockNotificationsViewModel
              .Setup(m => m.AfterCompleteForMockSniffer(It.IsAny<ProcessResults>()))
@@ -116,9 +117,9 @@ namespace AutoVersionsDB.Core.IntegrationTests
                  testContext.ProcessResults = processResults;
              });
 
-            if (testContext is DBVersionsAPITestContext)
+            if (testContext is DBVersionsUITestContext)
             {
-                DBVersionsAPITestContext dbVersionsTestContext = testContext as DBVersionsAPITestContext;
+                DBVersionsUITestContext dbVersionsTestContext = testContext as DBVersionsUITestContext;
 
                 MockDBVersionsViewSateManagerFotTests
                  .Setup(m => m.ChangeViewStateForMockSniffer(It.IsAny<DBVersionsViewStateType>()))
@@ -129,9 +130,9 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
             }
 
-            if (testContext is EditProjectAPITestContext)
+            if (testContext is EditProjectUITestContext)
             {
-                EditProjectAPITestContext editProjectAPITestContext = testContext as EditProjectAPITestContext;
+                EditProjectUITestContext editProjectAPITestContext = testContext as EditProjectUITestContext;
 
                 MockEditProjectViewSateManagerFotTests
                  .Setup(m => m.ChangeViewStateForMockSniffer(It.IsAny<EditProjectViewStateType>()))
@@ -147,7 +148,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        public static void SetTestContextDataByMockCallbacksForCLI(TestContext testContext)
+        public static void SetTestContextDataByMockCallbacksForCLI(CLITestContext testContext)
         {
             MockObjectsProvider.SetProcessResultsToTestContextForCLI(testContext);
             MockObjectsProvider.SetConsoleOutputToTestContext(testContext);
@@ -156,7 +157,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        private static void SetProcessResultsToTestContextForCLI(TestContext testContext)
+        private static void SetProcessResultsToTestContextForCLI(CLITestContext testContext)
         {
             MockConsoleProcessMessages
              .Setup(m => m.ProcessCompleteForMockSniffer(It.IsAny<ProcessResults>()))
@@ -166,7 +167,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
              });
         }
 
-        private static void SetConsoleOutputToTestContext(TestContext testContext)
+        private static void SetConsoleOutputToTestContext(CLITestContext testContext)
         {
             MockConsole
              .Setup(m => m.Out.Write(It.IsAny<string>()))

@@ -10,6 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.C
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Init;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
@@ -47,15 +48,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             _projectConfigsDirectoriesCleaner.ClearAutoCreatedFolders();
 
-            return new TestContext(testArgs);
+            return new ProcessTestContext(testArgs);
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
@@ -76,7 +77,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
 
@@ -103,7 +104,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath);
         }
 
-        public override void Release(TestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsDirectoriesCleaner.ClearAutoCreatedFolders();
 

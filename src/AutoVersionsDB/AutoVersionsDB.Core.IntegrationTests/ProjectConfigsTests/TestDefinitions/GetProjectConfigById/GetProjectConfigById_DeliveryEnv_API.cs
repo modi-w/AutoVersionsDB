@@ -21,6 +21,7 @@ using System.Text;
 using NuGet.Frameworks;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectConfigById
 {
@@ -38,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
@@ -61,11 +62,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
 
 
-            return new TestContext(overrideTestArgs);
+            return new ProcessTestContext(overrideTestArgs);
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.Result =
                 AutoVersionsDBAPI
@@ -73,7 +74,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             ProjectConfigItem projectConfig =
                 _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfig.Id);
@@ -83,7 +84,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             Assert.That(projectConfig.Description == IntegrationTestsConsts.DummyProjectConfig.Description, $"{GetType().Name} -> ProjectConfig not found.");
         }
 
-        public override void Release(TestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
         }

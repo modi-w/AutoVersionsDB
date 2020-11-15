@@ -10,7 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectConfigById;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectConfigById
 {
-    public class GetProjectConfigById_DevEnv_CLI : TestDefinition
+    public class GetProjectConfigById_DevEnv_CLI : TestDefinition<CLITestContext>
     {
         private readonly GetProjectConfigById_DevEnv_API _getProjectConfigById_API;
 
@@ -27,22 +27,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _getProjectConfigById_API = getProjectConfigById_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _getProjectConfigById_API.Arrange(testArgs);
+            CLITestContext testContext = new CLITestContext(_getProjectConfigById_API.Arrange(testArgs));
+
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"info -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _getProjectConfigById_API.Asserts(testContext);
 
@@ -68,7 +69,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Release(TestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _getProjectConfigById_API.Release(testContext);
 

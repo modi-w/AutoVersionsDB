@@ -10,7 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.RemoveProjectConfig;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.RemoveProjectConfig
 {
-    public class RemoveProjectConfig_CLI : TestDefinition
+    public class RemoveProjectConfig_CLI : TestDefinition<CLITestContext>
     {
         private readonly RemoveProjectConfig_API _removeProjectConfig_API;
 
@@ -27,22 +27,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _removeProjectConfig_API = removeProjectConfig_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _removeProjectConfig_API.Arrange(testArgs);
+            CLITestContext testContext = new CLITestContext(_removeProjectConfig_API.Arrange(testArgs));
+
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"remove -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _removeProjectConfig_API.Asserts(testContext);
 
@@ -55,7 +56,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Release(TestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _removeProjectConfig_API.Release(testContext);
 
