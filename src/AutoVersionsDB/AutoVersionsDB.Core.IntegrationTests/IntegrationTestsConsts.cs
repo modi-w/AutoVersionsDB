@@ -12,6 +12,10 @@ namespace AutoVersionsDB.Core.IntegrationTests
     {
         public const string TestProjectId = "IntegrationTestProject";
 
+        public const string SqlServerDBType = "SqlServer";
+        public const string TestDBName = "AutoVersionsDB.Tests";
+
+
         public const string TargetStateFile_MiddleState = "incScript_2020-02-25.102_CreateLookupTable2.sql";
         public const string TargetStateFile_FinalState = "incScript_2020-03-02.101_CreateInvoiceTable1.sql";
 
@@ -55,16 +59,16 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             Id = TestProjectId,
             Description = "DummyDescription",
-            DBType = "SqlServer",
+            DBType = SqlServerDBType,
             Server = SqlServerLocalDBConnection.ConnectionStringBuilder.DataSource,
-            DBName = "AutoVersionsDB.Tests",
+            DBName = TestDBName,
             Username = SqlServerLocalDBConnection.ConnectionStringBuilder.UserID,
             Password = SqlServerLocalDBConnection.ConnectionStringBuilder.Password,
             BackupFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackupBaseFolder),
             DevEnvironment = true,
-            DevScriptsBaseFolderPath =  FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal).Replace("[DBType]", "SqlServer"),
-            DeployArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeployArtifact_FolderPath).Replace("[DBType]", "SqlServer"),
-            DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_Normal).Replace("[DBType]", "SqlServer"),
+            DevScriptsBaseFolderPath =  FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal).Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType),
+            DeployArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeployArtifact_FolderPath).Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType),
+            DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_Normal).Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType),
         };
 
         public static ProjectConfigItem GetNewInstanceForDummyProjectConfigValid()
@@ -91,7 +95,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             Id = TestProjectId,
             Description = "DummyDescription",
-            DBType = "SqlServer",
+            DBType = IntegrationTestsConsts.SqlServerDBType,
             Server = "DummyServer",
             DBName = "DummyDBName",
             Username = "DummyUsername",

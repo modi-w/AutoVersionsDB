@@ -44,7 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             Assert.That(dbTypesResults.Count == 1, $"{GetType().Name} -> The number of DBTypes should be 1, but was: {dbTypesResults.Count}");
 
             DBType firstDBType = dbTypesResults.First();
-            Assert.That(firstDBType.Code == "SqlServer", $"{GetType().Name} -> The first DBType Code should be: 'SqlServer', but was: '{firstDBType.Code}'");
+            Assert.That(firstDBType.Code == IntegrationTestsConsts.SqlServerDBType, $"{GetType().Name} -> The first DBType Code should be: '{IntegrationTestsConsts.SqlServerDBType}', but was: '{firstDBType.Code}'");
             Assert.That(firstDBType.Name == "Sql Server", $"{GetType().Name} -> The first DBType Name should be: 'Sql Server', but was: '{firstDBType.Name}'");
         }
 

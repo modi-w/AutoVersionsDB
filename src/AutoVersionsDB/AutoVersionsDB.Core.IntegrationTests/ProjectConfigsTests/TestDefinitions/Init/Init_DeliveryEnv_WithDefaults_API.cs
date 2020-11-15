@@ -88,7 +88,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DeliveryArtifactFolderPath), newProjectConfig.DeliveryArtifactFolderPath, IntegrationTestsConsts.DummyProjectConfigValid.DeliveryArtifactFolderPath);
 
 
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DBType), newProjectConfig.DBType, "SqlServer");
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DBType), newProjectConfig.DBType, IntegrationTestsConsts.SqlServerDBType);
             _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Server), newProjectConfig.Server, "(local)");
             _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.BackupFolderPath), ProjectConfigsDirectories.DefaultBackupsFolder, newProjectConfig.BackupFolderPath);
 
