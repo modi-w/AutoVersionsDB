@@ -40,7 +40,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public void AssertViewStateHistory(string testName, IList<EditProjectViewStateType> actualViewStateHistory, IList<EditProjectViewStateType> expectedViewStateHistory)
         {
-            Assert.That(actualViewStateHistory.Count == 4, $"{testName} -> Number of process ViewStates should be {expectedViewStateHistory}, but was {expectedViewStateHistory.Count}");
+            Assert.That(actualViewStateHistory.Count == expectedViewStateHistory.Count, $"{testName} -> Number of process ViewStates should be {expectedViewStateHistory.Count}, but was {actualViewStateHistory.Count}");
             for (int i = 0; i < expectedViewStateHistory.Count; i++)
             {
                 var expectedViewStateItem = expectedViewStateHistory[i];

@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnSaveIdEnabled), editProjectControls.BtnSaveIdEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnSaveIdVisible), editProjectControls.BtnSaveIdVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnCancelEditIdVisible), editProjectControls.BtnCancelEditIdVisible, false);
-            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnCancelEditIdEnabled), editProjectControls.BtnCancelEditIdEnabled, true);
+          //  _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnCancelEditIdEnabled), editProjectControls.BtnCancelEditIdEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.PnlDevEnvFoldersFieldsVisible), editProjectControls.PnlDevEnvFoldersFieldsVisible, isDevEnv);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.PnlDevEnvDeplyFolderVisible), editProjectControls.PnlDevEnvDeplyFolderVisible, isDevEnv);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.PnlDelEnvFieldsVisible), editProjectControls.PnlDelEnvFieldsVisible, !isDevEnv);
@@ -67,7 +67,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnSaveIdEnabled), editProjectControls.BtnSaveIdEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnSaveIdVisible), editProjectControls.BtnSaveIdVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnCancelEditIdVisible), editProjectControls.BtnCancelEditIdVisible, false);
-            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnCancelEditIdEnabled), editProjectControls.BtnCancelEditIdEnabled, true);
+           // _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnCancelEditIdEnabled), editProjectControls.BtnCancelEditIdEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.PnlDevEnvFoldersFieldsVisible), editProjectControls.PnlDevEnvFoldersFieldsVisible, isDevEnv);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.PnlDevEnvDeplyFolderVisible), editProjectControls.PnlDevEnvDeplyFolderVisible, isDevEnv);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.PnlDelEnvFieldsVisible), editProjectControls.PnlDelEnvFieldsVisible, !isDevEnv);
