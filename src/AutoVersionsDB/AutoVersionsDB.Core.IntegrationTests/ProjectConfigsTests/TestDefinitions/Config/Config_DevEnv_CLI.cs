@@ -42,16 +42,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Act(CLITestContext testContext)
         {
-            string args = $"-id={IntegrationTestsConsts.DummyProjectConfig.Id} ";
-            args += $"-desc={IntegrationTestsConsts.DummyProjectConfig.Description} ";
-            args += $"-dbt={IntegrationTestsConsts.DummyProjectConfig.DBType} ";
-            args += $"-ser={IntegrationTestsConsts.DummyProjectConfig.Server} ";
-            args += $"-db={IntegrationTestsConsts.DummyProjectConfig.DBName} ";
-            args += $"-un={IntegrationTestsConsts.DummyProjectConfig.Username} ";
-            args += $"-pass={IntegrationTestsConsts.DummyProjectConfig.Password} ";
-            args += $"-buf={IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath} ";
-            args += $"-dsf={IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath} ";
-            args += $"-def={IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath} ";
+            string args = $"-id={IntegrationTestsConsts.DummyProjectConfigValid.Id} ";
+            args += $"-desc={IntegrationTestsConsts.DummyProjectConfigValid.Description} ";
+            args += $"-dbt={IntegrationTestsConsts.DummyProjectConfigValid.DBType} ";
+            args += $"-ser={IntegrationTestsConsts.DummyProjectConfigValid.Server} ";
+            args += $"-db={IntegrationTestsConsts.DummyProjectConfigValid.DBName} ";
+            args += $"-un={IntegrationTestsConsts.DummyProjectConfigValid.Username} ";
+            args += $"-pass={IntegrationTestsConsts.DummyProjectConfigValid.Password} ";
+            args += $"-buf={IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath} ";
+            args += $"-dsf={IntegrationTestsConsts.DummyProjectConfigValid.DevScriptsBaseFolderPath} ";
+            args += $"-def={IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath} ";
 
             AutoVersionsDBAPI.CLIRun($"config {args}");
         }

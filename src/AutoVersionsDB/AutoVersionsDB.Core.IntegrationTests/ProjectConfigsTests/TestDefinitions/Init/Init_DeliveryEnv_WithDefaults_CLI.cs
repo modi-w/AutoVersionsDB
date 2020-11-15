@@ -38,13 +38,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Act(CLITestContext testContext)
         {
-            string args = $"-id={IntegrationTestsConsts.DummyProjectConfig.Id} ";
-            args+= $"-desc={IntegrationTestsConsts.DummyProjectConfig.Description} ";
-            args += $"-db={IntegrationTestsConsts.DummyProjectConfig.DBName} ";
-            args += $"-un={IntegrationTestsConsts.DummyProjectConfig.Username} ";
-            args += $"-pass={IntegrationTestsConsts.DummyProjectConfig.Password} ";
+            string args = $"-id={IntegrationTestsConsts.DummyProjectConfigValid.Id} ";
+            args+= $"-desc={IntegrationTestsConsts.DummyProjectConfigValid.Description} ";
+            args += $"-db={IntegrationTestsConsts.DummyProjectConfigValid.DBName} ";
+            args += $"-un={IntegrationTestsConsts.DummyProjectConfigValid.Username} ";
+            args += $"-pass={IntegrationTestsConsts.DummyProjectConfigValid.Password} ";
             args += $"-dev=false ";
-            args += $"-darf={IntegrationTestsConsts.DummyProjectConfig.DeliveryArtifactFolderPath} ";
+            args += $"-darf={IntegrationTestsConsts.DummyProjectConfigValid.DeliveryArtifactFolderPath} ";
 
             AutoVersionsDBAPI.CLIRun($"init {args}");
         }

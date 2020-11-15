@@ -133,8 +133,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public void AssertError(string testName, EditProjectControls editProjectControls, ProjectConfigErrorMessages projectConfigErrorMessages, IList<string> expctedErrorCodes)
         {
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.ImgErrorVisible), editProjectControls.ImgErrorVisible, expctedErrorCodes.Count > 0);
-            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.ImgValidVisible), editProjectControls.ImgValidVisible, expctedErrorCodes.Count > 0);
-            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnNavToProcessVisible), editProjectControls.BtnNavToProcessVisible, expctedErrorCodes.Count > 0);
+            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.ImgValidVisible), editProjectControls.ImgValidVisible, expctedErrorCodes.Count == 0);
+            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnNavToProcessVisible), editProjectControls.BtnNavToProcessVisible, expctedErrorCodes.Count == 0);
 
 
             AssertErrorMessage(testName, expctedErrorCodes.Contains("IdMandatory"), projectConfigErrorMessages.IdErrorMessage, nameof(projectConfigErrorMessages.IdErrorMessage));

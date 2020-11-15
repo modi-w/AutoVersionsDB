@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Helpers;
 using Newtonsoft.Json;
 using System;
@@ -50,7 +51,43 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        public static ProjectConfigItem DummyProjectConfig = new ProjectConfigItem()
+        public static ProjectConfigItem DummyProjectConfigValid = new ProjectConfigItem()
+        {
+            Id = TestProjectId,
+            Description = "DummyDescription",
+            DBType = "SqlServer",
+            Server = SqlServerLocalDBConnection.ConnectionStringBuilder.DataSource,
+            DBName = "AutoVersionsDB.Tests",
+            Username = SqlServerLocalDBConnection.ConnectionStringBuilder.UserID,
+            Password = SqlServerLocalDBConnection.ConnectionStringBuilder.Password,
+            BackupFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackupBaseFolder),
+            DevEnvironment = true,
+            DevScriptsBaseFolderPath =  FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal).Replace("[DBType]", "SqlServer"),
+            DeployArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeployArtifact_FolderPath).Replace("[DBType]", "SqlServer"),
+            DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_Normal).Replace("[DBType]", "SqlServer"),
+        };
+
+        public static ProjectConfigItem GetNewInstanceForDummyProjectConfigValid()
+        {
+            return new ProjectConfigItem()
+            {
+                Id = DummyProjectConfigValid.Id,
+                Description = DummyProjectConfigValid.Description,
+                DBType = DummyProjectConfigValid.DBType,
+                Server = DummyProjectConfigValid.Server,
+                DBName = DummyProjectConfigValid.DBName,
+                Username = DummyProjectConfigValid.Username,
+                Password = DummyProjectConfigValid.Password,
+                BackupFolderPath = DummyProjectConfigValid.BackupFolderPath,
+                DevEnvironment = DummyProjectConfigValid.DevEnvironment,
+                DevScriptsBaseFolderPath = DummyProjectConfigValid.DevScriptsBaseFolderPath,
+                DeployArtifactFolderPath = DummyProjectConfigValid.DeployArtifactFolderPath,
+                DeliveryArtifactFolderPath = DummyProjectConfigValid.DeliveryArtifactFolderPath,
+            };
+        }
+
+
+        public static ProjectConfigItem DummyProjectConfigDBNotValid = new ProjectConfigItem()
         {
             Id = TestProjectId,
             Description = "DummyDescription",

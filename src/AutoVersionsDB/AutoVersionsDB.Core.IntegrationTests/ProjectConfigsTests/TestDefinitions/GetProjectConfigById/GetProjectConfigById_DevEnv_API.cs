@@ -43,18 +43,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
-                Id = IntegrationTestsConsts.DummyProjectConfig.Id,
-                Description = IntegrationTestsConsts.DummyProjectConfig.Description,
-                DBType = IntegrationTestsConsts.DummyProjectConfig.DBType,
-                Server = IntegrationTestsConsts.DummyProjectConfig.Server,
-                DBName = IntegrationTestsConsts.DummyProjectConfig.DBName,
-                Username = IntegrationTestsConsts.DummyProjectConfig.Username,
-                Password = IntegrationTestsConsts.DummyProjectConfig.Password,
-                BackupFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath,
-                DevEnvironment = IntegrationTestsConsts.DummyProjectConfig.DevEnvironment,
-                DevScriptsBaseFolderPath = IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath,
-                DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath,
-                DeliveryArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeliveryArtifactFolderPath,
+                Id = IntegrationTestsConsts.DummyProjectConfigValid.Id,
+                Description = IntegrationTestsConsts.DummyProjectConfigValid.Description,
+                DBType = IntegrationTestsConsts.DummyProjectConfigValid.DBType,
+                Server = IntegrationTestsConsts.DummyProjectConfigValid.Server,
+                DBName = IntegrationTestsConsts.DummyProjectConfigValid.DBName,
+                Username = IntegrationTestsConsts.DummyProjectConfigValid.Username,
+                Password = IntegrationTestsConsts.DummyProjectConfigValid.Password,
+                BackupFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath,
+                DevEnvironment = IntegrationTestsConsts.DummyProjectConfigValid.DevEnvironment,
+                DevScriptsBaseFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.DevScriptsBaseFolderPath,
+                DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath,
+                DeliveryArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.DeliveryArtifactFolderPath,
             };
 
             _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
@@ -69,18 +69,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             testContext.Result =
                 AutoVersionsDBAPI
-                .GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfig.Id);
+                .GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfigValid.Id);
         }
 
 
         public override void Asserts(ITestContext testContext)
         {
             ProjectConfigItem projectConfig =
-                _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfig.Id);
+                _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfigValid.Id);
 
             Assert.That(projectConfig != null, $"{GetType().Name} -> ProjectConfig not found.");
 
-            Assert.That(projectConfig.Description == IntegrationTestsConsts.DummyProjectConfig.Description, $"{GetType().Name} -> ProjectConfig not found.");
+            Assert.That(projectConfig.Description == IntegrationTestsConsts.DummyProjectConfigValid.Description, $"{GetType().Name} -> ProjectConfig not found.");
         }
 
         public override void Release(ITestContext testContext)

@@ -36,13 +36,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
 
 
-        public void AssertViewStateHistory(string testName, IList<EditProjectViewStateType> viewStateHistory, EditProjectViewStateType finalViewState)
-        {
-            Assert.That(viewStateHistory.Count == 2, $"{testName} -> Number of process ViewStates should be 2, but was {viewStateHistory.Count}");
-            Assert.That(viewStateHistory[0] == EditProjectViewStateType.InProcess, $"{testName} -> ViewState 1 should be {EditProjectViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
-            Assert.That(viewStateHistory[1] == finalViewState, $"{testName} -> ViewState 2 should be {finalViewState}, but was '{viewStateHistory[1]}'");
-        }
+       
 
+        public void AssertViewStateHistory(string testName, IList<EditProjectViewStateType> actualViewStateHistory, IList<EditProjectViewStateType> expectedViewStateHistory)
+        {
+            Assert.That(actualViewStateHistory.Count == 4, $"{testName} -> Number of process ViewStates should be {expectedViewStateHistory}, but was {expectedViewStateHistory.Count}");
+            for (int i = 0; i < expectedViewStateHistory.Count; i++)
+            {
+                var expectedViewStateItem = expectedViewStateHistory[i];
+                var actualViewStateItem = actualViewStateHistory[i];
+             
+                Assert.That(actualViewStateItem == expectedViewStateItem, $"{testName} -> ViewState {i+1} should be {expectedViewStateItem}, but was '{actualViewStateItem}'");
+            }
+        }
 
 
 

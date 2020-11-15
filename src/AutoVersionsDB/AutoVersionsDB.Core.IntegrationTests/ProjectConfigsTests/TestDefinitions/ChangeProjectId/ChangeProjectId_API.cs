@@ -48,27 +48,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            ProjectConfigItem projectConfig = new ProjectConfigItem()
-            {
-                Id = OldProjectId,
-                Description = ProjectDesc,
-                BackupFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath,
-                DBName = IntegrationTestsConsts.DummyProjectConfig.DBName,
-                DBType = IntegrationTestsConsts.DummyProjectConfig.DBType,
-                DeliveryArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath,
-                DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath,
-                DevScriptsBaseFolderPath= IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath,
-                DevEnvironment = true,
-                Password = IntegrationTestsConsts.DummyProjectConfig.Password,
-                Server = IntegrationTestsConsts.DummyProjectConfig.Server,
-                Username = IntegrationTestsConsts.DummyProjectConfig.Username,
-            };
+            ProjectConfigItem projectConfig = IntegrationTestsConsts.GetNewInstanceForDummyProjectConfigValid();
+            projectConfig.Id = OldProjectId;
+            projectConfig.Description = ProjectDesc;
 
             _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
 
             ProjectConfigTestArgs projectConfigTestArgs = new ProjectConfigTestArgs(projectConfig);
 
-            return new TestContexts.ProcessTestContext(projectConfigTestArgs);
+            return new ProcessTestContext(projectConfigTestArgs);
         }
 
 
@@ -83,7 +71,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
 
             ProjectConfigItem oldProjectByProjectId = _projectConfigsStorage.GetProjectConfigById(OldProjectId);
-            Assert.That(oldProjectByProjectId == null, $"{this.GetType().Name} -> Shuold not find project with the old ProjectId.");
+            Assert.That(oldProjectByProjectId == null, $"{this.GetType().Name} -> Chuold not find project with the old ProjectId.");
 
             ProjectConfigItem newProjectByProjectId = _projectConfigsStorage.GetProjectConfigById(NewProjectId);
             Assert.That(newProjectByProjectId != null, $"{this.GetType().Name} -> Could not find project with the new ProjectId.");
