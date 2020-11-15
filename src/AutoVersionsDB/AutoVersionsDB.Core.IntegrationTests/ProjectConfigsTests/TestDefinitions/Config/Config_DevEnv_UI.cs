@@ -26,18 +26,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 {
     public class Config_DevEnv_UI : TestDefinition<EditProjectUITestContext>
     {
-        private readonly Config_DevEnv_API _Config_DevEnv_API;
+        private readonly Config_DevEnv_API _config_DevEnv_API;
         private readonly EditProjectViewModel _editProjectViewModel;
         private readonly EditProjectViewModelAsserts _editProjectViewModelAsserts;
         private readonly EditProjectViewStateAsserts _editProjectViewStateAsserts;
 
 
-        public Config_DevEnv_UI(Config_DevEnv_API Config_DevEnv_API,
+        public Config_DevEnv_UI(Config_DevEnv_API config_DevEnv_API,
                                     EditProjectViewModel editProjectViewModel,
                                     EditProjectViewModelAsserts editProjectViewModelAsserts,
                                     EditProjectViewStateAsserts editProjectViewStateAsserts)
         {
-            _Config_DevEnv_API = Config_DevEnv_API;
+            _config_DevEnv_API = config_DevEnv_API;
             _editProjectViewModel = editProjectViewModel;
             _editProjectViewModelAsserts = editProjectViewModelAsserts;
             _editProjectViewStateAsserts = editProjectViewStateAsserts;
@@ -45,7 +45,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            EditProjectUITestContext testContext = new EditProjectUITestContext(_Config_DevEnv_API.Arrange(testArgs));
+            EditProjectUITestContext testContext = new EditProjectUITestContext(_config_DevEnv_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -75,7 +75,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Asserts(EditProjectUITestContext testContext)
         {
-            _Config_DevEnv_API.Asserts(testContext);
+            _config_DevEnv_API.Asserts(testContext);
 
             _editProjectViewStateAsserts.AssertEditProjectViewStateUpdate(GetType().Name, _editProjectViewModel.EditProjectControls, testContext.ProjectConfig.DevEnvironment);
             _editProjectViewStateAsserts.AssertNoErrors(GetType().Name, _editProjectViewModel.EditProjectControls, _editProjectViewModel.ProjectConfigErrorMessages);
@@ -94,7 +94,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Release(EditProjectUITestContext testContext)
         {
-            _Config_DevEnv_API.Release(testContext);
+            _config_DevEnv_API.Release(testContext);
 
         }
 

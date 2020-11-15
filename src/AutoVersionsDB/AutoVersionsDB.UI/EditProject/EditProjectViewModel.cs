@@ -16,7 +16,6 @@ namespace AutoVersionsDB.UI.EditProject
     public class EditProjectViewModel : INotifyPropertyChanged
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly INotificationsViewModel _notificationsViewModel;
 
         private readonly IEditProjectViewSateManager _editProjectViewSateManager;
@@ -66,14 +65,12 @@ namespace AutoVersionsDB.UI.EditProject
 
 
         public EditProjectViewModel(ProjectConfigsAPI projectConfigsAPI,
-                                    DBVersionsAPI dbVersionsAPI,
                                     IEditProjectViewSateManager editProjectViewSateManager,
                                     INotificationsViewModel notificationsViewModel,
                                     EditProjectControls editProjectControls,
                                     ProjectConfigErrorMessages projectConfigErrorMessages)
         {
             _projectConfigsAPI = projectConfigsAPI;
-            _dbVersionsAPI = dbVersionsAPI;
             _editProjectViewSateManager = editProjectViewSateManager;
             _notificationsViewModel = notificationsViewModel;
 

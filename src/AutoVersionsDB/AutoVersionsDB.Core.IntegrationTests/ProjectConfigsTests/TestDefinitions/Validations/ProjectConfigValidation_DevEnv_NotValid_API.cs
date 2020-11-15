@@ -21,12 +21,12 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations
 {
-    public class DevEnv_ProjectConfigValidation_NotValid_API : TestDefinition
+    public class ProjectConfigValidation_DevEnv_NotValid_API : TestDefinition
     {
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProcessAsserts _processAsserts;
 
-        public DevEnv_ProjectConfigValidation_NotValid_API(ProjectConfigsStorageHelper projectConfigsStorageHelper,
+        public ProjectConfigValidation_DevEnv_NotValid_API(ProjectConfigsStorageHelper projectConfigsStorageHelper,
                                                                 ProcessAsserts processAsserts)
         {
             _projectConfigsStorageHelper = projectConfigsStorageHelper;
