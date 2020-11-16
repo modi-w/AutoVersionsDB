@@ -59,7 +59,6 @@ namespace AutoVersionsDB.UI.ChooseProject
             ChooseProjectViewModelData.PropertyChanged += ChooseProjectViewModelData_PropertyChanged;
 
             RefreshProjectList();
-
         }
 
         private void ChooseProjectViewModelData_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -128,7 +127,7 @@ namespace AutoVersionsDB.UI.ChooseProject
 
         private void DeleteProject(string id)
         {
-            bool isAllowRun = UIGeneralEvents.FireOnConfirm(this,$"Are you sure you want to delete the configurration for the project: '{id}'");
+            bool isAllowRun = UIGeneralEvents.FireOnConfirm(this, $"Are you sure you want to delete the configurration for the project: '{id}'");
 
             if (isAllowRun)
             {
@@ -142,7 +141,7 @@ namespace AutoVersionsDB.UI.ChooseProject
 
 
 
-  
+
 
 
 
