@@ -16,11 +16,13 @@ namespace AutoVersionsDB.UI.EditProject
     public class EditProjectViewModel : INotifyPropertyChanged
     {
         private readonly ProjectConfigsAPI _projectConfigsAPI;
-        private readonly INotificationsViewModel _notificationsViewModel;
 
         private readonly IEditProjectViewSateManager _editProjectViewSateManager;
 
         private bool _isNewProjectConfig = false;
+
+
+        public INotificationsViewModel NotificationsViewModel { get; }
 
 
         public List<DBType> DBTypes { get; }
@@ -72,7 +74,7 @@ namespace AutoVersionsDB.UI.EditProject
         {
             _projectConfigsAPI = projectConfigsAPI;
             _editProjectViewSateManager = editProjectViewSateManager;
-            _notificationsViewModel = notificationsViewModel;
+            NotificationsViewModel = notificationsViewModel;
 
             EditProjectControls = editProjectControls;
             ProjectConfigErrorMessages = projectConfigErrorMessages;
@@ -92,7 +94,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         public void CreateNewProjectConfig()
         {
-            _notificationsViewModel.WaitingForUser();
+            NotificationsViewModel.WaitingForUser();
 
             _editProjectViewSateManager.ClearUIElementsErrors();
 
@@ -168,7 +170,7 @@ namespace AutoVersionsDB.UI.EditProject
 
             if (_isNewProjectConfig)
             {
-                ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(ProjectConfig.ActualProjectConfig, NotificationsViewModel.OnNotificationStateChanged);
 
                 handleCompleteProcess(processResults);
 
@@ -180,7 +182,7 @@ namespace AutoVersionsDB.UI.EditProject
             }
             else
             {
-                ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(ProjectConfig.ActualProjectConfig, NotificationsViewModel.OnNotificationStateChanged);
 
                 handleCompleteProcess(processResults);
             }
@@ -211,7 +213,7 @@ namespace AutoVersionsDB.UI.EditProject
         {
             _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InProcess);
 
-            ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(_prevId, ProjectConfig.Id, _notificationsViewModel.OnNotificationStateChanged);
+            ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(_prevId, ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
 
             handleCompleteProcess(processResults);
         }
@@ -230,11 +232,11 @@ namespace AutoVersionsDB.UI.EditProject
         {
             _editProjectViewSateManager.ChangeViewState(EditProjectViewStateType.InProcess);
 
-            _notificationsViewModel.WaitingForUser();
+            NotificationsViewModel.WaitingForUser();
 
             _editProjectViewSateManager.ClearUIElementsErrors();
 
-            ProcessResults processResults = _projectConfigsAPI.ValidateProjectConfig(ProjectConfig.ActualProjectConfig, _notificationsViewModel.OnNotificationStateChanged);
+            ProcessResults processResults = _projectConfigsAPI.ValidateProjectConfig(ProjectConfig.ActualProjectConfig, NotificationsViewModel.OnNotificationStateChanged);
 
             _editProjectViewSateManager.HandleProcessErrors(_isNewProjectConfig, processResults);
         }

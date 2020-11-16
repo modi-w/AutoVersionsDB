@@ -60,7 +60,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(DBVersionsUITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, false);
+            _dbVersionsTestHelper.Asserts(GetType().Name, testContext, false);
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "HistoryExecutedFilesChanged");
 
 

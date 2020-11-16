@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
         public static void RunTests<T1>()
-        where T1 : TestDefinition
+            where T1 : TestDefinition
         {
             TestArgs testArgs = new ProjectConfigTestArgs(null);
 
@@ -26,7 +26,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         }
 
         public static void RunTests<T1, T2>()
-        where T1 : TestDefinition
+            where T1 : TestDefinition
               where T2 : TestDefinition
         {
             TestArgs testArgs = new ProjectConfigTestArgs(null);
@@ -36,9 +36,9 @@ namespace AutoVersionsDB.Core.IntegrationTests
             RunTests(tests, testArgs);
         }
         public static void RunTests<T1, T2, T3>()
-        where T1 : TestDefinition
-        where T2 : TestDefinition
-        where T3 : TestDefinition
+            where T1 : TestDefinition
+            where T2 : TestDefinition
+            where T3 : TestDefinition
         {
             TestArgs testArgs = new ProjectConfigTestArgs(null);
 
@@ -46,12 +46,25 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
             RunTests(tests, testArgs);
         }
+        public static void RunTests<T1, T2, T3, T4>()
+            where T1 : TestDefinition
+            where T2 : TestDefinition
+            where T3 : TestDefinition
+            where T4 : TestDefinition
+        {
+            TestArgs testArgs = new ProjectConfigTestArgs(null);
+
+            var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3, T4>();
+
+            RunTests(tests, testArgs);
+        }
+
 
 
 
 
         public static void RunTestsForeachDBType<T1>()
-         where T1 : TestDefinition
+            where T1 : TestDefinition
         {
             List<ProjectConfigItem> projectConfigs = _projectConfigsFactory.CreateProjectConfigsByDBTyps();
 
@@ -68,8 +81,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
         public static void RunTestsForeachDBType<T1, T2>()
-          where T1 : TestDefinition
-          where T2 : TestDefinition
+            where T1 : TestDefinition
+            where T2 : TestDefinition
         {
             List<ProjectConfigItem> projectConfigs = _projectConfigsFactory.CreateProjectConfigsByDBTyps();
 

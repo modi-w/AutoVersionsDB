@@ -41,7 +41,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, true);
+            _dbVersionsTestHelper.Asserts(GetType().Name, testContext, true);
         }
 
 

@@ -78,7 +78,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _config_DevEnv_API.Asserts(testContext);
 
             _editProjectViewStateAsserts.AssertEditProjectViewStateUpdate(GetType().Name, _editProjectViewModel.EditProjectControls, testContext.ProjectConfig.DevEnvironment);
-            _editProjectViewStateAsserts.AssertNoErrors(GetType().Name, _editProjectViewModel.EditProjectControls, _editProjectViewModel.ProjectConfigErrorMessages);
+
+            _editProjectViewStateAsserts.AssertNoErrors(
+                this.GetType().Name,
+                _editProjectViewModel.NotificationsViewModel.NotificationsViewModelData,
+                _editProjectViewModel.EditProjectControls,
+                _editProjectViewModel.ProjectConfigErrorMessages);
+
             _editProjectViewModelAsserts.AssertViewStateHistory(GetType().Name,
                 testContext.ViewStatesHistory,
                 new List<EditProjectViewStateType>()

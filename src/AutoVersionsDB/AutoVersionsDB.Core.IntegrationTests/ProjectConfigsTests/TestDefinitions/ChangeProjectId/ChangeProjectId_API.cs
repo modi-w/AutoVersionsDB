@@ -15,6 +15,7 @@ using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override ITestContext Arrange(TestArgs testArgs)
         {
             ProjectConfigItem projectConfig = IntegrationTestsConsts.GetNewInstanceForDummyProjectConfigValid();
+            projectConfig.DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal).Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType);
             projectConfig.Id = OldProjectId;
             projectConfig.Description = ProjectDesc;
 

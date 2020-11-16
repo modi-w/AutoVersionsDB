@@ -47,7 +47,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(ITestContext testContext)
         {
-              _dbVersionsTestHelper.Asserts(testContext, false);
+              _dbVersionsTestHelper.Asserts(GetType().Name, testContext, false);
 
             _dbAsserts.AssertRestore(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, testContext.DBBackupFileType, testContext.ProcessResults.Trace);
 

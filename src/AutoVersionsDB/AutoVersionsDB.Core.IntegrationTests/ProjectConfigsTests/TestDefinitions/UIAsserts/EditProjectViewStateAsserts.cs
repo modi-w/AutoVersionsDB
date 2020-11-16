@@ -21,10 +21,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
     public class EditProjectViewStateAsserts
     {
         private readonly PropertiesAsserts _propertiesAsserts;
+        private readonly NotificationsViewModelAsserts _notificationsViewModelAsserts;
 
-        public EditProjectViewStateAsserts(PropertiesAsserts propertiesAsserts)
+        public EditProjectViewStateAsserts(PropertiesAsserts propertiesAsserts,
+                                            NotificationsViewModelAsserts notificationsViewModelAsserts)
         {
             _propertiesAsserts = propertiesAsserts;
+            _notificationsViewModelAsserts = notificationsViewModelAsserts;
         }
 
         public void AssertEditProjectViewStateNew(string testName, EditProjectControls editProjectControls, bool isDevEnv)
@@ -120,21 +123,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public void AssertNoErrors(string testName, EditProjectControls editProjectControls, ProjectConfigErrorMessages projectConfigErrorMessages)
+        public void AssertNoErrors(string testName, NotificationsViewModelData notificationsViewModelData, EditProjectControls editProjectControls, ProjectConfigErrorMessages projectConfigErrorMessages)
         {
-            AssertError(testName, editProjectControls, projectConfigErrorMessages, new List<string>());
+            AssertError(testName, notificationsViewModelData, editProjectControls, projectConfigErrorMessages, new List<string>());
         }
 
-        public void AssertError(string testName, EditProjectControls editProjectControls, ProjectConfigErrorMessages projectConfigErrorMessages, string errorCode)
+        public void AssertError(string testName, NotificationsViewModelData notificationsViewModelData, EditProjectControls editProjectControls, ProjectConfigErrorMessages projectConfigErrorMessages, string errorCode)
         {
-            AssertError(testName, editProjectControls, projectConfigErrorMessages, new List<string>() { errorCode });
+            AssertError(testName, notificationsViewModelData, editProjectControls, projectConfigErrorMessages, new List<string>() { errorCode });
         }
 
-        public void AssertError(string testName, EditProjectControls editProjectControls, ProjectConfigErrorMessages projectConfigErrorMessages, IList<string> expctedErrorCodes)
+        public void AssertError(string testName, NotificationsViewModelData notificationsViewModelData, EditProjectControls editProjectControls, ProjectConfigErrorMessages projectConfigErrorMessages, IList<string> expctedErrorCodes)
         {
-            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.ImgErrorVisible), editProjectControls.ImgErrorVisible, expctedErrorCodes.Count > 0);
-            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.ImgValidVisible), editProjectControls.ImgValidVisible, expctedErrorCodes.Count == 0);
-            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnNavToProcessVisible), editProjectControls.BtnNavToProcessVisible, expctedErrorCodes.Count == 0);
+            bool expectError = expctedErrorCodes.Count > 0;
+
+            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.ImgErrorVisible), editProjectControls.ImgErrorVisible, expectError);
+            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.ImgValidVisible), editProjectControls.ImgValidVisible, !expectError);
+            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnNavToProcessVisible), editProjectControls.BtnNavToProcessVisible, !expectError);
 
 
             AssertErrorMessage(testName, expctedErrorCodes.Contains("IdMandatory"), projectConfigErrorMessages.IdErrorMessage, nameof(projectConfigErrorMessages.IdErrorMessage));
@@ -144,9 +149,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             AssertErrorMessage(testName, expctedErrorCodes.Contains("DeliveryArtifactFolderPath"), projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage, nameof(projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage));
             AssertErrorMessage(testName, expctedErrorCodes.Contains("DeployArtifactFolderPath"), projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage, nameof(projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage));
             AssertErrorMessage(testName, expctedErrorCodes.Contains("DevScriptsBaseFolder"), projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage, nameof(projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("IdMandatory"), projectConfigErrorMessages.IdErrorMessage, nameof(projectConfigErrorMessages.IdErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("IdMandatory"), projectConfigErrorMessages.IdErrorMessage, nameof(projectConfigErrorMessages.IdErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("IdMandatory"), projectConfigErrorMessages.IdErrorMessage, nameof(projectConfigErrorMessages.IdErrorMessage));
+
+            if (expectError)
+            {
+                _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, notificationsViewModelData, "Project Config Validation Error");
+            }
+            else
+            {
+                _notificationsViewModelAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, notificationsViewModelData);
+            }
         }
 
         private void AssertErrorMessage(string testName,bool isErrorCodeExist, string errorMessageValue, string errorMessagePropertyName)

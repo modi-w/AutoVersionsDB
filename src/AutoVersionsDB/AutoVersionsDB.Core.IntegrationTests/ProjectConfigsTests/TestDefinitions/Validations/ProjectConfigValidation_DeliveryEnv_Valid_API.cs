@@ -42,7 +42,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, true);
+            _dbVersionsTestHelper.Asserts(GetType().Name, testContext, true);
         }
 
 

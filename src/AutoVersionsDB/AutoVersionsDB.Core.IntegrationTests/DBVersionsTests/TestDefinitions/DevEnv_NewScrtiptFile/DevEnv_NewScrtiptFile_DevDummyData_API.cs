@@ -60,7 +60,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, true);
+            _dbVersionsTestHelper.Asserts(GetType().Name, testContext, true);
 
             _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
 

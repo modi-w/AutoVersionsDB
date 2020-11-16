@@ -70,17 +70,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
         }
 
 
-        public void Asserts(ITestContext testContext, bool processSucceed)
+        public void Asserts(string testName,ITestContext testContext, bool processSucceed)
         {
             if (testContext.DBBackupFileType != DBBackupFileType.None)
             {
-                _dbAsserts.AssertNumOfOpenDbConnection(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, testContext.NumOfConnectionsBefore);
-                _dbAsserts.AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, testContext.DBBackupFileType);
+                _dbAsserts.AssertNumOfOpenDbConnection(testName, testContext.ProjectConfig.DBConnectionInfo, testContext.NumOfConnectionsBefore);
+                _dbAsserts.AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(testName, testContext.ProjectConfig.DBConnectionInfo, testContext.DBBackupFileType);
             }
 
             if (processSucceed)
             {
-                _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
+                _processAsserts.AssertProccessValid(testName, testContext.ProcessResults.Trace);
             }
         }
 

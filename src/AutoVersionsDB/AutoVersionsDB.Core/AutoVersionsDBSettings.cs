@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core
 
         public AutoVersionsDBSettings(string autoVersionsDBBaseFolder)
         {
-            _autoVersionsDBBaseFolder = autoVersionsDBBaseFolder;
+            _autoVersionsDBBaseFolder = FileSystemPathUtils.ParsePathVaribles(autoVersionsDBBaseFolder);
         }
 
 
