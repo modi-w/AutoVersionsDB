@@ -20,15 +20,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_Deploy_API : TestDefinition
     {
-        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DevEnv_Deploy_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
+        public DevEnv_Deploy_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                     ScriptFilesAsserts scriptFilesAsserts,
                                     DBAsserts dbAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _scriptFilesAsserts = scriptFilesAsserts;
             _dbAsserts = dbAsserts;
         }
@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            ITestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+            ITestContext testContext = _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
 
             ClearDeployFiles(testContext);
 
@@ -51,14 +51,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(GetType().Name, testContext, true);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, true);
 
             _scriptFilesAsserts.AssertThat_NewFileInTheDeployPath_And_ItsContentBeEqualToTheDevScriptsFolder(GetType().Name, testContext.ProjectConfig);
         }
 
         public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
             ClearDeployFiles(testContext);
         }
 

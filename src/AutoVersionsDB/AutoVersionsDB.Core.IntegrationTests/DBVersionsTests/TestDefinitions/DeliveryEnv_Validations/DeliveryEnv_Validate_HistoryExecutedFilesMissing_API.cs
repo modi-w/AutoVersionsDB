@@ -20,20 +20,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_Validate_HistoryExecutedFilesMissing_API : TestDefinition
     {
-        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ProcessAsserts _processAsserts;
 
-        public DeliveryEnv_Validate_HistoryExecutedFilesMissing_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper, 
+        public DeliveryEnv_Validate_HistoryExecutedFilesMissing_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert, 
                                                                     ProcessAsserts processAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _processAsserts = processAsserts;
         }
 
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.MissingFile);
+            return _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.MissingFile);
         }
 
         public override void Act(ITestContext testContext)
@@ -44,7 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(GetType().Name, testContext, false);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
 
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "HistoryExecutedFilesChanged");
 
@@ -52,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
         }
     }
 }

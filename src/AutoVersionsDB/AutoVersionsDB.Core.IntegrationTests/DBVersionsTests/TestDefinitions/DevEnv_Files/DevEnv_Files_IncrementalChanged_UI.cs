@@ -23,17 +23,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_Files_IncrementalChanged_UI : TestDefinition<DBVersionsUITestContext>
     {
-        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ProcessAsserts _processAsserts;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
         private readonly DBVersionsViewModelAsserts _dbVersionsViewModelAsserts;
 
-        public DevEnv_Files_IncrementalChanged_UI(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
+        public DevEnv_Files_IncrementalChanged_UI(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                                         ProcessAsserts processAsserts,
                                                         DBVersionsViewModel dbVersionsViewModel,
                                                         DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _processAsserts = processAsserts;
             _dbVersionsViewModel = dbVersionsViewModel;
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
@@ -41,7 +41,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.MiddleState, ScriptFilesStateType.IncrementalChanged));
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_projectConfigWithDBArrangeAndAssert.Arrange(testArgs, true, DBBackupFileType.MiddleState, ScriptFilesStateType.IncrementalChanged));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -61,7 +61,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(DBVersionsUITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(GetType().Name, testContext, false);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "HistoryExecutedFilesChanged");
 
 
@@ -73,7 +73,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Release(DBVersionsUITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
         }
 
     }

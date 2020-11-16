@@ -20,20 +20,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_Validate_MissingSystemTables_API : TestDefinition
     {
-        private readonly ProjectConfigWithDBArrangeAndAssert _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ProcessAsserts _processAsserts;
 
-        public DevEnv_Validate_MissingSystemTables_API(ProjectConfigWithDBArrangeAndAssert dbVersionsTestHelper,
+        public DevEnv_Validate_MissingSystemTables_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                                                     ProcessAsserts processAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _processAsserts = processAsserts;
         }
 
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_MissingSystemTables, ScriptFilesStateType.ValidScripts);
+            return _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, true, DBBackupFileType.FinalState_MissingSystemTables, ScriptFilesStateType.ValidScripts);
         }
 
         public override void Act(ITestContext testContext)
@@ -44,7 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(GetType().Name, testContext, false);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
 
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "SystemTables");
 
@@ -53,7 +53,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
         }
     }
 }
