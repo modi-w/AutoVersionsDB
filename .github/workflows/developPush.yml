@@ -14,9 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v5
+      uses: gittools/actions/gitversion/setup@v5.5.1
       with:
-        versionSpec: '5.5.x'
+        versionSpec: '5.5.1'
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
