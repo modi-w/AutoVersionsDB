@@ -67,6 +67,10 @@ jobs:
       run: dotnet restore src\AutoVersionsDB\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj    
     - name: Build AutoVersionsDB.WinApp
       run: dotnet build src\AutoVersionsDB\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -c debug
+    - name: Install dependencies for AutoVersionsDB.ConsoleApp
+      run: dotnet restore src\AutoVersionsDB\AutoVersionsDB.ConsoleApp\AutoVersionsDB.ConsoleApp.csproj    
+    - name: Build AutoVersionsDB.ConsoleApp
+      run: dotnet build src\AutoVersionsDB\AutoVersionsDB.ConsoleApp\AutoVersionsDB.ConsoleApp.csproj -c debug
     - name: Run Integration Tests
       run: dotnet test src\AutoVersionsDB\AutoVersionsDB.Core.IntegrationTests\AutoVersionsDB.Core.IntegrationTests.csproj
 
