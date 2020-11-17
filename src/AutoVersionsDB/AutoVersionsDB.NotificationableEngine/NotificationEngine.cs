@@ -42,6 +42,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 _processContext.EndProcessDateTime = DateTime.Now;
             }
 
+            _processTraceHandler.WaitForStepNotificationStateChangesComplete();
 
             return new ProcessResults(_processTraceHandler.ProcessTrace, _processContext.Results);
         }
@@ -144,6 +145,8 @@ namespace AutoVersionsDB.NotificationableEngine
                 {
                     _processContext.ProcessDefinition.Dispose();
                 }
+
+                _processTraceHandler.Dispose();
             }
 
             _disposed = true;
