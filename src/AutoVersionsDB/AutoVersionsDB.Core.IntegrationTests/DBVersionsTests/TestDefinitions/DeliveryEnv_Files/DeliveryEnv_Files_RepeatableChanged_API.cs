@@ -20,40 +20,42 @@ using System.IO;
 using System.Text;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
-    public class DeliveryEnv_Files_RepeatableChanged_API : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Files_RepeatableChanged_API : TestDefinition
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public DeliveryEnv_Files_RepeatableChanged_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_Files_RepeatableChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                                     ScriptFilesAsserts scriptFilesAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _scriptFilesAsserts = scriptFilesAsserts;
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.RepeatableChanged);
+            ITestContext testContext = _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.RepeatableChanged);
 
 
             return testContext;
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.GetScriptFilesState(testContext.ProjectConfig.Id, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, true);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, true);
 
             ScriptFilesState scriptFilesState = testContext.ProcessResults.Results as ScriptFilesState;
 
@@ -73,9 +75,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             Assert.That(scriptFilesState.DevDummyDataScriptFilesComparer == null, $"{this.GetType().Name} -> DevDummyDataScriptFilesComparer should be null on delivery environment");
         }
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
         }
 
 

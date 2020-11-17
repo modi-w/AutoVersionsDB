@@ -20,18 +20,22 @@ namespace AutoVersionsDB.ConsoleApp
             NinjectKernelContainer = new StandardKernel();
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            RegisterServices(NinjectKernelContainer);
+            RegisterServices();
+
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
+
+            ComposeObjects();
         }
 
-        private static void RegisterServices(IKernel kernel)
+        private static void RegisterServices()
         {
-            //  kernel.ThrowIfNull(nameof(kernel));
-            kernel.Bind<IConsoleExtended>().To<ConsoleExtended>();
-            kernel.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessages>();
+            NinjectKernelContainer.Bind<IConsoleExtended>().To<ConsoleExtended>();
+            NinjectKernelContainer.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessages>();
         }
 
-
+        private static void ComposeObjects()
+        {
+        }
 
 
     }

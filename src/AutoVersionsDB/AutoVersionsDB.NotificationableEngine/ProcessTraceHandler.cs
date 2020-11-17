@@ -1,17 +1,16 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
-    public class ProcessTraceHandler
+    public class ProcessTraceHandler : IDisposable
     {
-        internal ProcessTrace ProcessTrace { get; private set; }
-
-
+        private bool _isRunning;
+        private BlockingCollection<StepNotificationState> _stepsNotificationStateChangedQueue;
         private Action<ProcessTrace, StepNotificationState> _onStepNotificationStateChanged;
-
-
         private StepNotificationState _rootStepNotificationState;
+        private Task _riseStepNotificationStateChangesTask;
 
         private StepNotificationState _parentStepNotificationState
         {
@@ -50,6 +49,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
+        internal ProcessTrace ProcessTrace { get; private set; }
 
 
         internal bool HasError
@@ -63,6 +63,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public ProcessTraceHandler()
         {
+
         }
 
         internal void StartProcess(string processName, Action<ProcessTrace, StepNotificationState> onStepNotificationStateChanged)
@@ -73,6 +74,11 @@ namespace AutoVersionsDB.NotificationableEngine
 
             _rootStepNotificationState = new StepNotificationState(processName);
 
+            _stepsNotificationStateChangedQueue = new BlockingCollection<StepNotificationState>();
+
+            _isRunning = true;
+
+            RiseStepNotificationStateChanges();
         }
 
         internal void StepStart(string stepName)
@@ -86,7 +92,7 @@ namespace AutoVersionsDB.NotificationableEngine
             _currentStepNotificationState
                 .SetNumOfSteps(numOfSteps);
 
-            RiseNotificationStateChanged();
+            SaveNotificationStateSnapshot();
         }
 
 
@@ -100,7 +106,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 {
                     _parentStepNotificationState.LastNotifyPrecents = _parentStepNotificationState.Precents;
 
-                    RiseNotificationStateChanged();
+                    SaveNotificationStateSnapshot();
                 }
             }
 
@@ -114,7 +120,7 @@ namespace AutoVersionsDB.NotificationableEngine
             _currentStepNotificationState.ErrorMesage = errorMessage;
             _currentStepNotificationState.InstructionsMessage = instructionsMessage;
 
-            RiseNotificationStateChanged();
+            SaveNotificationStateSnapshot();
         }
 
 
@@ -126,7 +132,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        private void RiseNotificationStateChanged()
+        private void SaveNotificationStateSnapshot()
         {
 
             StepNotificationState snapshotNotificationState = _rootStepNotificationState.Clone();
@@ -135,11 +141,97 @@ namespace AutoVersionsDB.NotificationableEngine
 
             ProcessTrace.Appand(snapshotNotificationState);
 
-            Task.Run(() =>
+            if (_stepsNotificationStateChangedQueue.IsCompleted)
             {
-                _onStepNotificationStateChanged?.Invoke(ProcessTrace, snapshotNotificationState);
-            });
+
+            }
+            _stepsNotificationStateChangedQueue.Add(snapshotNotificationState);
         }
+
+
+        private void RiseStepNotificationStateChanges()
+        {
+
+            _riseStepNotificationStateChangesTask = Task.Run(() =>
+             {
+                 try
+                 {
+                     while (true)
+                     {
+                         StepNotificationState snapshotNotificationState = _stepsNotificationStateChangedQueue.Take();
+
+                         if (snapshotNotificationState.StepName != "EndProcessDummyStepNotificationState")
+                         {
+                             try
+                             {
+                                 _onStepNotificationStateChanged?.Invoke(ProcessTrace, snapshotNotificationState);
+                             }
+                             catch (Exception ex)
+                             {
+                                 StepError("OnStepNotificationStateChanged", ex.ToString(), "Error occured on your OnStepNotificationStateChanged callback method");
+                             }
+                         }
+                         else
+                         {
+                             break;
+                         }
+
+                     }
+                 }
+                 catch (Exception ex)
+                 {
+                     Console.WriteLine($"ProcessTraceHandler.RiseStepNotificationStateChanges() -> {ex.ToString()}");
+                 }
+
+             });
+        }
+
+
+        public void WaitForStepNotificationStateChangesComplete()
+        {
+            StepNotificationState endDummyStepNotificationState = new StepNotificationState("EndProcessDummyStepNotificationState");
+            _stepsNotificationStateChangedQueue.Add(endDummyStepNotificationState);
+            _riseStepNotificationStateChangesTask.Wait();
+        }
+
+
+
+        #region IDisposable
+
+        private bool _disposed = false;
+
+        ~ProcessTraceHandler() => Dispose(false);
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        public void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+
+                if (_stepsNotificationStateChangedQueue != null)
+                {
+                    _stepsNotificationStateChangedQueue.Dispose();
+                }
+            }
+
+            _disposed = true;
+        }
+
+
+
+        #endregion
 
     }
 }

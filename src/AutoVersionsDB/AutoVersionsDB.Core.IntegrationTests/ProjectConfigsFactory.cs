@@ -21,9 +21,9 @@ namespace AutoVersionsDB.Core.IntegrationTests
     {
         private List<DBConnectionInfo> _dbConnectionInfos = new List<DBConnectionInfo>()
         {
-            new DBConnectionInfo("SqlServer",
+            new DBConnectionInfo(IntegrationTestsConsts.SqlServerDBType,
                                 SqlServerLocalDBConnection.ConnectionStringBuilder.DataSource,
-                                "AutoVersionsDB.Tests",
+                                IntegrationTestsConsts.TestDBName,
                                 SqlServerLocalDBConnection.ConnectionStringBuilder.UserID,
                                 SqlServerLocalDBConnection.ConnectionStringBuilder.Password)
         };

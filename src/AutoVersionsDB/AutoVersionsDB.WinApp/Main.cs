@@ -1,18 +1,19 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.Main;
+using AutoVersionsDB.WinApp.Utils;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
-    public delegate void OnNavToProcessHandler(string id);
-    public delegate void OnRefreshProjectListHandler();
-    public delegate void OnEditProjectHandler(string id);
-
 
     public partial class Main : Form
     {
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
         public new void SuspendLayout()
         {
@@ -20,24 +21,59 @@ namespace AutoVersionsDB.WinApp
             //  And because that we cant set ignore to ths method to the auto generate code, we implement nothing.
         }
 
+        private readonly MainViewModel _viewModel;
 
 
-        public Main()
+        public Main(MainViewModel viewModel)
         {
             InitializeComponent();
+
+
+            _viewModel = viewModel;
+
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                _viewModel.MainViewModelData.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
+            }
 
             this.Load += Main_Load;
 
 
 
-            chooseProject1.OnSetNewProject += ChooseProject1_OnSetNewProject1;
-            chooseProject1.OnNavToProcess += ChooseProject1_OnNavToProcess;
-            chooseProject1.OnEditProject += ChooseProject1_OnEditProject;
+            //chooseProject1.OnSetNewProject += ChooseProject1_OnSetNewProject1;
+            //chooseProject1.OnNavToProcess += ChooseProject1_OnNavToProcess;
+            //chooseProject1.OnEditProject += ChooseProject1_OnEditProject;
 
-            editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
-            dbVersionsMangement1.OnEditProject += DbVersionsMangement1_OnEditProject;
+            //editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
+            //dbVersionsMangement1.OnEditProject += DbVersionsMangement1_OnEditProject;
+        }
 
-            lnkBtnChooseProject.Visible = false;
+        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(_viewModel.MainViewModelData.CurrentView):
+
+                    SetView(_viewModel.MainViewModelData.CurrentView);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void SetDataBindings()
+        {
+            this.lnkBtnChooseProject.DataBindings.Clear();
+            this.lnkBtnChooseProject.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lnkBtnChooseProject,
+                    nameof(lnkBtnChooseProject.Visible),
+                    _viewModel.MainControls,
+                    nameof(_viewModel.MainControls.BtnChooseProjectVisible)
+                )
+            );
         }
 
 
@@ -50,48 +86,42 @@ namespace AutoVersionsDB.WinApp
             tabMainLayout.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabMainLayout.DrawItem += TabMainLayout_DrawItem;
 
-            tabMainLayout.Selected += TabMainLayout_Selected;
+            //tabMainLayout.Selected += TabMainLayout_Selected;
 
-     //       tabMainLayout.Width = this.Width - 50;
+            //       tabMainLayout.Width = this.Width - 50;
         }
 
-        private void EditProjectConfigDetails1_OnNavToProcess(string id)
+
+        public void SetView(ViewType viewType)
         {
-            tabMainLayout.SelectTab(tbDBVersionsMangement);
+            tabMainLayout.BeginInvoke((MethodInvoker)(() =>
+            {
 
-            Task.Run(() => {
+                switch (viewType)
+                {
+                    case ViewType.ChooseProject:
 
-                dbVersionsMangement1.SetProjectConfigItem(id);
-            });
+                        tabMainLayout.SelectTab(tbChooseProject);
+                        break;
+
+                    case ViewType.EditProjectConfig:
+
+                        tabMainLayout.SelectTab(tbEditProjectConfig);
+                        break;
+
+                    case ViewType.DBVersions:
+
+                        tabMainLayout.SelectTab(tbDBVersionsMangement);
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }));
         }
 
-        private void ChooseProject1_OnEditProject(string id)
-        {
-            tabMainLayout.SelectedTab = tbEditProjectConfig;
-        
-            Task.Run(() => {
 
-                editProjectConfigDetails1.SetProjectConfigItem(id);
-            });
-        }
-    
-
-        private void DbVersionsMangement1_OnEditProject(string id)
-        {
-            tabMainLayout.SelectedTab = tbEditProjectConfig;
-
-            Task.Run(() => {
-
-                editProjectConfigDetails1.SetProjectConfigItem(id);
-            });
-        }
-
-
-
-        private void TabMainLayout_Selected(object sender, TabControlEventArgs e)
-        {
-            lnkBtnChooseProject.Visible = tabMainLayout.SelectedTab != tbChooseProject;
-        }
 
         private void TabMainLayout_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -103,34 +133,13 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void ChooseProject1_OnSetNewProject1(object sender, EventArgs e)
-        {
-            editProjectConfigDetails1.CreateNewProjectConfig();
 
-            tabMainLayout.SelectedTab = tbEditProjectConfig;
-        }
-
-
-        private void ChooseProject1_OnNavToProcess(string id)
-        {
-            tabMainLayout.SelectTab(tbDBVersionsMangement);
-
-            Task.Run(() => {
-
-                dbVersionsMangement1.SetProjectConfigItem(id);
-            });
-
-        }
-
-        private void LnkBtnChooseProject_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-
-
-        }
 
         private void LnkBtnChooseProject_Click(object sender, EventArgs e)
         {
-            tabMainLayout.SelectedTab = tbChooseProject;
+            _viewModel.NavToChooseProjectCommand.Execute(null);
         }
+
+
     }
 }

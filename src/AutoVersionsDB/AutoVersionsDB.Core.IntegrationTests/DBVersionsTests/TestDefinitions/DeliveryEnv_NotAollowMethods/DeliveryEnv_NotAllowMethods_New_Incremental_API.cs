@@ -9,8 +9,8 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
@@ -22,7 +22,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods
 {
-    public class DeliveryEnv_NotAllowMethods_New_Incremental_API : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_NotAllowMethods_New_Incremental_API : TestDefinition
     {
         private string _relFolder_Incremental = "Incremental";
 
@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             }
         }
 
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ProcessAsserts _processAsserts;
 
 
@@ -47,17 +47,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         public string ScriptName1 => "TestIncScript1";
 
 
-        public DeliveryEnv_NotAllowMethods_New_Incremental_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_NotAllowMethods_New_Incremental_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                                                     ProcessAsserts processAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _processAsserts = processAsserts;
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
+            ITestContext testContext = _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
 
             if (File.Exists(_scriptFullPath_Incremental_scriptName1))
             {
@@ -68,23 +68,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             return testContext;
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.CreateNewIncrementalScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext,false);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext,false);
 
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DeliveryEnvironment");
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
 
             if (File.Exists(_scriptFullPath_Incremental_scriptName1))
             {

@@ -107,7 +107,7 @@ namespace AutoVersionsDB.Core.Common.CLI
                 {
                     SetErrorInstruction("The process complete with errors:");
                     SetErrorInstruction("--------------------------------");
-                    SetErrorMessage(processReults.Trace.GetOnlyErrorsHistoryAsString());
+                    SetErrorMessage(processReults.Trace.GetOnlyErrorsStatesLogAsString());
 
                     SetErrorInstruction(processReults.Trace.InstructionsMessage);
 

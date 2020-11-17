@@ -343,6 +343,16 @@ namespace AutoVersionsDB.WinApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap succeed {
+            get {
+                object obj = ResourceManager.GetObject("succeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap trashIcon32_red {
             get {
                 object obj = ResourceManager.GetObject("trashIcon32_red", resourceCulture);

@@ -14,17 +14,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils
 {
     public class ProjectConfigsDirectories
     {
-        public static string DefaultBackupsFolder => FileSystemPathUtils.ParsePathVaribles($@"[CommonApplicationData]\AutoVersionsDB\Backups\{IntegrationTestsConsts.DummyProjectConfig.Id}");
+        public static string DefaultBackupsFolder => FileSystemPathUtils.ParsePathVaribles($@"[CommonApplicationData]\AutoVersionsDB\Backups\{IntegrationTestsConsts.DummyProjectConfigValid.Id}");
 
         public void ClearAutoCreatedFolders()
         {
             ResolveDeleteFolder(DefaultBackupsFolder);
-            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath);
-            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath);
-            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.IncrementalScriptsFolderPath);
-            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.RepeatableScriptsFolderPath);
-            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.DevDummyDataScriptsFolderPath);
-            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath);
+            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath);
+            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfigValid.DevScriptsBaseFolderPath);
+            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfigValid.IncrementalScriptsFolderPath);
+            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfigValid.RepeatableScriptsFolderPath);
+            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfigValid.DevDummyDataScriptsFolderPath);
+            ResolveDeleteFolder(IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath);
         }
 
         public void ResolveDeleteFolder(string path)

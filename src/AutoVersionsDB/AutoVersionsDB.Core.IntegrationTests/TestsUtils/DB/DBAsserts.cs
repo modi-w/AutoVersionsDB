@@ -70,7 +70,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
             bool isRestoreExecuted =
                 processTrace
-                .StatesHistory.Any(e => e.InternalStepNotificationState != null
+                .StatesLog.Any(e => e.InternalStepNotificationState != null
                                         && !string.IsNullOrWhiteSpace(e.InternalStepNotificationState.StepName)
                                         && e.InternalStepNotificationState.StepName.StartsWith(RestoreDatabaseStep.StepNameStr));
 
@@ -264,7 +264,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
         private static void assertTableNumOfRows(string testName, string tableName, DataTable table1Data, int numOfRows)
         {
-            Assert.That(table1Data.Rows.Count, Is.EqualTo(numOfRows), $"{testName} -> The table {tableName} not should be {numOfRows} rows, but has {table1Data.Rows.Count}");
+            Assert.That(table1Data.Rows.Count, Is.EqualTo(numOfRows), $"{testName} -> The table {tableName} should be {numOfRows} rows, but has {table1Data.Rows.Count}");
         }
         private static void assertTableCellValue(string testName, string tableName, DataTable table1Data, int rowIndex, string colName, object cellValue)
         {

@@ -23,13 +23,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests
         [Test]
         public void Config_DevEnv()
         {
-            TestsRunner.RunTests<Config_DevEnv_API, Config_DevEnv_CLI>();
+            TestsRunner.RunTests<Config_DevEnv_API, Config_DevEnv_CLI, Config_DevEnv_UI>();
         }
 
         [Test]
         public void Config_DeliveryEnv()
         {
-            TestsRunner.RunTests<Config_DeliveryEnv_API, Config_DeliveryEnv_CLI>();
+            TestsRunner.RunTests<Config_DeliveryEnv_API, Config_DeliveryEnv_CLI, Config_DeliveryEnv_UI>();
         }
 
 

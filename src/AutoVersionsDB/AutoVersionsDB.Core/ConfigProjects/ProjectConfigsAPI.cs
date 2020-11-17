@@ -15,6 +15,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         private readonly ProjectConfigsStorage _projectConfigsStorage;
         private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
 
+        private readonly NotificationProcessRunner<ProjectConfigValidationProcessDefinition, ProjectConfigProcessContext> _projectConfigValidationRunner;
         private readonly NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> _saveNewProjectConfigRunner;
         private readonly NotificationProcessRunner<UpdateProjectConfigProcessDefinition, ProjectConfigProcessContext> _updateProjectConfigRunner;
         private readonly NotificationProcessRunner<ChangeIdProcessDefinition, ProjectConfigProcessContext> _changeIdRunner;
@@ -23,6 +24,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         public ProjectConfigsAPI(ProjectConfigsStorage projectConfigsStorage,
                                 DBCommandsFactoryProvider dbCommandsFactoryProvider,
+                                NotificationProcessRunner<ProjectConfigValidationProcessDefinition, ProjectConfigProcessContext> projectConfigValidationRunner,
                                 NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> saveNewProjectConfigRunner,
                                 NotificationProcessRunner<UpdateProjectConfigProcessDefinition, ProjectConfigProcessContext> updateProjectConfigRunner,
                                 NotificationProcessRunner<ChangeIdProcessDefinition, ProjectConfigProcessContext> changeIdRunner,
@@ -30,6 +32,8 @@ namespace AutoVersionsDB.Core.ConfigProjects
         {
             _projectConfigsStorage = projectConfigsStorage;
             _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+
+            _projectConfigValidationRunner = projectConfigValidationRunner;
             _saveNewProjectConfigRunner = saveNewProjectConfigRunner;
             _updateProjectConfigRunner = updateProjectConfigRunner;
             _changeIdRunner = changeIdRunner;
@@ -51,6 +55,12 @@ namespace AutoVersionsDB.Core.ConfigProjects
         {
             return _projectConfigsStorage.GetProjectConfigById(id);
         }
+
+        public ProcessResults ValidateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        {
+            return _projectConfigValidationRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
+        }
+
 
 
         public ProcessResults SaveNewProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)

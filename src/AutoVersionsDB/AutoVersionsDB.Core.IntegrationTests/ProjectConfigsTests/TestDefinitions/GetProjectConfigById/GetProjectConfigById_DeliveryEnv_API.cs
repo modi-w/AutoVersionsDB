@@ -20,6 +20,8 @@ using System.Linq;
 using System.Text;
 using NuGet.Frameworks;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectConfigById
 {
@@ -37,22 +39,22 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
-                Id = IntegrationTestsConsts.DummyProjectConfig.Id,
-                Description = IntegrationTestsConsts.DummyProjectConfig.Description,
-                DBType = IntegrationTestsConsts.DummyProjectConfig.DBType,
-                Server = IntegrationTestsConsts.DummyProjectConfig.Server,
-                DBName = IntegrationTestsConsts.DummyProjectConfig.DBName,
-                Username = IntegrationTestsConsts.DummyProjectConfig.Username,
-                Password = IntegrationTestsConsts.DummyProjectConfig.Password,
-                BackupFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath,
+                Id = IntegrationTestsConsts.DummyProjectConfigValid.Id,
+                Description = IntegrationTestsConsts.DummyProjectConfigValid.Description,
+                DBType = IntegrationTestsConsts.DummyProjectConfigValid.DBType,
+                Server = IntegrationTestsConsts.DummyProjectConfigValid.Server,
+                DBName = IntegrationTestsConsts.DummyProjectConfigValid.DBName,
+                Username = IntegrationTestsConsts.DummyProjectConfigValid.Username,
+                Password = IntegrationTestsConsts.DummyProjectConfigValid.Password,
+                BackupFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath,
                 DevEnvironment = false,
-                DevScriptsBaseFolderPath = IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath,
-                DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath,
-                DeliveryArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeliveryArtifactFolderPath,
+                DevScriptsBaseFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.DevScriptsBaseFolderPath,
+                DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath,
+                DeliveryArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.DeliveryArtifactFolderPath,
             };
 
             _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
@@ -60,29 +62,29 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
 
 
-            return new TestContext(overrideTestArgs);
+            return new ProcessTestContext(overrideTestArgs);
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.Result =
                 AutoVersionsDBAPI
-                .GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfig.Id);
+                .GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfigValid.Id);
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             ProjectConfigItem projectConfig =
-                _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfig.Id);
+                _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfigValid.Id);
 
             Assert.That(projectConfig != null, $"{GetType().Name} -> ProjectConfig not found.");
 
-            Assert.That(projectConfig.Description == IntegrationTestsConsts.DummyProjectConfig.Description, $"{GetType().Name} -> ProjectConfig not found.");
+            Assert.That(projectConfig.Description == IntegrationTestsConsts.DummyProjectConfigValid.Description, $"{GetType().Name} -> ProjectConfig not found.");
         }
 
-        public override void Release(TestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
         }

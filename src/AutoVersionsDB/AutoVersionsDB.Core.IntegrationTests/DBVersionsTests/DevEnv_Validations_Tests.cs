@@ -5,9 +5,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
-
-
-
+using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Validations;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -37,42 +35,28 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 
 
         [Test]
-        public void DevEnv_ProjectConfigValidation_NotValid()
-        {
-            TestsRunner.RunTests<DevEnv_ProjectConfigValidation_NotValid_API>();
-        }
-
-
-        [Test]
-        public void DevEnv_ProjectConfigValidation_Valid()
-        {
-            TestsRunner.RunTestsForeachDBType<DevEnv_ProjectConfigValidation_Valid_API>();
-        }
-
-
-        [Test]
         public void DevEnv_Validate_Valid()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Validate_Valid_API, DevEnv_Validate_Valid_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Validate_Valid_API, DevEnv_Validate_Valid_CLI, DevEnv_Validate_Valid_UI>();
         }
 
 
         [Test]
         public void DevEnv_Validate_HistoryExecutedFilesChanged()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Validate_HistoryExecutedFilesChanged_API, DevEnv_Validate_HistoryExecutedFilesChanged_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Validate_HistoryExecutedFilesChanged_API, DevEnv_Validate_HistoryExecutedFilesChanged_CLI, DevEnv_Validate_HistoryExecutedFilesChanged_UI>();
         }
 
         [Test]
         public void DevEnv_Validate_HistoryExecutedFileMissing()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Validate_HistoryExecutedFilesMissing_API, DevEnv_Validate_HistoryExecutedFilesMissing_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Validate_HistoryExecutedFilesMissing_API, DevEnv_Validate_HistoryExecutedFilesMissing_CLI, DevEnv_Validate_HistoryExecutedFilesMissing_UI>();
         }
 
         [Test]
         public void DevEnv_Validate_MissingSystemTables()
         {
-            TestsRunner.RunTestsForeachDBType<DevEnv_Validate_MissingSystemTables_API, DevEnv_Validate_MissingSystemTables_CLI>();
+            TestsRunner.RunTestsForeachDBType<DevEnv_Validate_MissingSystemTables_API, DevEnv_Validate_MissingSystemTables_CLI, DevEnv_Validate_MissingSystemTables_UI>();
         }
 
         [Test]

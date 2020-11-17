@@ -11,13 +11,13 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
+using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
 
 namespace AutoVersionsDB.Core.DBVersions
 {
     public class DBVersionsAPI
     {
         private readonly NotificationProcessRunner<DBVersionsValidationsProcessDefinitions, DBVersionsProcessContext> _dbVersionsValidationsRunner;
-        private readonly NotificationProcessRunner<ProjectConfigValidationProcessDefinition, DBVersionsProcessContext> _projectConfigValidationRunner;
         private readonly NotificationProcessRunner<TargetStateScriptFileValidationProcessDefinition, DBVersionsProcessContext> _targetStateScriptFileValidationRunner;
 
         private readonly NotificationProcessRunner<GetScriptFilesStateProcessDefinitions, DBVersionsProcessContext> _getScriptFilesStateRunner;
@@ -38,7 +38,6 @@ namespace AutoVersionsDB.Core.DBVersions
 
 
         public DBVersionsAPI(NotificationProcessRunner<DBVersionsValidationsProcessDefinitions, DBVersionsProcessContext> dbVersionsValidationsRunner,
-                               NotificationProcessRunner<ProjectConfigValidationProcessDefinition, DBVersionsProcessContext> projectConfigValidationRunner,
                                NotificationProcessRunner<TargetStateScriptFileValidationProcessDefinition, DBVersionsProcessContext> targetStateScriptFileValidationRunner,
                                NotificationProcessRunner<GetScriptFilesStateProcessDefinitions, DBVersionsProcessContext> getScriptFilesStateRunner,
                                NotificationProcessRunner<CreateNextScriptFileProcessDefinition<IncrementalScriptFileType>, DBVersionsProcessContext> createIncrementalNextScriptFileRunner,
@@ -52,7 +51,6 @@ namespace AutoVersionsDB.Core.DBVersions
                                ScriptFilesStateFactory scriptFilesStateFactory)
         {
             _dbVersionsValidationsRunner = dbVersionsValidationsRunner;
-            _projectConfigValidationRunner = projectConfigValidationRunner;
             _targetStateScriptFileValidationRunner = targetStateScriptFileValidationRunner;
 
             _getScriptFilesStateRunner = getScriptFilesStateRunner;
@@ -79,11 +77,6 @@ namespace AutoVersionsDB.Core.DBVersions
         public ProcessResults ValidateDBVersions(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             return _dbVersionsValidationsRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
-        }
-
-        public ProcessResults ValidateProjectConfig(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
-        {
-            return _projectConfigValidationRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
         }
 
 

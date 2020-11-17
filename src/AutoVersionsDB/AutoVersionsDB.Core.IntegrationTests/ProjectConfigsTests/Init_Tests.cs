@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests
         [Test]
         public void Init_DevEnv_AllProperties()
         {
-            TestsRunner.RunTests<Init_DevEnv_AllProperties_API, Init_DevEnv_AllProperties_CLI>();
+            TestsRunner.RunTests<Init_DevEnv_AllProperties_API, Init_DevEnv_AllProperties_CLI, Init_DevEnv_AllProperties_UI>();
         }
 
 
@@ -41,7 +41,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests
         [Test]
         public void Init_DeliveryEnv_AllProperties()
         {
-            TestsRunner.RunTests<Init_DeliveryEnv_AllProperties_API, Init_DeliveryEnv_AllProperties_CLI>();
+            TestsRunner.RunTests<Init_DeliveryEnv_AllProperties_API, Init_DeliveryEnv_AllProperties_CLI, Init_DeliveryEnv_AllProperties_UI>();
         }
 
 

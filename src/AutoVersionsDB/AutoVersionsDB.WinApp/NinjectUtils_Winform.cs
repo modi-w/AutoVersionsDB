@@ -1,4 +1,8 @@
 ﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.UI;
+using AutoVersionsDB.UI.DBVersions;
+using AutoVersionsDB.UI.EditProject;
+using AutoVersionsDB.UI.Notifications;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
 using System;
@@ -9,7 +13,7 @@ using System.Text;
 namespace AutoVersionsDB.WinApp
 {
     public static class NinjectUtils_Winform
-    { 
+    {
         /* https://github.com/ninject/Ninject.Web/blob/master/src/Ninject.Web/WebServiceBase.cs
          * 
          * https://stackoverflow.com/questions/14127763/dependency-injection-in-winforms-using-ninject-and-entity-framework
@@ -17,7 +21,6 @@ namespace AutoVersionsDB.WinApp
          */
 
 
-        // TODO: When using winapp -> call to CreateKernel(), when using unit tests -> call to CreateKenrelForTests
 
         public static IKernel NinjectKernelContainer { get; private set; }
 
@@ -27,31 +30,51 @@ namespace AutoVersionsDB.WinApp
             NinjectKernelContainer = new StandardKernel();
             NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
 
-            RegisterServices(NinjectKernelContainer);
+            //var notificationsViewModel = NinjectKernelContainer.Get<NotificationsViewModel>();
+            //NinjectKernelContainer.Bind<INotificationsViewModel>().ToConstant(notificationsViewModel);
+
+            //var dbVersionsViewSateManager = NinjectKernelContainer.Get<DBVersionsViewSateManager>();
+            //NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().ToConstant(dbVersionsViewSateManager);
+
+
+            RegisterServices();
+
             NinjectUtils.SetKernelInstance(NinjectKernelContainer);
+            NinjectUtils_UI.SetKernelInstance(NinjectKernelContainer);
+
+            ComposeObjects();
         }
 
-        private static void RegisterServices(IKernel kernel)
+        private static void RegisterServices()
         {
-          //  kernel.ThrowIfNull(nameof(kernel));
-
+            NinjectKernelContainer.Bind<INotificationsViewModel>().To<NotificationsViewModel>().InSingletonScope();
+            NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManager>().InSingletonScope();
+            NinjectKernelContainer.Bind<IEditProjectViewSateManager>().To<EditProjectViewSateManager>().InSingletonScope();
+            
         }
 
 
-        public static void CreateKernelForTests()
+        private static void ComposeObjects()
         {
-            NinjectKernelContainer = new StandardKernel();
-            NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
-
-            RegisterServicesForTests(NinjectKernelContainer);
-        }
-
-        private static void RegisterServicesForTests(IKernel kernel)
-        {
-           // kernel.ThrowIfNull(nameof(kernel));
-
-            //TODO: register Mock services
+            ViewRouter viewRouter = NinjectKernelContainer.Get<ViewRouter>();
+            NinjectKernelContainer.Bind<ViewRouter>().ToConstant(viewRouter);
 
         }
+
+        //public static void CreateKernelForTests()
+        //{
+        //    NinjectKernelContainer = new StandardKernel();
+        //    NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
+
+        //    RegisterServicesForTests(NinjectKernelContainer);
+        //}
+
+        //private static void RegisterServicesForTests(IKernel kernel)
+        //{
+        //   // kernel.ThrowIfNull(nameof(kernel));
+
+        //    //TODO: register Mock services
+
+        //}
     }
 }

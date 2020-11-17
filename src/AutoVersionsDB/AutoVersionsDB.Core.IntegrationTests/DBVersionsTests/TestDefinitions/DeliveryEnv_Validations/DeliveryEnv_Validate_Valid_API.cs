@@ -2,13 +2,13 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -17,36 +17,36 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations
 {
-    public class DeliveryEnv_Validate_Valid_API : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Validate_Valid_API : TestDefinition
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
 
-        public DeliveryEnv_Validate_Valid_API(DBVersionsTestHelper dbVersionsTestHelper)
+        public DeliveryEnv_Validate_Valid_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.MiddleState, ScriptFilesStateType.ValidScripts);
+            return _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.ValidateDBVersions(testContext.ProjectConfig.Id, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, true);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, true);
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
         }
 
     }

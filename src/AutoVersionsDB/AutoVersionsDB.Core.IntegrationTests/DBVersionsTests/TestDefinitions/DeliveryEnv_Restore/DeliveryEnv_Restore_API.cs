@@ -10,8 +10,8 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -20,41 +20,41 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Restore
 {
-    public class DeliveryEnv_Restore_API : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Restore_API : TestDefinition
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly DBAsserts _dbAsserts;
 
-        public DeliveryEnv_Restore_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_Restore_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                         DBAsserts dbAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _dbAsserts = dbAsserts;
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
+            return _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.MiddleState, ScriptFilesStateType.ScriptError);
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.SyncDB(testContext.ProjectConfig.Id, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, false);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
 
             _dbAsserts.AssertRestore(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, testContext.DBBackupFileType, testContext.ProcessResults.Trace);
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
         }
     }
 }

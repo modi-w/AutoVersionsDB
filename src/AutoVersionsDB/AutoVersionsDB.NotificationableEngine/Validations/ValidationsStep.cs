@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
+using System.Collections.Generic;
 
 namespace AutoVersionsDB.NotificationableEngine.Validations
 {
@@ -25,13 +26,15 @@ namespace AutoVersionsDB.NotificationableEngine.Validations
 
             ValidationsGroup validationsGroup = _validationsFactory.Create(processContext);
 
+            List<ActionStepBase> internalSteps = new List<ActionStepBase>();
+
             foreach (ValidatorBase validator in validationsGroup.GetValidators())
             {
                 SingleValidationStep singleValidationStep = _singleValidationStepFactory.Create(validator);
-                AddInternalStep(singleValidationStep);
+                internalSteps.Add(singleValidationStep);
             }
 
-            ExecuteInternalSteps(true);
+            ExecuteInternalSteps(internalSteps, true);
         }
 
     }

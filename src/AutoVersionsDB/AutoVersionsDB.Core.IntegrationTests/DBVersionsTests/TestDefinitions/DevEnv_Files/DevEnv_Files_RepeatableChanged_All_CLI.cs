@@ -9,7 +9,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files
 {
-    public class DevEnv_Files_RepeatableChanged_All_CLI : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_Files_RepeatableChanged_All_CLI : TestDefinition<CLITestContext>
     {
 
         private readonly DevEnv_Files_RepeatableChanged_API _files_RepeatableChanged_API;
@@ -27,23 +27,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _files_RepeatableChanged_API = devEnv_Files_RepeatableChanged_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _files_RepeatableChanged_API.Arrange(testArgs);
+            CLITestContext testContext = new CLITestContext(_files_RepeatableChanged_API.Arrange(testArgs));
 
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"files -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _files_RepeatableChanged_API.Asserts(testContext);
 
@@ -78,7 +78,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _files_RepeatableChanged_API.Release(testContext);
         }

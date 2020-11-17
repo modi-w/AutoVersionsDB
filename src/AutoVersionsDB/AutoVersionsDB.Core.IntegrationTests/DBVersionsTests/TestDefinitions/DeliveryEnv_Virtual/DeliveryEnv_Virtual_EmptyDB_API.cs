@@ -2,12 +2,12 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using System;
@@ -16,36 +16,36 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual
 {
-    public class DeliveryEnv_Virtual_EmptyDB_API  : TestDefinition<DBVersionsTestContext>
+    public class DeliveryEnv_Virtual_EmptyDB_API : TestDefinition
     {
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
         private readonly DBAsserts _dbAsserts;
 
-        public DeliveryEnv_Virtual_EmptyDB_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DeliveryEnv_Virtual_EmptyDB_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                                 ScriptFilesAsserts scriptFilesAsserts,
                                                 DBAsserts dbAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _scriptFilesAsserts = scriptFilesAsserts;
             _dbAsserts = dbAsserts;
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            return _dbVersionsTestHelper.Arrange(testArgs, false, DBBackupFileType.EmptyDB, ScriptFilesStateType.ValidScripts);
+            return _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.EmptyDB, ScriptFilesStateType.ValidScripts);
         }
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.SetDBStateByVirtualExecution(testContext.ProjectConfig.Id, IntegrationTestsConsts.TargetStateFile_MiddleState, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, true);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, true);
 
             _dbAsserts.AssertDbInEmptyStateExceptSystemTables(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
             _dbAsserts.AssertThatDbExecutedFilesAreInMiddleState(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
@@ -54,9 +54,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
         }
 
     }

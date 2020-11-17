@@ -9,18 +9,18 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public abstract class ActionStepBase
     {
-        private readonly List<ActionStepBase> _internalSteps;
-        public ReadOnlyCollection<ActionStepBase> ReadOnlyInternalSteps
-        {
-            get
-            {
-                return _internalSteps.AsReadOnly();
-            }
-        }
+        //private readonly List<ActionStepBase> _internalSteps;
+        //public ReadOnlyCollection<ActionStepBase> ReadOnlyInternalSteps
+        //{
+        //    get
+        //    {
+        //        return _internalSteps.AsReadOnly();
+        //    }
+        //}
 
         public abstract string StepName { get; }
 
-        public bool IsContinueOnErrorInIternalStep { get; }
+        //public bool IsContinueOnErrorInIternalStep { get; }
 
         private IStepsExecuter _stepsExecuter;
 
@@ -29,7 +29,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         protected ActionStepBase()
         {
-            _internalSteps = new List<ActionStepBase>();
+            //_internalSteps = new List<ActionStepBase>();
         }
 
 
@@ -39,17 +39,35 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        protected void AddInternalStep(ActionStepBase internalStep)
+        //protected void AddInternalStep(ActionStepBase internalStep)
+        //{
+        //    _internalSteps.Add(internalStep);
+        //}
+
+
+
+
+        protected void ExecuteInternalSteps(List<ActionStepBase> internalSteps, bool isContinueOnError)
         {
-            _internalSteps.Add(internalStep);
+            _stepsExecuter.ExecuteSteps(internalSteps, isContinueOnError);
+
+            disposStepsList(internalSteps);
         }
 
-       
 
 
-        protected void ExecuteInternalSteps(bool isContinueOnError)
+        private static void disposStepsList(IEnumerable<ActionStepBase> processStepsToDispose)
         {
-            _stepsExecuter.ExecuteSteps(_internalSteps, isContinueOnError);
+            foreach (var processStep in processStepsToDispose)
+            {
+                //disposStepsList(processStep.ReadOnlyInternalSteps);
+
+                IDisposable disposeStep = processStep as IDisposable;
+                if (disposeStep != null)
+                {
+                    disposeStep.Dispose();
+                }
+            }
         }
     }
 

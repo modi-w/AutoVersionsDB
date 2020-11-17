@@ -1,239 +1,157 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.UI.Notifications;
+using AutoVersionsDB.UI.StatesLog;
+using AutoVersionsDB.WinApp.Properties;
+using AutoVersionsDB.WinApp.Utils;
+using Ninject;
 
 namespace AutoVersionsDB.WinApp
 {
-    public partial class NotificationsControl : UserControl
+    public partial class NotificationsControl : UserControlNinjectBase
     {
-        private ProcessTrace _processTrace;
+        [Inject]
+        public INotificationsViewModel ViewModel { get; set; }
+
+
 
         public NotificationsControl()
         {
             InitializeComponent();
 
-        }
-
-        public void OnNotificationStateChanged(ProcessTrace processTrace, StepNotificationState notificationStateItem)
-        {
-            _processTrace = processTrace;
-
-            ResolveColorAndImageByErrorStatus(true);
-
-            lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                if (!string.IsNullOrWhiteSpace(notificationStateItem.LowLevelInstructionsMessage))
+                if (!ViewModel.IsEventsBinded)
                 {
-                    lblProcessStatusMessage.Text = notificationStateItem.LowLevelInstructionsMessage;
+                    ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog;
+
+                    ViewModel.IsEventsBinded = true;
                 }
-                else
-                {
-                    lblProcessStatusMessage.Text = notificationStateItem.ToString();
-                }
-            }));
-        }
 
+                ViewModel.NotificationsViewModelData.PropertyChanged += _viewModel_PropertyChanged;
+                SetDataBindings();
 
-        public void SetAttentionMessage(string message)
-        {
-            Clear();
-
-            lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblProcessStatusMessage.Text = message;
-                lblProcessStatusMessage.ForeColor = Color.DarkOrange;
-            }));
-        }
-
-
-        public void Clear()
-        {
-            System.Threading.Thread.Sleep(500);
-
-            pbStatus.BeginInvoke((MethodInvoker)(() =>
-            {
-                pbStatus.Visible = false;
-                pbStatus.Cursor = Cursors.Default;
-
-                //      resolveMessageLocation();
-            }));
-
-
-            lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblProcessStatusMessage.ForeColor = Color.Black;
-                lblProcessStatusMessage.Text = "Waiting for your command.";
-                lblProcessStatusMessage.Cursor = Cursors.Default;
-            }));
-
-        }
-
-
-
-
-
-
-
-        public void PreparingMesage()
-        {
-            pbStatus.BeginInvoke((MethodInvoker)(() =>
-            {
-                pbStatus.Visible = false;
-                pbStatus.Cursor = Cursors.Default;
-
-                //          resolveMessageLocation();
-            }));
-
-
-            lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblProcessStatusMessage.ForeColor = Color.Black;
-                lblProcessStatusMessage.Text = "Please wait, preparing...";
-                lblProcessStatusMessage.Cursor = Cursors.Default;
-            }));
-
-        }
-
-
-        public void BeforeStart()
-        {
-            //pbStatus.BeginInvoke((MethodInvoker)(() =>
-            //{
-            //    pbStatus.Visible = false;
-            //    //   resolveMessageLocation();
-            //}));
-
-            pbStatus.BeginInvoke((MethodInvoker)(() =>
-            {
-                pbStatus.Cursor = Cursors.Hand;
-                pbStatus.Visible = true;
-                pbStatus.Image = Properties.Resources.Spinner3_32;
-            }));
-
-
-            lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-            {
-                lblProcessStatusMessage.Visible = true;
-                lblProcessStatusMessage.ForeColor = Color.Black;
-                lblProcessStatusMessage.Text = "Prepare...";
-            }));
-
-
-        }
-
-        public void AfterComplete()
-        {
-            System.Threading.Thread.Sleep(500);
-
-            ResolveColorAndImageByErrorStatus(false);
-
-            if (!string.IsNullOrWhiteSpace(_processTrace.InstructionsMessage))
-            {
-                lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-                {
-                    lblProcessStatusMessage.Text = _processTrace.InstructionsMessage;
-                }));
-            }
-            else
-            {
-                lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-                {
-                    lblProcessStatusMessage.Text = "The process complete successfully";
-                }));
             }
 
         }
 
-        private void ResolveColorAndImageByErrorStatus(bool isInProcess)
+        private void ViewModel_OnShowStatesLog(object sender, StatesLogViewModel statesLogViewModel)
         {
-            if (isInProcess)
+            StatesLogView statesLogView = new StatesLogView(statesLogViewModel);
+            statesLogView.ShowDialog();
+        }
+
+        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
             {
+                case nameof(ViewModel.NotificationsViewModelData.StatusImageType):
+
+                    StatusImageTypeChanged();
+                    break;
+
+                default:
+                    break;
             }
-            else
+        }
+
+
+        private void SetDataBindings()
+        {
+            this.lblProcessStatusMessage.DataBindings.Clear();
+            this.lblProcessStatusMessage.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblProcessStatusMessage,
+                    nameof(lblProcessStatusMessage.Text),
+                    ViewModel.NotificationsViewModelData,
+                    nameof(ViewModel.NotificationsViewModelData.ProcessStatusMessage)
+                    )
+                );
+            this.lblProcessStatusMessage.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblProcessStatusMessage,
+                    nameof(lblProcessStatusMessage.ForeColor),
+                    ViewModel.NotificationsControls,
+                    nameof(ViewModel.NotificationsControls.ProcessStatusMessageColor)
+                    )
+                );
+
+            this.pbStatus.DataBindings.Clear();
+            this.pbStatus.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    pbStatus,
+                    nameof(pbStatus.Visible),
+                    ViewModel.NotificationsControls,
+                    nameof(ViewModel.NotificationsControls.StatusImageVisible)
+                    )
+                );
+
+
+        }
+
+
+        private void StatusImageTypeChanged()
+        {
+            switch (ViewModel.NotificationsViewModelData.StatusImageType)
             {
-                if (_processTrace.HasError)
-                {
+                case eStatusImageType.Spinner:
+
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
-                        pbStatus.Cursor = Cursors.Hand;
-                        pbStatus.Visible = true;
-                        pbStatus.Image = Properties.Resources.StopIcon_32;
+                        pbStatus.Image = Resources.Spinner3_32;
                     }));
-                }
-                else
-                {
+                    break;
+
+                case eStatusImageType.Warning:
+
+                    //TODO: add image
+                    //pbStatus.Image = Resources.W;
+                    break;
+
+                case eStatusImageType.Error:
+
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
-                        pbStatus.Visible = true;
-                        pbStatus.Image = Properties.Resources.info2_32_32;
-                        pbStatus.Cursor = Cursors.Hand;
+                        pbStatus.Image = Resources.StopIcon_32;
                     }));
-                }
+                    break;
+
+                case eStatusImageType.Succeed:
+
+                    pbStatus.BeginInvoke((MethodInvoker)(() =>
+                    {
+                        pbStatus.Image = Resources.succeed;
+                    }));
+                    break;
+
             }
 
-            if (_processTrace.HasError)
-            {
 
-                lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-                {
-                    lblProcessStatusMessage.ForeColor = Color.DarkRed;
-                    lblProcessStatusMessage.Cursor = Cursors.Hand;
-                }));
-            }
-            else
-            {
-                lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-                {
-                    lblProcessStatusMessage.ForeColor = Color.Black;
-                    lblProcessStatusMessage.Cursor = Cursors.Hand;
-                }));
-            }
         }
+
+
+
 
         private void PbStatus_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow(_processTrace);
+            ViewModel.ShowStatesLogViewCommand.Execute();
         }
 
-        private static void ShowMessageWindow(ProcessTrace processResults)
-        {
-            using (MessageWindow messageWindow = new MessageWindow(processResults))
-            {
-                messageWindow.ShowDialog();
-            }
 
-        }
-
-        //private void resolveMessageLocation()
-        //{
-        //    lblProcessStatusMessage.BeginInvoke((MethodInvoker)(() =>
-        //    {
-        //        if (pbStatus.Visible)
-        //        {
-
-        //            lblProcessStatusMessage.Location = new Point(120, 17);
-        //        }
-        //        else
-        //        {
-        //            lblProcessStatusMessage.Location = new Point(10, 17);
-
-        //        }
-        //    }));
-
-
-        //}
 
         private void LblPrecents_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow(_processTrace);
+            ViewModel.ShowStatesLogViewCommand.Execute();
         }
 
         private void LblProcessStatusMessage_Click(object sender, EventArgs e)
         {
-            ShowMessageWindow(_processTrace);
+            ViewModel.ShowStatesLogViewCommand.Execute();
         }
 
 

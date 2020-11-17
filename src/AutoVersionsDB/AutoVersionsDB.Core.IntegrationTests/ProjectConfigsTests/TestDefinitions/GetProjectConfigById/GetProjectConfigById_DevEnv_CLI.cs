@@ -10,7 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectConfigById;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectConfigById
 {
-    public class GetProjectConfigById_DevEnv_CLI : TestDefinition
+    public class GetProjectConfigById_DevEnv_CLI : TestDefinition<CLITestContext>
     {
         private readonly GetProjectConfigById_DevEnv_API _getProjectConfigById_API;
 
@@ -27,22 +27,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _getProjectConfigById_API = getProjectConfigById_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _getProjectConfigById_API.Arrange(testArgs);
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            CLITestContext testContext = new CLITestContext(_getProjectConfigById_API.Arrange(testArgs));
+
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
             AutoVersionsDBAPI.CLIRun($"info -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             _getProjectConfigById_API.Asserts(testContext);
 
@@ -50,25 +51,25 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,15);
             assertTextByLines.AssertLineMessage("> Run 'info' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage($"Id                                 : {IntegrationTestsConsts.DummyProjectConfig.Id}", true);
-            assertTextByLines.AssertLineMessage($"Description                        : {IntegrationTestsConsts.DummyProjectConfig.Description}", true);
-            assertTextByLines.AssertLineMessage($"DBType                             : {IntegrationTestsConsts.DummyProjectConfig.DBType}", true);
-            assertTextByLines.AssertLineMessage($"ServerInstance                     : {IntegrationTestsConsts.DummyProjectConfig.Server}", true);
-            assertTextByLines.AssertLineMessage($"DataBaseName                       : {IntegrationTestsConsts.DummyProjectConfig.DBName}", true);
-            assertTextByLines.AssertLineMessage($"DBUsername                         : {IntegrationTestsConsts.DummyProjectConfig.Username}", true);
-            assertTextByLines.AssertLineMessage($"DBPassword                         : {IntegrationTestsConsts.DummyProjectConfig.Password}", true);
-            assertTextByLines.AssertLineMessage($"Backup Folder Path                 : {IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath}", true);
-            assertTextByLines.AssertLineMessage($"Dev Environment                    : {IntegrationTestsConsts.DummyProjectConfig.DevEnvironment}", true);
-            assertTextByLines.AssertLineMessage( $"Scripts Base Folder                : {IntegrationTestsConsts.DummyProjectConfig.ScriptsBaseFolderPath}", true);
-            assertTextByLines.AssertLineMessage( $" Incremental Scripts Folder        : {IntegrationTestsConsts.DummyProjectConfig.IncrementalScriptsFolderPath}", true);
-            assertTextByLines.AssertLineMessage( $" Repeatable Scripts Folder         : {IntegrationTestsConsts.DummyProjectConfig.RepeatableScriptsFolderPath}", true);
-            assertTextByLines.AssertLineMessage( $" Dev Dummy Data Scripts Folder     : {IntegrationTestsConsts.DummyProjectConfig.DevDummyDataScriptsFolderPath}", true);
-            assertTextByLines.AssertLineMessage( $"Deploy Artifact Folder             : {IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath}", true);
+            assertTextByLines.AssertLineMessage($"Id                                 : {IntegrationTestsConsts.DummyProjectConfigValid.Id}", true);
+            assertTextByLines.AssertLineMessage($"Description                        : {IntegrationTestsConsts.DummyProjectConfigValid.Description}", true);
+            assertTextByLines.AssertLineMessage($"DBType                             : {IntegrationTestsConsts.DummyProjectConfigValid.DBType}", true);
+            assertTextByLines.AssertLineMessage($"ServerInstance                     : {IntegrationTestsConsts.DummyProjectConfigValid.Server}", true);
+            assertTextByLines.AssertLineMessage($"DataBaseName                       : {IntegrationTestsConsts.DummyProjectConfigValid.DBName}", true);
+            assertTextByLines.AssertLineMessage($"DBUsername                         : {IntegrationTestsConsts.DummyProjectConfigValid.Username}", true);
+            assertTextByLines.AssertLineMessage($"DBPassword                         : {IntegrationTestsConsts.DummyProjectConfigValid.Password}", true);
+            assertTextByLines.AssertLineMessage($"Backup Folder Path                 : {IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath}", true);
+            assertTextByLines.AssertLineMessage($"Dev Environment                    : {IntegrationTestsConsts.DummyProjectConfigValid.DevEnvironment}", true);
+            assertTextByLines.AssertLineMessage( $"Scripts Base Folder                : {IntegrationTestsConsts.DummyProjectConfigValid.ScriptsBaseFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $" Incremental Scripts Folder        : {IntegrationTestsConsts.DummyProjectConfigValid.IncrementalScriptsFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $" Repeatable Scripts Folder         : {IntegrationTestsConsts.DummyProjectConfigValid.RepeatableScriptsFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $" Dev Dummy Data Scripts Folder     : {IntegrationTestsConsts.DummyProjectConfigValid.DevDummyDataScriptsFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $"Deploy Artifact Folder             : {IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath}", true);
 
         }
 
 
-        public override void Release(TestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             _getProjectConfigById_API.Release(testContext);
 

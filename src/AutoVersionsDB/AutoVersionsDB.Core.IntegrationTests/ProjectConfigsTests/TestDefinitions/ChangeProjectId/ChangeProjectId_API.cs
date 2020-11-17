@@ -9,12 +9,13 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.ChangeProjectId;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -46,33 +47,33 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            ProjectConfigItem projectConfig1 = new ProjectConfigItem()
-            {
-                Id = OldProjectId,
-                Description = ProjectDesc,
-            };
+            ProjectConfigItem projectConfig = IntegrationTestsConsts.GetNewInstanceForDummyProjectConfigValid();
+            projectConfig.DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal).Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType);
+            projectConfig.Id = OldProjectId;
+            projectConfig.Description = ProjectDesc;
 
-            _projectConfigsStorageHelper.PrepareTestProject(projectConfig1);
+            _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
 
+            ProjectConfigTestArgs projectConfigTestArgs = new ProjectConfigTestArgs(projectConfig);
 
-            return new TestContext(testArgs);
+            return new ProcessTestContext(projectConfigTestArgs);
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.ChangeProjectId(OldProjectId, NewProjectId, null);
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
 
             ProjectConfigItem oldProjectByProjectId = _projectConfigsStorage.GetProjectConfigById(OldProjectId);
-            Assert.That(oldProjectByProjectId == null, $"{this.GetType().Name} -> Shuold not find project with the old ProjectId.");
+            Assert.That(oldProjectByProjectId == null, $"{this.GetType().Name} -> Chuold not find project with the old ProjectId.");
 
             ProjectConfigItem newProjectByProjectId = _projectConfigsStorage.GetProjectConfigById(NewProjectId);
             Assert.That(newProjectByProjectId != null, $"{this.GetType().Name} -> Could not find project with the new ProjectId.");
@@ -80,7 +81,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             Assert.That(newProjectByProjectId.Description == ProjectDesc, $"{this.GetType().Name} -> Project Description should be: '{ProjectDesc}', but was:'{newProjectByProjectId.Description}'.");
         }
 
-        public override void Release(TestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
         }

@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests
         [Test]
         public void ChangeProjectId()
         {
-            TestsRunner.RunTests<ChangeProjectId_API, ChangeProjectId_CLI>();
+            TestsRunner.RunTests<ChangeProjectId_API, ChangeProjectId_CLI, ChangeProjectId_UI>();
         }
     }
 }

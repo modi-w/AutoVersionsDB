@@ -4,6 +4,7 @@ using AutoVersionsDB.DbCommands.Contract;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {
@@ -41,13 +42,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
                 List<string> scriptBlocks = _dbCommands.SplitSqlStatementsToExecutionBlocks(sqlCommandStr).ToList();
 
+                List<ActionStepBase> internalSteps = new List<ActionStepBase>();
+
                 foreach (string scriptBlockStr in scriptBlocks)
                 {
                     var executeScriptBlockStep = _executeScriptBlockStepFactory.Craete(_dbCommands, scriptBlockStr);
-                    AddInternalStep(executeScriptBlockStep);
+                    internalSteps.Add(executeScriptBlockStep);
                 }
 
-                ExecuteInternalSteps(false);
+                ExecuteInternalSteps(internalSteps, false);
             }
 
             processContext.AppendExecutedFile(_scriptFile);

@@ -26,12 +26,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils
 
             _projectConfigsStorage.SaveNewProjectConfig(projectConfig);
         }
+
+        public void AppendProject(ProjectConfigItem projectConfig)
+        {
+            _projectConfigsStorage.SaveNewProjectConfig(projectConfig);
+        }
+
         public void PrepareTestProject(ProjectConfigItem projectConfig1, ProjectConfigItem projectConfig2)
         {
             ClearAllProjects();
 
             _projectConfigsStorage.SaveNewProjectConfig(projectConfig1);
             _projectConfigsStorage.SaveNewProjectConfig(projectConfig2);
+        }
+
+        public bool IsIdExsit(string id)
+        {
+            return _projectConfigsStorage.IsIdExsit(id);
         }
 
         public void ClearAllProjects()

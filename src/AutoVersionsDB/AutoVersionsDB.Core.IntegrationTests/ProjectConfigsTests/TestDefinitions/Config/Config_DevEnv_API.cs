@@ -2,16 +2,14 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-
-
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.ChangeProjectId;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Config;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.DbCommands.Contract;
@@ -24,13 +22,13 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Config
 {
-    public class Config_DevEnv_API : TestDefinition<TestContext<ProjectConfigTestArgs>>
+    public class Config_DevEnv_API : TestDefinition
     {
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProjectConfigsStorage _projectConfigsStorage;
         private readonly ProcessAsserts _processAsserts;
         private readonly ProjectConfigsDirectories _projectConfigsDirectoriesCleaner;
-        private readonly ProperiesAsserts _properiesAsserts;
+        private readonly PropertiesAsserts _properiesAsserts;
 
 
 
@@ -38,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
                                 ProjectConfigsStorage projectConfigsStorage,
                                 ProcessAsserts processAsserts,
                                 ProjectConfigsDirectories projectConfigsDirectoriesCleaner,
-                                ProperiesAsserts properiesAsserts)
+                                PropertiesAsserts properiesAsserts)
         {
             _projectConfigsStorageHelper = projectConfigsStorageHelper;
             _projectConfigsStorage = projectConfigsStorage;
@@ -48,13 +46,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             _projectConfigsDirectoriesCleaner.ClearAutoCreatedFolders();
 
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
-                Id = IntegrationTestsConsts.DummyProjectConfig.Id,
+                Id = IntegrationTestsConsts.DummyProjectConfigValid.Id,
                 DevEnvironment = true
             };
 
@@ -62,52 +60,52 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
 
-            return new TestContext<ProjectConfigTestArgs>(overrideTestArgs);
+            return new ProcessTestContext(overrideTestArgs);
         }
 
 
-        public override void Act(TestContext<ProjectConfigTestArgs> testContext)
+        public override void Act(ITestContext testContext)
         {
-            testContext.TestArgs.ProjectConfig.Description = IntegrationTestsConsts.DummyProjectConfig.Description;
-            testContext.TestArgs.ProjectConfig.DBType = IntegrationTestsConsts.DummyProjectConfig.DBType;
-            testContext.TestArgs.ProjectConfig.Server = IntegrationTestsConsts.DummyProjectConfig.Server;
-            testContext.TestArgs.ProjectConfig.DBName = IntegrationTestsConsts.DummyProjectConfig.DBName;
-            testContext.TestArgs.ProjectConfig.Username = IntegrationTestsConsts.DummyProjectConfig.Username;
-            testContext.TestArgs.ProjectConfig.Password = IntegrationTestsConsts.DummyProjectConfig.Password;
-            testContext.TestArgs.ProjectConfig.BackupFolderPath = IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath;
-            testContext.TestArgs.ProjectConfig.DevScriptsBaseFolderPath = IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath;
-            testContext.TestArgs.ProjectConfig.DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath;
+            testContext.ProjectConfig.Description = IntegrationTestsConsts.DummyProjectConfigValid.Description;
+            testContext.ProjectConfig.DBType = IntegrationTestsConsts.DummyProjectConfigValid.DBType;
+            testContext.ProjectConfig.Server = IntegrationTestsConsts.DummyProjectConfigValid.Server;
+            testContext.ProjectConfig.DBName = IntegrationTestsConsts.DummyProjectConfigValid.DBName;
+            testContext.ProjectConfig.Username = IntegrationTestsConsts.DummyProjectConfigValid.Username;
+            testContext.ProjectConfig.Password = IntegrationTestsConsts.DummyProjectConfigValid.Password;
+            testContext.ProjectConfig.BackupFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath;
+            testContext.ProjectConfig.DevScriptsBaseFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.DevScriptsBaseFolderPath;
+            testContext.ProjectConfig.DeployArtifactFolderPath = IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath;
 
-            testContext.ProcessResults = AutoVersionsDBAPI.UpdateProjectConfig(testContext.TestArgs.ProjectConfig, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.UpdateProjectConfig(testContext.ProjectConfig, null);
         }
 
 
-        public override void Asserts(TestContext<ProjectConfigTestArgs> testContext)
+        public override void Asserts(ITestContext testContext)
         {
-            ProjectConfigItem newProjectConfig = _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfig.Id);
+            ProjectConfigItem newProjectConfig = _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfigValid.Id);
             Assert.That(newProjectConfig != null, $"{GetType().Name} -> Could not find project with the new ProjectId.");
 
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Description), IntegrationTestsConsts.DummyProjectConfig.Description, newProjectConfig.Description);
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DBName), IntegrationTestsConsts.DummyProjectConfig.DBName, newProjectConfig.DBName);
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Username), IntegrationTestsConsts.DummyProjectConfig.Username, newProjectConfig.Username);
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Password), IntegrationTestsConsts.DummyProjectConfig.Password, newProjectConfig.Password);
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DevEnvironment), true, newProjectConfig.DevEnvironment);
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DevScriptsBaseFolderPath), IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath, newProjectConfig.DevScriptsBaseFolderPath);
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DeployArtifactFolderPath), IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath, newProjectConfig.DeployArtifactFolderPath);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Description), newProjectConfig.Description, IntegrationTestsConsts.DummyProjectConfigValid.Description);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DBName), newProjectConfig.DBName,IntegrationTestsConsts.DummyProjectConfigValid.DBName);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Username), newProjectConfig.Username, IntegrationTestsConsts.DummyProjectConfigValid.Username);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Password), newProjectConfig.Password,IntegrationTestsConsts.DummyProjectConfigValid.Password);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DevEnvironment),  newProjectConfig.DevEnvironment, true);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DevScriptsBaseFolderPath),  newProjectConfig.DevScriptsBaseFolderPath, IntegrationTestsConsts.DummyProjectConfigValid.DevScriptsBaseFolderPath);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DeployArtifactFolderPath),  newProjectConfig.DeployArtifactFolderPath, IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath);
 
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DBType), IntegrationTestsConsts.DummyProjectConfig.DBType, newProjectConfig.DBType);
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Server), IntegrationTestsConsts.DummyProjectConfig.Server, newProjectConfig.Server);
-            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.BackupFolderPath), IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath, newProjectConfig.BackupFolderPath);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DBType), newProjectConfig.DBType,IntegrationTestsConsts.DummyProjectConfigValid.DBType);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Server),  newProjectConfig.Server, IntegrationTestsConsts.DummyProjectConfigValid.Server);
+            _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.BackupFolderPath),  newProjectConfig.BackupFolderPath, IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath);
 
-            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath);
-            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.DevScriptsBaseFolderPath);
-            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.IncrementalScriptsFolderPath);
-            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.RepeatableScriptsFolderPath);
-            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.DevDummyDataScriptsFolderPath);
-            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfig.DeployArtifactFolderPath);
+            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath);
+            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfigValid.DevScriptsBaseFolderPath);
+            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfigValid.IncrementalScriptsFolderPath);
+            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfigValid.RepeatableScriptsFolderPath);
+            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfigValid.DevDummyDataScriptsFolderPath);
+            _projectConfigsDirectoriesCleaner.AssertDirectoryExist(GetType().Name, IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath);
         }
 
-        public override void Release(TestContext<ProjectConfigTestArgs> testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsDirectoriesCleaner.ClearAutoCreatedFolders();
 

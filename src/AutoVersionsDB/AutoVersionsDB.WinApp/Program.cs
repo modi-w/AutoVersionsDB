@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoVersionsDB.UI;
+using Ninject;
+using System;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
@@ -21,12 +23,25 @@ namespace AutoVersionsDB.WinApp
 
             NinjectUtils_Winform.CreateKernel();
 
+            UIGeneralEvents.OnException += UIGeneralEvents_OnException;
+            UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
 
-            using(var mainWindows = new Main())
-            {
-                Application.Run(mainWindows);
-            }
+
+            Main mainFrame = NinjectUtils_Winform.NinjectKernelContainer.Get<Main>();
+
+            Application.Run(mainFrame);
         }
+
+        private static void UIGeneralEvents_OnException(object sender, string exceptionMessage)
+        {
+            MessageBox.Show(exceptionMessage);
+        }
+
+        private static bool UIGeneralEvents_OnConfirm(object sender, string confirmMessage)
+        {
+            return MessageBox.Show(null, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+        }
+
 
 
         private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)

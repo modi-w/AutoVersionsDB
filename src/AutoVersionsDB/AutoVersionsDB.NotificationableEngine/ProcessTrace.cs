@@ -7,15 +7,13 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class ProcessTrace
     {
-        private readonly List<StepNotificationState> _statesHistory;
+        private readonly List<StepNotificationState> _statesLog;
+        public List<StepNotificationState> StatesLog
 
-
-
-        public List<StepNotificationState> StatesHistory
         {
             get
             {
-                return _statesHistory.ToList();
+                return _statesLog.ToList();
             }
         }
 
@@ -25,9 +23,9 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 bool outVal;
 
-                lock (_statesHistory)
+                lock (_statesLog)
                 {
-                    outVal = _statesHistory.Any(e => e.HasError);
+                    outVal = _statesLog.Any(e => e.HasError);
                 }
 
                 return outVal;
@@ -56,7 +54,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public bool ContainErrorCode(string errorCode)
         {
-            return _statesHistory.Any(e => e.LowLevelErrorCode == errorCode);
+            return _statesLog.Any(e => e.LowLevelErrorCode == errorCode);
         }
 
 
@@ -66,9 +64,9 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 string outStr = "";
 
-                lock (_statesHistory)
+                lock (_statesLog)
                 {
-                    var lastStateWithInstructionsMessage = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
+                    var lastStateWithInstructionsMessage = _statesLog.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
                     if (lastStateWithInstructionsMessage != null)
                     {
                         outStr = lastStateWithInstructionsMessage.LowLevelInstructionsMessage;
@@ -85,9 +83,9 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 string outStr = "";
 
-                lock (_statesHistory)
+                lock (_statesLog)
                 {
-                    StepNotificationState lastStateWithInstructionsMessage = _statesHistory.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
+                    StepNotificationState lastStateWithInstructionsMessage = _statesLog.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
 
                     outStr = lastStateWithInstructionsMessage.LowLevelStepName;
                 }
@@ -100,15 +98,15 @@ namespace AutoVersionsDB.NotificationableEngine
 
         internal ProcessTrace()
         {
-            _statesHistory = new List<StepNotificationState>();
+            _statesLog = new List<StepNotificationState>();
         }
 
 
         internal void Appand(StepNotificationState notificationStateItem)
         {
-            lock (_statesHistory)
+            lock (_statesLog)
             {
-                _statesHistory.Add(notificationStateItem);
+                _statesLog.Add(notificationStateItem);
             }
         }
 
@@ -117,13 +115,13 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        public string GetAllHistoryAsString()
+        public string GetAllStatesLogAsString()
         {
             StringBuilder sbStrResults = new StringBuilder();
 
-            lock (_statesHistory)
+            lock (_statesLog)
             {
-                foreach (var notificationState in _statesHistory.ToList())
+                foreach (var notificationState in _statesLog.ToList())
                 {
                     sbStrResults.AppendLine(notificationState.ToString(true, true));
                 }
@@ -132,12 +130,12 @@ namespace AutoVersionsDB.NotificationableEngine
             return sbStrResults.ToString();
         }
 
-        public string GetOnlyErrorsHistoryAsString()
+        public string GetOnlyErrorsStatesLogAsString()
         {
             StringBuilder sbStrResults = new StringBuilder();
 
 
-            lock (_statesHistory)
+            lock (_statesLog)
             {
                 // var notificationState = _statesHistory.Where(e => e.HasError).FirstOrDefault();
 
@@ -146,7 +144,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 //    sbStrResults.AppendLine(notificationState.ToString(false, false));
                 //}
 
-                foreach (var notificationState in _statesHistory.Where(e => e.HasError).GroupBy(e => e.LowLevelErrorCode).Select(e => e.First()))
+                foreach (var notificationState in _statesLog.Where(e => e.HasError).GroupBy(e => e.LowLevelErrorCode).Select(e => e.First()))
                 {
                     sbStrResults.AppendLine(notificationState.ToString(true, true));
                 }

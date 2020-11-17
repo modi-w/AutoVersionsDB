@@ -35,7 +35,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_RestoreExecuted()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Restore_API, DeliveryEnv_Restore_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Restore_API, DeliveryEnv_Restore_CLI, DeliveryEnv_Restore_UI>();
         }
 
 

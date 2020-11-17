@@ -31,14 +31,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_SyncDB_DBInMiddleState()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInMiddleState_API, DeliveryEnv_SyncDB_DBInMiddleState_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInMiddleState_API, DeliveryEnv_SyncDB_DBInMiddleState_CLI, DeliveryEnv_SyncDB_DBInMiddleState_UI>();
         }
 
 
         [Test]
         public void DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_API, DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_API, DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_CLI, DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_UI>();
         }
 
     
@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged_API, DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged_API, DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged_CLI, DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged_UI>();
         }
 
 

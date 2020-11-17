@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,29 +50,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\AutoVersionsDB.WinApp\ChooseProject.cs">
-      <Link>ChooseProject.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\ChooseProjectView.cs">
+      <Link>ChooseProjectView.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\ChooseProject.Designer.cs">
-      <Link>ChooseProject.Designer.cs</Link>
-      <DependentUpon>ChooseProject.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\ChooseProjectView.Designer.cs">
+      <Link>ChooseProjectView.Designer.cs</Link>
+      <DependentUpon>ChooseProjectView.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\DBProcessControl.cs">
-      <Link>DBProcessControl.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\DBVersionsView.cs">
+      <Link>DBVersionsView.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\DBProcessControl.Designer.cs">
-      <Link>DBProcessControl.Designer.cs</Link>
-      <DependentUpon>DBProcessControl.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\DBVersionsView.Designer.cs">
+      <Link>DBVersionsView.Designer.cs</Link>
+      <DependentUpon>DBVersionsView.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\EditProjectConfigDetails.cs">
-      <Link>EditProjectConfigDetails.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\EditProjectView.cs">
+      <Link>EditProjectView.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\EditProjectConfigDetails.Designer.cs">
-      <Link>EditProjectConfigDetails.Designer.cs</Link>
-      <DependentUpon>EditProjectConfigDetails.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\EditProjectView.Designer.cs">
+      <Link>EditProjectView.Designer.cs</Link>
+      <DependentUpon>EditProjectView.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Main.cs">
       <Link>Main.cs</Link>
@@ -79,13 +82,8 @@
       <Link>Main.Designer.cs</Link>
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\MessageWindow.cs">
-      <Link>MessageWindow.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\MessageWindow.Designer.cs">
-      <Link>MessageWindow.Designer.cs</Link>
-      <DependentUpon>MessageWindow.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\NinjectUtils_Winform.cs">
+      <Link>NinjectUtils_Winform.cs</Link>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\NotificationsControl.cs">
       <Link>NotificationsControl.cs</Link>
@@ -106,6 +104,14 @@
     <Compile Include="..\AutoVersionsDB.WinApp\Properties\Resources.Designer.cs">
       <Link>Properties\Resources.Designer.cs</Link>
     </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\StatesLogView.cs">
+      <Link>StatesLogView.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\StatesLogView.Designer.cs">
+      <Link>StatesLogView.Designer.cs</Link>
+      <DependentUpon>StatesLogView.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\TextInputWindow.cs">
       <Link>TextInputWindow.cs</Link>
       <SubType>Form</SubType>
@@ -114,30 +120,34 @@
       <Link>TextInputWindow.Designer.cs</Link>
       <DependentUpon>TextInputWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\Utils\OsProcessUtils.cs">
-      <Link>Utils\OsProcessUtils.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\AsyncBindingHelper.cs">
+      <Link>Utils\AsyncBindingHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\FromNinjectBase.cs">
+      <Link>Utils\FromNinjectBase.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\Utils\UserControlNinjectBase.cs">
+      <Link>Utils\UserControlNinjectBase.cs</Link>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ChooseProject.resx">
-      <Link>ChooseProject.resx</Link>
-      <DependentUpon>ChooseProject.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ChooseProjectView.resx">
+      <Link>ChooseProjectView.resx</Link>
+      <DependentUpon>ChooseProjectView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\DBProcessControl.resx">
-      <Link>DBProcessControl.resx</Link>
-      <DependentUpon>DBProcessControl.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\DBVersionsView.resx">
+      <Link>DBVersionsView.resx</Link>
+      <DependentUpon>DBVersionsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\EditProjectConfigDetails.resx">
-      <Link>EditProjectConfigDetails.resx</Link>
-      <DependentUpon>EditProjectConfigDetails.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\EditProjectView.resx">
+      <Link>EditProjectView.resx</Link>
+      <DependentUpon>EditProjectView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Main.resx">
       <Link>Main.resx</Link>
       <DependentUpon>Main.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\MessageWindow.resx">
-      <Link>MessageWindow.resx</Link>
-      <DependentUpon>MessageWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\NotificationsControl.resx">
       <Link>NotificationsControl.resx</Link>
@@ -152,13 +162,22 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\StatesLogView.resx">
+      <Link>StatesLogView.resx</Link>
+      <DependentUpon>StatesLogView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\TextInputWindow.resx">
       <Link>TextInputWindow.resx</Link>
       <DependentUpon>TextInputWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Utils\UserControlNinjectBase.resx">
+      <Link>Utils\UserControlNinjectBase.resx</Link>
+      <DependentUpon>UserControlNinjectBase.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,6 +211,10 @@
     <ProjectReference Include="..\AutoVersionsDB.NotificationableEngine\AutoVersionsDB.NotificationableEngine.csproj">
       <Project>{38CCA5D1-3F7E-4282-8649-75990F1AF1E8}</Project>
       <Name>AutoVersionsDB.NotificationableEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoVersionsDB.UI\AutoVersionsDB.UI.csproj">
+      <Project>{4C4DE6A7-2AE3-49D0-AA6C-A4D93CBDE190}</Project>
+      <Name>AutoVersionsDB.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

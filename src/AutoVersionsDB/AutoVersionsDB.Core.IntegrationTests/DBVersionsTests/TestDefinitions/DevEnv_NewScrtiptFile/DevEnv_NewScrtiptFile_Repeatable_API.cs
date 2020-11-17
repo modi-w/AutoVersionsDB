@@ -10,8 +10,8 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Validations;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
@@ -23,11 +23,11 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile
 {
-    public class DevEnv_NewScrtiptFile_Repeatable_API : TestDefinition<DBVersionsTestContext>
+    public class DevEnv_NewScrtiptFile_Repeatable_API : TestDefinition
     {
         private string _relFolder_Repeatable = "Repeatable";
 
-        private readonly DBVersionsTestHelper _dbVersionsTestHelper;
+        private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
@@ -35,41 +35,41 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public DevEnv_NewScrtiptFile_Repeatable_API(DBVersionsTestHelper dbVersionsTestHelper,
+        public DevEnv_NewScrtiptFile_Repeatable_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                                         ScriptFilesAsserts scriptFilesAsserts)
         {
-            _dbVersionsTestHelper = dbVersionsTestHelper;
+            _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _scriptFilesAsserts = scriptFilesAsserts;
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = _dbVersionsTestHelper.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
+            ITestContext testContext = _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, true, DBBackupFileType.FinalState_DevEnv, ScriptFilesStateType.ValidScripts);
 
-            ClearScriptsFiles(testContext as DBVersionsTestContext);
+            ClearScriptsFiles(testContext);
 
             return testContext;
         }
 
 
-        public override void Act(DBVersionsTestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = AutoVersionsDBAPI.CreateNewRepeatableScriptFile(testContext.ProjectConfig.Id, ScriptName1, null);
         }
 
 
-        public override void Asserts(DBVersionsTestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Asserts(testContext, true);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, true);
 
             _scriptFilesAsserts.AssertScriptFileExsit(this.GetType().Name, GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo));
         }
 
 
-        public override void Release(DBVersionsTestContext testContext)
+        public override void Release(ITestContext testContext)
         {
-            _dbVersionsTestHelper.Release(testContext);
+            _projectConfigWithDBArrangeAndAssert.Release(testContext);
 
             ClearScriptsFiles(testContext);
         }
@@ -92,7 +92,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        private void ClearScriptsFiles(DBVersionsTestContext testContext)
+        private void ClearScriptsFiles(ITestContext testContext)
         {
             if (File.Exists(GetScriptFullPath_Repeatable_scriptName1(testContext.ProjectConfig.DBConnectionInfo)))
             {

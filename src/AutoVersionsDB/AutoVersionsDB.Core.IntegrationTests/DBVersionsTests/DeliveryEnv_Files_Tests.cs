@@ -29,14 +29,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [Test]
         public void DeliveryEnv_Files_IncrementalChanged()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Files_IncrementalChanged_API, DeliveryEnv_Files_IncrementalChanged_All_CLI, DeliveryEnv_Files_IncrementalChanged_Incremental_CLI, DeliveryEnv_Files_IncrementalChanged_Repeatable_CLI, DeliveryEnv_Files_IncrementalChanged_DevDummyData_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Files_IncrementalChanged_API, DeliveryEnv_Files_IncrementalChanged_All_CLI, DeliveryEnv_Files_IncrementalChanged_Incremental_CLI, DeliveryEnv_Files_IncrementalChanged_Repeatable_CLI, DeliveryEnv_Files_IncrementalChanged_DevDummyData_CLI, DeliveryEnv_Files_IncrementalChanged_UI>();
         }
 
 
         [Test]
         public void DeliveryEnv_Files_RepeatableChanged()
         {
-            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Files_RepeatableChanged_API, DeliveryEnv_Files_RepeatableChanged_All_CLI, DeliveryEnv_Files_RepeatableChanged_Incremental_CLI, DeliveryEnv_Files_RepeatableChanged_Repeatable_CLI, DeliveryEnv_Files_RepeatableChanged_DevDummyData_CLI>();
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Files_RepeatableChanged_API, DeliveryEnv_Files_RepeatableChanged_All_CLI, DeliveryEnv_Files_RepeatableChanged_Incremental_CLI, DeliveryEnv_Files_RepeatableChanged_Repeatable_CLI, DeliveryEnv_Files_RepeatableChanged_DevDummyData_CLI, DeliveryEnv_Files_RepeatableChanged_UI>();
         }
 
 

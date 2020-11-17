@@ -13,7 +13,7 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Config;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Init;
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Config
 {
-    public class Config_DeliveryEnv_CLI : TestDefinition
+    public class Config_DeliveryEnv_CLI : TestDefinition<CLITestContext>
     {
         private readonly Config_DeliveryEnv_API config_API;
 
@@ -30,32 +30,33 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             config_API = init_AllProperties_API;
         }
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
-            TestContext testContext = config_API.Arrange(testArgs);
-            MockObjectsProvider.SetTestContextDataByMockCallbacks(testContext);
+            CLITestContext testContext = new CLITestContext(config_API.Arrange(testArgs));
+
+            MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(CLITestContext testContext)
         {
-            string args = $"-id={IntegrationTestsConsts.DummyProjectConfig.Id} ";
-            args += $"-desc={IntegrationTestsConsts.DummyProjectConfig.Description} ";
-            args += $"-dbt={IntegrationTestsConsts.DummyProjectConfig.DBType} ";
-            args += $"-ser={IntegrationTestsConsts.DummyProjectConfig.Server} ";
-            args += $"-db={IntegrationTestsConsts.DummyProjectConfig.DBName} ";
-            args += $"-un={IntegrationTestsConsts.DummyProjectConfig.Username} ";
-            args += $"-pass={IntegrationTestsConsts.DummyProjectConfig.Password} ";
-            args += $"-buf={IntegrationTestsConsts.DummyProjectConfig.BackupFolderPath} ";
-            args += $"-darf={IntegrationTestsConsts.DummyProjectConfig.DeliveryArtifactFolderPath} ";
+            string args = $"-id={IntegrationTestsConsts.DummyProjectConfigValid.Id} ";
+            args += $"-desc={IntegrationTestsConsts.DummyProjectConfigValid.Description} ";
+            args += $"-dbt={IntegrationTestsConsts.DummyProjectConfigValid.DBType} ";
+            args += $"-ser={IntegrationTestsConsts.DummyProjectConfigValid.Server} ";
+            args += $"-db={IntegrationTestsConsts.DummyProjectConfigValid.DBName} ";
+            args += $"-un={IntegrationTestsConsts.DummyProjectConfigValid.Username} ";
+            args += $"-pass={IntegrationTestsConsts.DummyProjectConfigValid.Password} ";
+            args += $"-buf={IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath} ";
+            args += $"-darf={IntegrationTestsConsts.DummyProjectConfigValid.DeliveryArtifactFolderPath} ";
 
             AutoVersionsDBAPI.CLIRun($"config {args}");
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(CLITestContext testContext)
         {
             config_API.Asserts(testContext);
 
@@ -68,7 +69,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Release(TestContext testContext)
+        public override void Release(CLITestContext testContext)
         {
             config_API.Release(testContext);
         }

@@ -10,8 +10,8 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.C
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.RemoveProjectConfig;
-
-
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.DbCommands.Contract;
@@ -42,7 +42,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override TestContext Arrange(TestArgs testArgs)
+        public override ITestContext Arrange(TestArgs testArgs)
         {
             ProjectConfigItem projectConfig = new ProjectConfigItem()
             {
@@ -54,11 +54,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
 
 
-            return new TestContext(overrideTestArgs);
+            return new ProcessTestContext(overrideTestArgs);
         }
 
 
-        public override void Act(TestContext testContext)
+        public override void Act(ITestContext testContext)
         {
             testContext.ProcessResults = 
                 AutoVersionsDBAPI
@@ -67,7 +67,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         }
 
 
-        public override void Asserts(TestContext testContext)
+        public override void Asserts(ITestContext testContext)
         {
             _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
 
@@ -77,7 +77,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             Assert.That(projectByProjectId == null, $"{GetType().Name} -> ProjectConfig didnt remove from storage.");
         }
 
-        public override void Release(TestContext testContext)
+        public override void Release(ITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
         }
