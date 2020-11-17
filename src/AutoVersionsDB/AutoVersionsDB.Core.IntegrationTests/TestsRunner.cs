@@ -14,6 +14,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
     {
         private static ProjectConfigsFactory _projectConfigsFactory = NinjectUtils_IntegrationTests.NinjectKernelContainer.Get<ProjectConfigsFactory>();
 
+        private static object _testRunSync = new object();
 
         public static void RunTests<T1>()
             where T1 : TestDefinition
@@ -176,37 +177,40 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             foreach (var test in tests)
             {
-                ITestContext testContext = null;
-
-                try
+                lock (_testRunSync)
                 {
-                    Console.WriteLine($"{test.GetType().Name} -> Start");
-                    Debug.WriteLine($"{test.GetType().Name} -> Start");
+                    ITestContext testContext = null;
 
-                    testContext = test.Arrange(testArgs);
-
-                    test.Act(testContext);
-
-                    test.Asserts(testContext);
-                }
-                catch
-                {
-                    if (testContext != null
-                        && testContext.ProcessResults != null
-                        && testContext.ProcessResults.Trace != null)
+                    try
                     {
-                        Console.WriteLine(testContext.ProcessResults.Trace.GetAllStatesLogAsString());
-                        Debug.WriteLine(testContext.ProcessResults.Trace.GetAllStatesLogAsString());
+                        Console.WriteLine($"{test.GetType().Name} -> Start");
+                        Debug.WriteLine($"{test.GetType().Name} -> Start");
+
+                        testContext = test.Arrange(testArgs);
+
+                        test.Act(testContext);
+
+                        test.Asserts(testContext);
                     }
+                    catch
+                    {
+                        if (testContext != null
+                            && testContext.ProcessResults != null
+                            && testContext.ProcessResults.Trace != null)
+                        {
+                            Console.WriteLine(testContext.ProcessResults.Trace.GetAllStatesLogAsString());
+                            Debug.WriteLine(testContext.ProcessResults.Trace.GetAllStatesLogAsString());
+                        }
 
-                    throw;
-                }
-                finally
-                {
-                    test.Release(testContext);
+                        throw;
+                    }
+                    finally
+                    {
+                        test.Release(testContext);
 
-                    Console.WriteLine($"{test.GetType().Name} -> Complete");
-                    Debug.WriteLine($"{test.GetType().Name} -> Complete");
+                        Console.WriteLine($"{test.GetType().Name} -> Complete");
+                        Debug.WriteLine($"{test.GetType().Name} -> Complete");
+                    }
                 }
             }
         }
