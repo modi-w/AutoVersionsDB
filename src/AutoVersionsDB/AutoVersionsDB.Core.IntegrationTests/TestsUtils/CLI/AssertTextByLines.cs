@@ -19,6 +19,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
     {
         private readonly string _testName;
         private readonly string _textType;
+        private readonly string _text;
         private readonly List<string> _finalConsoleOutLines;
         private readonly int? _maxNumOfLines;
 
@@ -28,6 +29,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
         {
             _testName = testName;
             _textType = textType;
+            _text = text;
             _maxNumOfLines = maxNumOfLines;
 
             _finalConsoleOutLines = text.Trim(Environment.NewLine.ToCharArray()).Split(Environment.NewLine).ToList();
@@ -45,15 +47,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
                 lineIndex = forceLineIndex.Value;
             }
 
-            Assert.That(lineIndex < _finalConsoleOutLines.Count, $"{_testName}-> {_textType} -> Number of lines ({_finalConsoleOutLines.Count}) too small. should be at least: '{lineIndex + 1}'");
+            Assert.That(lineIndex < _finalConsoleOutLines.Count, $"{_testName}-> {_textType} -> Number of lines ({_finalConsoleOutLines.Count}) too small. should be at least: '{lineIndex + 1}'. Full Console Text: {Environment.NewLine}{_text}");
 
             if (isExact)
             {
-                Assert.That(_finalConsoleOutLines[lineIndex] == expectedMessage, $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was '{_finalConsoleOutLines[lineIndex]}'.");
+                Assert.That(_finalConsoleOutLines[lineIndex] == expectedMessage, $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was '{_finalConsoleOutLines[lineIndex]}'. Full Console Text: {Environment.NewLine}{_text}");
             }
             else
             {
-                Assert.That(_finalConsoleOutLines[lineIndex].Contains(expectedMessage), $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was {_finalConsoleOutLines[lineIndex]}.");
+                Assert.That(_finalConsoleOutLines[lineIndex].Contains(expectedMessage), $"{_testName}-> {_textType} -> Final console message on line {lineIndex + 1} should be: '{expectedMessage}'. but was {_finalConsoleOutLines[lineIndex]}. Full Console Text: {Environment.NewLine}{_text}");
             }
 
 
@@ -63,7 +65,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
                 if (_maxNumOfLines.HasValue 
                     && _maxNumOfLines <= _lineIndex+1)
                 {
-                    Assert.That(_finalConsoleOutLines.Count == _maxNumOfLines, $"{_testName}-> {_textType} -> Invalid number of lines, should be: {_maxNumOfLines}, but was: {_finalConsoleOutLines.Count}");
+                    Assert.That(_finalConsoleOutLines.Count == _maxNumOfLines, $"{_testName}-> {_textType} -> Invalid number of lines, should be: {_maxNumOfLines}, but was: {_finalConsoleOutLines.Count}. Full Console Text: {Environment.NewLine}{_text}");
                 }
 
 

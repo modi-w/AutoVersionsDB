@@ -284,29 +284,38 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void RefreshAll()
         {
+            Console.WriteLine("DBVersionsViewModel.RefreshAll() -> Start");
+
             DBVersionsViewModelData.TargetStateScriptFileName = null;
 
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
+            Console.WriteLine("DBVersionsViewModel.RefreshAll() -> After change to InProcess");
 
             NotificationsViewModel.BeforeStartProcess();
+            Console.WriteLine("DBVersionsViewModel.RefreshAll() -> after call to AfterBeforeStartProcess()");
 
             if (RefreshScriptFilesState(true))
             {
+                Console.WriteLine("DBVersionsViewModel.RefreshAll() -> after call to RefreshScriptFilesState(true)");
 
                 ProcessResults processResults = _dbVersionsAPI.ValidateDBVersions(DBVersionsViewModelData.ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
+                Console.WriteLine("DBVersionsViewModel.RefreshAll() -> after call to ValidateDBVersions()");
 
 
                 if (processResults.Trace.HasError)
                 {
                     NotificationsViewModel.AfterComplete(processResults);
+                    Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  AfterComplete()");
 
                     if (processResults.Trace.ContainErrorCode("SystemTables"))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);
+                        Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  MissingSystemTables()");
                     }
                     else if (processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.HistoryExecutedFilesChanged);
+                        Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  HistoryExecutedFilesChanged()");
                     }
                     else
                     {
@@ -321,16 +330,21 @@ namespace AutoVersionsDB.UI.DBVersions
                         //   }
 
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
+                        Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  ReadyToRunSync()");
                     }
                 }
                 else
                 {
                     //RefreshScriptFilesState();
                     NotificationsViewModel.AfterComplete(processResults);
+                    Console.WriteLine("DBVersionsViewModel.RefreshAll() -> No Error -> after call to  AfterComplete()");
 
 
                     NotificationsViewModel.WaitingForUser();
+                    Console.WriteLine("DBVersionsViewModel.RefreshAll() -> No Error -> after call to  WaitingForUser()");
+                    
                     _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
+                    Console.WriteLine("DBVersionsViewModel.RefreshAll() -> No Error -> after call to  ReadyToRunSync()");
                 }
             }
 
