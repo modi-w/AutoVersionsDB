@@ -8,7 +8,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>59dbc11e-0f23-4e5b-becf-a9ff846fb27a</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>AutoVersionsDBSetup</OutputName>
+    <OutputName>AutoVersionsDBUISetup</OutputName>
     <OutputType>Package</OutputType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
