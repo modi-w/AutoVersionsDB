@@ -3,6 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>avdbKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyName>avdb</AssemblyName>
+    <RootNamespace>avdb</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
