@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.Core.Common.CLI;
+﻿using AutoVersionsDB.CLI;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;

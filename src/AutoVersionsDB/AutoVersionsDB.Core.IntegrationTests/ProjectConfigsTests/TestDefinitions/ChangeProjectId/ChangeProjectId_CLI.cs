@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB;
+using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
@@ -39,7 +40,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Act(CLITestContext testContext)
         {
-            AutoVersionsDBAPI.CLIRun($"config change-id -id={ChangeProjectId_API.OldProjectId} -nid={ChangeProjectId_API.NewProjectId}");
+            CLIRunner.CLIRun($"config change-id -id={ChangeProjectId_API.OldProjectId} -nid={ChangeProjectId_API.NewProjectId}");
         }
 
 

@@ -1,5 +1,5 @@
-﻿using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.Common.CLI;
+﻿using AutoVersionsDB.CLI;
+using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;

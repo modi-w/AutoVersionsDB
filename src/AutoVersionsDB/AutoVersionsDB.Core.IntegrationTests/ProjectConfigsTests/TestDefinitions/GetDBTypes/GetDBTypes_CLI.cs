@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB;
+using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
@@ -37,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Act(CLITestContext testContext)
         {
-            AutoVersionsDBAPI.CLIRun($"dbtypes");
+            CLIRunner.CLIRun($"dbtypes");
         }
 
 

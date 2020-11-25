@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB;
+using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
@@ -48,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             args += $"-dsf={IntegrationTestsConsts.DummyProjectConfigValid.DevScriptsBaseFolderPath} ";
             args += $"-def={IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath} ";
 
-            AutoVersionsDBAPI.CLIRun($"init {args}");
+            CLIRunner.CLIRun($"init {args}");
         }
 
 

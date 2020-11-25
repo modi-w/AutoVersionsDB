@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.CLI;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
@@ -36,7 +37,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(CLITestContext testContext)
         {
-            AutoVersionsDBAPI.CLIRun($"files incremental -id={IntegrationTestsConsts.TestProjectId}");
+            CLIRunner.CLIRun($"files incremental -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 

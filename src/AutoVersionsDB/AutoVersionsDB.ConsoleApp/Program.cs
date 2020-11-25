@@ -1,6 +1,6 @@
-﻿using AutoVersionsDB.Core;
+﻿using AutoVersionsDB.CLI;
+using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
@@ -18,7 +18,7 @@ namespace AutoVersionsDB.ConsoleApp
             Console.Title = "AutoVersionsDB";
 
 
-            return AutoVersionsDBAPI.CLIRun(args);
+            return CLIRunner.CLIRun(args);
 
             //return AutoVersionsDBAPI.CLIRun("recreate -id=Bandana");
 

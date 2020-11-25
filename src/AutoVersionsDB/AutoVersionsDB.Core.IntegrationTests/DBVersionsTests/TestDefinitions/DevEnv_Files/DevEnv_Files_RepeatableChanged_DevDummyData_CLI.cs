@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB;
+using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
@@ -37,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(CLITestContext testContext)
         {
-            AutoVersionsDBAPI.CLIRun($"files ddd -id={IntegrationTestsConsts.TestProjectId}");
+            CLIRunner.CLIRun($"files ddd -id={IntegrationTestsConsts.TestProjectId}");
         }
 
 
