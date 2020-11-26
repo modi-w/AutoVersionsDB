@@ -19,12 +19,40 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SystemScripts\BackupDB_SqlServer.sql" />
+    <None Remove="SystemScripts\CheckIfStoredProcedureExist_SqlServer.sql" />
+    <None Remove="SystemScripts\CheckIfTableExist_SqlServer.sql" />
+    <None Remove="SystemScripts\CreateDB_SqlServer.sql" />
     <None Remove="SystemScripts\DropAllDbObjects_SqlServer.sql" />
+    <None Remove="SystemScripts\DropDB_SqlServer.sql" />
+    <None Remove="SystemScripts\GetAllDBTablesExceptSchema_SqlServer.sql" />
+    <None Remove="SystemScripts\GetAllTableData_SqlServer.sql" />
+    <None Remove="SystemScripts\GetDBAccessState_SqlServer.sql" />
+    <None Remove="SystemScripts\GetDBSessions_SqlServer.sql" />
+    <None Remove="SystemScripts\GetEmptyTable_SqlServer.sql" />
+    <None Remove="SystemScripts\GetExecutedFilesFromDBByFileTypeCode_SqlServer.sql" />
+    <None Remove="SystemScripts\GetIsDBExsit_SqlServer.sql" />
+    <None Remove="SystemScripts\KillSession_SqlServer.sql" />
     <None Remove="SystemScripts\RecreateDBVersionsSchema_SqlServer.sql" />
+    <None Remove="SystemScripts\RestorDB_SqlServer.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="SystemScripts\GetExecutedFilesFromDBByFileTypeCode_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\GetEmptyTable_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\CheckIfTableExist_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\CheckIfStoredProcedureExist_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\GetAllTableData_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\GetAllDBTablesExceptSchema_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\GetIsDBExsit_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\CreateDB_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\DropDB_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\KillSession_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\GetDBSessions_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\GetDBAccessState_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\RestorDB_SqlServer.sql" />
     <EmbeddedResource Include="SystemScripts\DropAllDbObjects_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\BackupDB_SqlServer.sql" />
     <EmbeddedResource Include="SystemScripts\RecreateDBVersionsSchema_SqlServer.sql" />
   </ItemGroup>
 

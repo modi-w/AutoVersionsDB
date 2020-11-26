@@ -1,0 +1,1 @@
+﻿SELECT user_access_desc, state_desc FROM sys.databases WHERE name = '{dbName}'

@@ -25,7 +25,12 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public void CreateDbBackup(string filename, string dbName)
         {
-            string sqlCommandStr = $"BACKUP DATABASE [{dbName}] TO DISK='{filename}'";
+            string sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("BackupDB_SqlServer.sql");
+            sqlCommandStr =
+                sqlCommandStr
+                .Replace("{dbName}", dbName)
+                .Replace("{filename}", filename);
+
 
             _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
         }
@@ -33,39 +38,40 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public void RestoreDbFromBackup(string filename, string dbName, string dbFilesBasePath = null)
         {
-            //_sqlServerConnectionManager.Close();
-            //_sqlServerConnectionManager.Open();
-
             ResolveDBInSingleUserMode(dbName, dbFilesBasePath);
 
-            string sqlCmdStr = $"ALTER DATABASE [{dbName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
-            _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr);
 
-            sqlCmdStr = $"RESTORE DATABASE [{dbName}] FROM DISK='{filename}' WITH REPLACE";// ;";
+            string sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("RestorDB_SqlServer.sql");
+            sqlCommandStr =
+                sqlCommandStr
+                .Replace("{dbName}", dbName)
+                .Replace("{filename}", filename);
+
+
+            string moveDBFilesScriptStr = "";
             if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
             {
-                sqlCmdStr += $@", MOVE '{dbName}' TO '{dbFilesBasePath}\{dbName}.mdf', ";
-                sqlCmdStr += $@" MOVE '{dbName}_log' TO '{dbFilesBasePath}\{dbName}.ldf';";
+                moveDBFilesScriptStr += $@", MOVE '{dbName}' TO '{dbFilesBasePath}\{dbName}.mdf', ";
+                moveDBFilesScriptStr += $@" MOVE '{dbName}_log' TO '{dbFilesBasePath}\{dbName}.ldf';";
             }
 
-            _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr);
+            sqlCommandStr =
+                sqlCommandStr
+                .Replace("{moveDBFilesScript}", moveDBFilesScriptStr);
 
-            //_sqlServerConnectionManager.Close();
-
-            //_sqlServerConnectionManager.Open();
-
-            sqlCmdStr = $"ALTER DATABASE [{dbName}] SET MULTI_USER";
-            _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr);
-
-            //_sqlServerConnectionManager.Close();
+            _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
         }
 
         private void ResolveDBInSingleUserMode(string dbName, string dbFilesBasePath)
         {
             bool isDBInSigleUserMode = false;
 
-            string sqlCmdStr2 = $"SELECT user_access_desc, state_desc FROM sys.databases WHERE name = '{dbName}'";
-            using (DataTable dbStateTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr2))
+            string sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("GetDBAccessState_SqlServer.sql");
+            sqlCommandStr =
+                sqlCommandStr
+                .Replace("{dbName}", dbName);
+
+            using (DataTable dbStateTable = _sqlServerConnection.GetSelectCommand(sqlCommandStr))
             {
                 if (dbStateTable.Rows.Count > 0)
                 {
@@ -73,24 +79,29 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
                     isDBInSigleUserMode = Convert.ToString(dbStateRow["user_access_desc"], CultureInfo.InvariantCulture) == "SINGLE_USER"
                                     || Convert.ToString(dbStateRow["state_desc"], CultureInfo.InvariantCulture) == "RESTORING";
-
-
                 }
             }
 
             if (isDBInSigleUserMode)
             {
-                sqlCmdStr2 = $"SELECT request_session_id FROM sys.dm_tran_locks WHERE resource_database_id = DB_ID('{dbName}')";
+                sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("GetDBSessions_SqlServer.sql");
+                sqlCommandStr =
+                    sqlCommandStr
+                    .Replace("{dbName}", dbName);
 
-                using (DataTable sessionsTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr2))
+                using (DataTable sessionsTable = _sqlServerConnection.GetSelectCommand(sqlCommandStr))
                 {
                     foreach (DataRow rowSession in sessionsTable.Rows)
                     {
                         int seesionID = Convert.ToInt32(rowSession["request_session_id"], CultureInfo.InvariantCulture);
                         if (seesionID > 50)
                         {
-                            sqlCmdStr2 = $"KILL {seesionID}";
-                            _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);
+                            sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("KillSession_SqlServer.sql");
+                            sqlCommandStr =
+                                sqlCommandStr
+                                .Replace("{seesionID}", seesionID.ToString());
+
+                            _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
                         }
                     }
                 }
@@ -99,32 +110,27 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 //sqlCmdStr2 = $"ALTER DATABASE [{dbName}] SET MULTI_USER ";
                 //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
 
-                sqlCmdStr2 = $"DROP DATABASE [{dbName}]";
-                _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);
+                sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("DropDB_SqlServer.sql");
+                sqlCommandStr =
+                    sqlCommandStr
+                    .Replace("{dbName}", dbName);
+                _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
 
-                sqlCmdStr2 = $"CREATE DATABASE [{dbName}]";
-                if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
-                {
-                    sqlCmdStr2 += " ON ";
-                    sqlCmdStr2 += $@" ( NAME = '{dbName}_dat', FILENAME = '{dbFilesBasePath}\{dbName}.mdf') ";
-                    sqlCmdStr2 += " LOG ON ";
-                    sqlCmdStr2 += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
-                }
-                _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);
+                CreateDB(dbName, dbFilesBasePath);
             }
             else
             {
-                sqlCmdStr2 = $"SELECT name FROM master.dbo.sysdatabases WHERE ('[' + name + ']' = '{dbName}' OR name = '{dbName}' )";
+                sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("GetIsDBExsit_SqlServer.sql");
+                sqlCommandStr =
+                    sqlCommandStr
+                    .Replace("{dbName}", dbName);
 
-                using (DataTable dtIsDBExsit = _sqlServerConnection.GetSelectCommand(sqlCmdStr2))
+                using (DataTable dtIsDBExsit = _sqlServerConnection.GetSelectCommand(sqlCommandStr))
                 {
                     if (dtIsDBExsit.Rows.Count == 0)
                     {
                         //sqlCmdStr2 = @"DECLARE @dataFilePath NVARCHAR(MAX) = CAST(SERVERPROPERTY('InstanceDefaultDataPath') AS NVARCHAR) + FORMATMESSAGE('\%s.mdf', 'MASTER'); SELECT @dataFilePath ;";
                         //DataTable DT = _sqlServerConnectionManager.GetSelectCommand(sqlCmdStr2);
-
-
-                        sqlCmdStr2 = $"CREATE DATABASE [{dbName}]";
 
                         if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
                         {
@@ -139,21 +145,51 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                             {
                                 File.Delete(ldfFilePath);
                             }
-
-
-                            sqlCmdStr2 += " ON ";
-                            sqlCmdStr2 += $@" ( NAME = '{dbName}_dat', FILENAME = '{mdfFilePath}') ";
-                            sqlCmdStr2 += " LOG ON ";
-                            sqlCmdStr2 += $@" (NAME = '{dbName}_log', FILENAME = '{ldfFilePath}') ";
                         }
 
-                        _sqlServerConnection.ExecSQLCommandStr(sqlCmdStr2);
+                        CreateDB(dbName, dbFilesBasePath);
                     }
                 }
             }
         }
 
+        private void CreateDB(string dbName, string dbFilesBasePath)
+        {
+            string sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("CreateDB_SqlServer.sql");
+            sqlCommandStr =
+                sqlCommandStr
+                .Replace("{dbName}", dbName);
 
+            string logFilesScriptStr = getLogFilesScript(dbName, dbFilesBasePath);
+            sqlCommandStr =
+                sqlCommandStr
+                .Replace("{logFilesScript}", logFilesScriptStr);
+
+            _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
+        }
+
+        private static string getLogFilesScript(string dbName, string dbFilesBasePath)
+        {
+            string logFilesScriptStr = "";
+            if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
+            {
+                logFilesScriptStr += " ON ";
+                logFilesScriptStr += $@" ( NAME = '{dbName}_dat', FILENAME = '{dbFilesBasePath}\{dbName}.mdf') ";
+                logFilesScriptStr += " LOG ON ";
+                logFilesScriptStr += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
+            }
+
+            return logFilesScriptStr;
+        }
+
+        private string GetEmbeddedResourceFileSqlServerScript(string filename)
+        {
+            string sqlCommandStr =
+                EmbeddedResources
+                .GetEmbeddedResourceFile($"AutoVersionsDB.DbCommands.SqlServer.SystemScripts.{filename}");
+
+            return sqlCommandStr;
+        }
 
 
 
