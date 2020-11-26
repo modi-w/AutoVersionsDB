@@ -21,6 +21,11 @@ dotnet build src\AutoVersionsDB\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj -
 CALL :checkError "%errorsLogFile%"
 CALL :echoExtend complete build: AutoVersionsDB.Core
 
+:: build AutoVersionsDB.ConsoleApp project
+CALL :echoExtend start build: AutoVersionsDB.ConsoleApp
+dotnet build src\AutoVersionsDB\AutoVersionsDB.ConsoleApp\AutoVersionsDB.ConsoleApp.csproj -c debug 2>> "%errorsLogFile%"
+CALL :checkError "%errorsLogFile%"
+CALL :echoExtend complete build: AutoVersionsDB.ConsoleApp
 
 
 :: build AutoVersionsDB.WinApp project

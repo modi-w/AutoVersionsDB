@@ -20,16 +20,31 @@ CALL :checkError "%errorsLogFile%"
 CALL :echoExtend complete find MSBuild Path
 
 
-:: create package for x64
+:: create WinApp package for x64
 CALL :echoExtend start create package for x64
 "%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.Setup\AutoVersionsDB.Setup.wixproj /p:Configuration=Debug /p:Platform=x64 2>> "%errorsLogFile%"
 CALL :checkError "%errorsLogFile%"
 CALL :echoExtend complete create package for x64
 
 
-:: create package for x86
+:: create WinApp package for x86
 CALL :echoExtend start create package for x86
 "%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.Setup\AutoVersionsDB.Setup.wixproj /p:Configuration=Debug /p:Platform=x86 2>> "%errorsLogFile%"
+CALL :checkError "%errorsLogFile%"
+CALL :echoExtend complete create package for x86
+
+
+
+:: create ConsoleApp package for x64
+CALL :echoExtend start create package for x64
+"%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.ConsoleApp.Setup\AutoVersionsDB.ConsoleApp.Setup.wixproj /p:Configuration=Debug /p:Platform=x64 2>> "%errorsLogFile%"
+CALL :checkError "%errorsLogFile%"
+CALL :echoExtend complete create package for x64
+
+
+:: create ConsoleApp package for x86
+CALL :echoExtend start create package for x86
+"%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.ConsoleApp.Setup\AutoVersionsDB.ConsoleApp.Setup.wixproj /p:Configuration=Debug /p:Platform=x86 2>> "%errorsLogFile%"
 CALL :checkError "%errorsLogFile%"
 CALL :echoExtend complete create package for x86
 
