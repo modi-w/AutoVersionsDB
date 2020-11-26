@@ -1,6 +1,6 @@
 ﻿using AutoVersionsDB;
+using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.Common.CLI;
 using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;

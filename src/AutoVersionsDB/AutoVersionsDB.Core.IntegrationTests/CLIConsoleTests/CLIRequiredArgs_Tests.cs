@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+﻿using AutoVersionsDB.CLI;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using NUnit.Framework;
 using System;
@@ -24,7 +25,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"info");
+            CLIRunner.CLIRun($"info");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -37,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"init");
+            CLIRunner.CLIRun($"init");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -53,7 +54,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"config");
+            CLIRunner.CLIRun($"config");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -66,7 +67,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"remove");
+            CLIRunner.CLIRun($"remove");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -79,7 +80,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"validate");
+            CLIRunner.CLIRun($"validate");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -92,7 +93,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"files");
+            CLIRunner.CLIRun($"files");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -105,7 +106,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"files incremental");
+            CLIRunner.CLIRun($"files incremental");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -118,7 +119,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"files repeatable");
+            CLIRunner.CLIRun($"files repeatable");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -131,7 +132,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"files ddd");
+            CLIRunner.CLIRun($"files ddd");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -145,7 +146,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"sync");
+            CLIRunner.CLIRun($"sync");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -158,7 +159,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"recreate");
+            CLIRunner.CLIRun($"recreate");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -171,7 +172,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"virtual");
+            CLIRunner.CLIRun($"virtual");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -185,7 +186,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"deploy");
+            CLIRunner.CLIRun($"deploy");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 1);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -198,7 +199,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"new incremental");
+            CLIRunner.CLIRun($"new incremental");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -214,7 +215,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"new repeatable");
+            CLIRunner.CLIRun($"new repeatable");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);
@@ -229,7 +230,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
             CLITestContext testContext = new CLITestContext(new ProcessTestContext(new TestArgs()));
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
-            AutoVersionsDBAPI.CLIRun($"new ddd");
+            CLIRunner.CLIRun($"new ddd");
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
             assertConsoleOutTextByLines.AssertLineMessage("Option '--id' is required.", true);

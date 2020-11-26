@@ -20,27 +20,11 @@ namespace AutoVersionsDB.Core
 
         private static readonly object _processSyncLock = new object();
 
-        private static AutoVersionsDBCLI GetNewInstanceForAutoVersionsDBCLI()
-        {
-            return NinjectUtils.KernelInstance.Get<AutoVersionsDBCLI>();
-        }
 
         private static ProjectConfigsAPI _projectConfigsAPI = NinjectUtils.KernelInstance.Get<ProjectConfigsAPI>();
         private static DBVersionsAPI _dbVersionsAPI = NinjectUtils.KernelInstance.Get<DBVersionsAPI>();
 
 
-
-
-
-
-        public static int CLIRun(string[] args)
-        {
-            return GetNewInstanceForAutoVersionsDBCLI().Run(args);
-        }
-        public static int CLIRun(string args)
-        {
-            return GetNewInstanceForAutoVersionsDBCLI().Run(args);
-        }
 
 
 

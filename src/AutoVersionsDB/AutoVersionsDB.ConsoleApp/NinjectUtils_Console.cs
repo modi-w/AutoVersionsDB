@@ -1,5 +1,5 @@
-﻿using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.Common.CLI;
+﻿using AutoVersionsDB.CLI;
+using AutoVersionsDB.Core;
 using Ninject;
 using System;
 using System.Collections.Generic;
