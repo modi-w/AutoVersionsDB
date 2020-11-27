@@ -3,7 +3,6 @@ using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -37,50 +36,38 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         }
 
 
-        public DataTable GetEmptyTable(string tableName)
+
+        public DataSet GetScriptsExecutionHistoryTableStructureFromDB()
         {
+            DataSet dsExecutionHistory = new DataSet();
+
             string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetEmptyTable_SqlServer.sql");
             sqlCmdStr =
                 sqlCmdStr
-                .Replace("{tableName}", tableName);
+                .Replace("{tableName}", DBCommandsConsts.DbScriptsExecutionHistoryFullTableName);
+            DataTable dbScriptsExecutionHistoryTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr);
+            dbScriptsExecutionHistoryTable.TableName = DBCommandsConsts.DbScriptsExecutionHistoryFullTableName;
+            dsExecutionHistory.Tables.Add(dbScriptsExecutionHistoryTable);
 
-            DataTable dataTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr);
-            dataTable.TableName = tableName;
 
-            return dataTable;
+
+            sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetEmptyTable_SqlServer.sql");
+            sqlCmdStr =
+                sqlCmdStr
+                .Replace("{tableName}", DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+            DataTable dbScriptsExecutionHistoryFilesTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr);
+            dbScriptsExecutionHistoryFilesTable.TableName = DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName;
+            dsExecutionHistory.Tables.Add(dbScriptsExecutionHistoryFilesTable);
+
+
+
+            return dsExecutionHistory;
         }
 
-
-        public void UpdateScriptsExecutionToDB(ScriptsExecution scriptsExecution)
+        public void UpdateScriptsExecutionHistoryTableToDB(DataTable dbScriptsExecutionHistoryTable)
         {
-            DataTable dbScriptsExecutionHistoryTable=  GetEmptyTable(DBCommandsConsts.DbScriptsExecutionHistoryFullTableName);
-
-            DataRow drScriptsExecutionHistory = dbScriptsExecutionHistoryTable.NewRow();
-            ReflectionUtils.TryCopyPropertiesFromObjectToDataRow(scriptsExecution, drScriptsExecutionHistory);
-            dbScriptsExecutionHistoryTable.Rows.Add(drScriptsExecutionHistory);
-
             _sqlServerConnection.UpdateDataTableWithUpdateIdentityOnInsert(dbScriptsExecutionHistoryTable);
-
-            int dbScriptsExecutionHistoryID = Convert.ToInt32(drScriptsExecutionHistory["DBScriptsExecutionHistoryID"], CultureInfo.InvariantCulture);
-
-
-            DataTable dbScriptsExecutionHistoryFilesTable = GetEmptyTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
-
-            int currentID = -1;
-            foreach (var scriptsExecutionFile in scriptsExecution.ScriptsExecutionFiles)
-            {
-                scriptsExecutionFile.ID = currentID--;
-                scriptsExecutionFile.DBScriptsExecutionHistoryID = dbScriptsExecutionHistoryID;
-
-                DataRow drScriptsExecutionHistoryFile = dbScriptsExecutionHistoryFilesTable.NewRow();
-                ReflectionUtils.TryCopyPropertiesFromObjectToDataRow(scriptsExecutionFile, drScriptsExecutionHistoryFile);
-                dbScriptsExecutionHistoryFilesTable.Rows.Add(drScriptsExecutionHistoryFile);
-            }
-
-            _sqlServerConnection.UpdateDataTableWithUpdateIdentityOnInsert(dbScriptsExecutionHistoryFilesTable);
         }
-
-      
 
         public void UpdateScriptsExecutionHistoryFilesTableToDB(DataTable dbScriptsExecutionHistoryFilesTable)
         {
@@ -216,7 +203,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
-        public void DropAllDBObjects()
+        public void DropAllDB()
         {
             string recreateDBVersionsSchema =
                 GetEmbeddedResourceFileSqlServerScript("DropAllDbObjects_SqlServer.sql");
@@ -224,8 +211,6 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             ExecSQLCommandStr(recreateDBVersionsSchema);
 
         }
-
-
 
 
 

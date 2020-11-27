@@ -9,19 +9,18 @@ namespace AutoVersionsDB.DbCommands.Contract
     {
         string GetDataBaseName();
 
-        DataTable GetEmptyTable(string tableName);
+        DataSet GetScriptsExecutionHistoryTableStructureFromDB();
 
-        DataTable GetTable(string tableName);
+        void UpdateScriptsExecutionHistoryTableToDB(DataTable dbScriptsExecutionHistoryTable);
 
-
-        void UpdateScriptsExecutionToDB(ScriptsExecution scriptsExecution);
-
+        void UpdateScriptsExecutionHistoryFilesTableToDB(DataTable dbScriptsExecutionHistoryFilesTable);
 
         DataTable GetExecutedFilesFromDBByFileTypeCode(string scriptFileType);
 
         IEnumerable<string> SplitSqlStatementsToExecutionBlocks(string sqlUnifyScript);
 
 
+        DataTable GetTable(string tableName);
 
         void ExecSQLCommandStr(string commandStr);
 
@@ -33,6 +32,6 @@ namespace AutoVersionsDB.DbCommands.Contract
 
         void RecreateDBVersionsTables();
 
-        void DropAllDBObjects();
+        void DropAllDB();
     }
 }
