@@ -61,9 +61,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                 }
 
 
-                DataSet systemTablesSetFromDB = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
-
-                DataTable scriptsExecutionHistoryTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
+                DataTable scriptsExecutionHistoryTableFromDB = dbCommands.Instance.GetEmptyTable(DBCommandsConsts.DbScriptsExecutionHistoryFullTableName);
 
                 using (DataTable scriptsExecutionHistoryTableFromStructure = CreateScriptsExecutionHistoryTableStructure())
                 {
@@ -88,7 +86,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                 }
 
 
-                DataTable scriptsExecutionHistoryFilesTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
+                DataTable scriptsExecutionHistoryFilesTableFromDB = dbCommands.Instance.GetEmptyTable(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
 
                 using (DataTable scriptsExecutionHistoryFilesTableFromStructure = CreateScriptsExecutionHistoryFilesTableStructure())
                 {

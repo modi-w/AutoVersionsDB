@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
-                dbCommands.Instance.DropAllDB();
+                dbCommands.Instance.DropAllDBObjects();
             }
 
         }

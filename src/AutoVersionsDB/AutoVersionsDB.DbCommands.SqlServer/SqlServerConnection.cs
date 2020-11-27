@@ -148,6 +148,38 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 .Select(x => x.Trim(' ', '\r', '\n'));
         }
 
+        internal void UpdateDataTable(DataTable dataTable)
+        {
+            string currTableName = dataTable.TableName;
+
+
+            using (SqlDataAdapter myDataAdapter = new SqlDataAdapter())
+            {
+                myDataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+
+                string currTableSelectSql = $"Select * from {currTableName}";
+
+                SqlCommandBuilder currCommandBuilder = new SqlCommandBuilder(myDataAdapter);
+
+                myDataAdapter.SelectCommand = new SqlCommand(currTableSelectSql, _sqlDbConnection);
+                myDataAdapter.InsertCommand = currCommandBuilder.GetInsertCommand();
+                myDataAdapter.UpdateCommand = currCommandBuilder.GetUpdateCommand();
+                myDataAdapter.DeleteCommand = currCommandBuilder.GetDeleteCommand();
+
+
+                myDataAdapter.Update(dataTable);
+
+
+                currCommandBuilder.Dispose();
+
+
+
+            }
+
+        }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         internal int UpdateDataTableWithUpdateIdentityOnInsert(DataTable dataTable)
         {

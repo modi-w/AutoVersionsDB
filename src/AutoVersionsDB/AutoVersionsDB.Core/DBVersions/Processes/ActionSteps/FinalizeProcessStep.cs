@@ -30,56 +30,36 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
-                DataSet dsExecutionHistory = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
-
-                DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
-                DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
-
                 processContext.EndProcessDateTime = DateTime.Now;
 
-                DataRow executionHistoryRow = dbScriptsExecutionHistoryTable.NewRow();
+                ScriptsExecution scriptsExecution = new ScriptsExecution();
 
-                executionHistoryRow["DBScriptsExecutionHistoryID"] = 0;
-
-                executionHistoryRow["StartProcessDateTime"] = processContext.StartProcessDateTime;
-                executionHistoryRow["ExecutionTypeName"] = processContext.ProcessDefinition.EngineTypeName;
-                executionHistoryRow["EndProcessDateTime"] = processContext.EndProcessDateTime;
-                executionHistoryRow["ProcessDurationInMs"] = processContext.ProcessDurationInMs;
-                executionHistoryRow["NumOfScriptFiles"] = processContext.ExecutedFiles.Count;
-                executionHistoryRow["DBBackupFileFullPath"] = processContext.DBBackupFileFullPath;
-                executionHistoryRow["IsVirtualExecution"] = processContext.IsVirtualExecution;
-
-                dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
-                dbCommands.Instance.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
+                scriptsExecution.StartProcessDateTime = processContext.StartProcessDateTime.Value;
+                scriptsExecution.ExecutionTypeName = processContext.ProcessDefinition.EngineTypeName;
+                scriptsExecution.EndProcessDateTime = processContext.EndProcessDateTime.Value;
+                scriptsExecution.ProcessDurationInMs = processContext.ProcessDurationInMs;
+                scriptsExecution.NumOfScriptFiles = processContext.ExecutedFiles.Count;
+                scriptsExecution.DBBackupFileFullPath = processContext.DBBackupFileFullPath;
+                scriptsExecution.IsVirtualExecution = processContext.IsVirtualExecution;
 
 
                 foreach (var executedFiles in processContext.ExecutedFiles)
                 {
-                    DataRow newFileRow = dbScriptsExecutionHistoryFilesTable.NewRow();
+                    ScriptsExecutionFile scriptsExecutionFile = new ScriptsExecutionFile();
 
-                    newFileRow["DBScriptsExecutionHistoryID"] = 0;
-                    newFileRow["ExecutedDateTime"] = DateTime.Now;
-                    newFileRow["Filename"] = executedFiles.Filename;
-                    newFileRow["FileFullPath"] = executedFiles.FileFullPath;
-                    newFileRow["ScriptFileType"] = executedFiles.ScriptFileType.FileTypeCode;
-                    newFileRow["IsVirtualExecution"] = processContext.IsVirtualExecution;
-                    newFileRow["ComputedFileHash"] = executedFiles.ComputedHash;
-                    newFileRow["ComputedFileHashDateTime"] = executedFiles.ComputedHashDateTime;
+                    scriptsExecutionFile.ExecutedDateTime = DateTime.Now;
+                    scriptsExecutionFile.Filename = executedFiles.Filename;
+                    scriptsExecutionFile.FileFullPath = executedFiles.FileFullPath;
+                    scriptsExecutionFile.ScriptFileType = executedFiles.ScriptFileType.FileTypeCode;
+                    scriptsExecutionFile.IsVirtualExecution = processContext.IsVirtualExecution;
+                    scriptsExecutionFile.ComputedFileHash = executedFiles.ComputedHash;
+                    scriptsExecutionFile.ComputedFileHashDateTime = executedFiles.ComputedHashDateTime;
 
 
-                    dbScriptsExecutionHistoryFilesTable.Rows.Add(newFileRow);
+                    scriptsExecution.ScriptsExecutionFiles.Add(scriptsExecutionFile);
                 }
 
-
-                int currDBScriptsExecutionHistoryID = Convert.ToInt32(executionHistoryRow["DBScriptsExecutionHistoryID"], CultureInfo.InvariantCulture);
-
-                foreach (DataRow fileRow in dbScriptsExecutionHistoryFilesTable.Rows)
-                {
-                    fileRow["DBScriptsExecutionHistoryID"] = currDBScriptsExecutionHistoryID;
-                }
-
-                dbCommands.Instance.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
-
+                dbCommands.Instance.UpdateScriptsExecutionToDB(scriptsExecution);
             }
         }
 
