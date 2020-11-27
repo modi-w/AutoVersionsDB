@@ -51,8 +51,11 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             string moveDBFilesScriptStr = "";
             if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
             {
-                moveDBFilesScriptStr += $@", MOVE '{dbName}' TO '{dbFilesBasePath}\{dbName}.mdf', ";
-                moveDBFilesScriptStr += $@" MOVE '{dbName}_log' TO '{dbFilesBasePath}\{dbName}.ldf';";
+                moveDBFilesScriptStr = GetEmbeddedResourceFileSqlServerScript("MoveDBFilesScript_SqlServer.sql");
+                moveDBFilesScriptStr =
+                    moveDBFilesScriptStr
+                    .Replace("{dbName}", dbName)
+                    .Replace("{dbFilesBasePath}", dbFilesBasePath);
             }
 
             sqlCommandStr =
@@ -160,27 +163,33 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 sqlCommandStr
                 .Replace("{dbName}", dbName);
 
-            string logFilesScriptStr = getLogFilesScript(dbName, dbFilesBasePath);
+            string appendDBFilesScriptStr = GetEmbeddedResourceFileSqlServerScript("AppendDBFilesScript_SqlServer.sql");
+            appendDBFilesScriptStr =
+                appendDBFilesScriptStr
+                .Replace("{dbName}", dbName)
+                .Replace("{dbFilesBasePath}", dbFilesBasePath);
+                
+
             sqlCommandStr =
                 sqlCommandStr
-                .Replace("{logFilesScript}", logFilesScriptStr);
+                .Replace("{logFilesScript}", appendDBFilesScriptStr);
 
             _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
         }
 
-        private static string getLogFilesScript(string dbName, string dbFilesBasePath)
-        {
-            string logFilesScriptStr = "";
-            if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
-            {
-                logFilesScriptStr += " ON ";
-                logFilesScriptStr += $@" ( NAME = '{dbName}_dat', FILENAME = '{dbFilesBasePath}\{dbName}.mdf') ";
-                logFilesScriptStr += " LOG ON ";
-                logFilesScriptStr += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
-            }
+        //private static string AppendDBFilesScript(string dbName, string dbFilesBasePath)
+        //{
+        //    string logFilesScriptStr = "";
+        //    if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
+        //    {
+        //        logFilesScriptStr += " ON ";
+        //        logFilesScriptStr += $@" ( NAME = '{dbName}_dat', FILENAME = '{dbFilesBasePath}\{dbName}.mdf') ";
+        //        logFilesScriptStr += " LOG ON ";
+        //        logFilesScriptStr += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
+        //    }
 
-            return logFilesScriptStr;
-        }
+        //    return logFilesScriptStr;
+        //}
 
         private string GetEmbeddedResourceFileSqlServerScript(string filename)
         {

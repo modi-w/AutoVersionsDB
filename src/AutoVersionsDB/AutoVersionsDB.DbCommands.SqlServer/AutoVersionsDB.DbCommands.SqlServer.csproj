@@ -19,6 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SystemScripts\AppendDBFilesScript_SqlServer.sql" />
     <None Remove="SystemScripts\BackupDB_SqlServer.sql" />
     <None Remove="SystemScripts\CheckIfStoredProcedureExist_SqlServer.sql" />
     <None Remove="SystemScripts\CheckIfTableExist_SqlServer.sql" />
@@ -33,11 +34,14 @@
     <None Remove="SystemScripts\GetExecutedFilesFromDBByFileTypeCode_SqlServer.sql" />
     <None Remove="SystemScripts\GetIsDBExsit_SqlServer.sql" />
     <None Remove="SystemScripts\KillSession_SqlServer.sql" />
+    <None Remove="SystemScripts\MoveDBFilesScript_SqlServer.sql" />
     <None Remove="SystemScripts\RecreateDBVersionsSchema_SqlServer.sql" />
     <None Remove="SystemScripts\RestorDB_SqlServer.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="SystemScripts\AppendDBFilesScript_SqlServer.sql" />
+    <EmbeddedResource Include="SystemScripts\MoveDBFilesScript_SqlServer.sql" />
     <EmbeddedResource Include="SystemScripts\GetExecutedFilesFromDBByFileTypeCode_SqlServer.sql" />
     <EmbeddedResource Include="SystemScripts\GetEmptyTable_SqlServer.sql" />
     <EmbeddedResource Include="SystemScripts\CheckIfTableExist_SqlServer.sql" />
