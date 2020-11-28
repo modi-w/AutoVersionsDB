@@ -1,0 +1,1 @@
+﻿KILL {seesionID}

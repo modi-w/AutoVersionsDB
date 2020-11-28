@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
     public class ProjectConfigsAPI
     {
         private readonly ProjectConfigsStorage _projectConfigsStorage;
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
         private readonly NotificationProcessRunner<ProjectConfigValidationProcessDefinition, ProjectConfigProcessContext> _projectConfigValidationRunner;
         private readonly NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> _saveNewProjectConfigRunner;
@@ -23,7 +23,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
 
         public ProjectConfigsAPI(ProjectConfigsStorage projectConfigsStorage,
-                                DBCommandsFactoryProvider dbCommandsFactoryProvider,
+                                DBCommandsFactory dbCommandsFactory,
                                 NotificationProcessRunner<ProjectConfigValidationProcessDefinition, ProjectConfigProcessContext> projectConfigValidationRunner,
                                 NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> saveNewProjectConfigRunner,
                                 NotificationProcessRunner<UpdateProjectConfigProcessDefinition, ProjectConfigProcessContext> updateProjectConfigRunner,
@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
                                 NotificationProcessRunner<RemoveProjectConfigProcessDefinition, ProjectConfigProcessContext> removeProjectConfigProcessDefinition)
         {
             _projectConfigsStorage = projectConfigsStorage;
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            dbCommandsFactoryProvider = dbCommandsFactory;
 
             _projectConfigValidationRunner = projectConfigValidationRunner;
             _saveNewProjectConfigRunner = saveNewProjectConfigRunner;
@@ -43,7 +43,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         public List<DBType> GetDBTypes()
         {
-            return _dbCommandsFactoryProvider.GetDBTypes();
+            return dbCommandsFactoryProvider.GetDBTypes();
         }
 
         public List<ProjectConfigItem> GetProjectsList()

@@ -9,14 +9,14 @@ namespace AutoVersionsDB.Core.Common
 {
     public class ProjectConfigValidationsFactory : ValidationsFactory
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
         public override string ValidationName => "Project Config";
 
 
-        public ProjectConfigValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public ProjectConfigValidationsFactory(DBCommandsFactory dbCommandsFactory)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 
@@ -30,16 +30,16 @@ namespace AutoVersionsDB.Core.Common
             IdMandatory projectIdValidator = new IdMandatory(projectConfig.Id);
             validationsGroup.Add(projectIdValidator);
 
-            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBConnectionInfo.DBType, _dbCommandsFactoryProvider);
+            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBConnectionInfo.DBType, dbCommandsFactoryProvider);
             validationsGroup.Add(dbTypeValidator);
 
             DBNameValidator dbNameValidator = new DBNameValidator(projectConfig.DBConnectionInfo.DBName);
             validationsGroup.Add(dbNameValidator);
 
-            ConnectionStringValidator connectionStringValidator = new ConnectionStringValidator(projectConfig.DBConnectionInfo, _dbCommandsFactoryProvider);
+            ConnectionStringValidator connectionStringValidator = new ConnectionStringValidator(projectConfig.DBConnectionInfo, dbCommandsFactoryProvider);
             validationsGroup.Add(connectionStringValidator);
 
-            AdminConnectionStringValidator adminConnectionStringValidator = new AdminConnectionStringValidator(projectConfig.DBConnectionInfo, _dbCommandsFactoryProvider);
+            AdminConnectionStringValidator adminConnectionStringValidator = new AdminConnectionStringValidator(projectConfig.DBConnectionInfo, dbCommandsFactoryProvider);
             validationsGroup.Add(adminConnectionStringValidator);
 
             DBBackupFolderValidator dbBackupBaseFolderValidator = new DBBackupFolderValidator(projectConfig.BackupFolderPath);

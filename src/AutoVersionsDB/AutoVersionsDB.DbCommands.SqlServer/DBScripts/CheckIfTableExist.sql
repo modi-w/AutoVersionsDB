@@ -1,0 +1,4 @@
+﻿SELECT * 
+FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_SCHEMA = '{schemaName}' 
+	AND  TABLE_NAME = '{tableName}'

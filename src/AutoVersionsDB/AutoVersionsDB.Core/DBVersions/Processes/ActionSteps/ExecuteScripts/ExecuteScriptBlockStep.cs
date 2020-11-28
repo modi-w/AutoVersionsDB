@@ -5,12 +5,12 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {
     public class ExecuteScriptBlockStep : DBVersionsStep
     {
-        private readonly IDBCommands _dbCommands;
+        private readonly DBCommands _dbCommands;
         private readonly string _scriptBlockToExecute;
 
         public override string StepName => "Execute Script Block";
 
-        public ExecuteScriptBlockStep(IDBCommands dbCommands, string scriptBlockToExecute)
+        public ExecuteScriptBlockStep(DBCommands dbCommands, string scriptBlockToExecute)
         {
             dbCommands.ThrowIfNull(nameof(dbCommands));
 

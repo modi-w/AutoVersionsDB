@@ -11,15 +11,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         public override string StepName => "Finalize Process";
 
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
 
 
-        public FinalizeProcessStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public FinalizeProcessStep(DBCommandsFactory dbCommandsFactory)
         {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 
@@ -28,9 +28,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
-                DataSet dsExecutionHistory = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
+                DataSet dsExecutionHistory = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
                 DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
                 DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 executionHistoryRow["IsVirtualExecution"] = processContext.IsVirtualExecution;
 
                 dbScriptsExecutionHistoryTable.Rows.Add(executionHistoryRow);
-                dbCommands.Instance.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
+                dbCommands.UpdateScriptsExecutionHistoryTableToDB(dbScriptsExecutionHistoryTable);
 
 
                 foreach (var executedFiles in processContext.ExecutedFiles)
@@ -78,7 +78,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                     fileRow["DBScriptsExecutionHistoryID"] = currDBScriptsExecutionHistoryID;
                 }
 
-                dbCommands.Instance.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
+                dbCommands.UpdateScriptsExecutionHistoryFilesTableToDB(dbScriptsExecutionHistoryFilesTable);
 
             }
         }

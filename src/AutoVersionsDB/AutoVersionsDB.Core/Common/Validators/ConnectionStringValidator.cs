@@ -9,7 +9,7 @@ namespace AutoVersionsDB.Core.Common.Validators
     public class ConnectionStringValidator : ValidatorBase
     {
         private readonly DBConnectionInfo _dbConnectionInfo;
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
         public override string ValidatorName => "ConnectionString";
 
@@ -18,23 +18,23 @@ namespace AutoVersionsDB.Core.Common.Validators
 
 
         public ConnectionStringValidator(DBConnectionInfo dbConnectionInfo,
-                                        DBCommandsFactoryProvider dbCommandsFactoryProvider)
+                                        DBCommandsFactory dbCommandsFactory)
         {
             _dbConnectionInfo = dbConnectionInfo;
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
         public override string Validate()
         {
             if (_dbConnectionInfo.HasValues)
             {
-                using (var dbConnection = _dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo).AsDisposable())
+                using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo))
                 {
                     if (dbConnection != null)
                     {
-                        if (!dbConnection.Instance.CheckConnection(out string exMessage))
+                        if (!dbConnection.CheckConnection(out string exMessage))
                         {
-                            string errorMsg = $"Could not connect to the Database with the following properties: {_dbConnectionInfo}, Check each of the above properties. The used connection String was: '{dbConnection.Instance.ConnectionString}'. Error Message: '{exMessage}'";
+                            string errorMsg = $"Could not connect to the Database with the following properties: {_dbConnectionInfo}, Check each of the above properties. The used connection String was: '{dbConnection.ConnectionString}'. Error Message: '{exMessage}'";
                             return errorMsg;
                         }
                     }

@@ -20,14 +20,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
         public override string StepName => "Build Deploy Artifact File";
 
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
-        public BuildDeployArtifactFileStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+        public BuildDeployArtifactFileStep(DBCommandsFactory dbCommandsFactory,
                                             AutoVersionsDBSettings settings)
         {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            dbCommandsFactoryProvider = dbCommandsFactory;
             _settings = settings;
 
         }
@@ -36,9 +36,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
         public override void Execute(DBVersionsProcessContext processContext)
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
-                string dbName = dbCommands.Instance.GetDataBaseName();
+                string dbName = dbCommands.GetDataBaseName();
 
 
                 string tempFolderForDeploy = Path.Combine(_settings.TempFolderPath, $"Deploy_{dbName}_{DateTime.Now:HH-mm-dd-fff}");

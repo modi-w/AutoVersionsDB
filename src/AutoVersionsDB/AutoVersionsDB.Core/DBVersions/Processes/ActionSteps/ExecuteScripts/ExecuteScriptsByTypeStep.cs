@@ -8,13 +8,13 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {
     public class ExecuteScriptsByTypeStep : DBVersionsStep
     {
-        private readonly IDBCommands _dbCommands;
+        private readonly DBCommands _dbCommands;
         private readonly ExecuteSingleFileScriptStepFactory _executeSingleFileScriptStepFactory;
         private readonly string _fileTypeCode;
         public override string StepName => _fileTypeCode;
 
 
-        public ExecuteScriptsByTypeStep(string fileTypeCode, IDBCommands dbCommands, ExecuteSingleFileScriptStepFactory executeSingleFileScriptStepFactory)
+        public ExecuteScriptsByTypeStep(string fileTypeCode, DBCommands dbCommands, ExecuteSingleFileScriptStepFactory executeSingleFileScriptStepFactory)
         {
             dbCommands.ThrowIfNull(nameof(dbCommands));
             executeSingleFileScriptStepFactory.ThrowIfNull(nameof(executeSingleFileScriptStepFactory));

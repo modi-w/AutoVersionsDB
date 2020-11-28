@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class SystemTablesValidator : ValidatorBase
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
         private readonly bool _isDevEnvironment;
         private readonly DBConnectionInfo _dbConnectionInfo;
 
@@ -34,34 +34,34 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
 
 
-        public SystemTablesValidator(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+        public SystemTablesValidator(DBCommandsFactory dbCommandsFactory,
                                         bool isDevEnvironment,
                                         DBConnectionInfo dbConnectionInfo)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            dbCommandsFactoryProvider = dbCommandsFactory;
             _isDevEnvironment = isDevEnvironment;
             _dbConnectionInfo = dbConnectionInfo;
         }
 
         public override string Validate()
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(_dbConnectionInfo))
             {
 
-                if (!dbCommands.Instance.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName))
+                if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName))
                 {
                     string errorMsg = $"The table '{DBCommandsConsts.DbScriptsExecutionHistoryFullTableName}' is not exist in the db";
                     return errorMsg;
                 }
 
-                if (!dbCommands.Instance.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName))
+                if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName))
                 {
                     string errorMsg = $"The table '{DBCommandsConsts.DbScriptsExecutionHistoryFilesTableName}' is not exist in the db";
                     return errorMsg;
                 }
 
 
-                DataSet systemTablesSetFromDB = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
+                DataSet systemTablesSetFromDB = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
                 DataTable scriptsExecutionHistoryTableFromDB = systemTablesSetFromDB.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
 

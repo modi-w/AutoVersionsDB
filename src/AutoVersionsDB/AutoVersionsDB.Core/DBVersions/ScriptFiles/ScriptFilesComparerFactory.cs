@@ -19,7 +19,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
 
 
-        public ScriptFilesComparerBase CreateScriptFilesComparer<TScriptFileType>(IDBCommands dbCommands, string folderPath)
+        public ScriptFilesComparerBase CreateScriptFilesComparer<TScriptFileType>(DBCommands dbCommands, string folderPath)
             where TScriptFileType : ScriptFileTypeBase, new()
         {
             DBExecutedFiles dbExecutedFiles = new DBExecutedFiles(dbCommands, ScriptFileTypeBase.Create<TScriptFileType>());

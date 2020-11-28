@@ -9,22 +9,22 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {
     public class ScriptFilesStateFactory
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
         private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
         private readonly ArtifactExtractorFactory _artifactExtractorFactory;
 
-        public ScriptFilesStateFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+        public ScriptFilesStateFactory(DBCommandsFactory dbCommandsFactory,
                                        ScriptFilesComparerFactory scriptFilesComparerFactory,
                                         ArtifactExtractorFactory artifactExtractorFactory)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            dbCommandsFactoryProvider = dbCommandsFactory;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
             _artifactExtractorFactory = artifactExtractorFactory;
         }
 
         public ScriptFilesState Create()
         {
-            ScriptFilesState scriptFilesState = new ScriptFilesState(_dbCommandsFactoryProvider, _scriptFilesComparerFactory, _artifactExtractorFactory);
+            ScriptFilesState scriptFilesState = new ScriptFilesState(dbCommandsFactoryProvider, _scriptFilesComparerFactory, _artifactExtractorFactory);
 
             return scriptFilesState;
         }

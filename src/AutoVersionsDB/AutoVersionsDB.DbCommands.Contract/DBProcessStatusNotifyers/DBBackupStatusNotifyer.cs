@@ -1,11 +1,13 @@
 ﻿
+using System;
+
 namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
 {
-    public class DBBackupStatusNotifyer : DBProcessStatusNotifyerBase
+    public class DBBackupStatusNotifyer : DBProcessStatusNotifyerBase, IDisposable
     {
-        private readonly IDBQueryStatus _dbQueryStatus;
+        private readonly DBQueryStatus _dbQueryStatus;
 
-        public DBBackupStatusNotifyer(IDBQueryStatus dbQueryStatus, int interval)
+        public DBBackupStatusNotifyer(DBQueryStatus dbQueryStatus, int interval)
             :base(interval)
         {
             _dbQueryStatus = dbQueryStatus;
@@ -17,6 +19,35 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
         }
 
 
+
+        #region IDisposable
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~DBBackupStatusNotifyer()
+        {
+            Dispose(false);
+        }
+
+        // The bulk of the clean-up code is implemented in Dispose(bool)
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                if (_dbQueryStatus != null)
+                {
+                    _dbQueryStatus.Dispose();
+                }
+
+            }
+            // free native resources here if there are any
+        }
+
+        #endregion
 
 
     }
