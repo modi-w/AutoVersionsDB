@@ -28,13 +28,13 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (_dbConnectionInfo.HasValues)
             {
-                using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo).AsDisposable())
+                using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo))
                 {
                     if (dbConnection != null)
                     {
-                        if (!dbConnection.Instance.CheckConnection(out string exMessage))
+                        if (!dbConnection.CheckConnection(out string exMessage))
                         {
-                            string errorMsg = $"Could not connect to the Database with the following properties: {_dbConnectionInfo}, Check each of the above properties. The used connection String was: '{dbConnection.Instance.ConnectionString}'. Error Message: '{exMessage}'";
+                            string errorMsg = $"Could not connect to the Database with the following properties: {_dbConnectionInfo}, Check each of the above properties. The used connection String was: '{dbConnection.ConnectionString}'. Error Message: '{exMessage}'";
                             return errorMsg;
                         }
                     }

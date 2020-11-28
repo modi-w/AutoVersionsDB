@@ -68,11 +68,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
                     try
                     {
-                        using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                        using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
                         {
-                            using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                            using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
                             {
-                                dbBackupRestoreCommands.Instance.RestoreDBFromBackup(processContext.DBBackupFileFullPath, dbCommands.Instance.GetDataBaseName());
+                                dbBackupRestoreCommands.RestoreDBFromBackup(processContext.DBBackupFileFullPath, dbCommands.GetDataBaseName());
 
                                 foreach (ExternalProcessStatusStep step in internalSteps)
                                 {

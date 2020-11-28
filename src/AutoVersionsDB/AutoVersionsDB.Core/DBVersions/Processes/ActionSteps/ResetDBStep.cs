@@ -31,9 +31,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 throw new Exception("Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).");
             }
 
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
-                dbCommands.Instance.DropAllDBObject();
+                dbCommands.DropAllDBObject();
             }
 
         }

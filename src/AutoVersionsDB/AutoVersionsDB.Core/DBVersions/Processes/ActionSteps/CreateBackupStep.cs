@@ -38,9 +38,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
             string timeStampStr = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.InvariantCulture);
 
             string targetFileName;
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
-                targetFileName = $"bu_{ dbCommands.Instance.GetDataBaseName()}_{timeStampStr}.bak";
+                targetFileName = $"bu_{ dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
             }
 
             string targetFileFullPath = Path.Combine(processContext.ProjectConfig.BackupFolderPath, targetFileName);
@@ -81,11 +81,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 {
                     try
                     {
-                        using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                        using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
                         {
-                            using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                            using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
                             {
-                                dbBackupRestoreCommands.Instance.CreateDBBackup(targetFileFullPath, dbCommands.Instance.GetDataBaseName());
+                                dbBackupRestoreCommands.CreateDBBackup(targetFileFullPath, dbCommands.GetDataBaseName());
 
                                 foreach (ExternalProcessStatusStep step in internalSteps)
                                 {

@@ -33,9 +33,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
         public void RestoreDB(DBConnectionInfo dbConnectionInfo, DBBackupFileType dbBackupFileType)
         {
-            using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(dbConnectionInfo).AsDisposable())
+            using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(dbConnectionInfo))
             {
-                using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(dbConnectionInfo).AsDisposable())
+                using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(dbConnectionInfo))
                 {
                     string dbTestsBaseLocation = Path.Combine(FileSystemPathUtils.CommonApplicationData, "AutoVersionsDB.IntegrationTests", "TestsDBs");
                     if (!Directory.Exists(dbTestsBaseLocation))
@@ -44,7 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
                     }
 
                     string filename = _dbBackupFilesProvider.GetDBBackupFilePath(dbBackupFileType, dbConnectionInfo.DBType);
-                    dbBackupRestoreCommands.Instance.RestoreDBFromBackup(filename, dbConnection.Instance.DataBaseName, dbTestsBaseLocation);
+                    dbBackupRestoreCommands.RestoreDBFromBackup(filename, dbConnection.DataBaseName, dbTestsBaseLocation);
                 }
             }
         }
@@ -52,11 +52,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
         public void CreateDBBackup(DBConnectionInfo dbConnectionInfo, string targetFilePath)
         {
-            using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(dbConnectionInfo).AsDisposable())
+            using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(dbConnectionInfo))
             {
-                using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(dbConnectionInfo).AsDisposable())
+                using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(dbConnectionInfo))
                 {
-                    dbBackupRestoreCommands.Instance.CreateDBBackup(targetFilePath, dbConnectionInfo.DBName);
+                    dbBackupRestoreCommands.CreateDBBackup(targetFilePath, dbConnectionInfo.DBName);
                 }
             }
         }
@@ -68,21 +68,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             NumOfDBConnections numOfConnectionsItem = new NumOfDBConnections();
 
             string masterDBName;
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                masterDBName = dbCommands.Instance.GetDataBaseName();
+                masterDBName = dbCommands.GetDataBaseName();
             }
 
 
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                numOfConnectionsItem.DBName = dbCommands.Instance.GetDataBaseName();
+                numOfConnectionsItem.DBName = dbCommands.GetDataBaseName();
             }
 
-            using (var dbQueryStatus = dbCommandsFactoryProvider.CreateDBQueryStatus(dbConnectionInfo).AsDisposable())
+            using (var dbQueryStatus = dbCommandsFactoryProvider.CreateDBQueryStatus(dbConnectionInfo))
             {
-                numOfConnectionsItem.NumOfConnectionsToDB = dbQueryStatus.Instance.GetNumOfOpenConnection(numOfConnectionsItem.DBName);
-                numOfConnectionsItem.NumOfConnectionsToAdminDB = dbQueryStatus.Instance.GetNumOfOpenConnection(masterDBName);
+                numOfConnectionsItem.NumOfConnectionsToDB = dbQueryStatus.GetNumOfOpenConnection(numOfConnectionsItem.DBName);
+                numOfConnectionsItem.NumOfConnectionsToAdminDB = dbQueryStatus.GetNumOfOpenConnection(masterDBName);
             }
 
             return numOfConnectionsItem;
@@ -93,34 +93,34 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
         public bool CheckIfTableExist(DBConnectionInfo dbConnectionInfo, string schemaName, string tableName)
         {
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                return dbCommands.Instance.CheckIfTableExist(schemaName, tableName);
+                return dbCommands.CheckIfTableExist(schemaName, tableName);
             }
         }
 
         public DataTable GetTable(DBConnectionInfo dbConnectionInfo, string tableName)
         {
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                return dbCommands.Instance.GetTable(tableName);
+                return dbCommands.GetTable(tableName);
             }
         }
 
 
         public bool CheckIfStoredProcedureExist(DBConnectionInfo dbConnectionInfo, string schemaName, string spName)
         {
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                return dbCommands.Instance.CheckIfStoredProcedureExist(schemaName, spName);
+                return dbCommands.CheckIfStoredProcedureExist(schemaName, spName);
             }
         }
 
         public DataTable GetAllDBSchemaExceptDBVersionSchema(DBConnectionInfo dbConnectionInfo)
         {
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                return dbCommands.Instance.GetAllDBSchemaExceptDBVersionSchema();
+                return dbCommands.GetAllDBSchemaExceptDBVersionSchema();
             }
         }
 
