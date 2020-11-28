@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {
     public class ScriptFilesState
     {
-        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
         private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
         private readonly ArtifactExtractorFactory _artifactExtractorFactory;
 
@@ -30,7 +30,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
             scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
             artifactExtractorFactory.ThrowIfNull(nameof(artifactExtractorFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactory;
+            dbCommandsFactoryProvider = dbCommandsFactory;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
             _artifactExtractorFactory = artifactExtractorFactory;
 
@@ -45,7 +45,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
             using (ArtifactExtractor _currentArtifactExtractor = _artifactExtractorFactory.Create(projectConfig))
             {
-                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBConnectionInfo).AsDisposable())
+                using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(projectConfig.DBConnectionInfo).AsDisposable())
                 {
                     IncrementalScriptFilesComparer = _scriptFilesComparerFactory.CreateScriptFilesComparer<IncrementalScriptFileType>(dbCommands.Instance, projectConfig.IncrementalScriptsFolderPath);
                     ScriptFilesComparers[IncrementalScriptFilesComparer.ScriptFileType.FileTypeCode] = IncrementalScriptFilesComparer;

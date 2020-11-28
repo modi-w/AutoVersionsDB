@@ -1,5 +1,7 @@
 ﻿using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
 using AutoVersionsDB.DbCommands.SqlServer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -70,7 +72,7 @@ namespace AutoVersionsDB.DbCommands.Integration
             {
                 IDBConnection dbConnection = dbTypeObjectsFactory.CreateDBConnection(dbConnectionInfo);
                 IDBScriptsProvider dbScriptsProvider = dbTypeObjectsFactory.CreateDBScriptsProvider();
-               
+
                 dbCommands = new DBCommands(dbConnection, dbScriptsProvider);
             }
 
@@ -86,7 +88,7 @@ namespace AutoVersionsDB.DbCommands.Integration
             {
                 IDBConnection adminDBConnection = dbTypeObjectsFactory.CreateAdminDBConnection(dbConnectionInfo);
                 IDBScriptsProvider dbScriptsProvider = dbTypeObjectsFactory.CreateDBScriptsProvider();
-             
+
                 dbBackupRestoreCommands = new DBBackupRestoreCommands(adminDBConnection, dbScriptsProvider);
             }
 
@@ -96,7 +98,7 @@ namespace AutoVersionsDB.DbCommands.Integration
         public DBQueryStatus CreateDBQueryStatus(DBConnectionInfo dbConnectionInfo)
         {
             DBQueryStatus dbQueryStatus = null;
-       
+
             if (!string.IsNullOrWhiteSpace(dbConnectionInfo.DBType)
                 && _DBTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
             {
@@ -107,6 +109,15 @@ namespace AutoVersionsDB.DbCommands.Integration
             }
 
             return dbQueryStatus;
+        }
+
+
+        public virtual DBProcessStatusNotifyerBase CreateDBProcessStatusNotifyer(Type notifyerType, DBConnectionInfo dbConnectionInfo)
+        {
+            DBQueryStatus dbQueryStatus = CreateDBQueryStatus(dbConnectionInfo);
+            DBProcessStatusNotifyerBase dbNotifyer = Activator.CreateInstance(notifyerType, dbQueryStatus, DBCommandsConsts.DbLongProcessGetStatusIntervalInMs) as DBProcessStatusNotifyerBase;
+
+            return dbNotifyer;
         }
 
 

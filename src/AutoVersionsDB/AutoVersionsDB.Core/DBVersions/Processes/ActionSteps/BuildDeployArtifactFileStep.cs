@@ -20,14 +20,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
         public override string StepName => "Build Deploy Artifact File";
 
-        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
         public BuildDeployArtifactFileStep(DBCommandsFactory dbCommandsFactory,
                                             AutoVersionsDBSettings settings)
         {
             dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactory;
+            dbCommandsFactoryProvider = dbCommandsFactory;
             _settings = settings;
 
         }
@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
         public override void Execute(DBVersionsProcessContext processContext)
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 string dbName = dbCommands.Instance.GetDataBaseName();
 

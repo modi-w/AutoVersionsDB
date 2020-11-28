@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class ResetDBStep : DBVersionsStep
     {
-        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
         public override string StepName => "Resolve Reset Database";
 
@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactory;
+            dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 
@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 throw new Exception("Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).");
             }
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 dbCommands.Instance.DropAllDBObject();
             }

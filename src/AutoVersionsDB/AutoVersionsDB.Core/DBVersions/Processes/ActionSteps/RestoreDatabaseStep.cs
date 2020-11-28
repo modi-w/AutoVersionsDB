@@ -18,17 +18,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         public override string StepName => StepNameStr;
 
 
-        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
-        private readonly DBProcessStatusNotifyerFactory _dbProcessStatusNotifyerFactory;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
 
-        public RestoreDatabaseStep(DBCommandsFactory dbCommandsFactory,
-                                    DBProcessStatusNotifyerFactory dbProcessStatusNotifyerFactory)
+        public RestoreDatabaseStep(DBCommandsFactory dbCommandsFactory)
         {
             dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactory;
-            _dbProcessStatusNotifyerFactory = dbProcessStatusNotifyerFactory;
+            dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 
@@ -40,10 +37,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             //notificationExecutersProvider.SetStepStartManually(100, "Restore process");
 
-            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbRestoreStatusNotifyer = dbCommandsFactoryProvider.CreateDBProcessStatusNotifyer(typeof(DBRestoreStatusNotifyer), processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
-                DBProcessStatusNotifyerBase dbRestoreStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBRestoreStatusNotifyer), dbQueryStatus.Instance) as DBRestoreStatusNotifyer;
-
                 List<ActionStepBase> internalSteps = new List<ActionStepBase>();
 
                 for (int internalStepNumber = 1; internalStepNumber <= 100; internalStepNumber++)
@@ -55,7 +50,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 Exception processExpetion = null;
 
 
-                dbRestoreStatusNotifyer.Start((precents) =>
+                dbRestoreStatusNotifyer.Instance.Start((precents) =>
                 {
                     // notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
 
@@ -73,9 +68,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
                     try
                     {
-                        using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                        using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
                         {
-                            using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                            using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
                             {
                                 dbBackupRestoreCommands.Instance.RestoreDBFromBackup(processContext.DBBackupFileFullPath, dbCommands.Instance.GetDataBaseName());
 
@@ -99,7 +94,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
                 ExecuteInternalSteps(internalSteps, true);
 
-                dbRestoreStatusNotifyer.Stop();
+                dbRestoreStatusNotifyer.Instance.Stop();
 
 
             }

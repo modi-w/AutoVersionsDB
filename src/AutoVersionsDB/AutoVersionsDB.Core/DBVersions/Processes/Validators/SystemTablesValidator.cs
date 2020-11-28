@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class SystemTablesValidator : ValidatorBase
     {
-        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
         private readonly bool _isDevEnvironment;
         private readonly DBConnectionInfo _dbConnectionInfo;
 
@@ -38,14 +38,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                                         bool isDevEnvironment,
                                         DBConnectionInfo dbConnectionInfo)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactory;
+            dbCommandsFactoryProvider = dbCommandsFactory;
             _isDevEnvironment = isDevEnvironment;
             _dbConnectionInfo = dbConnectionInfo;
         }
 
         public override string Validate()
         {
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(_dbConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(_dbConnectionInfo).AsDisposable())
             {
 
                 if (!dbCommands.Instance.CheckIfTableExist(DBCommandsConsts.DbSchemaName, DBCommandsConsts.DbScriptsExecutionHistoryTableName))

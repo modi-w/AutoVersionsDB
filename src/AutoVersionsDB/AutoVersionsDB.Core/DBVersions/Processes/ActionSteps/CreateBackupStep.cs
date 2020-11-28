@@ -18,17 +18,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         public override string StepName => "Create Backup";
 
-        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
-        private readonly DBProcessStatusNotifyerFactory _dbProcessStatusNotifyerFactory;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
 
-        public CreateBackupStep(DBCommandsFactory dbCommandsFactory,
-                                DBProcessStatusNotifyerFactory dbProcessStatusNotifyerFactory)
+        public CreateBackupStep(DBCommandsFactory dbCommandsFactory)
         {
             dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactory;
-            _dbProcessStatusNotifyerFactory = dbProcessStatusNotifyerFactory;
+            dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 
@@ -41,7 +38,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
             string timeStampStr = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.InvariantCulture);
 
             string targetFileName;
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 targetFileName = $"bu_{ dbCommands.Instance.GetDataBaseName()}_{timeStampStr}.bak";
             }
@@ -51,9 +48,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             //notificationExecutersProvider.SetStepStartManually(100, "Backup process");
 
-            using (var dbQueryStatus = _dbCommandsFactoryProvider.CreateDBQueryStatus(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbBackupStatusNotifyer = dbCommandsFactoryProvider.CreateDBProcessStatusNotifyer(typeof(DBBackupStatusNotifyer),processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
-                DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(typeof(DBBackupStatusNotifyer), dbQueryStatus.Instance) as DBBackupStatusNotifyer;
+                //DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(, dbQueryStatus.Instance) as DBBackupStatusNotifyer;
 
                 List<ActionStepBase> internalSteps = new List<ActionStepBase>();
 
@@ -66,7 +63,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 Exception processExpetion = null;
 
 
-                dbBackupStatusNotifyer.Start(
+                dbBackupStatusNotifyer.Instance.Start(
                 (precents) =>
                 {
                     //notificationExecutersProvider.ForceStepProgress(Convert.ToInt32(precents));
@@ -84,9 +81,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 {
                     try
                     {
-                        using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                        using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
                         {
-                            using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                            using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
                             {
                                 dbBackupRestoreCommands.Instance.CreateDBBackup(targetFileFullPath, dbCommands.Instance.GetDataBaseName());
 
@@ -111,7 +108,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
 
 
-                dbBackupStatusNotifyer.Stop();
+                dbBackupStatusNotifyer.Instance.Stop();
 
                 processContext.DBBackupFileFullPath = targetFileFullPath;
             }

@@ -11,7 +11,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         public override string StepName => "Finalize Process";
 
-        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
 
 
 
@@ -19,7 +19,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactory;
+            dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 
@@ -28,7 +28,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 DataSet dsExecutionHistory = dbCommands.Instance.GetScriptsExecutionHistoryTableStructureFromDB();
 

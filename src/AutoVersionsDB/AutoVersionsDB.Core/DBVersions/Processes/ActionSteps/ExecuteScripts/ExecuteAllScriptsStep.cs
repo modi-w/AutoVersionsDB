@@ -17,7 +17,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {
     public class ExecuteAllScriptsStep : DBVersionsStep
     {
-        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory dbCommandsFactoryProvider;
         private readonly ExecuteScriptsByTypeStepFactory _executeScriptsByTypeStepFactory;
         private readonly ArtifactExtractorFactory _artifactExtractorFactory;
 
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
             executeScriptsByTypeStepFactory.ThrowIfNull(nameof(executeScriptsByTypeStepFactory));
             artifactExtractorFactory.ThrowIfNull(nameof(artifactExtractorFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactory;
+            dbCommandsFactoryProvider = dbCommandsFactory;
             _executeScriptsByTypeStepFactory = executeScriptsByTypeStepFactory;
             _artifactExtractorFactory = artifactExtractorFactory;
         }
@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
             {
                 List<ActionStepBase> internalSteps = new List<ActionStepBase>();
 
-                using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+                using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
                 {
 
                     ScriptFileTypeBase incrementalFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
