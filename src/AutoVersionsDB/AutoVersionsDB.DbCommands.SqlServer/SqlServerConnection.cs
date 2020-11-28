@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
-    public class SqlServerConnection : IDBConnection, IDisposable
+    public class SqlServerConnection : IDBConnection
     {
         private readonly SqlConnection _sqlDbConnection;
 
@@ -109,7 +109,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
-        internal void ExecSQLCommandStr(string commandStr)
+        public void ExecSQLCommandStr(string commandStr)
         {
             List<string> splitedCommandStr = SplitSqlStatements(commandStr).ToList();
 
@@ -149,7 +149,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
-        internal int UpdateDataTableWithUpdateIdentityOnInsert(DataTable dataTable)
+        public int UpdateDataTableWithUpdateIdentityOnInsert(DataTable dataTable)
         {
             //Comment: dont work here with get changes and merge becase the UpdateIdentityOnInsert duplicate the inserted DataRows
 
@@ -298,7 +298,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
-        internal DataTable GetSelectCommand(string sqlSelectCmd, int overrideTimeout = 0)
+        public DataTable GetSelectCommand(string sqlSelectCmd, int overrideTimeout = 0)
         {
             DataTable outDt = new DataTable();
 

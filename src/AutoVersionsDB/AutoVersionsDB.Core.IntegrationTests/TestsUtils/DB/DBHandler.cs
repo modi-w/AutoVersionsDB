@@ -44,7 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
                     }
 
                     string filename = _dbBackupFilesProvider.GetDBBackupFilePath(dbBackupFileType, dbConnectionInfo.DBType);
-                    dbBackupRestoreCommands.Instance.RestoreDbFromBackup(filename, dbConnection.Instance.DataBaseName, dbTestsBaseLocation);
+                    dbBackupRestoreCommands.Instance.RestoreDBFromBackup(filename, dbConnection.Instance.DataBaseName, dbTestsBaseLocation);
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             {
                 using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(dbConnectionInfo).AsDisposable())
                 {
-                    dbBackupRestoreCommands.Instance.CreateDbBackup(targetFilePath, dbConnectionInfo.DBName);
+                    dbBackupRestoreCommands.Instance.CreateDBBackup(targetFilePath, dbConnectionInfo.DBName);
                 }
             }
         }

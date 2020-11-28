@@ -9,103 +9,64 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBBackupRestoreCommands : IDBBackupRestoreCommands, IDisposable
     {
-        private readonly SqlServerConnection _sqlServerConnection;
+        private readonly IDBConnection _dbConnection;
+        private readonly IDBScriptsProvider _dBScriptsProvider;
 
 
 
-        public SqlServerDBBackupRestoreCommands(SqlServerConnection sqlServerConnection)
+        public SqlServerDBBackupRestoreCommands(IDBConnection dbConnection,
+                                                IDBScriptsProvider dBScriptsProvider)
         {
-            sqlServerConnection.ThrowIfNull(nameof(sqlServerConnection));
+            dbConnection.ThrowIfNull(nameof(dbConnection));
 
-            _sqlServerConnection = sqlServerConnection;
+            _dbConnection = dbConnection;
+            _dBScriptsProvider = dBScriptsProvider;
 
-            _sqlServerConnection.Open();
+            _dbConnection.Open();
         }
 
 
-        public void CreateDbBackup(string filename, string dbName)
+        public void CreateDBBackup(string filename, string dbName)
         {
-            string sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("BackupDB_SqlServer.sql");
-            sqlCommandStr =
-                sqlCommandStr
-                .Replace("{dbName}", dbName)
-                .Replace("{filename}", filename);
+            string sqlCmdStr = _dBScriptsProvider.BackupDBScript(filename, dbName);
 
-
-            _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
+            _dbConnection.ExecSQLCommandStr(sqlCmdStr);
         }
 
 
-        public void RestoreDbFromBackup(string filename, string dbName, string dbFilesBasePath = null)
+        public void RestoreDBFromBackup(string filename, string dbName, string dbFilesBasePath = null)
         {
             ResolveDBInSingleUserMode(dbName, dbFilesBasePath);
 
+            string sqlCmdStr = _dBScriptsProvider.BackupDBScript(filename, dbName);
 
-            string sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("RestorDB_SqlServer.sql");
-            sqlCommandStr =
-                sqlCommandStr
-                .Replace("{dbName}", dbName)
-                .Replace("{filename}", filename);
-
-
-            string moveDBFilesScriptStr = "";
-            if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
-            {
-                moveDBFilesScriptStr = GetEmbeddedResourceFileSqlServerScript("MoveDBFilesScript_SqlServer.sql");
-                moveDBFilesScriptStr =
-                    moveDBFilesScriptStr
-                    .Replace("{dbName}", dbName)
-                    .Replace("{dbFilesBasePath}", dbFilesBasePath);
-            }
-
-            sqlCommandStr =
-                sqlCommandStr
-                .Replace("{moveDBFilesScript}", moveDBFilesScriptStr);
-
-            _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
+            _dbConnection.ExecSQLCommandStr(sqlCmdStr);
         }
 
         private void ResolveDBInSingleUserMode(string dbName, string dbFilesBasePath)
         {
             bool isDBInSigleUserMode = false;
 
-            string sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("GetDBAccessState_SqlServer.sql");
-            sqlCommandStr =
-                sqlCommandStr
-                .Replace("{dbName}", dbName);
+            string sqlCommandStr = _dBScriptsProvider.GetDBAccessStateScript(dbName);
 
-            using (DataTable dbStateTable = _sqlServerConnection.GetSelectCommand(sqlCommandStr))
+            using (DataTable dbStateTable = _dbConnection.GetSelectCommand(sqlCommandStr))
             {
-                if (dbStateTable.Rows.Count > 0)
-                {
-                    DataRow dbStateRow = dbStateTable.Rows[0];
-
-                    isDBInSigleUserMode = Convert.ToString(dbStateRow["user_access_desc"], CultureInfo.InvariantCulture) == "SINGLE_USER"
-                                    || Convert.ToString(dbStateRow["state_desc"], CultureInfo.InvariantCulture) == "RESTORING";
-                }
+                isDBInSigleUserMode = dbStateTable.Rows.Count > 0;
             }
 
             if (isDBInSigleUserMode)
             {
-                sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("GetDBSessions_SqlServer.sql");
-                sqlCommandStr =
-                    sqlCommandStr
-                    .Replace("{dbName}", dbName);
+                sqlCommandStr = _dBScriptsProvider.GetDBSessionsScript(dbName);
 
-                using (DataTable sessionsTable = _sqlServerConnection.GetSelectCommand(sqlCommandStr))
+                using (DataTable sessionsTable = _dbConnection.GetSelectCommand(sqlCommandStr))
                 {
                     foreach (DataRow rowSession in sessionsTable.Rows)
                     {
-                        int seesionID = Convert.ToInt32(rowSession["request_session_id"], CultureInfo.InvariantCulture);
-                        if (seesionID > 50)
-                        {
-                            sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("KillSession_SqlServer.sql");
-                            sqlCommandStr =
-                                sqlCommandStr
-                                .Replace("{seesionID}", seesionID.ToString());
+                        int seesionID = Convert.ToInt32(rowSession["SessionID"], CultureInfo.InvariantCulture);
 
-                            _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
-                        }
+                        sqlCommandStr = _dBScriptsProvider.KillSessionScript(seesionID.ToString());
+
+                        _dbConnection.ExecSQLCommandStr(sqlCommandStr);
                     }
                 }
 
@@ -113,22 +74,16 @@ namespace AutoVersionsDB.DbCommands.SqlServer
                 //sqlCmdStr2 = $"ALTER DATABASE [{dbName}] SET MULTI_USER ";
                 //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
 
-                sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("DropDB_SqlServer.sql");
-                sqlCommandStr =
-                    sqlCommandStr
-                    .Replace("{dbName}", dbName);
-                _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
+                sqlCommandStr = _dBScriptsProvider.DropDBScript(dbName);
+                _dbConnection.ExecSQLCommandStr(sqlCommandStr);
 
                 CreateDB(dbName, dbFilesBasePath);
             }
             else
             {
-                sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("GetIsDBExsit_SqlServer.sql");
-                sqlCommandStr =
-                    sqlCommandStr
-                    .Replace("{dbName}", dbName);
+                sqlCommandStr = _dBScriptsProvider.GetIsDBExsitScript(dbName);
 
-                using (DataTable dtIsDBExsit = _sqlServerConnection.GetSelectCommand(sqlCommandStr))
+                using (DataTable dtIsDBExsit = _dbConnection.GetSelectCommand(sqlCommandStr))
                 {
                     if (dtIsDBExsit.Rows.Count == 0)
                     {
@@ -158,46 +113,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         private void CreateDB(string dbName, string dbFilesBasePath)
         {
-            string sqlCommandStr = GetEmbeddedResourceFileSqlServerScript("CreateDB_SqlServer.sql");
-            sqlCommandStr =
-                sqlCommandStr
-                .Replace("{dbName}", dbName);
+            string sqlCommandStr = _dBScriptsProvider.CreateDBScript(dbName, dbFilesBasePath);
 
-            string appendDBFilesScriptStr = GetEmbeddedResourceFileSqlServerScript("AppendDBFilesScript_SqlServer.sql");
-            appendDBFilesScriptStr =
-                appendDBFilesScriptStr
-                .Replace("{dbName}", dbName)
-                .Replace("{dbFilesBasePath}", dbFilesBasePath);
-                
-
-            sqlCommandStr =
-                sqlCommandStr
-                .Replace("{logFilesScript}", appendDBFilesScriptStr);
-
-            _sqlServerConnection.ExecSQLCommandStr(sqlCommandStr);
-        }
-
-        //private static string AppendDBFilesScript(string dbName, string dbFilesBasePath)
-        //{
-        //    string logFilesScriptStr = "";
-        //    if (!string.IsNullOrWhiteSpace(dbFilesBasePath))
-        //    {
-        //        logFilesScriptStr += " ON ";
-        //        logFilesScriptStr += $@" ( NAME = '{dbName}_dat', FILENAME = '{dbFilesBasePath}\{dbName}.mdf') ";
-        //        logFilesScriptStr += " LOG ON ";
-        //        logFilesScriptStr += $@" (NAME = '{dbName}_log', FILENAME = '{dbFilesBasePath}\{dbName}.ldf') ";
-        //    }
-
-        //    return logFilesScriptStr;
-        //}
-
-        private string GetEmbeddedResourceFileSqlServerScript(string filename)
-        {
-            string sqlCommandStr =
-                EmbeddedResources
-                .GetEmbeddedResourceFile($"AutoVersionsDB.DbCommands.SqlServer.SystemScripts.{filename}");
-
-            return sqlCommandStr;
+            _dbConnection.ExecSQLCommandStr(sqlCommandStr);
         }
 
 
@@ -220,9 +138,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             if (disposing)
             {
                 // free managed resources
-                _sqlServerConnection.Close();
+                _dbConnection.Close();
 
-                _sqlServerConnection.Dispose();
+                _dbConnection.Dispose();
             }
             // free native resources here if there are any
         }

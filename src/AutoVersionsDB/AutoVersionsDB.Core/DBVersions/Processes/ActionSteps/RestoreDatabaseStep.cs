@@ -77,7 +77,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                         {
                             using (var dbBackupRestoreCommands = _dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
                             {
-                                dbBackupRestoreCommands.Instance.RestoreDbFromBackup(processContext.DBBackupFileFullPath, dbCommands.Instance.GetDataBaseName());
+                                dbBackupRestoreCommands.Instance.RestoreDBFromBackup(processContext.DBBackupFileFullPath, dbCommands.Instance.GetDataBaseName());
 
                                 foreach (ExternalProcessStatusStep step in internalSteps)
                                 {

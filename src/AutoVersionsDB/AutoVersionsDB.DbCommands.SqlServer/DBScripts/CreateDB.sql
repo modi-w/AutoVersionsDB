@@ -1,2 +1,2 @@
 ﻿CREATE DATABASE [{dbName}]
-{logFilesScript}
+{appendDBFilesScript}

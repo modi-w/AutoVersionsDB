@@ -10,17 +10,20 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBCommands : IDBCommands, IDisposable
     {
-        private readonly SqlServerConnection _sqlServerConnection;
+        private readonly IDBConnection _dbConnection;
+        private readonly IDBScriptsProvider _dBScriptsProvider;
 
 
 
-        public SqlServerDBCommands(SqlServerConnection sqlServerConnection)
+        public SqlServerDBCommands(IDBConnection dbConnection,
+                                    IDBScriptsProvider dBScriptsProvider)
         {
-            sqlServerConnection.ThrowIfNull(nameof(sqlServerConnection));
+            dbConnection.ThrowIfNull(nameof(dbConnection));
 
-            _sqlServerConnection = sqlServerConnection;
+            _dbConnection = dbConnection;
+            _dBScriptsProvider = dBScriptsProvider;
 
-            _sqlServerConnection.Open();
+            _dbConnection.Open();
         }
 
 
@@ -30,7 +33,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             string dbName;
 
-            dbName = _sqlServerConnection.DataBaseName;
+            dbName = _dbConnection.DataBaseName;
 
             return dbName;
         }
@@ -41,24 +44,16 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             DataSet dsExecutionHistory = new DataSet();
 
-            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetEmptyTable_SqlServer.sql");
-            sqlCmdStr =
-                sqlCmdStr
-                .Replace("{tableName}", DBCommandsConsts.DbScriptsExecutionHistoryFullTableName);
-            DataTable dbScriptsExecutionHistoryTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr);
+            string sqlCmdStr = _dBScriptsProvider.GetEmptyTableScript(DBCommandsConsts.DbScriptsExecutionHistoryFullTableName);
+            DataTable dbScriptsExecutionHistoryTable = _dbConnection.GetSelectCommand(sqlCmdStr);
             dbScriptsExecutionHistoryTable.TableName = DBCommandsConsts.DbScriptsExecutionHistoryFullTableName;
             dsExecutionHistory.Tables.Add(dbScriptsExecutionHistoryTable);
 
 
-
-            sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetEmptyTable_SqlServer.sql");
-            sqlCmdStr =
-                sqlCmdStr
-                .Replace("{tableName}", DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
-            DataTable dbScriptsExecutionHistoryFilesTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr);
+            sqlCmdStr = _dBScriptsProvider.GetEmptyTableScript(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+            DataTable dbScriptsExecutionHistoryFilesTable = _dbConnection.GetSelectCommand(sqlCmdStr);
             dbScriptsExecutionHistoryFilesTable.TableName = DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName;
             dsExecutionHistory.Tables.Add(dbScriptsExecutionHistoryFilesTable);
-
 
 
             return dsExecutionHistory;
@@ -66,29 +61,24 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public void UpdateScriptsExecutionHistoryTableToDB(DataTable dbScriptsExecutionHistoryTable)
         {
-            _sqlServerConnection.UpdateDataTableWithUpdateIdentityOnInsert(dbScriptsExecutionHistoryTable);
+            _dbConnection.UpdateDataTableWithUpdateIdentityOnInsert(dbScriptsExecutionHistoryTable);
         }
 
         public void UpdateScriptsExecutionHistoryFilesTableToDB(DataTable dbScriptsExecutionHistoryFilesTable)
         {
-            _sqlServerConnection.UpdateDataTableWithUpdateIdentityOnInsert(dbScriptsExecutionHistoryFilesTable);
+            _dbConnection.UpdateDataTableWithUpdateIdentityOnInsert(dbScriptsExecutionHistoryFilesTable);
         }
 
 
 
         public DataTable GetExecutedFilesFromDBByFileTypeCode(string scriptFileType)
         {
-            DataTable aExecutedFilesFromDBTable;
+            DataTable executedFilesFromDBTable;
 
-            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetExecutedFilesFromDBByFileTypeCode_SqlServer.sql");
-            sqlCmdStr =
-                sqlCmdStr
-                .Replace("{executedFilesTableName}", DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName)
-                .Replace("{scriptFileType}", scriptFileType);
-            
-            aExecutedFilesFromDBTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr);
+            string sqlCmdStr = _dBScriptsProvider.GetExecutedFilesFromDBByFileTypeCodeScript(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, scriptFileType);
+            executedFilesFromDBTable = _dbConnection.GetSelectCommand(sqlCmdStr);
 
-            return aExecutedFilesFromDBTable;
+            return executedFilesFromDBTable;
         }
 
 
@@ -111,7 +101,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public void ExecSQLCommandStr(string commandStr)
         {
-            _sqlServerConnection.ExecSQLCommandStr(commandStr);
+            _dbConnection.ExecSQLCommandStr(commandStr);
         }
 
 
@@ -122,14 +112,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
             bool outVal = false;
 
-            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("CheckIfTableExist_SqlServer.sql");
-            sqlCmdStr =
-                sqlCmdStr
-                .Replace("{schemaName}", schemaName.Trim('[').Trim(']'))
-                .Replace("{tableName}", tableName.Trim('[').Trim(']'));
-            
+            string sqlCmdStr = _dBScriptsProvider.CheckIfTableExistScript(schemaName, tableName);
 
-            using (DataTable resultsTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr, 10))
+            using (DataTable resultsTable = _dbConnection.GetSelectCommand(sqlCmdStr, 10))
             {
                 if (resultsTable.Rows.Count > 0)
                 {
@@ -144,14 +129,10 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         public bool CheckIfStoredProcedureExist(string schemaName, string spName)
         {
             bool outVal = false;
-            
-            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("CheckIfStoredProcedureExist_SqlServer.sql");
-            sqlCmdStr =
-                sqlCmdStr
-                .Replace("{schemaName}", schemaName)
-                .Replace("{spName}", spName);
 
-            using (DataTable resultsTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr))
+            string sqlCmdStr = _dBScriptsProvider.CheckIfStoredProcedureExistScript(schemaName, spName);
+
+            using (DataTable resultsTable = _dbConnection.GetSelectCommand(sqlCmdStr))
             {
                 if (resultsTable.Rows.Count > 0)
                 {
@@ -168,12 +149,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             DataTable outDt;
 
-            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetAllTableData_SqlServer.sql");
-            sqlCmdStr =
-                sqlCmdStr
-                .Replace("{tableName}", tableName);
+            string sqlCmdStr = _dBScriptsProvider.GetAllTableDataScript(tableName);
 
-            outDt = _sqlServerConnection.GetSelectCommand(sqlCmdStr);
+            outDt = _dbConnection.GetSelectCommand(sqlCmdStr);
 
             outDt.TableName = tableName;
 
@@ -183,46 +161,34 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public DataTable GetAllDBSchemaExceptDBVersionSchema()
         {
-            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetAllDBTablesExceptSchema_SqlServer.sql");
-            sqlCmdStr =
-                sqlCmdStr
-                .Replace("{dbSchemaName}", DBCommandsConsts.DbSchemaName);
+            string sqlCmdStr = _dBScriptsProvider.GetAllDBTablesExceptSchemaScript(DBCommandsConsts.DbSchemaName);
 
-            DataTable dbSchemaExceptDBVersionTable = _sqlServerConnection.GetSelectCommand(sqlCmdStr);
+            DataTable dbSchemaExceptDBVersionTable = _dbConnection.GetSelectCommand(sqlCmdStr);
             return dbSchemaExceptDBVersionTable;
         }
 
 
         public void RecreateDBVersionsTables()
         {
-            string recreateDBVersionsSchema =
-                GetEmbeddedResourceFileSqlServerScript("RecreateDBVersionsSchema_SqlServer.sql");
+            string sqlCmdStr = _dBScriptsProvider.RecreateDBVersionsTablesScript();
 
-            ExecSQLCommandStr(recreateDBVersionsSchema);
+            ExecSQLCommandStr(sqlCmdStr);
         }
 
 
 
         public void DropAllDB()
         {
-            string recreateDBVersionsSchema =
-                GetEmbeddedResourceFileSqlServerScript("DropAllDbObjects_SqlServer.sql");
+            string sqlCmdStr = _dBScriptsProvider.DropAllDBObjectsScript();
 
-            ExecSQLCommandStr(recreateDBVersionsSchema);
+            ExecSQLCommandStr(sqlCmdStr);
 
         }
 
 
 
 
-        private string GetEmbeddedResourceFileSqlServerScript(string filename)
-        {
-            string sqlCommandStr =
-                EmbeddedResources
-                .GetEmbeddedResourceFile($"AutoVersionsDB.DbCommands.SqlServer.SystemScripts.{filename}");
 
-            return sqlCommandStr;
-        }
 
 
         #region IDisposable
@@ -243,9 +209,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             if (disposing)
             {
                 // free managed resources
-                _sqlServerConnection.Close();
+                _dbConnection.Close();
 
-                _sqlServerConnection.Dispose();
+                _dbConnection.Dispose();
             }
             // free native resources here if there are any
         }
