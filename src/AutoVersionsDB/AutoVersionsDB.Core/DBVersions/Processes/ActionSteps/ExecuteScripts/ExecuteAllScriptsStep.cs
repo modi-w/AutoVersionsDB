@@ -17,7 +17,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {
     public class ExecuteAllScriptsStep : DBVersionsStep
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
         private readonly ExecuteScriptsByTypeStepFactory _executeScriptsByTypeStepFactory;
         private readonly ArtifactExtractorFactory _artifactExtractorFactory;
 
@@ -25,15 +25,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
 
 
-        public ExecuteAllScriptsStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+        public ExecuteAllScriptsStep(DBCommandsFactory dbCommandsFactory,
                                     ExecuteScriptsByTypeStepFactory executeScriptsByTypeStepFactory,
                                     ArtifactExtractorFactory artifactExtractorFactory)
         {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
             executeScriptsByTypeStepFactory.ThrowIfNull(nameof(executeScriptsByTypeStepFactory));
             artifactExtractorFactory.ThrowIfNull(nameof(artifactExtractorFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
             _executeScriptsByTypeStepFactory = executeScriptsByTypeStepFactory;
             _artifactExtractorFactory = artifactExtractorFactory;
         }

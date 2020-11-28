@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {
     public class DBExecutedFiles
     {
-        private readonly IDBCommands _dbCommands;
+        private readonly DBCommands _dbCommands;
 
         public ScriptFileTypeBase ScriptFileType { get; private set; }
 
@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         public string LastFileOfLastExecutedFilename { get; private set; }
 
 
-        public DBExecutedFiles(IDBCommands dbCommands,
+        public DBExecutedFiles(DBCommands dbCommands,
                                 ScriptFileTypeBase scriptFileType)
         {
             _dbCommands = dbCommands;

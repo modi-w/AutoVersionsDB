@@ -11,7 +11,7 @@ namespace AutoVersionsDB.DbCommands.Integration
     public class DBProcessStatusNotifyerFactory
     {
 #pragma warning disable CA1822 // Mark members as static
-        public DBProcessStatusNotifyerBase Create(Type notifyerType, IDBQueryStatus dbQueryStatus)
+        public DBProcessStatusNotifyerBase Create(Type notifyerType, DBQueryStatus dbQueryStatus)
 #pragma warning restore CA1822 // Mark members as static
         {
             DBProcessStatusNotifyerBase dbNotifyer = Activator.CreateInstance(notifyerType, dbQueryStatus, DBCommandsConsts.DbLongProcessGetStatusIntervalInMs) as DBProcessStatusNotifyerBase;

@@ -9,14 +9,14 @@ namespace AutoVersionsDB.Core.Common
 {
     public class ProjectConfigValidationsFactory : ValidationsFactory
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
 
         public override string ValidationName => "Project Config";
 
 
-        public ProjectConfigValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public ProjectConfigValidationsFactory(DBCommandsFactory dbCommandsFactory)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 

@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {
     public class ScriptFilesState
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
         private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
         private readonly ArtifactExtractorFactory _artifactExtractorFactory;
 
@@ -22,15 +22,15 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         public ScriptFilesComparerBase RepeatableScriptFilesComparer { get; private set; }
         public ScriptFilesComparerBase DevDummyDataScriptFilesComparer { get; private set; }
 
-        public ScriptFilesState(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+        public ScriptFilesState(DBCommandsFactory dbCommandsFactory,
                                 ScriptFilesComparerFactory scriptFilesComparerFactory,
                                 ArtifactExtractorFactory artifactExtractorFactory)
         {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
             scriptFilesComparerFactory.ThrowIfNull(nameof(scriptFilesComparerFactory));
             artifactExtractorFactory.ThrowIfNull(nameof(artifactExtractorFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
             _artifactExtractorFactory = artifactExtractorFactory;
 

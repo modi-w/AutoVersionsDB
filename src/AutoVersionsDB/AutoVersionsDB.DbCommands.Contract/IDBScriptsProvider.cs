@@ -1,4 +1,4 @@
-﻿namespace AutoVersionsDB.DbCommands.SqlServer
+﻿namespace AutoVersionsDB.DbCommands.Contract
 {
     public interface IDBScriptsProvider
     {
@@ -12,7 +12,7 @@
         string RecreateDBVersionsTablesScript();
 
         string BackupDBScript(string filename, string dbName);
-        string RestorDBScript(string filename, string dbName);
+        string RestorDBScript(string filename, string dbName, string dbFilesBasePath);
 
         string GetDBAccessStateScript(string dbName);
         string GetDBSessionsScript(string dbName);

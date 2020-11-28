@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core
 
         public static void RegisterServices()
         {
-            KernelInstance.Bind<DBCommandsFactoryProvider>().To<DBCommandsFactoryProvider>().InSingletonScope();
+            KernelInstance.Bind<DBCommandsFactory>().To<DBCommandsFactory>().InSingletonScope();
         }
 
         private static void ComposeObjects()

@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
         }
 
-        public virtual ExecuteScriptBlockStep Craete(IDBCommands dbCommands, string scriptBlockToExecute)
+        public virtual ExecuteScriptBlockStep Craete(DBCommands dbCommands, string scriptBlockToExecute)
         {
             return new ExecuteScriptBlockStep(dbCommands, scriptBlockToExecute);
         }

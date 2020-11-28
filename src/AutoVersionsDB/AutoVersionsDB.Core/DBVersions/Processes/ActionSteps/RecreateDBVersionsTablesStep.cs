@@ -6,15 +6,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class RecreateDBVersionsTablesStep : DBVersionsStep
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
 
         public override string StepName => "Recreate System Tables";
 
-        public RecreateDBVersionsTablesStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public RecreateDBVersionsTablesStep(DBCommandsFactory dbCommandsFactory)
         {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 

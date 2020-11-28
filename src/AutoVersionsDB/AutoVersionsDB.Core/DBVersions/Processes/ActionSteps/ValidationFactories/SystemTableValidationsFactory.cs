@@ -10,13 +10,13 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 {
     public class SystemTableValidationsFactory : ValidationsFactory
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
 
         public override string ValidationName => "System Tables";
 
-        public SystemTableValidationsFactory(DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public SystemTableValidationsFactory(DBCommandsFactory dbCommandsFactory)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 

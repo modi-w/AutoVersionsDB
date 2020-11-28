@@ -1,14 +1,14 @@
-﻿using System;
+﻿//using System;
 
 
-namespace AutoVersionsDB.DbCommands.Contract
-{
-    //Comment: we seperate this from IDBCommands, because here we use "Master" DB instead of the specific DB.
-    public interface IDBBackupRestoreCommands //: IDisposable
-    {
-        void CreateDBBackup(string filename, string dbName);
+//namespace AutoVersionsDB.DbCommands.Contract
+//{
+//    //Comment: we seperate this from DBCommands, because here we use "Master" DB instead of the specific DB.
+//    public interface IDBBackupRestoreCommands //: IDisposable
+//    {
+//        void CreateDBBackup(string filename, string dbName);
 
-        void RestoreDBFromBackup(string filename, string dbName, string dbFilesBasePath = null);
+//        void RestoreDBFromBackup(string filename, string dbName, string dbFilesBasePath = null);
 
-    }
-}
+//    }
+//}

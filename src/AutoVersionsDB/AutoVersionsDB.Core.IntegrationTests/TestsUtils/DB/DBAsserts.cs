@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
 
             //string dbBackupFileFullPath;
-            //using (IDBCommands dbCommands = _dbCommands_FactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
+            //using (DBCommands dbCommands = _dbCommands_FactoryProvider.CreateDBCommand(projectConfig.DBTypeCode, projectConfig.ConnStr, 0))
             //{
             //    DataTable executionHistoryTable = dbCommands.Instance.GetTable(DBCommandsConsts.C_DBScriptsExecutionHistory_FullTableName);
 

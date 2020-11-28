@@ -7,7 +7,7 @@ namespace AutoVersionsDB.Core.Common.Validators
     public class DBTypeValidator : ValidatorBase
     {
         private readonly string _dbTypeCode;
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
 
         public override string ValidatorName => "DBType";
 
@@ -15,9 +15,9 @@ namespace AutoVersionsDB.Core.Common.Validators
 
 
         public DBTypeValidator(string dbTypeCode,
-                                DBCommandsFactoryProvider dbCommandsFactoryProvider)
+                                DBCommandsFactory dbCommandsFactory)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
             _dbTypeCode = dbTypeCode;
         }
 

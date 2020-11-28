@@ -8,17 +8,17 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class ResetDBStep : DBVersionsStep
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
 
         public override string StepName => "Resolve Reset Database";
 
 
 
-        public ResetDBStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public ResetDBStep(DBCommandsFactory dbCommandsFactory)
         {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             using (var dbCommands = _dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
-                dbCommands.Instance.DropAllDB();
+                dbCommands.Instance.DropAllDBObject();
             }
 
         }

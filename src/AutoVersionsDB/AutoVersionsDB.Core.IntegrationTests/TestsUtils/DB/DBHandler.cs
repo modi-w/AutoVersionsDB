@@ -20,14 +20,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 {
     public class DBHandler
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
         private readonly DBBackupFilesProvider _dbBackupFilesProvider;
 
 
-        public DBHandler(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+        public DBHandler(DBCommandsFactory dbCommandsFactory,
                             DBBackupFilesProvider dbBackupFilesProvider)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
             _dbBackupFilesProvider = dbBackupFilesProvider;
         }
 

@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
-    public class SqlServerDBCommandsFactory : IDBCommandsFactory
+    public class SqlServerDBTypeObjectsFactory : IDBTypeObjectsFactory
     {
         public DBType DBType
         {
@@ -30,30 +30,36 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             return sqlServerConnection;
         }
 
-
-        public IDBCommands CreateDBCommands(DBConnectionInfo dbConnectionInfo)
+        public IDBScriptsProvider CreateDBScriptsProvider()
         {
-            SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateConnectionString(dbConnectionInfo), 0);
-            SqlServerDBCommands sqlServerDBCommands = new SqlServerDBCommands(sqlServerConnection);
-
-            return sqlServerDBCommands;
+            return new SQLServerDBScriptsProvider();
         }
 
-        public IDBBackupRestoreCommands CreateBackupRestoreCommands(DBConnectionInfo dbConnectionInfo)
-        {
-            SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateAdminConnectionString(dbConnectionInfo), 0);
-            SqlServerDBBackupRestoreCommands sqlServerDBBackupRestoreCommands = new SqlServerDBBackupRestoreCommands(sqlServerConnection);
 
-            return sqlServerDBBackupRestoreCommands;
-        }
 
-        public IDBQueryStatus CreateDBQueryStatus(DBConnectionInfo dbConnectionInfo)
-        {
-            SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateAdminConnectionString(dbConnectionInfo), 0);
-            SqlServerDBQueryStatus sqlServerDBQueryStatus = new SqlServerDBQueryStatus(sqlServerConnection);
+        //public DBCommands CreateDBCommands(DBConnectionInfo dbConnectionInfo)
+        //{
+        //    SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateConnectionString(dbConnectionInfo), 0);
+        //    DBCommands sqlServerDBCommands = new DBCommands(sqlServerConnection);
 
-            return sqlServerDBQueryStatus;
-        }
+        //    return sqlServerDBCommands;
+        //}
+
+        //public IDBBackupRestoreCommands CreateBackupRestoreCommands(DBConnectionInfo dbConnectionInfo)
+        //{
+        //    SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateAdminConnectionString(dbConnectionInfo), 0);
+        //    DBBackupRestoreCommands sqlServerDBBackupRestoreCommands = new DBBackupRestoreCommands(sqlServerConnection);
+
+        //    return sqlServerDBBackupRestoreCommands;
+        //}
+
+        //public DBQueryStatus CreateDBQueryStatus(DBConnectionInfo dbConnectionInfo)
+        //{
+        //    SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateAdminConnectionString(dbConnectionInfo), 0);
+        //    DBQueryStatus sqlServerDBQueryStatus = new DBQueryStatus(sqlServerConnection);
+
+        //    return sqlServerDBQueryStatus;
+        //}
 
 
         private string CreateConnectionString(DBConnectionInfo dbConnectionInfo)

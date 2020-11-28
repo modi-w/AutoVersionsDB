@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class SystemTablesValidator : ValidatorBase
     {
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
         private readonly bool _isDevEnvironment;
         private readonly DBConnectionInfo _dbConnectionInfo;
 
@@ -34,11 +34,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
 
 
-        public SystemTablesValidator(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+        public SystemTablesValidator(DBCommandsFactory dbCommandsFactory,
                                         bool isDevEnvironment,
                                         DBConnectionInfo dbConnectionInfo)
         {
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
             _isDevEnvironment = isDevEnvironment;
             _dbConnectionInfo = dbConnectionInfo;
         }

@@ -105,7 +105,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             return sqlCmdStr;
         }
 
-        public string RestorDBScript(string filename, string dbName, string dbFilesBasePath = null)
+        public string RestorDBScript(string filename, string dbName, string dbFilesBasePath)
         {
             string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("RestorDB.sql");
             sqlCmdStr =
@@ -245,5 +245,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
             return sqlCommandStr;
         }
+
+      
     }
 }

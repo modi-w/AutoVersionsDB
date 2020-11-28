@@ -37,7 +37,7 @@
     <None Remove="DBScripts\GetQueryProcessStatus.sql" />
     <None Remove="DBScripts\KillSession.sql" />
     <None Remove="DBScripts\MoveDBFilesScript.sql" />
-    <None Remove="DBScripts\RecreateDBVersionsSchema.sql" />
+    <None Remove="DBScripts\RecreateDBVersionsTables.sql" />
     <None Remove="DBScripts\RestorDB.sql" />
   </ItemGroup>
 
@@ -61,7 +61,7 @@
     <EmbeddedResource Include="DBScripts\RestorDB.sql" />
     <EmbeddedResource Include="DBScripts\DropAllDbObjects.sql" />
     <EmbeddedResource Include="DBScripts\BackupDB.sql" />
-    <EmbeddedResource Include="DBScripts\RecreateDBVersionsSchema.sql" />
+    <EmbeddedResource Include="DBScripts\RecreateDBVersionsTables.sql" />
   </ItemGroup>
 
   <ItemGroup>

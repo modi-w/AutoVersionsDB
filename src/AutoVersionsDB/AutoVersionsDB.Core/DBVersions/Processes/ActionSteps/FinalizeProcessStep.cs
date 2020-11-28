@@ -11,15 +11,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         public override string StepName => "Finalize Process";
 
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
 
 
 
-        public FinalizeProcessStep(DBCommandsFactoryProvider dbCommandsFactoryProvider)
+        public FinalizeProcessStep(DBCommandsFactory dbCommandsFactory)
         {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
         }
 
 

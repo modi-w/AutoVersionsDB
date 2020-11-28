@@ -1,14 +1,14 @@
-﻿using System;
+﻿//using System;
 
-namespace AutoVersionsDB.DbCommands.Contract
-{
-    public interface IDBQueryStatus //: IDisposable
-    {
-        int GetNumOfOpenConnection(string dbName);
+//namespace AutoVersionsDB.DbCommands.Contract
+//{
+//    public interface DBQueryStatus //: IDisposable
+//    {
+//        int GetNumOfOpenConnection(string dbName);
 
-        double GetBackupProcessStatus();
+//        double GetBackupProcessStatus();
         
-        double GetRestoreProcessStatus();
+//        double GetRestoreProcessStatus();
 
-    }
-}
+//    }
+//}

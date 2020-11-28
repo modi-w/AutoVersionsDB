@@ -1,37 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Data;
 
 
-namespace AutoVersionsDB.DbCommands.Contract
-{
-    public interface IDBCommands //: IDisposable
-    {
-        string GetDataBaseName();
+//namespace AutoVersionsDB.DbCommands.Contract
+//{
+//    public interface DBCommands //: IDisposable
+//    {
+//        string GetDataBaseName();
 
-        DataSet GetScriptsExecutionHistoryTableStructureFromDB();
+//        DataSet GetScriptsExecutionHistoryTableStructureFromDB();
 
-        void UpdateScriptsExecutionHistoryTableToDB(DataTable dbScriptsExecutionHistoryTable);
+//        void UpdateScriptsExecutionHistoryTableToDB(DataTable dbScriptsExecutionHistoryTable);
 
-        void UpdateScriptsExecutionHistoryFilesTableToDB(DataTable dbScriptsExecutionHistoryFilesTable);
+//        void UpdateScriptsExecutionHistoryFilesTableToDB(DataTable dbScriptsExecutionHistoryFilesTable);
 
-        DataTable GetExecutedFilesFromDBByFileTypeCode(string scriptFileType);
+//        DataTable GetExecutedFilesFromDBByFileTypeCode(string scriptFileType);
 
-        IEnumerable<string> SplitSqlStatementsToExecutionBlocks(string sqlUnifyScript);
+//        IEnumerable<string> SplitSqlStatementsToExecutionBlocks(string sqlUnifyScript);
 
 
-        DataTable GetTable(string tableName);
+//        DataTable GetTable(string tableName);
 
-        void ExecSQLCommandStr(string commandStr);
+//        void ExecSQLCommandStr(string commandStr);
 
-        bool CheckIfTableExist(string schemaName, string tableName);
+//        bool CheckIfTableExist(string schemaName, string tableName);
 
-        bool CheckIfStoredProcedureExist(string schemaName, string spName);
+//        bool CheckIfStoredProcedureExist(string schemaName, string spName);
 
-        DataTable GetAllDBSchemaExceptDBVersionSchema();
+//        DataTable GetAllDBSchemaExceptDBVersionSchema();
 
-        void RecreateDBVersionsTables();
+//        void RecreateDBVersionsTables();
 
-        void DropAllDB();
-    }
-}
+//        void DropAllDB();
+//    }
+//}

@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
         {
             _executeSingleFileScriptStepFactory = executeSingleFileScriptStepFactory;
         }
-        public ExecuteScriptsByTypeStep Create(string fileTypeCode, IDBCommands dbCommands)
+        public ExecuteScriptsByTypeStep Create(string fileTypeCode, DBCommands dbCommands)
         {
             return new ExecuteScriptsByTypeStep(fileTypeCode, dbCommands, _executeSingleFileScriptStepFactory);
         }

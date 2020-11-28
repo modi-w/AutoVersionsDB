@@ -18,16 +18,16 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         public override string StepName => StepNameStr;
 
 
-        private readonly DBCommandsFactoryProvider _dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
         private readonly DBProcessStatusNotifyerFactory _dbProcessStatusNotifyerFactory;
 
 
-        public RestoreDatabaseStep(DBCommandsFactoryProvider dbCommandsFactoryProvider,
+        public RestoreDatabaseStep(DBCommandsFactory dbCommandsFactory,
                                     DBProcessStatusNotifyerFactory dbProcessStatusNotifyerFactory)
         {
-            dbCommandsFactoryProvider.ThrowIfNull(nameof(dbCommandsFactoryProvider));
+            dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            _dbCommandsFactoryProvider = dbCommandsFactoryProvider;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
             _dbProcessStatusNotifyerFactory = dbProcessStatusNotifyerFactory;
         }
 
