@@ -22,5 +22,8 @@
         string GetIsDBExsitScript(string dbName);
 
         string CreateDBScript(string dbName, string dbFilesBasePath);
+
+        string GetNumOfOpenConnectionScript(string dbName);
+        string GetQueryProcessStatusScript(string queryName);
     }
 }

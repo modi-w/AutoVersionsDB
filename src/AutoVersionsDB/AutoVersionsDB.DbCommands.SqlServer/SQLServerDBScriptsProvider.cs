@@ -213,6 +213,30 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
 
 
+        public string GetNumOfOpenConnectionScript(string dbName)
+        {
+            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetNumOfOpenConnection.sql");
+            sqlCmdStr =
+                sqlCmdStr
+                .Replace("{dbName}", dbName);
+
+            return sqlCmdStr;
+        }
+
+
+        public string GetQueryProcessStatusScript(string queryName)
+        {
+            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("GetQueryProcessStatus.sql");
+            sqlCmdStr =
+                sqlCmdStr
+                .Replace("{queryName}", queryName);
+
+            return sqlCmdStr;
+        }
+
+
+
+
         private string GetEmbeddedResourceFileSqlServerScript(string filename)
         {
             string sqlCommandStr =

@@ -33,6 +33,8 @@
     <None Remove="DBScripts\GetEmptyTable.sql" />
     <None Remove="DBScripts\GetExecutedFilesFromDBByFileTypeCode.sql" />
     <None Remove="DBScripts\GetIsDBExsit.sql" />
+    <None Remove="DBScripts\GetNumOfOpenConnection.sql" />
+    <None Remove="DBScripts\GetQueryProcessStatus.sql" />
     <None Remove="DBScripts\KillSession.sql" />
     <None Remove="DBScripts\MoveDBFilesScript.sql" />
     <None Remove="DBScripts\RecreateDBVersionsSchema.sql" />
@@ -41,6 +43,8 @@
 
   <ItemGroup>
     <EmbeddedResource Include="DBScripts\AppendDBFilesScript.sql" />
+    <EmbeddedResource Include="DBScripts\GetQueryProcessStatus.sql" />
+    <EmbeddedResource Include="DBScripts\GetNumOfOpenConnection.sql" />
     <EmbeddedResource Include="DBScripts\MoveDBFilesScript.sql" />
     <EmbeddedResource Include="DBScripts\GetExecutedFilesFromDBByFileTypeCode.sql" />
     <EmbeddedResource Include="DBScripts\GetEmptyTable.sql" />
