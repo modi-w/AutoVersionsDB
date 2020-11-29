@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text;
 using System.Windows.Forms;
 
 
@@ -34,9 +37,9 @@ namespace AutoVersionsDB.WinApp.Utils
             return new Binding(propertyName, helper, "Value", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        private readonly Control bindingControl;
-        private readonly INotifyPropertyChanged bindingSource;
-        private readonly string dataMember;
+        Control bindingControl;
+        INotifyPropertyChanged bindingSource;
+        string dataMember;
 
         private AsyncBindingHelper(Control bindingControl,
                                     INotifyPropertyChanged bindingSource,
@@ -49,7 +52,7 @@ namespace AutoVersionsDB.WinApp.Utils
               += new PropertyChangedEventHandler(bindingSource_PropertyChanged);
         }
 
-        private void bindingSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        void bindingSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null && e.PropertyName == dataMember)
             {
@@ -72,9 +75,15 @@ namespace AutoVersionsDB.WinApp.Utils
         /// </summary>
         public object Value
         {
-            get => bindingSource.GetType().GetProperty(dataMember)
+            get
+            {
+                return bindingSource.GetType().GetProperty(dataMember)
                   .GetValue(bindingSource, null);
-            set => bindingSource.GetType().GetProperty(dataMember).SetValue(bindingSource, value, null);
+            }
+            set
+            {
+                bindingSource.GetType().GetProperty(dataMember).SetValue(bindingSource, value, null);
+            }
         }
         #region INotifyPropertyChanged Members
         /// <summary>

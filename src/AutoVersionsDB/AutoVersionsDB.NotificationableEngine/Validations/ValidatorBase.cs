@@ -1,4 +1,6 @@
-﻿namespace AutoVersionsDB.NotificationableEngine.Validations
+﻿using AutoVersionsDB.NotificationableEngine;
+
+namespace AutoVersionsDB.NotificationableEngine.Validations
 {
     public abstract class ValidatorBase
     {

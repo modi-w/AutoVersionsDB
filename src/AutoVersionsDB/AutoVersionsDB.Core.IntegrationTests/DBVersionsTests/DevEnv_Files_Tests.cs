@@ -1,9 +1,11 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_NewScrtiptFile;
+
+
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using Moq;
@@ -12,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Files;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
 {
@@ -33,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
             TestsRunner.RunTestsForeachDBType<DevEnv_Files_IncrementalChanged_API, DevEnv_Files_IncrementalChanged_All_CLI, DevEnv_Files_IncrementalChanged_Incremental_CLI, DevEnv_Files_IncrementalChanged_Repeatable_CLI, DevEnv_Files_IncrementalChanged_DevDummyData_CLI, DevEnv_Files_IncrementalChanged_UI>();
         }
 
-
+       
 
 
         [Test]

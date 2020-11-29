@@ -52,7 +52,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             NinjectKernelContainer.Bind<INotificationsViewModel>().To<NotificationsViewModelForTests>().InSingletonScope();
             NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManagerForTests>().InSingletonScope();
             NinjectKernelContainer.Bind<IEditProjectViewSateManager>().To<EditProjectViewSateManagerForTests>().InSingletonScope();
-
+            
         }
 
         private static void ComposeObjects()
@@ -138,7 +138,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             return testDefinitions;
         }
 
-        public static IEnumerable<TestDefinition> GetTestDefinitions<T1, T2, T3, T4, T5, T6>()
+        public static IEnumerable<TestDefinition> GetTestDefinitions<T1, T2, T3, T4, T5,T6>()
           where T1 : TestDefinition
           where T2 : TestDefinition
           where T3 : TestDefinition

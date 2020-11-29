@@ -1,9 +1,14 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.StatesLog;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace AutoVersionsDB.UI.Notifications
 {

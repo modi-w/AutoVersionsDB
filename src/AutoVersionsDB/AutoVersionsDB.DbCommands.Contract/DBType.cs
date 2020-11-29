@@ -1,4 +1,8 @@
-﻿namespace AutoVersionsDB.DbCommands.Contract
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace AutoVersionsDB.DbCommands.Contract
 {
     public class DBType
     {

@@ -38,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override void Act(CLITestContext testContext)
         {
             string args = $"-id={IntegrationTestsConsts.DummyProjectConfigValid.Id} ";
-            args += $"-desc={IntegrationTestsConsts.DummyProjectConfigValid.Description} ";
+            args+= $"-desc={IntegrationTestsConsts.DummyProjectConfigValid.Description} ";
             args += $"-db={IntegrationTestsConsts.DummyProjectConfigValid.DBName} ";
             args += $"-un={IntegrationTestsConsts.DummyProjectConfigValid.Username} ";
             args += $"-pass={IntegrationTestsConsts.DummyProjectConfigValid.Password} ";
@@ -55,7 +55,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 2);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,2);
             assertTextByLines.AssertLineMessage("> Run 'init' for 'IntegrationTestProject'", true);
             assertTextByLines.AssertLineMessage("The process complete successfully", true);
 

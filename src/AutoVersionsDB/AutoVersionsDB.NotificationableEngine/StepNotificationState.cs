@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
@@ -9,11 +14,11 @@ namespace AutoVersionsDB.NotificationableEngine
 
         public StepNotificationState Clone()
         {
-            StepNotificationState outItem = MemberwiseClone() as StepNotificationState;
+            StepNotificationState outItem = this.MemberwiseClone() as StepNotificationState;
 
             if (InternalStepNotificationState != null)
             {
-                outItem.InternalStepNotificationState = InternalStepNotificationState.Clone();
+                outItem.InternalStepNotificationState = this.InternalStepNotificationState.Clone();
             }
 
             return outItem;
@@ -33,7 +38,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
                 if (NumOfSteps != 0)
                 {
-                    results = StepNumber / (double)NumOfSteps * 100;
+                    results = (double)StepNumber / (double)NumOfSteps * 100;
                 }
 
                 return results;
@@ -41,8 +46,14 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
         internal double LastNotifyPrecents { get; set; }
-        internal bool IsPrecentsAboveMin => LastNotifyPrecents == 0
+        internal bool IsPrecentsAboveMin
+        {
+            get
+            {
+                return LastNotifyPrecents == 0
                     || (Precents - LastNotifyPrecents) > _minPrecentChangeToNotify;
+            }
+        }
 
 
         public string LowLevelStepName
@@ -109,7 +120,13 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
-        public bool HasError => !string.IsNullOrWhiteSpace(LowLevelErrorMessage);
+        public bool HasError
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(LowLevelErrorMessage);
+            }
+        }
 
         public string InstructionsMessage { get; set; }
         public string LowLevelInstructionsMessage
@@ -179,7 +196,7 @@ namespace AutoVersionsDB.NotificationableEngine
             string outStr;
 
             string stepStageStr = "";
-            if (NumOfSteps > 0
+            if (NumOfSteps>0
                 && isIncludeStepStage)
             {
                 stepStageStr = $" ({StepNumber}/{NumOfSteps})";
@@ -220,7 +237,7 @@ namespace AutoVersionsDB.NotificationableEngine
             //    outStr = $"{outStr} -> {InternalNotificationStateItem.ToString(this,false, isIncludeStepStage)}";
             //}
 
-
+            
 
             if (isIncludeTimestamp)
             {

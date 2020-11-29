@@ -89,8 +89,8 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             bool outVal;
             try
             {
-                Open();
-                Close();
+                this.Open();
+                this.Close();
 
                 outVal = true;
             }

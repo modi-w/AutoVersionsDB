@@ -1,7 +1,9 @@
 ﻿using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace AutoVersionsDB.UI.EditProject
 {

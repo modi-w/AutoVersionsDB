@@ -55,6 +55,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
             TestsRunner.RunTestsForeachDBType<DevEnv_SetDBToSpecificState_IgnoreWarning_API, DevEnv_SetDBToSpecificState_IgnoreWarning_UI>();
         }
 
-
+        
     }
 }

@@ -1,4 +1,8 @@
-﻿namespace AutoVersionsDB.UI.DBVersions
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace AutoVersionsDB.UI.DBVersions
 {
     public delegate TextInputResults OnTextInputEventHandler(object sender, string instructionMessageText);
     public class TextInputResults

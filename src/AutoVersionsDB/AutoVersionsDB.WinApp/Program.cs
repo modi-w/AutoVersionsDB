@@ -5,13 +5,13 @@ using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
-    internal static class Program
+    static class Program
     {
         /// <summary>
         /// The main entry point for the application . 
         /// </summary>
         [STAThread]
-        private static void Main()
+        static void Main()
         {
             Application.ThreadException += Application_ThreadException;
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);

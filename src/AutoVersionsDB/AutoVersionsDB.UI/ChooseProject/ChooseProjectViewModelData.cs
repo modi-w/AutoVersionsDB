@@ -1,7 +1,10 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace AutoVersionsDB.UI.ChooseProject
 {
@@ -11,7 +14,10 @@ namespace AutoVersionsDB.UI.ChooseProject
         public string SerchProjectText
         {
             get => _serchProjectText;
-            set => SetField(ref _serchProjectText, value);
+            set
+            {
+                SetField(ref _serchProjectText, value);
+            }
         }
 
         private List<ProjectConfigItem> _filteredProjectList;

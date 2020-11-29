@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using AutoVersionsDB.NotificationableEngine;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace AutoVersionsDB.UI.EditProject
 {
@@ -11,13 +15,19 @@ namespace AutoVersionsDB.UI.EditProject
         public string IdErrorMessage
         {
             get => _idErrorMessage;
-            set => SetField(ref _idErrorMessage, value);
+            set
+            {
+                SetField(ref _idErrorMessage, value);
+            }
         }
         private string _dbTypeCodeErrorMessage;
         public string DBTypeCodeErrorMessage
         {
             get => _dbTypeCodeErrorMessage;
-            set => SetField(ref _dbTypeCodeErrorMessage, value);
+            set
+            {
+                SetField(ref _dbTypeCodeErrorMessage, value);
+            }
         }
         //private string _serverErrorMessage;
         //public string ServerErrorMessage
@@ -32,7 +42,10 @@ namespace AutoVersionsDB.UI.EditProject
         public string DBNameErrorMessage
         {
             get => _dbNameErrorMessage;
-            set => SetField(ref _dbNameErrorMessage, value);
+            set
+            {
+                SetField(ref _dbNameErrorMessage, value);
+            }
         }
         //private string _usernameErrorMessage;
         //public string UsernameErrorMessage
@@ -56,25 +69,37 @@ namespace AutoVersionsDB.UI.EditProject
         public string BackupFolderPathErrorMessage
         {
             get => _backupFolderPathErrorMessage;
-            set => SetField(ref _backupFolderPathErrorMessage, value);
+            set
+            {
+                SetField(ref _backupFolderPathErrorMessage, value);
+            }
         }
         private string _devScriptsBaseFolderPathErrorMessage;
         public string DevScriptsBaseFolderPathErrorMessage
         {
             get => _devScriptsBaseFolderPathErrorMessage;
-            set => SetField(ref _devScriptsBaseFolderPathErrorMessage, value);
+            set
+            {
+                SetField(ref _devScriptsBaseFolderPathErrorMessage, value);
+            }
         }
         private string _deployArtifactFolderPathErrorMessage;
         public string DeployArtifactFolderPathErrorMessage
         {
             get => _deployArtifactFolderPathErrorMessage;
-            set => SetField(ref _deployArtifactFolderPathErrorMessage, value);
+            set
+            {
+                SetField(ref _deployArtifactFolderPathErrorMessage, value);
+            }
         }
         private string _deliveryArtifactFolderPathErrorMessage;
         public string DeliveryArtifactFolderPathErrorMessage
         {
             get => _deliveryArtifactFolderPathErrorMessage;
-            set => SetField(ref _deliveryArtifactFolderPathErrorMessage, value);
+            set
+            {
+                SetField(ref _deliveryArtifactFolderPathErrorMessage, value);
+            }
         }
 
 

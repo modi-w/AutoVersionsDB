@@ -1,6 +1,8 @@
-﻿using AutoVersionsDB.Helpers;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.CommandLine;
+using AutoVersionsDB.Helpers;
 
 namespace AutoVersionsDB.CLI.ConfigProjects
 {
@@ -29,8 +31,6 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
         public void Build(RootCommand rootCommand)
         {
-            rootCommand.ThrowIfNull(nameof(rootCommand));
-
             foreach (var commandFactory in _cliCommandFactories)
             {
                 Command command = commandFactory.Create();

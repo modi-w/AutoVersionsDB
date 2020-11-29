@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
     public sealed class NotificationProcessRunner<TProcessDefinition, TProcessContext>
-        where TProcessDefinition : ProcessDefinition
+        where TProcessDefinition: ProcessDefinition
         where TProcessContext : ProcessContext, new()
     {
-        private readonly TProcessDefinition _processDefinition;
+        private TProcessDefinition _processDefinition;
 
         public NotificationProcessRunner(TProcessDefinition processDefinition)
         {

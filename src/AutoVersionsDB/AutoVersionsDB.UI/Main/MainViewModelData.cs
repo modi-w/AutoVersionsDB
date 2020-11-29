@@ -1,5 +1,10 @@
-﻿using System.ComponentModel;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace AutoVersionsDB.UI.Main
 {
@@ -12,7 +17,7 @@ namespace AutoVersionsDB.UI.Main
             set => SetField(ref _currentView, value);
         }
 
-
+   
 
 
 

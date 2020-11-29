@@ -3,10 +3,15 @@ using AutoVersionsDB.Core.DBVersions;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.UI.EditProject;
 using AutoVersionsDB.UI.Notifications;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AutoVersionsDB.UI.DBVersions
 {
@@ -26,7 +31,10 @@ namespace AutoVersionsDB.UI.DBVersions
         private ViewRouter _viewRouter;
         public ViewRouter ViewRouter
         {
-            get => _viewRouter;
+            get
+            {
+                return _viewRouter;
+            }
             set
             {
                 _viewRouter = value;
@@ -334,7 +342,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                     NotificationsViewModel.WaitingForUser();
                     Console.WriteLine("DBVersionsViewModel.RefreshAll() -> No Error -> after call to  WaitingForUser()");
-
+                    
                     _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
                     Console.WriteLine("DBVersionsViewModel.RefreshAll() -> No Error -> after call to  ReadyToRunSync()");
                 }

@@ -1,7 +1,4 @@
-﻿
-/* Unmerged change from project 'AutoVersionsDB.WinApp'
-Before:
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Drawing;
@@ -13,28 +10,6 @@ using AutoVersionsDB.UI.StatesLog;
 using AutoVersionsDB.WinApp.Properties;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
-After:
-using AutoVersionsDB.Core;
-using AutoVersionsDB.NotificationableEngine;
-using AutoVersionsDB.UI.Notifications;
-using System.UI.StatesLog;
-using AutoVersionsDB.WinApp.Properties;
-using AutoVersionsDB.WinApp.Utils;
-using Ninject;
-using System;
-using System.ComponentModel;
-using AutoVersionsDB.WinApp.Configuration;
-using System.Drawing;
-using System.Windows.Forms;
-*/
-using AutoVersionsDB.UI.Notifications;
-using AutoVersionsDB.UI.StatesLog;
-using AutoVersionsDB.WinApp.Properties;
-using AutoVersionsDB.WinApp.Utils;
-using Ninject;
-using System;
-using System.ComponentModel;
-using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -88,8 +63,8 @@ namespace AutoVersionsDB.WinApp
 
         private void SetDataBindings()
         {
-            lblProcessStatusMessage.DataBindings.Clear();
-            lblProcessStatusMessage.DataBindings.Add(
+            this.lblProcessStatusMessage.DataBindings.Clear();
+            this.lblProcessStatusMessage.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblProcessStatusMessage,
                     nameof(lblProcessStatusMessage.Text),
@@ -97,7 +72,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.NotificationsViewModelData.ProcessStatusMessage)
                     )
                 );
-            lblProcessStatusMessage.DataBindings.Add(
+            this.lblProcessStatusMessage.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblProcessStatusMessage,
                     nameof(lblProcessStatusMessage.ForeColor),
@@ -106,8 +81,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            pbStatus.DataBindings.Clear();
-            pbStatus.DataBindings.Add(
+            this.pbStatus.DataBindings.Clear();
+            this.pbStatus.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pbStatus,
                     nameof(pbStatus.Visible),

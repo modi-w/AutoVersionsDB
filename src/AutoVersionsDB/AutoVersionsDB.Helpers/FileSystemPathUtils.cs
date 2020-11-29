@@ -1,6 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.IO;
+using System.Configuration;
 using System.Reflection;
+using System.Web;
+using System.ComponentModel;
+using System.ComponentModel.Design;
 
 namespace AutoVersionsDB.Helpers
 {
@@ -26,9 +34,27 @@ namespace AutoVersionsDB.Helpers
 
 
 
-        public static string RoamingPath => Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        public static string LocalAppDataPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        public static string CommonApplicationData => Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+        public static string RoamingPath
+        {
+            get
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            }
+        }
+        public static string LocalAppDataPath
+        {
+            get
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            }
+        }
+        public static string CommonApplicationData
+        {
+            get
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            }
+        }
 
         public static string ParsePathVaribles(string path)
         {

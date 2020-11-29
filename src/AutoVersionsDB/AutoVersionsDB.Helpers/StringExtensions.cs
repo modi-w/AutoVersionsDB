@@ -1,4 +1,9 @@
-﻿namespace AutoVersionsDB.Helpers
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+namespace AutoVersionsDB.Helpers
 {
     public static class StringExtensions
     {

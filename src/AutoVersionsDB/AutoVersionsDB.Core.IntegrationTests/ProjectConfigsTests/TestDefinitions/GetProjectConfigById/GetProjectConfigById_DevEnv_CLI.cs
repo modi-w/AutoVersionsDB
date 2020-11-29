@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 15);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,15);
             assertTextByLines.AssertLineMessage("> Run 'info' for 'IntegrationTestProject'", true);
             assertTextByLines.AssertLineMessage($"Id                                 : {IntegrationTestsConsts.DummyProjectConfigValid.Id}", true);
             assertTextByLines.AssertLineMessage($"Description                        : {IntegrationTestsConsts.DummyProjectConfigValid.Description}", true);
@@ -61,11 +61,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             assertTextByLines.AssertLineMessage($"DBPassword                         : {IntegrationTestsConsts.DummyProjectConfigValid.Password}", true);
             assertTextByLines.AssertLineMessage($"Backup Folder Path                 : {IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath}", true);
             assertTextByLines.AssertLineMessage($"Dev Environment                    : {IntegrationTestsConsts.DummyProjectConfigValid.DevEnvironment}", true);
-            assertTextByLines.AssertLineMessage($"Scripts Base Folder                : {IntegrationTestsConsts.DummyProjectConfigValid.ScriptsBaseFolderPath}", true);
-            assertTextByLines.AssertLineMessage($" Incremental Scripts Folder        : {IntegrationTestsConsts.DummyProjectConfigValid.IncrementalScriptsFolderPath}", true);
-            assertTextByLines.AssertLineMessage($" Repeatable Scripts Folder         : {IntegrationTestsConsts.DummyProjectConfigValid.RepeatableScriptsFolderPath}", true);
-            assertTextByLines.AssertLineMessage($" Dev Dummy Data Scripts Folder     : {IntegrationTestsConsts.DummyProjectConfigValid.DevDummyDataScriptsFolderPath}", true);
-            assertTextByLines.AssertLineMessage($"Deploy Artifact Folder             : {IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $"Scripts Base Folder                : {IntegrationTestsConsts.DummyProjectConfigValid.ScriptsBaseFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $" Incremental Scripts Folder        : {IntegrationTestsConsts.DummyProjectConfigValid.IncrementalScriptsFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $" Repeatable Scripts Folder         : {IntegrationTestsConsts.DummyProjectConfigValid.RepeatableScriptsFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $" Dev Dummy Data Scripts Folder     : {IntegrationTestsConsts.DummyProjectConfigValid.DevDummyDataScriptsFolderPath}", true);
+            assertTextByLines.AssertLineMessage( $"Deploy Artifact Folder             : {IntegrationTestsConsts.DummyProjectConfigValid.DeployArtifactFolderPath}", true);
 
         }
 

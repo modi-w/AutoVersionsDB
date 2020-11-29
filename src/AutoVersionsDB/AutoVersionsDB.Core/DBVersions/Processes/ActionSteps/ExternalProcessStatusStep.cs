@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.NotificationableEngine;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
@@ -14,7 +18,13 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         public override string StepName => StepNumber.ToString();
 
 
-        public bool IsCompleted => CurrentStepNumber >= StepNumber || ProcessExpetion != null;
+        public bool IsCompleted
+        {
+            get
+            {
+                return CurrentStepNumber >= StepNumber || ProcessExpetion != null;
+            }
+        }
 
 
         public ExternalProcessStatusStep(int stepNumber)

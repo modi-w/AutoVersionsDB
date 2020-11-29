@@ -1,12 +1,17 @@
 ﻿using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using Ninject;
+using System;
+using System.Collections.Generic;
+using System.CommandLine;
+using System.CommandLine.IO;
 using System.Reflection;
+using System.Text;
 
 namespace AutoVersionsDB.ConsoleApp
 {
     public static class NinjectUtils_Console
-    {
+    { 
         public static IKernel NinjectKernelContainer { get; private set; }
 
 

@@ -52,7 +52,13 @@ namespace AutoVersionsDB.NotificationableEngine
         internal ProcessTrace ProcessTrace { get; private set; }
 
 
-        internal bool HasError => ProcessTrace.HasError;
+        internal bool HasError
+        {
+            get
+            {
+                return ProcessTrace.HasError;
+            }
+        }
 
 
         public ProcessTraceHandler()

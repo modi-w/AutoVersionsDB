@@ -9,7 +9,13 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 {
     public class IncrementalRuntimeScriptFile : RuntimeScriptFileBase
     {
-        public override ScriptFileTypeBase ScriptFileType => ScriptFileTypeBase.Create<IncrementalScriptFileType>();
+        public override ScriptFileTypeBase ScriptFileType
+        {
+            get
+            {
+                return ScriptFileTypeBase.Create<IncrementalScriptFileType>();
+            }
+        }
 
         public override string SortKey => $"{Date.ToString(IncrementalScriptFileType.ScriptFileDatePattern, CultureInfo.InvariantCulture)}{Version:000}{ScriptName}";
 
@@ -29,7 +35,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
             Date = date;
             Version = version;
 
-
+           
         }
 
         public IncrementalRuntimeScriptFile(string folderPath, string fileFullPath)

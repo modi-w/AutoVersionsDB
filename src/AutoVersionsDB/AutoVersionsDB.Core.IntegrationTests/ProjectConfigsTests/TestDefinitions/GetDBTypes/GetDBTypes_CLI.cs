@@ -47,7 +47,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 5);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,5);
             assertTextByLines.AssertLineMessage("> Run 'dbtypes' (no params)", true);
             assertTextByLines.AssertLineMessage("", true);
             assertTextByLines.AssertLineMessage("  Code       |  Name", true);

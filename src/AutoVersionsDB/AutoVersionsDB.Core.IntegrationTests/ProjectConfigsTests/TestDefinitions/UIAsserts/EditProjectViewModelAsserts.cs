@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
 
 
-
+       
 
         public void AssertViewStateHistory(string testName, IList<EditProjectViewStateType> actualViewStateHistory, IList<EditProjectViewStateType> expectedViewStateHistory)
         {
@@ -45,8 +45,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             {
                 var expectedViewStateItem = expectedViewStateHistory[i];
                 var actualViewStateItem = actualViewStateHistory[i];
-
-                Assert.That(actualViewStateItem == expectedViewStateItem, $"{testName} -> ViewState {i + 1} should be {expectedViewStateItem}, but was '{actualViewStateItem}'");
+             
+                Assert.That(actualViewStateItem == expectedViewStateItem, $"{testName} -> ViewState {i+1} should be {expectedViewStateItem}, but was '{actualViewStateItem}'");
             }
         }
 

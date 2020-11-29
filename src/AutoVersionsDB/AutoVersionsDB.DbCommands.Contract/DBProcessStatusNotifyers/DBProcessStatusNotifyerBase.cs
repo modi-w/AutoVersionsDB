@@ -24,23 +24,23 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
         {
             IsActive = true;
 
-            Task.Run(() =>
-              {
-                  try
-                  {
-                      Run(onProgress);
-                  }
-                  catch (ThreadAbortException threadAbortEx)
-                  {
-                      string exStr = threadAbortEx.ToString();
+               Task.Run(() =>
+                 {
+                     try
+                     {
+                         Run(onProgress);
+                     }
+                     catch (ThreadAbortException threadAbortEx)
+                     {
+                         string exStr = threadAbortEx.ToString();
                          //Do Nothing - usually happand when the system closed before the sleep interval is over - like in Unit Tests
                      }
-                  catch (Exception ex)
-                  {
-                      throw new Exception("DBProcessStatusNotifyerBase. on run Thread", ex);
-                  }
-              });
-
+                     catch (Exception ex)
+                     {
+                         throw new Exception("DBProcessStatusNotifyerBase. on run Thread", ex);
+                     }
+                 });
+         
         }
 
         public void Stop()

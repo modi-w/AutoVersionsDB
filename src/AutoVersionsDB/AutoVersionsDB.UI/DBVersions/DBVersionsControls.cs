@@ -1,5 +1,9 @@
-﻿using System.ComponentModel;
+﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace AutoVersionsDB.UI.DBVersions
 {
@@ -12,7 +16,10 @@ namespace AutoVersionsDB.UI.DBVersions
         public string LblProjectNameText
         {
             get => _lblProjectNameText;
-            set => SetField(ref _lblProjectNameText, value);
+            set
+            {
+                SetField(ref _lblProjectNameText, value);
+            }
         }
 
 
@@ -20,46 +27,67 @@ namespace AutoVersionsDB.UI.DBVersions
         public bool PnlMainActionsVisible
         {
             get => _pnlMainActionsVisible;
-            set => SetField(ref _pnlMainActionsVisible, value);
+            set
+            {
+                SetField(ref _pnlMainActionsVisible, value);
+            }
         }
         private bool _pnlMainActionsEnabled;
         public bool PnlMainActionsEnabled
         {
             get => _pnlMainActionsEnabled;
-            set => SetField(ref _pnlMainActionsEnabled, value);
+            set
+            {
+                SetField(ref _pnlMainActionsEnabled, value);
+            }
         }
 
         private bool _pnlSyncToSpecificStateVisible;
         public bool PnlSyncToSpecificStateVisible
         {
             get => _pnlSyncToSpecificStateVisible;
-            set => SetField(ref _pnlSyncToSpecificStateVisible, value);
+            set
+            {
+                SetField(ref _pnlSyncToSpecificStateVisible, value);
+            }
         }
 
         private bool _pnlMissingSystemTablesVisible;
         public bool PnlMissingSystemTablesVisible
         {
             get => _pnlMissingSystemTablesVisible;
-            set => SetField(ref _pnlMissingSystemTablesVisible, value);
+            set
+            {
+                SetField(ref _pnlMissingSystemTablesVisible, value);
+            }
         }
         private bool _pnlMissingSystemTablesEnabled;
         public bool PnlMissingSystemTablesEnabled
         {
             get => _pnlMissingSystemTablesEnabled;
-            set => SetField(ref _pnlMissingSystemTablesEnabled, value);
+            set
+            {
+                SetField(ref _pnlMissingSystemTablesEnabled, value);
+            }
         }
 
         private bool _pnlSetDBStateManuallyVisible;
         public bool PnlSetDBStateManuallyVisible
         {
             get => _pnlSetDBStateManuallyVisible;
-            set => SetField(ref _pnlSetDBStateManuallyVisible, value);
+            set
+            {
+                SetField(ref _pnlSetDBStateManuallyVisible, value);
+            }
         }
         private bool _pnlSetDBStateManuallyEnabled;
         public bool PnlSetDBStateManuallyEnabled
         {
             get => _pnlSetDBStateManuallyEnabled;
-            set => SetField(ref _pnlSetDBStateManuallyEnabled, value);
+            set
+            {
+                SetField(ref _pnlSetDBStateManuallyEnabled, value);
+            }
         }
 
 
@@ -69,7 +97,10 @@ namespace AutoVersionsDB.UI.DBVersions
         public bool PnlRepeatableFilesVisible
         {
             get => _pnlRepeatableFilesVisible;
-            set => SetField(ref _pnlRepeatableFilesVisible, value);
+            set
+            {
+                SetField(ref _pnlRepeatableFilesVisible, value);
+            }
         }
 
 
@@ -77,14 +108,20 @@ namespace AutoVersionsDB.UI.DBVersions
         public bool PnlDevDummyDataFilesVisible
         {
             get => _pnlDevDummyDataFilesVisible;
-            set => SetField(ref _pnlDevDummyDataFilesVisible, value);
+            set
+            {
+                SetField(ref _pnlDevDummyDataFilesVisible, value);
+            }
         }
 
         private bool _pnlRestoreDbErrorVisible;
         public bool PnlRestoreDbErrorVisible
         {
             get => _pnlRestoreDbErrorVisible;
-            set => SetField(ref _pnlRestoreDbErrorVisible, value);
+            set
+            {
+                SetField(ref _pnlRestoreDbErrorVisible, value);
+            }
         }
 
 
@@ -93,14 +130,20 @@ namespace AutoVersionsDB.UI.DBVersions
         public bool IncrementalScriptsGridEnabled
         {
             get => _incrementalScriptsGridEnabled;
-            set => SetField(ref _incrementalScriptsGridEnabled, value);
+            set
+            {
+                SetField(ref _incrementalScriptsGridEnabled, value);
+            }
         }
 
         private bool _gridToSelectTargetStateEnabled;
         public bool GridToSelectTargetStateEnabled
         {
             get => _gridToSelectTargetStateEnabled;
-            set => SetField(ref _gridToSelectTargetStateEnabled, value);
+            set
+            {
+                SetField(ref _gridToSelectTargetStateEnabled, value);
+            }
         }
 
 
@@ -108,21 +151,30 @@ namespace AutoVersionsDB.UI.DBVersions
         public bool BtnRefreshEnable
         {
             get => _btnRefreshEnable;
-            set => SetField(ref _btnRefreshEnable, value);
+            set
+            {
+                SetField(ref _btnRefreshEnable, value);
+            }
         }
-
+      
         private bool _btnRecreateDbFromScratchMainVisible;
         public bool BtnRecreateDbFromScratchMainVisible
         {
             get => _btnRecreateDbFromScratchMainVisible;
-            set => SetField(ref _btnRecreateDbFromScratchMainVisible, value);
+            set
+            {
+                SetField(ref _btnRecreateDbFromScratchMainVisible, value);
+            }
         }
 
         private bool _btnRecreateDbFromScratchSecondaryVisible;
         public bool BtnRecreateDbFromScratchSecondaryVisible
         {
             get => _btnRecreateDbFromScratchSecondaryVisible;
-            set => SetField(ref _btnRecreateDbFromScratchSecondaryVisible, value);
+            set
+            {
+                SetField(ref _btnRecreateDbFromScratchSecondaryVisible, value);
+            }
         }
 
 
@@ -130,7 +182,10 @@ namespace AutoVersionsDB.UI.DBVersions
         public bool BtnDeployVisible
         {
             get => _btnDeployVisible;
-            set => SetField(ref _btnDeployVisible, value);
+            set
+            {
+                SetField(ref _btnDeployVisible, value);
+            }
         }
 
 
@@ -140,28 +195,40 @@ namespace AutoVersionsDB.UI.DBVersions
         public bool BtnShowHistoricalBackupsEnabled
         {
             get => _btnShowHistoricalBackupsEnabled;
-            set => SetField(ref _btnShowHistoricalBackupsEnabled, value);
+            set
+            {
+                SetField(ref _btnShowHistoricalBackupsEnabled, value);
+            }
         }
 
         private bool _btnCreateNewIncrementalScriptFileEnabled;
         public bool BtnCreateNewIncrementalScriptFileEnabled
         {
             get => _btnCreateNewIncrementalScriptFileEnabled;
-            set => SetField(ref _btnCreateNewIncrementalScriptFileEnabled, value);
+            set
+            {
+                SetField(ref _btnCreateNewIncrementalScriptFileEnabled, value);
+            }
         }
 
         private bool _btnCreateNewRepeatableScriptFileEnabled;
         public bool BtnCreateNewRepeatableScriptFileEnabled
         {
             get => _btnCreateNewRepeatableScriptFileEnabled;
-            set => SetField(ref _btnCreateNewRepeatableScriptFileEnabled, value);
+            set
+            {
+                SetField(ref _btnCreateNewRepeatableScriptFileEnabled, value);
+            }
         }
 
         private bool _btnCreateNewDevDummyDataScriptFileEnabled;
         public bool BtnCreateNewDevDummyDataScriptFileEnabled
         {
             get => _btnCreateNewDevDummyDataScriptFileEnabled;
-            set => SetField(ref _btnCreateNewDevDummyDataScriptFileEnabled, value);
+            set
+            {
+                SetField(ref _btnCreateNewDevDummyDataScriptFileEnabled, value);
+            }
         }
 
 
@@ -171,14 +238,20 @@ namespace AutoVersionsDB.UI.DBVersions
         public bool LblColorTargetState_SquareVisible
         {
             get => _lblColorTargetState_SquareVisible;
-            set => SetField(ref _lblColorTargetState_SquareVisible, value);
+            set
+            {
+                SetField(ref _lblColorTargetState_SquareVisible, value);
+            }
         }
 
         private bool _lblColorTargetState_CaptionVisible;
         public bool LblColorTargetState_CaptionVisible
         {
             get => _lblColorTargetState_CaptionVisible;
-            set => SetField(ref _lblColorTargetState_CaptionVisible, value);
+            set
+            {
+                SetField(ref _lblColorTargetState_CaptionVisible, value);
+            }
         }
 
 
@@ -187,49 +260,70 @@ namespace AutoVersionsDB.UI.DBVersions
         public string BtnRefreshTooltip
         {
             get => _btnRefreshTooltip;
-            set => SetField(ref _btnRefreshTooltip, value);
+            set
+            {
+                SetField(ref _btnRefreshTooltip, value);
+            }
         }
 
         private string _btnRunSyncTooltip;
         public string BtnRunSyncTooltip
         {
             get => _btnRunSyncTooltip;
-            set => SetField(ref _btnRunSyncTooltip, value);
+            set
+            {
+                SetField(ref _btnRunSyncTooltip, value);
+            }
         }
 
         private string _btnRecreateDbFromScratchTooltip;
         public string BtnRecreateDbFromScratchMainTooltip
         {
             get => _btnRecreateDbFromScratchTooltip;
-            set => SetField(ref _btnRecreateDbFromScratchTooltip, value);
+            set
+            {
+                SetField(ref _btnRecreateDbFromScratchTooltip, value);
+            }
         }
 
         private string _btnDeployTooltip;
         public string BtnDeployTooltip
         {
             get => _btnDeployTooltip;
-            set => SetField(ref _btnDeployTooltip, value);
+            set
+            {
+                SetField(ref _btnDeployTooltip, value);
+            }
         }
 
         private string _btnSetDBToSpecificStateTooltip;
         public string BtnSetDBToSpecificStateTooltip
         {
             get => _btnSetDBToSpecificStateTooltip;
-            set => SetField(ref _btnSetDBToSpecificStateTooltip, value);
+            set
+            {
+                SetField(ref _btnSetDBToSpecificStateTooltip, value);
+            }
         }
 
         private string _btnVirtualExecutionTooltip;
         public string BtnVirtualExecutionTooltip
         {
             get => _btnVirtualExecutionTooltip;
-            set => SetField(ref _btnVirtualExecutionTooltip, value);
+            set
+            {
+                SetField(ref _btnVirtualExecutionTooltip, value);
+            }
         }
 
         private string _btnShowHistoricalBackupsTooltip;
         public string BtnShowHistoricalBackupsTooltip
         {
             get => _btnShowHistoricalBackupsTooltip;
-            set => SetField(ref _btnShowHistoricalBackupsTooltip, value);
+            set
+            {
+                SetField(ref _btnShowHistoricalBackupsTooltip, value);
+            }
         }
 
 

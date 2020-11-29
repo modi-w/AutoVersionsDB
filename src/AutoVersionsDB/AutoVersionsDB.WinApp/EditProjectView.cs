@@ -1,54 +1,21 @@
-﻿
-/* Unmerged change from project 'AutoVersionsDB.WinApp'
-Before:
-using System;
+﻿using System;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Linq;
-After:
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.NotificationableEngine;
-using AutoVersionsDB.UI;
-using System.UI.EditProject;
-using System.WinApp.Utils;
-*/
-using AutoVersionsDB.UI.EditProject;
-using AutoVersionsDB.WinApp.Utils;
-using Ninject;
-using System;
-using AutoVersionsDB.ComponentModel;
-using AutoVersionsDB.Drawing;
-using Ninject;
-/* Unmerged change from project 'AutoVersionsDB.WinApp'
-Before:
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.NotificationableEngine;
-using System.Threading.Tasks;
-using System.Globalization;
-using AutoVersionsDB.UI;
-using Ninject;
-using AutoVersionsDB.WinApp.Utils;
-using AutoVersionsDB.UI.EditProject;
-After:
-using System;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-*/
-
+using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.NotificationableEngine;
+using System.Threading.Tasks;
+using System.Globalization;
+using AutoVersionsDB.UI;
+using Ninject;
+using AutoVersionsDB.WinApp.Utils;
+using AutoVersionsDB.UI.EditProject;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -99,10 +66,10 @@ namespace AutoVersionsDB.WinApp
 
         private void bindProjectConfig()
         {
-            BeginInvoke((MethodInvoker)(() =>
+            this.BeginInvoke((MethodInvoker)(() =>
             {
-                tbId.DataBindings.Clear();
-                tbId.DataBindings.Add(
+                this.tbId.DataBindings.Clear();
+                this.tbId.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbId,
                         nameof(tbId.Text),
@@ -110,7 +77,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.Id)
                     )
                 );
-                tbId.DataBindings.Add(
+                this.tbId.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbId,
                         nameof(tbId.Enabled),
@@ -120,8 +87,8 @@ namespace AutoVersionsDB.WinApp
                     );
 
 
-                tbProjectDescription.DataBindings.Clear();
-                tbProjectDescription.DataBindings.Add(
+                this.tbProjectDescription.DataBindings.Clear();
+                this.tbProjectDescription.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbProjectDescription,
                         nameof(tbProjectDescription.Text),
@@ -129,7 +96,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.Description)
                     )
                 );
-                tbProjectDescription.DataBindings.Add(
+                this.tbProjectDescription.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbProjectDescription,
                         nameof(tbProjectDescription.Enabled),
@@ -139,8 +106,8 @@ namespace AutoVersionsDB.WinApp
                     );
 
 
-                cboConncectionType.DataBindings.Clear();
-                cboConncectionType.DataBindings.Add(
+                this.cboConncectionType.DataBindings.Clear();
+                this.cboConncectionType.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         cboConncectionType,
                         nameof(cboConncectionType.SelectedValue),
@@ -148,7 +115,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.DBType)
                     )
                 );
-                cboConncectionType.DataBindings.Add(
+                this.cboConncectionType.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         cboConncectionType,
                         nameof(cboConncectionType.Enabled),
@@ -158,8 +125,8 @@ namespace AutoVersionsDB.WinApp
                     );
 
 
-                tbServer.DataBindings.Clear();
-                tbServer.DataBindings.Add(
+                this.tbServer.DataBindings.Clear();
+                this.tbServer.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbServer,
                         nameof(tbServer.Text),
@@ -167,7 +134,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.Server)
                     )
                 );
-                tbServer.DataBindings.Add(
+                this.tbServer.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbServer,
                         nameof(tbServer.Enabled),
@@ -177,8 +144,8 @@ namespace AutoVersionsDB.WinApp
                     );
 
 
-                tbDBName.DataBindings.Clear();
-                tbDBName.DataBindings.Add(
+                this.tbDBName.DataBindings.Clear();
+                this.tbDBName.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDBName,
                         nameof(tbDBName.Text),
@@ -186,7 +153,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.DBName)
                     )
                 );
-                tbDBName.DataBindings.Add(
+                this.tbDBName.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDBName,
                         nameof(tbDBName.Enabled),
@@ -195,8 +162,8 @@ namespace AutoVersionsDB.WinApp
                         )
                     );
 
-                tbUsername.DataBindings.Clear();
-                tbUsername.DataBindings.Add(
+                this.tbUsername.DataBindings.Clear();
+                this.tbUsername.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbUsername,
                         nameof(tbUsername.Text),
@@ -204,7 +171,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.Username)
                     )
                 );
-                tbUsername.DataBindings.Add(
+                this.tbUsername.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbUsername,
                         nameof(tbUsername.Enabled),
@@ -213,8 +180,8 @@ namespace AutoVersionsDB.WinApp
                         )
                     );
 
-                tbPassword.DataBindings.Clear();
-                tbPassword.DataBindings.Add(
+                this.tbPassword.DataBindings.Clear();
+                this.tbPassword.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbPassword,
                         nameof(tbPassword.Text),
@@ -222,7 +189,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.Password)
                     )
                 );
-                tbPassword.DataBindings.Add(
+                this.tbPassword.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbPassword,
                         nameof(tbPassword.Enabled),
@@ -231,8 +198,8 @@ namespace AutoVersionsDB.WinApp
                         )
                     );
 
-                tbDBBackupFolder.DataBindings.Clear();
-                tbDBBackupFolder.DataBindings.Add(
+                this.tbDBBackupFolder.DataBindings.Clear();
+                this.tbDBBackupFolder.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDBBackupFolder,
                         nameof(tbDBBackupFolder.Text),
@@ -240,7 +207,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.BackupFolderPath)
                     )
                 );
-                tbDBBackupFolder.DataBindings.Add(
+                this.tbDBBackupFolder.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDBBackupFolder,
                         nameof(tbDBBackupFolder.Enabled),
@@ -249,8 +216,8 @@ namespace AutoVersionsDB.WinApp
                         )
                     );
 
-                rbDevEnv.DataBindings.Clear();
-                rbDevEnv.DataBindings.Add(
+                this.rbDevEnv.DataBindings.Clear();
+                this.rbDevEnv.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         rbDevEnv,
                         nameof(rbDevEnv.Checked),
@@ -258,7 +225,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.DevEnvironment)
                     )
                 );
-                rbDevEnv.DataBindings.Add(
+                this.rbDevEnv.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         rbDevEnv,
                         nameof(rbDevEnv.Enabled),
@@ -268,8 +235,8 @@ namespace AutoVersionsDB.WinApp
                     );
 
 
-                rbDelEnv.DataBindings.Clear();
-                rbDelEnv.DataBindings.Add(
+                this.rbDelEnv.DataBindings.Clear();
+                this.rbDelEnv.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         rbDelEnv,
                         nameof(rbDelEnv.Checked),
@@ -277,7 +244,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.DeliveryEnvironment)
                     )
                 );
-                rbDelEnv.DataBindings.Add(
+                this.rbDelEnv.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         rbDelEnv,
                         nameof(rbDelEnv.Enabled),
@@ -286,8 +253,8 @@ namespace AutoVersionsDB.WinApp
                         )
                     );
 
-                tbDevScriptsFolderPath.DataBindings.Clear();
-                tbDevScriptsFolderPath.DataBindings.Add(
+                this.tbDevScriptsFolderPath.DataBindings.Clear();
+                this.tbDevScriptsFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDevScriptsFolderPath,
                         nameof(tbDevScriptsFolderPath.Text),
@@ -295,7 +262,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.DevScriptsBaseFolderPath)
                     )
                 );
-                tbDevScriptsFolderPath.DataBindings.Add(
+                this.tbDevScriptsFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDevScriptsFolderPath,
                         nameof(tbDevScriptsFolderPath.Enabled),
@@ -304,8 +271,8 @@ namespace AutoVersionsDB.WinApp
                         )
                     );
 
-                lblIncrementalScriptsFolderPath.DataBindings.Clear();
-                lblIncrementalScriptsFolderPath.DataBindings.Add(
+                this.lblIncrementalScriptsFolderPath.DataBindings.Clear();
+                this.lblIncrementalScriptsFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         lblIncrementalScriptsFolderPath,
                         nameof(lblIncrementalScriptsFolderPath.Text),
@@ -314,8 +281,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-                lblRepeatableScriptsFolderPath.DataBindings.Clear();
-                lblRepeatableScriptsFolderPath.DataBindings.Add(
+                this.lblRepeatableScriptsFolderPath.DataBindings.Clear();
+                this.lblRepeatableScriptsFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         lblRepeatableScriptsFolderPath,
                         nameof(lblRepeatableScriptsFolderPath.Text),
@@ -324,8 +291,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-                lblDevDummyDataScriptsFolderPath.DataBindings.Clear();
-                lblDevDummyDataScriptsFolderPath.DataBindings.Add(
+                this.lblDevDummyDataScriptsFolderPath.DataBindings.Clear();
+                this.lblDevDummyDataScriptsFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         lblDevDummyDataScriptsFolderPath,
                         nameof(lblDevDummyDataScriptsFolderPath.Text),
@@ -335,8 +302,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-                tbDeployArtifactFolderPath.DataBindings.Clear();
-                tbDeployArtifactFolderPath.DataBindings.Add(
+                this.tbDeployArtifactFolderPath.DataBindings.Clear();
+                this.tbDeployArtifactFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDeployArtifactFolderPath,
                         nameof(tbDeployArtifactFolderPath.Text),
@@ -344,7 +311,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.DeployArtifactFolderPath)
                     )
                 );
-                tbDeployArtifactFolderPath.DataBindings.Add(
+                this.tbDeployArtifactFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDeployArtifactFolderPath,
                         nameof(tbDeployArtifactFolderPath.Enabled),
@@ -353,8 +320,8 @@ namespace AutoVersionsDB.WinApp
                         )
                     );
 
-                tbDeliveryArtifactFolderPath.DataBindings.Clear();
-                tbDeliveryArtifactFolderPath.DataBindings.Add(
+                this.tbDeliveryArtifactFolderPath.DataBindings.Clear();
+                this.tbDeliveryArtifactFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDeliveryArtifactFolderPath,
                         nameof(tbDeliveryArtifactFolderPath.Text),
@@ -362,7 +329,7 @@ namespace AutoVersionsDB.WinApp
                         nameof(ViewModel.ProjectConfig.DeliveryArtifactFolderPath)
                     )
                 );
-                tbDeliveryArtifactFolderPath.DataBindings.Add(
+                this.tbDeliveryArtifactFolderPath.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(
                         tbDeliveryArtifactFolderPath,
                         nameof(tbDeliveryArtifactFolderPath.Enabled),
@@ -440,8 +407,8 @@ namespace AutoVersionsDB.WinApp
             cboConncectionType.DisplayMember = "Name";
             cboConncectionType.ValueMember = "Code";
 
-            pnlDevEnvFoldersFields.DataBindings.Clear();
-            pnlDevEnvFoldersFields.DataBindings.Add(
+            this.pnlDevEnvFoldersFields.DataBindings.Clear();
+            this.pnlDevEnvFoldersFields.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlDevEnvFoldersFields,
                     nameof(pnlDevEnvFoldersFields.Visible),
@@ -461,8 +428,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            pnlDelEnvFields.DataBindings.Clear();
-            pnlDelEnvFields.DataBindings.Add(
+            this.pnlDelEnvFields.DataBindings.Clear();
+            this.pnlDelEnvFields.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlDelEnvFields,
                     nameof(pnlDelEnvFields.Visible),
@@ -472,8 +439,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            imgError.DataBindings.Clear();
-            imgError.DataBindings.Add(
+            this.imgError.DataBindings.Clear();
+            this.imgError.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     imgError,
                     nameof(imgError.Visible),
@@ -483,8 +450,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            imgValid.DataBindings.Clear();
-            imgValid.DataBindings.Add(
+            this.imgValid.DataBindings.Clear();
+            this.imgValid.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     imgValid,
                     nameof(imgValid.Visible),
@@ -494,8 +461,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            btnSave.DataBindings.Clear();
-            btnSave.DataBindings.Add(
+            this.btnSave.DataBindings.Clear();
+            this.btnSave.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnSave,
                     nameof(btnSave.Enabled),
@@ -512,8 +479,8 @@ namespace AutoVersionsDB.WinApp
             //        )
             //    );
 
-            btnEditId.DataBindings.Clear();
-            btnEditId.DataBindings.Add(
+            this.btnEditId.DataBindings.Clear();
+            this.btnEditId.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnEditId,
                     nameof(btnEditId.Enabled),
@@ -521,7 +488,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.EditProjectControls.BtnEditIdEnabled)
                     )
                 );
-            btnEditId.DataBindings.Add(
+            this.btnEditId.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnEditId,
                     nameof(btnEditId.Visible),
@@ -531,8 +498,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            btnSaveId.DataBindings.Clear();
-            btnSaveId.DataBindings.Add(
+            this.btnSaveId.DataBindings.Clear();
+            this.btnSaveId.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnSaveId,
                     nameof(btnSaveId.Enabled),
@@ -540,7 +507,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.EditProjectControls.BtnSaveIdEnabled)
                     )
                 );
-            btnSaveId.DataBindings.Add(
+            this.btnSaveId.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnSaveId,
                     nameof(btnSaveId.Visible),
@@ -550,8 +517,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            btnCancelEditId.DataBindings.Clear();
-            btnCancelEditId.DataBindings.Add(
+            this.btnCancelEditId.DataBindings.Clear();
+            this.btnCancelEditId.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnCancelEditId,
                     nameof(btnCancelEditId.Enabled),
@@ -559,7 +526,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.EditProjectControls.BtnCancelEditIdEnabled)
                     )
                 );
-            btnCancelEditId.DataBindings.Add(
+            this.btnCancelEditId.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnCancelEditId,
                     nameof(btnCancelEditId.Visible),
@@ -568,8 +535,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            btnNavToProcess.DataBindings.Clear();
-            btnNavToProcess.DataBindings.Add(
+            this.btnNavToProcess.DataBindings.Clear();
+            this.btnNavToProcess.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnNavToProcess,
                     nameof(btnNavToProcess.Visible),
@@ -577,7 +544,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.EditProjectControls.BtnNavToProcessVisible)
                     )
                 );
-            btnNavToProcess.DataBindings.Add(
+            this.btnNavToProcess.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnNavToProcess,
                     nameof(btnNavToProcess.Enabled),
@@ -587,8 +554,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            btnNavToProcess.DataBindings.Clear();
-            btnNavToProcess.DataBindings.Add(
+            this.btnNavToProcess.DataBindings.Clear();
+            this.btnNavToProcess.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnNavToProcess,
                     nameof(btnNavToProcess.Visible),
@@ -596,7 +563,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.EditProjectControls.BtnNavToProcessVisible)
                     )
                 );
-            btnNavToProcess.DataBindings.Add(
+            this.btnNavToProcess.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnNavToProcess,
                     nameof(btnNavToProcess.Enabled),
@@ -606,8 +573,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            lblDbProcess.DataBindings.Clear();
-            lblDbProcess.DataBindings.Add(
+            this.lblDbProcess.DataBindings.Clear();
+            this.lblDbProcess.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblDbProcess,
                     nameof(lblDbProcess.Visible),

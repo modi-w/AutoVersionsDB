@@ -1,7 +1,8 @@
-﻿using AutoVersionsDB.Core.Common;
+﻿using AutoVersionsDB.Helpers;
+using AutoVersionsDB.Core.Common;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
-using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
 
@@ -21,10 +22,22 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 
 
 
-        public bool IsVirtualExecution => (ProcessDefinition as DBVersionsProcessDefinition).IsVirtualExecution;
+        public bool IsVirtualExecution
+        {
+            get
+            {
+                return (ProcessDefinition as DBVersionsProcessDefinition).IsVirtualExecution;
+            }
+        }
 
 
-        public override bool CanRollback => !string.IsNullOrWhiteSpace(DBBackupFileFullPath);
+        public override bool CanRollback
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(DBBackupFileFullPath);
+            }
+        }
 
         public double ProcessDurationInMs
         {

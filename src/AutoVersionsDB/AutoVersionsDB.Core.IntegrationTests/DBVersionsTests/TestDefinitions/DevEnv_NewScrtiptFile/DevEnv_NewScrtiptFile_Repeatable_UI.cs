@@ -48,7 +48,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(DBVersionsUITestContext testContext)
         {
-            _dbVersionsViewModel.OnTextInput += _dbVersionsViewModel_OnTextInput;
+            _dbVersionsViewModel.OnTextInput += _dbVersionsViewModel_OnTextInput; 
             var task1 = _dbVersionsViewModel.CreateNewRepeatableScriptFileCommand.ExecuteWrapped();
             task1.Wait();
             _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInput;

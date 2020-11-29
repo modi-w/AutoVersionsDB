@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ProcessAsserts _processAsserts;
 
-        public DevEnv_Validate_HistoryExecutedFilesChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
+        public DevEnv_Validate_HistoryExecutedFilesChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert, 
                                                                     ProcessAsserts processAsserts)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
@@ -45,7 +45,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(ITestContext testContext)
         {
-            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext,false);
 
             _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "HistoryExecutedFilesChanged");
 

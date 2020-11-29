@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ProcessAsserts _processAsserts;
 
-        public DevEnv_Validate_HistoryExecutedFilesMissing_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
+        public DevEnv_Validate_HistoryExecutedFilesMissing_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert, 
                                                                     ProcessAsserts processAsserts)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;

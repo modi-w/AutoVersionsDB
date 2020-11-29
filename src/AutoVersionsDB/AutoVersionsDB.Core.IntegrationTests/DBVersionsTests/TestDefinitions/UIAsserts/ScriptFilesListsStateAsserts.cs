@@ -137,7 +137,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         public void AssertDBVersionsViewModelDataRepeatableChanged(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
-            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0],  HashDiffType.Equal);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[1], HashDiffType.Equal);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[2], HashDiffType.Equal);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[3], HashDiffType.Equal);

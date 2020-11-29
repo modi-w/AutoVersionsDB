@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 using System.IO;
 

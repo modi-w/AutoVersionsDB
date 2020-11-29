@@ -5,6 +5,7 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using System.IO;
 
 namespace AutoVersionsDB.Core.ConfigProjects
@@ -23,7 +24,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         public string Password { get; set; }
 
         public DBConnectionInfo DBConnectionInfo =>
-            new DBConnectionInfo(DBType, Server, DBName, Username, Password);
+            new DBConnectionInfo(this.DBType, this.Server, this.DBName, this.Username, this.Password);
 
 
         public string BackupFolderPath { get; set; }
@@ -46,7 +47,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 if (!string.IsNullOrWhiteSpace(DeliveryArtifactFolderPath))
                 {
-                    outStr = Path.Combine(DeliveryArtifactFolderPath, ArtifactExtractor.TempExtractArtifactFolderName);
+                    outStr = Path.Combine(this.DeliveryArtifactFolderPath, ArtifactExtractor.TempExtractArtifactFolderName);
                 }
 
                 return outStr;

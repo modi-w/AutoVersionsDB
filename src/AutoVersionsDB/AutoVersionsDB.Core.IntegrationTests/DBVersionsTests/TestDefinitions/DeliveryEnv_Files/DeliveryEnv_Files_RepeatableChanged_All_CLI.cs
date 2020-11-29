@@ -1,17 +1,20 @@
 ﻿using AutoVersionsDB;
-using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
+
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.TestContexts;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+using AutoVersionsDB.CLI;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Files
 {
@@ -47,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 17);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,17);
 
             assertTextByLines.AssertLineMessage("> Run 'files' for 'IntegrationTestProject'", true);
             assertTextByLines.AssertLineMessage("The process complete successfully", true);
@@ -59,13 +62,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.101_CreateLookupTable1.sql", true);
             assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.102_CreateLookupTable2.sql", true);
             assertTextByLines.AssertLineMessage("   sync    | incScript_2020-03-02.100_CreateTransTable1.sql", true);
-            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-03-02.101_CreateInvoiceTable1.sql", true);
-            assertTextByLines.AssertLineMessage("", true);
-            assertTextByLines.AssertLineMessage("++ Repeatable Scripts:", true);
-            assertTextByLines.AssertLineMessage("  Status   |  File", true);
-            assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("   changed | rptScript_DataForLookupTable1.sql", true);
-            assertTextByLines.AssertLineMessage("   sync    | rptScript_DataForLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage( "   sync    | incScript_2020-03-02.101_CreateInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage( "", true);
+            assertTextByLines.AssertLineMessage( "++ Repeatable Scripts:", true);
+            assertTextByLines.AssertLineMessage( "  Status   |  File", true);
+            assertTextByLines.AssertLineMessage( "-------------------------------------------------------", true);
+            assertTextByLines.AssertLineMessage( "   changed | rptScript_DataForLookupTable1.sql", true);
+            assertTextByLines.AssertLineMessage( "   sync    | rptScript_DataForLookupTable2.sql", true);
         }
 
 

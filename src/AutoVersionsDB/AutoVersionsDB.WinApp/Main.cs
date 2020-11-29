@@ -1,9 +1,11 @@
-﻿using AutoVersionsDB.UI;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.UI;
 using AutoVersionsDB.UI.Main;
 using AutoVersionsDB.WinApp.Utils;
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
@@ -35,7 +37,7 @@ namespace AutoVersionsDB.WinApp
                 SetDataBindings();
             }
 
-            Load += Main_Load;
+            this.Load += Main_Load;
 
 
 
@@ -63,8 +65,8 @@ namespace AutoVersionsDB.WinApp
 
         private void SetDataBindings()
         {
-            lnkBtnChooseProject.DataBindings.Clear();
-            lnkBtnChooseProject.DataBindings.Add(
+            this.lnkBtnChooseProject.DataBindings.Clear();
+            this.lnkBtnChooseProject.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lnkBtnChooseProject,
                     nameof(lnkBtnChooseProject.Visible),

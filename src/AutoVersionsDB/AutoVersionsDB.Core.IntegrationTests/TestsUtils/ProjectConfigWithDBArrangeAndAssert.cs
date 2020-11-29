@@ -69,7 +69,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
         }
 
 
-        public void Asserts(string testName, ITestContext testContext, bool processSucceed)
+        public void Asserts(string testName,ITestContext testContext, bool processSucceed)
         {
             if (testContext.DBBackupFileType != DBBackupFileType.None)
             {

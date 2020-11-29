@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         private readonly DBVersionsViewModel _dbVersionsViewModel;
         private readonly DBVersionsViewModelAsserts _dbVersionsViewModelAsserts;
 
-        public DevEnv_SyncDB_RepeatableChanged_UI(DevEnv_SyncDB_RepeatableChanged_API devEnv_SyncDB_API,
+        public DevEnv_SyncDB_RepeatableChanged_UI(DevEnv_SyncDB_RepeatableChanged_API devEnv_SyncDB_API, 
                                 DBVersionsViewModel dbVersionsViewModel,
                                 DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
         {
@@ -62,7 +62,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _devEnv_SyncDB_API.Asserts(testContext);
 
-            _dbVersionsViewModelAsserts.AssertCompleteSuccessfullyAllFilesSync(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
+            _dbVersionsViewModelAsserts.AssertCompleteSuccessfullyAllFilesSync(this.GetType().Name,_dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
             _dbVersionsViewModelAsserts.AssertViewStateHistory(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
         }
 

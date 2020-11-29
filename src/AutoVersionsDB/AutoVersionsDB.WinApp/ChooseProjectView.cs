@@ -1,42 +1,15 @@
-﻿
-/* Unmerged change from project 'AutoVersionsDB.WinApp'
-Before:
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
-using System.Linq;
-After:
-using AutoVersionsDB.Core;
-using System.Core.ConfigProjects;
-using System.UI.ChooseProject;
-using AutoVersionsDB.WinApp.Utils;
-using Ninject;
-using System;
-*/
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.UI.ChooseProject;
-using AutoVersionsDB.WinApp.Utils;
-using Ninject;
-using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-/* Unmerged change from project 'AutoVersionsDB.WinApp'
-Before:
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.WinApp.Utils;
-using Ninject;
-using AutoVersionsDB.UI.ChooseProject;
-After:
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-*/
-
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.WinApp.Utils;
+using Ninject;
+using AutoVersionsDB.UI.ChooseProject;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -79,8 +52,8 @@ namespace AutoVersionsDB.WinApp
 
         private void SetDataBindings()
         {
-            tbSerchProject.DataBindings.Clear();
-            tbSerchProject.DataBindings.Add(
+            this.tbSerchProject.DataBindings.Clear();
+            this.tbSerchProject.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     tbSerchProject,
                     nameof(tbSerchProject.Text),

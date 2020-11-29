@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override ITestContext Arrange(TestArgs testArgs)
         {
             CLITestContext testContext = new CLITestContext(_getProjectConfigById_API.Arrange(testArgs));
-
+        
             MockObjectsProvider.SetTestContextDataByMockCallbacksForCLI(testContext);
 
             return testContext;

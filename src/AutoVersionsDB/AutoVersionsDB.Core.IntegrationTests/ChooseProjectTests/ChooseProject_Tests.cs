@@ -28,6 +28,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.ChooseProjectTests
         {
             TestsRunner.RunTests<DeleteProject_UI>();
         }
-
+        
     }
 }

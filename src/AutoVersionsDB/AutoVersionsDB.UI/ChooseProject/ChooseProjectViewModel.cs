@@ -1,8 +1,13 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using Ninject;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AutoVersionsDB.UI.ChooseProject
 {
@@ -16,7 +21,10 @@ namespace AutoVersionsDB.UI.ChooseProject
         private ViewRouter _viewRouter;
         public ViewRouter ViewRouter
         {
-            get => _viewRouter;
+            get
+            {
+                return _viewRouter;
+            }
             set
             {
                 _viewRouter = value;

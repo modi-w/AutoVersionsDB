@@ -17,7 +17,7 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual
 {
-    public class DeliveryEnv_Virtual_EmptyDBWithSystemTables_API : TestDefinition
+    public class DeliveryEnv_Virtual_EmptyDBWithSystemTables_API  : TestDefinition
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;

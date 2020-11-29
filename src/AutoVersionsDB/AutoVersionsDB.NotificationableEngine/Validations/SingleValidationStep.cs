@@ -1,4 +1,7 @@
-﻿namespace AutoVersionsDB.NotificationableEngine.Validations
+﻿using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
+
+namespace AutoVersionsDB.NotificationableEngine.Validations
 {
     public class SingleValidationStep : ActionStepBase
     {

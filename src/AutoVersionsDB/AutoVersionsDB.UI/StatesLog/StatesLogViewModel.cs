@@ -1,13 +1,20 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
+using AutoVersionsDB.NotificationableEngine;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace AutoVersionsDB.UI.StatesLog
 {
     public class StatesLogViewModel : INotifyPropertyChanged
     {
-        private readonly ProcessTrace _processTrace;
+        private ProcessTrace _processTrace;
 
 
         private bool _showOnlyErrors;
@@ -25,21 +32,30 @@ namespace AutoVersionsDB.UI.StatesLog
         public string Caption
         {
             get => _caption;
-            set => SetField(ref _caption, value);
+            set
+            {
+                SetField(ref _caption, value);
+            }
         }
 
         private Color _captionColor;
         public Color CaptionColor
         {
             get => _captionColor;
-            set => SetField(ref _captionColor, value);
+            set
+            {
+                SetField(ref _captionColor, value);
+            }
         }
 
         private string _statesLogText;
         public string StatesLogText
         {
             get => _statesLogText;
-            set => SetField(ref _statesLogText, value);
+            set
+            {
+                SetField(ref _statesLogText, value);
+            }
         }
 
 

@@ -60,7 +60,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Act(ITestContext testContext)
         {
-            testContext.ProcessResults =
+            testContext.ProcessResults = 
                 AutoVersionsDBAPI
                 .RemoveProjectConfig(
                     (testContext.TestArgs as ProjectConfigTestArgs).ProjectConfig.Id, null);
@@ -71,7 +71,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
 
-            ProjectConfigItem projectByProjectId =
+            ProjectConfigItem projectByProjectId = 
                 _projectConfigsStorage.GetProjectConfigById(
                     (testContext.TestArgs as ProjectConfigTestArgs).ProjectConfig.Id);
             Assert.That(projectByProjectId == null, $"{GetType().Name} -> ProjectConfig didnt remove from storage.");
