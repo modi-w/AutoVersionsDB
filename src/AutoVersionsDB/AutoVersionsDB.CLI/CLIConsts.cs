@@ -1,10 +1,10 @@
 ﻿namespace AutoVersionsDB.CLI
 {
-    public static class CLIConsts
+    internal static class CLIConsts
     {
-        public const int ExistErrorCode = -1;
+        internal const int ExistErrorCode = -1;
 
-        public static object ConsolWriteSync = new object();
+        internal static object ConsolWriteSync = new object();
 
     }
 }

@@ -8,3 +8,5 @@ dotnet_diagnostic.CA1031.severity = none
 
 # IDE0063: Use simple 'using' statement
 csharp_prefer_simple_using_statement = true:none
+
+dotnet_code_quality.CA1062.null_check_validation_methods = ThrowIfNull
