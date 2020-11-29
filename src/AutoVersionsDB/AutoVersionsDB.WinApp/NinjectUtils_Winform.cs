@@ -3,12 +3,8 @@ using AutoVersionsDB.UI;
 using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.UI.EditProject;
 using AutoVersionsDB.UI.Notifications;
-using AutoVersionsDB.WinApp.Utils;
 using Ninject;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -50,7 +46,7 @@ namespace AutoVersionsDB.WinApp
             NinjectKernelContainer.Bind<INotificationsViewModel>().To<NotificationsViewModel>().InSingletonScope();
             NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManager>().InSingletonScope();
             NinjectKernelContainer.Bind<IEditProjectViewSateManager>().To<EditProjectViewSateManager>().InSingletonScope();
-            
+
         }
 
 

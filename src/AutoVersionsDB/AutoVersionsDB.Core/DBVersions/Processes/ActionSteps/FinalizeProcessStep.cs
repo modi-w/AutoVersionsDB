@@ -1,6 +1,6 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.DbCommands.Contract;
+﻿using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.Helpers;
 using System;
 using System.Data;
 using System.Globalization;

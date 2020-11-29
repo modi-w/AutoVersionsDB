@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoVersionsDB.CLI
+﻿namespace AutoVersionsDB.CLI
 {
     public static class CLIConsts
     {

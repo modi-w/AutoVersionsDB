@@ -1,17 +1,8 @@
-﻿using System;
-using AutoVersionsDB.Helpers;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.WinApp.Utils;
+﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.UI.ChooseProject;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -40,7 +31,7 @@ namespace AutoVersionsDB.WinApp
 
 
 
-   
+
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

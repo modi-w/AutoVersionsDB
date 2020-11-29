@@ -18,7 +18,7 @@ namespace AutoVersionsDB.UI.Notifications
             get => _notificationStatus;
             set
             {
-                Console.WriteLine($"NotificationStatus Changed: {_notificationStatus} -> {value}. StackTrace: {Environment.StackTrace}");
+                //Console.WriteLine($"NotificationStatus Changed: {_notificationStatus} -> {value}. StackTrace: {Environment.StackTrace}");
                 SetField(ref _notificationStatus, value);
             }
         }
