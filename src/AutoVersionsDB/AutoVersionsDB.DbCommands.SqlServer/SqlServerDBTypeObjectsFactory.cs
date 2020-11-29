@@ -5,13 +5,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 {
     public class SqlServerDBTypeObjectsFactory : IDBTypeObjectsFactory
     {
-        public DBType DBType
-        {
-            get
-            {
-                return new DBType("SqlServer", "Sql Server");
-            }
-        }
+        public DBType DBType => new DBType("SqlServer", "Sql Server");
 
 
 

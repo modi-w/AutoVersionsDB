@@ -1,5 +1,4 @@
-﻿using AutoVersionsDB.NotificationableEngine;
-using AutoVersionsDB.NotificationableEngine.Validations;
+﻿using AutoVersionsDB.NotificationableEngine.Validations;
 using System.IO;
 
 namespace AutoVersionsDB.Core.Common.Validators

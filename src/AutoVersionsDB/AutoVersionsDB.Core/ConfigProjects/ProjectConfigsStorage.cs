@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace AutoVersionsDB.Core.ConfigProjects
 {
@@ -14,7 +12,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         private readonly AutoVersionsDBSettings _settings;
 
 
-        private static object _saveSync = new object();
+        private static readonly object _saveSync = new object();
 
 
         public ProjectConfigsStorage(AutoVersionsDBSettings settings)
@@ -145,7 +143,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         {
             var dicAllProjectConfigs = GetAllProjectConfigs();
 
-            dicAllProjectConfigs.TryGetValue( id.ToTrimedInvariant(), out ProjectConfigItem resultProjectConfig);
+            dicAllProjectConfigs.TryGetValue(id.ToTrimedInvariant(), out ProjectConfigItem resultProjectConfig);
 
             return resultProjectConfig;
         }
@@ -159,7 +157,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
 
 
-       
+
         //private string clearInvalidCharsForFilename(string inputStr)
         //{
         //    string outStr = inputStr;

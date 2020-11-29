@@ -1,9 +1,6 @@
 ﻿using AutoVersionsDB.CLI.ConfigProjects;
 using AutoVersionsDB.CLI.DBVersions;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
-using System.Text;
 
 namespace AutoVersionsDB.CLI
 {

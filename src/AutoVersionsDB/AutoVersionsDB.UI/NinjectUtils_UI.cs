@@ -1,13 +1,10 @@
 ﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
-using Ninject;
-using AutoVersionsDB.UI.EditProject;
-using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.UI.ChooseProject;
+using AutoVersionsDB.UI.DBVersions;
+using AutoVersionsDB.UI.EditProject;
 using AutoVersionsDB.UI.Main;
 using AutoVersionsDB.UI.Notifications;
+using Ninject;
 
 namespace AutoVersionsDB.UI
 {

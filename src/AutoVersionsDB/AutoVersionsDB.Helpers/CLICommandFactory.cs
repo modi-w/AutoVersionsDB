@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.CommandLine;
-using System.Text;
+﻿using System.CommandLine;
 
 namespace AutoVersionsDB.Helpers
 {
     public abstract class CLICommandFactory
     {
-        
+
         public abstract Command Create();
     }
 }

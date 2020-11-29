@@ -1,14 +1,10 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.ArtifactFile;
+﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
-using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.Helpers;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 

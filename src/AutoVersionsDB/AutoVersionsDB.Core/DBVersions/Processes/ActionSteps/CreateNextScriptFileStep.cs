@@ -1,8 +1,5 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
-using System;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.Helpers;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 {

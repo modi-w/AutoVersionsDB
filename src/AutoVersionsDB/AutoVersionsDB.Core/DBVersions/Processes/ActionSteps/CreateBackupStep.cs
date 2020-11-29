@@ -1,10 +1,7 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
+﻿using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
-using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -48,7 +45,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             //notificationExecutersProvider.SetStepStartManually(100, "Backup process");
 
-            using (var dbBackupStatusNotifyer = dbCommandsFactoryProvider.CreateDBProcessStatusNotifyer(typeof(DBBackupStatusNotifyer),processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbBackupStatusNotifyer = dbCommandsFactoryProvider.CreateDBProcessStatusNotifyer(typeof(DBBackupStatusNotifyer), processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 //DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(, dbQueryStatus.Instance) as DBBackupStatusNotifyer;
 

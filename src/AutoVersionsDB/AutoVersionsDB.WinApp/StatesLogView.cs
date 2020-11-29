@@ -1,11 +1,30 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿
+/* Unmerged change from project 'AutoVersionsDB.WinApp'
+Before:
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.WinApp.Utils;
 using System;
 using System.Drawing;
-using System.Windows.Forms;
+After:
+using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.UI.StatesLog;
+using System.WinApp.Utils;
+*/
+using AutoVersionsDB.UI.StatesLog;
+using AutoVersionsDB.ComponentModel;
+using System;
+/* Unmerged change from project 'AutoVersionsDB.WinApp'
+Before:
 using AutoVersionsDB.Helpers;
 using System.ComponentModel;
 using AutoVersionsDB.UI.StatesLog;
+After:
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+*/
+
 
 namespace AutoVersionsDB.WinApp
 {
@@ -40,30 +59,30 @@ namespace AutoVersionsDB.WinApp
 
         private void SetDataBindings()
         {
-            this.chkShowOnlyErrors.DataBindings.Clear();
-            this.chkShowOnlyErrors.DataBindings.Add(
+            chkShowOnlyErrors.DataBindings.Clear();
+            chkShowOnlyErrors.DataBindings.Add(
                 nameof(chkShowOnlyErrors.Checked),
                 ViewModel,
                 nameof(ViewModel.ShowOnlyErrors),
                 false,
                 DataSourceUpdateMode.OnPropertyChanged);
 
-            this.lblMessageType.DataBindings.Clear();
-            this.lblMessageType.DataBindings.Add(
+            lblMessageType.DataBindings.Clear();
+            lblMessageType.DataBindings.Add(
                 nameof(lblMessageType.Text),
                 ViewModel,
                 nameof(ViewModel.Caption),
                 false,
                 DataSourceUpdateMode.OnPropertyChanged);
-            this.lblMessageType.DataBindings.Add(
+            lblMessageType.DataBindings.Add(
                 nameof(lblMessageType.ForeColor),
                 ViewModel,
                 nameof(ViewModel.CaptionColor),
                 false,
                 DataSourceUpdateMode.OnPropertyChanged);
 
-            this.rtbMessages.DataBindings.Clear();
-            this.rtbMessages.DataBindings.Add(
+            rtbMessages.DataBindings.Clear();
+            rtbMessages.DataBindings.Add(
                 nameof(rtbMessages.Text),
                 ViewModel,
                 nameof(ViewModel.StatesLogText),

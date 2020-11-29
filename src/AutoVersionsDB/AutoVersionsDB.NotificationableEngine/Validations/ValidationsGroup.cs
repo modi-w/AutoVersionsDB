@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AutoVersionsDB.NotificationableEngine.Validations
 {
@@ -9,13 +7,7 @@ namespace AutoVersionsDB.NotificationableEngine.Validations
     {
         private readonly List<ValidatorBase> _validators;
 
-        public int Count
-        {
-            get
-            {
-                return _validators.Count;
-            }
-        }
+        public int Count => _validators.Count;
         public bool ShouldContinueWhenFindError { get; }
 
 

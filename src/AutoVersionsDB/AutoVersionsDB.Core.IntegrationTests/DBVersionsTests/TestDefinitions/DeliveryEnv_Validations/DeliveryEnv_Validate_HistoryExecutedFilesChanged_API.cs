@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ProcessAsserts _processAsserts;
 
-        public DeliveryEnv_Validate_HistoryExecutedFilesChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert, 
+        public DeliveryEnv_Validate_HistoryExecutedFilesChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
                                                                     ProcessAsserts processAsserts)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;

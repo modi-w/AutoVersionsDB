@@ -81,8 +81,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         {
             scriptName.ThrowIfNull(nameof(scriptName));
 
-            RuntimeScriptFileBase newRuntimeScriptFile;
-            if (!ScriptFileType.RuntimeScriptFileFactory.TryParseNextRuntimeScriptFileName(FolderPath, scriptName, prevRuntimeScriptFile, out newRuntimeScriptFile))
+            if (!ScriptFileType.RuntimeScriptFileFactory.TryParseNextRuntimeScriptFileName(FolderPath, scriptName, prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile))
             {
                 string errorMessage = $"Filename '{newRuntimeScriptFile.Filename}' not valid for script type: '{ScriptFileType.FileTypeCode}'. Should be like the following pattern: '{ScriptFileType.FilenamePattern}'";
                 throw new Exception(errorMessage);

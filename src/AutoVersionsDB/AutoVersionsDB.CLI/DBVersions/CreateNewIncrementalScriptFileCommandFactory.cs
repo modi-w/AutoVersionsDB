@@ -1,11 +1,8 @@
 ﻿using AutoVersionsDB.Core.DBVersions;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Text;
 
 namespace AutoVersionsDB.CLI.DBVersions
 {

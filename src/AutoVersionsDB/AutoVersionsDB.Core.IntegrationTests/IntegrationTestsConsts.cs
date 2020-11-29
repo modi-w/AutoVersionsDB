@@ -66,7 +66,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             Password = SqlServerLocalDBConnection.ConnectionStringBuilder.Password,
             BackupFolderPath = FileSystemPathUtils.ParsePathVaribles($"{IntegrationTestsConsts.DBBackupBaseFolder}_Temp"),
             DevEnvironment = true,
-            DevScriptsBaseFolderPath =  FileSystemPathUtils.ParsePathVaribles($"{IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal}_Temp").Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType),
+            DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles($"{IntegrationTestsConsts.DevScriptsBaseFolderPath_Normal}_Temp").Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType),
             DeployArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles($"{IntegrationTestsConsts.DeployArtifact_FolderPath}_Temp").Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType),
             DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_Normal).Replace("[DBType]", IntegrationTestsConsts.SqlServerDBType),
         };

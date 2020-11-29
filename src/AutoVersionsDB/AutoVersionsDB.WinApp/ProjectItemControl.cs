@@ -1,17 +1,44 @@
-﻿using System;
+﻿
+/* Unmerged change from project 'AutoVersionsDB.WinApp'
+Before:
+using System;
 using AutoVersionsDB.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
 using System.Linq;
-using System.Text;
+After:
+using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Helpers;
+using AutoVersionsDB.UI.ChooseProject;
+using AutoVersionsDB.WinApp.Utils;
+using System;
+using System.Collections.Generic;
+*/
+using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.UI.ChooseProject;
+using System;
+using System.ComponentModel;
+
+/* Unmerged change from project 'AutoVersionsDB.WinApp'
+Before:
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.WinApp.Utils;
 using AutoVersionsDB.UI.ChooseProject;
+After:
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+*/
+using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -40,7 +67,7 @@ namespace AutoVersionsDB.WinApp
 
 
 
-   
+
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

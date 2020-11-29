@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsUITestContext testContext = new DBVersionsUITestContext( _devEnv_NotAllowMethods_New_Repeatable_API.Arrange(testArgs) );
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_devEnv_NotAllowMethods_New_Repeatable_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 

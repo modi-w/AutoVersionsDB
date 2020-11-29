@@ -1,11 +1,4 @@
-﻿using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
-using AutoVersionsDB.Helpers;
-using AutoVersionsDB.NotificationableEngine;
-using AutoVersionsDB.UI;
+﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.UI.DBVersions;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
@@ -14,8 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
@@ -61,7 +52,7 @@ namespace AutoVersionsDB.WinApp
             ChangeButtonsPanelsLocation(pnlSyncToSpecificState);
             ChangeButtonsPanelsLocation(pnlSetDBStateManually);
 
-            this.Controls.Remove(pnlActionButtons);
+            Controls.Remove(pnlActionButtons);
 
             //pnlSyncToSpecificState.Location = new Point(873, 14);
             //pnlMissingSystemTables.Location = new Point(600, 10);
@@ -141,14 +132,14 @@ namespace AutoVersionsDB.WinApp
             })
             {
                 // Set up the ToolTip text with the controls.
-                tooltipControl.SetToolTip(this.btnRefresh, ViewModel.DBVersionsControls.BtnRefreshTooltip);
-                tooltipControl.SetToolTip(this.btnRunSync, ViewModel.DBVersionsControls.BtnRunSyncTooltip);
-                tooltipControl.SetToolTip(this.btnRecreateDbFromScratchMain, ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainTooltip);
-                tooltipControl.SetToolTip(this.btnRecreateDbFromScratch2, ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainTooltip);
-                tooltipControl.SetToolTip(this.btnDeploy, ViewModel.DBVersionsControls.BtnDeployTooltip);
-                tooltipControl.SetToolTip(this.btnSetDBToSpecificState, ViewModel.DBVersionsControls.BtnSetDBToSpecificStateTooltip);
-                tooltipControl.SetToolTip(this.btnVirtualExecution, ViewModel.DBVersionsControls.BtnVirtualExecutionTooltip);
-                tooltipControl.SetToolTip(this.btnShowHistoricalBackups, ViewModel.DBVersionsControls.BtnShowHistoricalBackupsTooltip);
+                tooltipControl.SetToolTip(btnRefresh, ViewModel.DBVersionsControls.BtnRefreshTooltip);
+                tooltipControl.SetToolTip(btnRunSync, ViewModel.DBVersionsControls.BtnRunSyncTooltip);
+                tooltipControl.SetToolTip(btnRecreateDbFromScratchMain, ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainTooltip);
+                tooltipControl.SetToolTip(btnRecreateDbFromScratch2, ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainTooltip);
+                tooltipControl.SetToolTip(btnDeploy, ViewModel.DBVersionsControls.BtnDeployTooltip);
+                tooltipControl.SetToolTip(btnSetDBToSpecificState, ViewModel.DBVersionsControls.BtnSetDBToSpecificStateTooltip);
+                tooltipControl.SetToolTip(btnVirtualExecution, ViewModel.DBVersionsControls.BtnVirtualExecutionTooltip);
+                tooltipControl.SetToolTip(btnShowHistoricalBackups, ViewModel.DBVersionsControls.BtnShowHistoricalBackupsTooltip);
             }
 
         }
@@ -182,8 +173,8 @@ namespace AutoVersionsDB.WinApp
 
         private void SetDataBindings()
         {
-            this.lblProjectName.DataBindings.Clear();
-            this.lblProjectName.DataBindings.Add(
+            lblProjectName.DataBindings.Clear();
+            lblProjectName.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblProjectName,
                     nameof(lblProjectName.Text),
@@ -193,8 +184,8 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            this.pnlMainActions.DataBindings.Clear();
-            this.pnlMainActions.DataBindings.Add(
+            pnlMainActions.DataBindings.Clear();
+            pnlMainActions.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlMainActions,
                     nameof(pnlMainActions.Visible),
@@ -203,8 +194,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.pnlSyncToSpecificState.DataBindings.Clear();
-            this.pnlSyncToSpecificState.DataBindings.Add(
+            pnlSyncToSpecificState.DataBindings.Clear();
+            pnlSyncToSpecificState.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlSyncToSpecificState,
                     nameof(pnlSyncToSpecificState.Visible),
@@ -213,8 +204,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.pnlMissingSystemTables.DataBindings.Clear();
-            this.pnlMissingSystemTables.DataBindings.Add(
+            pnlMissingSystemTables.DataBindings.Clear();
+            pnlMissingSystemTables.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlMissingSystemTables,
                     nameof(pnlMissingSystemTables.Visible),
@@ -222,7 +213,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesVisible)
                     )
                 );
-            this.pnlMissingSystemTables.DataBindings.Add(
+            pnlMissingSystemTables.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlMissingSystemTables,
                     nameof(pnlMissingSystemTables.Enabled),
@@ -231,8 +222,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.pnlSetDBStateManually.DataBindings.Clear();
-            this.pnlSetDBStateManually.DataBindings.Add(
+            pnlSetDBStateManually.DataBindings.Clear();
+            pnlSetDBStateManually.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlSetDBStateManually,
                     nameof(pnlSetDBStateManually.Visible),
@@ -240,7 +231,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.DBVersionsControls.PnlSetDBStateManuallyVisible)
                     )
                 );
-            this.pnlSetDBStateManually.DataBindings.Add(
+            pnlSetDBStateManually.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlSetDBStateManually,
                     nameof(pnlSetDBStateManually.Enabled),
@@ -249,8 +240,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.pnlDevDummyDataFiles.DataBindings.Clear();
-            this.pnlDevDummyDataFiles.DataBindings.Add(
+            pnlDevDummyDataFiles.DataBindings.Clear();
+            pnlDevDummyDataFiles.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlDevDummyDataFiles,
                     nameof(pnlDevDummyDataFiles.Visible),
@@ -259,8 +250,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.pnlRestoreDbError.DataBindings.Clear();
-            this.pnlRestoreDbError.DataBindings.Add(
+            pnlRestoreDbError.DataBindings.Clear();
+            pnlRestoreDbError.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pnlRestoreDbError,
                     nameof(pnlRestoreDbError.Visible),
@@ -269,8 +260,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.dgIncrementalScriptsFiles.DataBindings.Clear();
-            this.dgIncrementalScriptsFiles.DataBindings.Add(
+            dgIncrementalScriptsFiles.DataBindings.Clear();
+            dgIncrementalScriptsFiles.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     dgIncrementalScriptsFiles,
                     nameof(dgIncrementalScriptsFiles.Enabled),
@@ -279,8 +270,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.btnRefresh.DataBindings.Clear();
-            this.btnRefresh.DataBindings.Add(
+            btnRefresh.DataBindings.Clear();
+            btnRefresh.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnRefresh,
                     nameof(btnRefresh.Enabled),
@@ -289,8 +280,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.btnRecreateDbFromScratchMain.DataBindings.Clear();
-            this.btnRecreateDbFromScratchMain.DataBindings.Add(
+            btnRecreateDbFromScratchMain.DataBindings.Clear();
+            btnRecreateDbFromScratchMain.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnRecreateDbFromScratchMain,
                     nameof(btnRecreateDbFromScratchMain.Visible),
@@ -299,8 +290,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.lblRecreateDbFromScratchMain.DataBindings.Clear();
-            this.lblRecreateDbFromScratchMain.DataBindings.Add(
+            lblRecreateDbFromScratchMain.DataBindings.Clear();
+            lblRecreateDbFromScratchMain.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblRecreateDbFromScratchMain,
                     nameof(lblRecreateDbFromScratchMain.Visible),
@@ -309,8 +300,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.btnRecreateDbFromScratch2.DataBindings.Clear();
-            this.btnRecreateDbFromScratch2.DataBindings.Add(
+            btnRecreateDbFromScratch2.DataBindings.Clear();
+            btnRecreateDbFromScratch2.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnRecreateDbFromScratch2,
                     nameof(btnRecreateDbFromScratch2.Visible),
@@ -319,8 +310,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.lblRecreateDbFromScratch2.DataBindings.Clear();
-            this.lblRecreateDbFromScratch2.DataBindings.Add(
+            lblRecreateDbFromScratch2.DataBindings.Clear();
+            lblRecreateDbFromScratch2.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblRecreateDbFromScratch2,
                     nameof(lblRecreateDbFromScratch2.Visible),
@@ -329,8 +320,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.btnDeploy.DataBindings.Clear();
-            this.btnDeploy.DataBindings.Add(
+            btnDeploy.DataBindings.Clear();
+            btnDeploy.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnDeploy,
                     nameof(btnDeploy.Visible),
@@ -339,8 +330,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.lblDeploy.DataBindings.Clear();
-            this.lblDeploy.DataBindings.Add(
+            lblDeploy.DataBindings.Clear();
+            lblDeploy.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblDeploy,
                     nameof(lblDeploy.Visible),
@@ -349,8 +340,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.btnShowHistoricalBackups.DataBindings.Clear();
-            this.btnShowHistoricalBackups.DataBindings.Add(
+            btnShowHistoricalBackups.DataBindings.Clear();
+            btnShowHistoricalBackups.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnShowHistoricalBackups,
                     nameof(btnShowHistoricalBackups.Enabled),
@@ -359,8 +350,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.btnCreateNewIncrementalScriptFile.DataBindings.Clear();
-            this.btnCreateNewIncrementalScriptFile.DataBindings.Add(
+            btnCreateNewIncrementalScriptFile.DataBindings.Clear();
+            btnCreateNewIncrementalScriptFile.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnCreateNewIncrementalScriptFile,
                     nameof(btnCreateNewIncrementalScriptFile.Enabled),
@@ -369,8 +360,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.btnCreateNewRepeatableScriptFile.DataBindings.Clear();
-            this.btnCreateNewRepeatableScriptFile.DataBindings.Add(
+            btnCreateNewRepeatableScriptFile.DataBindings.Clear();
+            btnCreateNewRepeatableScriptFile.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnCreateNewRepeatableScriptFile,
                     nameof(btnCreateNewRepeatableScriptFile.Enabled),
@@ -379,8 +370,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.btnCreateNewDevDummyDataScriptFile.DataBindings.Clear();
-            this.btnCreateNewDevDummyDataScriptFile.DataBindings.Add(
+            btnCreateNewDevDummyDataScriptFile.DataBindings.Clear();
+            btnCreateNewDevDummyDataScriptFile.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     btnCreateNewDevDummyDataScriptFile,
                     nameof(btnCreateNewDevDummyDataScriptFile.Enabled),
@@ -389,8 +380,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.lblColorTargetState_Square.DataBindings.Clear();
-            this.lblColorTargetState_Square.DataBindings.Add(
+            lblColorTargetState_Square.DataBindings.Clear();
+            lblColorTargetState_Square.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblColorTargetState_Square,
                     nameof(lblColorTargetState_Square.Visible),
@@ -399,8 +390,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.lblColorTargetState_Caption.DataBindings.Clear();
-            this.lblColorTargetState_Caption.DataBindings.Add(
+            lblColorTargetState_Caption.DataBindings.Clear();
+            lblColorTargetState_Caption.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblColorTargetState_Caption,
                     nameof(lblColorTargetState_Caption.Visible),

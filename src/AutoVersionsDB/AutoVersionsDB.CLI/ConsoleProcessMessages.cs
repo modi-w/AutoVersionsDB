@@ -1,18 +1,14 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using System;
-using System.Collections.Generic;
-using System.CommandLine;
 using System.CommandLine.IO;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace AutoVersionsDB.CLI
 {
     public class ConsoleProcessMessages : IConsoleProcessMessages
     {
-        private IConsoleExtended _console;
-        private ConsoleSpinner _spinner;
+        private readonly IConsoleExtended _console;
+        private readonly ConsoleSpinner _spinner;
 
 
 
@@ -98,6 +94,8 @@ namespace AutoVersionsDB.CLI
 
         public void ProcessComplete(ProcessResults processReults)
         {
+            processReults.ThrowIfNull(nameof(processReults));
+
             ClearConsoleLine(0);
 
             lock (CLIConsts.ConsolWriteSync)
