@@ -1,9 +1,5 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.ArtifactFile;
+﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
 using AutoVersionsDB.DbCommands.Integration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {

@@ -1,15 +1,10 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
+﻿using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.NotificationableEngine;
-using AutoVersionsDB.UI.EditProject;
 using AutoVersionsDB.UI.Notifications;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace AutoVersionsDB.UI.DBVersions
 {

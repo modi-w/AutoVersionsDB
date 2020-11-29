@@ -49,10 +49,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _deliveryEnv_NotAllowMethods_Deploy_API.Asserts(testContext);
 
-            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,1);
+            AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 1);
             assertConsoleOutTextByLines.AssertLineMessage("> Run 'deploy' for 'IntegrationTestProject'", true);
 
-            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError,5);
+            AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
             assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
             assertErrorsTextByLines.AssertLineMessage("DeliveryEnvironment. Error: Could not run this command on Delivery Environment", false);

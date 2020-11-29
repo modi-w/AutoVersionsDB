@@ -1,8 +1,5 @@
 ﻿using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
 {
@@ -246,6 +243,6 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             return sqlCommandStr;
         }
 
-      
+
     }
 }

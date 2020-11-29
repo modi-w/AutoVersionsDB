@@ -1,8 +1,6 @@
-﻿using System;
+﻿using AutoVersionsDB.Helpers;
 using System.Collections.Generic;
-using System.Text;
 using System.CommandLine;
-using AutoVersionsDB.Helpers;
 
 
 namespace AutoVersionsDB.CLI.DBVersions

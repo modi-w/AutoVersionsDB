@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
@@ -15,11 +11,11 @@ namespace AutoVersionsDB.NotificationableEngine
         public NotificationProcessException()
         {
         }
-        public NotificationProcessException(string message) 
+        public NotificationProcessException(string message)
             : base(message)
         {
         }
-        public NotificationProcessException(string message, Exception innerException) 
+        public NotificationProcessException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
@@ -33,7 +29,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
         public NotificationProcessException(string errorCode, string message, string instructionsMessage, Exception ex)
-            :base(message, ex)
+            : base(message, ex)
         {
             ErrorCode = errorCode;
             InstructionsMessage = instructionsMessage;

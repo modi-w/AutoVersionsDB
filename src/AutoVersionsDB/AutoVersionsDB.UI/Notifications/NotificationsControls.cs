@@ -1,10 +1,6 @@
-﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace AutoVersionsDB.UI.Notifications
 {
@@ -16,10 +12,7 @@ namespace AutoVersionsDB.UI.Notifications
         public Color ProcessStatusMessageColor
         {
             get => _processStatusMessageColor;
-            set
-            {
-                SetField(ref _processStatusMessageColor, value);
-            }
+            set => SetField(ref _processStatusMessageColor, value);
         }
 
 
@@ -28,10 +21,7 @@ namespace AutoVersionsDB.UI.Notifications
         public bool StatusImageVisible
         {
             get => _statusImageVisible;
-            set
-            {
-                SetField(ref _statusImageVisible, value);
-            }
+            set => SetField(ref _statusImageVisible, value);
         }
 
 

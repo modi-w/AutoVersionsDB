@@ -75,7 +75,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Release(testContext);
 
-            ClearScriptsFiles(testContext); 
+            ClearScriptsFiles(testContext);
         }
 
 

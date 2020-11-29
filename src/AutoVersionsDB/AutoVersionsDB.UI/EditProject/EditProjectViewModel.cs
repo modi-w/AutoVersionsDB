@@ -1,15 +1,10 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions;
 using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.NotificationableEngine;
-using System;
+using AutoVersionsDB.UI.Notifications;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using AutoVersionsDB.UI.Notifications;
 
 namespace AutoVersionsDB.UI.EditProject
 {
@@ -30,10 +25,7 @@ namespace AutoVersionsDB.UI.EditProject
         private ViewRouter _viewRouter;
         public ViewRouter ViewRouter
         {
-            get
-            {
-                return _viewRouter;
-            }
+            get => _viewRouter;
             set
             {
                 _viewRouter = value;

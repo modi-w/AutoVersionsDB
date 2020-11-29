@@ -1,17 +1,13 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.ArtifactFile;
+﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {

@@ -1,10 +1,10 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {

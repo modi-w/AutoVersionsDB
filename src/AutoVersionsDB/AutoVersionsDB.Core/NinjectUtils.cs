@@ -1,7 +1,4 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.DbCommands.Integration;
 using Ninject;
 
 namespace AutoVersionsDB.Core
@@ -15,7 +12,7 @@ namespace AutoVersionsDB.Core
             KernelInstance = kernel;
 
             RegisterServices();
-            
+
             ComposeObjects();
         }
 

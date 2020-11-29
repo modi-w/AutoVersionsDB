@@ -33,8 +33,8 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
                   catch (ThreadAbortException threadAbortEx)
                   {
                       string exStr = threadAbortEx.ToString();
-                         //Do Nothing - usually happand when the system closed before the sleep interval is over - like in Unit Tests
-                     }
+                      //Do Nothing - usually happand when the system closed before the sleep interval is over - like in Unit Tests
+                  }
                   catch (Exception ex)
                   {
                       throw new Exception("DBProcessStatusNotifyerBase. on run Thread", ex);
