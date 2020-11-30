@@ -2,10 +2,7 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-
-
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
-using AutoVersionsDB.DbCommands.Contract;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

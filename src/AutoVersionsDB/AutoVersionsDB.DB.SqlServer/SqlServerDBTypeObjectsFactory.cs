@@ -1,8 +1,8 @@
-﻿using AutoVersionsDB.DbCommands.Contract;
+﻿using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.Helpers;
 using System.Data.SqlClient;
 
-namespace AutoVersionsDB.DbCommands.SqlServer
+namespace AutoVersionsDB.DB.SqlServer
 {
     public class SqlServerDBTypeObjectsFactory : IDBTypeObjectsFactory
     {

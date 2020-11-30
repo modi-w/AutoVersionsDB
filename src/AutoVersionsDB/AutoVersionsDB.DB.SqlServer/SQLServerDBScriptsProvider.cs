@@ -1,7 +1,7 @@
-﻿using AutoVersionsDB.DbCommands.Contract;
+﻿using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.Helpers;
 
-namespace AutoVersionsDB.DbCommands.SqlServer
+namespace AutoVersionsDB.DB.SqlServer
 {
     public class SQLServerDBScriptsProvider : IDBScriptsProvider
     {
@@ -241,7 +241,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
         {
             string sqlCommandStr =
                 EmbeddedResources
-                .GetEmbeddedResourceFile($"AutoVersionsDB.DbCommands.SqlServer.DBScripts.{filename}");
+                .GetEmbeddedResourceFile($"AutoVersionsDB.DB.SqlServer.DBScripts.{filename}");
 
             return sqlCommandStr;
         }

@@ -7,6 +7,6 @@ namespace AutoVersionsDB.UI.DBVersions
         DBVersionsViewStateType LastViewState { get; }
 
         void ChangeViewState(DBVersionsViewStateType viewType);
-        void ChangeViewState_AfterProcessComplete(ProcessTrace processResults);
+        void ChangeViewStateAfterProcessComplete(ProcessTrace processResults);
     }
 }

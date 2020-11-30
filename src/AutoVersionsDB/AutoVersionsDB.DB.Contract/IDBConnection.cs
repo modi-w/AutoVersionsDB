@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace AutoVersionsDB.DbCommands.Contract
+namespace AutoVersionsDB.DB.Contract
 {
     public interface IDBConnection : IDisposable
     {

@@ -97,6 +97,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.ChooseProjectTests.TestDefinition
             e.IsConfirm = true;
         }
 
-     
+
     }
 }

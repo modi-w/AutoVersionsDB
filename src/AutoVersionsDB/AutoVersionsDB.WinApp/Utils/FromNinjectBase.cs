@@ -9,7 +9,7 @@ namespace AutoVersionsDB.WinApp.Utils
         {
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                NinjectUtils_Winform.NinjectKernelContainer.Inject(this);
+                DIConfig.Kernel.Inject(this);
             }
         }
     }

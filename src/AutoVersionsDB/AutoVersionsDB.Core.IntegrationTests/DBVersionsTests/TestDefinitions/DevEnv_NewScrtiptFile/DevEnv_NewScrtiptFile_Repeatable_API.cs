@@ -14,7 +14,7 @@ using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
-using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;

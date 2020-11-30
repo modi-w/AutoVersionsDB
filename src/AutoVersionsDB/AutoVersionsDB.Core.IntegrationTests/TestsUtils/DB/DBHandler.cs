@@ -6,8 +6,8 @@ using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.Helpers;
 using NUnit.Framework;
 using System;

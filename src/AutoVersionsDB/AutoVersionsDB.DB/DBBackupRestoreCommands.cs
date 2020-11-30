@@ -1,10 +1,11 @@
-﻿using AutoVersionsDB.Helpers;
+﻿using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.Helpers;
 using System;
 using System.Data;
 using System.Globalization;
 using System.IO;
 
-namespace AutoVersionsDB.DbCommands.Contract
+namespace AutoVersionsDB.DB
 {
     public class DBBackupRestoreCommands : IDisposable
     {

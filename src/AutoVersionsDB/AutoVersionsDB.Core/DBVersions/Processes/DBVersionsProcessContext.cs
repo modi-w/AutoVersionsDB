@@ -26,7 +26,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 
         public override bool CanRollback => !string.IsNullOrWhiteSpace(DBBackupFileFullPath);
 
-      
+
 
 
         public List<RuntimeScriptFileBase> ExecutedFiles { get; private set; }

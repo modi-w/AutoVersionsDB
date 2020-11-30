@@ -8,8 +8,17 @@ using System.Runtime.CompilerServices;
 
 namespace AutoVersionsDB.UI.Notifications
 {
-    public delegate void OnShowStatesLogEventHandler(object sender, StatesLogViewModel statesLogViewModel);
 
+    public class StatesLogViewModelEventArgs : EventArgs
+    {
+        public StatesLogViewModel StatesLogViewModel { get; set; }
+
+        public StatesLogViewModelEventArgs(StatesLogViewModel statesLogViewModel)
+        {
+            StatesLogViewModel = statesLogViewModel;
+        }
+
+    }
 
     public class NotificationsViewModel : INotificationsViewModel
     {
@@ -28,7 +37,7 @@ namespace AutoVersionsDB.UI.Notifications
 
         public bool IsEventsBinded { get; set; }
 
-        public event OnShowStatesLogEventHandler OnShowStatesLog;
+        public event EventHandler<StatesLogViewModelEventArgs> OnShowStatesLog;
 
 
         public RelayCommand ShowStatesLogViewCommand { get; private set; }
@@ -212,7 +221,7 @@ namespace AutoVersionsDB.UI.Notifications
 
             StatesLogViewModel statesLogViewModel = new StatesLogViewModel(processTrace);
 
-            OnShowStatesLog(this, statesLogViewModel);
+            OnShowStatesLog(this, new StatesLogViewModelEventArgs(statesLogViewModel));
         }
 
 

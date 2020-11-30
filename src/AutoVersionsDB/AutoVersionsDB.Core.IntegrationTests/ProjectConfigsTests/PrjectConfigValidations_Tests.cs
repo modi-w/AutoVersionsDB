@@ -16,7 +16,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests
         [SetUp]
         public void Init()
         {
-            NinjectUtils_IntegrationTests.CreateKernel();
+            DIConfig.CreateKernel();
         }
 
 

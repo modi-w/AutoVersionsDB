@@ -1,4 +1,4 @@
-﻿using AutoVersionsDB.DbCommands.Contract;
+﻿using AutoVersionsDB.DB.Contract;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AutoVersionsDB.DbCommands.SqlServer
+namespace AutoVersionsDB.DB.SqlServer
 {
     public class SqlServerConnection : IDBConnection
     {

@@ -5,7 +5,6 @@ using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
-using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;

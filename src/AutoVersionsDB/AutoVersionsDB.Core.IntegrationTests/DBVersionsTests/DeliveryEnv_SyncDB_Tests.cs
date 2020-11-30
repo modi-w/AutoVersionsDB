@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [SetUp]
         public void Init()
         {
-            NinjectUtils_IntegrationTests.CreateKernel();
+            DIConfig.CreateKernel();
         }
 
 

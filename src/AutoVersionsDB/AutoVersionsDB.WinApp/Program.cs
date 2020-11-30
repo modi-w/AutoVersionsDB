@@ -21,13 +21,13 @@ namespace AutoVersionsDB.WinApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            NinjectUtils_Winform.CreateKernel();
+            DIConfig.CreateKernel();
 
             UIGeneralEvents.OnException += UIGeneralEvents_OnException;
             UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
 
 
-            Main mainFrame = NinjectUtils_Winform.NinjectKernelContainer.Get<Main>();
+            Main mainFrame = DIConfig.Kernel.Get<Main>();
 
             Application.Run(mainFrame);
         }

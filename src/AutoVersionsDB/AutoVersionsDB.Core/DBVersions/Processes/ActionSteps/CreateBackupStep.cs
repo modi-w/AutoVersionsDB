@@ -1,5 +1,5 @@
-﻿using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
-using AutoVersionsDB.DbCommands.Integration;
+﻿using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.DBProcessStatusNotifyers;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using System;

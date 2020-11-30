@@ -1,5 +1,5 @@
-﻿using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
+﻿using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Common.Validators

@@ -1,11 +1,12 @@
-﻿using AutoVersionsDB.Helpers;
+﻿using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace AutoVersionsDB.DbCommands.Contract
+namespace AutoVersionsDB.DB
 {
     public class DBCommands : IDisposable
     {

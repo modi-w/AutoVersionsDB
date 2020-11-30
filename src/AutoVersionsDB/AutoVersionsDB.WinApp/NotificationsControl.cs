@@ -24,7 +24,7 @@ namespace AutoVersionsDB.WinApp
             {
                 if (!ViewModel.IsEventsBinded)
                 {
-                    ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog;
+                    ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog; 
 
                     ViewModel.IsEventsBinded = true;
                 }
@@ -36,13 +36,15 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void ViewModel_OnShowStatesLog(object sender, StatesLogViewModel statesLogViewModel)
+        private void ViewModel_OnShowStatesLog(object sender, StatesLogViewModelEventArgs e)
         {
-            using (StatesLogView statesLogView = new StatesLogView(statesLogViewModel))
+            using (StatesLogView statesLogView = new StatesLogView(e.StatesLogViewModel))
             {
                 statesLogView.ShowDialog();
             }
         }
+
+      
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

@@ -1,5 +1,4 @@
-﻿
-namespace AutoVersionsDB.DbCommands.Contract
+﻿namespace AutoVersionsDB.DB.Contract
 {
     public interface IDBTypeObjectsFactory
     {

@@ -3,7 +3,7 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
-using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.Helpers;
 using System.IO;
 

@@ -1,7 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects.Processes;
 using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;

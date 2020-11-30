@@ -29,7 +29,7 @@ namespace AutoVersionsDB.UI.DBVersions
         }
 
 
-        public void ChangeViewState_AfterProcessComplete(ProcessTrace processResults)
+        public void ChangeViewStateAfterProcessComplete(ProcessTrace processResults)
         {
             processResults.ThrowIfNull(nameof(processResults));
 

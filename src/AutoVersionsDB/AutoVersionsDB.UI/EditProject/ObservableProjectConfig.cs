@@ -9,9 +9,9 @@ namespace AutoVersionsDB.UI.EditProject
         public ProjectConfigItem ActualProjectConfig { get; }
 
 
-        public ObservableProjectConfig(ProjectConfigItem _projectConfig)
+        public ObservableProjectConfig(ProjectConfigItem projectConfig)
         {
-            ActualProjectConfig = _projectConfig;
+            ActualProjectConfig = projectConfig;
         }
 
         public string Id

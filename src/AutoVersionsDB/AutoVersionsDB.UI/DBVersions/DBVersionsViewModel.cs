@@ -211,7 +211,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 ProcessResults processResults = _dbVersionsAPI.CreateNewIncrementalScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
                 NotificationsViewModel.AfterComplete(processResults);
-                _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+                _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
 
                 if (!processResults.Trace.HasError)
                 {
@@ -234,7 +234,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 ProcessResults processResults = _dbVersionsAPI.CreateNewRepeatableScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
                 NotificationsViewModel.AfterComplete(processResults);
-                _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+                _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
 
                 if (!processResults.Trace.HasError)
                 {
@@ -260,7 +260,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 ProcessResults processResults = _dbVersionsAPI.CreateNewDevDummyDataScriptFile(DBVersionsViewModelData.ProjectConfig.Id, results.ResultText, NotificationsViewModel.OnNotificationStateChanged);
 
                 NotificationsViewModel.AfterComplete(processResults);
-                _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+                _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
 
                 if (!processResults.Trace.HasError)
                 {
@@ -352,7 +352,7 @@ namespace AutoVersionsDB.UI.DBVersions
             RefreshScriptFilesState(false);
 
             NotificationsViewModel.AfterComplete(processResults);
-            _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+            _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
         }
 
 
@@ -369,7 +369,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 RefreshScriptFilesState(false);
 
                 NotificationsViewModel.AfterComplete(processResults);
-                _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+                _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
             }
         }
 
@@ -384,7 +384,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 RefreshScriptFilesState(false);
 
                 NotificationsViewModel.AfterComplete(processResults);
-                _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+                _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
             }
         }
 
@@ -398,7 +398,7 @@ namespace AutoVersionsDB.UI.DBVersions
             RefreshScriptFilesState(false);
 
             NotificationsViewModel.AfterComplete(processResults);
-            _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+            _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
 
             _osProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.DeployArtifactFolderPath);
         }
@@ -412,7 +412,7 @@ namespace AutoVersionsDB.UI.DBVersions
             RefreshScriptFilesState(false);
 
             NotificationsViewModel.AfterComplete(processResults);
-            _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+            _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
         }
 
 
@@ -442,7 +442,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 }
                 else
                 {
-                    _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults.Trace);
+                    _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
                 }
             }
             else

@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.StatesLog;
+using System;
 using System.ComponentModel;
 
 namespace AutoVersionsDB.UI.Notifications
@@ -12,8 +13,7 @@ namespace AutoVersionsDB.UI.Notifications
         RelayCommand ShowStatesLogViewCommand { get; }
         StatesLogViewModel StatesLogViewModel { get; }
 
-        event OnShowStatesLogEventHandler OnShowStatesLog;
-        event PropertyChangedEventHandler PropertyChanged;
+        event EventHandler<StatesLogViewModelEventArgs> OnShowStatesLog;
 
         void AfterComplete(ProcessResults processResults);
         void BeforeStartProcess();

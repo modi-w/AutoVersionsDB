@@ -1,6 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions;
-using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using Ninject;
 using System;
@@ -14,8 +14,8 @@ namespace AutoVersionsDB.Core
         private static readonly object _processSyncLock = new object();
 
 
-        private static readonly ProjectConfigsAPI _projectConfigsAPI = NinjectUtils.KernelInstance.Get<ProjectConfigsAPI>();
-        private static readonly DBVersionsAPI _dbVersionsAPI = NinjectUtils.KernelInstance.Get<DBVersionsAPI>();
+        private static readonly ProjectConfigsAPI _projectConfigsAPI = DIConfig.Kernel.Get<ProjectConfigsAPI>();
+        private static readonly DBVersionsAPI _dbVersionsAPI = DIConfig.Kernel.Get<DBVersionsAPI>();
 
 
 

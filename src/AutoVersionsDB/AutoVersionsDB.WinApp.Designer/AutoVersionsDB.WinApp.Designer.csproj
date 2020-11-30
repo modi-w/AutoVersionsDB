@@ -195,13 +195,9 @@
       <Project>{D8E93FE9-2EBA-4A49-B713-899E45402AEA}</Project>
       <Name>AutoVersionsDB.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Contract\AutoVersionsDB.DbCommands.Contract.csproj">
-      <Project>{9BCFE8FD-86EC-47B7-899B-BC327B6D210D}</Project>
-      <Name>AutoVersionsDB.DbCommands.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Integration\AutoVersionsDB.DbCommands.Integration.csproj">
-      <Project>{3D0091E6-44EB-474B-A77D-53DC984F5E88}</Project>
-      <Name>AutoVersionsDB.DbCommands.Integration</Name>
+    <ProjectReference Include="..\AutoVersionsDB.DB.Contract\AutoVersionsDB.DB.Contract.csproj">
+      <Project>{e8917cbc-ed03-41ad-8424-0faaa6cf9f5a}</Project>
+      <Name>AutoVersionsDB.DB.Contract</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoVersionsDB.Helpers\AutoVersionsDB.Helpers.csproj">
       <Project>{06a9844c-f76f-4f6e-9e65-0f84b3fc8733}</Project>

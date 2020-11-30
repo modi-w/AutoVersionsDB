@@ -22,23 +22,23 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests
 {
-    public static class NinjectUtils_IntegrationTests
+    public static class DIConfig
     {
-        public static IKernel NinjectKernelContainer { get; private set; }
+        public static IKernel Kernel { get; private set; }
 
 
         public static void CreateKernel()
         {
 
-            NinjectKernelContainer = new StandardKernel();
-            NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
+            Kernel = new StandardKernel();
+            Kernel.Load(Assembly.GetExecutingAssembly());
 
 
             RegisterServices();
 
-            NinjectUtils.SetKernelInstance(NinjectKernelContainer);
+            Core.DIConfig.SetKernelInstance(Kernel);
 
-            NinjectUtils_UI.SetKernelInstance(NinjectKernelContainer);
+            UI.DIConfig.SetKernelInstance(Kernel);
 
 
 
@@ -48,19 +48,19 @@ namespace AutoVersionsDB.Core.IntegrationTests
         private static void RegisterServices()
         {
 
-            NinjectKernelContainer.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessagesForTests>().InSingletonScope();
-            NinjectKernelContainer.Bind<INotificationsViewModel>().To<NotificationsViewModelForTests>().InSingletonScope();
-            NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManagerForTests>().InSingletonScope();
-            NinjectKernelContainer.Bind<IEditProjectViewSateManager>().To<EditProjectViewSateManagerForTests>().InSingletonScope();
+            Kernel.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessagesForTests>().InSingletonScope();
+            Kernel.Bind<INotificationsViewModel>().To<NotificationsViewModelForTests>().InSingletonScope();
+            Kernel.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManagerForTests>().InSingletonScope();
+            Kernel.Bind<IEditProjectViewSateManager>().To<EditProjectViewSateManagerForTests>().InSingletonScope();
 
         }
 
         private static void ComposeObjects()
         {
-            MockObjectsProvider.Init(NinjectKernelContainer);
+            MockObjectsProvider.Init(Kernel);
 
-            ViewRouter viewRouter = NinjectKernelContainer.Get<ViewRouter>();
-            NinjectKernelContainer.Bind<ViewRouter>().ToConstant(viewRouter);
+            ViewRouter viewRouter = Kernel.Get<ViewRouter>();
+            Kernel.Bind<ViewRouter>().ToConstant(viewRouter);
 
 
         }
@@ -73,7 +73,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             List<TestDefinition> testDefinitions = new List<TestDefinition>();
 
-            testDefinitions.Add(NinjectKernelContainer.Get<T1>());
+            testDefinitions.Add(Kernel.Get<T1>());
 
             return testDefinitions;
         }
@@ -83,8 +83,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             List<TestDefinition> testDefinitions = new List<TestDefinition>();
 
-            testDefinitions.Add(NinjectKernelContainer.Get<T1>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T2>());
+            testDefinitions.Add(Kernel.Get<T1>());
+            testDefinitions.Add(Kernel.Get<T2>());
 
             return testDefinitions;
         }
@@ -96,9 +96,9 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             List<TestDefinition> testDefinitions = new List<TestDefinition>();
 
-            testDefinitions.Add(NinjectKernelContainer.Get<T1>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T2>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T3>());
+            testDefinitions.Add(Kernel.Get<T1>());
+            testDefinitions.Add(Kernel.Get<T2>());
+            testDefinitions.Add(Kernel.Get<T3>());
 
             return testDefinitions;
         }
@@ -111,10 +111,10 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             List<TestDefinition> testDefinitions = new List<TestDefinition>();
 
-            testDefinitions.Add(NinjectKernelContainer.Get<T1>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T2>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T3>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T4>());
+            testDefinitions.Add(Kernel.Get<T1>());
+            testDefinitions.Add(Kernel.Get<T2>());
+            testDefinitions.Add(Kernel.Get<T3>());
+            testDefinitions.Add(Kernel.Get<T4>());
 
             return testDefinitions;
         }
@@ -129,11 +129,11 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             List<TestDefinition> testDefinitions = new List<TestDefinition>();
 
-            testDefinitions.Add(NinjectKernelContainer.Get<T1>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T2>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T3>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T4>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T5>());
+            testDefinitions.Add(Kernel.Get<T1>());
+            testDefinitions.Add(Kernel.Get<T2>());
+            testDefinitions.Add(Kernel.Get<T3>());
+            testDefinitions.Add(Kernel.Get<T4>());
+            testDefinitions.Add(Kernel.Get<T5>());
 
             return testDefinitions;
         }
@@ -148,12 +148,12 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             List<TestDefinition> testDefinitions = new List<TestDefinition>();
 
-            testDefinitions.Add(NinjectKernelContainer.Get<T1>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T2>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T3>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T4>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T5>());
-            testDefinitions.Add(NinjectKernelContainer.Get<T6>());
+            testDefinitions.Add(Kernel.Get<T1>());
+            testDefinitions.Add(Kernel.Get<T2>());
+            testDefinitions.Add(Kernel.Get<T3>());
+            testDefinitions.Add(Kernel.Get<T4>());
+            testDefinitions.Add(Kernel.Get<T5>());
+            testDefinitions.Add(Kernel.Get<T6>());
 
             return testDefinitions;
         }

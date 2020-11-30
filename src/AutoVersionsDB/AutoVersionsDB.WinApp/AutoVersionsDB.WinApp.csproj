@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj" />
+    <ProjectReference Include="..\AutoVersionsDB.DB.Contract\AutoVersionsDB.DB.Contract.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.Helpers\AutoVersionsDB.Helpers.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.UI\AutoVersionsDB.UI.csproj" />
   </ItemGroup>

@@ -8,15 +8,15 @@ using Ninject;
 
 namespace AutoVersionsDB.UI
 {
-    public static class NinjectUtils_UI
+    public static class DIConfig
     {
-        public static IKernel KernelInstance { get; private set; }
+        public static IKernel Kernel { get; private set; }
 
         public static void SetKernelInstance(IKernel kernel)
         {
             RegisterServices(kernel);
 
-            KernelInstance = kernel;
+            Kernel = kernel;
         }
 
         public static void RegisterServices(IKernel kernel)

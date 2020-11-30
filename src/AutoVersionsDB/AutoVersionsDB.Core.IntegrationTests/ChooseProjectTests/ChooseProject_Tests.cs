@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ChooseProjectTests
         [SetUp]
         public void Init()
         {
-            NinjectUtils_IntegrationTests.CreateKernel();
+            DIConfig.CreateKernel();
         }
 
 

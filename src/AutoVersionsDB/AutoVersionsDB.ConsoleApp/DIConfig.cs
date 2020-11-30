@@ -7,25 +7,25 @@ namespace AutoVersionsDB.ConsoleApp
 {
     public static class DIConfig
     {
-        public static IKernel NinjectKernelContainer { get; private set; }
+        public static IKernel Kernel { get; private set; }
 
 
         public static void CreateKernel()
         {
-            NinjectKernelContainer = new StandardKernel();
-            NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
+            Kernel = new StandardKernel();
+            Kernel.Load(Assembly.GetExecutingAssembly());
 
             RegisterServices();
 
-            NinjectUtils.SetKernelInstance(NinjectKernelContainer);
+            Core.DIConfig.SetKernelInstance(Kernel);
 
             ComposeObjects();
         }
 
         private static void RegisterServices()
         {
-            NinjectKernelContainer.Bind<IConsoleExtended>().To<ConsoleExtended>();
-            NinjectKernelContainer.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessages>();
+            Kernel.Bind<IConsoleExtended>().To<ConsoleExtended>();
+            Kernel.Bind<IConsoleProcessMessages>().To<ConsoleProcessMessages>();
         }
 
         private static void ComposeObjects()

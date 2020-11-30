@@ -11,8 +11,6 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.G
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
 using NuGet.Frameworks;
 using NUnit.Framework;
 using System;

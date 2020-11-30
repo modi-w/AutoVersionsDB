@@ -7,7 +7,7 @@ namespace AutoVersionsDB.CLI
     {
         private static AutoVersionsDBCLI GetNewInstanceForAutoVersionsDBCLI()
         {
-            return NinjectUtils.KernelInstance.Get<AutoVersionsDBCLI>();
+            return DIConfig.Kernel.Get<AutoVersionsDBCLI>();
         }
 
 

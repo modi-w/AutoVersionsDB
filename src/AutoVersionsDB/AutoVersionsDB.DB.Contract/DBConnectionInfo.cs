@@ -1,4 +1,4 @@
-﻿namespace AutoVersionsDB.DbCommands.Contract
+﻿namespace AutoVersionsDB.DB.Contract
 {
     public class DBConnectionInfo
     {

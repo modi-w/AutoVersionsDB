@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
-using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DB;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using System.Collections.Generic;

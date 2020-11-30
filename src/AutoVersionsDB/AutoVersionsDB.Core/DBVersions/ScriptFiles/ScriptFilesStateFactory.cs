@@ -1,5 +1,5 @@
 ﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
-using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.DB;
 
 namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {

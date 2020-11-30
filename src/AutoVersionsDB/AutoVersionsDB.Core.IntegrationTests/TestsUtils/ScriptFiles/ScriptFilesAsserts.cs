@@ -7,11 +7,9 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.Core.IntegrationTests;
-
-
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
-using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DB;
 using AutoVersionsDB.Helpers;
 using NUnit.Framework;
 using System;

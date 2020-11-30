@@ -1,9 +1,10 @@
-﻿using AutoVersionsDB.Helpers;
+﻿using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.Helpers;
 using System;
 using System.Data;
 using System.Globalization;
 
-namespace AutoVersionsDB.DbCommands.Contract
+namespace AutoVersionsDB.DB
 {
     public class DBQueryStatus : IDisposable
     {

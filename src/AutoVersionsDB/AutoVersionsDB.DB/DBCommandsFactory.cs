@@ -1,12 +1,12 @@
-﻿using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
-using AutoVersionsDB.DbCommands.SqlServer;
+﻿using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.DB.DBProcessStatusNotifyers;
+using AutoVersionsDB.DB.SqlServer;
 using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AutoVersionsDB.DbCommands.Integration
+namespace AutoVersionsDB.DB
 {
     public class DBCommandsFactory
     {

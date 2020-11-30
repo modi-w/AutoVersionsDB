@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace AutoVersionsDB.WinApp
 {
-    public static class NinjectUtils_Winform
+    public static class DIConfig
     {
         /* https://github.com/ninject/Ninject.Web/blob/master/src/Ninject.Web/WebServiceBase.cs
          * 
@@ -18,13 +18,13 @@ namespace AutoVersionsDB.WinApp
 
 
 
-        public static IKernel NinjectKernelContainer { get; private set; }
+        public static IKernel Kernel { get; private set; }
 
 
         public static void CreateKernel()
         {
-            NinjectKernelContainer = new StandardKernel();
-            NinjectKernelContainer.Load(Assembly.GetExecutingAssembly());
+            Kernel = new StandardKernel();
+            Kernel.Load(Assembly.GetExecutingAssembly());
 
             //var notificationsViewModel = NinjectKernelContainer.Get<NotificationsViewModel>();
             //NinjectKernelContainer.Bind<INotificationsViewModel>().ToConstant(notificationsViewModel);
@@ -35,25 +35,25 @@ namespace AutoVersionsDB.WinApp
 
             RegisterServices();
 
-            NinjectUtils.SetKernelInstance(NinjectKernelContainer);
-            NinjectUtils_UI.SetKernelInstance(NinjectKernelContainer);
+            Core.DIConfig.SetKernelInstance(Kernel);
+            UI.DIConfig.SetKernelInstance(Kernel);
 
             ComposeObjects();
         }
 
         private static void RegisterServices()
         {
-            NinjectKernelContainer.Bind<INotificationsViewModel>().To<NotificationsViewModel>().InSingletonScope();
-            NinjectKernelContainer.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManager>().InSingletonScope();
-            NinjectKernelContainer.Bind<IEditProjectViewSateManager>().To<EditProjectViewSateManager>().InSingletonScope();
+            Kernel.Bind<INotificationsViewModel>().To<NotificationsViewModel>().InSingletonScope();
+            Kernel.Bind<IDBVersionsViewSateManager>().To<DBVersionsViewSateManager>().InSingletonScope();
+            Kernel.Bind<IEditProjectViewSateManager>().To<EditProjectViewSateManager>().InSingletonScope();
 
         }
 
 
         private static void ComposeObjects()
         {
-            ViewRouter viewRouter = NinjectKernelContainer.Get<ViewRouter>();
-            NinjectKernelContainer.Bind<ViewRouter>().ToConstant(viewRouter);
+            ViewRouter viewRouter = Kernel.Get<ViewRouter>();
+            Kernel.Bind<ViewRouter>().ToConstant(viewRouter);
 
         }
 
