@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.StatesLog;
 using System;
 using System.ComponentModel;
@@ -123,6 +124,8 @@ namespace AutoVersionsDB.UI.Notifications
 
         public void OnNotificationStateChanged(ProcessTrace processTrace, StepNotificationState notificationStateItem)
         {
+            notificationStateItem.ThrowIfNull(nameof(notificationStateItem));
+
             _processTrace = processTrace;
 
             if (NotificationsViewModelData.NotificationStatus != eNotificationStatus.InProgress)
@@ -175,6 +178,8 @@ namespace AutoVersionsDB.UI.Notifications
 
         public void AfterComplete(ProcessResults processResults)
         {
+            processResults.ThrowIfNull(nameof(processResults));
+
             _processTrace = processResults.Trace;
 
             System.Threading.Thread.Sleep(500);

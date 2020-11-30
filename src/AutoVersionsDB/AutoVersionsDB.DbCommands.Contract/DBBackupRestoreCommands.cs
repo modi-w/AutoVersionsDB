@@ -63,7 +63,7 @@ namespace AutoVersionsDB.DbCommands.Contract
                     {
                         int seesionID = Convert.ToInt32(rowSession["SessionID"], CultureInfo.InvariantCulture);
 
-                        sqlCommandStr = _dBScriptsProvider.KillSessionScript(seesionID.ToString());
+                        sqlCommandStr = _dBScriptsProvider.KillSessionScript(seesionID.ToString(CultureInfo.InvariantCulture));
 
                         _dbConnection.ExecSQLCommandStr(sqlCommandStr);
                     }

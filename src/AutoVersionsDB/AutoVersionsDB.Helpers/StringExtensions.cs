@@ -16,6 +16,8 @@
 
         public static string Ellipsis(this string str, int maxLength)
         {
+            str.ThrowIfNull(nameof(str));
+
             string resultsStr = str;
 
             if (str.Length > maxLength)

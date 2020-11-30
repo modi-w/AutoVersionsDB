@@ -81,7 +81,7 @@ namespace AutoVersionsDB.DbCommands.SqlServer
             }
         }
 
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1021:Avoid out parameters", Justification = "<Pending>")]
         public bool CheckConnection(out string outErrorMseeage)
         {
             outErrorMseeage = "";

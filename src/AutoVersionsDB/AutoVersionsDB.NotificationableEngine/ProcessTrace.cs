@@ -6,8 +6,8 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class ProcessTrace
     {
-        private readonly List<StepNotificationState> _statesLog;
-        public List<StepNotificationState> StatesLog => _statesLog.ToList();
+        private readonly IList<StepNotificationState> _statesLog;
+        public IList<StepNotificationState> StatesLog => _statesLog.ToList();
 
         public bool HasError
         {

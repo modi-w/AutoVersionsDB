@@ -37,7 +37,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
             string targetFileName;
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
-                targetFileName = $"bu_{ dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
+                targetFileName = $"bu_{ dbCommands.DataBaseName}_{timeStampStr}.bak";
             }
 
             string targetFileFullPath = Path.Combine(processContext.ProjectConfig.BackupFolderPath, targetFileName);
@@ -82,7 +82,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                         {
                             using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
                             {
-                                dbBackupRestoreCommands.CreateDBBackup(targetFileFullPath, dbCommands.GetDataBaseName());
+                                dbBackupRestoreCommands.CreateDBBackup(targetFileFullPath, dbCommands.DataBaseName);
 
                                 foreach (ExternalProcessStatusStep step in internalSteps)
                                 {

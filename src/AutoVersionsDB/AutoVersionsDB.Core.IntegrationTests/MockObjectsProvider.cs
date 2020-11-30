@@ -98,15 +98,14 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
         }
 
-
-
-        private static void UIGeneralEvents_OnException(object sender, string exceptionMessage)
+        private static void UIGeneralEvents_OnException(object sender, MessageEventArgs e)
         {
-            Console.WriteLine(exceptionMessage);
-            Debug.WriteLine(exceptionMessage);
+            Console.WriteLine(e.Message);
+            Debug.WriteLine(e.Message);
 
-            throw new Exception(exceptionMessage);
+            throw new Exception(e.Message);
         }
+
 
         public static void SetTestContextDataByMockCallbacksForUI(ITestContext testContext)
         {

@@ -32,15 +32,16 @@ namespace AutoVersionsDB.WinApp
             Application.Run(mainFrame);
         }
 
-        private static void UIGeneralEvents_OnException(object sender, string exceptionMessage)
+        private static void UIGeneralEvents_OnException(object sender, MessageEventArgs e)
         {
-            MessageBox.Show(exceptionMessage);
+            MessageBox.Show(e.Message);
         }
 
-        private static bool UIGeneralEvents_OnConfirm(object sender, string confirmMessage)
+        private static void UIGeneralEvents_OnConfirm(object sender, ConfirmEventArgs e)
         {
-            return MessageBox.Show(null, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+            e.IsConfirm = MessageBox.Show(null, e.Message, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
         }
+
 
 
 

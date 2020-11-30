@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace AutoVersionsDB.ConsoleApp
 {
-    public static class NinjectUtils_Console
+    public static class DIConfig
     {
         public static IKernel NinjectKernelContainer { get; private set; }
 

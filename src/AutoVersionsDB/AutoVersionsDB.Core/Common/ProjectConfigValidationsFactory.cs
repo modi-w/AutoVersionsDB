@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.Common.Validators;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 
@@ -21,6 +22,8 @@ namespace AutoVersionsDB.Core.Common
 
         public override ValidationsGroup Create(ProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             ProjectConfigItem projectConfig = (processContext as CommonProcessContext).ProjectConfig;
 
 

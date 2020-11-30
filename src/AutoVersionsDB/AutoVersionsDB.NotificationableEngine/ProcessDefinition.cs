@@ -13,7 +13,7 @@ namespace AutoVersionsDB.NotificationableEngine
         private readonly List<ActionStepBase> _processSteps;
         public ReadOnlyCollection<ActionStepBase> ProcessSteps => _processSteps.AsReadOnly();
 
-        public ProcessDefinition(ActionStepBase rollbackStep)
+        protected ProcessDefinition(ActionStepBase rollbackStep)
         {
             _processSteps = new List<ActionStepBase>();
 

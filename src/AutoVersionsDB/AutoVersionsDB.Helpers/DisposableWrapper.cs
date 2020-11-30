@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Helpers
 
         private bool disposedValue = false; // To detect redundant calls
 
-        private void Dispose(bool disposing)
+        public void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Helpers
             }
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             Dispose(true);
         }

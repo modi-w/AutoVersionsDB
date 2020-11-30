@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
-
+using AutoVersionsDB.Helpers;
 
 //http://www.claassen.net/geek/blog/2007/07/generic-asynchronous.html
 
@@ -27,7 +27,7 @@ namespace AutoVersionsDB.WinApp.Utils
                                           INotifyPropertyChanged bindingSource,
                                           string dataMember)
         {
-            //return new Binding(propertyName, bindingSource, dataMember,false, DataSourceUpdateMode.OnPropertyChanged);
+            bindingSource.ThrowIfNull(nameof(bindingSource));
 
             AsyncBindingHelper helper
               = new AsyncBindingHelper(bindingControl, bindingSource, dataMember);
@@ -63,7 +63,7 @@ namespace AutoVersionsDB.WinApp.Utils
                       e);
                     return;
                 }
-                PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(Value)));
             }
         }
 

@@ -10,7 +10,7 @@ namespace AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers
 
         public bool IsActive { get; private set; }
 
-        public DBProcessStatusNotifyerBase(int intervalInMs)
+        protected DBProcessStatusNotifyerBase(int intervalInMs)
         {
 
             IntervalInMs = intervalInMs;

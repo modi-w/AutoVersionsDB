@@ -32,6 +32,8 @@ namespace AutoVersionsDB.CLI.DBVersions
 
         public void Build(RootCommand rootCommand)
         {
+            rootCommand.ThrowIfNull(nameof(rootCommand));
+
             foreach (var commandFactory in _cliCommandFactories)
             {
                 Command command = commandFactory.Create();

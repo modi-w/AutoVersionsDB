@@ -42,7 +42,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                     _consoleProcessMessages.SetInfoMessage(captionsLineMessage);
 
 
-                    IEnumerable<DBType> dbTypesList = _projectConfigsAPI.GetDBTypes();
+                    IEnumerable<DBType> dbTypesList = _projectConfigsAPI.DBTypes;
 
                     foreach (DBType dbType in dbTypesList)
                     {

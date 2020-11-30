@@ -23,10 +23,7 @@ namespace AutoVersionsDB.Core
 
         #region Config
 
-        public static List<DBType> GetDBTypes()
-        {
-            return _projectConfigsAPI.GetDBTypes();
-        }
+        public static IList<DBType> DBTypes => _projectConfigsAPI.DBTypes;
 
 
         public static List<ProjectConfigItem> GetProjectsList()

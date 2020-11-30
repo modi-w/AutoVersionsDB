@@ -20,6 +20,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             ProjectConfigProcessParams projectConfigProcessParams = processContext.ProcessParams as ProjectConfigProcessParams;
 
             _projectConfigsStorage.RemoveProjectConfig(projectConfigProcessParams.Id);

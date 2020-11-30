@@ -32,6 +32,9 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public string CheckIfTableExistScript(string schemaName, string tableName)
         {
+            schemaName.ThrowIfNull(nameof(schemaName));
+            tableName.ThrowIfNull(nameof(tableName));
+
             string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("CheckIfTableExist.sql");
             sqlCmdStr =
                 sqlCmdStr

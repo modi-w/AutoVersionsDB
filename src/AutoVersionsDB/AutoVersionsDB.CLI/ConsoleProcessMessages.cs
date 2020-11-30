@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.CommandLine.IO;
 
@@ -93,6 +94,8 @@ namespace AutoVersionsDB.CLI
 
         public void ProcessComplete(ProcessResults processReults)
         {
+            processReults.ThrowIfNull(nameof(processReults));
+
             ClearConsoleLine(0);
 
             lock (CLIConsts.ConsolWriteSync)
@@ -122,6 +125,8 @@ namespace AutoVersionsDB.CLI
 
         public void OnNotificationStateChanged(ProcessTrace processTrace, StepNotificationState notificationStateItem)
         {
+            notificationStateItem.ThrowIfNull(nameof(notificationStateItem));
+
             lock (CLIConsts.ConsolWriteSync)
             {
                 ClearConsoleLine(3);

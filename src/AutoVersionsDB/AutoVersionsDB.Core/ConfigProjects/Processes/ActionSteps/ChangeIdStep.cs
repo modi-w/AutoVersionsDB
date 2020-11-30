@@ -21,6 +21,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             ChangeIdProcessParams projectConfigProcessParams = processContext.ProcessParams as ChangeIdProcessParams;
 
             _projectConfigsStorage.ChangeId(projectConfigProcessParams.Id, projectConfigProcessParams.NewId);

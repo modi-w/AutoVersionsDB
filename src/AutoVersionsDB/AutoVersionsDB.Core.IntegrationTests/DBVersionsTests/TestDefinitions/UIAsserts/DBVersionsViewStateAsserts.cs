@@ -35,8 +35,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             //     AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnShowHistoricalBackupsEnabled), dbVersionsControls.BtnShowHistoricalBackupsEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.GridToSelectTargetStateEnabled), dbVersionsControls.GridToSelectTargetStateEnabled, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.IncrementalScriptsGridEnabled), dbVersionsControls.IncrementalScriptsGridEnabled, true);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetState_CaptionVisible), dbVersionsControls.LblColorTargetState_CaptionVisible, false);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetState_SquareVisible), dbVersionsControls.LblColorTargetState_SquareVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetStateCaptionVisible), dbVersionsControls.LblColorTargetStateCaptionVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetStateSquareVisible), dbVersionsControls.LblColorTargetStateSquareVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblProjectNameText), dbVersionsControls.LblProjectNameText, $"{IntegrationTestsConsts.TestProjectId} - ");
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlDevDummyDataFilesVisible), dbVersionsControls.PnlDevDummyDataFilesVisible, isDevEnv);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlMainActionsEnabled), dbVersionsControls.PnlMainActionsEnabled, true);
@@ -63,8 +63,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             //     AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnShowHistoricalBackupsEnabled), dbVersionsControls.BtnShowHistoricalBackupsEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.GridToSelectTargetStateEnabled), dbVersionsControls.GridToSelectTargetStateEnabled, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.IncrementalScriptsGridEnabled), dbVersionsControls.IncrementalScriptsGridEnabled, true);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetState_CaptionVisible), dbVersionsControls.LblColorTargetState_CaptionVisible, false);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetState_SquareVisible), dbVersionsControls.LblColorTargetState_SquareVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetStateCaptionVisible), dbVersionsControls.LblColorTargetStateCaptionVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetStateSquareVisible), dbVersionsControls.LblColorTargetStateSquareVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblProjectNameText), dbVersionsControls.LblProjectNameText, $"{IntegrationTestsConsts.TestProjectId} - ");
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlDevDummyDataFilesVisible), dbVersionsControls.PnlDevDummyDataFilesVisible, isDevEnv);
             //_propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlMainActionsEnabled), dbVersionsControls.PnlMainActionsEnabled, true);
@@ -90,8 +90,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             //     AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnShowHistoricalBackupsEnabled), dbVersionsControls.BtnShowHistoricalBackupsEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.GridToSelectTargetStateEnabled), dbVersionsControls.GridToSelectTargetStateEnabled, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.IncrementalScriptsGridEnabled), dbVersionsControls.IncrementalScriptsGridEnabled, true);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetState_CaptionVisible), dbVersionsControls.LblColorTargetState_CaptionVisible, false);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetState_SquareVisible), dbVersionsControls.LblColorTargetState_SquareVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetStateCaptionVisible), dbVersionsControls.LblColorTargetStateCaptionVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblColorTargetStateSquareVisible), dbVersionsControls.LblColorTargetStateSquareVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.LblProjectNameText), dbVersionsControls.LblProjectNameText, $"{IntegrationTestsConsts.TestProjectId} - ");
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlDevDummyDataFilesVisible), dbVersionsControls.PnlDevDummyDataFilesVisible, isDevEnv);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlMainActionsEnabled), dbVersionsControls.PnlMainActionsEnabled, true);

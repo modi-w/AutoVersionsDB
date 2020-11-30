@@ -38,8 +38,10 @@ namespace AutoVersionsDB.WinApp
 
         private void ViewModel_OnShowStatesLog(object sender, StatesLogViewModel statesLogViewModel)
         {
-            StatesLogView statesLogView = new StatesLogView(statesLogViewModel);
-            statesLogView.ShowDialog();
+            using (StatesLogView statesLogView = new StatesLogView(statesLogViewModel))
+            {
+                statesLogView.ShowDialog();
+            }
         }
 
         private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

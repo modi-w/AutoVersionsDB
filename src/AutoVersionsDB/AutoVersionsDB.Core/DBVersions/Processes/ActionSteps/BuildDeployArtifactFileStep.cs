@@ -32,9 +32,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
         public override void Execute(DBVersionsProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
-                string dbName = dbCommands.GetDataBaseName();
+                string dbName = dbCommands.DataBaseName;
 
 
                 string tempFolderForDeploy = Path.Combine(_settings.TempFolderPath, $"Deploy_{dbName}_{DateTime.Now:HH-mm-dd-fff}");

@@ -33,7 +33,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Act(ITestContext testContext)
         {
-            testContext.Result = AutoVersionsDBAPI.GetDBTypes();
+            testContext.Result = AutoVersionsDBAPI.DBTypes;
         }
 
 

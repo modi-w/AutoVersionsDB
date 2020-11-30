@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.DBVersions.Processes.Validators;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 
@@ -19,6 +20,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 
         public override ValidationsGroup Create(ProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             DBVersionsProcessContext dbVersionsProcessContext = processContext as DBVersionsProcessContext;
             DBVersionsProcessParams dbVersionsProcessParams = dbVersionsProcessContext.ProcessParams as DBVersionsProcessParams;
 

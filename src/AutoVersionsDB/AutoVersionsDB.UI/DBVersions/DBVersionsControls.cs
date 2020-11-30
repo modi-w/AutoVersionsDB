@@ -167,18 +167,18 @@ namespace AutoVersionsDB.UI.DBVersions
 
 
 
-        private bool _lblColorTargetState_SquareVisible;
-        public bool LblColorTargetState_SquareVisible
+        private bool _lblColorTargetStateSquareVisible;
+        public bool LblColorTargetStateSquareVisible
         {
-            get => _lblColorTargetState_SquareVisible;
-            set => SetField(ref _lblColorTargetState_SquareVisible, value);
+            get => _lblColorTargetStateSquareVisible;
+            set => SetField(ref _lblColorTargetStateSquareVisible, value);
         }
 
-        private bool _lblColorTargetState_CaptionVisible;
-        public bool LblColorTargetState_CaptionVisible
+        private bool _lblColorTargetStateCaptionVisible;
+        public bool LblColorTargetStateCaptionVisible
         {
-            get => _lblColorTargetState_CaptionVisible;
-            set => SetField(ref _lblColorTargetState_CaptionVisible, value);
+            get => _lblColorTargetStateCaptionVisible;
+            set => SetField(ref _lblColorTargetStateCaptionVisible, value);
         }
 
 

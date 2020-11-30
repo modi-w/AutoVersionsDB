@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.Notifications;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,6 +110,8 @@ namespace AutoVersionsDB.UI.EditProject
 
         public void HandleProcessErrors(bool isNewProjectConfig, ProcessResults processResults)
         {
+            processResults.ThrowIfNull(nameof(processResults));
+
             _notificationsViewModel.AfterComplete(processResults);
 
             SetErrorsToUiElements(processResults.Trace);
@@ -149,6 +152,8 @@ namespace AutoVersionsDB.UI.EditProject
 
         public void SetErrorsToUiElements(ProcessTrace processResults)
         {
+            processResults.ThrowIfNull(nameof(processResults));
+
             if (processResults.HasError)
             {
                 List<StepNotificationState> errorStates = processResults.StatesLog.Where(e => e.HasError).ToList();

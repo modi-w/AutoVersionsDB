@@ -26,27 +26,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 
         public override bool CanRollback => !string.IsNullOrWhiteSpace(DBBackupFileFullPath);
 
-        public double ProcessDurationInMs
-        {
-            get
-            {
-                double results = 0;
-
-                if (StartProcessDateTime.HasValue)
-                {
-                    if (EndProcessDateTime.HasValue)
-                    {
-                        results = (EndProcessDateTime.Value - StartProcessDateTime.Value).TotalMilliseconds;
-                    }
-                    else
-                    {
-                        results = (DateTime.Now - StartProcessDateTime.Value).TotalMilliseconds;
-                    }
-                }
-
-                return results;
-            }
-        }
+      
 
 
         public List<RuntimeScriptFileBase> ExecutedFiles { get; private set; }

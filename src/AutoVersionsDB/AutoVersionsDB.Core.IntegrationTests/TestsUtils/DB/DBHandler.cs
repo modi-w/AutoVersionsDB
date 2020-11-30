@@ -70,13 +70,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string masterDBName;
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                masterDBName = dbCommands.GetDataBaseName();
+                masterDBName = dbCommands.DataBaseName;
             }
 
 
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                numOfConnectionsItem.DBName = dbCommands.GetDataBaseName();
+                numOfConnectionsItem.DBName = dbCommands.DataBaseName;
             }
 
             using (var dbQueryStatus = dbCommandsFactoryProvider.CreateDBQueryStatus(dbConnectionInfo))

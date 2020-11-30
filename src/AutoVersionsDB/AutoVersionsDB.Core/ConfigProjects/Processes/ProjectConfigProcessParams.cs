@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.Helpers;
+using AutoVersionsDB.NotificationableEngine;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes
 {
@@ -15,6 +16,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes
 
         public ProjectConfigProcessParams(ProjectConfigItem projectConfig)
         {
+            projectConfig.ThrowIfNull(nameof(projectConfig));
+
             ProjectConfig = projectConfig;
             Id = projectConfig.Id;
         }

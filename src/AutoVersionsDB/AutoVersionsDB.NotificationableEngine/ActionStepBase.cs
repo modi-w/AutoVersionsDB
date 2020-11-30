@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoVersionsDB.Helpers;
+using System;
 using System.Collections.Generic;
 
 namespace AutoVersionsDB.NotificationableEngine
@@ -43,8 +44,10 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        protected void ExecuteInternalSteps(List<ActionStepBase> internalSteps, bool isContinueOnError)
+        protected void ExecuteInternalSteps(IList<ActionStepBase> internalSteps, bool isContinueOnError)
         {
+            internalSteps.ThrowIfNull(nameof(internalSteps));
+
             _stepsExecuter.ExecuteSteps(internalSteps, isContinueOnError);
 
             disposStepsList(internalSteps);

@@ -7,7 +7,7 @@ namespace AutoVersionsDB.ConsoleApp
     {
         private static int Main(string[] args)
         {
-            NinjectUtils_Console.CreateKernel();
+            DIConfig.CreateKernel();
 
             Console.Title = "AutoVersionsDB";
 

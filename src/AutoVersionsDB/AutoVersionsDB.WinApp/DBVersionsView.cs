@@ -386,7 +386,7 @@ namespace AutoVersionsDB.WinApp
                     lblColorTargetState_Square,
                     nameof(lblColorTargetState_Square.Visible),
                     ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetState_SquareVisible)
+                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateSquareVisible)
                     )
                 );
 
@@ -396,7 +396,7 @@ namespace AutoVersionsDB.WinApp
                     lblColorTargetState_Caption,
                     nameof(lblColorTargetState_Caption.Visible),
                     ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetState_CaptionVisible)
+                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
                     )
                 );
 
@@ -564,7 +564,7 @@ namespace AutoVersionsDB.WinApp
         #region Set View State
 
 
-        private static void BindGridDataSource(DataGridView dataGridView, List<RuntimeScriptFileBase> scriptFilesList)
+        private static void BindGridDataSource(DataGridView dataGridView, IList<RuntimeScriptFileBase> scriptFilesList)
         {
 
             dataGridView.BeginInvoke((MethodInvoker)(() =>

@@ -20,6 +20,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
         public override void Execute(DBVersionsProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             string id = (processContext.ProcessParams as DBVersionsProcessParams).Id;
 
             processContext.SetProjectConfig(_projectConfigsStorage.GetProjectConfigById(id));

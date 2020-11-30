@@ -40,10 +40,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         }
 
 
-        public List<DBType> GetDBTypes()
-        {
-            return dbCommandsFactoryProvider.GetDBTypes();
-        }
+        public IList<DBType> DBTypes => dbCommandsFactoryProvider.DBTypes;
 
         public List<ProjectConfigItem> GetProjectsList()
         {

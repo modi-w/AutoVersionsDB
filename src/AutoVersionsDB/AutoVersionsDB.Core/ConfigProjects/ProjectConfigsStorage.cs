@@ -133,7 +133,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
                 listAllProjectConfigs = new List<ProjectConfigItem>();
             }
 
-            listAllProjectConfigs.OrderBy(e => e.Id.ToTrimedInvariant()).ToList();
+            listAllProjectConfigs = listAllProjectConfigs.OrderBy(e => e.Id.ToTrimedInvariant()).ToList();
             dicAllProjectConfigs = listAllProjectConfigs.ToDictionary(e => e.Id.ToTrimedInvariant());
 
             return dicAllProjectConfigs;

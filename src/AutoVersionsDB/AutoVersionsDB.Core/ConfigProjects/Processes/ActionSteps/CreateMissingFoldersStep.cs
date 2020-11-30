@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using AutoVersionsDB.Helpers;
+using System.IO;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
@@ -15,6 +16,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             ResolveFolderExist(processContext.ProjectConfig.BackupFolderPath);
 
             if (processContext.ProjectConfig.DevEnvironment)

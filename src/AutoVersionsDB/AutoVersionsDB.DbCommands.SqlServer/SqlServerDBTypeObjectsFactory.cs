@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.Helpers;
 using System.Data.SqlClient;
 
 namespace AutoVersionsDB.DbCommands.SqlServer
@@ -12,6 +13,8 @@ namespace AutoVersionsDB.DbCommands.SqlServer
 
         public IDBConnection CreateDBConnection(DBConnectionInfo dbConnectionInfo)
         {
+            dbConnectionInfo.ThrowIfNull(nameof(dbConnectionInfo));
+
             SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateConnectionString(dbConnectionInfo), 0);
 
             return sqlServerConnection;

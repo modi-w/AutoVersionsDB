@@ -28,16 +28,17 @@ namespace AutoVersionsDB.DbCommands.Contract
 
 
 
-        public string GetDataBaseName()
+        public string DataBaseName
         {
-            string dbName;
+            get
+            {
+                string dbName;
 
-            dbName = _dbConnection.DataBaseName;
+                dbName = _dbConnection.DataBaseName;
 
-            return dbName;
+                return dbName;
+            }
         }
-
-
 
         public DataSet GetScriptsExecutionHistoryTableStructureFromDB()
         {

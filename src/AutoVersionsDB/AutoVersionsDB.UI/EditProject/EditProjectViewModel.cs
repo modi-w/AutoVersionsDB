@@ -20,7 +20,7 @@ namespace AutoVersionsDB.UI.EditProject
         public INotificationsViewModel NotificationsViewModel { get; }
 
 
-        public List<DBType> DBTypes { get; }
+        public IList<DBType> DBTypes { get; }
 
         private ViewRouter _viewRouter;
         public ViewRouter ViewRouter
@@ -71,7 +71,7 @@ namespace AutoVersionsDB.UI.EditProject
             EditProjectControls = editProjectControls;
             ProjectConfigErrorMessages = projectConfigErrorMessages;
 
-            DBTypes = _projectConfigsAPI.GetDBTypes();
+            DBTypes = _projectConfigsAPI.DBTypes;
 
             SaveCommand = new RelayCommand(Save);
             SetEditIdStateCommand = new RelayCommand(SetEditIdState);

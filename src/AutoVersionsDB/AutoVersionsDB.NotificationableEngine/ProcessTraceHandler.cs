@@ -204,7 +204,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
         // Protected implementation of Dispose pattern.
-        public void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
             {

@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.DbCommands.Contract;
 using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
 using AutoVersionsDB.DbCommands.SqlServer;
+using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace AutoVersionsDB.DbCommands.Integration
 {
     public class DBCommandsFactory
     {
-        private Dictionary<string, IDBTypeObjectsFactory> _DBTypeObjectsFactoryDictionary;
+        private Dictionary<string, IDBTypeObjectsFactory> _dbTypeObjectsFactoryDictionary;
 
         public DBCommandsFactory()
         {
@@ -17,14 +18,10 @@ namespace AutoVersionsDB.DbCommands.Integration
         }
 
 
-        public List<DBType> GetDBTypes()
-        {
-
-            return _DBTypeObjectsFactoryDictionary
-                .Values
-                .Select(e => e.DBType)
-                .ToList();
-        }
+        public IList<DBType> DBTypes => _dbTypeObjectsFactoryDictionary
+                                        .Values
+                                        .Select(e => e.DBType)
+                                        .ToList();
 
         //public IDBCommandsFactory GetDBCommandsFactoryByDBTypeCode(string dbTypeCode)
         //{
@@ -33,16 +30,18 @@ namespace AutoVersionsDB.DbCommands.Integration
 
         public bool ContainDbType(string dbTypeCode)
         {
-            return _DBTypeObjectsFactoryDictionary.ContainsKey(dbTypeCode);
+            return _dbTypeObjectsFactoryDictionary.ContainsKey(dbTypeCode);
         }
 
 
         public IDBConnection CreateDBConnection(DBConnectionInfo dbConnectionInfo)
         {
+            dbConnectionInfo.ThrowIfNull(nameof(dbConnectionInfo));
+
             IDBConnection dbConnection = null;
 
             if (!string.IsNullOrWhiteSpace(dbConnectionInfo.DBType)
-                && _DBTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
+                && _dbTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
             {
                 dbConnection = dbTypeObjectsFactory.CreateDBConnection(dbConnectionInfo);
             }
@@ -51,10 +50,12 @@ namespace AutoVersionsDB.DbCommands.Integration
         }
         public IDBConnection CreateAdminDBConnection(DBConnectionInfo dbConnectionInfo)
         {
+            dbConnectionInfo.ThrowIfNull(nameof(dbConnectionInfo));
+
             IDBConnection dbConnection = null;
 
             if (!string.IsNullOrWhiteSpace(dbConnectionInfo.DBType)
-                && _DBTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
+                && _dbTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
             {
                 dbConnection = dbTypeObjectsFactory.CreateAdminDBConnection(dbConnectionInfo);
             }
@@ -65,10 +66,12 @@ namespace AutoVersionsDB.DbCommands.Integration
 
         public DBCommands CreateDBCommand(DBConnectionInfo dbConnectionInfo)
         {
+            dbConnectionInfo.ThrowIfNull(nameof(dbConnectionInfo));
+
             DBCommands dbCommands = null;
 
             if (!string.IsNullOrWhiteSpace(dbConnectionInfo.DBType)
-                && _DBTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
+                && _dbTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
             {
                 IDBConnection dbConnection = dbTypeObjectsFactory.CreateDBConnection(dbConnectionInfo);
                 IDBScriptsProvider dbScriptsProvider = dbTypeObjectsFactory.CreateDBScriptsProvider();
@@ -81,10 +84,12 @@ namespace AutoVersionsDB.DbCommands.Integration
 
         public DBBackupRestoreCommands CreateDBBackupRestoreCommands(DBConnectionInfo dbConnectionInfo)
         {
+            dbConnectionInfo.ThrowIfNull(nameof(dbConnectionInfo));
+
             DBBackupRestoreCommands dbBackupRestoreCommands = null;
 
             if (!string.IsNullOrWhiteSpace(dbConnectionInfo.DBType)
-                && _DBTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
+                && _dbTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
             {
                 IDBConnection adminDBConnection = dbTypeObjectsFactory.CreateAdminDBConnection(dbConnectionInfo);
                 IDBScriptsProvider dbScriptsProvider = dbTypeObjectsFactory.CreateDBScriptsProvider();
@@ -97,10 +102,12 @@ namespace AutoVersionsDB.DbCommands.Integration
 
         public DBQueryStatus CreateDBQueryStatus(DBConnectionInfo dbConnectionInfo)
         {
+            dbConnectionInfo.ThrowIfNull(nameof(dbConnectionInfo));
+
             DBQueryStatus dbQueryStatus = null;
 
             if (!string.IsNullOrWhiteSpace(dbConnectionInfo.DBType)
-                && _DBTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
+                && _dbTypeObjectsFactoryDictionary.TryGetValue(dbConnectionInfo.DBType, out IDBTypeObjectsFactory dbTypeObjectsFactory))
             {
                 IDBConnection adminDBConnection = dbTypeObjectsFactory.CreateAdminDBConnection(dbConnectionInfo);
                 IDBScriptsProvider dbScriptsProvider = dbTypeObjectsFactory.CreateDBScriptsProvider();
@@ -125,10 +132,10 @@ namespace AutoVersionsDB.DbCommands.Integration
 
         private void PopulateFactoriesDictionary()
         {
-            _DBTypeObjectsFactoryDictionary = new Dictionary<string, IDBTypeObjectsFactory>();
+            _dbTypeObjectsFactoryDictionary = new Dictionary<string, IDBTypeObjectsFactory>();
 
             SqlServerDBTypeObjectsFactory sqlServerDBCommands_Factory = new SqlServerDBTypeObjectsFactory();
-            _DBTypeObjectsFactoryDictionary.Add(sqlServerDBCommands_Factory.DBType.Code, sqlServerDBCommands_Factory);
+            _dbTypeObjectsFactoryDictionary.Add(sqlServerDBCommands_Factory.DBType.Code, sqlServerDBCommands_Factory);
 
         }
 
