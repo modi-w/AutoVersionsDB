@@ -23,18 +23,18 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
         public override Command Create()
         {
-            Command command = new Command("dbtypes");
+            Command command = new Command("dbtypes")
+            {
+                Description = "Show list of the supported DataBase Types.",
 
-            command.Description = "Show list of the supported DataBase Types.";
-
-            command.Handler = CommandHandler
+                Handler = CommandHandler
                 .Create(() =>
                 {
                     _consoleProcessMessages.StartProcessMessage("dbtypes");
 
                     _consoleProcessMessages.SetInfoMessage("");
 
-                    string captionsMessage = $"{"  Code".PadRight(12)} |  Name";
+                    string captionsMessage = $"{"  Code",-12} |  Name";
                     _consoleProcessMessages.SetInfoMessage(captionsMessage);
 
                     string captionsLineMessage = "-".PadRight(20, '-');
@@ -45,12 +45,13 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
                     foreach (DBType dbType in dbTypesList)
                     {
-                        string projectLineMessage = $"+ {dbType.Code.PadRight(10)} | {dbType.Name}";
+                        string projectLineMessage = $"+ {dbType.Code,-10} | {dbType.Name}";
                         _consoleProcessMessages.SetInfoMessage(projectLineMessage);
                     }
 
 
-                });
+                })
+            };
 
             return command;
         }

@@ -21,8 +21,7 @@ namespace AutoVersionsDB.Helpers
             {
                 if (disposing)
                 {
-                    var disposableObject = Instance as IDisposable;
-                    if (disposableObject != null)
+                    if (Instance is IDisposable disposableObject)
                     {
                         disposableObject.Dispose();
                     }

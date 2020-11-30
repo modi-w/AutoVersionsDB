@@ -17,13 +17,13 @@ namespace AutoVersionsDB.WinApp
             {
                 ViewModel = viewModel;
 
-                ViewModel.PropertyChanged += _viewModel_PropertyChanged;
+                ViewModel.PropertyChanged += ViewModel_PropertyChanged;
 
                 SetDataBindings();
             }
         }
 
-        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {

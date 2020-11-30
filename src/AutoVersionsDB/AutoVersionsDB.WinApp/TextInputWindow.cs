@@ -16,14 +16,14 @@ namespace AutoVersionsDB.WinApp
             lblMessage.Text = message;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             IsApply = false;
 
             Close();
         }
 
-        private void btnApply_Click(object sender, EventArgs e)
+        private void BtnApply_Click(object sender, EventArgs e)
         {
             ResultText = tbInput.Text;
             IsApply = true;

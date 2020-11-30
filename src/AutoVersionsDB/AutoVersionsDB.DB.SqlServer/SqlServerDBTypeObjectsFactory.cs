@@ -73,9 +73,10 @@ namespace AutoVersionsDB.DB.SqlServer
 
         private static string CreateConnecntionStringByDBName(DBConnectionInfo dbConnectionInfo, string dbName)
         {
-            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder();
-
-            connectionStringBuilder.InitialCatalog = dbName;
+            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder
+            {
+                InitialCatalog = dbName
+            };
 
             if (string.IsNullOrWhiteSpace(dbConnectionInfo.Server))
             {

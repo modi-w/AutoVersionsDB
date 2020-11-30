@@ -6,8 +6,8 @@ namespace AutoVersionsDB.UI.Notifications
     public class NotificationsViewModelData : INotifyPropertyChanged
     {
 
-        private eNotificationStatus _notificationStatus;
-        public eNotificationStatus NotificationStatus
+        private NotificationStatus _notificationStatus;
+        public NotificationStatus NotificationStatus
         {
             get => _notificationStatus;
             set =>
@@ -25,8 +25,8 @@ namespace AutoVersionsDB.UI.Notifications
 
 
 
-        private eStatusImageType _statusImageType;
-        public eStatusImageType StatusImageType
+        private StatusImageType _statusImageType;
+        public StatusImageType StatusImageType
         {
             get => _statusImageType;
             set => SetField(ref _statusImageType, value);

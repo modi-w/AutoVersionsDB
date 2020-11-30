@@ -46,10 +46,10 @@ namespace AutoVersionsDB.WinApp.Utils
             this.bindingSource = bindingSource;
             this.dataMember = dataMember;
             bindingSource.PropertyChanged
-              += new PropertyChangedEventHandler(bindingSource_PropertyChanged);
+              += new PropertyChangedEventHandler(BindingSource_PropertyChanged);
         }
 
-        private void bindingSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void BindingSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null && e.PropertyName == dataMember)
             {
@@ -58,7 +58,7 @@ namespace AutoVersionsDB.WinApp.Utils
                 if (bindingControl.InvokeRequired)
                 {
                     bindingControl.BeginInvoke(
-                      new PropertyChangedEventHandler(bindingSource_PropertyChanged),
+                      new PropertyChangedEventHandler(BindingSource_PropertyChanged),
                       sender,
                       e);
                     return;

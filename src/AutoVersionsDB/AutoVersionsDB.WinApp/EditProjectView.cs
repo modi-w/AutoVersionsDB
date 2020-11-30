@@ -39,13 +39,13 @@ namespace AutoVersionsDB.WinApp
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            errorMessageChanged(e);
+            ErrorMessageChanged(e);
 
             switch (e.PropertyName)
             {
                 case nameof(ViewModel.ProjectConfig):
 
-                    bindProjectConfig();
+                    BindProjectConfig();
                     break;
 
                 default:
@@ -53,7 +53,7 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void bindProjectConfig()
+        private void BindProjectConfig()
         {
             BeginInvoke((MethodInvoker)(() =>
             {
@@ -331,7 +331,7 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void errorMessageChanged(PropertyChangedEventArgs e)
+        private void ErrorMessageChanged(PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -603,15 +603,15 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void btnEditId_Click(object sender, EventArgs e)
+        private void BtnEditId_Click(object sender, EventArgs e)
         {
             ViewModel.SetEditIdStateCommand.Execute(null);
         }
-        private void btnCancelEditId_Click(object sender, EventArgs e)
+        private void BtnCancelEditId_Click(object sender, EventArgs e)
         {
             ViewModel.CancelEditIdCommand.Execute(null);
         }
-        private void btnSaveId_Click(object sender, EventArgs e)
+        private void BtnSaveId_Click(object sender, EventArgs e)
         {
             ViewModel.SaveChangeIdCommand.Execute(null);
         }

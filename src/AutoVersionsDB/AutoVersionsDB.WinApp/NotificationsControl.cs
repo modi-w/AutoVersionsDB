@@ -29,7 +29,7 @@ namespace AutoVersionsDB.WinApp
                     ViewModel.IsEventsBinded = true;
                 }
 
-                ViewModel.NotificationsViewModelData.PropertyChanged += _viewModel_PropertyChanged;
+                ViewModel.NotificationsViewModelData.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
 
             }
@@ -46,7 +46,7 @@ namespace AutoVersionsDB.WinApp
 
       
 
-        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -99,7 +99,7 @@ namespace AutoVersionsDB.WinApp
         {
             switch (ViewModel.NotificationsViewModelData.StatusImageType)
             {
-                case eStatusImageType.Spinner:
+                case StatusImageType.Spinner:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -107,13 +107,13 @@ namespace AutoVersionsDB.WinApp
                     }));
                     break;
 
-                case eStatusImageType.Warning:
+                case StatusImageType.Warning:
 
                     //TODO: add image
                     //pbStatus.Image = Resources.W;
                     break;
 
-                case eStatusImageType.Error:
+                case StatusImageType.Error:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -121,7 +121,7 @@ namespace AutoVersionsDB.WinApp
                     }));
                     break;
 
-                case eStatusImageType.Succeed:
+                case StatusImageType.Succeed:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {

@@ -24,19 +24,19 @@ namespace AutoVersionsDB.CLI
 
         public int Run(string[] args)
         {
-            RootCommand rootCommand = createCli();
+            RootCommand rootCommand = CreateCli();
 
             return rootCommand.InvokeAsync(args, _console).Result;
         }
 
         public int Run(string args)
         {
-            RootCommand rootCommand = createCli();
+            RootCommand rootCommand = CreateCli();
 
             return rootCommand.InvokeAsync(args, _console).Result;
         }
 
-        private RootCommand createCli()
+        private RootCommand CreateCli()
         {
             RootCommand rootCommand = new RootCommand();
 

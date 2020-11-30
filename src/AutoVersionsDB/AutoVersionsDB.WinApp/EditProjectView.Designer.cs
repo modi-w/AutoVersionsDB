@@ -469,7 +469,7 @@
             this.btnCancelEditId.TabIndex = 91;
             this.btnCancelEditId.Text = "X";
             this.btnCancelEditId.UseVisualStyleBackColor = false;
-            this.btnCancelEditId.Click += new System.EventHandler(this.btnCancelEditId_Click);
+            this.btnCancelEditId.Click += new System.EventHandler(this.BtnCancelEditId_Click);
             // 
             // btnSaveId
             // 
@@ -491,7 +491,7 @@
             this.btnSaveId.Size = new System.Drawing.Size(51, 49);
             this.btnSaveId.TabIndex = 90;
             this.btnSaveId.UseVisualStyleBackColor = false;
-            this.btnSaveId.Click += new System.EventHandler(this.btnSaveId_Click);
+            this.btnSaveId.Click += new System.EventHandler(this.BtnSaveId_Click);
             // 
             // btnEditId
             // 
@@ -513,7 +513,7 @@
             this.btnEditId.Size = new System.Drawing.Size(51, 49);
             this.btnEditId.TabIndex = 89;
             this.btnEditId.UseVisualStyleBackColor = false;
-            this.btnEditId.Click += new System.EventHandler(this.btnEditId_Click);
+            this.btnEditId.Click += new System.EventHandler(this.BtnEditId_Click);
             // 
             // tbProjectDescription
             // 

@@ -24,11 +24,11 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
         public override Command Create()
         {
-            Command command = new Command("list");
+            Command command = new Command("list")
+            {
+                Description = "Show list of all projects",
 
-            command.Description = "Show list of all projects";
-
-            command.Handler = CommandHandler
+                Handler = CommandHandler
                 .Create(() =>
                 {
                     _consoleProcessMessages.StartProcessMessage("list");
@@ -43,7 +43,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                     }
                     else
                     {
-                        string captionsMessage = $"{"  Id".PadRight(31)} |  Description";
+                        string captionsMessage = $"{"  Id",-31} |  Description";
                         _consoleProcessMessages.SetInfoMessage(captionsMessage);
 
                         string captionsLineMessage = "-".PadRight(55, '-');
@@ -53,13 +53,14 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                         {
                             string id = projectConfig.Id.Ellipsis(30);
 
-                            string projectLineMessage = $" {id.PadRight(30)} | {projectConfig.Description}";
+                            string projectLineMessage = $" {id,-30} | {projectConfig.Description}";
                             _consoleProcessMessages.SetInfoMessage(projectLineMessage);
                         }
 
                     }
 
-                });
+                })
+            };
 
             return command;
         }

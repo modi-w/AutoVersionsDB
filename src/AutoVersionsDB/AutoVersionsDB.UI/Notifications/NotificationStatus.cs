@@ -2,7 +2,7 @@
 {
 
 
-    public enum eNotificationStatus
+    public enum NotificationStatus
     {
         None = 0,
         WaitingForUser = 1,

@@ -1,7 +1,7 @@
 ﻿namespace AutoVersionsDB.UI.Notifications
 {
 
-    public enum eStatusImageType
+    public enum StatusImageType
     {
         None = 0,
         Spinner = 1,

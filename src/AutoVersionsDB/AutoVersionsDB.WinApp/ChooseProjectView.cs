@@ -25,7 +25,7 @@ namespace AutoVersionsDB.WinApp
 
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
 
-                renderProjectList();
+                RenderProjectList();
             }
         }
 
@@ -36,7 +36,7 @@ namespace AutoVersionsDB.WinApp
             {
                 case nameof(ViewModel.ChooseProjectViewModelData.FilteredProjectList):
 
-                    renderProjectList();
+                    RenderProjectList();
                     break;
 
                 default:
@@ -59,7 +59,7 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void renderProjectList()
+        private void RenderProjectList()
         {
             if (flowLayoutPanel1.InvokeRequired)
             {

@@ -27,8 +27,6 @@ namespace AutoVersionsDB.Core.DBVersions
 
         private readonly NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> _deployExecutionsRunner;
 
-        private readonly ScriptFilesStateFactory _scriptFilesStateFactory;
-
 
 
         public DBVersionsAPI(NotificationProcessRunner<DBVersionsValidationsProcessDefinitions, DBVersionsProcessContext> dbVersionsValidationsRunner,
@@ -41,8 +39,7 @@ namespace AutoVersionsDB.Core.DBVersions
                                NotificationProcessRunner<RecreateDBFromScratchProcessDefinition, DBVersionsProcessContext> recreateDBFromScratchRunner,
                                NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> syncDBToSpecificStateRunner,
                                NotificationProcessRunner<CreateVirtualExecutionsProcessDefinition, DBVersionsProcessContext> createVirtualExecutionsRunner,
-                               NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> deployVirtualExecutionsRunner,
-                               ScriptFilesStateFactory scriptFilesStateFactory)
+                               NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> deployVirtualExecutionsRunner)
         {
             _dbVersionsValidationsRunner = dbVersionsValidationsRunner;
             _targetStateScriptFileValidationRunner = targetStateScriptFileValidationRunner;
@@ -60,7 +57,6 @@ namespace AutoVersionsDB.Core.DBVersions
 
             _deployExecutionsRunner = deployVirtualExecutionsRunner;
 
-            _scriptFilesStateFactory = scriptFilesStateFactory;
         }
 
 

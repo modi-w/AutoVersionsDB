@@ -61,8 +61,7 @@ namespace AutoVersionsDB.NotificationableEngine
             {
                 //disposStepsList(processStep.ReadOnlyInternalSteps);
 
-                IDisposable disposeStep = processStep as IDisposable;
-                if (disposeStep != null)
+                if (processStep is IDisposable disposeStep)
                 {
                     disposeStep.Dispose();
                 }

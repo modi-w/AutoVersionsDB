@@ -23,32 +23,32 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI
 
         public void AssertNotificationsViewModelCompleteSuccessfully(string testName, NotificationsViewModelData notificationsViewModelData)
         {
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), eNotificationStatus.CompleteSuccessfully.ToString());
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), NotificationStatus.CompleteSuccessfully.ToString());
             _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, "The process complete successfully");
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), eStatusImageType.Succeed.ToString());
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), StatusImageType.Succeed.ToString());
         }
 
 
         public void AssertNotificationsViewModelProcessError(string testName, NotificationsViewModelData notificationsViewModelData)
         {
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), eNotificationStatus.Error.ToString());
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), NotificationStatus.Error.ToString());
             _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, "Error occurred during the process.");
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), eStatusImageType.Error.ToString());
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), StatusImageType.Error.ToString());
         }
 
 
         public void AssertNotificationsViewModelWaitingForUser(string testName, NotificationsViewModelData notificationsViewModelData)
         {
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), eNotificationStatus.WaitingForUser.ToString());
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), NotificationStatus.WaitingForUser.ToString());
             _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, "Waiting for your command.");
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), eStatusImageType.Succeed.ToString());
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), StatusImageType.Succeed.ToString());
         }
 
         public void AssertNotificationsViewModelError(string testName, NotificationsViewModelData notificationsViewModelData, string instrationMessage)
         {
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), eNotificationStatus.Error.ToString());
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), NotificationStatus.Error.ToString());
             _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, instrationMessage);
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), eStatusImageType.Error.ToString());
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), StatusImageType.Error.ToString());
         }
     }
 }

@@ -30,8 +30,10 @@ namespace AutoVersionsDB.NotificationableEngine
         private NotificationEngine Create()
         {
             ProcessTraceHandler processTraceHandler = new ProcessTraceHandler();
-            TProcessContext processContext = new TProcessContext();
-            processContext.ProcessDefinition = _processDefinition;
+            TProcessContext processContext = new TProcessContext
+            {
+                ProcessDefinition = _processDefinition
+            };
 
             NotificationEngine engine = new NotificationEngine(processTraceHandler, processContext);
 

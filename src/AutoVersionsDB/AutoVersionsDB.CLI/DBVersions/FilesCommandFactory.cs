@@ -45,25 +45,25 @@ namespace AutoVersionsDB.CLI.DBVersions
                 {
                     ScriptFilesState scriptFilesState = processResults.Results as ScriptFilesState;
 
-                    renderFilesList(scriptFilesState.IncrementalScriptFilesComparer);
+                    RenderFilesList(scriptFilesState.IncrementalScriptFilesComparer);
 
-                    renderFilesList(scriptFilesState.RepeatableScriptFilesComparer);
+                    RenderFilesList(scriptFilesState.RepeatableScriptFilesComparer);
 
                     if (scriptFilesState.DevDummyDataScriptFilesComparer != null)
                     {
-                        renderFilesList(scriptFilesState.DevDummyDataScriptFilesComparer);
+                        RenderFilesList(scriptFilesState.DevDummyDataScriptFilesComparer);
                     }
                 }
             });
 
-            appendIncrementalCommand(command);
-            appendRepeatableCommand(command);
-            appendDevDummyDataCommand(command);
+            AppendIncrementalCommand(command);
+            AppendRepeatableCommand(command);
+            AppendDevDummyDataCommand(command);
 
             return command;
         }
 
-        private void appendIncrementalCommand(Command command)
+        private void AppendIncrementalCommand(Command command)
         {
             Command incrementalCommand = new Command("incremental")
             {
@@ -85,14 +85,14 @@ namespace AutoVersionsDB.CLI.DBVersions
                 {
                     ScriptFilesState scriptFilesState = processResults.Results as ScriptFilesState;
 
-                    renderFilesList(scriptFilesState.IncrementalScriptFilesComparer);
+                    RenderFilesList(scriptFilesState.IncrementalScriptFilesComparer);
                 }
             });
 
             command.Add(incrementalCommand);
         }
 
-        private void appendRepeatableCommand(Command command)
+        private void AppendRepeatableCommand(Command command)
         {
             Command incrementalCommand = new Command("repeatable")
             {
@@ -114,14 +114,14 @@ namespace AutoVersionsDB.CLI.DBVersions
                 {
                     ScriptFilesState scriptFilesState = processResults.Results as ScriptFilesState;
 
-                    renderFilesList(scriptFilesState.RepeatableScriptFilesComparer);
+                    RenderFilesList(scriptFilesState.RepeatableScriptFilesComparer);
                 }
             });
 
             command.Add(incrementalCommand);
         }
 
-        private void appendDevDummyDataCommand(Command command)
+        private void AppendDevDummyDataCommand(Command command)
         {
             Command incrementalCommand = new Command("ddd")
             {
@@ -145,7 +145,7 @@ namespace AutoVersionsDB.CLI.DBVersions
 
                     if (scriptFilesState.DevDummyDataScriptFilesComparer != null)
                     {
-                        renderFilesList(scriptFilesState.DevDummyDataScriptFilesComparer);
+                        RenderFilesList(scriptFilesState.DevDummyDataScriptFilesComparer);
                     }
                 }
             });
@@ -154,13 +154,13 @@ namespace AutoVersionsDB.CLI.DBVersions
         }
 
 
-        private void renderFilesList(ScriptFilesComparerBase scriptFilesComparer)
+        private void RenderFilesList(ScriptFilesComparerBase scriptFilesComparer)
         {
             _consoleProcessMessages.SetInfoMessage("");
             _consoleProcessMessages.SetInfoMessage($"++ {scriptFilesComparer.ScriptFileType.FileTypeCode} Scripts:");
 
 
-            string captionsMessage = $"{"  Status".PadRight(10)} |  File";
+            string captionsMessage = $"{"  Status",-10} |  File";
             _consoleProcessMessages.SetInfoMessage(captionsMessage);
 
             string captionsLineMessage = "-".PadRight(55, '-');

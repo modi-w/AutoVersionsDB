@@ -23,7 +23,7 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
+                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
             }
 
@@ -33,7 +33,7 @@ namespace AutoVersionsDB.WinApp
 
 
 
-        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {

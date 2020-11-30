@@ -202,7 +202,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void CreateNewIncrementalScriptFile()
         {
-            TextInputResults results = fireOnTextInput("Create new script script file, insert the script name:");
+            TextInputResults results = FireOnTextInput("Create new script script file, insert the script name:");
 
             if (results.IsApply)
             {
@@ -225,7 +225,7 @@ namespace AutoVersionsDB.UI.DBVersions
         }
         private void CreateNewRepeatableScriptFile()
         {
-            TextInputResults results = fireOnTextInput("Create new script script file, insert the script name:");
+            TextInputResults results = FireOnTextInput("Create new script script file, insert the script name:");
 
             if (results.IsApply)
             {
@@ -250,7 +250,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void CreateNewDevDummyDataScriptFile()
         {
-            TextInputResults results = fireOnTextInput("Create new script script file, insert the script name:");
+            TextInputResults results = FireOnTextInput("Create new script script file, insert the script name:");
 
 
             if (results.IsApply)
@@ -477,7 +477,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
 
 
-        private TextInputResults fireOnTextInput(string instructionMessageText)
+        private TextInputResults FireOnTextInput(string instructionMessageText)
         {
             if (OnTextInput == null)
             {

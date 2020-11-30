@@ -47,7 +47,7 @@ namespace AutoVersionsDB.UI.EditProject
 
                 _editProjectViewSateManager.ShowHideEnvFields(ProjectConfig.DevEnvironment);
 
-                _projectConfig.PropertyChanged += _projectConfig_PropertyChanged;
+                _projectConfig.PropertyChanged += ProjectConfig_PropertyChanged;
             }
         }
 
@@ -90,8 +90,10 @@ namespace AutoVersionsDB.UI.EditProject
 
             _editProjectViewSateManager.ClearUIElementsErrors();
 
-            ProjectConfigItem newProjectConfigItem = new ProjectConfigItem();
-            newProjectConfigItem.DevEnvironment = true;
+            ProjectConfigItem newProjectConfigItem = new ProjectConfigItem
+            {
+                DevEnvironment = true
+            };
             newProjectConfigItem.SetDefaltValues();
 
             ProjectConfig = new ObservableProjectConfig(newProjectConfigItem);
@@ -104,7 +106,7 @@ namespace AutoVersionsDB.UI.EditProject
         }
 
 
-        private void _projectConfig_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ProjectConfig_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -164,7 +166,7 @@ namespace AutoVersionsDB.UI.EditProject
             {
                 ProcessResults processResults = _projectConfigsAPI.SaveNewProjectConfig(ProjectConfig.ActualProjectConfig, NotificationsViewModel.OnNotificationStateChanged);
 
-                handleCompleteProcess(processResults);
+                HandleCompleteProcess(processResults);
 
                 if (!processResults.Trace.HasError)
                 {
@@ -176,7 +178,7 @@ namespace AutoVersionsDB.UI.EditProject
             {
                 ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(ProjectConfig.ActualProjectConfig, NotificationsViewModel.OnNotificationStateChanged);
 
-                handleCompleteProcess(processResults);
+                HandleCompleteProcess(processResults);
             }
         }
 
@@ -207,7 +209,7 @@ namespace AutoVersionsDB.UI.EditProject
 
             ProcessResults processResults = _projectConfigsAPI.ChangeProjectId(_prevId, ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
 
-            handleCompleteProcess(processResults);
+            HandleCompleteProcess(processResults);
         }
 
         #endregion
@@ -233,7 +235,7 @@ namespace AutoVersionsDB.UI.EditProject
             _editProjectViewSateManager.HandleProcessErrors(_isNewProjectConfig, processResults);
         }
 
-        private void handleCompleteProcess(ProcessResults processResults)
+        private void HandleCompleteProcess(ProcessResults processResults)
         {
             if (processResults.Trace.HasError)
             {
