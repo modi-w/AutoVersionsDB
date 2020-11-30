@@ -66,6 +66,9 @@
       <Link>DBVersionsView.Designer.cs</Link>
       <DependentUpon>DBVersionsView.cs</DependentUpon>
     </Compile>
+    <Compile Include="..\AutoVersionsDB.WinApp\DIConfig.cs">
+      <Link>DIConfig.cs</Link>
+    </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\EditProjectView.cs">
       <Link>EditProjectView.cs</Link>
       <SubType>UserControl</SubType>
@@ -74,16 +77,13 @@
       <Link>EditProjectView.Designer.cs</Link>
       <DependentUpon>EditProjectView.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\Main.cs">
-      <Link>Main.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\MainView.cs">
+      <Link>MainView.cs</Link>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\Main.Designer.cs">
-      <Link>Main.Designer.cs</Link>
-      <DependentUpon>Main.cs</DependentUpon>
-    </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\NinjectUtils_Winform.cs">
-      <Link>NinjectUtils_Winform.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\MainView.Designer.cs">
+      <Link>MainView.Designer.cs</Link>
+      <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\NotificationsControl.cs">
       <Link>NotificationsControl.cs</Link>
@@ -145,9 +145,9 @@
       <Link>EditProjectView.resx</Link>
       <DependentUpon>EditProjectView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Main.resx">
-      <Link>Main.resx</Link>
-      <DependentUpon>Main.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\MainView.resx">
+      <Link>MainView.resx</Link>
+      <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\NotificationsControl.resx">
       <Link>NotificationsControl.resx</Link>

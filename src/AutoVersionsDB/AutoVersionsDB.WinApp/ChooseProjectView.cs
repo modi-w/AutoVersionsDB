@@ -126,7 +126,7 @@ namespace AutoVersionsDB.WinApp
         #region Dispose
 
         // To detect redundant calls
-        private bool _disposed = false;
+        private bool _disposed;
 
         // Protected implementation of Dispose pattern.
         protected override void Dispose(bool disposing)

@@ -27,7 +27,7 @@ namespace AutoVersionsDB.WinApp
             UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
 
 
-            Main mainFrame = DIConfig.Kernel.Get<Main>();
+            MainView mainFrame = DIConfig.Kernel.Get<MainView>();
 
             Application.Run(mainFrame);
         }

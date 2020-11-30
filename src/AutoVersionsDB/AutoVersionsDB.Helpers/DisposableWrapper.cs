@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Helpers
             Instance = objectToWrap;
         }
 
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         public void Dispose(bool disposing)
         {
