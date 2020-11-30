@@ -1,5 +1,4 @@
 ﻿using AutoVersionsDB.Core.DBVersions;
-using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using System.CommandLine;
 using System.CommandLine.Invocation;

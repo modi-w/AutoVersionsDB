@@ -59,13 +59,13 @@ namespace AutoVersionsDB.DB.SqlServer
         //}
 
 
-        private string CreateConnectionString(DBConnectionInfo dbConnectionInfo)
+        private static string CreateConnectionString(DBConnectionInfo dbConnectionInfo)
         {
             return CreateConnecntionStringByDBName(dbConnectionInfo, dbConnectionInfo.DBName);
         }
 
 
-        private string CreateAdminConnectionString(DBConnectionInfo dbConnectionInfo)
+        private static string CreateAdminConnectionString(DBConnectionInfo dbConnectionInfo)
         {
             return CreateConnecntionStringByDBName(dbConnectionInfo, "master");
         }

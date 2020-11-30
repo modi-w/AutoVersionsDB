@@ -1,5 +1,4 @@
 ﻿using AutoVersionsDB.Core.DBVersions;
-using AutoVersionsDB.Helpers;
 using System.CommandLine;
 
 namespace AutoVersionsDB.CLI.DBVersions

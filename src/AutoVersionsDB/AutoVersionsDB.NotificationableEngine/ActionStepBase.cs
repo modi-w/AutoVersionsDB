@@ -50,12 +50,12 @@ namespace AutoVersionsDB.NotificationableEngine
 
             _stepsExecuter.ExecuteSteps(internalSteps, isContinueOnError);
 
-            disposStepsList(internalSteps);
+            DisposStepsList(internalSteps);
         }
 
 
 
-        private static void disposStepsList(IEnumerable<ActionStepBase> processStepsToDispose)
+        private static void DisposStepsList(IEnumerable<ActionStepBase> processStepsToDispose)
         {
             foreach (var processStep in processStepsToDispose)
             {

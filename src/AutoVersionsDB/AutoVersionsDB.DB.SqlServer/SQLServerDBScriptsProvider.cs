@@ -237,7 +237,7 @@ namespace AutoVersionsDB.DB.SqlServer
 
 
 
-        private string GetEmbeddedResourceFileSqlServerScript(string filename)
+        private static string GetEmbeddedResourceFileSqlServerScript(string filename)
         {
             string sqlCommandStr =
                 EmbeddedResources

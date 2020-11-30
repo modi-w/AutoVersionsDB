@@ -6,7 +6,6 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class ProcessTraceHandler : IDisposable
     {
-        private bool _isRunning;
         private BlockingCollection<StepNotificationState> _stepsNotificationStateChangedQueue;
         private Action<ProcessTrace, StepNotificationState> _onStepNotificationStateChanged;
         private StepNotificationState _rootStepNotificationState;
@@ -69,8 +68,6 @@ namespace AutoVersionsDB.NotificationableEngine
             _rootStepNotificationState = new StepNotificationState(processName);
 
             _stepsNotificationStateChangedQueue = new BlockingCollection<StepNotificationState>();
-
-            _isRunning = true;
 
             RiseStepNotificationStateChanges();
         }
@@ -192,7 +189,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         #region IDisposable
 
-        private bool _disposed = false;
+        private bool _disposed;
 
         ~ProcessTraceHandler() => Dispose(false);
 

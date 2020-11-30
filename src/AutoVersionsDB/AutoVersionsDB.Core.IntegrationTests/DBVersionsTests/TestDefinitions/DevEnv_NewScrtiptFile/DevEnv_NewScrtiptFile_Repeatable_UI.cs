@@ -74,15 +74,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-
-
-        private TextInputResults _dbVersionsViewModel_OnTextInput(object sender, string instructionMessageText)
+        private void _dbVersionsViewModel_OnTextInput(object sender, OnTextInputEventsEventArgs e)
         {
-            return new TextInputResults()
+            e.Results = new TextInputResults()
             {
                 IsApply = true,
                 ResultText = _devEnv_NewScrtiptFile_Repeatable_API.ScriptName1
             };
         }
+
+
     }
 }

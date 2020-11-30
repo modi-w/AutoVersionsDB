@@ -36,7 +36,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
 
 
-        public event OnTextInputEventHandler OnTextInput;
+        public event EventHandler<OnTextInputEventsEventArgs> OnTextInput;
 
 
 
@@ -484,7 +484,10 @@ namespace AutoVersionsDB.UI.DBVersions
                 throw new Exception($"Bind method to 'OnTextInput' event is mandatory");
             }
 
-            return OnTextInput(this, instructionMessageText);
+            var eventsArgs = new OnTextInputEventsEventArgs(instructionMessageText);
+            OnTextInput(this, eventsArgs);
+
+            return eventsArgs.Results;
         }
 
 

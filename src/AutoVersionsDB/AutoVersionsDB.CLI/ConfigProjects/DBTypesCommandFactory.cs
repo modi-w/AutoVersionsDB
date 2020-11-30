@@ -1,6 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.DB.Contract;
-using AutoVersionsDB.Helpers;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;

@@ -83,7 +83,7 @@ namespace AutoVersionsDB.DB
         }
 
 
-        public IEnumerable<string> SplitSqlStatementsToExecutionBlocks(string sqlUnifyScript)
+        public virtual IEnumerable<string> SplitSqlStatementsToExecutionBlocks(string sqlUnifyScript)
         {
             // Split by "GO" statements
             var statements = Regex.Split(

@@ -1,6 +1,6 @@
 ﻿using System.CommandLine;
 
-namespace AutoVersionsDB.Helpers
+namespace AutoVersionsDB.CLI
 {
     public abstract class CLICommandFactory
     {

@@ -29,7 +29,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         #region IDisposable
 
-        private bool _disposed = false;
+        private bool _disposed;
 
         ~ProcessDefinition() => Dispose(false);
 

@@ -14,7 +14,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         private readonly IEditProjectViewSateManager _editProjectViewSateManager;
 
-        private bool _isNewProjectConfig = false;
+        private bool _isNewProjectConfig;
 
 
         public INotificationsViewModel NotificationsViewModel { get; }
@@ -183,7 +183,7 @@ namespace AutoVersionsDB.UI.EditProject
 
         #region Change Id
 
-        private string _prevId = null;
+        private string _prevId;
 
         public RelayCommand SetEditIdStateCommand { get; private set; }
         public RelayCommand CancelEditIdCommand { get; private set; }

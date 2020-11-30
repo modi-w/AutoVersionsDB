@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         }
 
-        private void ResolveFolderExist(string folderPath)
+        private static void ResolveFolderExist(string folderPath)
         {
             if (!string.IsNullOrWhiteSpace(folderPath))
             {

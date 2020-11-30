@@ -16,9 +16,11 @@ namespace AutoVersionsDB.UI
 
         public bool CanExecute(object parameter)
         {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+
             if (parameter != null)
             {
-                return _canExecute == null ? true : _canExecute();
+                return _canExecute == null || _canExecute();
             }
             else
             {
@@ -58,9 +60,7 @@ namespace AutoVersionsDB.UI
 
         public RelayCommand(Action execute, Func<bool> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
@@ -77,9 +77,11 @@ namespace AutoVersionsDB.UI
 
         public bool CanExecute(object parameter)
         {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+
             if (parameter != null)
             {
-                return _canExecute == null ? true : _canExecute((T)parameter);
+                return _canExecute == null || _canExecute((T)parameter);
             }
             else
             {
@@ -118,9 +120,7 @@ namespace AutoVersionsDB.UI
 
         public RelayCommand(Action<T> execute, Func<T, bool> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 

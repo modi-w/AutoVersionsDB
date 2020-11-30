@@ -16,3 +16,6 @@ dotnet_diagnostic.CA2201.severity = none
 
 # CA1045: Do not pass types by reference
 dotnet_diagnostic.CA1045.severity = none
+
+# CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+dotnet_diagnostic.CS8632.severity = none

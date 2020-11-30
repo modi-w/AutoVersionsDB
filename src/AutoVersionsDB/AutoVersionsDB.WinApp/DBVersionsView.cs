@@ -145,12 +145,13 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private TextInputResults ViewModel_OnTextInput(object sender, string instructionMessageText)
+
+        private void ViewModel_OnTextInput(object sender, OnTextInputEventsEventArgs e)
         {
-            TextInputWindow textInputWindow = new TextInputWindow(instructionMessageText);
+            TextInputWindow textInputWindow = new TextInputWindow(e.InstructionMessageText);
             textInputWindow.ShowDialog();
 
-            return new TextInputResults()
+            e.Results = new TextInputResults()
             {
                 ResultText = textInputWindow.ResultText,
                 IsApply = textInputWindow.IsApply,
@@ -158,9 +159,6 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void ViewModel_OnShowTextInput(object sender, EventArgs e)
-        {
-        }
 
 
 
