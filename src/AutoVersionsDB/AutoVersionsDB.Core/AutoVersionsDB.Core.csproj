@@ -31,17 +31,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Ninject" Version="3.3.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Contract\AutoVersionsDB.DbCommands.Contract.csproj" />
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Integration\AutoVersionsDB.DbCommands.Integration.csproj" />
+    <ProjectReference Include="..\AutoVersionsDB.DB\AutoVersionsDB.DB.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.Helpers\AutoVersionsDB.Helpers.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.NotificationableEngine\AutoVersionsDB.NotificationableEngine.csproj" />
   </ItemGroup>

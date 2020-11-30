@@ -1,8 +1,5 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Globalization;
 using System.Threading;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
@@ -15,16 +12,10 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         public int CurrentStepNumber { get; private set; }
         public Exception ProcessExpetion { get; private set; }
 
-        public override string StepName => StepNumber.ToString();
+        public override string StepName => StepNumber.ToString(CultureInfo.InvariantCulture);
 
 
-        public bool IsCompleted
-        {
-            get
-            {
-                return CurrentStepNumber >= StepNumber || ProcessExpetion != null;
-            }
-        }
+        public bool IsCompleted => CurrentStepNumber >= StepNumber || ProcessExpetion != null;
 
 
         public ExternalProcessStatusStep(int stepNumber)

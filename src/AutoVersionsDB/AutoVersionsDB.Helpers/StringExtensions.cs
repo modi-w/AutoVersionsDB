@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-
-namespace AutoVersionsDB.Helpers
+﻿namespace AutoVersionsDB.Helpers
 {
     public static class StringExtensions
     {
@@ -21,6 +16,8 @@ namespace AutoVersionsDB.Helpers
 
         public static string Ellipsis(this string str, int maxLength)
         {
+            str.ThrowIfNull(nameof(str));
+
             string resultsStr = str;
 
             if (str.Length > maxLength)

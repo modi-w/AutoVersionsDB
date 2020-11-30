@@ -35,9 +35,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
 
 
-        public void ChangeViewState_AfterProcessComplete(ProcessTrace processResults)
+        public void ChangeViewStateAfterProcessComplete(ProcessTrace processResults)
         {
-            _dbVersionsViewSateManager.ChangeViewState_AfterProcessComplete(processResults);
+            _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults);
 
             ChangeViewStateForMockSniffer(LastViewState);
         }

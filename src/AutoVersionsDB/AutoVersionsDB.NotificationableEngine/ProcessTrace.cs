@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -7,15 +6,8 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class ProcessTrace
     {
-        private readonly List<StepNotificationState> _statesLog;
-        public List<StepNotificationState> StatesLog
-
-        {
-            get
-            {
-                return _statesLog.ToList();
-            }
-        }
+        private readonly IList<StepNotificationState> _statesLog;
+        public IList<StepNotificationState> StatesLog => _statesLog.ToList();
 
         public bool HasError
         {

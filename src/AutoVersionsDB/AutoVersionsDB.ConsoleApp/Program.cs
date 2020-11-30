@@ -1,19 +1,13 @@
 ﻿using AutoVersionsDB.CLI;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
 using System;
-using System.CommandLine;
-using System.CommandLine.Invocation;
-using System.IO;
-using System.Threading;
 
 namespace AutoVersionsDB.ConsoleApp
 {
-    class Program
+    internal class Program
     {
-        static int Main(string[] args)
+        private static int Main(string[] args)
         {
-            NinjectUtils_Console.CreateKernel();
+            DIConfig.CreateKernel();
 
             Console.Title = "AutoVersionsDB";
 

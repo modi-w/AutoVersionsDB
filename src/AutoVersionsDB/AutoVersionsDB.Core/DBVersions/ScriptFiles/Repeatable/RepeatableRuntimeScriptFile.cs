@@ -8,13 +8,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable
 {
     public class RepeatableRuntimeScriptFile : RuntimeScriptFileBase
     {
-        public override ScriptFileTypeBase ScriptFileType
-        {
-            get
-            {
-                return ScriptFileTypeBase.Create<RepeatableScriptFileType>();
-            }
-        }
+        public override ScriptFileTypeBase ScriptFileType => ScriptFileTypeBase.Create<RepeatableScriptFileType>();
 
         public override string SortKey => ScriptName;
         public override string FolderPath { get; protected set; }

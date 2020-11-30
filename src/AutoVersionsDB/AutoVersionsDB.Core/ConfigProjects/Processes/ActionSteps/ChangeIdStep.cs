@@ -1,10 +1,5 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
+﻿using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
+using AutoVersionsDB.Helpers;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
@@ -26,6 +21,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             ChangeIdProcessParams projectConfigProcessParams = processContext.ProcessParams as ChangeIdProcessParams;
 
             _projectConfigsStorage.ChangeId(projectConfigProcessParams.Id, projectConfigProcessParams.NewId);

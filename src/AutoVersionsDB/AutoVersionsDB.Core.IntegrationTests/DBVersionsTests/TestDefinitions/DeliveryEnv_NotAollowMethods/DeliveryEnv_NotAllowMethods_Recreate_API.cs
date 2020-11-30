@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Asserts(ITestContext testContext)
         {
-            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext,false);
+            _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
 
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DeliveryEnvironment");
 

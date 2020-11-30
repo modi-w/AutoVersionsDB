@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Windows.Forms;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.UI.ChooseProject;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
-using AutoVersionsDB.UI.ChooseProject;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -30,7 +25,7 @@ namespace AutoVersionsDB.WinApp
 
                 flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
 
-                renderProjectList();
+                RenderProjectList();
             }
         }
 
@@ -41,7 +36,7 @@ namespace AutoVersionsDB.WinApp
             {
                 case nameof(ViewModel.ChooseProjectViewModelData.FilteredProjectList):
 
-                    renderProjectList();
+                    RenderProjectList();
                     break;
 
                 default:
@@ -52,8 +47,8 @@ namespace AutoVersionsDB.WinApp
 
         private void SetDataBindings()
         {
-            this.tbSerchProject.DataBindings.Clear();
-            this.tbSerchProject.DataBindings.Add(
+            tbSerchProject.DataBindings.Clear();
+            tbSerchProject.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     tbSerchProject,
                     nameof(tbSerchProject.Text),
@@ -64,7 +59,7 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void renderProjectList()
+        private void RenderProjectList()
         {
             if (flowLayoutPanel1.InvokeRequired)
             {
@@ -131,7 +126,7 @@ namespace AutoVersionsDB.WinApp
         #region Dispose
 
         // To detect redundant calls
-        private bool _disposed = false;
+        private bool _disposed;
 
         // Protected implementation of Dispose pattern.
         protected override void Dispose(bool disposing)

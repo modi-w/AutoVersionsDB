@@ -6,13 +6,12 @@ namespace AutoVersionsDB.NotificationableEngine
 {
     public class ProcessTraceHandler : IDisposable
     {
-        private bool _isRunning;
         private BlockingCollection<StepNotificationState> _stepsNotificationStateChangedQueue;
         private Action<ProcessTrace, StepNotificationState> _onStepNotificationStateChanged;
         private StepNotificationState _rootStepNotificationState;
         private Task _riseStepNotificationStateChangesTask;
 
-        private StepNotificationState _parentStepNotificationState
+        private StepNotificationState ParentStepNotificationState
         {
             get
             {
@@ -30,11 +29,11 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
-        private StepNotificationState _currentStepNotificationState
+        private StepNotificationState CurrentStepNotificationState
         {
             get
             {
-                StepNotificationState parentStepNotificationState = _parentStepNotificationState;
+                StepNotificationState parentStepNotificationState = ParentStepNotificationState;
 
                 if (parentStepNotificationState.InternalStepNotificationState == null)
                 {
@@ -52,13 +51,7 @@ namespace AutoVersionsDB.NotificationableEngine
         internal ProcessTrace ProcessTrace { get; private set; }
 
 
-        internal bool HasError
-        {
-            get
-            {
-                return ProcessTrace.HasError;
-            }
-        }
+        internal bool HasError => ProcessTrace.HasError;
 
 
         public ProcessTraceHandler()
@@ -76,20 +69,18 @@ namespace AutoVersionsDB.NotificationableEngine
 
             _stepsNotificationStateChangedQueue = new BlockingCollection<StepNotificationState>();
 
-            _isRunning = true;
-
             RiseStepNotificationStateChanges();
         }
 
         internal void StepStart(string stepName)
         {
-            _currentStepNotificationState
+            CurrentStepNotificationState
                 .InternalStepNotificationState = new StepNotificationState(stepName);
         }
 
         internal void SetNumOfInternalSteps(int numOfSteps)
         {
-            _currentStepNotificationState
+            CurrentStepNotificationState
                 .SetNumOfSteps(numOfSteps);
 
             SaveNotificationStateSnapshot();
@@ -98,27 +89,27 @@ namespace AutoVersionsDB.NotificationableEngine
 
         internal void StepEnd()
         {
-            _parentStepNotificationState.StepNumber++;
+            ParentStepNotificationState.StepNumber++;
 
-            if (_parentStepNotificationState.NumOfSteps > 0)
+            if (ParentStepNotificationState.NumOfSteps > 0)
             {
-                if (_parentStepNotificationState.IsPrecentsAboveMin)
+                if (ParentStepNotificationState.IsPrecentsAboveMin)
                 {
-                    _parentStepNotificationState.LastNotifyPrecents = _parentStepNotificationState.Precents;
+                    ParentStepNotificationState.LastNotifyPrecents = ParentStepNotificationState.Precents;
 
                     SaveNotificationStateSnapshot();
                 }
             }
 
-            _parentStepNotificationState.InternalStepNotificationState = null;
+            ParentStepNotificationState.InternalStepNotificationState = null;
         }
 
 
         internal void StepError(string errorCode, string errorMessage, string instructionsMessage)
         {
-            _currentStepNotificationState.ErrorCode = errorCode;
-            _currentStepNotificationState.ErrorMesage = errorMessage;
-            _currentStepNotificationState.InstructionsMessage = instructionsMessage;
+            CurrentStepNotificationState.ErrorCode = errorCode;
+            CurrentStepNotificationState.ErrorMesage = errorMessage;
+            CurrentStepNotificationState.InstructionsMessage = instructionsMessage;
 
             SaveNotificationStateSnapshot();
         }
@@ -180,7 +171,7 @@ namespace AutoVersionsDB.NotificationableEngine
                  }
                  catch (Exception ex)
                  {
-                     Console.WriteLine($"ProcessTraceHandler.RiseStepNotificationStateChanges() -> {ex.ToString()}");
+                     Console.WriteLine($"ProcessTraceHandler.RiseStepNotificationStateChanges() -> {ex}");
                  }
 
              });
@@ -198,7 +189,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         #region IDisposable
 
-        private bool _disposed = false;
+        private bool _disposed;
 
         ~ProcessTraceHandler() => Dispose(false);
 
@@ -210,7 +201,7 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
         // Protected implementation of Dispose pattern.
-        public void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
             {

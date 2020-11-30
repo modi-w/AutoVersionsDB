@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
-
+using AutoVersionsDB.Helpers;
 
 //http://www.claassen.net/geek/blog/2007/07/generic-asynchronous.html
 
@@ -30,16 +27,16 @@ namespace AutoVersionsDB.WinApp.Utils
                                           INotifyPropertyChanged bindingSource,
                                           string dataMember)
         {
-            //return new Binding(propertyName, bindingSource, dataMember,false, DataSourceUpdateMode.OnPropertyChanged);
+            bindingSource.ThrowIfNull(nameof(bindingSource));
 
             AsyncBindingHelper helper
               = new AsyncBindingHelper(bindingControl, bindingSource, dataMember);
             return new Binding(propertyName, helper, "Value", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        Control bindingControl;
-        INotifyPropertyChanged bindingSource;
-        string dataMember;
+        private readonly Control bindingControl;
+        private readonly INotifyPropertyChanged bindingSource;
+        private readonly string dataMember;
 
         private AsyncBindingHelper(Control bindingControl,
                                     INotifyPropertyChanged bindingSource,
@@ -49,10 +46,10 @@ namespace AutoVersionsDB.WinApp.Utils
             this.bindingSource = bindingSource;
             this.dataMember = dataMember;
             bindingSource.PropertyChanged
-              += new PropertyChangedEventHandler(bindingSource_PropertyChanged);
+              += new PropertyChangedEventHandler(BindingSource_PropertyChanged);
         }
 
-        void bindingSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void BindingSource_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (PropertyChanged != null && e.PropertyName == dataMember)
             {
@@ -61,12 +58,12 @@ namespace AutoVersionsDB.WinApp.Utils
                 if (bindingControl.InvokeRequired)
                 {
                     bindingControl.BeginInvoke(
-                      new PropertyChangedEventHandler(bindingSource_PropertyChanged),
+                      new PropertyChangedEventHandler(BindingSource_PropertyChanged),
                       sender,
                       e);
                     return;
                 }
-                PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(Value)));
             }
         }
 
@@ -75,15 +72,9 @@ namespace AutoVersionsDB.WinApp.Utils
         /// </summary>
         public object Value
         {
-            get
-            {
-                return bindingSource.GetType().GetProperty(dataMember)
+            get => bindingSource.GetType().GetProperty(dataMember)
                   .GetValue(bindingSource, null);
-            }
-            set
-            {
-                bindingSource.GetType().GetProperty(dataMember).SetValue(bindingSource, value, null);
-            }
+            set => bindingSource.GetType().GetProperty(dataMember).SetValue(bindingSource, value, null);
         }
         #region INotifyPropertyChanged Members
         /// <summary>

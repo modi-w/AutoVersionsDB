@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [SetUp]
         public void Init()
         {
-            NinjectUtils_IntegrationTests.CreateKernel();
+            DIConfig.CreateKernel();
         }
 
 
@@ -41,7 +41,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
             TestsRunner.RunTestsForeachDBType<DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_API, DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_CLI, DeliveryEnv_SyncDB_DBInMiddleState_WithDevDummyDataFiles_UI>();
         }
 
-    
+
 
         [Test]
         public void DeliveryEnv_SyncDB_DBInFinalState_RepeatableChanged()

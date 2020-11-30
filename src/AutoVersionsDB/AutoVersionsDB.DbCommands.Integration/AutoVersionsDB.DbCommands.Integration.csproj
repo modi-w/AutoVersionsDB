@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Contract\AutoVersionsDB.DbCommands.Contract.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.DbCommands.SqlServer\AutoVersionsDB.DbCommands.SqlServer.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.Helpers\AutoVersionsDB.Helpers.csproj" />
   </ItemGroup>

@@ -7,8 +7,8 @@ namespace AutoVersionsDB.NotificationableEngine
 
     internal sealed class NotificationEngine : IStepsExecuter, IDisposable
     {
-        private ProcessTraceHandler _processTraceHandler;
-        private ProcessContext _processContext;
+        private readonly ProcessTraceHandler _processTraceHandler;
+        private readonly ProcessContext _processContext;
 
         internal NotificationEngine(ProcessTraceHandler processTraceHandler,
                                     ProcessContext processContext)
@@ -119,7 +119,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         #region IDisposable
 
-        private bool _disposed = false;
+        private bool _disposed;
 
         ~NotificationEngine() => Dispose(false);
 

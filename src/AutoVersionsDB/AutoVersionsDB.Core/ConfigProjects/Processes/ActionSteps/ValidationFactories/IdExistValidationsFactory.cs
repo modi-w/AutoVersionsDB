@@ -1,9 +1,8 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.Common.Validators;
-using AutoVersionsDB.DbCommands.Integration;
+﻿using AutoVersionsDB.Core.Common.Validators;
+using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
-using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
 using System;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFactories
@@ -23,9 +22,11 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
 
         public override ValidationsGroup Create(ProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
-            string Id = null;
+            string Id;
             if (processContext.ProcessParams is ProjectConfigProcessParams)
             {
                 Id = (processContext.ProcessParams as ProjectConfigProcessParams).Id;

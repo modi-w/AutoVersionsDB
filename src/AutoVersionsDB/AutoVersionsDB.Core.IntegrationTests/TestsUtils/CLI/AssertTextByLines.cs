@@ -2,10 +2,7 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
-
-
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
-using AutoVersionsDB.DbCommands.Contract;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -62,8 +59,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
 
             if (!forceLineIndex.HasValue)
             {
-                if (_maxNumOfLines.HasValue 
-                    && _maxNumOfLines <= _lineIndex+1)
+                if (_maxNumOfLines.HasValue
+                    && _maxNumOfLines <= _lineIndex + 1)
                 {
                     Assert.That(_finalConsoleOutLines.Count == _maxNumOfLines, $"{_testName}-> {_textType} -> Invalid number of lines, should be: {_maxNumOfLines}, but was: {_finalConsoleOutLines.Count}. Full Console Text: {Environment.NewLine}{_text}");
                 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoVersionsDB.NotificationableEngine.Validations
+﻿namespace AutoVersionsDB.NotificationableEngine.Validations
 {
     public class SingleValidationStepFactory
     {

@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 {
     public static class TestsRunner
     {
-        private static ProjectConfigsFactory _projectConfigsFactory = NinjectUtils_IntegrationTests.NinjectKernelContainer.Get<ProjectConfigsFactory>();
+        private static ProjectConfigsFactory _projectConfigsFactory = DIConfig.Kernel.Get<ProjectConfigsFactory>();
 
         private static object _testRunSync = new object();
 
@@ -21,7 +21,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             TestArgs testArgs = new ProjectConfigTestArgs(null);
 
-            var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1>();
+            var tests = DIConfig.GetTestDefinitions<T1>();
 
             RunTests(tests, testArgs);
         }
@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             TestArgs testArgs = new ProjectConfigTestArgs(null);
 
-            var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2>();
+            var tests = DIConfig.GetTestDefinitions<T1, T2>();
 
             RunTests(tests, testArgs);
         }
@@ -43,7 +43,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             TestArgs testArgs = new ProjectConfigTestArgs(null);
 
-            var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3>();
+            var tests = DIConfig.GetTestDefinitions<T1, T2, T3>();
 
             RunTests(tests, testArgs);
         }
@@ -55,7 +55,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         {
             TestArgs testArgs = new ProjectConfigTestArgs(null);
 
-            var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3, T4>();
+            var tests = DIConfig.GetTestDefinitions<T1, T2, T3, T4>();
 
             RunTests(tests, testArgs);
         }
@@ -73,7 +73,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             {
                 TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
 
-                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1>();
+                var tests = DIConfig.GetTestDefinitions<T1>();
 
                 RunTests(tests, testArgs);
             }
@@ -91,7 +91,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             {
                 TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
 
-                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2>();
+                var tests = DIConfig.GetTestDefinitions<T1, T2>();
 
                 RunTests(tests, testArgs);
             }
@@ -108,7 +108,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             {
                 TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
 
-                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3>();
+                var tests = DIConfig.GetTestDefinitions<T1, T2, T3>();
 
                 RunTests(tests, testArgs);
             }
@@ -126,7 +126,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             {
                 TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
 
-                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3, T4>();
+                var tests = DIConfig.GetTestDefinitions<T1, T2, T3, T4>();
 
                 RunTests(tests, testArgs);
             }
@@ -145,7 +145,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             {
                 TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
 
-                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3, T4, T5>();
+                var tests = DIConfig.GetTestDefinitions<T1, T2, T3, T4, T5>();
 
                 RunTests(tests, testArgs);
             }
@@ -165,7 +165,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             {
                 TestArgs testArgs = new ProjectConfigTestArgs(projectConfig);
 
-                var tests = NinjectUtils_IntegrationTests.GetTestDefinitions<T1, T2, T3, T4, T5, T6>();
+                var tests = DIConfig.GetTestDefinitions<T1, T2, T3, T4, T5, T6>();
 
                 RunTests(tests, testArgs);
             }

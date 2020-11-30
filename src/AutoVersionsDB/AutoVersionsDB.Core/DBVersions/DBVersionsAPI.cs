@@ -1,17 +1,11 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.Processes;
+﻿using AutoVersionsDB.Core.DBVersions.Processes;
 using AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
-using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
-using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
-using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
+using AutoVersionsDB.NotificationableEngine;
+using System;
 
 namespace AutoVersionsDB.Core.DBVersions
 {
@@ -33,8 +27,6 @@ namespace AutoVersionsDB.Core.DBVersions
 
         private readonly NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> _deployExecutionsRunner;
 
-        private readonly ScriptFilesStateFactory _scriptFilesStateFactory;
-
 
 
         public DBVersionsAPI(NotificationProcessRunner<DBVersionsValidationsProcessDefinitions, DBVersionsProcessContext> dbVersionsValidationsRunner,
@@ -47,8 +39,7 @@ namespace AutoVersionsDB.Core.DBVersions
                                NotificationProcessRunner<RecreateDBFromScratchProcessDefinition, DBVersionsProcessContext> recreateDBFromScratchRunner,
                                NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> syncDBToSpecificStateRunner,
                                NotificationProcessRunner<CreateVirtualExecutionsProcessDefinition, DBVersionsProcessContext> createVirtualExecutionsRunner,
-                               NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> deployVirtualExecutionsRunner,
-                               ScriptFilesStateFactory scriptFilesStateFactory)
+                               NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> deployVirtualExecutionsRunner)
         {
             _dbVersionsValidationsRunner = dbVersionsValidationsRunner;
             _targetStateScriptFileValidationRunner = targetStateScriptFileValidationRunner;
@@ -66,7 +57,6 @@ namespace AutoVersionsDB.Core.DBVersions
 
             _deployExecutionsRunner = deployVirtualExecutionsRunner;
 
-            _scriptFilesStateFactory = scriptFilesStateFactory;
         }
 
 
@@ -142,13 +132,13 @@ namespace AutoVersionsDB.Core.DBVersions
 
         public ProcessResults GetScriptFilesState(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            
-           return _getScriptFilesStateRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
+
+            return _getScriptFilesStateRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
         }
 
         public ProcessResults CreateNewIncrementalScriptFile(string id, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-           return _createIncrementalNextScriptFileRunner.Run(new DBVersionsProcessParams(id, null, scriptName), onNotificationStateChanged);
+            return _createIncrementalNextScriptFileRunner.Run(new DBVersionsProcessParams(id, null, scriptName), onNotificationStateChanged);
         }
 
         public ProcessResults CreateNewRepeatableScriptFile(string id, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)

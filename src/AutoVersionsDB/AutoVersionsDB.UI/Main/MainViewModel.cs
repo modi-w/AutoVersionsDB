@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace AutoVersionsDB.UI.Main
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        
+
         public MainViewModelData MainViewModelData { get; }
         public MainControls MainControls { get; }
-        
+
 
         private ViewRouter _viewRouter;
         public ViewRouter ViewRouter
         {
-            get
-            {
-                return _viewRouter;
-            }
+            get => _viewRouter;
             set
             {
                 _viewRouter = value;

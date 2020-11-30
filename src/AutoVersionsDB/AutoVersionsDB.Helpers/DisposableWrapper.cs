@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoVersionsDB.Helpers
 {
@@ -15,16 +13,15 @@ namespace AutoVersionsDB.Helpers
             Instance = objectToWrap;
         }
 
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
-        private void Dispose(bool disposing)
+        public void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
                 if (disposing)
                 {
-                    var disposableObject = Instance as IDisposable;
-                    if (disposableObject != null)
+                    if (Instance is IDisposable disposableObject)
                     {
                         disposableObject.Dispose();
                     }
@@ -33,7 +30,7 @@ namespace AutoVersionsDB.Helpers
             }
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             Dispose(true);
         }

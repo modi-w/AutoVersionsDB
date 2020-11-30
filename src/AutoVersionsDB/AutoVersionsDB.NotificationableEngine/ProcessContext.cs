@@ -34,17 +34,15 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
+
         public abstract bool CanRollback { get; }
 
         public bool IsRollbackExecuted { get; internal set; }
 
 
-        public ProcessContext()
-        {
+     
 
-        }
 
-      
     }
 
 }

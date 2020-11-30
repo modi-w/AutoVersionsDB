@@ -1,8 +1,6 @@
-﻿using System;
+﻿using AutoVersionsDB.Helpers;
 using System.Collections.Generic;
-using System.Text;
 using System.CommandLine;
-using AutoVersionsDB.Helpers;
 
 
 namespace AutoVersionsDB.CLI.DBVersions
@@ -34,6 +32,8 @@ namespace AutoVersionsDB.CLI.DBVersions
 
         public void Build(RootCommand rootCommand)
         {
+            rootCommand.ThrowIfNull(nameof(rootCommand));
+
             foreach (var commandFactory in _cliCommandFactories)
             {
                 Command command = commandFactory.Create();

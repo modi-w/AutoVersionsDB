@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.CLIConsoleTests
         [SetUp]
         public void Init()
         {
-            NinjectUtils_IntegrationTests.CreateKernel();
+            DIConfig.CreateKernel();
         }
 
 

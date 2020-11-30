@@ -48,8 +48,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut,6);
-          
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 6);
+
             assertTextByLines.AssertLineMessage("> Run 'new incremental' for 'IntegrationTestProject'", true);
             assertTextByLines.AssertLineMessage("The process complete successfully", true);
             assertTextByLines.AssertLineMessage($"The file: '{_devEnv_NewScrtiptFile_Incremental_API.GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);

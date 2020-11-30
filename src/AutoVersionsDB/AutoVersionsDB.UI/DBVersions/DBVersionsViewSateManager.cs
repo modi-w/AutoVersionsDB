@@ -1,15 +1,11 @@
-﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
+﻿using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
-using AutoVersionsDB.UI.EditProject;
 using AutoVersionsDB.UI.Notifications;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace AutoVersionsDB.UI.DBVersions
 {
@@ -33,8 +29,10 @@ namespace AutoVersionsDB.UI.DBVersions
         }
 
 
-        public void ChangeViewState_AfterProcessComplete(ProcessTrace processResults)
+        public void ChangeViewStateAfterProcessComplete(ProcessTrace processResults)
         {
+            processResults.ThrowIfNull(nameof(processResults));
+
             if (processResults.HasError
                 && !string.IsNullOrWhiteSpace(processResults.InstructionsMessageStepName)
                 && string.CompareOrdinal(processResults.InstructionsMessageStepName, RestoreDatabaseStep.StepNameStr) == 0)
@@ -85,8 +83,8 @@ namespace AutoVersionsDB.UI.DBVersions
                 case DBVersionsViewStateType.ReadyToRunSync:
 
                     _dbVersionsControls.PnlMainActionsVisible = true;
-                    _dbVersionsControls.LblColorTargetState_SquareVisible = false;
-                    _dbVersionsControls.LblColorTargetState_CaptionVisible = false;
+                    _dbVersionsControls.LblColorTargetStateSquareVisible = false;
+                    _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
 
 
                     if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
@@ -104,8 +102,8 @@ namespace AutoVersionsDB.UI.DBVersions
                     AppendEmptyDBTargetStateToIncremental();
 
                     _dbVersionsControls.PnlSyncToSpecificStateVisible = true;
-                    _dbVersionsControls.LblColorTargetState_SquareVisible = true;
-                    _dbVersionsControls.LblColorTargetState_CaptionVisible = true;
+                    _dbVersionsControls.LblColorTargetStateSquareVisible = true;
+                    _dbVersionsControls.LblColorTargetStateCaptionVisible = true;
 
                     _dbVersionsControls.PnlRepeatableFilesVisible = false;
                     _dbVersionsControls.PnlDevDummyDataFilesVisible = false;
@@ -121,8 +119,8 @@ namespace AutoVersionsDB.UI.DBVersions
                 case DBVersionsViewStateType.HistoryExecutedFilesChanged:
 
                     _dbVersionsControls.PnlMissingSystemTablesVisible = true;
-                    _dbVersionsControls.LblColorTargetState_SquareVisible = false;
-                    _dbVersionsControls.LblColorTargetState_CaptionVisible = false;
+                    _dbVersionsControls.LblColorTargetStateSquareVisible = false;
+                    _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
 
                     if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
                     {
@@ -139,8 +137,8 @@ namespace AutoVersionsDB.UI.DBVersions
                     AppendEmptyDBTargetStateToIncremental();
 
                     _dbVersionsControls.PnlSetDBStateManuallyVisible = true;
-                    _dbVersionsControls.LblColorTargetState_SquareVisible = true;
-                    _dbVersionsControls.LblColorTargetState_CaptionVisible = true;
+                    _dbVersionsControls.LblColorTargetStateSquareVisible = true;
+                    _dbVersionsControls.LblColorTargetStateCaptionVisible = true;
 
                     _dbVersionsControls.PnlRepeatableFilesVisible = false;
                     _dbVersionsControls.PnlDevDummyDataFilesVisible = false;
@@ -166,8 +164,8 @@ namespace AutoVersionsDB.UI.DBVersions
                     _dbVersionsControls.BtnShowHistoricalBackupsEnabled = true;
 
                     _dbVersionsControls.PnlRestoreDbErrorVisible = true;
-                    _dbVersionsControls.LblColorTargetState_SquareVisible = false;
-                    _dbVersionsControls.LblColorTargetState_CaptionVisible = false;
+                    _dbVersionsControls.LblColorTargetStateSquareVisible = false;
+                    _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
                     break;
 
                 default:

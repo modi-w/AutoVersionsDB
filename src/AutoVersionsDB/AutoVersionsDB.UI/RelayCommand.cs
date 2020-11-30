@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -18,9 +16,11 @@ namespace AutoVersionsDB.UI
 
         public bool CanExecute(object parameter)
         {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+
             if (parameter != null)
             {
-                return _canExecute == null ? true : _canExecute();
+                return _canExecute == null || _canExecute();
             }
             else
             {
@@ -60,20 +60,10 @@ namespace AutoVersionsDB.UI
 
         public RelayCommand(Action execute, Func<bool> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException("execute");
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
-        public void RaiseCanExecuteChanged()
-        {
-            var handler = CanExecuteChanged;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
-        }
     }
 
 
@@ -87,9 +77,11 @@ namespace AutoVersionsDB.UI
 
         public bool CanExecute(object parameter)
         {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+
             if (parameter != null)
             {
-                return _canExecute == null ? true : _canExecute((T)parameter);
+                return _canExecute == null || _canExecute((T)parameter);
             }
             else
             {
@@ -128,19 +120,9 @@ namespace AutoVersionsDB.UI
 
         public RelayCommand(Action<T> execute, Func<T, bool> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException("execute");
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
-        public void RaiseCanExecuteChanged()
-        {
-            var handler = CanExecuteChanged;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
-        }
     }
 }

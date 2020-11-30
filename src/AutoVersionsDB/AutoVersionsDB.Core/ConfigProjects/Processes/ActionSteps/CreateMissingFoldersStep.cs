@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AutoVersionsDB.Helpers;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Text;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
@@ -19,6 +16,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             ResolveFolderExist(processContext.ProjectConfig.BackupFolderPath);
 
             if (processContext.ProjectConfig.DevEnvironment)
@@ -37,7 +36,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         }
 
-        private void ResolveFolderExist(string folderPath)
+        private static void ResolveFolderExist(string folderPath)
         {
             if (!string.IsNullOrWhiteSpace(folderPath))
             {

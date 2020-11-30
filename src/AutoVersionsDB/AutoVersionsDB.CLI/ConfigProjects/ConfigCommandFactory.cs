@@ -1,13 +1,8 @@
 ﻿using AutoVersionsDB.CLI.ConfigProjects.CLIOptions;
 using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions;
-using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.Text;
 
 namespace AutoVersionsDB.CLI.ConfigProjects
 {
@@ -99,7 +94,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                     }
                     else
                     {
-                        overrideProjectConfigProperties(existProjectConfig, projectConfig);
+                        OverrideProjectConfigProperties(existProjectConfig, projectConfig);
 
                         _consoleProcessMessages.StartSpiiner();
                         ProcessResults processResults = _projectConfigsAPI.UpdateProjectConfig(existProjectConfig, _consoleProcessMessages.OnNotificationStateChanged);
@@ -118,7 +113,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
             return command;
         }
 
-        private static void overrideProjectConfigProperties(ProjectConfigItem existProjectConfig, ProjectConfigItem projectConfig)
+        private static void OverrideProjectConfigProperties(ProjectConfigItem existProjectConfig, ProjectConfigItem projectConfig)
         {
             if (projectConfig.Description != null)
             {

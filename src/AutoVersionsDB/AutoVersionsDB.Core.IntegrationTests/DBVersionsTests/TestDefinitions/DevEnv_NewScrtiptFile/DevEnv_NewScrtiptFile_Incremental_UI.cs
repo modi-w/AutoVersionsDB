@@ -80,25 +80,25 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-
-
-
-        private TextInputResults _dbVersionsViewModel_OnTextInputScript1(object sender, string instructionMessageText)
+        private void _dbVersionsViewModel_OnTextInputScript1(object sender, OnTextInputEventsEventArgs e)
         {
-            return new TextInputResults()
+            e.Results = new TextInputResults()
             {
                 IsApply = true,
                 ResultText = _devEnv_NewScrtiptFile_Incremental_API.ScriptName1
             };
         }
-
-        private TextInputResults _dbVersionsViewModel_OnTextInputScript2(object sender, string instructionMessageText)
+        private void _dbVersionsViewModel_OnTextInputScript2(object sender, OnTextInputEventsEventArgs e)
         {
-            return new TextInputResults()
+            e.Results = new TextInputResults()
             {
                 IsApply = true,
                 ResultText = _devEnv_NewScrtiptFile_Incremental_API.ScriptName2
             };
         }
+
+
+
+
     }
 }

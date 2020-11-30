@@ -1,14 +1,8 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.Common;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.Processes.Validators;
+﻿using AutoVersionsDB.Core.DBVersions.Processes.Validators;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles;
-using System;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactories
 {
@@ -26,6 +20,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 
         public override ValidationsGroup Create(ProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             DBVersionsProcessContext dbVersionsProcessContext = processContext as DBVersionsProcessContext;
             DBVersionsProcessParams dbVersionsProcessParams = dbVersionsProcessContext.ProcessParams as DBVersionsProcessParams;
 

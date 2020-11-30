@@ -1,12 +1,10 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
-using AutoVersionsDB.DbCommands.Integration;
+﻿using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.DBProcessStatusNotifyers;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using System;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 {
@@ -72,7 +70,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                         {
                             using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
                             {
-                                dbBackupRestoreCommands.RestoreDBFromBackup(processContext.DBBackupFileFullPath, dbCommands.GetDataBaseName());
+                                dbBackupRestoreCommands.RestoreDBFromBackup(processContext.DBBackupFileFullPath, dbCommands.DataBaseName);
 
                                 foreach (ExternalProcessStatusStep step in internalSteps)
                                 {

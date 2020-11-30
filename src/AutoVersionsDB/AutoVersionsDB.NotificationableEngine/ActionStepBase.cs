@@ -1,9 +1,6 @@
-﻿using System;
+﻿using AutoVersionsDB.Helpers;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
@@ -47,23 +44,24 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        protected void ExecuteInternalSteps(List<ActionStepBase> internalSteps, bool isContinueOnError)
+        protected void ExecuteInternalSteps(IList<ActionStepBase> internalSteps, bool isContinueOnError)
         {
+            internalSteps.ThrowIfNull(nameof(internalSteps));
+
             _stepsExecuter.ExecuteSteps(internalSteps, isContinueOnError);
 
-            disposStepsList(internalSteps);
+            DisposStepsList(internalSteps);
         }
 
 
 
-        private static void disposStepsList(IEnumerable<ActionStepBase> processStepsToDispose)
+        private static void DisposStepsList(IEnumerable<ActionStepBase> processStepsToDispose)
         {
             foreach (var processStep in processStepsToDispose)
             {
                 //disposStepsList(processStep.ReadOnlyInternalSteps);
 
-                IDisposable disposeStep = processStep as IDisposable;
-                if (disposeStep != null)
+                if (processStep is IDisposable disposeStep)
                 {
                     disposeStep.Dispose();
                 }

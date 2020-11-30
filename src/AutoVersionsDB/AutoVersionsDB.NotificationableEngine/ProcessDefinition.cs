@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace AutoVersionsDB.NotificationableEngine
 {
@@ -12,15 +11,9 @@ namespace AutoVersionsDB.NotificationableEngine
         public ActionStepBase RollbackStep { get; }
 
         private readonly List<ActionStepBase> _processSteps;
-        public ReadOnlyCollection<ActionStepBase> ProcessSteps
-        {
-            get
-            {
-                return _processSteps.AsReadOnly();
-            }
-        }
+        public ReadOnlyCollection<ActionStepBase> ProcessSteps => _processSteps.AsReadOnly();
 
-        public ProcessDefinition(ActionStepBase rollbackStep)
+        protected ProcessDefinition(ActionStepBase rollbackStep)
         {
             _processSteps = new List<ActionStepBase>();
 
@@ -36,7 +29,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
         #region IDisposable
 
-        private bool _disposed = false;
+        private bool _disposed;
 
         ~ProcessDefinition() => Dispose(false);
 
@@ -71,7 +64,7 @@ namespace AutoVersionsDB.NotificationableEngine
             _disposed = true;
         }
 
-        
+
 
         #endregion
 

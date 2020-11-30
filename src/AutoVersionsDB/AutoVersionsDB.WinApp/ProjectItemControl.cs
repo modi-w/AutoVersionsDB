@@ -1,17 +1,8 @@
-﻿using System;
-using AutoVersionsDB.Helpers;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.WinApp.Utils;
+﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.UI.ChooseProject;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -32,7 +23,7 @@ namespace AutoVersionsDB.WinApp
 
             if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
             {
-                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
+                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
             }
 
@@ -40,9 +31,9 @@ namespace AutoVersionsDB.WinApp
 
 
 
-   
 
-        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -91,7 +82,7 @@ namespace AutoVersionsDB.WinApp
         #region Dispose
 
         // To detect redundant calls
-        private bool _disposed = false;
+        private bool _disposed;
 
         // Protected implementation of Dispose pattern.
         protected override void Dispose(bool disposing)

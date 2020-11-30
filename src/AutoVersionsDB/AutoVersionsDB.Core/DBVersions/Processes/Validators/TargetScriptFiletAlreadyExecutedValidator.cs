@@ -1,5 +1,4 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine.Validations;
 using System.Linq;
 

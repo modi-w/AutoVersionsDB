@@ -1,17 +1,10 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
-using System;
-using Ninject;
-using System.Collections.Generic;
-using System.Linq;
-using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
-using AutoVersionsDB.Core.ConfigProjects.Processes;
-using AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions;
-using AutoVersionsDB.Core.DBVersions.Processes;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions;
+using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.NotificationableEngine;
+using Ninject;
+using System;
+using System.Collections.Generic;
 
 namespace AutoVersionsDB.Core
 {
@@ -21,8 +14,8 @@ namespace AutoVersionsDB.Core
         private static readonly object _processSyncLock = new object();
 
 
-        private static ProjectConfigsAPI _projectConfigsAPI = NinjectUtils.KernelInstance.Get<ProjectConfigsAPI>();
-        private static DBVersionsAPI _dbVersionsAPI = NinjectUtils.KernelInstance.Get<DBVersionsAPI>();
+        private static readonly ProjectConfigsAPI _projectConfigsAPI = DIConfig.Kernel.Get<ProjectConfigsAPI>();
+        private static readonly DBVersionsAPI _dbVersionsAPI = DIConfig.Kernel.Get<DBVersionsAPI>();
 
 
 
@@ -30,10 +23,7 @@ namespace AutoVersionsDB.Core
 
         #region Config
 
-        public static List<DBType> GetDBTypes()
-        {
-            return _projectConfigsAPI.GetDBTypes();
-        }
+        public static IList<DBType> DBTypes => _projectConfigsAPI.DBTypes;
 
 
         public static List<ProjectConfigItem> GetProjectsList()

@@ -1,12 +1,4 @@
 ﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
@@ -28,6 +20,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             _projectConfigsStorage.UpdateProjectConfig(processContext.ProjectConfig);
         }
 

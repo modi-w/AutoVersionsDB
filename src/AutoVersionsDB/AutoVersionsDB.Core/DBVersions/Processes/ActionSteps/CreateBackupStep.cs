@@ -1,10 +1,7 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Contract.DBProcessStatusNotifyers;
-using AutoVersionsDB.DbCommands.Integration;
+﻿using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.DBProcessStatusNotifyers;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
-using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -40,7 +37,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
             string targetFileName;
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
-                targetFileName = $"bu_{ dbCommands.GetDataBaseName()}_{timeStampStr}.bak";
+                targetFileName = $"bu_{ dbCommands.DataBaseName}_{timeStampStr}.bak";
             }
 
             string targetFileFullPath = Path.Combine(processContext.ProjectConfig.BackupFolderPath, targetFileName);
@@ -48,7 +45,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             //notificationExecutersProvider.SetStepStartManually(100, "Backup process");
 
-            using (var dbBackupStatusNotifyer = dbCommandsFactoryProvider.CreateDBProcessStatusNotifyer(typeof(DBBackupStatusNotifyer),processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbBackupStatusNotifyer = dbCommandsFactoryProvider.CreateDBProcessStatusNotifyer(typeof(DBBackupStatusNotifyer), processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 //DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(, dbQueryStatus.Instance) as DBBackupStatusNotifyer;
 
@@ -85,7 +82,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                         {
                             using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
                             {
-                                dbBackupRestoreCommands.CreateDBBackup(targetFileFullPath, dbCommands.GetDataBaseName());
+                                dbBackupRestoreCommands.CreateDBBackup(targetFileFullPath, dbCommands.DataBaseName);
 
                                 foreach (ExternalProcessStatusStep step in internalSteps)
                                 {

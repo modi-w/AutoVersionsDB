@@ -19,52 +19,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="DBScripts\AppendDBFilesScript.sql" />
-    <None Remove="DBScripts\BackupDB.sql" />
-    <None Remove="DBScripts\CheckIfStoredProcedureExist.sql" />
-    <None Remove="DBScripts\CheckIfTableExist.sql" />
-    <None Remove="DBScripts\CreateDB.sql" />
-    <None Remove="DBScripts\DropAllDbObjects.sql" />
-    <None Remove="DBScripts\DropDB.sql" />
-    <None Remove="DBScripts\GetAllDBTablesExceptSchema.sql" />
-    <None Remove="DBScripts\GetAllTableData.sql" />
-    <None Remove="DBScripts\GetDBAccessState.sql" />
-    <None Remove="DBScripts\GetDBSessions.sql" />
-    <None Remove="DBScripts\GetEmptyTable.sql" />
-    <None Remove="DBScripts\GetExecutedFilesFromDBByFileTypeCode.sql" />
-    <None Remove="DBScripts\GetIsDBExsit.sql" />
-    <None Remove="DBScripts\GetNumOfOpenConnection.sql" />
-    <None Remove="DBScripts\GetQueryProcessStatus.sql" />
-    <None Remove="DBScripts\KillSession.sql" />
-    <None Remove="DBScripts\MoveDBFilesScript.sql" />
-    <None Remove="DBScripts\RecreateDBVersionsTables.sql" />
-    <None Remove="DBScripts\RestorDB.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="DBScripts\AppendDBFilesScript.sql" />
-    <EmbeddedResource Include="DBScripts\GetQueryProcessStatus.sql" />
-    <EmbeddedResource Include="DBScripts\GetNumOfOpenConnection.sql" />
-    <EmbeddedResource Include="DBScripts\MoveDBFilesScript.sql" />
-    <EmbeddedResource Include="DBScripts\GetExecutedFilesFromDBByFileTypeCode.sql" />
-    <EmbeddedResource Include="DBScripts\GetEmptyTable.sql" />
-    <EmbeddedResource Include="DBScripts\CheckIfTableExist.sql" />
-    <EmbeddedResource Include="DBScripts\CheckIfStoredProcedureExist.sql" />
-    <EmbeddedResource Include="DBScripts\GetAllTableData.sql" />
-    <EmbeddedResource Include="DBScripts\GetAllDBTablesExceptSchema.sql" />
-    <EmbeddedResource Include="DBScripts\GetIsDBExsit.sql" />
-    <EmbeddedResource Include="DBScripts\CreateDB.sql" />
-    <EmbeddedResource Include="DBScripts\DropDB.sql" />
-    <EmbeddedResource Include="DBScripts\KillSession.sql" />
-    <EmbeddedResource Include="DBScripts\GetDBSessions.sql" />
-    <EmbeddedResource Include="DBScripts\GetDBAccessState.sql" />
-    <EmbeddedResource Include="DBScripts\RestorDB.sql" />
-    <EmbeddedResource Include="DBScripts\DropAllDbObjects.sql" />
-    <EmbeddedResource Include="DBScripts\BackupDB.sql" />
-    <EmbeddedResource Include="DBScripts\RecreateDBVersionsTables.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="GitVersionTask" Version="5.5.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -77,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoVersionsDB.DbCommands.Contract\AutoVersionsDB.DbCommands.Contract.csproj" />
     <ProjectReference Include="..\AutoVersionsDB.Helpers\AutoVersionsDB.Helpers.csproj" />
   </ItemGroup>
 

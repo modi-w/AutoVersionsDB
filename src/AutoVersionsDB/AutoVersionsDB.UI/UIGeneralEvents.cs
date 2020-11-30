@@ -1,17 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoVersionsDB.UI
 {
-    public delegate void OnExceptionEventHandler(object sender, string exceptionMessage);
+    public class MessageEventArgs : EventArgs
+    {
+        public string Message { get; set; }
+        public MessageEventArgs(string message)
+        {
+            Message = message;
+        }
 
-    public delegate bool OnConfirmEventHandler(object sender, string confirmMessage);
+    }
+    public class ConfirmEventArgs : EventArgs
+    {
+        public string Message { get; set; }
+        public bool IsConfirm { get; set; }
+
+        public ConfirmEventArgs(string message)
+        {
+            Message = message;
+        }
+
+    }
 
     public static class UIGeneralEvents
     {
-        public static event OnExceptionEventHandler OnException;
-        public static event OnConfirmEventHandler OnConfirm;
+        public static event EventHandler<MessageEventArgs> OnException;
+        public static event EventHandler<ConfirmEventArgs> OnConfirm;
 
         internal static void FireOnException(object sender, Exception ex)
         {
@@ -20,7 +35,7 @@ namespace AutoVersionsDB.UI
                 throw new Exception($"Bind method to 'OnException' event is mandatory");
             }
 
-            OnException(sender, ex.ToString());
+            OnException(sender, new MessageEventArgs(ex.ToString()));
         }
 
         internal static bool FireOnConfirm(object sender, string confirmMessage)
@@ -30,7 +45,11 @@ namespace AutoVersionsDB.UI
                 throw new Exception($"Bind method to 'OnConfirm' event is mandatory");
             }
 
-            return OnConfirm(sender, confirmMessage);
+            ConfirmEventArgs eventArgs = new ConfirmEventArgs(confirmMessage);
+
+            OnConfirm(sender, eventArgs);
+
+            return eventArgs.IsConfirm;
         }
 
     }

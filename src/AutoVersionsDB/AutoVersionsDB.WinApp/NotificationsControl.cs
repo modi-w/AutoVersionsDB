@@ -1,15 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Configuration;
-using System.Drawing;
-using System.Windows.Forms;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.NotificationableEngine;
-using AutoVersionsDB.UI.Notifications;
+﻿using AutoVersionsDB.UI.Notifications;
 using AutoVersionsDB.UI.StatesLog;
 using AutoVersionsDB.WinApp.Properties;
 using AutoVersionsDB.WinApp.Utils;
 using Ninject;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
@@ -28,25 +24,29 @@ namespace AutoVersionsDB.WinApp
             {
                 if (!ViewModel.IsEventsBinded)
                 {
-                    ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog;
+                    ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog; 
 
                     ViewModel.IsEventsBinded = true;
                 }
 
-                ViewModel.NotificationsViewModelData.PropertyChanged += _viewModel_PropertyChanged;
+                ViewModel.NotificationsViewModelData.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
 
             }
 
         }
 
-        private void ViewModel_OnShowStatesLog(object sender, StatesLogViewModel statesLogViewModel)
+        private void ViewModel_OnShowStatesLog(object sender, StatesLogViewModelEventArgs e)
         {
-            StatesLogView statesLogView = new StatesLogView(statesLogViewModel);
-            statesLogView.ShowDialog();
+            using (StatesLogView statesLogView = new StatesLogView(e.StatesLogViewModel))
+            {
+                statesLogView.ShowDialog();
+            }
         }
 
-        private void _viewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+      
+
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -63,8 +63,8 @@ namespace AutoVersionsDB.WinApp
 
         private void SetDataBindings()
         {
-            this.lblProcessStatusMessage.DataBindings.Clear();
-            this.lblProcessStatusMessage.DataBindings.Add(
+            lblProcessStatusMessage.DataBindings.Clear();
+            lblProcessStatusMessage.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblProcessStatusMessage,
                     nameof(lblProcessStatusMessage.Text),
@@ -72,7 +72,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.NotificationsViewModelData.ProcessStatusMessage)
                     )
                 );
-            this.lblProcessStatusMessage.DataBindings.Add(
+            lblProcessStatusMessage.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     lblProcessStatusMessage,
                     nameof(lblProcessStatusMessage.ForeColor),
@@ -81,8 +81,8 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            this.pbStatus.DataBindings.Clear();
-            this.pbStatus.DataBindings.Add(
+            pbStatus.DataBindings.Clear();
+            pbStatus.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
                     pbStatus,
                     nameof(pbStatus.Visible),
@@ -99,7 +99,7 @@ namespace AutoVersionsDB.WinApp
         {
             switch (ViewModel.NotificationsViewModelData.StatusImageType)
             {
-                case eStatusImageType.Spinner:
+                case StatusImageType.Spinner:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -107,13 +107,13 @@ namespace AutoVersionsDB.WinApp
                     }));
                     break;
 
-                case eStatusImageType.Warning:
+                case StatusImageType.Warning:
 
                     //TODO: add image
                     //pbStatus.Image = Resources.W;
                     break;
 
-                case eStatusImageType.Error:
+                case StatusImageType.Error:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -121,7 +121,7 @@ namespace AutoVersionsDB.WinApp
                     }));
                     break;
 
-                case eStatusImageType.Succeed:
+                case StatusImageType.Succeed:
 
                     pbStatus.BeginInvoke((MethodInvoker)(() =>
                     {
@@ -160,7 +160,7 @@ namespace AutoVersionsDB.WinApp
         #region Dispose
 
         // To detect redundant calls
-        private bool _disposed = false;
+        private bool _disposed;
 
         // Protected implementation of Dispose pattern.
         protected override void Dispose(bool disposing)

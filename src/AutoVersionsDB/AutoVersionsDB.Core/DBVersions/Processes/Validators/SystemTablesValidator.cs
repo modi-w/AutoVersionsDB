@@ -1,7 +1,5 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
+﻿using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.NotificationableEngine.Validations;
 using System;
 using System.Data;

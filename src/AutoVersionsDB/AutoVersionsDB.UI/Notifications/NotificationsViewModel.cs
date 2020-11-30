@@ -1,19 +1,24 @@
-﻿using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
+﻿using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.StatesLog;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace AutoVersionsDB.UI.Notifications
 {
-    public delegate void OnShowStatesLogEventHandler(object sender, StatesLogViewModel statesLogViewModel);
 
+    public class StatesLogViewModelEventArgs : EventArgs
+    {
+        public StatesLogViewModel StatesLogViewModel { get; set; }
+
+        public StatesLogViewModelEventArgs(StatesLogViewModel statesLogViewModel)
+        {
+            StatesLogViewModel = statesLogViewModel;
+        }
+
+    }
 
     public class NotificationsViewModel : INotificationsViewModel
     {
@@ -32,7 +37,7 @@ namespace AutoVersionsDB.UI.Notifications
 
         public bool IsEventsBinded { get; set; }
 
-        public event OnShowStatesLogEventHandler OnShowStatesLog;
+        public event EventHandler<StatesLogViewModelEventArgs> OnShowStatesLog;
 
 
         public RelayCommand ShowStatesLogViewCommand { get; private set; }
@@ -68,7 +73,7 @@ namespace AutoVersionsDB.UI.Notifications
 
         private void ShowStatesLogView()
         {
-            fireOnShowStatesLog(_processTrace);
+            FireOnShowStatesLog(_processTrace);
         }
 
 
@@ -77,7 +82,7 @@ namespace AutoVersionsDB.UI.Notifications
         {
             switch (NotificationsViewModelData.NotificationStatus)
             {
-                case eNotificationStatus.WaitingForUser:
+                case NotificationStatus.WaitingForUser:
 
                     NotificationsControls.StatusImageVisible = false;
 
@@ -85,40 +90,40 @@ namespace AutoVersionsDB.UI.Notifications
 
                     break;
 
-                case eNotificationStatus.InProgress:
+                case NotificationStatus.InProgress:
 
                     NotificationsControls.StatusImageVisible = true;
-                    NotificationsViewModelData.StatusImageType = eStatusImageType.Spinner;
+                    NotificationsViewModelData.StatusImageType = StatusImageType.Spinner;
 
                     NotificationsControls.ProcessStatusMessageColor = Color.Black;
                     break;
 
 
-                case eNotificationStatus.Error:
+                case NotificationStatus.Error:
 
                     NotificationsControls.StatusImageVisible = true;
-                    NotificationsViewModelData.StatusImageType = eStatusImageType.Error;
+                    NotificationsViewModelData.StatusImageType = StatusImageType.Error;
 
                     NotificationsControls.ProcessStatusMessageColor = Color.DarkRed;
                     break;
 
-                case eNotificationStatus.CompleteSuccessfully:
+                case NotificationStatus.CompleteSuccessfully:
 
                     NotificationsControls.StatusImageVisible = true;
-                    NotificationsViewModelData.StatusImageType = eStatusImageType.Succeed;
+                    NotificationsViewModelData.StatusImageType = StatusImageType.Succeed;
 
                     NotificationsControls.ProcessStatusMessageColor = Color.Black;
                     break;
 
-                case eNotificationStatus.Attention:
+                case NotificationStatus.Attention:
 
                     NotificationsControls.StatusImageVisible = true;
-                    NotificationsViewModelData.StatusImageType = eStatusImageType.Warning;
+                    NotificationsViewModelData.StatusImageType = StatusImageType.Warning;
 
                     NotificationsControls.ProcessStatusMessageColor = Color.DarkOrange;
                     break;
 
-                case eNotificationStatus.None:
+                case NotificationStatus.None:
                 default:
                     break;
             }
@@ -128,11 +133,13 @@ namespace AutoVersionsDB.UI.Notifications
 
         public void OnNotificationStateChanged(ProcessTrace processTrace, StepNotificationState notificationStateItem)
         {
+            notificationStateItem.ThrowIfNull(nameof(notificationStateItem));
+
             _processTrace = processTrace;
 
-            if (NotificationsViewModelData.NotificationStatus != eNotificationStatus.InProgress)
+            if (NotificationsViewModelData.NotificationStatus != NotificationStatus.InProgress)
             {
-                NotificationsViewModelData.NotificationStatus = eNotificationStatus.InProgress;
+                NotificationsViewModelData.NotificationStatus = NotificationStatus.InProgress;
             }
 
             if (!string.IsNullOrWhiteSpace(notificationStateItem.LowLevelInstructionsMessage))
@@ -151,13 +158,13 @@ namespace AutoVersionsDB.UI.Notifications
         {
             System.Threading.Thread.Sleep(500);
 
-            NotificationsViewModelData.NotificationStatus = eNotificationStatus.WaitingForUser;
+            NotificationsViewModelData.NotificationStatus = NotificationStatus.WaitingForUser;
             NotificationsViewModelData.ProcessStatusMessage = "Waiting for your command.";
         }
 
         public void Preparing()
         {
-            NotificationsViewModelData.NotificationStatus = eNotificationStatus.InProgress;
+            NotificationsViewModelData.NotificationStatus = NotificationStatus.InProgress;
             NotificationsViewModelData.ProcessStatusMessage = "Please wait, preparing...";
         }
 
@@ -166,7 +173,7 @@ namespace AutoVersionsDB.UI.Notifications
         {
             System.Threading.Thread.Sleep(500);
 
-            NotificationsViewModelData.NotificationStatus = eNotificationStatus.Attention;
+            NotificationsViewModelData.NotificationStatus = NotificationStatus.Attention;
             NotificationsViewModelData.ProcessStatusMessage = message;
         }
 
@@ -174,12 +181,14 @@ namespace AutoVersionsDB.UI.Notifications
 
         public void BeforeStartProcess()
         {
-            NotificationsViewModelData.NotificationStatus = eNotificationStatus.InProgress;
+            NotificationsViewModelData.NotificationStatus = NotificationStatus.InProgress;
             NotificationsViewModelData.ProcessStatusMessage = "Prepare...";
         }
 
         public void AfterComplete(ProcessResults processResults)
         {
+            processResults.ThrowIfNull(nameof(processResults));
+
             _processTrace = processResults.Trace;
 
             System.Threading.Thread.Sleep(500);
@@ -187,12 +196,12 @@ namespace AutoVersionsDB.UI.Notifications
 
             if (_processTrace.HasError)
             {
-                NotificationsViewModelData.NotificationStatus = eNotificationStatus.Error;
+                NotificationsViewModelData.NotificationStatus = NotificationStatus.Error;
                 NotificationsViewModelData.ProcessStatusMessage = _processTrace.InstructionsMessage;
             }
             else
             {
-                NotificationsViewModelData.NotificationStatus = eNotificationStatus.CompleteSuccessfully;
+                NotificationsViewModelData.NotificationStatus = NotificationStatus.CompleteSuccessfully;
                 NotificationsViewModelData.ProcessStatusMessage = "The process complete successfully";
             }
 
@@ -203,7 +212,7 @@ namespace AutoVersionsDB.UI.Notifications
 
 
 
-        private void fireOnShowStatesLog(ProcessTrace processTrace)
+        private void FireOnShowStatesLog(ProcessTrace processTrace)
         {
             if (OnShowStatesLog == null)
             {
@@ -212,7 +221,7 @@ namespace AutoVersionsDB.UI.Notifications
 
             StatesLogViewModel statesLogViewModel = new StatesLogViewModel(processTrace);
 
-            OnShowStatesLog(this, statesLogViewModel);
+            OnShowStatesLog(this, new StatesLogViewModelEventArgs(statesLogViewModel));
         }
 
 

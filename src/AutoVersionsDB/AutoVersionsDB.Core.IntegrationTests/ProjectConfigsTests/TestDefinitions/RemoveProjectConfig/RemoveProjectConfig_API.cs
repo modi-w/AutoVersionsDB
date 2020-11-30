@@ -14,8 +14,6 @@ using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -60,7 +58,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Act(ITestContext testContext)
         {
-            testContext.ProcessResults = 
+            testContext.ProcessResults =
                 AutoVersionsDBAPI
                 .RemoveProjectConfig(
                     (testContext.TestArgs as ProjectConfigTestArgs).ProjectConfig.Id, null);
@@ -71,7 +69,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
 
-            ProjectConfigItem projectByProjectId = 
+            ProjectConfigItem projectByProjectId =
                 _projectConfigsStorage.GetProjectConfigById(
                     (testContext.TestArgs as ProjectConfigTestArgs).ProjectConfig.Id);
             Assert.That(projectByProjectId == null, $"{GetType().Name} -> ProjectConfig didnt remove from storage.");

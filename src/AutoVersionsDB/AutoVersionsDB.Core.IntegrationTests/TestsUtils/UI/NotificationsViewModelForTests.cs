@@ -36,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI
 
         public StatesLogViewModel StatesLogViewModel => _notificationsViewModel.StatesLogViewModel;
 
-        public event OnShowStatesLogEventHandler OnShowStatesLog
+        public event EventHandler<StatesLogViewModelEventArgs> OnShowStatesLog
         {
             add
             {

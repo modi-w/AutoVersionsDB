@@ -1,14 +1,10 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.ArtifactFile;
+﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
-using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.DB;
+using AutoVersionsDB.Helpers;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 
@@ -36,9 +32,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
         public override void Execute(DBVersionsProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
-                string dbName = dbCommands.GetDataBaseName();
+                string dbName = dbCommands.DataBaseName;
 
 
                 string tempFolderForDeploy = Path.Combine(_settings.TempFolderPath, $"Deploy_{dbName}_{DateTime.Now:HH-mm-dd-fff}");

@@ -1,8 +1,7 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.Common;
+﻿using AutoVersionsDB.Core.Common;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
-using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -22,44 +21,12 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 
 
 
-        public bool IsVirtualExecution
-        {
-            get
-            {
-                return (ProcessDefinition as DBVersionsProcessDefinition).IsVirtualExecution;
-            }
-        }
+        public bool IsVirtualExecution => (ProcessDefinition as DBVersionsProcessDefinition).IsVirtualExecution;
 
 
-        public override bool CanRollback
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(DBBackupFileFullPath);
-            }
-        }
+        public override bool CanRollback => !string.IsNullOrWhiteSpace(DBBackupFileFullPath);
 
-        public double ProcessDurationInMs
-        {
-            get
-            {
-                double results = 0;
 
-                if (StartProcessDateTime.HasValue)
-                {
-                    if (EndProcessDateTime.HasValue)
-                    {
-                        results = (EndProcessDateTime.Value - StartProcessDateTime.Value).TotalMilliseconds;
-                    }
-                    else
-                    {
-                        results = (DateTime.Now - StartProcessDateTime.Value).TotalMilliseconds;
-                    }
-                }
-
-                return results;
-            }
-        }
 
 
         public List<RuntimeScriptFileBase> ExecutedFiles { get; private set; }

@@ -1,12 +1,11 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects.Processes;
 using AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AutoVersionsDB.Core.ConfigProjects
 {
@@ -41,10 +40,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         }
 
 
-        public List<DBType> GetDBTypes()
-        {
-            return dbCommandsFactoryProvider.GetDBTypes();
-        }
+        public IList<DBType> DBTypes => dbCommandsFactoryProvider.DBTypes;
 
         public List<ProjectConfigItem> GetProjectsList()
         {

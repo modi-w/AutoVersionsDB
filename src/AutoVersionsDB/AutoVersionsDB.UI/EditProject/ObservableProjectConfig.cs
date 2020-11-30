@@ -1,9 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace AutoVersionsDB.UI.EditProject
 {
@@ -12,9 +9,9 @@ namespace AutoVersionsDB.UI.EditProject
         public ProjectConfigItem ActualProjectConfig { get; }
 
 
-        public ObservableProjectConfig(ProjectConfigItem _projectConfig)
+        public ObservableProjectConfig(ProjectConfigItem projectConfig)
         {
-            ActualProjectConfig = _projectConfig;
+            ActualProjectConfig = projectConfig;
         }
 
         public string Id
@@ -137,18 +134,9 @@ namespace AutoVersionsDB.UI.EditProject
         }
 
 
-        public string IncrementalScriptsFolderPath
-        {
-            get => ActualProjectConfig.IncrementalScriptsFolderPath;
-        }
-        public string RepeatableScriptsFolderPath
-        {
-            get => ActualProjectConfig.RepeatableScriptsFolderPath;
-        }
-        public string DevDummyDataScriptsFolderPath
-        {
-            get => ActualProjectConfig.DevDummyDataScriptsFolderPath;
-        }
+        public string IncrementalScriptsFolderPath => ActualProjectConfig.IncrementalScriptsFolderPath;
+        public string RepeatableScriptsFolderPath => ActualProjectConfig.RepeatableScriptsFolderPath;
+        public string DevDummyDataScriptsFolderPath => ActualProjectConfig.DevDummyDataScriptsFolderPath;
 
 
 

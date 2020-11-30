@@ -5,7 +5,8 @@ using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
-using AutoVersionsDB.DbCommands.Contract;
+using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using NUnit.Framework;

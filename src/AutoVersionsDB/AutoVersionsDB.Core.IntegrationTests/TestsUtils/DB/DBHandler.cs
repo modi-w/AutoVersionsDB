@@ -6,8 +6,8 @@ using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
-using AutoVersionsDB.DbCommands.Contract;
-using AutoVersionsDB.DbCommands.Integration;
+using AutoVersionsDB.DB;
+using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.Helpers;
 using NUnit.Framework;
 using System;
@@ -70,13 +70,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string masterDBName;
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                masterDBName = dbCommands.GetDataBaseName();
+                masterDBName = dbCommands.DataBaseName;
             }
 
 
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(dbConnectionInfo))
             {
-                numOfConnectionsItem.DBName = dbCommands.GetDataBaseName();
+                numOfConnectionsItem.DBName = dbCommands.DataBaseName;
             }
 
             using (var dbQueryStatus = dbCommandsFactoryProvider.CreateDBQueryStatus(dbConnectionInfo))

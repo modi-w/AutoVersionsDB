@@ -1,8 +1,5 @@
-﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Helpers;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 {
@@ -23,6 +20,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
         public override void Execute(DBVersionsProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             string id = (processContext.ProcessParams as DBVersionsProcessParams).Id;
 
             processContext.SetProjectConfig(_projectConfigsStorage.GetProjectConfigById(id));

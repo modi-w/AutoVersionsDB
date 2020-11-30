@@ -1,7 +1,4 @@
-﻿using AutoVersionsDB.DbCommands.Contract;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AutoVersionsDB.DB;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {

@@ -71,6 +71,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ChooseProjectTests.TestDefinition
             return testContext;
         }
 
+
         public override void Act(ITestContext testContext)
         {
             var task = _chooseProjectViewModel.DeleteProjectCommand.ExecuteWrapped("Id3");
@@ -91,9 +92,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.ChooseProjectTests.TestDefinition
         }
 
 
-        private bool UIGeneralEvents_OnConfirm(object sender, string confirmMessage)
+        private void UIGeneralEvents_OnConfirm(object sender, ConfirmEventArgs e)
         {
-            return true;
+            e.IsConfirm = true;
         }
+
+
     }
 }

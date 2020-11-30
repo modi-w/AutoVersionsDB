@@ -5,13 +5,13 @@ using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application . 
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.ThreadException += Application_ThreadException;
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
@@ -21,26 +21,27 @@ namespace AutoVersionsDB.WinApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            NinjectUtils_Winform.CreateKernel();
+            DIConfig.CreateKernel();
 
             UIGeneralEvents.OnException += UIGeneralEvents_OnException;
             UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
 
 
-            Main mainFrame = NinjectUtils_Winform.NinjectKernelContainer.Get<Main>();
+            MainView mainFrame = DIConfig.Kernel.Get<MainView>();
 
             Application.Run(mainFrame);
         }
 
-        private static void UIGeneralEvents_OnException(object sender, string exceptionMessage)
+        private static void UIGeneralEvents_OnException(object sender, MessageEventArgs e)
         {
-            MessageBox.Show(exceptionMessage);
+            MessageBox.Show(e.Message);
         }
 
-        private static bool UIGeneralEvents_OnConfirm(object sender, string confirmMessage)
+        private static void UIGeneralEvents_OnConfirm(object sender, ConfirmEventArgs e)
         {
-            return MessageBox.Show(null, confirmMessage, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+            e.IsConfirm = MessageBox.Show(null, e.Message, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
         }
+
 
 
 

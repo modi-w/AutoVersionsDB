@@ -27,13 +27,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         [SetUp]
         public void Init()
         {
-            NinjectUtils_IntegrationTests.CreateKernel();
-            _projectConfigsStorageHelper = NinjectUtils_IntegrationTests.NinjectKernelContainer.Get<ProjectConfigsStorageHelper>();
+            DIConfig.CreateKernel();
+            _projectConfigsStorageHelper = DIConfig.Kernel.Get<ProjectConfigsStorageHelper>();
         }
 
 
 
-       
+
 
 
         [Test]

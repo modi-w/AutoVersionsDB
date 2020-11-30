@@ -1,9 +1,4 @@
 ﻿using AutoVersionsDB.Helpers;
-using AutoVersionsDB.Core.ConfigProjects;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
@@ -25,6 +20,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 
         public override void Execute(ProjectConfigProcessContext processContext)
         {
+            processContext.ThrowIfNull(nameof(processContext));
+
             ProjectConfigProcessParams projectConfigProcessParams = processContext.ProcessParams as ProjectConfigProcessParams;
 
             _projectConfigsStorage.RemoveProjectConfig(projectConfigProcessParams.Id);

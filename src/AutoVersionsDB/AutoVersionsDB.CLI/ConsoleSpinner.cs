@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.CommandLine;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,7 +6,7 @@ namespace AutoVersionsDB.CLI
 {
     //https://stackoverflow.com/questions/888533/how-can-i-update-the-current-line-in-a-c-sharp-windows-console-app
 
-    public class ConsoleSpinner
+    public class ConsoleSpinner : IDisposable
     {
         private readonly IConsoleExtended _console;
 

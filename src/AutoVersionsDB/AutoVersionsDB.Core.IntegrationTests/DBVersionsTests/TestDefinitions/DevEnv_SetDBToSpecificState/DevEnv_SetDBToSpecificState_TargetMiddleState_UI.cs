@@ -77,9 +77,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         }
 
 
-        private bool UIGeneralEvents_OnConfirm(object sender, string confirmMessage)
+        private void UIGeneralEvents_OnConfirm(object sender, ConfirmEventArgs e)
         {
-            return true;
+            e.IsConfirm = true;
         }
     }
 }

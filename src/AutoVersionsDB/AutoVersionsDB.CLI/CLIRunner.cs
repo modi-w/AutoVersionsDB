@@ -1,8 +1,5 @@
 ﻿using AutoVersionsDB.Core;
 using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoVersionsDB.CLI
 {
@@ -10,7 +7,7 @@ namespace AutoVersionsDB.CLI
     {
         private static AutoVersionsDBCLI GetNewInstanceForAutoVersionsDBCLI()
         {
-            return NinjectUtils.KernelInstance.Get<AutoVersionsDBCLI>();
+            return DIConfig.Kernel.Get<AutoVersionsDBCLI>();
         }
 
 

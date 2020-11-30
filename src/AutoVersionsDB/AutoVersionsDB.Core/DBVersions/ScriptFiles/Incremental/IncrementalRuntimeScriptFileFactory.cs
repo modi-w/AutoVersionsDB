@@ -8,8 +8,6 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 
         public override bool TryParseNextRuntimeScriptFileInstance(string folderPath, string scriptName, IncrementalRuntimeScriptFile prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile)
         {
-            newRuntimeScriptFile = null;
-
             int nextFileVersion = 1;
             DateTime nextFileDate = DateTime.Today;
 

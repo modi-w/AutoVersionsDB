@@ -1,33 +1,19 @@
 ﻿using AutoVersionsDB.Core.DBVersions;
-using AutoVersionsDB.Helpers;
-using AutoVersionsDB.NotificationableEngine;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.Invocation;
-using System.Text;
 
 namespace AutoVersionsDB.CLI.DBVersions
 {
     public class CreateNewScriptFileCommandFactory : CLICommandFactory
     {
-        private readonly DBVersionsAPI _dbVersionsAPI;
-        private readonly IConsoleProcessMessages _consoleProcessMessages;
-
         private readonly CreateNewIncrementalScriptFileCommandFactory _createNewIncrementalScriptFileCommandFactory;
         private readonly CreateNewRepeatableScriptFileCommandFactory _createNewRepeatableScriptFileCommandFactory;
         private readonly CreateNewDevDummyDataScriptFileCommandFactory _createNewDevDummyDataScriptFileCommandFactory;
 
 
-        public CreateNewScriptFileCommandFactory(DBVersionsAPI dbVersionsAPI,
-                                                IConsoleProcessMessages consoleProcessMessages,
-                                                CreateNewIncrementalScriptFileCommandFactory createNewIncrementalScriptFileCommandFactory,
+        public CreateNewScriptFileCommandFactory(CreateNewIncrementalScriptFileCommandFactory createNewIncrementalScriptFileCommandFactory,
                                                 CreateNewRepeatableScriptFileCommandFactory createNewRepeatableScriptFileCommandFactory,
                                                 CreateNewDevDummyDataScriptFileCommandFactory createNewDevDummyDataScriptFileCommandFactory)
         {
-            _dbVersionsAPI = dbVersionsAPI;
-            _consoleProcessMessages = consoleProcessMessages;
-
             _createNewIncrementalScriptFileCommandFactory = createNewIncrementalScriptFileCommandFactory;
             _createNewRepeatableScriptFileCommandFactory = createNewRepeatableScriptFileCommandFactory;
             _createNewDevDummyDataScriptFileCommandFactory = createNewDevDummyDataScriptFileCommandFactory;
@@ -35,9 +21,10 @@ namespace AutoVersionsDB.CLI.DBVersions
 
         public override Command Create()
         {
-            Command command = new Command("new");
-
-            command.Description = "Create new script file. The type of script file is required.";
+            Command command = new Command("new")
+            {
+                Description = "Create new script file. The type of script file is required."
+            };
 
             Command incrementalScriptFileCommand = _createNewIncrementalScriptFileCommandFactory.Create();
             command.Add(incrementalScriptFileCommand);
