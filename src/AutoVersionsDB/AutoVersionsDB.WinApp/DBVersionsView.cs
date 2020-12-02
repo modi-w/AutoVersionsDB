@@ -624,7 +624,8 @@ namespace AutoVersionsDB.WinApp
 
                 RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
 
-                if (currRowFileInfo.Filename.Trim().ToUpperInvariant() == ViewModel.DBVersionsViewModelData.TargetStateScriptFileName.Trim().ToUpperInvariant())
+                if (ViewModel.DBVersionsViewModelData.TargetStateScriptFileName != null
+                    && currRowFileInfo.Filename.Trim().ToUpperInvariant() == ViewModel.DBVersionsViewModelData.TargetStateScriptFileName.Trim().ToUpperInvariant())
                 {
                     currGridRow.Cells[2].Style.BackColor = Color.Yellow;
                 }
