@@ -45,15 +45,15 @@ namespace AutoVersionsDB.DB
         {
             DataSet dsExecutionHistory = new DataSet();
 
-            string sqlCmdStr = _dBScriptsProvider.GetEmptyTableScript(DBCommandsConsts.DbScriptsExecutionHistoryFullTableName);
+            string sqlCmdStr = _dBScriptsProvider.GetEmptyTableScript(DBCommandsConsts.DBScriptsExecutionHistoryFullTableName);
             DataTable dbScriptsExecutionHistoryTable = _dbConnection.GetSelectCommand(sqlCmdStr);
-            dbScriptsExecutionHistoryTable.TableName = DBCommandsConsts.DbScriptsExecutionHistoryFullTableName;
+            dbScriptsExecutionHistoryTable.TableName = DBCommandsConsts.DBScriptsExecutionHistoryFullTableName;
             dsExecutionHistory.Tables.Add(dbScriptsExecutionHistoryTable);
 
 
-            sqlCmdStr = _dBScriptsProvider.GetEmptyTableScript(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+            sqlCmdStr = _dBScriptsProvider.GetEmptyTableScript(DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName);
             DataTable dbScriptsExecutionHistoryFilesTable = _dbConnection.GetSelectCommand(sqlCmdStr);
-            dbScriptsExecutionHistoryFilesTable.TableName = DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName;
+            dbScriptsExecutionHistoryFilesTable.TableName = DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName;
             dsExecutionHistory.Tables.Add(dbScriptsExecutionHistoryFilesTable);
 
 
@@ -76,7 +76,7 @@ namespace AutoVersionsDB.DB
         {
             DataTable executedFilesFromDBTable;
 
-            string sqlCmdStr = _dBScriptsProvider.GetExecutedFilesFromDBByFileTypeCodeScript(DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, scriptFileType);
+            string sqlCmdStr = _dBScriptsProvider.GetExecutedFilesFromDBByFileTypeCodeScript(DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, scriptFileType);
             executedFilesFromDBTable = _dbConnection.GetSelectCommand(sqlCmdStr);
 
             return executedFilesFromDBTable;
@@ -162,7 +162,7 @@ namespace AutoVersionsDB.DB
 
         public DataTable GetAllDBSchemaExceptDBVersionSchema()
         {
-            string sqlCmdStr = _dBScriptsProvider.GetAllDBTablesExceptSchemaScript(DBCommandsConsts.DbSchemaName);
+            string sqlCmdStr = _dBScriptsProvider.GetAllDBTablesExceptSchemaScript(DBCommandsConsts.DBSchemaName);
 
             DataTable dbSchemaExceptDBVersionTable = _dbConnection.GetSelectCommand(sqlCmdStr);
             return dbSchemaExceptDBVersionTable;

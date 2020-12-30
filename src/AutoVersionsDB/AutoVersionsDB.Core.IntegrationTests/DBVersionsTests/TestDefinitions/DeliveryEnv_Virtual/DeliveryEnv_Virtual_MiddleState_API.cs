@@ -48,9 +48,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, true);
 
-            _dbAsserts.AssertDbInMiddleState(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
+            _dbAsserts.AssertDBInMiddleState(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
 
-            _scriptFilesAsserts.AssertThatAllFilesInTheDbExistWithTheSameHashInTheFolder(GetType().Name, testContext.ProjectConfig);
+            _scriptFilesAsserts.AssertThatAllFilesInTheDBExistWithTheSameHashInTheFolder(GetType().Name, testContext.ProjectConfig);
 
         }
 

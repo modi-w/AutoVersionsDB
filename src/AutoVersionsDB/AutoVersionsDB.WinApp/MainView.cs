@@ -44,7 +44,7 @@ namespace AutoVersionsDB.WinApp
             //chooseProject1.OnEditProject += ChooseProject1_OnEditProject;
 
             //editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
-            //dbVersionsMangement1.OnEditProject += DbVersionsMangement1_OnEditProject;
+            //dbVersionsMangement1.OnEditProject += DBVersionsMangement1_OnEditProject;
         }
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

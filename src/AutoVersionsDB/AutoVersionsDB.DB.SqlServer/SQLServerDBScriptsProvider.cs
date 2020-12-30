@@ -85,7 +85,7 @@ namespace AutoVersionsDB.DB.SqlServer
 
         public string DropAllDBObjectsScript()
         {
-            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("DropAllDbObjects.sql");
+            string sqlCmdStr = GetEmbeddedResourceFileSqlServerScript("DropAllDBObjects.sql");
 
             return sqlCmdStr;
         }

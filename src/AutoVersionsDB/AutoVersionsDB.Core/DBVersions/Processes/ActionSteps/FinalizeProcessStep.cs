@@ -31,8 +31,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
             {
                 DataSet dsExecutionHistory = dbCommands.GetScriptsExecutionHistoryTableStructureFromDB();
 
-                DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFullTableName];
-                DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName];
+                DataTable dbScriptsExecutionHistoryTable = dsExecutionHistory.Tables[DBCommandsConsts.DBScriptsExecutionHistoryFullTableName];
+                DataTable dbScriptsExecutionHistoryFilesTable = dsExecutionHistory.Tables[DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName];
 
                 processContext.EndProcessDateTime = DateTime.Now;
 

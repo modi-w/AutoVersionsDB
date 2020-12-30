@@ -33,7 +33,7 @@
     <EmbeddedResource Include="DBScripts\CheckIfStoredProcedureExist.sql" />
     <EmbeddedResource Include="DBScripts\CheckIfTableExist.sql" />
     <EmbeddedResource Include="DBScripts\CreateDB.sql" />
-    <EmbeddedResource Include="DBScripts\DropAllDbObjects.sql" />
+    <EmbeddedResource Include="DBScripts\DropAllDBObjects.sql" />
     <EmbeddedResource Include="DBScripts\DropDB.sql" />
     <EmbeddedResource Include="DBScripts\GetAllDBTablesExceptSchema.sql" />
     <EmbeddedResource Include="DBScripts\GetAllTableData.sql" />

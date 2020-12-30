@@ -10,7 +10,7 @@ namespace AutoVersionsDB.DB.SqlServer
 {
     public class SqlServerConnection : IDBConnection
     {
-        private readonly SqlConnection _sqlDbConnection;
+        private readonly SqlConnection _sqlDBConnection;
 
         public bool IsDisposed { get; private set; }
 
@@ -27,15 +27,15 @@ namespace AutoVersionsDB.DB.SqlServer
             {
                 string outStr = "";
 
-                if (_sqlDbConnection != null)
+                if (_sqlDBConnection != null)
                 {
-                    if (string.IsNullOrWhiteSpace(_sqlDbConnection.ConnectionString)
+                    if (string.IsNullOrWhiteSpace(_sqlDBConnection.ConnectionString)
                         && !string.IsNullOrWhiteSpace(ConnectionString))
                     {
-                        _sqlDbConnection.ConnectionString = ConnectionString;
+                        _sqlDBConnection.ConnectionString = ConnectionString;
                     }
 
-                    outStr = _sqlDbConnection.Database;
+                    outStr = _sqlDBConnection.Database;
                 }
 
                 return outStr;
@@ -46,7 +46,7 @@ namespace AutoVersionsDB.DB.SqlServer
 
         public SqlServerConnection(string connectionString, int timeout)
         {
-            _sqlDbConnection = new SqlConnection();
+            _sqlDBConnection = new SqlConnection();
             ConnectionString = connectionString;
             Timeout = timeout;
         }
@@ -56,15 +56,15 @@ namespace AutoVersionsDB.DB.SqlServer
         {
             lock (_openCloseSync)
             {
-                if (_sqlDbConnection.State != ConnectionState.Open)
+                if (_sqlDBConnection.State != ConnectionState.Open)
                 {
-                    if (string.IsNullOrWhiteSpace(_sqlDbConnection.ConnectionString))
+                    if (string.IsNullOrWhiteSpace(_sqlDBConnection.ConnectionString))
                     {
-                        _sqlDbConnection.ConnectionString = ConnectionString;
+                        _sqlDBConnection.ConnectionString = ConnectionString;
                     }
 
 
-                    _sqlDbConnection.Open();
+                    _sqlDBConnection.Open();
                 }
             }
         }
@@ -73,11 +73,11 @@ namespace AutoVersionsDB.DB.SqlServer
         {
             lock (_openCloseSync)
             {
-                //            _sqlDbConnection.Open();
+                //            _sqlDBConnection.Open();
 
-                _sqlDbConnection.Close();
-                SqlConnection.ClearPool(_sqlDbConnection);
-                //    _sqlDbConnection.Dispose(); 
+                _sqlDBConnection.Close();
+                SqlConnection.ClearPool(_sqlDBConnection);
+                //    _sqlDBConnection.Dispose(); 
             }
         }
 
@@ -170,7 +170,7 @@ namespace AutoVersionsDB.DB.SqlServer
                 {
                     myDataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 
-                    myDataAdapter.RowUpdated += new SqlRowUpdatedEventHandler(OnRowUpdate_SetIdentityFromDb);
+                    myDataAdapter.RowUpdated += new SqlRowUpdatedEventHandler(OnRowUpdate_SetIdentityFromDB);
 
                     //if (_timeout > 0)
                     //{
@@ -182,7 +182,7 @@ namespace AutoVersionsDB.DB.SqlServer
 
                     SqlCommandBuilder currCommandBuilder = new SqlCommandBuilder(myDataAdapter);
 
-                    myDataAdapter.SelectCommand = new SqlCommand(currTableSelectSql, _sqlDbConnection);
+                    myDataAdapter.SelectCommand = new SqlCommand(currTableSelectSql, _sqlDBConnection);
                     myDataAdapter.UpdateCommand = currCommandBuilder.GetUpdateCommand();
                     myDataAdapter.DeleteCommand = currCommandBuilder.GetDeleteCommand();
 
@@ -212,10 +212,10 @@ namespace AutoVersionsDB.DB.SqlServer
                     myDataAdapter.InsertCommand = cmd;
 
                     //string commandObjStr = getCommandObjAsStr(myDataAdapter.InsertCommand);
-                    //OnLogMessage(string.Format(" before call resolveNewRowsIDsConfilctWithDb: {0}", commandObjStr));
+                    //OnLogMessage(string.Format(" before call resolveNewRowsIDsConfilctWithDB: {0}", commandObjStr));
 
 
-                    ResolveNewRowsIDsConfilctWithDb(dataTable);
+                    ResolveNewRowsIDsConfilctWithDB(dataTable);
 
                     //             OnLogMessage("UpdateDataTableWithUpdateIdentityOnInsert - before call update");
 
@@ -236,7 +236,7 @@ namespace AutoVersionsDB.DB.SqlServer
             return outVal;
         }
 
-        private static void ResolveNewRowsIDsConfilctWithDb(DataTable dataTable)
+        private static void ResolveNewRowsIDsConfilctWithDB(DataTable dataTable)
         {
             int currNewRowsKey = -1;
             foreach (DataRow rowItem in dataTable.Rows)
@@ -247,10 +247,6 @@ namespace AutoVersionsDB.DB.SqlServer
                     {
                         if (currCol.AutoIncrement)
                         {
-                            //string logMessage = string.Format("resolveNewRowsIDsConfilctWithDb --> set AutoIncrement Keys --> col: '{0}', old value: '{1}', new value: '{2}'", currCol.ColumnName, drItem[currCol], currNewRowsKey);
-                            //OnLogMessage(logMessage);
-
-
                             currCol.ReadOnly = false;
                             rowItem[currCol] = currNewRowsKey;
                             currCol.ReadOnly = true;
@@ -262,7 +258,7 @@ namespace AutoVersionsDB.DB.SqlServer
             }
         }
 
-        private void OnRowUpdate_SetIdentityFromDb(object sender, SqlRowUpdatedEventArgs args)
+        private void OnRowUpdate_SetIdentityFromDB(object sender, SqlRowUpdatedEventArgs args)
         {
             if (args.StatementType == StatementType.Insert)
             {
@@ -289,7 +285,7 @@ namespace AutoVersionsDB.DB.SqlServer
                 args.Row.AcceptChanges();
 
 
-                //logMessage = "onRowUpdate_SetIdentityFromDb --> End";
+                //logMessage = "onRowUpdate_SetIdentityFromDB --> End";
                 //OnLogMessage(logMessage);
 
             }
@@ -359,7 +355,7 @@ namespace AutoVersionsDB.DB.SqlServer
         {
             SqlCommand cmd = new SqlCommand
             {
-                Connection = _sqlDbConnection,
+                Connection = _sqlDBConnection,
                 CommandType = commandType,
                 CommandText = commandText
             };
@@ -404,11 +400,11 @@ namespace AutoVersionsDB.DB.SqlServer
                 // free managed resources
 
 
-                if (_sqlDbConnection.State == ConnectionState.Open)
+                if (_sqlDBConnection.State == ConnectionState.Open)
                 {
-                    _sqlDbConnection.Close();
+                    _sqlDBConnection.Close();
                 }
-                _sqlDbConnection.Dispose();
+                _sqlDBConnection.Dispose();
 
                 IsDisposed = true;
 

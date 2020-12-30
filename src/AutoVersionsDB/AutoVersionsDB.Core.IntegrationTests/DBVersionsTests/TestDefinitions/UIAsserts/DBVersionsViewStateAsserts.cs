@@ -29,8 +29,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled), dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled), dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnDeployVisible), dbVersionsControls.BtnDeployVisible, isDevEnv);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRecreateDbFromScratchMainVisible), dbVersionsControls.BtnRecreateDbFromScratchMainVisible, isDevEnv);
-            // AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible), dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible, true);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRecreateDBFromScratchMainVisible), dbVersionsControls.BtnRecreateDBFromScratchMainVisible, isDevEnv);
+            // AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnRecreateDBFromScratchSecondaryVisible), dbVersionsControls.BtnRecreateDBFromScratchSecondaryVisible, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRefreshEnable), dbVersionsControls.BtnRefreshEnable, true);
             //     AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnShowHistoricalBackupsEnabled), dbVersionsControls.BtnShowHistoricalBackupsEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.GridToSelectTargetStateEnabled), dbVersionsControls.GridToSelectTargetStateEnabled, false);
@@ -44,7 +44,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             //  AssertUIControlPropertyState(testName, nameof(dbVersionsControls.PnlMissingSystemTablesEnabled), dbVersionsControls.PnlMissingSystemTablesEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlMissingSystemTablesVisible), dbVersionsControls.PnlMissingSystemTablesVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRepeatableFilesVisible), dbVersionsControls.PnlRepeatableFilesVisible, true);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRestoreDbErrorVisible), dbVersionsControls.PnlRestoreDbErrorVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRestoreDBErrorVisible), dbVersionsControls.PnlRestoreDBErrorVisible, false);
             //AssertUIControlPropertyState(testName, nameof(dbVersionsControls.PnlSetDBStateManuallyEnabled), dbVersionsControls.PnlSetDBStateManuallyEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlSetDBStateManuallyVisible), dbVersionsControls.PnlSetDBStateManuallyVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlSyncToSpecificStateVisible), dbVersionsControls.PnlSyncToSpecificStateVisible, false);
@@ -57,8 +57,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled), dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled), dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnDeployVisible), dbVersionsControls.BtnDeployVisible, isDevEnv);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRecreateDbFromScratchMainVisible), dbVersionsControls.BtnRecreateDbFromScratchMainVisible, isDevEnv);
-            // AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible), dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible, true);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRecreateDBFromScratchMainVisible), dbVersionsControls.BtnRecreateDBFromScratchMainVisible, isDevEnv);
+            // AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnRecreateDBFromScratchSecondaryVisible), dbVersionsControls.BtnRecreateDBFromScratchSecondaryVisible, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRefreshEnable), dbVersionsControls.BtnRefreshEnable, true);
             //     AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnShowHistoricalBackupsEnabled), dbVersionsControls.BtnShowHistoricalBackupsEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.GridToSelectTargetStateEnabled), dbVersionsControls.GridToSelectTargetStateEnabled, false);
@@ -72,7 +72,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlMissingSystemTablesEnabled), dbVersionsControls.PnlMissingSystemTablesEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlMissingSystemTablesVisible), dbVersionsControls.PnlMissingSystemTablesVisible, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRepeatableFilesVisible), dbVersionsControls.PnlRepeatableFilesVisible, true);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRestoreDbErrorVisible), dbVersionsControls.PnlRestoreDbErrorVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRestoreDBErrorVisible), dbVersionsControls.PnlRestoreDBErrorVisible, false);
             //AssertUIControlPropertyState(testName, nameof(dbVersionsControls.PnlSetDBStateManuallyEnabled), dbVersionsControls.PnlSetDBStateManuallyEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlSetDBStateManuallyVisible), dbVersionsControls.PnlSetDBStateManuallyVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlSyncToSpecificStateVisible), dbVersionsControls.PnlSyncToSpecificStateVisible, false);
@@ -84,8 +84,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled), dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled), dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnDeployVisible), dbVersionsControls.BtnDeployVisible, isDevEnv);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRecreateDbFromScratchMainVisible), dbVersionsControls.BtnRecreateDbFromScratchMainVisible, isDevEnv);
-            // AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible), dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible, true);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRecreateDBFromScratchMainVisible), dbVersionsControls.BtnRecreateDBFromScratchMainVisible, isDevEnv);
+            // AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnRecreateDBFromScratchSecondaryVisible), dbVersionsControls.BtnRecreateDBFromScratchSecondaryVisible, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.BtnRefreshEnable), dbVersionsControls.BtnRefreshEnable, true);
             //     AssertUIControlPropertyState(testName, nameof(dbVersionsControls.BtnShowHistoricalBackupsEnabled), dbVersionsControls.BtnShowHistoricalBackupsEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.GridToSelectTargetStateEnabled), dbVersionsControls.GridToSelectTargetStateEnabled, false);
@@ -99,7 +99,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             //  AssertUIControlPropertyState(testName, nameof(dbVersionsControls.PnlMissingSystemTablesEnabled), dbVersionsControls.PnlMissingSystemTablesEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlMissingSystemTablesVisible), dbVersionsControls.PnlMissingSystemTablesVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRepeatableFilesVisible), dbVersionsControls.PnlRepeatableFilesVisible, true);
-            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRestoreDbErrorVisible), dbVersionsControls.PnlRestoreDbErrorVisible, false);
+            _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlRestoreDBErrorVisible), dbVersionsControls.PnlRestoreDBErrorVisible, false);
             //AssertUIControlPropertyState(testName, nameof(dbVersionsControls.PnlSetDBStateManuallyEnabled), dbVersionsControls.PnlSetDBStateManuallyEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlSetDBStateManuallyVisible), dbVersionsControls.PnlSetDBStateManuallyVisible, false);
             _propertiesAsserts.AssertProperty(testName, nameof(dbVersionsControls.PnlSyncToSpecificStateVisible), dbVersionsControls.PnlSyncToSpecificStateVisible, false);

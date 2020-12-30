@@ -66,7 +66,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         public RelayCommand RefreshAllCommand { get; private set; }
         public RelayCommand RunSyncCommand { get; private set; }
-        public RelayCommand RecreateDbFromScratchCommand { get; private set; }
+        public RelayCommand RecreateDBFromScratchCommand { get; private set; }
         public RelayCommand ApplySyncSpecificStateCommand { get; private set; }
         public RelayCommand DeployCommand { get; private set; }
         public RelayCommand RunSetDBStateManallyCommand { get; private set; }
@@ -112,7 +112,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
             RefreshAllCommand = new RelayCommand(RefreshAll);
             RunSyncCommand = new RelayCommand(RunSync);
-            RecreateDbFromScratchCommand = new RelayCommand(RecreateDbFromScratch);
+            RecreateDBFromScratchCommand = new RelayCommand(RecreateDBFromScratch);
             ApplySyncSpecificStateCommand = new RelayCommand(ApplySyncSpecificState);
             DeployCommand = new RelayCommand(Deploy);
             RunSetDBStateManallyCommand = new RelayCommand(RunSetDBStateManally);
@@ -124,7 +124,7 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             DBVersionsControls.BtnRefreshTooltip = "Refresh";
             DBVersionsControls.BtnRunSyncTooltip = "Sync the db with the missing scripts";
-            DBVersionsControls.BtnRecreateDbFromScratchMainTooltip = "Recreate DB From Scratch";
+            DBVersionsControls.BtnRecreateDBFromScratchMainTooltip = "Recreate DB From Scratch";
             DBVersionsControls.BtnDeployTooltip = "Create Deploy Package";
             DBVersionsControls.BtnSetDBToSpecificStateTooltip = "Set DB To Specific State";
             DBVersionsControls.BtnVirtualExecutionTooltip = "Set DB to specific state virtually. Use it if your DB is not empty but you never use our migration tool on it yet.";
@@ -356,7 +356,7 @@ namespace AutoVersionsDB.UI.DBVersions
         }
 
 
-        private void RecreateDbFromScratch()
+        private void RecreateDBFromScratch()
         {
             bool isAllowRun = UIGeneralEvents.FireOnConfirm(this, $"This action will drop the Database and recreate it only by the scripts, you may loose Data. Are you sure?");
 

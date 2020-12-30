@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(DBVersionsUITestContext testContext)
         {
-            var task = _dbVersionsViewModel.RecreateDbFromScratchCommand.ExecuteWrapped();
+            var task = _dbVersionsViewModel.RecreateDBFromScratchCommand.ExecuteWrapped();
             task.Wait();
         }
 

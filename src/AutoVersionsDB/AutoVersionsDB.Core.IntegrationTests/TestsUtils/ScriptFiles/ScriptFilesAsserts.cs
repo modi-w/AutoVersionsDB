@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
         }
 
 
-        public void AssertThatAllFilesInTheDbExistWithTheSameHashInTheFolder(string testName, ProjectConfigItem projectConfig)
+        public void AssertThatAllFilesInTheDBExistWithTheSameHashInTheFolder(string testName, ProjectConfigItem projectConfig)
         {
             ArtifactExtractor artifactExtractor = null;
 
@@ -55,7 +55,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 artifactExtractor = new ArtifactExtractor(projectConfig);
             }
 
-            DataTable dbScriptsExecutionHistoryFilesTable = _dbHandler.GetTable(projectConfig.DBConnectionInfo, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+            DataTable dbScriptsExecutionHistoryFilesTable = _dbHandler.GetTable(projectConfig.DBConnectionInfo, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName);
 
 
             string[] arrIncAllScriptFiles = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
@@ -129,58 +129,58 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 
         }
 
-        public void AssertThatAllFilesInFolderExistWithTheSameHashInTheDb_FinalState(string testName, ProjectConfigItem projectConfig)
+        public void AssertThatAllFilesInFolderExistWithTheSameHashInTheDB_FinalState(string testName, ProjectConfigItem projectConfig)
         {
-            DataTable dbScriptsExecutionHistoryFilesTable = _dbHandler.GetTable(projectConfig.DBConnectionInfo, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+            DataTable dbScriptsExecutionHistoryFilesTable = _dbHandler.GetTable(projectConfig.DBConnectionInfo, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName);
 
             if (!projectConfig.DevEnvironment)
             {
                 using (ArtifactExtractor artifactExtractor = new ArtifactExtractor(projectConfig))
                 {
-                    AssertMatchIncrementalFilesWithDbExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                    AssertMatchIncrementalFilesWithDBExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                    AssertMatchRepeatableFilesWithDbExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                    AssertMatchRepeatableFilesWithDBExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                    AssertDevDummyDataFilesWithDbExecuted_DeliveryEnv(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                    AssertDevDummyDataFilesWithDBExecuted_DeliveryEnv(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
                 }
             }
             else
             {
-                AssertMatchIncrementalFilesWithDbExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                AssertMatchIncrementalFilesWithDBExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                AssertMatchRepeatableFilesWithDbExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                AssertMatchRepeatableFilesWithDBExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                AssertMatchDevDummyDataFilesWithDbExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                AssertMatchDevDummyDataFilesWithDBExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
             }
         }
 
-        public void AssertThatAllFilesInFolderExistWithTheSameHashInTheDb_RunAgainAfterRepetableFilesChanged(string testName, ProjectConfigItem projectConfig)
+        public void AssertThatAllFilesInFolderExistWithTheSameHashInTheDB_RunAgainAfterRepetableFilesChanged(string testName, ProjectConfigItem projectConfig)
         {
-            DataTable dbScriptsExecutionHistoryFilesTable = _dbHandler.GetTable(projectConfig.DBConnectionInfo, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
+            DataTable dbScriptsExecutionHistoryFilesTable = _dbHandler.GetTable(projectConfig.DBConnectionInfo, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName);
 
             if (!projectConfig.DevEnvironment)
             {
                 using (ArtifactExtractor artifactExtractor = new ArtifactExtractor(projectConfig))
                 {
-                    AssertMatchIncrementalFilesWithDbExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                    AssertMatchIncrementalFilesWithDBExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                    AssertMatchRepeatableFilesWithDbExecuted_ForRunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                    AssertMatchRepeatableFilesWithDBExecuted_ForRunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                    AssertDevDummyDataFilesWithDbExecuted_DeliveryEnv(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                    AssertDevDummyDataFilesWithDBExecuted_DeliveryEnv(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
                 }
             }
             else
             {
-                AssertMatchIncrementalFilesWithDbExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                AssertMatchIncrementalFilesWithDBExecuted(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                AssertMatchRepeatableFilesWithDbExecuted_ForRunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                AssertMatchRepeatableFilesWithDBExecuted_ForRunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                AssertDevDummyDataFilesWithDbExecuted_RunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+                AssertDevDummyDataFilesWithDBExecuted_RunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
             }
         }
 
 
-        public void AssertMatchIncrementalFilesWithDbExecuted(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
+        public void AssertMatchIncrementalFilesWithDBExecuted(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
         {
             string[] arrAllIncrementalScriptFiles = Directory.GetFiles(projectConfig.IncrementalScriptsFolderPath, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
@@ -198,7 +198,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
         }
 
 
-        public void AssertMatchRepeatableFilesWithDbExecuted(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
+        public void AssertMatchRepeatableFilesWithDBExecuted(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
         {
             string[] arrAllRepeatableScriptFiles = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
@@ -215,7 +215,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
             }
         }
 
-        public void AssertMatchRepeatableFilesWithDbExecuted_ForRunAgainAfterRepetableFilesChanged(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
+        public void AssertMatchRepeatableFilesWithDBExecuted_ForRunAgainAfterRepetableFilesChanged(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
         {
             string[] arrAllRepeatableScriptFiles = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
@@ -247,7 +247,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
             }
         }
 
-        public void AssertMatchDevDummyDataFilesWithDbExecuted(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
+        public void AssertMatchDevDummyDataFilesWithDBExecuted(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
         {
             string[] arrAllDevDummyDataScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
@@ -262,7 +262,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
             }
         }
-        public void AssertDevDummyDataFilesWithDbExecuted_DeliveryEnv(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
+        public void AssertDevDummyDataFilesWithDBExecuted_DeliveryEnv(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
         {
             if (Directory.Exists(projectConfig.DevDummyDataScriptsFolderPath))
             {
@@ -278,7 +278,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
             }
 
         }
-        public void AssertDevDummyDataFilesWithDbExecuted_RunAgainAfterRepetableFilesChanged(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
+        public void AssertDevDummyDataFilesWithDBExecuted_RunAgainAfterRepetableFilesChanged(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
         {
             string[] arrAllDevDummyDataScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 

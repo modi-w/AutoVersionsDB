@@ -73,7 +73,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
         {
             if (testContext.DBBackupFileType != DBBackupFileType.None)
             {
-                _dbAsserts.AssertNumOfOpenDbConnection(testName, testContext.ProjectConfig.DBConnectionInfo, testContext.NumOfConnectionsBefore);
+                _dbAsserts.AssertNumOfOpenDBConnection(testName, testContext.ProjectConfig.DBConnectionInfo, testContext.NumOfConnectionsBefore);
                 _dbAsserts.AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(testName, testContext.ProjectConfig.DBConnectionInfo, testContext.DBBackupFileType);
             }
 

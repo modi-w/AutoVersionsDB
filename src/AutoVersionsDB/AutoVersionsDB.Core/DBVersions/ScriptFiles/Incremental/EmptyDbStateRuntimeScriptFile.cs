@@ -2,7 +2,7 @@
 
 namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 {
-    public class EmptyDbStateRuntimeScriptFile : IncrementalRuntimeScriptFile
+    public class EmptyDBStateRuntimeScriptFile : IncrementalRuntimeScriptFile
     {
         public const string TargetScriptFileNameEmptyDBState = "--- Empty DB State ---";
 
@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
         public override string Filename => TargetScriptFileNameEmptyDBState;
 
 
-        public EmptyDbStateRuntimeScriptFile()
+        public EmptyDBStateRuntimeScriptFile()
             : base(null, null, DateTime.MinValue, 0)
         {
         }

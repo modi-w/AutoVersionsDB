@@ -1,7 +1,6 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.IntegrationTests;
-
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using MartinCostello.SqlLocalDb;
 using Microsoft.Extensions.DependencyInjection;

@@ -12,7 +12,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
     public class ProjectConfigsAPI
     {
         private readonly ProjectConfigsStorage _projectConfigsStorage;
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactoryProvider;
 
         private readonly NotificationProcessRunner<ProjectConfigValidationProcessDefinition, ProjectConfigProcessContext> _projectConfigValidationRunner;
         private readonly NotificationProcessRunner<SaveNewProjectConfigProcessDefinition, ProjectConfigProcessContext> _saveNewProjectConfigRunner;
@@ -30,7 +30,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
                                 NotificationProcessRunner<RemoveProjectConfigProcessDefinition, ProjectConfigProcessContext> removeProjectConfigProcessDefinition)
         {
             _projectConfigsStorage = projectConfigsStorage;
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactoryProvider = dbCommandsFactory;
 
             _projectConfigValidationRunner = projectConfigValidationRunner;
             _saveNewProjectConfigRunner = saveNewProjectConfigRunner;
@@ -40,7 +40,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         }
 
 
-        public IList<DBType> DBTypes => dbCommandsFactoryProvider.DBTypes;
+        public IList<DBType> DBTypes => _dbCommandsFactoryProvider.DBTypes;
 
         public List<ProjectConfigItem> GetProjectsList()
         {

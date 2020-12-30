@@ -48,8 +48,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, true);
 
-            _dbAsserts.AssertDbInFinalState_DevEnv(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
-            _scriptFilesAsserts.AssertThatAllFilesInFolderExistWithTheSameHashInTheDb_RunAgainAfterRepetableFilesChanged(GetType().Name, testContext.ProjectConfig);
+            _dbAsserts.AssertDBInFinalState_DevEnv(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
+            _scriptFilesAsserts.AssertThatAllFilesInFolderExistWithTheSameHashInTheDB_RunAgainAfterRepetableFilesChanged(GetType().Name, testContext.ProjectConfig);
         }
 
 

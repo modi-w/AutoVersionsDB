@@ -78,7 +78,7 @@ namespace AutoVersionsDB.Core.DBVersions
         #endregion
 
 
-        #region Run Change Db State
+        #region Run Change DB State
 
         public ProcessResults SyncDB(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {

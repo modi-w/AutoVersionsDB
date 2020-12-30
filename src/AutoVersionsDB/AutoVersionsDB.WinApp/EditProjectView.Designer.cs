@@ -48,7 +48,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.label28 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.lblDbProcess = new System.Windows.Forms.Label();
+            this.lblDBProcess = new System.Windows.Forms.Label();
             this.imgValid = new System.Windows.Forms.Label();
             this.imgError = new System.Windows.Forms.Label();
             this.btnNavToProcess = new System.Windows.Forms.Button();
@@ -318,7 +318,7 @@
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel5.Controls.Add(this.label28);
             this.panel5.Controls.Add(this.btnSave);
-            this.panel5.Controls.Add(this.lblDbProcess);
+            this.panel5.Controls.Add(this.lblDBProcess);
             this.panel5.Controls.Add(this.imgValid);
             this.panel5.Controls.Add(this.imgError);
             this.panel5.Controls.Add(this.btnNavToProcess);
@@ -365,17 +365,17 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
-            // lblDbProcess
+            // lblDBProcess
             // 
-            this.lblDbProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDbProcess.AutoSize = true;
-            this.lblDbProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblDbProcess.Location = new System.Drawing.Point(907, 65);
-            this.lblDbProcess.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDbProcess.Name = "lblDbProcess";
-            this.lblDbProcess.Size = new System.Drawing.Size(71, 15);
-            this.lblDbProcess.TabIndex = 87;
-            this.lblDbProcess.Text = "DB Process";
+            this.lblDBProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDBProcess.AutoSize = true;
+            this.lblDBProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblDBProcess.Location = new System.Drawing.Point(907, 65);
+            this.lblDBProcess.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDBProcess.Name = "lblDBProcess";
+            this.lblDBProcess.Size = new System.Drawing.Size(71, 15);
+            this.lblDBProcess.TabIndex = 87;
+            this.lblDBProcess.Text = "DB Process";
             // 
             // imgValid
             // 
@@ -1064,7 +1064,7 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label lblRepeatableScriptsFolderPath;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label lblDbProcess;
+        private System.Windows.Forms.Label lblDBProcess;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox tbProjectDescription;

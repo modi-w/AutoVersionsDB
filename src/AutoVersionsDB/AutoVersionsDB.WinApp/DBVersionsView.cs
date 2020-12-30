@@ -48,7 +48,7 @@ namespace AutoVersionsDB.WinApp
 
             ChangeButtonsPanelsLocation(pnlMainActions);
             ChangeButtonsPanelsLocation(pnlMissingSystemTables);
-            ChangeButtonsPanelsLocation(pnlRestoreDbError);
+            ChangeButtonsPanelsLocation(pnlRestoreDBError);
             ChangeButtonsPanelsLocation(pnlSyncToSpecificState);
             ChangeButtonsPanelsLocation(pnlSetDBStateManually);
 
@@ -134,8 +134,8 @@ namespace AutoVersionsDB.WinApp
                 // Set up the ToolTip text with the controls.
                 tooltipControl.SetToolTip(btnRefresh, ViewModel.DBVersionsControls.BtnRefreshTooltip);
                 tooltipControl.SetToolTip(btnRunSync, ViewModel.DBVersionsControls.BtnRunSyncTooltip);
-                tooltipControl.SetToolTip(btnRecreateDbFromScratchMain, ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainTooltip);
-                tooltipControl.SetToolTip(btnRecreateDbFromScratch2, ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainTooltip);
+                tooltipControl.SetToolTip(btnRecreateDBFromScratchMain, ViewModel.DBVersionsControls.BtnRecreateDBFromScratchMainTooltip);
+                tooltipControl.SetToolTip(btnRecreateDBFromScratch2, ViewModel.DBVersionsControls.BtnRecreateDBFromScratchMainTooltip);
                 tooltipControl.SetToolTip(btnDeploy, ViewModel.DBVersionsControls.BtnDeployTooltip);
                 tooltipControl.SetToolTip(btnSetDBToSpecificState, ViewModel.DBVersionsControls.BtnSetDBToSpecificStateTooltip);
                 tooltipControl.SetToolTip(btnVirtualExecution, ViewModel.DBVersionsControls.BtnVirtualExecutionTooltip);
@@ -248,13 +248,13 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            pnlRestoreDbError.DataBindings.Clear();
-            pnlRestoreDbError.DataBindings.Add(
+            pnlRestoreDBError.DataBindings.Clear();
+            pnlRestoreDBError.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
-                    pnlRestoreDbError,
-                    nameof(pnlRestoreDbError.Visible),
+                    pnlRestoreDBError,
+                    nameof(pnlRestoreDBError.Visible),
                     ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.PnlRestoreDbErrorVisible)
+                    nameof(ViewModel.DBVersionsControls.PnlRestoreDBErrorVisible)
                     )
                 );
 
@@ -278,43 +278,43 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            btnRecreateDbFromScratchMain.DataBindings.Clear();
-            btnRecreateDbFromScratchMain.DataBindings.Add(
+            btnRecreateDBFromScratchMain.DataBindings.Clear();
+            btnRecreateDBFromScratchMain.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
-                    btnRecreateDbFromScratchMain,
-                    nameof(btnRecreateDbFromScratchMain.Visible),
+                    btnRecreateDBFromScratchMain,
+                    nameof(btnRecreateDBFromScratchMain.Visible),
                     ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainVisible)
+                    nameof(ViewModel.DBVersionsControls.BtnRecreateDBFromScratchMainVisible)
                     )
                 );
 
-            lblRecreateDbFromScratchMain.DataBindings.Clear();
-            lblRecreateDbFromScratchMain.DataBindings.Add(
+            lblRecreateDBFromScratchMain.DataBindings.Clear();
+            lblRecreateDBFromScratchMain.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
-                    lblRecreateDbFromScratchMain,
-                    nameof(lblRecreateDbFromScratchMain.Visible),
+                    lblRecreateDBFromScratchMain,
+                    nameof(lblRecreateDBFromScratchMain.Visible),
                     ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchMainVisible)
+                    nameof(ViewModel.DBVersionsControls.BtnRecreateDBFromScratchMainVisible)
                     )
                 );
 
-            btnRecreateDbFromScratch2.DataBindings.Clear();
-            btnRecreateDbFromScratch2.DataBindings.Add(
+            btnRecreateDBFromScratch2.DataBindings.Clear();
+            btnRecreateDBFromScratch2.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
-                    btnRecreateDbFromScratch2,
-                    nameof(btnRecreateDbFromScratch2.Visible),
+                    btnRecreateDBFromScratch2,
+                    nameof(btnRecreateDBFromScratch2.Visible),
                     ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchSecondaryVisible)
+                    nameof(ViewModel.DBVersionsControls.BtnRecreateDBFromScratchSecondaryVisible)
                     )
                 );
 
-            lblRecreateDbFromScratch2.DataBindings.Clear();
-            lblRecreateDbFromScratch2.DataBindings.Add(
+            lblRecreateDBFromScratch2.DataBindings.Clear();
+            lblRecreateDBFromScratch2.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
-                    lblRecreateDbFromScratch2,
-                    nameof(lblRecreateDbFromScratch2.Visible),
+                    lblRecreateDBFromScratch2,
+                    nameof(lblRecreateDBFromScratch2.Visible),
                     ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.BtnRecreateDbFromScratchSecondaryVisible)
+                    nameof(ViewModel.DBVersionsControls.BtnRecreateDBFromScratchSecondaryVisible)
                     )
                 );
 
@@ -517,9 +517,9 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void BtnRecreateDbFromScratchMain_Click(object sender, EventArgs e)
+        private void BtnRecreateDBFromScratchMain_Click(object sender, EventArgs e)
         {
-            ViewModel.RecreateDbFromScratchCommand.Execute();
+            ViewModel.RecreateDBFromScratchCommand.Execute();
         }
 
 
@@ -539,9 +539,9 @@ namespace AutoVersionsDB.WinApp
             ViewModel.SetDBStateManuallyViewStateCommand.Execute();
         }
 
-        private void BtnRecreateDbFromScratch2_Click(object sender, EventArgs e)
+        private void BtnRecreateDBFromScratch2_Click(object sender, EventArgs e)
         {
-            ViewModel.RecreateDbFromScratchCommand.Execute();
+            ViewModel.RecreateDBFromScratchCommand.Execute();
         }
 
 
@@ -667,7 +667,7 @@ namespace AutoVersionsDB.WinApp
             if (disposing)
             {
                 // Dispose managed state (managed objects).
-                //AutoVersionsDbAPI.Dispose();
+                //AutoVersionsDBAPI.Dispose();
 
                 if (components != null)
                 {

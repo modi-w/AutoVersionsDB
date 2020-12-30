@@ -40,9 +40,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, true);
 
-            _dbAsserts.AssertDbInFinalState_DeliveryEnv(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
+            _dbAsserts.AssertDBInFinalState_DeliveryEnv(GetType().Name, testContext.ProjectConfig.DBConnectionInfo);
 
-            _scriptFilesAsserts.AssertThatAllFilesInFolderExistWithTheSameHashInTheDb_FinalState(GetType().Name, testContext.ProjectConfig);
+            _scriptFilesAsserts.AssertThatAllFilesInFolderExistWithTheSameHashInTheDB_FinalState(GetType().Name, testContext.ProjectConfig);
         }
 
 

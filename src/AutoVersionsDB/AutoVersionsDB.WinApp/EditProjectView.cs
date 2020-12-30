@@ -562,11 +562,11 @@ namespace AutoVersionsDB.WinApp
                 );
 
 
-            lblDbProcess.DataBindings.Clear();
-            lblDbProcess.DataBindings.Add(
+            lblDBProcess.DataBindings.Clear();
+            lblDBProcess.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
-                    lblDbProcess,
-                    nameof(lblDbProcess.Visible),
+                    lblDBProcess,
+                    nameof(lblDBProcess.Visible),
                     ViewModel.EditProjectControls,
                     nameof(ViewModel.EditProjectControls.BtnNavToProcessVisible)
                     )

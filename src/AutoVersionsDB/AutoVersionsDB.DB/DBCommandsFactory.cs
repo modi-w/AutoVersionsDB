@@ -28,7 +28,7 @@ namespace AutoVersionsDB.DB
         //    return _dbCommandsFactoryDictionary[dbTypeCode];
         //}
 
-        public bool ContainDbType(string dbTypeCode)
+        public bool ContainDBType(string dbTypeCode)
         {
             return _dbTypeObjectsFactoryDictionary.ContainsKey(dbTypeCode);
         }
@@ -122,7 +122,7 @@ namespace AutoVersionsDB.DB
         public virtual DBProcessStatusNotifyerBase CreateDBProcessStatusNotifyer(Type notifyerType, DBConnectionInfo dbConnectionInfo)
         {
             DBQueryStatus dbQueryStatus = CreateDBQueryStatus(dbConnectionInfo);
-            DBProcessStatusNotifyerBase dbNotifyer = Activator.CreateInstance(notifyerType, dbQueryStatus, DBCommandsConsts.DbLongProcessGetStatusIntervalInMs) as DBProcessStatusNotifyerBase;
+            DBProcessStatusNotifyerBase dbNotifyer = Activator.CreateInstance(notifyerType, dbQueryStatus, DBCommandsConsts.DBLongProcessGetStatusIntervalInMs) as DBProcessStatusNotifyerBase;
 
             return dbNotifyer;
         }

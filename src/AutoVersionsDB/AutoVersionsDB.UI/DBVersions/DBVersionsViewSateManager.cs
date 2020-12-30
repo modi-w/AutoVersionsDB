@@ -163,7 +163,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                     _dbVersionsControls.BtnShowHistoricalBackupsEnabled = true;
 
-                    _dbVersionsControls.PnlRestoreDbErrorVisible = true;
+                    _dbVersionsControls.PnlRestoreDBErrorVisible = true;
                     _dbVersionsControls.LblColorTargetStateSquareVisible = false;
                     _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
                     break;
@@ -175,8 +175,8 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls.PnlRepeatableFilesVisible = true;
             _dbVersionsControls.PnlDevDummyDataFilesVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
 
-            _dbVersionsControls.BtnRecreateDbFromScratchMainVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
-            _dbVersionsControls.BtnRecreateDbFromScratchSecondaryVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
+            _dbVersionsControls.BtnRecreateDBFromScratchMainVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
+            _dbVersionsControls.BtnRecreateDBFromScratchSecondaryVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
             _dbVersionsControls.BtnDeployVisible = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
 
             _dbVersionsControls.BtnCreateNewDevDummyDataScriptFileEnabled = _dbVersionsViewModelData.ProjectConfig.DevEnvironment;
@@ -205,7 +205,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls.PnlSyncToSpecificStateVisible = false;
             _dbVersionsControls.PnlMissingSystemTablesVisible = false;
             _dbVersionsControls.PnlSetDBStateManuallyVisible = false;
-            _dbVersionsControls.PnlRestoreDbErrorVisible = false;
+            _dbVersionsControls.PnlRestoreDBErrorVisible = false;
         }
 
 
@@ -214,7 +214,7 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             List<RuntimeScriptFileBase> incScripts = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFileBase emptyDBTargetState = new EmptyDbStateRuntimeScriptFile();
+            RuntimeScriptFileBase emptyDBTargetState = new EmptyDBStateRuntimeScriptFile();
             incScripts.Insert(0, emptyDBTargetState);
 
             _dbVersionsViewModelData.IncrementalScriptFiles = incScripts;

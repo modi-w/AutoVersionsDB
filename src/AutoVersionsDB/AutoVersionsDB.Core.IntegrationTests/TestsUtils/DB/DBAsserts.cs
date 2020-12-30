@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         }
 
 
-        public void AssertNumOfOpenDbConnection(string testName, DBConnectionInfo dbConnectionInfo, NumOfDBConnections numOfOpenConnections_Before)
+        public void AssertNumOfOpenDBConnection(string testName, DBConnectionInfo dbConnectionInfo, NumOfDBConnections numOfOpenConnections_Before)
         {
             NumOfDBConnections numOfOpenConnections_After = _dbHandler.GetNumOfOpenConnection(dbConnectionInfo);
 
@@ -93,7 +93,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
 
 
-        public void AssertDbInEmptyStateExceptSystemTables(string testName, DBConnectionInfo dbConnectionInfo)
+        public void AssertDBInEmptyStateExceptSystemTables(string testName, DBConnectionInfo dbConnectionInfo)
         {
             DataTable allSchemaTable = _dbHandler.GetAllDBSchemaExceptDBVersionSchema(dbConnectionInfo);
 
@@ -103,17 +103,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
 
 
-        public void AssertThatDbExecutedFilesAreInMiddleState(string testName, DBConnectionInfo dbConnectionInfo)
+        public void AssertThatDBExecutedFilesAreInMiddleState(string testName, DBConnectionInfo dbConnectionInfo)
         {
-            DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName);
-            assertTableNumOfRows(testName, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, tableData, 3);
-            assertTableCellValue(testName, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, tableData, 0, "Filename", "incScript_2020-02-25.100_initState.sql");
-            assertTableCellValue(testName, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, tableData, 1, "Filename", "incScript_2020-02-25.101_CreateLookupTable1.sql");
-            assertTableCellValue(testName, DBCommandsConsts.DbScriptsExecutionHistoryFilesFullTableName, tableData, 2, "Filename", "incScript_2020-02-25.102_CreateLookupTable2.sql");
+            DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName);
+            assertTableNumOfRows(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 3);
+            assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 0, "Filename", "incScript_2020-02-25.100_initState.sql");
+            assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 1, "Filename", "incScript_2020-02-25.101_CreateLookupTable1.sql");
+            assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 2, "Filename", "incScript_2020-02-25.102_CreateLookupTable2.sql");
         }
 
 
-        public void AssertDbInMiddleState(string testName, DBConnectionInfo dbConnectionInfo)
+        public void AssertDBInMiddleState(string testName, DBConnectionInfo dbConnectionInfo)
         {
             AssertTable1ExistWithFullData(testName, dbConnectionInfo);
 
@@ -127,7 +127,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
         }
 
-        public void AssertDbInFinalState_DevEnv(string testName, DBConnectionInfo dbConnectionInfo)
+        public void AssertDBInFinalState_DevEnv(string testName, DBConnectionInfo dbConnectionInfo)
         {
             AssertTable1ExistWithFullData(testName, dbConnectionInfo);
 
@@ -171,7 +171,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
 
         //Comment: Dev Dummy Data Scripts should not run on Delivery Environment
-        public void AssertDbInFinalState_DeliveryEnv(string testName, DBConnectionInfo dbConnectionInfo)
+        public void AssertDBInFinalState_DeliveryEnv(string testName, DBConnectionInfo dbConnectionInfo)
         {
             AssertTable1ExistWithFullData(testName, dbConnectionInfo);
 
@@ -209,7 +209,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         }
 
 
-        public void AssertDbInFinalState_OnlyIncremental(string testName, DBConnectionInfo dbConnectionInfo)
+        public void AssertDBInFinalState_OnlyIncremental(string testName, DBConnectionInfo dbConnectionInfo)
         {
             AssertTable1ExistWithFullData(testName, dbConnectionInfo);
 

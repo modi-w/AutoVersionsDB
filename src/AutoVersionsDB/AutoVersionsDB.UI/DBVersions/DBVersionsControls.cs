@@ -80,11 +80,11 @@ namespace AutoVersionsDB.UI.DBVersions
             set => SetField(ref _pnlDevDummyDataFilesVisible, value);
         }
 
-        private bool _pnlRestoreDbErrorVisible;
-        public bool PnlRestoreDbErrorVisible
+        private bool _pnlRestoreDBErrorVisible;
+        public bool PnlRestoreDBErrorVisible
         {
-            get => _pnlRestoreDbErrorVisible;
-            set => SetField(ref _pnlRestoreDbErrorVisible, value);
+            get => _pnlRestoreDBErrorVisible;
+            set => SetField(ref _pnlRestoreDBErrorVisible, value);
         }
 
 
@@ -111,18 +111,18 @@ namespace AutoVersionsDB.UI.DBVersions
             set => SetField(ref _btnRefreshEnable, value);
         }
 
-        private bool _btnRecreateDbFromScratchMainVisible;
-        public bool BtnRecreateDbFromScratchMainVisible
+        private bool _btnRecreateDBFromScratchMainVisible;
+        public bool BtnRecreateDBFromScratchMainVisible
         {
-            get => _btnRecreateDbFromScratchMainVisible;
-            set => SetField(ref _btnRecreateDbFromScratchMainVisible, value);
+            get => _btnRecreateDBFromScratchMainVisible;
+            set => SetField(ref _btnRecreateDBFromScratchMainVisible, value);
         }
 
-        private bool _btnRecreateDbFromScratchSecondaryVisible;
-        public bool BtnRecreateDbFromScratchSecondaryVisible
+        private bool _btnRecreateDBbFromScratchSecondaryVisible;
+        public bool BtnRecreateDBFromScratchSecondaryVisible
         {
-            get => _btnRecreateDbFromScratchSecondaryVisible;
-            set => SetField(ref _btnRecreateDbFromScratchSecondaryVisible, value);
+            get => _btnRecreateDBbFromScratchSecondaryVisible;
+            set => SetField(ref _btnRecreateDBbFromScratchSecondaryVisible, value);
         }
 
 
@@ -197,11 +197,11 @@ namespace AutoVersionsDB.UI.DBVersions
             set => SetField(ref _btnRunSyncTooltip, value);
         }
 
-        private string _btnRecreateDbFromScratchTooltip;
-        public string BtnRecreateDbFromScratchMainTooltip
+        private string _btnRecreateDBFromScratchTooltip;
+        public string BtnRecreateDBFromScratchMainTooltip
         {
-            get => _btnRecreateDbFromScratchTooltip;
-            set => SetField(ref _btnRecreateDbFromScratchTooltip, value);
+            get => _btnRecreateDBFromScratchTooltip;
+            set => SetField(ref _btnRecreateDBFromScratchTooltip, value);
         }
 
         private string _btnDeployTooltip;

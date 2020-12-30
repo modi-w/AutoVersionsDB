@@ -2,16 +2,16 @@
 {
     public static class DBCommandsConsts
     {
-        public const string DbSchemaName = "AutoVersionsDB";
+        public const string DBSchemaName = "AutoVersionsDB";
 
-        public const string DbScriptsExecutionHistoryTableName = "DBScriptsExecutionHistory";
-        public static string DbScriptsExecutionHistoryFullTableName => $"{DbSchemaName}.{DbScriptsExecutionHistoryTableName}";
+        public const string DBScriptsExecutionHistoryTableName = "DBScriptsExecutionHistory";
+        public static string DBScriptsExecutionHistoryFullTableName => $"{DBSchemaName}.{DBScriptsExecutionHistoryTableName}";
 
-        public const string DbScriptsExecutionHistoryFilesTableName = "DBScriptsExecutionHistoryFiles";
-        public static string DbScriptsExecutionHistoryFilesFullTableName => $"{DbSchemaName}.{DbScriptsExecutionHistoryFilesTableName}";
+        public const string DBScriptsExecutionHistoryFilesTableName = "DBScriptsExecutionHistoryFiles";
+        public static string DBScriptsExecutionHistoryFilesFullTableName => $"{DBSchemaName}.{DBScriptsExecutionHistoryFilesTableName}";
 
 
-        public const int DbLongProcessGetStatusIntervalInMs = 800;
+        public const int DBLongProcessGetStatusIntervalInMs = 800;
 
     }
 }

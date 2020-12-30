@@ -65,16 +65,16 @@
             this.pnlMissingSystemTables = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.btnVirtualExecution = new System.Windows.Forms.Button();
-            this.lblRecreateDbFromScratch2 = new System.Windows.Forms.Label();
-            this.btnRecreateDbFromScratch2 = new System.Windows.Forms.Button();
+            this.lblRecreateDBFromScratch2 = new System.Windows.Forms.Label();
+            this.btnRecreateDBFromScratch2 = new System.Windows.Forms.Button();
             this.pnlMainActions = new System.Windows.Forms.Panel();
             this.lblSetDBToSpecificState = new System.Windows.Forms.Label();
             this.lblDeploy = new System.Windows.Forms.Label();
-            this.lblRecreateDbFromScratchMain = new System.Windows.Forms.Label();
+            this.lblRecreateDBFromScratchMain = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.btnSetDBToSpecificState = new System.Windows.Forms.Button();
             this.btnDeploy = new System.Windows.Forms.Button();
-            this.btnRecreateDbFromScratchMain = new System.Windows.Forms.Button();
+            this.btnRecreateDBFromScratchMain = new System.Windows.Forms.Button();
             this.btnRunSync = new System.Windows.Forms.Button();
             this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsControl();
             this.label15 = new System.Windows.Forms.Label();
@@ -112,7 +112,7 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label23 = new System.Windows.Forms.Label();
             this.pnlActionButtons = new System.Windows.Forms.Panel();
-            this.pnlRestoreDbError = new System.Windows.Forms.Panel();
+            this.pnlRestoreDBError = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
             this.btnShowHistoricalBackups = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgIncrementalScriptsFiles)).BeginInit();
@@ -130,7 +130,7 @@
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgDevDummyDataScriptsFiles)).BeginInit();
             this.pnlActionButtons.SuspendLayout();
-            this.pnlRestoreDbError.SuspendLayout();
+            this.pnlRestoreDBError.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblProjectName
@@ -550,8 +550,8 @@
             this.pnlMissingSystemTables.BackColor = System.Drawing.Color.White;
             this.pnlMissingSystemTables.Controls.Add(this.label6);
             this.pnlMissingSystemTables.Controls.Add(this.btnVirtualExecution);
-            this.pnlMissingSystemTables.Controls.Add(this.lblRecreateDbFromScratch2);
-            this.pnlMissingSystemTables.Controls.Add(this.btnRecreateDbFromScratch2);
+            this.pnlMissingSystemTables.Controls.Add(this.lblRecreateDBFromScratch2);
+            this.pnlMissingSystemTables.Controls.Add(this.btnRecreateDBFromScratch2);
             this.pnlMissingSystemTables.Location = new System.Drawing.Point(397, 19);
             this.pnlMissingSystemTables.Name = "pnlMissingSystemTables";
             this.pnlMissingSystemTables.Size = new System.Drawing.Size(189, 71);
@@ -589,37 +589,37 @@
             this.btnVirtualExecution.UseVisualStyleBackColor = false;
             this.btnVirtualExecution.Click += new System.EventHandler(this.BtnVirtualExecution_Click);
             // 
-            // lblRecreateDbFromScratch2
+            // lblRecreateDBFromScratch2
             // 
-            this.lblRecreateDbFromScratch2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblRecreateDbFromScratch2.AutoSize = true;
-            this.lblRecreateDbFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblRecreateDbFromScratch2.Location = new System.Drawing.Point(22, 43);
-            this.lblRecreateDbFromScratch2.Name = "lblRecreateDbFromScratch2";
-            this.lblRecreateDbFromScratch2.Size = new System.Drawing.Size(67, 13);
-            this.lblRecreateDbFromScratch2.TabIndex = 80;
-            this.lblRecreateDbFromScratch2.Text = "Recreate DB";
+            this.lblRecreateDBFromScratch2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblRecreateDBFromScratch2.AutoSize = true;
+            this.lblRecreateDBFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblRecreateDBFromScratch2.Location = new System.Drawing.Point(22, 43);
+            this.lblRecreateDBFromScratch2.Name = "lblRecreateDBFromScratch2";
+            this.lblRecreateDBFromScratch2.Size = new System.Drawing.Size(67, 13);
+            this.lblRecreateDBFromScratch2.TabIndex = 80;
+            this.lblRecreateDBFromScratch2.Text = "Recreate DB";
             // 
-            // btnRecreateDbFromScratch2
+            // btnRecreateDBFromScratch2
             // 
-            this.btnRecreateDbFromScratch2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRecreateDbFromScratch2.BackColor = System.Drawing.Color.White;
-            this.btnRecreateDbFromScratch2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnRecreateDbFromScratch2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRecreateDbFromScratch2.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnRecreateDbFromScratch2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRecreateDbFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.btnRecreateDbFromScratch2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnRecreateDbFromScratch2.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RecreateDBFromScratchIcon;
-            this.btnRecreateDbFromScratch2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecreateDbFromScratch2.Location = new System.Drawing.Point(30, 4);
-            this.btnRecreateDbFromScratch2.Margin = new System.Windows.Forms.Padding(0);
-            this.btnRecreateDbFromScratch2.Name = "btnRecreateDbFromScratch2";
-            this.btnRecreateDbFromScratch2.Size = new System.Drawing.Size(47, 39);
-            this.btnRecreateDbFromScratch2.TabIndex = 79;
-            this.btnRecreateDbFromScratch2.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnRecreateDbFromScratch2.UseVisualStyleBackColor = false;
-            this.btnRecreateDbFromScratch2.Click += new System.EventHandler(this.BtnRecreateDbFromScratch2_Click);
+            this.btnRecreateDBFromScratch2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRecreateDBFromScratch2.BackColor = System.Drawing.Color.White;
+            this.btnRecreateDBFromScratch2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnRecreateDBFromScratch2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRecreateDBFromScratch2.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnRecreateDBFromScratch2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRecreateDBFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnRecreateDBFromScratch2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnRecreateDBFromScratch2.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RecreateDBFromScratchIcon;
+            this.btnRecreateDBFromScratch2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRecreateDBFromScratch2.Location = new System.Drawing.Point(30, 4);
+            this.btnRecreateDBFromScratch2.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRecreateDBFromScratch2.Name = "btnRecreateDBFromScratch2";
+            this.btnRecreateDBFromScratch2.Size = new System.Drawing.Size(47, 39);
+            this.btnRecreateDBFromScratch2.TabIndex = 79;
+            this.btnRecreateDBFromScratch2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btnRecreateDBFromScratch2.UseVisualStyleBackColor = false;
+            this.btnRecreateDBFromScratch2.Click += new System.EventHandler(this.BtnRecreateDBFromScratch2_Click);
             // 
             // pnlMainActions
             // 
@@ -627,11 +627,11 @@
             this.pnlMainActions.BackColor = System.Drawing.Color.White;
             this.pnlMainActions.Controls.Add(this.lblSetDBToSpecificState);
             this.pnlMainActions.Controls.Add(this.lblDeploy);
-            this.pnlMainActions.Controls.Add(this.lblRecreateDbFromScratchMain);
+            this.pnlMainActions.Controls.Add(this.lblRecreateDBFromScratchMain);
             this.pnlMainActions.Controls.Add(this.label24);
             this.pnlMainActions.Controls.Add(this.btnSetDBToSpecificState);
             this.pnlMainActions.Controls.Add(this.btnDeploy);
-            this.pnlMainActions.Controls.Add(this.btnRecreateDbFromScratchMain);
+            this.pnlMainActions.Controls.Add(this.btnRecreateDBFromScratchMain);
             this.pnlMainActions.Controls.Add(this.btnRunSync);
             this.pnlMainActions.Location = new System.Drawing.Point(593, 19);
             this.pnlMainActions.Name = "pnlMainActions";
@@ -660,16 +660,16 @@
             this.lblDeploy.TabIndex = 79;
             this.lblDeploy.Text = "Deploy";
             // 
-            // lblRecreateDbFromScratchMain
+            // lblRecreateDBFromScratchMain
             // 
-            this.lblRecreateDbFromScratchMain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblRecreateDbFromScratchMain.AutoSize = true;
-            this.lblRecreateDbFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblRecreateDbFromScratchMain.Location = new System.Drawing.Point(127, 45);
-            this.lblRecreateDbFromScratchMain.Name = "lblRecreateDbFromScratchMain";
-            this.lblRecreateDbFromScratchMain.Size = new System.Drawing.Size(67, 13);
-            this.lblRecreateDbFromScratchMain.TabIndex = 78;
-            this.lblRecreateDbFromScratchMain.Text = "Recreate DB";
+            this.lblRecreateDBFromScratchMain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblRecreateDBFromScratchMain.AutoSize = true;
+            this.lblRecreateDBFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblRecreateDBFromScratchMain.Location = new System.Drawing.Point(127, 45);
+            this.lblRecreateDBFromScratchMain.Name = "lblRecreateDBFromScratchMain";
+            this.lblRecreateDBFromScratchMain.Size = new System.Drawing.Size(67, 13);
+            this.lblRecreateDBFromScratchMain.TabIndex = 78;
+            this.lblRecreateDBFromScratchMain.Text = "Recreate DB";
             // 
             // label24
             // 
@@ -724,26 +724,26 @@
             this.btnDeploy.UseVisualStyleBackColor = false;
             this.btnDeploy.Click += new System.EventHandler(this.BtnDeploy_Click);
             // 
-            // btnRecreateDbFromScratchMain
+            // btnRecreateDBFromScratchMain
             // 
-            this.btnRecreateDbFromScratchMain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRecreateDbFromScratchMain.BackColor = System.Drawing.Color.White;
-            this.btnRecreateDbFromScratchMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnRecreateDbFromScratchMain.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRecreateDbFromScratchMain.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnRecreateDbFromScratchMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRecreateDbFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.btnRecreateDbFromScratchMain.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnRecreateDbFromScratchMain.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RecreateDBFromScratchIcon;
-            this.btnRecreateDbFromScratchMain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecreateDbFromScratchMain.Location = new System.Drawing.Point(135, 6);
-            this.btnRecreateDbFromScratchMain.Margin = new System.Windows.Forms.Padding(0);
-            this.btnRecreateDbFromScratchMain.Name = "btnRecreateDbFromScratchMain";
-            this.btnRecreateDbFromScratchMain.Size = new System.Drawing.Size(47, 39);
-            this.btnRecreateDbFromScratchMain.TabIndex = 75;
-            this.btnRecreateDbFromScratchMain.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnRecreateDbFromScratchMain.UseVisualStyleBackColor = false;
-            this.btnRecreateDbFromScratchMain.Click += new System.EventHandler(this.BtnRecreateDbFromScratchMain_Click);
+            this.btnRecreateDBFromScratchMain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRecreateDBFromScratchMain.BackColor = System.Drawing.Color.White;
+            this.btnRecreateDBFromScratchMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnRecreateDBFromScratchMain.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRecreateDBFromScratchMain.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnRecreateDBFromScratchMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRecreateDBFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnRecreateDBFromScratchMain.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnRecreateDBFromScratchMain.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RecreateDBFromScratchIcon;
+            this.btnRecreateDBFromScratchMain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRecreateDBFromScratchMain.Location = new System.Drawing.Point(135, 6);
+            this.btnRecreateDBFromScratchMain.Margin = new System.Windows.Forms.Padding(0);
+            this.btnRecreateDBFromScratchMain.Name = "btnRecreateDBFromScratchMain";
+            this.btnRecreateDBFromScratchMain.Size = new System.Drawing.Size(47, 39);
+            this.btnRecreateDBFromScratchMain.TabIndex = 75;
+            this.btnRecreateDBFromScratchMain.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btnRecreateDBFromScratchMain.UseVisualStyleBackColor = false;
+            this.btnRecreateDBFromScratchMain.Click += new System.EventHandler(this.BtnRecreateDBFromScratchMain_Click);
             // 
             // btnRunSync
             // 
@@ -1277,7 +1277,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlActionButtons.BackColor = System.Drawing.Color.White;
             this.pnlActionButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlActionButtons.Controls.Add(this.pnlRestoreDbError);
+            this.pnlActionButtons.Controls.Add(this.pnlRestoreDBError);
             this.pnlActionButtons.Controls.Add(this.pnlSetDBStateManually);
             this.pnlActionButtons.Controls.Add(this.pnlMissingSystemTables);
             this.pnlActionButtons.Controls.Add(this.pnlMainActions);
@@ -1287,16 +1287,16 @@
             this.pnlActionButtons.Size = new System.Drawing.Size(877, 224);
             this.pnlActionButtons.TabIndex = 75;
             // 
-            // pnlRestoreDbError
+            // pnlRestoreDBError
             // 
-            this.pnlRestoreDbError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlRestoreDbError.BackColor = System.Drawing.Color.White;
-            this.pnlRestoreDbError.Controls.Add(this.label34);
-            this.pnlRestoreDbError.Controls.Add(this.btnShowHistoricalBackups);
-            this.pnlRestoreDbError.Location = new System.Drawing.Point(279, 19);
-            this.pnlRestoreDbError.Name = "pnlRestoreDbError";
-            this.pnlRestoreDbError.Size = new System.Drawing.Size(109, 71);
-            this.pnlRestoreDbError.TabIndex = 83;
+            this.pnlRestoreDBError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlRestoreDBError.BackColor = System.Drawing.Color.White;
+            this.pnlRestoreDBError.Controls.Add(this.label34);
+            this.pnlRestoreDBError.Controls.Add(this.btnShowHistoricalBackups);
+            this.pnlRestoreDBError.Location = new System.Drawing.Point(279, 19);
+            this.pnlRestoreDBError.Name = "pnlRestoreDBError";
+            this.pnlRestoreDBError.Size = new System.Drawing.Size(109, 71);
+            this.pnlRestoreDBError.TabIndex = 83;
             // 
             // label34
             // 
@@ -1370,8 +1370,8 @@
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgDevDummyDataScriptsFiles)).EndInit();
             this.pnlActionButtons.ResumeLayout(false);
-            this.pnlRestoreDbError.ResumeLayout(false);
-            this.pnlRestoreDbError.PerformLayout();
+            this.pnlRestoreDBError.ResumeLayout(false);
+            this.pnlRestoreDBError.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1435,17 +1435,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.Panel pnlActionButtons;
-        private System.Windows.Forms.Button btnRecreateDbFromScratchMain;
+        private System.Windows.Forms.Button btnRecreateDBFromScratchMain;
         private System.Windows.Forms.Button btnDeploy;
         private System.Windows.Forms.Button btnSetDBToSpecificState;
         private System.Windows.Forms.Label lblSetDBToSpecificState;
         private System.Windows.Forms.Label lblDeploy;
-        private System.Windows.Forms.Label lblRecreateDbFromScratchMain;
+        private System.Windows.Forms.Label lblRecreateDBFromScratchMain;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnVirtualExecution;
-        private System.Windows.Forms.Label lblRecreateDbFromScratch2;
-        private System.Windows.Forms.Button btnRecreateDbFromScratch2;
+        private System.Windows.Forms.Label lblRecreateDBFromScratch2;
+        private System.Windows.Forms.Button btnRecreateDBFromScratch2;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Button btnApplySyncSpecificState;
         private System.Windows.Forms.Label label30;
@@ -1454,7 +1454,7 @@
         private System.Windows.Forms.Button btnCancelSetDBStateManually;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Button btnRunSetDBStateManally;
-        private System.Windows.Forms.Panel pnlRestoreDbError;
+        private System.Windows.Forms.Panel pnlRestoreDBError;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Button btnShowHistoricalBackups;
         private System.Windows.Forms.Label label26;

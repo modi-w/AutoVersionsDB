@@ -17,7 +17,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
         {
             List<RuntimeScriptFileBase> pendingScriptFilesList = new List<RuntimeScriptFileBase>();
 
-            if (targetScriptFilename != EmptyDbStateRuntimeScriptFile.TargetScriptFileNameEmptyDBState)
+            if (targetScriptFilename != EmptyDBStateRuntimeScriptFile.TargetScriptFileNameEmptyDBState)
             {
                 RuntimeScriptFileBase prevExecutionLastScriptFile = CreateLasetExecutedFileItem();
 

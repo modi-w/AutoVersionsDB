@@ -173,7 +173,7 @@ namespace AutoVersionsDB.WinApp
             if (disposing)
             {
                 // Dispose managed state (managed objects).
-                //AutoVersionsDbAPI.Dispose();
+                //AutoVersionsDBAPI.Dispose();
 
                 if (components != null)
                 {
