@@ -2,12 +2,12 @@
 
 namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
 {
-    public class ChangeIdProcessParams : ProcessParams
+    public class ChangeIdProcessArgs : ProcessArgs
     {
         public string Id { get; }
         public string NewId { get; }
 
-        public ChangeIdProcessParams(string id, string newId)
+        public ChangeIdProcessArgs(string id, string newId)
         {
             Id = id;
             NewId = newId;

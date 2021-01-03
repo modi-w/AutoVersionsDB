@@ -23,9 +23,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            ChangeIdProcessParams projectConfigProcessParams = processContext.ProcessParams as ChangeIdProcessParams;
+            ChangeIdProcessArgs projectConfigProcessArgs = processContext.ProcessArgs as ChangeIdProcessArgs;
 
-            _projectConfigsStorage.ChangeId(projectConfigProcessParams.Id, projectConfigProcessParams.NewId);
+            _projectConfigsStorage.ChangeId(projectConfigProcessArgs.Id, projectConfigProcessArgs.NewId);
         }
 
     }

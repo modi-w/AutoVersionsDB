@@ -23,11 +23,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
             processContext.ThrowIfNull(nameof(processContext));
 
             DBVersionsProcessContext dbVersionsProcessContext = processContext as DBVersionsProcessContext;
-            DBVersionsProcessParams dbVersionsProcessParams = dbVersionsProcessContext.ProcessParams as DBVersionsProcessParams;
+            DBVersionsProcessArgs dbVersionsProcessArgs = dbVersionsProcessContext.ProcessArgs as DBVersionsProcessArgs;
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
-            NextScriptFileNameValidator nextScriptFileNameValidator = new NextScriptFileNameValidator(dbVersionsProcessContext.ScriptFilesState.ScriptFilesComparers[_scriptFileType.FileTypeCode], dbVersionsProcessParams.NewScriptName);
+            NextScriptFileNameValidator nextScriptFileNameValidator = new NextScriptFileNameValidator(dbVersionsProcessContext.ScriptFilesState.ScriptFilesComparers[_scriptFileType.FileTypeCode], dbVersionsProcessArgs.NewScriptName);
             validationsGroup.Add(nextScriptFileNameValidator);
 
 

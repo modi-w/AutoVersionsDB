@@ -65,9 +65,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
             _consoleProcessMessages.SetInfoMessage(processName);
         }
 
-        public void StartProcessMessage(string processName, string paramsStr)
+        public void StartProcessMessage(string processName, string args)
         {
-            _consoleProcessMessages.StartProcessMessage(processName, paramsStr);
+            _consoleProcessMessages.StartProcessMessage(processName, args);
         }
 
         public void StartSpiiner()

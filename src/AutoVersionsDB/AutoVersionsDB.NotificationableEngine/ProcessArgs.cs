@@ -1,6 +1,6 @@
 ﻿namespace AutoVersionsDB.NotificationableEngine
 {
-    public class ProcessParams
+    public class ProcessArgs
     {
     }
 }

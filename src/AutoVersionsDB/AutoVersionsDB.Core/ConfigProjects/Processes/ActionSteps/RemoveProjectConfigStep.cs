@@ -22,9 +22,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            ProjectConfigProcessParams projectConfigProcessParams = processContext.ProcessParams as ProjectConfigProcessParams;
+            ProjectConfigProcessArgs projectConfigProcessArgs = processContext.ProcessArgs as ProjectConfigProcessArgs;
 
-            _projectConfigsStorage.RemoveProjectConfig(projectConfigProcessParams.Id);
+            _projectConfigsStorage.RemoveProjectConfig(projectConfigProcessArgs.Id);
         }
 
     }

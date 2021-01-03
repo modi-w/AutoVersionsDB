@@ -74,17 +74,17 @@ namespace AutoVersionsDB.CLI
         {
             StartProcessMessage(processName, "");
         }
-        public void StartProcessMessage(string processName, string paramsStr)
+        public void StartProcessMessage(string processName, string args)
         {
             _console.ForegroundColor = ConsoleColor.Gray;
 
-            if (!string.IsNullOrWhiteSpace(paramsStr))
+            if (!string.IsNullOrWhiteSpace(args))
             {
-                _console.Out.WriteLine($"> Run '{processName}' for '{paramsStr}'");
+                _console.Out.WriteLine($"> Run '{processName}' for '{args}'");
             }
             else
             {
-                _console.Out.WriteLine($"> Run '{processName}' (no params)");
+                _console.Out.WriteLine($"> Run '{processName}' (no arguments)");
             }
 
         }

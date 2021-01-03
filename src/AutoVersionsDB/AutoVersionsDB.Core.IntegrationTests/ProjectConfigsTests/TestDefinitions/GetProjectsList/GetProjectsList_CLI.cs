@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 6);
-            assertTextByLines.AssertLineMessage("> Run 'list' (no params)", true);
+            assertTextByLines.AssertLineMessage("> Run 'list' (no arguments)", true);
             assertTextByLines.AssertLineMessage("", true);
             assertTextByLines.AssertLineMessage("  Id                            |  Description", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);

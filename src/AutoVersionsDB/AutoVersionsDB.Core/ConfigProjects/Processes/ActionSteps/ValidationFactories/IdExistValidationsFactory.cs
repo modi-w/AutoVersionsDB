@@ -27,17 +27,17 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
             string Id;
-            if (processContext.ProcessParams is ProjectConfigProcessParams)
+            if (processContext.ProcessArgs is ProjectConfigProcessArgs)
             {
-                Id = (processContext.ProcessParams as ProjectConfigProcessParams).Id;
+                Id = (processContext.ProcessArgs as ProjectConfigProcessArgs).Id;
             }
-            else if (processContext.ProcessParams is ChangeIdProcessParams)
+            else if (processContext.ProcessArgs is ChangeIdProcessArgs)
             {
-                Id = (processContext.ProcessParams as ChangeIdProcessParams).Id;
+                Id = (processContext.ProcessArgs as ChangeIdProcessArgs).Id;
             }
             else
             {
-                throw new Exception("Invalid 'ProcessParams' type");
+                throw new Exception("Invalid 'ProcessArgs' type");
             }
 
             IdMandatory idNotEmpty = new IdMandatory(Id);

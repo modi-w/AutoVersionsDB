@@ -66,13 +66,13 @@ namespace AutoVersionsDB.Core.DBVersions
 
         public ProcessResults ValidateDBVersions(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _dbVersionsValidationsRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
+            return _dbVersionsValidationsRunner.Run(new DBVersionsProcessArgs(id, null, null), onNotificationStateChanged);
         }
 
 
         public ProcessResults ValdiateTargetStateAlreadyExecuted(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _targetStateScriptFileValidationRunner.Run(new DBVersionsProcessParams(id, targetStateScriptFilename, null), onNotificationStateChanged);
+            return _targetStateScriptFileValidationRunner.Run(new DBVersionsProcessArgs(id, targetStateScriptFilename, null), onNotificationStateChanged);
         }
 
         #endregion
@@ -82,12 +82,12 @@ namespace AutoVersionsDB.Core.DBVersions
 
         public ProcessResults SyncDB(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _syncDBRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
+            return _syncDBRunner.Run(new DBVersionsProcessArgs(id, null, null), onNotificationStateChanged);
         }
 
         public ProcessResults RecreateDBFromScratch(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _recreateDBFromScratchRunner.Run(new DBVersionsProcessParams(id, targetStateScriptFilename, null), onNotificationStateChanged);
+            return _recreateDBFromScratchRunner.Run(new DBVersionsProcessArgs(id, targetStateScriptFilename, null), onNotificationStateChanged);
         }
 
 
@@ -101,7 +101,7 @@ namespace AutoVersionsDB.Core.DBVersions
             }
             else
             {
-                processTrace = _syncDBToSpecificStateRunner.Run(new DBVersionsProcessParams(id, targetStateScriptFilename, null), onNotificationStateChanged);
+                processTrace = _syncDBToSpecificStateRunner.Run(new DBVersionsProcessArgs(id, targetStateScriptFilename, null), onNotificationStateChanged);
             }
 
             return processTrace;
@@ -110,7 +110,7 @@ namespace AutoVersionsDB.Core.DBVersions
 
         public ProcessResults SetDBStateByVirtualExecution(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _createVirtualExecutionsRunner.Run(new DBVersionsProcessParams(id, targetStateScriptFilename, null), onNotificationStateChanged);
+            return _createVirtualExecutionsRunner.Run(new DBVersionsProcessArgs(id, targetStateScriptFilename, null), onNotificationStateChanged);
         }
 
 
@@ -121,7 +121,7 @@ namespace AutoVersionsDB.Core.DBVersions
 
         public ProcessResults Deploy(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _deployExecutionsRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
+            return _deployExecutionsRunner.Run(new DBVersionsProcessArgs(id, null, null), onNotificationStateChanged);
         }
 
         #endregion
@@ -133,22 +133,22 @@ namespace AutoVersionsDB.Core.DBVersions
         public ProcessResults GetScriptFilesState(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
 
-            return _getScriptFilesStateRunner.Run(new DBVersionsProcessParams(id, null, null), onNotificationStateChanged);
+            return _getScriptFilesStateRunner.Run(new DBVersionsProcessArgs(id, null, null), onNotificationStateChanged);
         }
 
         public ProcessResults CreateNewIncrementalScriptFile(string id, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _createIncrementalNextScriptFileRunner.Run(new DBVersionsProcessParams(id, null, scriptName), onNotificationStateChanged);
+            return _createIncrementalNextScriptFileRunner.Run(new DBVersionsProcessArgs(id, null, scriptName), onNotificationStateChanged);
         }
 
         public ProcessResults CreateNewRepeatableScriptFile(string id, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _createRepeatableNextScriptFileRunner.Run(new DBVersionsProcessParams(id, null, scriptName), onNotificationStateChanged);
+            return _createRepeatableNextScriptFileRunner.Run(new DBVersionsProcessArgs(id, null, scriptName), onNotificationStateChanged);
         }
 
         public ProcessResults CreateNewDevDummyDataScriptFile(string id, string scriptName, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _createDevDummyDataNextScriptFileRunner.Run(new DBVersionsProcessParams(id, null, scriptName), onNotificationStateChanged);
+            return _createDevDummyDataNextScriptFileRunner.Run(new DBVersionsProcessArgs(id, null, scriptName), onNotificationStateChanged);
         }
 
 

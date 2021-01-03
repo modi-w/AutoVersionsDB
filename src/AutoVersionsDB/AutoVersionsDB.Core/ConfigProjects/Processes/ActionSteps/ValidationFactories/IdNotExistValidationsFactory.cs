@@ -25,7 +25,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
 
             ValidationsGroup validationsGroup = new ValidationsGroup(true);
 
-            string id = (processContext.ProcessParams as ProjectConfigProcessParams).Id;
+            string id = (processContext.ProcessArgs as ProjectConfigProcessArgs).Id;
 
             IdMandatory idNotEmpty = new IdMandatory(id);
             validationsGroup.Add(idNotEmpty);

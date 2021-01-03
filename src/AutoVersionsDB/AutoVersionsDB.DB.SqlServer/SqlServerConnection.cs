@@ -313,7 +313,7 @@ namespace AutoVersionsDB.DB.SqlServer
         {
             return CreateDataAdapter(commandType, commandText, new Dictionary<string, object>(), overrideTimeout);
         }
-        private SqlDataAdapter CreateDataAdapter(CommandType commandType, string commandText, Dictionary<string, object> paramsDic, int overrideTimeout = 0)
+        private SqlDataAdapter CreateDataAdapter(CommandType commandType, string commandText, Dictionary<string, object> argsDic, int overrideTimeout = 0)
         {
 
             SqlDataAdapter myDataAdapter = new SqlDataAdapter
@@ -323,9 +323,9 @@ namespace AutoVersionsDB.DB.SqlServer
 
             SqlCommand cmd = CreateSqlCommand(commandType, commandText, overrideTimeout);
 
-            if (paramsDic.Count > 0)
+            if (argsDic.Count > 0)
             {
-                foreach (KeyValuePair<string, object> currParamKeyValue in paramsDic)
+                foreach (KeyValuePair<string, object> currParamKeyValue in argsDic)
                 {
                     SqlParameter currParam = new SqlParameter
                     {

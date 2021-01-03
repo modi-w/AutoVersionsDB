@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            string id = (processContext.ProcessParams as DBVersionsProcessParams).Id;
+            string id = (processContext.ProcessArgs as DBVersionsProcessArgs).Id;
 
             processContext.SetProjectConfig(_projectConfigsStorage.GetProjectConfigById(id));
 

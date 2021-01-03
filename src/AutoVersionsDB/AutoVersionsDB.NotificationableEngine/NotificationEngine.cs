@@ -19,10 +19,10 @@ namespace AutoVersionsDB.NotificationableEngine
 
 
 
-        internal ProcessResults Run(ProcessParams processParams, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        internal ProcessResults Run(ProcessArgs processArgs, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
 
-            _processContext.ProcessParams = processParams;
+            _processContext.ProcessArgs = processArgs;
 
             _processContext.StartProcessDateTime = DateTime.Now;
 

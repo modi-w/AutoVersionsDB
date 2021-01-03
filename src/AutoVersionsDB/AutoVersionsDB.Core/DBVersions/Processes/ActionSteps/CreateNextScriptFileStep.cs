@@ -23,11 +23,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            DBVersionsProcessParams dbVersionsProcessParams = processContext.ProcessParams as DBVersionsProcessParams;
+            DBVersionsProcessArgs dbVersionsProcessArgs = processContext.ProcessArgs as DBVersionsProcessArgs;
 
             var scriptFilesComparer = processContext.ScriptFilesState.ScriptFilesComparers[_scriptFileType.FileTypeCode];
 
-            RuntimeScriptFileBase newScriptFile = scriptFilesComparer.CreateNextNewScriptFile(dbVersionsProcessParams.NewScriptName);
+            RuntimeScriptFileBase newScriptFile = scriptFilesComparer.CreateNextNewScriptFile(dbVersionsProcessArgs.NewScriptName);
 
             processContext.Results = newScriptFile.FileFullPath;
         }

@@ -18,6 +18,6 @@ namespace AutoVersionsDB.CLI
         void SetInlineInfoMessage(string message, ConsoleColor color);
 
         void StartProcessMessage(string processName);
-        void StartProcessMessage(string processName, string paramsStr);
+        void StartProcessMessage(string processName, string args);
     }
 }

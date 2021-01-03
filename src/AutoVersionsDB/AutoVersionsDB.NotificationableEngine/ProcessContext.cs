@@ -5,7 +5,7 @@ namespace AutoVersionsDB.NotificationableEngine
     public abstract class ProcessContext
     {
         public ProcessDefinition ProcessDefinition { get; internal set; }
-        public ProcessParams ProcessParams { get; set; }
+        public ProcessArgs ProcessArgs { get; set; }
         public object Results { get; set; }
 
         public DateTime? StartProcessDateTime { get; set; }

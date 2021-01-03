@@ -54,29 +54,29 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
         public ProcessResults ValidateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _projectConfigValidationRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
+            return _projectConfigValidationRunner.Run(new ProjectConfigProcessArgs(projectConfig), onNotificationStateChanged);
         }
 
 
 
         public ProcessResults SaveNewProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _saveNewProjectConfigRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
+            return _saveNewProjectConfigRunner.Run(new ProjectConfigProcessArgs(projectConfig), onNotificationStateChanged);
         }
 
         public ProcessResults UpdateProjectConfig(ProjectConfigItem projectConfig, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _updateProjectConfigRunner.Run(new ProjectConfigProcessParams(projectConfig), onNotificationStateChanged);
+            return _updateProjectConfigRunner.Run(new ProjectConfigProcessArgs(projectConfig), onNotificationStateChanged);
         }
 
         public ProcessResults ChangeProjectId(string prevId, string newId, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _changeIdRunner.Run(new ChangeIdProcessParams(prevId, newId), onNotificationStateChanged);
+            return _changeIdRunner.Run(new ChangeIdProcessArgs(prevId, newId), onNotificationStateChanged);
         }
 
         public ProcessResults RemoveProjectConfig(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _removeProjectConfigProcessDefinition.Run(new ProjectConfigProcessParams(id), onNotificationStateChanged);
+            return _removeProjectConfigProcessDefinition.Run(new ProjectConfigProcessArgs(id), onNotificationStateChanged);
         }
 
     }

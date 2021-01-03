@@ -4,17 +4,17 @@ using AutoVersionsDB.NotificationableEngine;
 namespace AutoVersionsDB.Core.ConfigProjects.Processes
 {
 
-    public class ProjectConfigProcessParams : ProcessParams
+    public class ProjectConfigProcessArgs : ProcessArgs
     {
         public ProjectConfigItem ProjectConfig { get; }
         public string Id { get; }
 
-        public ProjectConfigProcessParams(string id)
+        public ProjectConfigProcessArgs(string id)
         {
             Id = id;
         }
 
-        public ProjectConfigProcessParams(ProjectConfigItem projectConfig)
+        public ProjectConfigProcessArgs(ProjectConfigItem projectConfig)
         {
             projectConfig.ThrowIfNull(nameof(projectConfig));
 

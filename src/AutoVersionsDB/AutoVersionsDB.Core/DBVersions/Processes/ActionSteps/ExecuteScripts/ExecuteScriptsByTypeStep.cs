@@ -32,9 +32,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
 
             string targetStateScriptFileName = null;
-            if (processContext.ProcessParams != null)
+            if (processContext.ProcessArgs != null)
             {
-                targetStateScriptFileName = (processContext.ProcessParams as DBVersionsProcessParams).TargetStateScriptFileName;
+                targetStateScriptFileName = (processContext.ProcessArgs as DBVersionsProcessArgs).TargetStateScriptFileName;
             }
 
             ScriptFilesComparerBase scriptFilesComparer = processContext.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);

@@ -57,9 +57,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
                     string lastIncStriptFilename = GetLastIncFilename(processContext);
 
                     string targetStateScriptFileName = null;
-                    if (processContext.ProcessParams != null)
+                    if (processContext.ProcessArgs != null)
                     {
-                        targetStateScriptFileName = (processContext.ProcessParams as DBVersionsProcessParams).TargetStateScriptFileName;
+                        targetStateScriptFileName = (processContext.ProcessArgs as DBVersionsProcessArgs).TargetStateScriptFileName;
                     }
 
 
