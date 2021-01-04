@@ -63,8 +63,8 @@ jobs:
         echo "CommitsSinceVersionSourcePadded: ${{ steps.gitversion.outputs.commitsSinceVersionSourcePadded }}"
         echo "CommitDate: ${{ steps.gitversion.outputs.commitDate }}"
       name: Output
-    - name: Install dependencies for AutoVersionsDB.Core
-      run: dotnet restore src\AutoVersionsDB\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj
+#    - name: Install dependencies for AutoVersionsDB.Core
+#      run: dotnet restore src\AutoVersionsDB\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj
     - name: Build AutoVersionsDB.Core
       run: dotnet build src\AutoVersionsDB\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj -c debug
     - name: Install dependencies for AutoVersionsDB.WinApp
