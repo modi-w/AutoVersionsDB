@@ -11,6 +11,7 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.G
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using AutoVersionsDB.Helpers;
@@ -32,16 +33,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProjectConfigsStorage _projectConfigsStorage;
         private readonly ProcessAsserts _processAsserts;
+        private readonly DBHandler _dbHandler;
 
 
         public ChangeProjectId_API(ProjectConfigsStorageHelper projectConfigsStorageHelper,
                                     ProjectConfigsStorage projectConfigsStorage,
-                                    ProcessAsserts processAsserts)
+                                    ProcessAsserts processAsserts,
+                                    DBHandler dbHandler)
 
         {
             _projectConfigsStorageHelper = projectConfigsStorageHelper;
             _projectConfigsStorage = projectConfigsStorage;
             _processAsserts = processAsserts;
+            _dbHandler = dbHandler;
         }
 
 
@@ -55,6 +59,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
 
             ProjectConfigTestArgs projectConfigTestArgs = new ProjectConfigTestArgs(projectConfig);
+
+            _dbHandler.RestoreDB(projectConfig.DBConnectionInfo, DBBackupFileType.EmptyDB);
 
             return new ProcessTestContext(projectConfigTestArgs);
         }
@@ -82,6 +88,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override void Release(ITestContext testContext)
         {
             _projectConfigsStorageHelper.ClearAllProjects();
+
+            _dbHandler.DropDB(testContext.ProjectConfig.DBConnectionInfo);
+
         }
     }
 }

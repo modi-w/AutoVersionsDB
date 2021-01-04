@@ -12,6 +12,7 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.G
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.Init;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using NUnit.Framework;
@@ -29,25 +30,30 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         private readonly ProcessAsserts _processAsserts;
         private readonly ProjectConfigsDirectories _projectConfigsDirectories;
         private readonly PropertiesAsserts _properiesAsserts;
+        private readonly DBHandler _dbHandler;
 
 
         public Init_DeliveryEnv_AllProperties_API(ProjectConfigsStorageHelper projectConfigsStorageHelper,
                                                 ProjectConfigsStorage projectConfigsStorage,
                                                 ProcessAsserts processAsserts,
                                                 ProjectConfigsDirectories projectConfigsDirectories,
-                                                PropertiesAsserts properiesAsserts)
+                                                PropertiesAsserts properiesAsserts,
+                                                DBHandler dbHandler)
         {
             _projectConfigsStorageHelper = projectConfigsStorageHelper;
             _projectConfigsStorage = projectConfigsStorage;
             _processAsserts = processAsserts;
             _projectConfigsDirectories = projectConfigsDirectories;
             _properiesAsserts = properiesAsserts;
+            _dbHandler = dbHandler;
         }
 
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
             _projectConfigsDirectories.ClearAutoCreatedFolders();
+
+            _dbHandler.RestoreDB(IntegrationTestsConsts.DummyProjectConfigValid.DBConnectionInfo, DBBackupFileType.EmptyDB);
 
             return new ProcessTestContext(testArgs);
         }
@@ -100,6 +106,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _projectConfigsDirectories.ClearAutoCreatedFolders();
 
             _projectConfigsStorageHelper.ClearAllProjects();
+
+            _dbHandler.DropDB(IntegrationTestsConsts.DummyProjectConfigValid.DBConnectionInfo);
+
         }
     }
 }

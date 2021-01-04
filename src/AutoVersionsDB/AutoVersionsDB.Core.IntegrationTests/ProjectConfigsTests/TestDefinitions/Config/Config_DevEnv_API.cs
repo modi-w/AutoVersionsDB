@@ -10,6 +10,7 @@ using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.G
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetProjectsList;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils;
+using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.Process;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils;
 using NUnit.Framework;
@@ -27,6 +28,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         private readonly ProcessAsserts _processAsserts;
         private readonly ProjectConfigsDirectories _projectConfigsDirectoriesCleaner;
         private readonly PropertiesAsserts _properiesAsserts;
+        private readonly DBHandler _dbHandler;
 
 
 
@@ -34,13 +36,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
                                 ProjectConfigsStorage projectConfigsStorage,
                                 ProcessAsserts processAsserts,
                                 ProjectConfigsDirectories projectConfigsDirectoriesCleaner,
-                                PropertiesAsserts properiesAsserts)
+                                PropertiesAsserts properiesAsserts,
+                                DBHandler dbHandler)
         {
             _projectConfigsStorageHelper = projectConfigsStorageHelper;
             _projectConfigsStorage = projectConfigsStorage;
             _processAsserts = processAsserts;
             _projectConfigsDirectoriesCleaner = projectConfigsDirectoriesCleaner;
             _properiesAsserts = properiesAsserts;
+            _dbHandler = dbHandler;
         }
 
 
@@ -57,6 +61,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _projectConfigsStorageHelper.PrepareTestProject(projectConfig);
 
             ProjectConfigTestArgs overrideTestArgs = new ProjectConfigTestArgs(projectConfig);
+
+            _dbHandler.RestoreDB(IntegrationTestsConsts.DummyProjectConfigValid.DBConnectionInfo, DBBackupFileType.EmptyDB);
 
             return new ProcessTestContext(overrideTestArgs);
         }
@@ -106,6 +112,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override void Release(ITestContext testContext)
         {
             _projectConfigsDirectoriesCleaner.ClearAutoCreatedFolders();
+           
+            _dbHandler.DropDB(IntegrationTestsConsts.DummyProjectConfigValid.DBConnectionInfo);
 
             _projectConfigsStorageHelper.ClearAllProjects();
         }

@@ -88,8 +88,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
         {
             _projectConfigsStorageHelper.ClearAllProjects();
 
-          //  _dbHandler.Drop
-            //TODO: Delete DB
+            _dbHandler.DropDB(testContext.ProjectConfig.DBConnectionInfo);
         }
 
 

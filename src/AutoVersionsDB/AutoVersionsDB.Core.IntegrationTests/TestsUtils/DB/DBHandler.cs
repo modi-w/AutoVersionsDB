@@ -61,6 +61,16 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             }
         }
 
+        public void DropDB(DBConnectionInfo dbConnectionInfo)
+        {
+            using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(dbConnectionInfo))
+            {
+                using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(dbConnectionInfo))
+                {
+                    dbBackupRestoreCommands.DropDB(dbConnectionInfo.DBName);
+                }
+            }
+        }
 
 
         public NumOfDBConnections GetNumOfOpenConnection(DBConnectionInfo dbConnectionInfo)
@@ -87,7 +97,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
             return numOfConnectionsItem;
         }
-
 
 
 

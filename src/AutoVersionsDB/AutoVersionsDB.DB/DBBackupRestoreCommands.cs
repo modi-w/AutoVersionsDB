@@ -43,6 +43,13 @@ namespace AutoVersionsDB.DB
             _dbConnection.ExecSQLCommandStr(sqlCmdStr);
         }
 
+        public void DropDB(string dbName)
+        {
+            string sqlCommandStr = _dBScriptsProvider.DropDBScript(dbName);
+            _dbConnection.ExecSQLCommandStr(sqlCommandStr);
+        }
+
+
         private void ResolveDBInSingleUserMode(string dbName, string dbFilesBasePath)
         {
             bool isDBInSigleUserMode = false;
@@ -74,8 +81,7 @@ namespace AutoVersionsDB.DB
                 //sqlCmdStr2 = $"ALTER DATABASE [{dbName}] SET MULTI_USER ";
                 //_sqlServerConnectionManager.ExecSQLCommandStr(sqlCmdStr2);
 
-                sqlCommandStr = _dBScriptsProvider.DropDBScript(dbName);
-                _dbConnection.ExecSQLCommandStr(sqlCommandStr);
+                DropDB(dbName);
 
                 CreateDB(dbName, dbFilesBasePath);
             }
@@ -110,6 +116,7 @@ namespace AutoVersionsDB.DB
                 }
             }
         }
+
 
         private void CreateDB(string dbName, string dbFilesBasePath)
         {
