@@ -109,8 +109,10 @@ namespace AutoVersionsDB.WinApp
 
                 case StatusImageType.Warning:
 
-                    //TODO: add image
-                    //pbStatus.Image = Resources.W;
+                    pbStatus.BeginInvoke((MethodInvoker)(() =>
+                    {
+                        pbStatus.Image = Resources.warning_32;
+                    }));
                     break;
 
                 case StatusImageType.Error:
