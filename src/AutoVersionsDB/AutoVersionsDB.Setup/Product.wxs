@@ -44,6 +44,9 @@
     <UIRef Id="WixUI_Minimal"/>
     <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\License.rtf"/>
 
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\topBanner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\bgBanner.bmp" />
+    <WixVariable Id="WixUIInfoIco" Value="$(var.ProjectDir)\AppIcon.ico" />
 
 
 

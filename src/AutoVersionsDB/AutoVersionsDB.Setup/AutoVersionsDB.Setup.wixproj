@@ -40,8 +40,10 @@
   <ItemGroup>
     <Content Include="AppIcon.ico" />
     <Content Include="AutoVersionsDB.Setup.wax" />
+    <Content Include="bgBanner.bmp" />
     <Content Include="License.rtf" />
     <Content Include="packages.config" />
+    <Content Include="topBanner.bmp" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">
