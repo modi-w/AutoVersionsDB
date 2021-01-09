@@ -41,7 +41,10 @@
     <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\topBanner.bmp" />
     <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\bgBanner.bmp" />
     <WixVariable Id="WixUIInfoIco" Value="$(var.ProjectDir)\AppIcon.ico" />
+    <WixVariable Id="WixUINewIco" Value="$(var.ProjectDir)\AppIcon.ico" />
+    <WixVariable Id="WixUIUpIco" Value="$(var.ProjectDir)\AppIcon.ico" />
 
+    
     <Feature Id="ProductFeature" Title="$(var.ProductDisplayName)" Level="1">
       <!--<ComponentGroupRef Id="ProductComponents" />-->
       <ComponentGroupRef Id="PublishedComponents" />
