@@ -95,7 +95,7 @@
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\ProjectItemControl.cs">
       <Link>ProjectItemControl.cs</Link>
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\ProjectItemControl.Designer.cs">
       <Link>ProjectItemControl.Designer.cs</Link>
@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\Properties\Resources.Designer.cs">
       <Link>Properties\Resources.Designer.cs</Link>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\StatesLogView.cs">
       <Link>StatesLogView.cs</Link>
@@ -159,7 +160,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\Properties\Resources.resx">
       <Link>Properties\Resources.resx</Link>
-      <DependentUpon>Resources.Designer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\StatesLogView.resx">
       <Link>StatesLogView.resx</Link>
@@ -276,6 +276,7 @@
     <Content Include="Resources\ApplyIcon.png" />
     <Content Include="Resources\CancelIcon.png" />
     <Content Include="Resources\deployIcon.png" />
+    <Content Include="Resources\Doc_32.png" />
     <Content Include="Resources\HistoricalBackups.png" />
     <Content Include="Resources\historyIcon.png" />
     <Content Include="Resources\plus32.png" />

@@ -156,6 +156,15 @@ namespace AutoVersionsDB.WinApp
             ViewModel.ShowStatesLogViewCommand.Execute();
         }
 
+        private void btnProcessLog_Click(object sender, EventArgs e)
+        {
+            ViewModel.ShowStatesLogViewCommand.Execute();
+        }
+        private void lblProcessLog_Click(object sender, EventArgs e)
+        {
+            ViewModel.ShowStatesLogViewCommand.Execute();
+        }
+
 
 
 

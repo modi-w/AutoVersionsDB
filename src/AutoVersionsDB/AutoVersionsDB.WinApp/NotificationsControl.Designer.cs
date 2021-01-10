@@ -30,7 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationsControl));
             this.panel7 = new System.Windows.Forms.Panel();
+            this.lblProcessLog = new System.Windows.Forms.Label();
             this.pbStatus = new System.Windows.Forms.PictureBox();
+            this.btnProcessLog = new System.Windows.Forms.Button();
             this.lblProcessStatusMessage = new System.Windows.Forms.Label();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbStatus)).BeginInit();
@@ -40,10 +42,18 @@
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.lblProcessLog);
             this.panel7.Controls.Add(this.pbStatus);
+            this.panel7.Controls.Add(this.btnProcessLog);
             this.panel7.Controls.Add(this.lblProcessStatusMessage);
             resources.ApplyResources(this.panel7, "panel7");
             this.panel7.Name = "panel7";
+            // 
+            // lblProcessLog
+            // 
+            resources.ApplyResources(this.lblProcessLog, "lblProcessLog");
+            this.lblProcessLog.Name = "lblProcessLog";
+            this.lblProcessLog.Click += new System.EventHandler(this.lblProcessLog_Click);
             // 
             // pbStatus
             // 
@@ -52,6 +62,18 @@
             this.pbStatus.Name = "pbStatus";
             this.pbStatus.TabStop = false;
             this.pbStatus.Click += new System.EventHandler(this.PbStatus_Click);
+            // 
+            // btnProcessLog
+            // 
+            resources.ApplyResources(this.btnProcessLog, "btnProcessLog");
+            this.btnProcessLog.BackColor = System.Drawing.Color.White;
+            this.btnProcessLog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnProcessLog.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnProcessLog.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnProcessLog.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Doc_32;
+            this.btnProcessLog.Name = "btnProcessLog";
+            this.btnProcessLog.UseVisualStyleBackColor = false;
+            this.btnProcessLog.Click += new System.EventHandler(this.btnProcessLog_Click);
             // 
             // lblProcessStatusMessage
             // 
@@ -74,11 +96,15 @@
 
         }
 
+
+
         #endregion
 
         private System.Windows.Forms.Panel panel7;
   //      private System.Windows.Forms.Button imgBtnStatus;
         private System.Windows.Forms.Label lblProcessStatusMessage;
         private System.Windows.Forms.PictureBox pbStatus;
+        private System.Windows.Forms.Label lblProcessLog;
+        private System.Windows.Forms.Button btnProcessLog;
     }
 }
