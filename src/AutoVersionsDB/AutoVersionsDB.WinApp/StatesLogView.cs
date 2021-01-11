@@ -1,4 +1,6 @@
-﻿using AutoVersionsDB.UI.StatesLog;
+﻿using AutoVersionsDB.UI.Notifications;
+using AutoVersionsDB.UI.StatesLog;
+using AutoVersionsDB.WinApp.Properties;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -20,16 +22,70 @@ namespace AutoVersionsDB.WinApp
                 ViewModel.PropertyChanged += ViewModel_PropertyChanged;
 
                 SetDataBindings();
+
+
+                this.Load += StatesLogView_Load;
             }
+        }
+
+        private void StatesLogView_Load(object sender, System.EventArgs e)
+        {
+            StatusImageTypeChanged();
         }
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
+                case nameof(ViewModel.StatusImageType):
+
+                    StatusImageTypeChanged();
+                    break;
+
                 default:
                     break;
             }
+        }
+
+        private void StatusImageTypeChanged()
+        {
+            switch (ViewModel.StatusImageType)
+            {
+                case StatusImageType.Spinner:
+
+                    imgMsgType.BeginInvoke((MethodInvoker)(() =>
+                    {
+                        imgMsgType.Image = Resources.Spinner3_32;
+                    }));
+                    break;
+
+                case StatusImageType.Warning:
+
+                    imgMsgType.BeginInvoke((MethodInvoker)(() =>
+                    {
+                        imgMsgType.Image = Resources.warning_32;
+                    }));
+                    break;
+
+                case StatusImageType.Error:
+
+                    imgMsgType.BeginInvoke((MethodInvoker)(() =>
+                    {
+                        imgMsgType.Image = Resources.StopIcon_32;
+                    }));
+                    break;
+
+                case StatusImageType.Succeed:
+
+                    imgMsgType.BeginInvoke((MethodInvoker)(() =>
+                    {
+                        imgMsgType.Image = Resources.succeed;
+                    }));
+                    break;
+
+            }
+
+
         }
 
 

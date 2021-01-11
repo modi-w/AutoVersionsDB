@@ -24,6 +24,7 @@ namespace AutoVersionsDB.UI.Notifications
     {
 
         private ProcessTrace _processTrace;
+        public bool HasProcessTrace => _processTrace != null;
 
 
         public NotificationsViewModelData NotificationsViewModelData { get; }
@@ -127,6 +128,8 @@ namespace AutoVersionsDB.UI.Notifications
                 default:
                     break;
             }
+
+            NotificationsControls.BtnProcessLogVisible = HasProcessTrace;
         }
 
 

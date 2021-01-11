@@ -24,6 +24,13 @@ namespace AutoVersionsDB.UI.Notifications
             set => SetField(ref _statusImageVisible, value);
         }
 
+        private bool _btnProcessLogVisible;
+        public bool BtnProcessLogVisible
+        {
+            get => _btnProcessLogVisible;
+            set => SetField(ref _btnProcessLogVisible, value);
+        }
+
 
         #region INotifyPropertyChanged
 

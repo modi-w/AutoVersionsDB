@@ -7,6 +7,7 @@ namespace AutoVersionsDB.UI.Notifications
 {
     public interface INotificationsViewModel : INotifyPropertyChanged
     {
+         bool HasProcessTrace { get; }
         bool IsEventsBinded { get; set; }
         NotificationsControls NotificationsControls { get; }
         NotificationsViewModelData NotificationsViewModelData { get; }

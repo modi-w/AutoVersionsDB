@@ -91,6 +91,24 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
+            btnProcessLog.DataBindings.Clear();
+            btnProcessLog.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    btnProcessLog,
+                    nameof(btnProcessLog.Visible),
+                    ViewModel.NotificationsControls,
+                    nameof(ViewModel.NotificationsControls.BtnProcessLogVisible)
+                    )
+                );
+            lblProcessLog.DataBindings.Clear();
+            lblProcessLog.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblProcessLog,
+                    nameof(lblProcessLog.Visible),
+                    ViewModel.NotificationsControls,
+                    nameof(ViewModel.NotificationsControls.BtnProcessLogVisible)
+                    )
+                );
 
         }
 
@@ -141,28 +159,43 @@ namespace AutoVersionsDB.WinApp
 
         private void PbStatus_Click(object sender, EventArgs e)
         {
-            ViewModel.ShowStatesLogViewCommand.Execute();
+            if (ViewModel.HasProcessTrace)
+            {
+                ViewModel.ShowStatesLogViewCommand.Execute();
+            }
         }
 
 
 
         private void LblPrecents_Click(object sender, EventArgs e)
         {
-            ViewModel.ShowStatesLogViewCommand.Execute();
+            if (ViewModel.HasProcessTrace)
+            {
+                ViewModel.ShowStatesLogViewCommand.Execute();
+            }
         }
 
         private void LblProcessStatusMessage_Click(object sender, EventArgs e)
         {
-            ViewModel.ShowStatesLogViewCommand.Execute();
+            if (ViewModel.HasProcessTrace)
+            {
+                ViewModel.ShowStatesLogViewCommand.Execute();
+            }
         }
 
         private void btnProcessLog_Click(object sender, EventArgs e)
         {
-            ViewModel.ShowStatesLogViewCommand.Execute();
+            if (ViewModel.HasProcessTrace)
+            {
+                ViewModel.ShowStatesLogViewCommand.Execute();
+            }
         }
         private void lblProcessLog_Click(object sender, EventArgs e)
         {
-            ViewModel.ShowStatesLogViewCommand.Execute();
+            if (ViewModel.HasProcessTrace)
+            {
+                ViewModel.ShowStatesLogViewCommand.Execute();
+            }
         }
 
 

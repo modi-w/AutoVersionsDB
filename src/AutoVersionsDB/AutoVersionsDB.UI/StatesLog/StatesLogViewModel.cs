@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.UI.Notifications;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
@@ -42,6 +43,12 @@ namespace AutoVersionsDB.UI.StatesLog
             set => SetField(ref _statesLogText, value);
         }
 
+        private StatusImageType _statusImageType;
+        public StatusImageType StatusImageType
+        {
+            get => _statusImageType;
+            set => SetField(ref _statusImageType, value);
+        }
 
 
 
@@ -64,11 +71,13 @@ namespace AutoVersionsDB.UI.StatesLog
             {
                 Caption = "Error";
                 CaptionColor = Color.DarkRed;
+                StatusImageType = StatusImageType.Error;
             }
             else
             {
                 Caption = "Process Log";
                 CaptionColor = Color.Black;
+                StatusImageType = StatusImageType.Succeed;
             }
         }
 
