@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.NotificationableEngine.Validations;
+﻿using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Common.Validators
 {
@@ -10,6 +11,7 @@ namespace AutoVersionsDB.Core.Common.Validators
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
         public DBBackupFolderValidator(string dbBackupBaseFolder)
         {

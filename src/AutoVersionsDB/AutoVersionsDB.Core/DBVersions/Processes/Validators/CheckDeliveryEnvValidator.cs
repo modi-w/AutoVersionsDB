@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.NotificationableEngine.Validations;
+﻿using AutoVersionsDB.NotificationableEngine;
+using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
@@ -7,6 +8,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         public override string ValidatorName => "DeliveryEnvironment";
 
         public override string ErrorInstructionsMessage => "Could not run this command on Delivery Environment";
+
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
+
 
         private readonly bool _isDevEnvironment;
 

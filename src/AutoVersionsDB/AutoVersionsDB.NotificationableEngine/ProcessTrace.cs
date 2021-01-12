@@ -69,6 +69,27 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
+        public NotificationErrorType NotificationErrorType
+        {
+            get
+            {
+                NotificationErrorType outNotificationErrorType =  NotificationErrorType.None;
+
+                lock (_statesLog)
+                {
+                    var lastStateWithInstructionsMessage = _statesLog.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelInstructionsMessage));
+                    if (lastStateWithInstructionsMessage != null)
+                    {
+                        outNotificationErrorType = lastStateWithInstructionsMessage.LowLevelNotificationErrorType;
+                    }
+                }
+
+                return outNotificationErrorType;
+            }
+        }
+
+
+
         public string InstructionsMessageStepName
         {
             get

@@ -183,14 +183,14 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void btnProcessLog_Click(object sender, EventArgs e)
+        private void BtnProcessLog_Click(object sender, EventArgs e)
         {
             if (ViewModel.HasProcessTrace)
             {
                 ViewModel.ShowStatesLogViewCommand.Execute();
             }
         }
-        private void lblProcessLog_Click(object sender, EventArgs e)
+        private void LblProcessLog_Click(object sender, EventArgs e)
         {
             if (ViewModel.HasProcessTrace)
             {

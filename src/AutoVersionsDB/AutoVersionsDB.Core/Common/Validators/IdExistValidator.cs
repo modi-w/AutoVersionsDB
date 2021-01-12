@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Common.Validators
@@ -12,6 +13,7 @@ namespace AutoVersionsDB.Core.Common.Validators
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
         public IdExistValidator(string id,
                                 ProjectConfigsStorage projectConfigsStorage)

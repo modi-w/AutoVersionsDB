@@ -22,6 +22,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI
     {
         private readonly NotificationsViewModel _notificationsViewModel;
 
+        public bool HasProcessTrace => _notificationsViewModel.HasProcessTrace;
+
         public bool IsEventsBinded
         {
             get => _notificationsViewModel.IsEventsBinded;

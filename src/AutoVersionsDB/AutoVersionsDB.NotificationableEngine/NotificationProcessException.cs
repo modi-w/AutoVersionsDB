@@ -6,33 +6,34 @@ namespace AutoVersionsDB.NotificationableEngine
     {
         public string ErrorCode { get; private set; }
         public string InstructionsMessage { get; private set; }
-
+        public NotificationErrorType NotificationErrorType { get; private set; }
 
         public NotificationProcessException()
         {
         }
         public NotificationProcessException(string message)
-            : base(message)
+        : this(message, null)
         {
+            NotificationErrorType = NotificationErrorType.Error;
         }
+
         public NotificationProcessException(string message, Exception innerException)
-            : base(message, innerException)
+        : this(null, message, null, NotificationErrorType.Error, innerException)
         {
         }
 
 
-        public NotificationProcessException(string errorCode, string message, string instructionsMessage)
-         : base(message)
+        public NotificationProcessException(string errorCode, string message, string instructionsMessage, NotificationErrorType notificationErrorType)
+         : this(errorCode, message, instructionsMessage, notificationErrorType, null)
         {
-            ErrorCode = errorCode;
-            InstructionsMessage = instructionsMessage;
         }
 
-        public NotificationProcessException(string errorCode, string message, string instructionsMessage, Exception ex)
+        public NotificationProcessException(string errorCode, string message, string instructionsMessage, NotificationErrorType notificationErrorType, Exception ex)
             : base(message, ex)
         {
             ErrorCode = errorCode;
             InstructionsMessage = instructionsMessage;
+            NotificationErrorType = notificationErrorType;
         }
 
 

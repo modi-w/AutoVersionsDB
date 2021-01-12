@@ -6,6 +6,9 @@
 
         public abstract string ErrorInstructionsMessage { get; }
 
+        public abstract NotificationErrorType NotificationErrorType { get;  }
+
+
         public abstract string Validate();
     }
 

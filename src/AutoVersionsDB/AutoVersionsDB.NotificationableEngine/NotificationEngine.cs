@@ -102,12 +102,12 @@ namespace AutoVersionsDB.NotificationableEngine
                 }
                 catch (NotificationProcessException ex)
                 {
-                    _processTraceHandler.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage);
+                    _processTraceHandler.StepError(ex.ErrorCode, ex.Message, ex.InstructionsMessage, ex.NotificationErrorType);
 
                 }
                 catch (Exception ex)
                 {
-                    _processTraceHandler.StepError(step.StepName, ex.ToString(), "Error occurred during the process.");
+                    _processTraceHandler.StepError(step.StepName, ex.ToString(), "Error occurred during the process.", NotificationErrorType.Error);
                 }
 
                 _processTraceHandler.StepEnd();

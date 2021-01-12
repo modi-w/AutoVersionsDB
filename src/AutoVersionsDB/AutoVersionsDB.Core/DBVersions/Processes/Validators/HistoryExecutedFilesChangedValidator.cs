@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
         public override string ErrorInstructionsMessage => "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";
 
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
 
         public HistoryExecutedFilesChangedValidator(ScriptFilesState scriptFilesState)

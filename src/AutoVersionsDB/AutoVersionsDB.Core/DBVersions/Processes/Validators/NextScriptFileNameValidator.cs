@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
@@ -12,6 +13,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
         public override string ErrorInstructionsMessage => "Invalid script name";
 
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
         public NextScriptFileNameValidator(ScriptFilesComparerBase scriptFilesComparer,
                                                     string scriptName)

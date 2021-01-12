@@ -105,11 +105,12 @@ namespace AutoVersionsDB.NotificationableEngine
         }
 
 
-        internal void StepError(string errorCode, string errorMessage, string instructionsMessage)
+        internal void StepError(string errorCode, string errorMessage, string instructionsMessage, NotificationErrorType notificationErrorType)
         {
             CurrentStepNotificationState.ErrorCode = errorCode;
             CurrentStepNotificationState.ErrorMesage = errorMessage;
             CurrentStepNotificationState.InstructionsMessage = instructionsMessage;
+            CurrentStepNotificationState.NotificationErrorType = notificationErrorType;
 
             SaveNotificationStateSnapshot();
         }
@@ -159,7 +160,7 @@ namespace AutoVersionsDB.NotificationableEngine
                              }
                              catch (Exception ex)
                              {
-                                 StepError("OnStepNotificationStateChanged", ex.ToString(), "Error occured on your OnStepNotificationStateChanged callback method");
+                                 StepError("OnStepNotificationStateChanged", ex.ToString(), "Error occured on your OnStepNotificationStateChanged callback method", NotificationErrorType.Error);
                              }
                          }
                          else

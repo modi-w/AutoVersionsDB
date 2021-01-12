@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.DB;
 using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.Common.Validators
@@ -13,6 +14,7 @@ namespace AutoVersionsDB.Core.Common.Validators
 
         public override string ErrorInstructionsMessage => "Project Config Validation Error";
 
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
 
         public AdminConnectionStringValidator(DBConnectionInfo dbConnectionInfo,

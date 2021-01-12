@@ -53,7 +53,7 @@
             // 
             resources.ApplyResources(this.lblProcessLog, "lblProcessLog");
             this.lblProcessLog.Name = "lblProcessLog";
-            this.lblProcessLog.Click += new System.EventHandler(this.lblProcessLog_Click);
+            this.lblProcessLog.Click += new System.EventHandler(this.LblProcessLog_Click);
             // 
             // pbStatus
             // 
@@ -73,7 +73,7 @@
             this.btnProcessLog.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Doc_32;
             this.btnProcessLog.Name = "btnProcessLog";
             this.btnProcessLog.UseVisualStyleBackColor = false;
-            this.btnProcessLog.Click += new System.EventHandler(this.btnProcessLog_Click);
+            this.btnProcessLog.Click += new System.EventHandler(this.BtnProcessLog_Click);
             // 
             // lblProcessStatusMessage
             // 

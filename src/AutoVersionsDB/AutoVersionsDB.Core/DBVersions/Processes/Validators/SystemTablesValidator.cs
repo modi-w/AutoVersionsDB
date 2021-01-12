@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.DB;
 using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 using System;
 using System.Data;
@@ -14,6 +15,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
 
         public override string ValidatorName => "SystemTables";
+
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error; 
 
         public override string ErrorInstructionsMessage
         {
@@ -45,6 +48,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         {
             using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(_dbConnectionInfo))
             {
+                //אולי לבדוק כאן שאם אין את 2 הטבלאות ואין בכלל סקירפטים - אז להוציא הודעה מסוג חדש - attention
 
                 if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DBSchemaName, DBCommandsConsts.DBScriptsExecutionHistoryTableName))
                 {
