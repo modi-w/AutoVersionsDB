@@ -82,7 +82,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label25 = new System.Windows.Forms.Label();
-            this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsControl();
+            this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsView();
             this.pnlDevEnvDeplyFolder = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
             this.tbServer = new System.Windows.Forms.TextBox();
@@ -1057,7 +1057,7 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label imgValid;
         private System.Windows.Forms.Label imgError;
-        private NotificationsControl notificationsControl1;
+        private NotificationsView notificationsControl1;
         private System.Windows.Forms.Panel pnlDevEnvDeplyFolder;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label lblDevDummyDataScriptsFolderPath;

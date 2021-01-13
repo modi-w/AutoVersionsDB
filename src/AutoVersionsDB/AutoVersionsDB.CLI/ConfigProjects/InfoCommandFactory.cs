@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.NotificationableEngine;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 
@@ -42,7 +43,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
                  if (projectConfig == null)
                  {
-                     _consoleProcessMessages.SetErrorInstruction($"Id '{id}' not exist. Try run list command to see the existing projects on this machine.");
+                     _consoleProcessMessages.SetErrorInstruction($"Id '{id}' not exist. Try run list command to see the existing projects on this machine.", NotificationErrorType.Error);
                  }
                  else
                  {

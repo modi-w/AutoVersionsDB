@@ -76,7 +76,7 @@
             this.btnDeploy = new System.Windows.Forms.Button();
             this.btnRecreateDBFromScratchMain = new System.Windows.Forms.Button();
             this.btnRunSync = new System.Windows.Forms.Button();
-            this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsControl();
+            this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsView();
             this.label15 = new System.Windows.Forms.Label();
             this.Filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
@@ -1390,7 +1390,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label lblColorTargetState_Caption;
         private System.Windows.Forms.Label lblColorTargetState_Square;
-        private NotificationsControl notificationsControl1;
+        private NotificationsView notificationsControl1;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnNavToEdit;
         private System.Windows.Forms.Button btnCreateNewIncrementalScriptFile;

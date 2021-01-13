@@ -14,6 +14,9 @@ namespace AutoVersionsDB.ConsoleApp
 
             return CLIRunner.CLIRun(args);
 
+            //    return CLIRunner.CLIRun("sync -id=testP2");
+
+            //
             //return CLIRunner.CLIRun("recreate -id=Bandana");
 
 
@@ -21,7 +24,6 @@ namespace AutoVersionsDB.ConsoleApp
             // return CLIRunner.CLIRun("dbtypes");
             //return CLIRunner.CLIRun("config -id=testp1 -desc=\"Test project 2\" --db-type=SqlServer -connstr=aaaa -connstrm=bbb -buf=ccc -dsf=ddd -def=eee -darf=fff");
             //  return CLIRunner.CLIRun("config environment -id=testp1 -dev=true");
-            //return CLIRunner.CLIRun("sync -id=testp");
             //return CLIRunner.CLIRun("recreate -id=Bandana");
             //    return CLIRunner.CLIRun("validate -id=testp");
             //   return CLIRunner.CLIRun("files -id=testp");
