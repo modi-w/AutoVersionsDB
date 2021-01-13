@@ -129,6 +129,7 @@ namespace AutoVersionsDB.CLI
                         SetErrorInstruction("The process complete with errors:",NotificationErrorType.Error);
                         SetErrorInstruction("--------------------------------", NotificationErrorType.Error);
                         SetErrorMessage(processReults.Trace.GetOnlyErrorsStatesLogAsString());
+                        SetErrorInstruction(processReults.Trace.InstructionsMessage, processReults.Trace.NotificationErrorType);
                     }
 
 
