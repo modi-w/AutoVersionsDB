@@ -56,6 +56,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         }
 
         [Test]
+        public void DeliveryEnv_Validate_NewProject()
+        {
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_NewProject_API, DeliveryEnv_Validate_NewProject_CLI, DeliveryEnv_Validate_NewProject_UI>();
+        }
+
+        [Test]
         public void DeliveryEnv_Validate_MissingSystemTables()
         {
             TestsRunner.RunTestsForeachDBType<DeliveryEnv_Validate_MissingSystemTables_API, DeliveryEnv_Validate_MissingSystemTables_CLI, DeliveryEnv_Validate_MissingSystemTables_UI>();

@@ -299,7 +299,7 @@ namespace AutoVersionsDB.UI.DBVersions
                     NotificationsViewModel.AfterComplete(processResults);
                     //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  AfterComplete()");
 
-                    if (processResults.Trace.ContainErrorCode("NewProjectValidator")
+                    if (processResults.Trace.ContainErrorCode("NewProject")
                         || processResults.Trace.ContainErrorCode("SystemTables"))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);

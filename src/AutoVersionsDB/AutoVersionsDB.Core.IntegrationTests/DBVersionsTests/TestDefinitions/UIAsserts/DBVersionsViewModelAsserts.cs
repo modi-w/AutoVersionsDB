@@ -88,7 +88,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'");
         }
 
+        public void AssertNewProject(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            if (isDevEnv)
+            {
+                _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Run 'Recreate' or 'Virtual' for creating our DB system tables >> 2) Add your scripts files >> 3) Run 'Sync'");
+            }
+            else
+            {
+                _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Copy the artifact file that deployed from your dev environment >> 2) Run 'Virtual' to set the current DB state related to the scripts file >> 3) Run 'Sync' for executing the rest of the scripts files");
+            }
 
+        }
 
         public void AssertMissingSystemTables(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
