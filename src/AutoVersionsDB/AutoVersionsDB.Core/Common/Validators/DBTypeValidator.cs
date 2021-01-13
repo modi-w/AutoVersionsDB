@@ -7,7 +7,7 @@ namespace AutoVersionsDB.Core.Common.Validators
     public class DBTypeValidator : ValidatorBase
     {
         private readonly string _dbTypeCode;
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
 
         public override string ValidatorName => "DBType";
 
@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         public DBTypeValidator(string dbTypeCode,
                                 DBCommandsFactory dbCommandsFactory)
         {
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
             _dbTypeCode = dbTypeCode;
         }
 
@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.Common.Validators
             }
             else
             {
-                if (!dbCommandsFactoryProvider.ContainDBType(_dbTypeCode))
+                if (!_dbCommandsFactory.ContainDBType(_dbTypeCode))
                 {
                     string errorMsg = $"DB Type Code '{_dbTypeCode}' is not valid";
                     return errorMsg;

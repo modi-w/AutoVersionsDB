@@ -33,7 +33,7 @@ namespace AutoVersionsDB.NotificationableEngine.Validations
                 internalSteps.Add(singleValidationStep);
             }
 
-            ExecuteInternalSteps(internalSteps, true);
+            ExecuteInternalSteps(internalSteps, validationsGroup.ShouldContinueWhenFindError);
         }
 
     }

@@ -9,7 +9,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class SystemTablesValidator : ValidatorBase
     {
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
         private readonly bool _isDevEnvironment;
         private readonly DBConnectionInfo _dbConnectionInfo;
 
@@ -39,17 +39,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                                         bool isDevEnvironment,
                                         DBConnectionInfo dbConnectionInfo)
         {
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
             _isDevEnvironment = isDevEnvironment;
             _dbConnectionInfo = dbConnectionInfo;
         }
 
         public override string Validate()
         {
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(_dbConnectionInfo))
+            using (var dbCommands = _dbCommandsFactory.CreateDBCommand(_dbConnectionInfo))
             {
-                //אולי לבדוק כאן שאם אין את 2 הטבלאות ואין בכלל סקירפטים - אז להוציא הודעה מסוג חדש - attention
-
                 if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DBSchemaName, DBCommandsConsts.DBScriptsExecutionHistoryTableName))
                 {
                     string errorMsg = $"The table '{DBCommandsConsts.DBScriptsExecutionHistoryFullTableName}' is not exist in the db";

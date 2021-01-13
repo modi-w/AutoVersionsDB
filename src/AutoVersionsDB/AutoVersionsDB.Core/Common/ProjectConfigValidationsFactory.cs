@@ -9,14 +9,14 @@ namespace AutoVersionsDB.Core.Common
 {
     public class ProjectConfigValidationsFactory : ValidationsFactory
     {
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
 
         public override string ValidationName => "Project Config";
 
 
         public ProjectConfigValidationsFactory(DBCommandsFactory dbCommandsFactory)
         {
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
         }
 
 
@@ -32,16 +32,16 @@ namespace AutoVersionsDB.Core.Common
             IdMandatory projectIdValidator = new IdMandatory(projectConfig.Id);
             validationsGroup.Add(projectIdValidator);
 
-            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBConnectionInfo.DBType, dbCommandsFactoryProvider);
+            DBTypeValidator dbTypeValidator = new DBTypeValidator(projectConfig.DBConnectionInfo.DBType, _dbCommandsFactory);
             validationsGroup.Add(dbTypeValidator);
 
             DBNameValidator dbNameValidator = new DBNameValidator(projectConfig.DBConnectionInfo.DBName);
             validationsGroup.Add(dbNameValidator);
 
-            ConnectionStringValidator connectionStringValidator = new ConnectionStringValidator(projectConfig.DBConnectionInfo, dbCommandsFactoryProvider);
+            ConnectionStringValidator connectionStringValidator = new ConnectionStringValidator(projectConfig.DBConnectionInfo, _dbCommandsFactory);
             validationsGroup.Add(connectionStringValidator);
 
-            AdminConnectionStringValidator adminConnectionStringValidator = new AdminConnectionStringValidator(projectConfig.DBConnectionInfo, dbCommandsFactoryProvider);
+            AdminConnectionStringValidator adminConnectionStringValidator = new AdminConnectionStringValidator(projectConfig.DBConnectionInfo, _dbCommandsFactory);
             validationsGroup.Add(adminConnectionStringValidator);
 
             DBBackupFolderValidator dbBackupBaseFolderValidator = new DBBackupFolderValidator(projectConfig.BackupFolderPath);

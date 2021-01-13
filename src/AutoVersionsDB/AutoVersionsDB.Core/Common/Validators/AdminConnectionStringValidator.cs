@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.Common.Validators
     public class AdminConnectionStringValidator : ValidatorBase
     {
         private readonly DBConnectionInfo _dbConnectionInfo;
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
 
         public override string ValidatorName => "AdminConnectionString";
 
@@ -21,14 +21,14 @@ namespace AutoVersionsDB.Core.Common.Validators
                                 DBCommandsFactory dbCommandsFactory)
         {
             _dbConnectionInfo = dbConnectionInfo;
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
         }
 
         public override string Validate()
         {
             if (_dbConnectionInfo.HasValues)
             {
-                using (var dbConnection = dbCommandsFactoryProvider.CreateDBConnection(_dbConnectionInfo))
+                using (var dbConnection = _dbCommandsFactory.CreateDBConnection(_dbConnectionInfo))
                 {
                     if (dbConnection != null)
                     {

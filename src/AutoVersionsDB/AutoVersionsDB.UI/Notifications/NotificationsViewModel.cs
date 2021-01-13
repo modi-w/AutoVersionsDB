@@ -121,7 +121,7 @@ namespace AutoVersionsDB.UI.Notifications
                     NotificationsControls.StatusImageVisible = true;
                     NotificationsViewModelData.StatusImageType = StatusImageType.Warning;
 
-                    NotificationsControls.ProcessStatusMessageColor = Color.DarkOrange;
+                    NotificationsControls.ProcessStatusMessageColor = Color.Blue;
                     break;
 
                 case NotificationStatus.None:
