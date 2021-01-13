@@ -3,6 +3,7 @@ using AutoVersionsDB.DB;
 using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,7 +51,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                             && _scriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.Count == 0
                             && _scriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.Count == 0)
                         {
-                            _errorInstructionsMessage = "Welcome to AutoVersionsDB :-) 1. Run 'Recreate' or 'Virtual' for creating our DB system tables; 2. Add your scripts; 3. Run 'Sync';";
+                            _errorInstructionsMessage = $"Welcome!!! This appear to be a new project.{Environment.NewLine}1. Run 'Recreate' or 'Virtual' for creating our DB system tables >> 2. Add your scripts >> 3. Run 'Sync'";
                             string errorMsg = $"No scripts file, and no system tables on the DB, its probably a new project on dev environment.";
                             return errorMsg;
                         }
@@ -60,13 +61,13 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                         if (_scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.Count == 0
                             && _scriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.Count == 0)
                         {
-                            _errorInstructionsMessage = "Welcome to AutoVersionsDB :-) 1. Copy the artifact file that deployed from your dev environment; 2. Run 'Virtual' to set the current DB state related to the scripts file; 3. Run 'Sync' for executing the rest of the scripts files;";
+                            _errorInstructionsMessage = $"Welcome!!! This appear to be a new project.{Environment.NewLine}1. Copy the artifact file that deployed from your dev environment >> 2. Run 'Virtual' to set the current DB state related to the scripts file >> 3. Run 'Sync' for executing the rest of the scripts files";
                             string errorMsg = $"No scripts file, and no system tables on the DB, its probably a new project on delivery environment.";
                             return errorMsg;
                         }
                         else
                         {
-                            _errorInstructionsMessage = "Welcome to AutoVersionsDB :-) 1. Run 'Virtual' to set the current DB state related to the scripts file; 2. Run 'Sync' for executing all other scripts files on the DB;";
+                            _errorInstructionsMessage = $"Welcome!!! This appear to be a new project.{Environment.NewLine}1. Run 'Virtual' to set the current DB state related to the scripts file >> 2. Run 'Sync' for executing all other scripts files on the DB";
                             string errorMsg = $"No system tables on the DB, its probably a new project on delivery environment.";
                             return errorMsg;
                         }
