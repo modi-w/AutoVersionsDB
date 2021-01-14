@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 using System.Linq;
 
@@ -13,6 +14,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
         public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
 
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
         public TargetStateScriptFileExistValidator(ScriptFilesState scriptFilesState,
                                                     string targetStateScriptFileName)

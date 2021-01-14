@@ -39,9 +39,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
         }
 
 
-        public void SetErrorInstruction(string message)
+        public void SetErrorInstruction(string message, NotificationErrorType notificationErrorType)
         {
-            _consoleProcessMessages.SetErrorInstruction(message);
+            _consoleProcessMessages.SetErrorInstruction(message, notificationErrorType);
         }
 
         public void SetErrorMessage(string message)

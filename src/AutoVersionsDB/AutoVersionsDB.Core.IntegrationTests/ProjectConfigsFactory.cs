@@ -12,6 +12,7 @@ using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests
@@ -116,6 +117,25 @@ namespace AutoVersionsDB.Core.IntegrationTests
                         projectConfig.DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_ChangedHistoryFiles_Repeatable).Replace("[DBType]", projectConfig.DBType);
                         break;
 
+                    case ScriptFilesStateType.NoScriptFiles:
+
+                        projectConfig.DevScriptsBaseFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DevScriptsBaseFolderPath_NoScriptFiles).Replace("[DBType]", projectConfig.DBType);
+
+                        if (!Directory.Exists(projectConfig.IncrementalScriptsFolderPath))
+                        {
+                            Directory.CreateDirectory(projectConfig.IncrementalScriptsFolderPath);
+                        }
+                        if (!Directory.Exists(projectConfig.RepeatableScriptsFolderPath))
+                        {
+                            Directory.CreateDirectory(projectConfig.RepeatableScriptsFolderPath);
+                        }
+                        if (!Directory.Exists(projectConfig.DevDummyDataScriptsFolderPath))
+                        {
+                            Directory.CreateDirectory(projectConfig.DevDummyDataScriptsFolderPath);
+                        }
+
+                        break;
+
                     default:
                         throw new Exception($"Invalid ScriptFilesStateType: '{scriptFilesStateType}'");
                 }
@@ -152,6 +172,11 @@ namespace AutoVersionsDB.Core.IntegrationTests
                     case ScriptFilesStateType.WithDevDummyDataFiles:
 
                         projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_WithDevDummyDataFiles).Replace("[DBType]", projectConfig.DBType);
+                        break;
+
+                    case ScriptFilesStateType.NoScriptFiles:
+
+                        projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_NoScriptFiles).Replace("[DBType]", projectConfig.DBType);
                         break;
 
                     default:

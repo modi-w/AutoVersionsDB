@@ -16,14 +16,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         public override string StepName => StepNameStr;
 
 
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
 
 
         public RestoreDatabaseStep(DBCommandsFactory dbCommandsFactory)
         {
             dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
         }
 
 
@@ -35,7 +35,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             //notificationExecutersProvider.SetStepStartManually(100, "Restore process");
 
-            using (var dbRestoreStatusNotifyer = dbCommandsFactoryProvider.CreateDBProcessStatusNotifyer(typeof(DBRestoreStatusNotifyer), processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbRestoreStatusNotifyer = _dbCommandsFactory.CreateDBProcessStatusNotifyer(typeof(DBRestoreStatusNotifyer), processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 List<ActionStepBase> internalSteps = new List<ActionStepBase>();
 
@@ -66,9 +66,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
                     try
                     {
-                        using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
+                        using (var dbCommands = _dbCommandsFactory.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
                         {
-                            using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
+                            using (var dbBackupRestoreCommands = _dbCommandsFactory.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
                             {
                                 dbBackupRestoreCommands.RestoreDBFromBackup(processContext.DBBackupFileFullPath, dbCommands.DataBaseName);
 
@@ -86,7 +86,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                     {
                         string errorInstructionsMessage = "The process fail when trying to 'Restore the Database', try to change the Timeout parameter and restore the database manually.";
 
-                        processExpetion = new NotificationProcessException(StepName, ex.Message, errorInstructionsMessage, ex);
+                        processExpetion = new NotificationProcessException(StepName, ex.Message, errorInstructionsMessage, NotificationErrorType.Error, ex);
                     }
                 });
 

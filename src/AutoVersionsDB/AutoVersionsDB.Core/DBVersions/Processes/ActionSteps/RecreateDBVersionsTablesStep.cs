@@ -6,7 +6,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class RecreateDBVersionsTablesStep : DBVersionsStep
     {
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
 
         public override string StepName => "Recreate System Tables";
 
@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
         }
 
 
@@ -23,7 +23,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
+            using (var dbCommands = _dbCommandsFactory.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
                 dbCommands.RecreateDBVersionsTables();
             }

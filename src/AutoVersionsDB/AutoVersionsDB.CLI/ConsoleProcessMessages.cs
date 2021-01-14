@@ -43,10 +43,27 @@ namespace AutoVersionsDB.CLI
             _console.ForegroundColor = ConsoleColor.White;
         }
 
-        public void SetErrorInstruction(string message)
+        public void SetErrorInstruction(string message, NotificationErrorType notificationErrorType)
         {
             IStandardStreamWriter errorWriter = _console.Error;
-            _console.ForegroundColor = ConsoleColor.DarkRed;
+
+            switch (notificationErrorType)
+            {
+                case NotificationErrorType.Error:
+
+                    _console.ForegroundColor = ConsoleColor.DarkRed;
+                    break;
+
+                case NotificationErrorType.Attention:
+
+                    _console.ForegroundColor = ConsoleColor.DarkBlue;
+                    break;
+
+                case NotificationErrorType.None:
+                default:
+                    throw new Exception($"Invalid NotificationErrorType '{notificationErrorType}'");
+            }
+
             errorWriter.WriteLine(message);
 
             _console.ForegroundColor = ConsoleColor.White;
@@ -103,11 +120,18 @@ namespace AutoVersionsDB.CLI
 
                 if (processReults.Trace.HasError)
                 {
-                    SetErrorInstruction("The process complete with errors:");
-                    SetErrorInstruction("--------------------------------");
-                    SetErrorMessage(processReults.Trace.GetOnlyErrorsStatesLogAsString());
+                    if (processReults.Trace.NotificationErrorType == NotificationErrorType.Attention)
+                    {
+                        SetErrorInstruction(processReults.Trace.InstructionsMessage, processReults.Trace.NotificationErrorType);
+                    }
+                    else
+                    {
+                        SetErrorInstruction("The process complete with errors:",NotificationErrorType.Error);
+                        SetErrorInstruction("--------------------------------", NotificationErrorType.Error);
+                        SetErrorMessage(processReults.Trace.GetOnlyErrorsStatesLogAsString());
+                        SetErrorInstruction(processReults.Trace.InstructionsMessage, processReults.Trace.NotificationErrorType);
+                    }
 
-                    SetErrorInstruction(processReults.Trace.InstructionsMessage);
 
                 }
                 else

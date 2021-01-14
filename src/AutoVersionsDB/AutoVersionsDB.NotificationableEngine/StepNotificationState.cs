@@ -123,17 +123,6 @@ namespace AutoVersionsDB.NotificationableEngine
                     if (!string.IsNullOrWhiteSpace(InternalStepNotificationState.LowLevelInstructionsMessage))
                     {
                         outInstructionsMessage = InternalStepNotificationState.LowLevelInstructionsMessage;
-
-                        //string internalInstructionsMessage = InternalNotificationStateItem.InstructionsMessage;
-
-                        //if (!string.IsNullOrWhiteSpace(outInstructionsMessage))
-                        //{
-                        //    outInstructionsMessage = $"{outInstructionsMessage} -> {internalInstructionsMessage}";
-                        //}
-                        //else
-                        //{
-                        //    outInstructionsMessage = internalInstructionsMessage;
-                        //}
                     }
                 }
 
@@ -141,6 +130,21 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
+        public NotificationErrorType NotificationErrorType { get; set; }
+        public NotificationErrorType LowLevelNotificationErrorType
+        {
+            get
+            {
+                NotificationErrorType outNotificationErrorType = NotificationErrorType;
+
+                if (InternalStepNotificationState != null)
+                {
+                    outNotificationErrorType = InternalStepNotificationState.LowLevelNotificationErrorType;
+                }
+
+                return outNotificationErrorType;
+            }
+        }
 
 
 

@@ -121,7 +121,7 @@ namespace AutoVersionsDB.UI.Notifications
                     NotificationsControls.StatusImageVisible = true;
                     NotificationsViewModelData.StatusImageType = StatusImageType.Warning;
 
-                    NotificationsControls.ProcessStatusMessageColor = Color.DarkOrange;
+                    NotificationsControls.ProcessStatusMessageColor = Color.Blue;
                     break;
 
                 case NotificationStatus.None:
@@ -199,8 +199,15 @@ namespace AutoVersionsDB.UI.Notifications
 
             if (_processTrace.HasError)
             {
-                NotificationsViewModelData.NotificationStatus = NotificationStatus.Error;
                 NotificationsViewModelData.ProcessStatusMessage = _processTrace.InstructionsMessage;
+
+                NotificationsViewModelData.NotificationStatus = _processTrace.NotificationErrorType 
+                    switch
+                {
+                    NotificationErrorType.Error => NotificationStatus.Error,
+                    NotificationErrorType.Attention => NotificationStatus.Attention,
+                    _ => throw new Exception($"Invalid NotificationErrorType '{_processTrace.NotificationErrorType}'"),
+                };
             }
             else
             {

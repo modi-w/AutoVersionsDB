@@ -10,13 +10,13 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 {
     public class SystemTableValidationsFactory : ValidationsFactory
     {
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
 
         public override string ValidationName => "System Tables";
 
         public SystemTableValidationsFactory(DBCommandsFactory dbCommandsFactory)
         {
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
         }
 
 
@@ -26,10 +26,19 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 
             ProjectConfigItem projectConfig = (processContext as CommonProcessContext).ProjectConfig;
 
+            DBVersionsProcessContext dbVersionsProcessContext = processContext as DBVersionsProcessContext;
+
 
             ValidationsGroup validationsGroup = new ValidationsGroup(false);
 
-            SystemTablesValidator systemTablesValidator = new SystemTablesValidator(dbCommandsFactoryProvider, projectConfig.DevEnvironment, projectConfig.DBConnectionInfo);
+            NewProjectValidator newProjectValidator = 
+                new NewProjectValidator(_dbCommandsFactory,
+                                        projectConfig.DevEnvironment,
+                                        projectConfig.DBConnectionInfo,
+                                        dbVersionsProcessContext.ScriptFilesState);
+            validationsGroup.Add(newProjectValidator);
+
+            SystemTablesValidator systemTablesValidator = new SystemTablesValidator(_dbCommandsFactory, projectConfig.DevEnvironment, projectConfig.DBConnectionInfo);
             validationsGroup.Add(systemTablesValidator);
 
             return validationsGroup;

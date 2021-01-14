@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.DB;
 using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 using System;
 using System.Data;
@@ -8,12 +9,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class SystemTablesValidator : ValidatorBase
     {
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
         private readonly bool _isDevEnvironment;
         private readonly DBConnectionInfo _dbConnectionInfo;
 
 
         public override string ValidatorName => "SystemTables";
+
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error; 
 
         public override string ErrorInstructionsMessage
         {
@@ -36,16 +39,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                                         bool isDevEnvironment,
                                         DBConnectionInfo dbConnectionInfo)
         {
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
             _isDevEnvironment = isDevEnvironment;
             _dbConnectionInfo = dbConnectionInfo;
         }
 
         public override string Validate()
         {
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(_dbConnectionInfo))
+            using (var dbCommands = _dbCommandsFactory.CreateDBCommand(_dbConnectionInfo))
             {
-
                 if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DBSchemaName, DBCommandsConsts.DBScriptsExecutionHistoryTableName))
                 {
                     string errorMsg = $"The table '{DBCommandsConsts.DBScriptsExecutionHistoryFullTableName}' is not exist in the db";

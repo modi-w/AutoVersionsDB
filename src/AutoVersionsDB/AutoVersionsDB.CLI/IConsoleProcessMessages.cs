@@ -12,7 +12,7 @@ namespace AutoVersionsDB.CLI
 
         void SetErrorMessage(string message);
 
-        void SetErrorInstruction(string message);
+        void SetErrorInstruction(string message, NotificationErrorType notificationErrorType);
 
         void SetInfoMessage(string message);
         void SetInlineInfoMessage(string message, ConsoleColor color);

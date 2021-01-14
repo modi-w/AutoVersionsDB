@@ -299,7 +299,8 @@ namespace AutoVersionsDB.UI.DBVersions
                     NotificationsViewModel.AfterComplete(processResults);
                     //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  AfterComplete()");
 
-                    if (processResults.Trace.ContainErrorCode("SystemTables"))
+                    if (processResults.Trace.ContainErrorCode("NewProject")
+                        || processResults.Trace.ContainErrorCode("SystemTables"))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);
                         //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  MissingSystemTables()");

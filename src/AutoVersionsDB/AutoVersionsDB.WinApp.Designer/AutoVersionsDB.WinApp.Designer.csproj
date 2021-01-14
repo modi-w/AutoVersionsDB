@@ -85,13 +85,13 @@
       <Link>MainView.Designer.cs</Link>
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\NotificationsControl.cs">
-      <Link>NotificationsControl.cs</Link>
+    <Compile Include="..\AutoVersionsDB.WinApp\NotificationsView.cs">
+      <Link>NotificationsView.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="..\AutoVersionsDB.WinApp\NotificationsControl.Designer.cs">
-      <Link>NotificationsControl.Designer.cs</Link>
-      <DependentUpon>NotificationsControl.cs</DependentUpon>
+    <Compile Include="..\AutoVersionsDB.WinApp\NotificationsView.Designer.cs">
+      <Link>NotificationsView.Designer.cs</Link>
+      <DependentUpon>NotificationsView.cs</DependentUpon>
     </Compile>
     <Compile Include="..\AutoVersionsDB.WinApp\ProjectItemControl.cs">
       <Link>ProjectItemControl.cs</Link>
@@ -150,9 +150,9 @@
       <Link>MainView.resx</Link>
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\NotificationsControl.resx">
-      <Link>NotificationsControl.resx</Link>
-      <DependentUpon>NotificationsControl.cs</DependentUpon>
+    <EmbeddedResource Include="..\AutoVersionsDB.WinApp\NotificationsView.resx">
+      <Link>NotificationsView.resx</Link>
+      <DependentUpon>NotificationsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="..\AutoVersionsDB.WinApp\ProjectItemControl.resx">
       <Link>ProjectItemControl.resx</Link>

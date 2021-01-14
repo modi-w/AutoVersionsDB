@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.DBVersions.ArtifactFile;
+using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
 using System.IO;
 
@@ -12,7 +13,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         public override string ValidatorName => "ArtifactFile";
 
         public override string ErrorInstructionsMessage => "Artifact File not exist";
-
+        public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
         public ArtifactFileValidator(bool isDevEnvironment,
                                         string deliveryArtifactFolderPath)

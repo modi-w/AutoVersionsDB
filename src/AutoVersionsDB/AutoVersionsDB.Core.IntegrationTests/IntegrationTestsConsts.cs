@@ -31,6 +31,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public const string DevScriptsBaseFolderPath_ChangedHistoryFiles_Repeatable = @"[AppPath]\[DBType]\Scripts\DevScripts_ChangedHistoryFiles_Repeatable";
         public const string DevScriptsBaseFolderPath_MissingFile = @"[AppPath]\[DBType]\Scripts\DevScripts_MissingFile";
         public const string DevScriptsBaseFolderPath_ScriptError = @"[AppPath]\[DBType]\Scripts\DevScripts_ScriptError";
+        public const string DevScriptsBaseFolderPath_NoScriptFiles = @"[AppPath]\[DBType]\Scripts\DevScripts_NoScriptFiles";
 
         public const string DeployArtifact_FolderPath = @"[AppPath]\[DBType]\Scripts\Deploy";
 
@@ -41,7 +42,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public const string DeliveryArtifactFolderPath_MissingFileh = @"[AppPath]\[DBType]\Scripts\Delivery_MissingFile";
         public const string DeliveryArtifactFolderPath_ScriptError = @"[AppPath]\[DBType]\Scripts\Delivery_ScriptError";
         public const string DeliveryArtifactFolderPath_WithDevDummyDataFiles = @"[AppPath]\[DBType]\Scripts\Delivery_WithDevDummyDataFiles";
-
+        public const string DeliveryArtifactFolderPath_NoScriptFiles = @"[AppPath]\[DBType]\Scripts\Delivery_NoScriptFiles";
+        
 
 
         public const string DBBackup_EmptyDB = @"[AppPath]\[DBType]\DBBackups\AutoVersionsDB_EmptyDB.bak";

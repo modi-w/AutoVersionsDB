@@ -21,5 +21,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
         IncrementalChanged = 4,
         RepeatableChanged = 5,
         WithDevDummyDataFiles = 6,
+        NoScriptFiles = 7
     }
 }

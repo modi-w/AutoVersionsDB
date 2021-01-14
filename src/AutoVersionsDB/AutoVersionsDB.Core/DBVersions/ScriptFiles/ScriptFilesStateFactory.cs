@@ -5,7 +5,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {
     public class ScriptFilesStateFactory
     {
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
         private readonly ScriptFilesComparerFactory _scriptFilesComparerFactory;
         private readonly ArtifactExtractorFactory _artifactExtractorFactory;
 
@@ -13,14 +13,14 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
                                        ScriptFilesComparerFactory scriptFilesComparerFactory,
                                         ArtifactExtractorFactory artifactExtractorFactory)
         {
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
             _scriptFilesComparerFactory = scriptFilesComparerFactory;
             _artifactExtractorFactory = artifactExtractorFactory;
         }
 
         public ScriptFilesState Create()
         {
-            ScriptFilesState scriptFilesState = new ScriptFilesState(dbCommandsFactoryProvider, _scriptFilesComparerFactory, _artifactExtractorFactory);
+            ScriptFilesState scriptFilesState = new ScriptFilesState(_dbCommandsFactory, _scriptFilesComparerFactory, _artifactExtractorFactory);
 
             return scriptFilesState;
         }

@@ -23,7 +23,7 @@
 
             if (!string.IsNullOrWhiteSpace(errorMsg))
             {
-                throw new NotificationProcessException(_validator.ValidatorName, errorMsg, _validator.ErrorInstructionsMessage);
+                throw new NotificationProcessException(_validator.ValidatorName, errorMsg, _validator.ErrorInstructionsMessage, _validator.NotificationErrorType);
             }
         }
 

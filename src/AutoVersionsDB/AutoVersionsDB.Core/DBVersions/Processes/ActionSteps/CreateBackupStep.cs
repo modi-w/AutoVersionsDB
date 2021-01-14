@@ -15,14 +15,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         public override string StepName => "Create Backup";
 
-        private readonly DBCommandsFactory dbCommandsFactoryProvider;
+        private readonly DBCommandsFactory _dbCommandsFactory;
 
 
         public CreateBackupStep(DBCommandsFactory dbCommandsFactory)
         {
             dbCommandsFactory.ThrowIfNull(nameof(dbCommandsFactory));
 
-            dbCommandsFactoryProvider = dbCommandsFactory;
+            _dbCommandsFactory = dbCommandsFactory;
         }
 
 
@@ -35,7 +35,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
             string timeStampStr = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss", CultureInfo.InvariantCulture);
 
             string targetFileName;
-            using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
+            using (var dbCommands = _dbCommandsFactory.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
             {
                 targetFileName = $"bu_{ dbCommands.DataBaseName}_{timeStampStr}.bak";
             }
@@ -45,7 +45,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             //notificationExecutersProvider.SetStepStartManually(100, "Backup process");
 
-            using (var dbBackupStatusNotifyer = dbCommandsFactoryProvider.CreateDBProcessStatusNotifyer(typeof(DBBackupStatusNotifyer), processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
+            using (var dbBackupStatusNotifyer = _dbCommandsFactory.CreateDBProcessStatusNotifyer(typeof(DBBackupStatusNotifyer), processContext.ProjectConfig.DBConnectionInfo).AsDisposable())
             {
                 //DBProcessStatusNotifyerBase dbBackupStatusNotifyer = _dbProcessStatusNotifyerFactory.Create(, dbQueryStatus.Instance) as DBBackupStatusNotifyer;
 
@@ -78,9 +78,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                 {
                     try
                     {
-                        using (var dbCommands = dbCommandsFactoryProvider.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
+                        using (var dbCommands = _dbCommandsFactory.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
                         {
-                            using (var dbBackupRestoreCommands = dbCommandsFactoryProvider.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
+                            using (var dbBackupRestoreCommands = _dbCommandsFactory.CreateDBBackupRestoreCommands(processContext.ProjectConfig.DBConnectionInfo))
                             {
                                 dbBackupRestoreCommands.CreateDBBackup(targetFileFullPath, dbCommands.DataBaseName);
 
