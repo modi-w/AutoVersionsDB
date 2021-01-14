@@ -12,9 +12,9 @@ namespace AutoVersionsDB.ConsoleApp
             Console.Title = "AutoVersionsDB";
 
 
-           // return CLIRunner.CLIRun(args);
+            return CLIRunner.CLIRun(args);
 
-                return CLIRunner.CLIRun("sync -id=testP2");
+             //   return CLIRunner.CLIRun("sync -id=testP2");
 
             //
             //return CLIRunner.CLIRun("recreate -id=Bandana");

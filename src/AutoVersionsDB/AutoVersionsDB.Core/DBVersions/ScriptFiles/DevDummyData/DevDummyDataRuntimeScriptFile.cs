@@ -7,12 +7,13 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData
         public override ScriptFileTypeBase ScriptFileType => ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
         protected DevDummyDataRuntimeScriptFile() { }
 
-        public static new DevDummyDataRuntimeScriptFile CreateByScriptName(string folderPath, string scriptName)
+        public static new DevDummyDataRuntimeScriptFile CreateByScriptName(string folderPath, string scriptName, int orderNum)
         {
             return new DevDummyDataRuntimeScriptFile()
             {
                 FolderPath = folderPath,
-                ScriptName = scriptName
+                ScriptName = scriptName,
+                OrderNum = orderNum,
             };
         }
 
