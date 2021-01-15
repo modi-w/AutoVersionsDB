@@ -67,14 +67,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage("++ Repeatable Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("   changed | rptScript_DataForLookupTable1.sql", true);
-            assertTextByLines.AssertLineMessage("   sync    | rptScript_DataForLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage("   changed | rptScript_001_DataForLookupTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | rptScript_002_DataForLookupTable2.sql", true);
             assertTextByLines.AssertLineMessage("", true);
             assertTextByLines.AssertLineMessage("++ DevDummyData Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("   sync    | dddScript_DataForInvoiceTable1.sql", true);
-            assertTextByLines.AssertLineMessage("   changed | dddScript_DataForTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | dddScript_001_DataForInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   changed | dddScript_002_DataForTransTable1.sql", true);
         }
 
 

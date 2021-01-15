@@ -69,13 +69,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             FileStateListAssert rptfileStateListAssert = new FileStateListAssert(this.GetType().Name, scriptFilesState.RepeatableScriptFilesComparer);
             rptfileStateListAssert.AssertNumOfFiles(2);
-            rptfileStateListAssert.AssertFileState(0, "rptScript_DataForLookupTable1.sql", HashDiffType.NotExist);
-            rptfileStateListAssert.AssertFileState(1, "rptScript_DataForLookupTable2.sql", HashDiffType.NotExist);
+            rptfileStateListAssert.AssertFileState(0, "rptScript_001_DataForLookupTable1.sql", HashDiffType.NotExist);
+            rptfileStateListAssert.AssertFileState(1, "rptScript_002_DataForLookupTable2.sql", HashDiffType.NotExist);
 
             FileStateListAssert dddfileStateListAssert = new FileStateListAssert(this.GetType().Name, scriptFilesState.DevDummyDataScriptFilesComparer);
             dddfileStateListAssert.AssertNumOfFiles(2);
-            dddfileStateListAssert.AssertFileState(0, "dddScript_DataForInvoiceTable1.sql", HashDiffType.NotExist);
-            dddfileStateListAssert.AssertFileState(1, "dddScript_DataForTransTable1.sql", HashDiffType.NotExist);
+            dddfileStateListAssert.AssertFileState(0, "dddScript_001_DataForInvoiceTable1.sql", HashDiffType.NotExist);
+            dddfileStateListAssert.AssertFileState(1, "dddScript_002_DataForTransTable1.sql", HashDiffType.NotExist);
         }
 
         public override void Release(ITestContext testContext)
