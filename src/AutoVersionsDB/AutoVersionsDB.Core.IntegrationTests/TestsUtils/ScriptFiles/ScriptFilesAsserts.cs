@@ -226,7 +226,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
 
 
-                if (fiScriptFile.Name == "rptScript_DataForLookupTable1.sql")
+                if (fiScriptFile.Name == "rptScript_001_DataForLookupTable1.sql")
                 {
                     Assert.That(executedScriptRows.Count, Is.EqualTo(2), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 2 times.");
 
@@ -290,7 +290,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 
                 string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
-                if (fiScriptFile.Name == "dddScript_DataForTransTable1.sql")
+                if (fiScriptFile.Name == "dddScript_002_DataForTransTable1.sql")
                 {
                     Assert.That(executedScriptRows.Count, Is.EqualTo(2));
 

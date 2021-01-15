@@ -5,7 +5,14 @@
 
         public override bool TryParseNextRuntimeScriptFileInstance(string folderPath, string scriptName, RepeatableRuntimeScriptFile prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile)
         {
-            newRuntimeScriptFile = RepeatableRuntimeScriptFile.CreateByScriptName(folderPath, scriptName);
+            int nextOrderNum = 1;
+
+            if (prevRuntimeScriptFile != null)
+            {
+                nextOrderNum = prevRuntimeScriptFile.OrderNum + 1;
+            }
+
+            newRuntimeScriptFile = RepeatableRuntimeScriptFile.CreateByScriptName(folderPath, scriptName, nextOrderNum);
 
             return newRuntimeScriptFile.IsValidFileName;
         }

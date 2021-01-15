@@ -20,9 +20,9 @@
 
         public override string Prefix => "rptScript";
 
-        public override string FilenamePattern => Prefix + "_[ScriptName].sql";
+        public override string FilenamePattern => Prefix + "_[OrderNum]_[ScriptName].sql";
 
-        public override string RegexFilenamePattern => "^" + Prefix + "_" + "[a-zA-Z_0-9]{1,}.sql$";
+        public override string RegexFilenamePattern => "^" + Prefix + "_" + "[0-9]{3}_[a-zA-Z_0-9]{1,}.sql$";
 
     }
 }

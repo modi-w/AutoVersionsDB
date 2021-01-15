@@ -10,20 +10,22 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable
     {
         public override ScriptFileTypeBase ScriptFileType => ScriptFileTypeBase.Create<RepeatableScriptFileType>();
 
-        public override string SortKey => ScriptName;
+        public override string SortKey => $"{OrderNum:000}{ScriptName}";
         public override string FolderPath { get; protected set; }
 
-        public override string Filename => $"{ScriptFileType.Prefix}_{ScriptName}.sql";
+        public override string Filename => $"{ScriptFileType.Prefix}_{OrderNum:000}_{ScriptName}.sql";
 
+        public int OrderNum { get; set; }
 
         protected RepeatableRuntimeScriptFile() { }
 
-        public static RepeatableRuntimeScriptFile CreateByScriptName(string folderPath, string scriptName)
+        public static RepeatableRuntimeScriptFile CreateByScriptName(string folderPath, string scriptName, int orderNum)
         {
             return new RepeatableRuntimeScriptFile()
             {
                 FolderPath = folderPath,
-                ScriptName = scriptName
+                ScriptName = scriptName,
+                OrderNum = orderNum,
             };
         }
 
@@ -60,8 +62,17 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable
 
             string[] arrFilenameParts = Regex.Split(filenameWithoutExtension, "_");
 
-            ScriptName = string.Join("_", arrFilenameParts.Skip(1));
+            ScriptName = string.Join("_", arrFilenameParts.Skip(2));
 
+            string fileOrderNumStr = arrFilenameParts[1];
+
+            if (!int.TryParse(fileOrderNumStr, out int tempOrderNum_FromFilename))
+            {
+                string errorMessage = $"Filename not valid for script pattern: '{filename}', the 'OrderNum' is not an integer number";
+                throw new Exception(errorMessage);
+            }
+
+            OrderNum = tempOrderNum_FromFilename;
         }
 
 

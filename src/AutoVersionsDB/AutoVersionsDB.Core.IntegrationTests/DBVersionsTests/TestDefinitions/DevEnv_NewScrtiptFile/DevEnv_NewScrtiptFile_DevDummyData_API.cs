@@ -84,7 +84,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             devScriptsBaseFolderPath = devScriptsBaseFolderPath.Replace("[DBType]", dbConnectionInfo.DBType);
 
-            string scriptFilename = $"dddScript_{ScriptName1}.sql";
+            string scriptFilename = $"dddScript_003_{ScriptName1}.sql";
             string script1FullPath = Path.Combine(devScriptsBaseFolderPath, _relFolder_DevDummyData, scriptFilename);
 
             return script1FullPath;
