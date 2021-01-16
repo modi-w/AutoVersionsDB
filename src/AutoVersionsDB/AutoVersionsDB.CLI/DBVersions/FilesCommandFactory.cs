@@ -179,6 +179,11 @@ namespace AutoVersionsDB.CLI.DBVersions
 
                         _consoleProcessMessages.SetInlineInfoMessage($"   sync".PadRight(11), ConsoleColor.DarkGreen);
                         break;
+                   
+                    case HashDiffType.EqualVirtual:
+
+                        _consoleProcessMessages.SetInlineInfoMessage($"   sync vr".PadRight(11), ConsoleColor.DarkGreen);
+                        break;
 
                     case HashDiffType.NotExist:
                     default:

@@ -4,6 +4,7 @@
     {
         NotExist = 0,
         Different = 1,
-        Equal = 2
+        Equal = 2,
+        EqualVirtual = 3
     }
 }
