@@ -7,6 +7,11 @@
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <Authors>Modi Weintroub</Authors>
+    <Product>AutoVersionsDB</Product>
+    <Description>Manage database scripts versions easily</Description>
+    <PackageIcon>AppIcon.ico</PackageIcon>
+    <RepositoryUrl>https://github.com/modi-w/AutoVersionsDB</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -57,6 +62,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="AppIcon.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
