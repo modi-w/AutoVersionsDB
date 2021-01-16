@@ -583,6 +583,7 @@ namespace AutoVersionsDB.WinApp
                         HashDiffType.NotExist => Color.White,
                         HashDiffType.Different => Color.LightSalmon,
                         HashDiffType.Equal => Color.LightGreen,
+                        HashDiffType.EqualVirtual => Color.LightSeaGreen,
                         _ => Color.White,
                     };
                 }

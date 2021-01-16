@@ -20,7 +20,11 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         public string LastFileOfLastExecutedFilename => DBExecutedFiles.LastFileOfLastExecutedFilename;
 
         public List<RuntimeScriptFileBase> AllFileSystemScriptFiles => FileSystemScriptFiles.ScriptFilesList;
-        public List<RuntimeScriptFileBase> ExecutedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Equal).ToList();
+        public List<RuntimeScriptFileBase> ExecutedFiles => 
+            AllFileSystemScriptFiles
+            .Where(e => e.HashDiffType == HashDiffType.Equal 
+                    || e.HashDiffType == HashDiffType.EqualVirtual)
+            .ToList();
         public List<RuntimeScriptFileBase> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Different).ToList();
         public List<RuntimeScriptFileBase> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.NotExist).ToList();
 
@@ -63,7 +67,15 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
                 }
                 else if (Convert.ToString(lastExecutedCurrnetFileRow["ComputedFileHash"], CultureInfo.InvariantCulture) == scriptFileItem.ComputedHash)
                 {
-                    scriptFileItem.HashDiffType = HashDiffType.Equal;
+                    bool isVirtualExecution = Convert.ToBoolean(lastExecutedCurrnetFileRow["IsVirtualExecution"], CultureInfo.InvariantCulture);
+                    if (isVirtualExecution)
+                    {
+                        scriptFileItem.HashDiffType = HashDiffType.EqualVirtual;
+                    }
+                    else
+                    {
+                        scriptFileItem.HashDiffType = HashDiffType.Equal;
+                    }
                 }
             }
         }
