@@ -49,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _dbVersionsViewModel.DBVersionsViewModelData.TargetIncScriptFileName = IntegrationTestsConsts.FinalStateTargetScripts.IncScriptFileName;
             _dbVersionsViewModel.DBVersionsViewModelData.TargetRptScriptFileName = IntegrationTestsConsts.FinalStateTargetScripts.RptScriptFileName;
             _dbVersionsViewModel.DBVersionsViewModelData.TargetDDDScriptFileName = IntegrationTestsConsts.FinalStateTargetScripts.DDDScriptFileName;
-            var task = _dbVersionsViewModel.RunSetDBStateManallyCommand.ExecuteWrapped();
+            var task = _dbVersionsViewModel.RunStateByVirtualExecutionCommand.ExecuteWrapped();
             task.Wait();
         }
 

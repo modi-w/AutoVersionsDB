@@ -508,7 +508,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnCancelSetDBStateManually_Click(object sender, EventArgs e)
         {
-            ViewModel.CancelSetDBStateManuallyCommand.Execute();
+            ViewModel.CancelStateByVirtualExecutionViewStateCommand.Execute();
         }
 
 
@@ -571,7 +571,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnVirtualExecution_Click(object sender, EventArgs e)
         {
-            ViewModel.SetDBStateManuallyViewStateCommand.Execute();
+            ViewModel.StateByVirtualExecutionViewStateCommand.Execute();
         }
 
         private void BtnRecreateDBFromScratch2_Click(object sender, EventArgs e)
@@ -584,7 +584,7 @@ namespace AutoVersionsDB.WinApp
 
         private void BtnRunSetDBStateManally_Click(object sender, EventArgs e)
         {
-            ViewModel.RunSetDBStateManallyCommand.Execute();
+            ViewModel.RunStateByVirtualExecutionCommand.Execute();
         }
 
 

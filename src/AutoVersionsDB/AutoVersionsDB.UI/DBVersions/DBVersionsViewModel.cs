@@ -49,8 +49,8 @@ namespace AutoVersionsDB.UI.DBVersions
         public RelayCommand SetDBToSpecificStateCommand { get; private set; }
         public RelayCommand CancelSyncToSpecificStateCommand { get; private set; }
 
-        public RelayCommand SetDBStateManuallyViewStateCommand { get; private set; }
-        public RelayCommand CancelSetDBStateManuallyCommand { get; private set; }
+        public RelayCommand StateByVirtualExecutionViewStateCommand { get; private set; }
+        public RelayCommand CancelStateByVirtualExecutionViewStateCommand { get; private set; }
 
 
         public RelayCommand<string> SelectTargetIncScriptFileNameCommand { get; private set; }
@@ -72,7 +72,7 @@ namespace AutoVersionsDB.UI.DBVersions
         public RelayCommand RecreateDBFromScratchCommand { get; private set; }
         public RelayCommand ApplySyncSpecificStateCommand { get; private set; }
         public RelayCommand DeployCommand { get; private set; }
-        public RelayCommand RunSetDBStateManallyCommand { get; private set; }
+        public RelayCommand RunStateByVirtualExecutionCommand { get; private set; }
 
 
 
@@ -99,8 +99,8 @@ namespace AutoVersionsDB.UI.DBVersions
             SetDBToSpecificStateCommand = new RelayCommand(SetDBToSpecificState);
             CancelSyncToSpecificStateCommand = new RelayCommand(CancelSyncToSpecificState);
 
-            SetDBStateManuallyViewStateCommand = new RelayCommand(SetDBStateManuallyViewState);
-            CancelSetDBStateManuallyCommand = new RelayCommand(CancelSetDBStateManually);
+            StateByVirtualExecutionViewStateCommand = new RelayCommand(StateByVirtualExecutionViewState);
+            CancelStateByVirtualExecutionViewStateCommand = new RelayCommand(CancelStateByVirtualExecutionViewState);
 
             SelectTargetIncScriptFileNameCommand = new RelayCommand<string>(SelectTargetIncScriptFileName);
             SelectTargetRptScriptFileNameCommand = new RelayCommand<string>(SelectTargetRptScriptFileName);
@@ -120,7 +120,7 @@ namespace AutoVersionsDB.UI.DBVersions
             RecreateDBFromScratchCommand = new RelayCommand(RecreateDBFromScratch);
             ApplySyncSpecificStateCommand = new RelayCommand(ApplySyncSpecificState);
             DeployCommand = new RelayCommand(Deploy);
-            RunSetDBStateManallyCommand = new RelayCommand(RunSetDBStateManally);
+            RunStateByVirtualExecutionCommand = new RelayCommand(RunStateByVirtualExecution);
 
             SetToolTips();
         }
@@ -174,12 +174,12 @@ namespace AutoVersionsDB.UI.DBVersions
         }
 
 
-        private void SetDBStateManuallyViewState()
+        private void StateByVirtualExecutionViewState()
         {
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.SetDBStateManually);
         }
 
-        private void CancelSetDBStateManually()
+        private void CancelStateByVirtualExecutionViewState()
         {
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);
         }
@@ -419,7 +419,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _osProcessUtils.StartOsProcess(DBVersionsViewModelData.ProjectConfig.DeployArtifactFolderPath);
         }
 
-        private void RunSetDBStateManally()
+        private void RunStateByVirtualExecution()
         {
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
             NotificationsViewModel.BeforeStartProcess();

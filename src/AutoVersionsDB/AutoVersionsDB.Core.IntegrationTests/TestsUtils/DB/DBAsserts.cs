@@ -106,10 +106,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         public void AssertThatDBExecutedFilesAreInMiddleState(string testName, DBConnectionInfo dbConnectionInfo)
         {
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName);
-            assertTableNumOfRows(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 3);
+            assertTableNumOfRows(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 4);
             assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 0, "Filename", "incScript_2020-02-25.100_initState.sql");
             assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 1, "Filename", "incScript_2020-02-25.101_CreateLookupTable1.sql");
             assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 2, "Filename", "incScript_2020-02-25.102_CreateLookupTable2.sql");
+            assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 3, "Filename", "rptScript_001_DataForLookupTable1.sql");
         }
 
 
@@ -120,6 +121,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string tableName = "[Schema2].[LookupTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable1");
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
+            assertTableNumOfRows(testName, tableName, tableData, 2);
+            assertTableCellValue(testName, tableName, tableData, 0, "Lookup1Value", "Value1");
+            assertTableCellValue(testName, tableName, tableData, 1, "Lookup1Value", "Value2");
+
+            tableName = "[Schema2].[LookupTable2]";
+            AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable2");
+            tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
             assertTableNumOfRows(testName, tableName, tableData, 0);
 
 
