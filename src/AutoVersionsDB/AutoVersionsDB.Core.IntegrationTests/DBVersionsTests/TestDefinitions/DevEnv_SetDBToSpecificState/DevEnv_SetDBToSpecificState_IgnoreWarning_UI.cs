@@ -54,7 +54,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(DBVersionsUITestContext testContext)
         {
-            _dbVersionsViewModel.DBVersionsViewModelData.TargetStateScriptFileName = IntegrationTestsConsts.TargetStateFile_MiddleState;
+            _dbVersionsViewModel.DBVersionsViewModelData.TargetIncScriptFileName = IntegrationTestsConsts.MiddleStateTargetScripts.IncScriptFileName;
+            _dbVersionsViewModel.DBVersionsViewModelData.TargetRptScriptFileName = IntegrationTestsConsts.MiddleStateTargetScripts.RptScriptFileName;
+            _dbVersionsViewModel.DBVersionsViewModelData.TargetDDDScriptFileName = IntegrationTestsConsts.MiddleStateTargetScripts.DDDScriptFileName;
             var task1 = _dbVersionsViewModel.ApplySyncSpecificStateCommand.ExecuteWrapped();
             task1.Wait();
         }

@@ -5,14 +5,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
     public class DBVersionsProcessArgs : ProcessArgs
     {
         public string Id { get; set; }
-        public string TargetStateScriptFileName { get; set; }
         public string NewScriptName { get; set; }
+        public TargetScripts TargetScripts { get; set; }
 
-        public DBVersionsProcessArgs(string id, string targetStateScriptFileName, string newScriptName)
+        public DBVersionsProcessArgs(string id, string newScriptName, TargetScripts targetScripts)
         {
             Id = id;
-            TargetStateScriptFileName = targetStateScriptFileName;
             NewScriptName = newScriptName;
+            TargetScripts = targetScripts;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions;
+using AutoVersionsDB.Core.DBVersions.Processes;
 using AutoVersionsDB.DB.Contract;
 using AutoVersionsDB.NotificationableEngine;
 using Ninject;
@@ -123,29 +124,29 @@ namespace AutoVersionsDB.Core
             }
         }
 
-        public static ProcessResults RecreateDBFromScratch(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults RecreateDBFromScratch(string id, TargetScripts targetScripts, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return _dbVersionsAPI.RecreateDBFromScratch(id, targetStateScriptFilename, onNotificationStateChanged);
+                return _dbVersionsAPI.RecreateDBFromScratch(id, targetScripts, onNotificationStateChanged);
             }
         }
 
 
-        public static ProcessResults SetDBToSpecificState(string id, string targetStateScriptFilename, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults SetDBToSpecificState(string id, TargetScripts targetScripts, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return _dbVersionsAPI.SetDBToSpecificState(id, targetStateScriptFilename, isIgnoreHistoryWarning, onNotificationStateChanged);
+                return _dbVersionsAPI.SetDBToSpecificState(id, targetScripts, isIgnoreHistoryWarning, onNotificationStateChanged);
             }
         }
 
 
-        public static ProcessResults SetDBStateByVirtualExecution(string id, string targetStateScriptFilename, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        public static ProcessResults SetDBStateByVirtualExecution(string id, TargetScripts targetScripts, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             lock (_processSyncLock)
             {
-                return _dbVersionsAPI.SetDBStateByVirtualExecution(id, targetStateScriptFilename, onNotificationStateChanged);
+                return _dbVersionsAPI.SetDBStateByVirtualExecution(id, targetScripts, onNotificationStateChanged);
             }
         }
 

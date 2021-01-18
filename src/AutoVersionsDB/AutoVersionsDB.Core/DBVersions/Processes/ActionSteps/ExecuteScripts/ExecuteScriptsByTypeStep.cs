@@ -31,14 +31,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
             processContext.ThrowIfNull(nameof(processContext));
 
 
-            string targetStateScriptFileName = null;
-            if (processContext.ProcessArgs != null)
-            {
-                targetStateScriptFileName = (processContext.ProcessArgs as DBVersionsProcessArgs).TargetStateScriptFileName;
-            }
+            TargetScripts targetScripts = (processContext.ProcessArgs as DBVersionsProcessArgs).TargetScripts;
+            //if (processContext.ProcessArgs != null)
+            //{
+            //    targetScripts = (processContext.ProcessArgs as DBVersionsProcessArgs).TargetScripts;
+            //}
 
             ScriptFilesComparerBase scriptFilesComparer = processContext.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);
 
+            string targetStateScriptFileName = targetScripts.TargetScriptsByType[_fileTypeCode];
             List<RuntimeScriptFileBase> scriptFilesList = scriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
 
             List<ActionStepBase> internalSteps = new List<ActionStepBase>();

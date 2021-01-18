@@ -1,4 +1,6 @@
 ﻿using AutoVersionsDB.Core.DBVersions;
+using AutoVersionsDB.Core.DBVersions.Processes;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.NotificationableEngine;
 using System.CommandLine;
 using System.CommandLine.Invocation;
@@ -10,17 +12,23 @@ namespace AutoVersionsDB.CLI.DBVersions
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly IConsoleProcessMessages _consoleProcessMessages;
         private readonly IdCLIOption _idOption;
-        private readonly TargetCLIOption _targetCLIOption;
+        private readonly IncTargetCLIOption _incTargetCLIOption;
+        private readonly RptTargetCLIOption _rptTargetCLIOption;
+        private readonly DDDTargetCLIOption _dddTargetCLIOption;
 
         public VirtualCommandFactory(DBVersionsAPI dbVersionsAPI,
                                         IConsoleProcessMessages consoleProcessMessages,
                                         IdCLIOption idOption,
-                                        TargetCLIOption targetCLIOption)
+                                        IncTargetCLIOption incTargetCLIOption,
+                                        RptTargetCLIOption rptTargetCLIOption,
+                                        DDDTargetCLIOption dddTargetCLIOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
             _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
-            _targetCLIOption = targetCLIOption;
+            _incTargetCLIOption = incTargetCLIOption;
+            _rptTargetCLIOption = rptTargetCLIOption;
+            _dddTargetCLIOption = dddTargetCLIOption;
         }
 
         public override Command Create()
@@ -28,17 +36,22 @@ namespace AutoVersionsDB.CLI.DBVersions
             Command command = new Command("virtual")
             {
                 _idOption,
-                _targetCLIOption,
-            };
+                _incTargetCLIOption,
+                _rptTargetCLIOption,
+                _dddTargetCLIOption,
+         };
 
             command.Description = "Set the Database to specific state by virtually executions the scripts file. This command is useful when production database didnt use this tool yet. Insert into the 'Target' option the target script file name that you want to set the db state.";
 
-            command.Handler = CommandHandler.Create<string, string>((id, target) =>
+            command.Handler = CommandHandler.Create<string, string, string, string>((id, incTarget, rptTarget, dddTarget) =>
             {
                 _consoleProcessMessages.StartProcessMessage("virtual", id);
 
                 _consoleProcessMessages.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(id, target, _consoleProcessMessages.OnNotificationStateChanged);
+
+                TargetScripts targetScripts = new TargetScripts(incTarget, rptTarget, dddTarget);
+
+                ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(id, targetScripts, _consoleProcessMessages.OnNotificationStateChanged);
                 _consoleProcessMessages.StopSpinner();
 
                 _consoleProcessMessages.ProcessComplete(processResults);

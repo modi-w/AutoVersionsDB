@@ -25,7 +25,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
         public override string Validate()
         {
-            if (!string.IsNullOrWhiteSpace(_targetStateScriptFileName))
+            if (!string.IsNullOrWhiteSpace(_targetStateScriptFileName)
+                && _targetStateScriptFileName.Trim().ToUpperInvariant() != RuntimeScriptFileBase.TargetLastScriptFileName.Trim().ToUpperInvariant())
             {
                 var isTargetFileExsit =
                     _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles

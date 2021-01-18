@@ -20,10 +20,10 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
             DBVersionsProcessArgs dbVersionsProcessArgs = dbVersionsProcessContext.ProcessArgs as DBVersionsProcessArgs;
 
 
-            TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(dbVersionsProcessContext.ScriptFilesState, dbVersionsProcessArgs.TargetStateScriptFileName);
+            TargetStateScriptFileExistValidator targetStateScriptFileExistValidator = new TargetStateScriptFileExistValidator(dbVersionsProcessContext.ScriptFilesState, dbVersionsProcessArgs.TargetScripts.IncScriptFileName);
             validationsGroup.Add(targetStateScriptFileExistValidator);
 
-            TargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new TargetScriptFiletAlreadyExecutedValidator(dbVersionsProcessContext.ScriptFilesState, dbVersionsProcessArgs.TargetStateScriptFileName);
+            TargetScriptFiletAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidator = new TargetScriptFiletAlreadyExecutedValidator(dbVersionsProcessContext.ScriptFilesState, dbVersionsProcessArgs.TargetScripts.IncScriptFileName);
             validationsGroup.Add(isTargetScriptFiletAlreadyExecutedValidator);
 
             return validationsGroup;

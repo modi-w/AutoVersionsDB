@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         {
             LoadExecutedFilesList();
 
-            DataRow lastRow = ExecutedFilesList.LastOrDefault();
+            DataRow lastRow = ExecutedFilesList.OrderBy(row=>Convert.ToString(row["Filename"], CultureInfo.InvariantCulture)).LastOrDefault();
 
             if (lastRow != null)
             {

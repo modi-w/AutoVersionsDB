@@ -1,4 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.Processes;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
 using AutoVersionsDB.Helpers;
 using Newtonsoft.Json;
@@ -16,8 +18,12 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public const string TestDBName = "AutoVersionsDB.Tests";
 
 
-        public const string TargetStateFile_MiddleState = "incScript_2020-02-25.102_CreateLookupTable2.sql";
-        public const string TargetStateFile_FinalState = "incScript_2020-03-02.101_CreateInvoiceTable1.sql";
+        public static TargetScripts MiddleStateTargetScripts =
+            new TargetScripts("incScript_2020-02-25.102_CreateLookupTable2.sql",
+                                "rptScript_001_DataForLookupTable1.sql",
+                                RuntimeScriptFileBase.TargetNoneScriptFileName);
+
+        public static TargetScripts FinalStateTargetScripts = TargetScripts.CreateLastState();
 
 
 
@@ -43,7 +49,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public const string DeliveryArtifactFolderPath_ScriptError = @"[AppPath]\[DBType]\Scripts\Delivery_ScriptError";
         public const string DeliveryArtifactFolderPath_WithDevDummyDataFiles = @"[AppPath]\[DBType]\Scripts\Delivery_WithDevDummyDataFiles";
         public const string DeliveryArtifactFolderPath_NoScriptFiles = @"[AppPath]\[DBType]\Scripts\Delivery_NoScriptFiles";
-        
+
 
 
         public const string DBBackup_EmptyDB = @"[AppPath]\[DBType]\DBBackups\AutoVersionsDB_EmptyDB.bak";

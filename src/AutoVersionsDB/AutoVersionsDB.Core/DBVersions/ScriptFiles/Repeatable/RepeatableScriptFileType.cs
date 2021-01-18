@@ -2,6 +2,8 @@
 {
     public class RepeatableScriptFileType : ScriptFileTypeBase
     {
+        public static string RepeatableFileTypeCode => ScriptFileTypeBase.Create<RepeatableScriptFileType>().FileTypeCode;
+
         private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory;
         public override RuntimeScriptFileFactoryBase RuntimeScriptFileFactory
         {

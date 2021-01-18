@@ -1,4 +1,7 @@
 
+--Comment: Script Error
+aaaa
+
 TRUNCATE TABLE Schema2.[LookupTable2]
 GO
 

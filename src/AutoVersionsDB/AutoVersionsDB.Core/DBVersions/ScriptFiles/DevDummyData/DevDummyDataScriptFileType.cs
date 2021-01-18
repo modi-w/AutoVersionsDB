@@ -5,6 +5,8 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData
 {
     public class DevDummyDataScriptFileType : RepeatableScriptFileType
     {
+        public static string DevDummyDataFileTypeCode => ScriptFileTypeBase.Create<DevDummyDataScriptFileType>().FileTypeCode;
+
         private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory;
         public override RuntimeScriptFileFactoryBase RuntimeScriptFileFactory
         {

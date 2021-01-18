@@ -25,12 +25,25 @@ namespace AutoVersionsDB.UI.DBVersions
 
 
 
-        private string _targetStateScriptFileName;
-        public string TargetStateScriptFileName
+        private string _targetIncScriptFileName;
+        public string TargetIncScriptFileName
         {
-            get => _targetStateScriptFileName;
-            set => SetField(ref _targetStateScriptFileName, value);
+            get => _targetIncScriptFileName;
+            set => SetField(ref _targetIncScriptFileName, value);
         }
+        private string _targetRptScriptFileName;
+        public string TargetRptScriptFileName
+        {
+            get => _targetRptScriptFileName;
+            set => SetField(ref _targetRptScriptFileName, value);
+        }
+        private string _targetDDDScriptFileName;
+        public string TargetDDDScriptFileName
+        {
+            get => _targetDDDScriptFileName;
+            set => SetField(ref _targetDDDScriptFileName, value);
+        }
+
 
 
         private IList<RuntimeScriptFileBase> _incrementalScriptFiles;

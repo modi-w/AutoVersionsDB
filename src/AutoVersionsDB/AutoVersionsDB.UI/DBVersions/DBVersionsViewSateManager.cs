@@ -1,6 +1,8 @@
 ﻿using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.Notifications;
@@ -87,10 +89,10 @@ namespace AutoVersionsDB.UI.DBVersions
                     _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
 
 
-                    if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
-                    {
-                        _dbVersionsViewModelData.TargetStateScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
-                    }
+                    //if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
+                    //{
+                    //    _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
+                    //}
 
                     _dbVersionsControls.GridToSelectTargetStateEnabled = false;
 
@@ -99,7 +101,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                 case DBVersionsViewStateType.ReadyToSyncToSpecificState:
 
-                    AppendEmptyDBTargetStateToIncremental();
+                    AppendNoneDBTargetState();
 
                     _dbVersionsControls.PnlSyncToSpecificStateVisible = true;
                     _dbVersionsControls.LblColorTargetStateSquareVisible = true;
@@ -108,7 +110,7 @@ namespace AutoVersionsDB.UI.DBVersions
                     _dbVersionsControls.PnlRepeatableFilesVisible = false;
                     _dbVersionsControls.PnlDevDummyDataFilesVisible = false;
 
-                    _notificationsViewModel.SetAttentionMessage("Select the target Database State, and click on Apply");
+                    _notificationsViewModel.SetAttentionMessage("Select the target Database State (on every script type), and click on Apply");
 
                     _dbVersionsControls.GridToSelectTargetStateEnabled = true;
 
@@ -124,7 +126,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                     if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
                     {
-                        _dbVersionsViewModelData.TargetStateScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
+                        _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
                     }
 
                     _dbVersionsControls.GridToSelectTargetStateEnabled = false;
@@ -134,7 +136,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                 case DBVersionsViewStateType.SetDBStateManually:
 
-                    AppendEmptyDBTargetStateToIncremental();
+                    AppendNoneDBTargetState();
 
                     _dbVersionsControls.PnlSetDBStateManuallyVisible = true;
                     _dbVersionsControls.LblColorTargetStateSquareVisible = true;
@@ -143,7 +145,7 @@ namespace AutoVersionsDB.UI.DBVersions
                     _dbVersionsControls.PnlRepeatableFilesVisible = false;
                     _dbVersionsControls.PnlDevDummyDataFilesVisible = false;
 
-                    _notificationsViewModel.SetAttentionMessage("Select the Target Database State to virtually mark, and click on Apply");
+                    _notificationsViewModel.SetAttentionMessage("Select the Target (on every script type) Database State to virtually mark, and click on Apply");
 
                     _dbVersionsControls.GridToSelectTargetStateEnabled = true;
 
@@ -210,14 +212,32 @@ namespace AutoVersionsDB.UI.DBVersions
 
 
 
-        private void AppendEmptyDBTargetStateToIncremental()
+        private void AppendNoneDBTargetState()
         {
             List<RuntimeScriptFileBase> incScripts = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFileBase emptyDBTargetState = new EmptyDBStateRuntimeScriptFile();
-            incScripts.Insert(0, emptyDBTargetState);
+            RuntimeScriptFileBase incNoneTargetState = new IncrementalRuntimeScriptFile("",RuntimeScriptFileBase.TargetNoneScriptFileName);
+            incScripts.Insert(0, incNoneTargetState);
 
             _dbVersionsViewModelData.IncrementalScriptFiles = incScripts;
+            _dbVersionsViewModelData.TargetIncScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
+
+            List<RuntimeScriptFileBase> rptScripts = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+
+            RuntimeScriptFileBase rptNoneTargetState = new RepeatableRuntimeScriptFile("", RuntimeScriptFileBase.TargetLastScriptFileName);
+            rptScripts.Insert(0, rptNoneTargetState);
+
+            _dbVersionsViewModelData.RepeatableScriptFiles = rptScripts;
+            _dbVersionsViewModelData.TargetRptScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
+
+
+            List<RuntimeScriptFileBase> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+
+            RuntimeScriptFileBase dddNoneTargetState = new DevDummyDataRuntimeScriptFile("", RuntimeScriptFileBase.TargetLastScriptFileName);
+            dddScripts.Insert(0, dddNoneTargetState);
+
+            _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
+            _dbVersionsViewModelData.TargetDDDScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
         }
 
 
