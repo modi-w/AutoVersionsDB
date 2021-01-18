@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(ITestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDBAPI.ValdiateTargetStateAlreadyExecuted(testContext.ProjectConfig.Id, IntegrationTestsConsts.TargetStateFile_FinalState, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.ValdiateTargetStateAlreadyExecuted(testContext.ProjectConfig.Id, IntegrationTestsConsts.FinalStateTargetScripts.IncScriptFileName, null);
         }
 
 

@@ -27,7 +27,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         private readonly DBAsserts _dbAsserts;
 
         public DevEnv_Restore_SetDBToSpecificState_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
-                                        DBAsserts dbAsserts)
+                                                        DBAsserts dbAsserts)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _dbAsserts = dbAsserts;
@@ -41,7 +41,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(ITestContext testContext)
         {
-            testContext.ProcessResults = AutoVersionsDBAPI.SetDBToSpecificState(testContext.ProjectConfig.Id, IntegrationTestsConsts.TargetStateFile_FinalState, false, null);
+            testContext.ProcessResults = AutoVersionsDBAPI.SetDBToSpecificState(testContext.ProjectConfig.Id, IntegrationTestsConsts.FinalStateTargetScripts, false, null);
         }
 
 

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
@@ -455,7 +456,7 @@ namespace AutoVersionsDB.WinApp
         }
 
 
-        private void DgScriptFiles_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DgIncrementalScriptsFiles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
 
@@ -464,12 +465,44 @@ namespace AutoVersionsDB.WinApp
             {
                 RuntimeScriptFileBase currScriptFileInfo = (dgIncrementalScriptsFiles.DataSource as List<RuntimeScriptFileBase>)[e.RowIndex];
 
-                ViewModel.SelectTargetStateScriptFileNameCommand.Execute(currScriptFileInfo.Filename);
-
-                //MarkUnMarkSelectedTargetInGrid();
+                Task task = ViewModel.SelectTargetIncScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
+                task.Wait();
+                MarkUnMarkSelectedTargetInGrid(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.TargetIncScriptFileName, true);
             }
-
         }
+
+        private void DgRepeatableScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                e.RowIndex >= 0)
+            {
+                RuntimeScriptFileBase currScriptFileInfo = (dgRepeatableScriptsFiles.DataSource as List<RuntimeScriptFileBase>)[e.RowIndex];
+
+                Task task = ViewModel.SelectTargetRptScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
+                task.Wait();
+
+                MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, true);
+            }
+        }
+
+        private void DgDevDummyDataScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                e.RowIndex >= 0)
+            {
+                RuntimeScriptFileBase currScriptFileInfo = (dgDevDummyDataScriptsFiles.DataSource as List<RuntimeScriptFileBase>)[e.RowIndex];
+
+                Task task = ViewModel.SelectTargetDDDScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
+                task.Wait();
+
+                MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, true);
+            }
+        }
+
 
         private void BtnCancelSetDBStateManually_Click(object sender, EventArgs e)
         {
@@ -605,28 +638,53 @@ namespace AutoVersionsDB.WinApp
             {
                 dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
                 {
-                    MarkUnMarkSelectedTargetInGrid(isEnable);
+                    MarkUnMarkSelectedTargetInGrid(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.TargetIncScriptFileName, isEnable);
                 }));
             }
             else
             {
-                MarkUnMarkSelectedTargetInGrid(isEnable);
+                MarkUnMarkSelectedTargetInGrid(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.TargetIncScriptFileName, isEnable);
             }
+
+            if (dgRepeatableScriptsFiles.InvokeRequired)
+            {
+                dgRepeatableScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+                {
+                    MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
+                }));
+            }
+            else
+            {
+                MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
+            }
+
+            if (dgDevDummyDataScriptsFiles.InvokeRequired)
+            {
+                dgDevDummyDataScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+                {
+                    MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
+                }));
+            }
+            else
+            {
+                MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
+            }
+
         }
 
-        private void MarkUnMarkSelectedTargetInGrid(bool isEnable)
+        private void MarkUnMarkSelectedTargetInGrid(DataGridView dgGrid, string targetScriptFileName, bool isEnable)
         {
-            dgIncrementalScriptsFiles.Columns[2].Visible = isEnable;
+            dgGrid.Columns[2].Visible = isEnable;
 
-            foreach (DataGridViewRow currGridRow in dgIncrementalScriptsFiles.Rows)
+            foreach (DataGridViewRow currGridRow in dgGrid.Rows)
             {
                 currGridRow.Cells[0].Value = (currGridRow.Index + 1).ToString(CultureInfo.InvariantCulture);
                 currGridRow.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
                 RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
 
-                if (ViewModel.DBVersionsViewModelData.TargetStateScriptFileName != null
-                    && currRowFileInfo.Filename.Trim().ToUpperInvariant() == ViewModel.DBVersionsViewModelData.TargetStateScriptFileName.Trim().ToUpperInvariant())
+                if (targetScriptFileName != null
+                    && currRowFileInfo.Filename.Trim().ToUpperInvariant() == targetScriptFileName.Trim().ToUpperInvariant())
                 {
                     currGridRow.Cells[2].Style.BackColor = Color.Yellow;
                 }

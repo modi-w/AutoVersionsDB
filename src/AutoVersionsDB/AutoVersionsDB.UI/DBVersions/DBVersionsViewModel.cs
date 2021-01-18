@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions;
+using AutoVersionsDB.Core.DBVersions.Processes;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -52,7 +53,9 @@ namespace AutoVersionsDB.UI.DBVersions
         public RelayCommand CancelSetDBStateManuallyCommand { get; private set; }
 
 
-        public RelayCommand<string> SelectTargetStateScriptFileNameCommand { get; private set; }
+        public RelayCommand<string> SelectTargetIncScriptFileNameCommand { get; private set; }
+        public RelayCommand<string> SelectTargetRptScriptFileNameCommand { get; private set; }
+        public RelayCommand<string> SelectTargetDDDScriptFileNameCommand { get; private set; }
 
         public RelayCommand OpenIncrementalScriptsFolderCommand { get; private set; }
         public RelayCommand OpenRepeatableScriptsFolderCommand { get; private set; }
@@ -99,7 +102,9 @@ namespace AutoVersionsDB.UI.DBVersions
             SetDBStateManuallyViewStateCommand = new RelayCommand(SetDBStateManuallyViewState);
             CancelSetDBStateManuallyCommand = new RelayCommand(CancelSetDBStateManually);
 
-            SelectTargetStateScriptFileNameCommand = new RelayCommand<string>(SelectTargetStateScriptFileName);
+            SelectTargetIncScriptFileNameCommand = new RelayCommand<string>(SelectTargetIncScriptFileName);
+            SelectTargetRptScriptFileNameCommand = new RelayCommand<string>(SelectTargetRptScriptFileName);
+            SelectTargetDDDScriptFileNameCommand = new RelayCommand<string>(SelectTargetDDDScriptFileName);
 
             OpenIncrementalScriptsFolderCommand = new RelayCommand(OpenIncrementalScriptsFolder);
             OpenRepeatableScriptsFolderCommand = new RelayCommand(OpenRepeatableScriptsFolder);
@@ -180,9 +185,17 @@ namespace AutoVersionsDB.UI.DBVersions
         }
 
 
-        private void SelectTargetStateScriptFileName(string targetStateScriptFileName)
+        private void SelectTargetIncScriptFileName(string targetScriptFileName)
         {
-            DBVersionsViewModelData.TargetStateScriptFileName = targetStateScriptFileName;
+            DBVersionsViewModelData.TargetIncScriptFileName = targetScriptFileName;
+        }
+        private void SelectTargetRptScriptFileName(string targetScriptFileName)
+        {
+            DBVersionsViewModelData.TargetRptScriptFileName = targetScriptFileName;
+        }
+        private void SelectTargetDDDScriptFileName(string targetScriptFileName)
+        {
+            DBVersionsViewModelData.TargetDDDScriptFileName = targetScriptFileName;
         }
 
 
@@ -278,7 +291,7 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> Start");
 
-            DBVersionsViewModelData.TargetStateScriptFileName = null;
+            DBVersionsViewModelData.TargetIncScriptFileName = null;
 
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
             //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> After change to InProcess");
@@ -366,7 +379,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
                 NotificationsViewModel.BeforeStartProcess();
 
-                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, NotificationsViewModel.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(DBVersionsViewModelData.ProjectConfig.Id, TargetScripts.CreateLastState(), NotificationsViewModel.OnNotificationStateChanged);
                 RefreshScriptFilesState(false);
 
                 NotificationsViewModel.AfterComplete(processResults);
@@ -381,7 +394,9 @@ namespace AutoVersionsDB.UI.DBVersions
                 _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
                 NotificationsViewModel.BeforeStartProcess();
 
-                ProcessResults processResults = _dbVersionsAPI.SetDBToSpecificState(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, true, NotificationsViewModel.OnNotificationStateChanged);
+                TargetScripts targetScripts = new TargetScripts(DBVersionsViewModelData.TargetIncScriptFileName, DBVersionsViewModelData.TargetRptScriptFileName, DBVersionsViewModelData.TargetDDDScriptFileName);
+
+                ProcessResults processResults = _dbVersionsAPI.SetDBToSpecificState(DBVersionsViewModelData.ProjectConfig.Id, targetScripts, true, NotificationsViewModel.OnNotificationStateChanged);
                 RefreshScriptFilesState(false);
 
                 NotificationsViewModel.AfterComplete(processResults);
@@ -409,7 +424,9 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
             NotificationsViewModel.BeforeStartProcess();
 
-            ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, NotificationsViewModel.OnNotificationStateChanged);
+            TargetScripts targetScripts = new TargetScripts(DBVersionsViewModelData.TargetIncScriptFileName, DBVersionsViewModelData.TargetRptScriptFileName, DBVersionsViewModelData.TargetDDDScriptFileName);
+
+            ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(DBVersionsViewModelData.ProjectConfig.Id, targetScripts, NotificationsViewModel.OnNotificationStateChanged);
             RefreshScriptFilesState(false);
 
             NotificationsViewModel.AfterComplete(processResults);
@@ -467,7 +484,7 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             bool isAllowRun = true;
 
-            if (_dbVersionsAPI.ValdiateTargetStateAlreadyExecuted(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetStateScriptFileName, NotificationsViewModel.OnNotificationStateChanged).Trace.HasError)
+            if (_dbVersionsAPI.ValdiateTargetStateAlreadyExecuted(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetIncScriptFileName, NotificationsViewModel.OnNotificationStateChanged).Trace.HasError)
             {
                 isAllowRun = UIGeneralEvents.FireOnConfirm(this, $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?");
             }

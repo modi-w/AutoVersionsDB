@@ -56,28 +56,23 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
                     string lastIncStriptFilename = GetLastIncFilename(processContext);
 
-                    string targetStateScriptFileName = null;
+                    TargetScripts targetScripts = null;
                     if (processContext.ProcessArgs != null)
                     {
-                        targetStateScriptFileName = (processContext.ProcessArgs as DBVersionsProcessArgs).TargetStateScriptFileName;
+                        targetScripts = (processContext.ProcessArgs as DBVersionsProcessArgs).TargetScripts;
                     }
 
 
-                    if (string.IsNullOrWhiteSpace(targetStateScriptFileName)
-                        || lastIncStriptFilename.Trim().ToUpperInvariant() == targetStateScriptFileName.Trim().ToUpperInvariant())
+                    ScriptFileTypeBase repeatableFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
+                    ExecuteScriptsByTypeStep repeatableFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(repeatableFileType.FileTypeCode, dbCommands);
+                    internalSteps.Add(repeatableFileTypeExecuteScriptsByTypeStep);
+
+
+                    if (processContext.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
                     {
-                        ScriptFileTypeBase repeatableFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
-                        ExecuteScriptsByTypeStep repeatableFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(repeatableFileType.FileTypeCode, dbCommands);
-                        internalSteps.Add(repeatableFileTypeExecuteScriptsByTypeStep);
-
-
-                        if (processContext.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
-                        {
-                            ScriptFileTypeBase devDummyDataFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
-                            ExecuteScriptsByTypeStep devDummyDataFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(devDummyDataFileType.FileTypeCode, dbCommands);
-                            internalSteps.Add(devDummyDataFileTypeExecuteScriptsByTypeStep);
-
-                        }
+                        ScriptFileTypeBase devDummyDataFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
+                        ExecuteScriptsByTypeStep devDummyDataFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(devDummyDataFileType.FileTypeCode, dbCommands);
+                        internalSteps.Add(devDummyDataFileTypeExecuteScriptsByTypeStep);
                     }
 
                     ExecuteInternalSteps(internalSteps, false);

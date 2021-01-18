@@ -49,6 +49,54 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         }
 
 
+        protected RuntimeScriptFileBase GetTargetRuntimeScriptFile(string targetScriptFilename)
+        {
+            RuntimeScriptFileBase targetRuntimeScriptFile = null;
+
+            if (targetScriptFilename.Trim().ToUpperInvariant() == LastRuntimeScriptFile.TargetLastScriptFileName.Trim().ToUpperInvariant())
+            {
+                targetRuntimeScriptFile = AllFileSystemScriptFiles.LastOrDefault();
+            }
+            else
+            {
+                targetRuntimeScriptFile = AllFileSystemScriptFiles.FirstOrDefault(e => e.Filename.Trim().ToUpperInvariant() == targetScriptFilename.Trim().ToUpperInvariant());
+                if (targetRuntimeScriptFile == null)
+                {
+                    throw new ArgumentException($"{targetRuntimeScriptFile} is not exist in the {ScriptFileType.FileTypeCode} files", nameof(targetScriptFilename));
+                }
+            }
+
+            //RuntimeScriptFileBase targetScriptFile = null;
+            //if (!string.IsNullOrWhiteSpace(targetScriptFilename))
+            //{
+            //    string targetFileFullPath = Path.Combine(FileSystemScriptFiles.FolderPath, targetScriptFilename);
+            //    targetScriptFile = FileSystemScriptFiles.CreateRuntimeScriptFileInstanceByFilename(targetFileFullPath);
+            //}
+
+            return targetRuntimeScriptFile;
+        }
+
+
+        protected List<RuntimeScriptFileBase> FilterPendingScriptsFilesByTarget(RuntimeScriptFileBase prevExecutionLastScriptFile, RuntimeScriptFileBase targetScriptFile, List<RuntimeScriptFileBase> sourceRuntimeFiles)
+        {
+            List<RuntimeScriptFileBase> pendingScriptFilesList = new List<RuntimeScriptFileBase>();
+
+
+            foreach (RuntimeScriptFileBase scriptFileItem in sourceRuntimeFiles)
+            {
+                // Comment:  We return all the files that after the preve executed file and before (and equal) to the target file.
+                if ((prevExecutionLastScriptFile == null || 0 < string.Compare(scriptFileItem.SortKey, prevExecutionLastScriptFile.SortKey, StringComparison.Ordinal))
+                    && (string.Compare(scriptFileItem.SortKey, targetScriptFile.SortKey, StringComparison.Ordinal) <= 0))
+                {
+                    pendingScriptFilesList.Add(scriptFileItem);
+                }
+            }
+
+            return pendingScriptFilesList;
+        }
+
+
+
         private void SetIsHashDifferentFlag()
         {
             foreach (RuntimeScriptFileBase scriptFileItem in AllFileSystemScriptFiles)

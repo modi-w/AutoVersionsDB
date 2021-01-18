@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 {
@@ -15,36 +16,31 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 
         public override List<RuntimeScriptFileBase> GetPendingFilesToExecute(string targetScriptFilename)
         {
-            List<RuntimeScriptFileBase> pendingScriptFilesList = new List<RuntimeScriptFileBase>();
-
-            if (targetScriptFilename != EmptyDBStateRuntimeScriptFile.TargetScriptFileNameEmptyDBState)
+            if (string.IsNullOrWhiteSpace(targetScriptFilename))
             {
-                RuntimeScriptFileBase prevExecutionLastScriptFile = CreateLasetExecutedFileItem();
-
-                RuntimeScriptFileBase targetScriptFile = null;
-                if (!string.IsNullOrWhiteSpace(targetScriptFilename))
-                {
-                    string targetFileFullPath = Path.Combine(FileSystemScriptFiles.FolderPath, targetScriptFilename);
-                    targetScriptFile = FileSystemScriptFiles.CreateRuntimeScriptFileInstanceByFilename(targetFileFullPath);
-                }
-
-
-                foreach (RuntimeScriptFileBase scriptFileItem in AllFileSystemScriptFiles)
-                {
-                    if ((prevExecutionLastScriptFile == null || 0 < string.Compare(scriptFileItem.SortKey, prevExecutionLastScriptFile.SortKey, StringComparison.Ordinal))
-                        && (targetScriptFile == null || string.Compare(scriptFileItem.SortKey, targetScriptFile.SortKey, StringComparison.Ordinal) <= 0))
-                    {
-                        pendingScriptFilesList.Add(scriptFileItem);
-                    }
-                }
+                throw new ArgumentNullException(nameof(targetScriptFilename));
+            }
+            if (targetScriptFilename.Trim().ToUpperInvariant() == NoneRuntimeScriptFile.TargetNoneScriptFileName.Trim().ToUpperInvariant())
+            {
+                return new List<RuntimeScriptFileBase>();
             }
 
+            RuntimeScriptFileBase targetRuntimeScriptFile = GetTargetRuntimeScriptFile(targetScriptFilename);
+
+            if (targetRuntimeScriptFile == null)
+            {
+                //Comment: targetScriptFile can be null if the user send #Last file, but thie is no file.
+                return new List<RuntimeScriptFileBase>();
+            }
+
+            RuntimeScriptFileBase prevExecutionLastScriptFile = CreateLasetExecutedFileItem();
+
+
+            List<RuntimeScriptFileBase> pendingScriptFilesList =
+                FilterPendingScriptsFilesByTarget(prevExecutionLastScriptFile, targetRuntimeScriptFile, AllFileSystemScriptFiles);
 
             return pendingScriptFilesList;
         }
-
-
-
 
     }
 }

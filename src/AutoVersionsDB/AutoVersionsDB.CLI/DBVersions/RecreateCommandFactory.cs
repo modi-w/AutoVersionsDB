@@ -1,4 +1,5 @@
 ﻿using AutoVersionsDB.Core.DBVersions;
+using AutoVersionsDB.Core.DBVersions.Processes;
 using AutoVersionsDB.NotificationableEngine;
 using System.CommandLine;
 using System.CommandLine.Invocation;
@@ -34,7 +35,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 _consoleProcessMessages.StartProcessMessage("recreate", id);
 
                 _consoleProcessMessages.StartSpiiner();
-                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(id, null, _consoleProcessMessages.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(id, TargetScripts.CreateLastState(), _consoleProcessMessages.OnNotificationStateChanged);
                 _consoleProcessMessages.StopSpinner();
 
                 _consoleProcessMessages.ProcessComplete(processResults);

@@ -87,10 +87,10 @@ namespace AutoVersionsDB.UI.DBVersions
                     _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
 
 
-                    if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
-                    {
-                        _dbVersionsViewModelData.TargetStateScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
-                    }
+                    //if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
+                    //{
+                    //    _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
+                    //}
 
                     _dbVersionsControls.GridToSelectTargetStateEnabled = false;
 
@@ -99,7 +99,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                 case DBVersionsViewStateType.ReadyToSyncToSpecificState:
 
-                    AppendEmptyDBTargetStateToIncremental();
+                    AppendNoneDBTargetState();
 
                     _dbVersionsControls.PnlSyncToSpecificStateVisible = true;
                     _dbVersionsControls.LblColorTargetStateSquareVisible = true;
@@ -124,7 +124,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                     if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
                     {
-                        _dbVersionsViewModelData.TargetStateScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
+                        _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
                     }
 
                     _dbVersionsControls.GridToSelectTargetStateEnabled = false;
@@ -134,7 +134,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
                 case DBVersionsViewStateType.SetDBStateManually:
 
-                    AppendEmptyDBTargetStateToIncremental();
+                    AppendNoneDBTargetState();
 
                     _dbVersionsControls.PnlSetDBStateManuallyVisible = true;
                     _dbVersionsControls.LblColorTargetStateSquareVisible = true;
@@ -210,14 +210,32 @@ namespace AutoVersionsDB.UI.DBVersions
 
 
 
-        private void AppendEmptyDBTargetStateToIncremental()
+        private void AppendNoneDBTargetState()
         {
             List<RuntimeScriptFileBase> incScripts = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFileBase emptyDBTargetState = new EmptyDBStateRuntimeScriptFile();
-            incScripts.Insert(0, emptyDBTargetState);
+            RuntimeScriptFileBase incNoneTargetState = new NoneRuntimeScriptFile();
+            incScripts.Insert(0, incNoneTargetState);
 
             _dbVersionsViewModelData.IncrementalScriptFiles = incScripts;
+            _dbVersionsViewModelData.TargetIncScriptFileName = NoneRuntimeScriptFile.TargetNoneScriptFileName;
+
+            List<RuntimeScriptFileBase> rptScripts = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+
+            RuntimeScriptFileBase rptNoneTargetState = new NoneRuntimeScriptFile();
+            rptScripts.Insert(0, rptNoneTargetState);
+
+            _dbVersionsViewModelData.RepeatableScriptFiles = rptScripts;
+            _dbVersionsViewModelData.TargetRptScriptFileName = NoneRuntimeScriptFile.TargetNoneScriptFileName;
+
+
+            List<RuntimeScriptFileBase> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+
+            RuntimeScriptFileBase dddNoneTargetState = new NoneRuntimeScriptFile();
+            dddScripts.Insert(0, dddNoneTargetState);
+
+            _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
+            _dbVersionsViewModelData.TargetDDDScriptFileName = NoneRuntimeScriptFile.TargetNoneScriptFileName;
         }
 
 
