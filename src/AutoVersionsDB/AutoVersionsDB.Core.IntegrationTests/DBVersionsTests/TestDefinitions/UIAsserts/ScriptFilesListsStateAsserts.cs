@@ -215,12 +215,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[4], HashDiffType.NotExist);
 
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 2);
-            AssertFilesListHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles, HashDiffType.NotExist);
+            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[0], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[1], HashDiffType.NotExist);
 
             if (isDevEnv)
             {
                 AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 2);
-                AssertFilesListHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles, HashDiffType.NotExist);
+                AssertFilesListHashState(testName, dbVersionsViewModelData.DevDummyDataScriptFiles, HashDiffType.NotExist);
             }
             else
             {

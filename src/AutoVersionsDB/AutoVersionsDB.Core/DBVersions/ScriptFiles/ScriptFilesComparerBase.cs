@@ -51,9 +51,12 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
         protected RuntimeScriptFileBase GetTargetRuntimeScriptFile(string targetScriptFilename)
         {
+            targetScriptFilename.ThrowIfNull(nameof(targetScriptFilename));
+
+
             RuntimeScriptFileBase targetRuntimeScriptFile = null;
 
-            if (targetScriptFilename.Trim().ToUpperInvariant() == LastRuntimeScriptFile.TargetLastScriptFileName.Trim().ToUpperInvariant())
+            if (targetScriptFilename.Trim().ToUpperInvariant() == RuntimeScriptFileBase.TargetLastScriptFileName.Trim().ToUpperInvariant())
             {
                 targetRuntimeScriptFile = AllFileSystemScriptFiles.LastOrDefault();
             }
@@ -77,8 +80,11 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         }
 
 
-        protected List<RuntimeScriptFileBase> FilterPendingScriptsFilesByTarget(RuntimeScriptFileBase prevExecutionLastScriptFile, RuntimeScriptFileBase targetScriptFile, List<RuntimeScriptFileBase> sourceRuntimeFiles)
+        protected virtual List<RuntimeScriptFileBase> FilterPendingScriptsFilesByTarget(RuntimeScriptFileBase prevExecutionLastScriptFile, RuntimeScriptFileBase targetScriptFile, List<RuntimeScriptFileBase> sourceRuntimeFiles)
         {
+            sourceRuntimeFiles.ThrowIfNull(nameof(sourceRuntimeFiles));
+            targetScriptFile.ThrowIfNull(nameof(targetScriptFile));
+
             List<RuntimeScriptFileBase> pendingScriptFilesList = new List<RuntimeScriptFileBase>();
 
 

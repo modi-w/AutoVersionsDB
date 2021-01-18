@@ -1,6 +1,8 @@
 ﻿using AutoVersionsDB.Core.DBVersions.Processes.ActionSteps;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.Notifications;
@@ -214,28 +216,28 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             List<RuntimeScriptFileBase> incScripts = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFileBase incNoneTargetState = new NoneRuntimeScriptFile();
+            RuntimeScriptFileBase incNoneTargetState = new IncrementalRuntimeScriptFile("",RuntimeScriptFileBase.TargetNoneScriptFileName);
             incScripts.Insert(0, incNoneTargetState);
 
             _dbVersionsViewModelData.IncrementalScriptFiles = incScripts;
-            _dbVersionsViewModelData.TargetIncScriptFileName = NoneRuntimeScriptFile.TargetNoneScriptFileName;
+            _dbVersionsViewModelData.TargetIncScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
 
             List<RuntimeScriptFileBase> rptScripts = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFileBase rptNoneTargetState = new NoneRuntimeScriptFile();
+            RuntimeScriptFileBase rptNoneTargetState = new RepeatableRuntimeScriptFile("", RuntimeScriptFileBase.TargetLastScriptFileName);
             rptScripts.Insert(0, rptNoneTargetState);
 
             _dbVersionsViewModelData.RepeatableScriptFiles = rptScripts;
-            _dbVersionsViewModelData.TargetRptScriptFileName = NoneRuntimeScriptFile.TargetNoneScriptFileName;
+            _dbVersionsViewModelData.TargetRptScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
 
 
             List<RuntimeScriptFileBase> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFileBase dddNoneTargetState = new NoneRuntimeScriptFile();
+            RuntimeScriptFileBase dddNoneTargetState = new DevDummyDataRuntimeScriptFile("", RuntimeScriptFileBase.TargetLastScriptFileName);
             dddScripts.Insert(0, dddNoneTargetState);
 
             _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
-            _dbVersionsViewModelData.TargetDDDScriptFileName = NoneRuntimeScriptFile.TargetNoneScriptFileName;
+            _dbVersionsViewModelData.TargetDDDScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
         }
 
 

@@ -6,6 +6,9 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 {
     public abstract class RuntimeScriptFileBase
     {
+        public const string TargetNoneScriptFileName = "#None";
+        public const string TargetLastScriptFileName = "#Last";
+
         public abstract ScriptFileTypeBase ScriptFileType { get; }
 
         public abstract string SortKey { get; }

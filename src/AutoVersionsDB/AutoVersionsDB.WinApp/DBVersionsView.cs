@@ -674,7 +674,7 @@ namespace AutoVersionsDB.WinApp
 
         }
 
-        private void MarkUnMarkSelectedTargetInGrid(DataGridView dgGrid, string targetScriptFileName, bool isEnable)
+        private static void MarkUnMarkSelectedTargetInGrid(DataGridView dgGrid, string targetScriptFileName, bool isEnable)
         {
             dgGrid.Columns[2].Visible = isEnable;
 

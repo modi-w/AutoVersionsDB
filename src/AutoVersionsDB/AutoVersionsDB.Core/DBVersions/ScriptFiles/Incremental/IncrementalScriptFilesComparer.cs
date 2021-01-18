@@ -20,7 +20,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
             {
                 throw new ArgumentNullException(nameof(targetScriptFilename));
             }
-            if (targetScriptFilename.Trim().ToUpperInvariant() == NoneRuntimeScriptFile.TargetNoneScriptFileName.Trim().ToUpperInvariant())
+            if (targetScriptFilename.Trim().ToUpperInvariant() == RuntimeScriptFileBase.TargetNoneScriptFileName.Trim().ToUpperInvariant())
             {
                 return new List<RuntimeScriptFileBase>();
             }

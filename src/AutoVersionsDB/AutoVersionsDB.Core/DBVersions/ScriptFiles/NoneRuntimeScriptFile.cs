@@ -1,25 +1,24 @@
-﻿using System;
+﻿//using System;
 
-namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
-{
-    public class NoneRuntimeScriptFile : RuntimeScriptFileBase
-    {
-        public const string TargetNoneScriptFileName = "#None";
-
-
-        public override string SortKey => throw new NotImplementedException();
+//namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
+//{
+//    public class RuntimeScriptFileBase : RuntimeScriptFileBase
+//    {
 
 
-        public override string Filename => TargetNoneScriptFileName;
-
-        public override ScriptFileTypeBase ScriptFileType => throw new NotImplementedException();
-
-        public override string FolderPath { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
-
-        public NoneRuntimeScriptFile()
-        {
-        }
+//        public override string SortKey => throw new NotImplementedException();
 
 
-    }
-}
+//        public override string Filename => TargetNoneScriptFileName;
+
+//        public override ScriptFileTypeBase ScriptFileType => throw new NotImplementedException();
+
+//        public override string FolderPath { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
+
+//        public RuntimeScriptFileBase()
+//        {
+//        }
+
+
+//    }
+//}
