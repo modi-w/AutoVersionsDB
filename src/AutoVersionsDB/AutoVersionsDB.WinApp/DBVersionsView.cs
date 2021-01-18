@@ -34,6 +34,9 @@ namespace AutoVersionsDB.WinApp
 
 
                 EnableDisableGridToSelectTargetState(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled);
+
+                SetToolTips();
+
             }
 
 
@@ -66,7 +69,6 @@ namespace AutoVersionsDB.WinApp
             lblSetDBToSpecificState.Visible = false;
             //#endif
 
-            SetToolTips();
 
 
         }
