@@ -43,6 +43,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnOpenIncrementalScriptsFolder = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblIncNumOfVirtual = new System.Windows.Forms.Label();
             this.lblIncColorTargetState_Caption = new System.Windows.Forms.Label();
             this.lblIncColorTargetState_Square = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -86,6 +88,15 @@
             this.label32 = new System.Windows.Forms.Label();
             this.btnRunSetDBStateManally = new System.Windows.Forms.Button();
             this.pnlRepeatableFiles = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblRptNumOfVirtual = new System.Windows.Forms.Label();
+            this.lblRptColorTargetState_Caption = new System.Windows.Forms.Label();
+            this.lblRptColorTargetState_Square = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.lblRptNumOfChanged = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.lblRptNumOfExecuted = new System.Windows.Forms.Label();
             this.btnOpenRepeatableScriptsFolder = new System.Windows.Forms.Button();
             this.btnCreateNewRepeatableScriptFile = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
@@ -95,6 +106,15 @@
             this.btnSelectTargetState = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label19 = new System.Windows.Forms.Label();
             this.pnlDevDummyDataFiles = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblDDDNumOfVirtual = new System.Windows.Forms.Label();
+            this.lblDDDColorTargetState_Caption = new System.Windows.Forms.Label();
+            this.lblDDDColorTargetState_Square = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.lblDDDNumOfChanged = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.lblDDDNumOfExecuted = new System.Windows.Forms.Label();
             this.btnOpenDevDummyDataScriptsFolder = new System.Windows.Forms.Button();
             this.btnCreateNewDevDummyDataScriptFile = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
@@ -107,26 +127,6 @@
             this.pnlRestoreDBError = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
             this.btnShowHistoricalBackups = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblIncNumOfVirtual = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblRptNumOfVirtual = new System.Windows.Forms.Label();
-            this.lblRptColorTargetState_Caption = new System.Windows.Forms.Label();
-            this.lblRptColorTargetState_Square = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.lblRptNumOfChanged = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.lblRptNumOfExecuted = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lblDDDNumOfVirtual = new System.Windows.Forms.Label();
-            this.lblDDDColorTargetState_Caption = new System.Windows.Forms.Label();
-            this.lblDDDColorTargetState_Square = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.lblDDDNumOfChanged = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.lblDDDNumOfExecuted = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgIncrementalScriptsFiles)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -136,13 +136,13 @@
             this.pnlMainActions.SuspendLayout();
             this.pnlSetDBStateManually.SuspendLayout();
             this.pnlRepeatableFiles.SuspendLayout();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgRepeatableScriptsFiles)).BeginInit();
             this.pnlDevDummyDataFiles.SuspendLayout();
+            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgDevDummyDataScriptsFiles)).BeginInit();
             this.pnlActionButtons.SuspendLayout();
             this.pnlRestoreDBError.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblProjectName
@@ -166,7 +166,7 @@
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(32, 26);
+            this.label17.Location = new System.Drawing.Point(32, 28);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(176, 25);
@@ -286,7 +286,7 @@
             this.btnOpenIncrementalScriptsFolder.Image = global::AutoVersionsDB.WinApp.Properties.Resources.OpenIcon32;
             this.btnOpenIncrementalScriptsFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnOpenIncrementalScriptsFolder.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOpenIncrementalScriptsFolder.Location = new System.Drawing.Point(1036, 12);
+            this.btnOpenIncrementalScriptsFolder.Location = new System.Drawing.Point(1036, 14);
             this.btnOpenIncrementalScriptsFolder.Margin = new System.Windows.Forms.Padding(4);
             this.btnOpenIncrementalScriptsFolder.Name = "btnOpenIncrementalScriptsFolder";
             this.btnOpenIncrementalScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -310,6 +310,30 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(745, 42);
             this.panel2.TabIndex = 71;
+            // 
+            // label1
+            // 
+            this.label1.AutoEllipsis = true;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.DimGray;
+            this.label1.Location = new System.Drawing.Point(265, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(184, 20);
+            this.label1.TabIndex = 72;
+            this.label1.Text = "Virtually Executed Files";
+            // 
+            // lblIncNumOfVirtual
+            // 
+            this.lblIncNumOfVirtual.BackColor = System.Drawing.Color.LightSeaGreen;
+            this.lblIncNumOfVirtual.Location = new System.Drawing.Point(229, 12);
+            this.lblIncNumOfVirtual.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblIncNumOfVirtual.Name = "lblIncNumOfVirtual";
+            this.lblIncNumOfVirtual.Size = new System.Drawing.Size(32, 18);
+            this.lblIncNumOfVirtual.TabIndex = 73;
+            this.lblIncNumOfVirtual.Text = "0";
+            this.lblIncNumOfVirtual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblIncColorTargetState_Caption
             // 
@@ -395,7 +419,7 @@
             this.btnCreateNewIncrementalScriptFile.Image = global::AutoVersionsDB.WinApp.Properties.Resources.AddIcon321;
             this.btnCreateNewIncrementalScriptFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCreateNewIncrementalScriptFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCreateNewIncrementalScriptFile.Location = new System.Drawing.Point(1095, 12);
+            this.btnCreateNewIncrementalScriptFile.Location = new System.Drawing.Point(1095, 14);
             this.btnCreateNewIncrementalScriptFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreateNewIncrementalScriptFile.Name = "btnCreateNewIncrementalScriptFile";
             this.btnCreateNewIncrementalScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -957,408 +981,6 @@
             this.pnlRepeatableFiles.Size = new System.Drawing.Size(1169, 404);
             this.pnlRepeatableFiles.TabIndex = 73;
             // 
-            // btnOpenRepeatableScriptsFolder
-            // 
-            this.btnOpenRepeatableScriptsFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenRepeatableScriptsFolder.BackColor = System.Drawing.Color.Transparent;
-            this.btnOpenRepeatableScriptsFolder.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOpenRepeatableScriptsFolder.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnOpenRepeatableScriptsFolder.FlatAppearance.BorderSize = 0;
-            this.btnOpenRepeatableScriptsFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenRepeatableScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnOpenRepeatableScriptsFolder.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnOpenRepeatableScriptsFolder.Image = global::AutoVersionsDB.WinApp.Properties.Resources.OpenIcon32;
-            this.btnOpenRepeatableScriptsFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnOpenRepeatableScriptsFolder.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOpenRepeatableScriptsFolder.Location = new System.Drawing.Point(1036, 12);
-            this.btnOpenRepeatableScriptsFolder.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOpenRepeatableScriptsFolder.Name = "btnOpenRepeatableScriptsFolder";
-            this.btnOpenRepeatableScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnOpenRepeatableScriptsFolder.Size = new System.Drawing.Size(51, 49);
-            this.btnOpenRepeatableScriptsFolder.TabIndex = 72;
-            this.btnOpenRepeatableScriptsFolder.UseVisualStyleBackColor = false;
-            this.btnOpenRepeatableScriptsFolder.Click += new System.EventHandler(this.BtnOpenRepeatableScriptsFolder_Click);
-            // 
-            // btnCreateNewRepeatableScriptFile
-            // 
-            this.btnCreateNewRepeatableScriptFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreateNewRepeatableScriptFile.BackColor = System.Drawing.Color.Transparent;
-            this.btnCreateNewRepeatableScriptFile.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCreateNewRepeatableScriptFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnCreateNewRepeatableScriptFile.FlatAppearance.BorderSize = 0;
-            this.btnCreateNewRepeatableScriptFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCreateNewRepeatableScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCreateNewRepeatableScriptFile.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnCreateNewRepeatableScriptFile.Image = global::AutoVersionsDB.WinApp.Properties.Resources.AddIcon321;
-            this.btnCreateNewRepeatableScriptFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCreateNewRepeatableScriptFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCreateNewRepeatableScriptFile.Location = new System.Drawing.Point(1095, 12);
-            this.btnCreateNewRepeatableScriptFile.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCreateNewRepeatableScriptFile.Name = "btnCreateNewRepeatableScriptFile";
-            this.btnCreateNewRepeatableScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnCreateNewRepeatableScriptFile.Size = new System.Drawing.Size(51, 49);
-            this.btnCreateNewRepeatableScriptFile.TabIndex = 70;
-            this.btnCreateNewRepeatableScriptFile.UseVisualStyleBackColor = false;
-            this.btnCreateNewRepeatableScriptFile.Click += new System.EventHandler(this.BtnCreateNewRepeatableScriptFile_Click);
-            // 
-            // label18
-            // 
-            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label18.BackColor = System.Drawing.Color.Aqua;
-            this.label18.Location = new System.Drawing.Point(0, 0);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(5, 402);
-            this.label18.TabIndex = 66;
-            // 
-            // dgRepeatableScriptsFiles
-            // 
-            this.dgRepeatableScriptsFiles.AllowUserToAddRows = false;
-            this.dgRepeatableScriptsFiles.AllowUserToDeleteRows = false;
-            this.dgRepeatableScriptsFiles.AllowUserToResizeColumns = false;
-            this.dgRepeatableScriptsFiles.AllowUserToResizeRows = false;
-            this.dgRepeatableScriptsFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgRepeatableScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgRepeatableScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgRepeatableScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgRepeatableScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgRepeatableScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.btnSelectTargetState});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgRepeatableScriptsFiles.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dgRepeatableScriptsFiles.GridColor = System.Drawing.Color.White;
-            this.dgRepeatableScriptsFiles.Location = new System.Drawing.Point(33, 64);
-            this.dgRepeatableScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
-            this.dgRepeatableScriptsFiles.Name = "dgRepeatableScriptsFiles";
-            this.dgRepeatableScriptsFiles.ReadOnly = true;
-            this.dgRepeatableScriptsFiles.RowHeadersVisible = false;
-            this.dgRepeatableScriptsFiles.RowHeadersWidth = 51;
-            this.dgRepeatableScriptsFiles.ShowCellErrors = false;
-            this.dgRepeatableScriptsFiles.ShowCellToolTips = false;
-            this.dgRepeatableScriptsFiles.ShowEditingIcon = false;
-            this.dgRepeatableScriptsFiles.ShowRowErrors = false;
-            this.dgRepeatableScriptsFiles.Size = new System.Drawing.Size(1109, 306);
-            this.dgRepeatableScriptsFiles.TabIndex = 47;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn2.FillWeight = 40.92313F;
-            this.dataGridViewTextBoxColumn2.HeaderText = "";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 30;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Filename";
-            this.dataGridViewTextBoxColumn3.FillWeight = 157.554F;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Filename";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // btnSelectTargetState
-            // 
-            this.btnSelectTargetState.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.btnSelectTargetState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectTargetState.HeaderText = "";
-            this.btnSelectTargetState.MinimumWidth = 6;
-            this.btnSelectTargetState.Name = "btnSelectTargetState";
-            this.btnSelectTargetState.ReadOnly = true;
-            this.btnSelectTargetState.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.btnSelectTargetState.Text = "Set as Target State";
-            this.btnSelectTargetState.UseColumnTextForButtonValue = true;
-            this.btnSelectTargetState.Width = 140;
-            // 
-            // label19
-            // 
-            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label19.ForeColor = System.Drawing.Color.Black;
-            this.label19.Location = new System.Drawing.Point(32, 26);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(173, 25);
-            this.label19.TabIndex = 43;
-            this.label19.Text = "Repeatable Files";
-            // 
-            // pnlDevDummyDataFiles
-            // 
-            this.pnlDevDummyDataFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlDevDummyDataFiles.BackColor = System.Drawing.Color.White;
-            this.pnlDevDummyDataFiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlDevDummyDataFiles.Controls.Add(this.panel4);
-            this.pnlDevDummyDataFiles.Controls.Add(this.btnOpenDevDummyDataScriptsFolder);
-            this.pnlDevDummyDataFiles.Controls.Add(this.btnCreateNewDevDummyDataScriptFile);
-            this.pnlDevDummyDataFiles.Controls.Add(this.label22);
-            this.pnlDevDummyDataFiles.Controls.Add(this.dgDevDummyDataScriptsFiles);
-            this.pnlDevDummyDataFiles.Controls.Add(this.label23);
-            this.pnlDevDummyDataFiles.Location = new System.Drawing.Point(20, 1003);
-            this.pnlDevDummyDataFiles.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlDevDummyDataFiles.Name = "pnlDevDummyDataFiles";
-            this.pnlDevDummyDataFiles.Size = new System.Drawing.Size(1169, 404);
-            this.pnlDevDummyDataFiles.TabIndex = 74;
-            // 
-            // btnOpenDevDummyDataScriptsFolder
-            // 
-            this.btnOpenDevDummyDataScriptsFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenDevDummyDataScriptsFolder.BackColor = System.Drawing.Color.Transparent;
-            this.btnOpenDevDummyDataScriptsFolder.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOpenDevDummyDataScriptsFolder.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnOpenDevDummyDataScriptsFolder.FlatAppearance.BorderSize = 0;
-            this.btnOpenDevDummyDataScriptsFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenDevDummyDataScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnOpenDevDummyDataScriptsFolder.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnOpenDevDummyDataScriptsFolder.Image = global::AutoVersionsDB.WinApp.Properties.Resources.OpenIcon32;
-            this.btnOpenDevDummyDataScriptsFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnOpenDevDummyDataScriptsFolder.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOpenDevDummyDataScriptsFolder.Location = new System.Drawing.Point(1036, 12);
-            this.btnOpenDevDummyDataScriptsFolder.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOpenDevDummyDataScriptsFolder.Name = "btnOpenDevDummyDataScriptsFolder";
-            this.btnOpenDevDummyDataScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnOpenDevDummyDataScriptsFolder.Size = new System.Drawing.Size(51, 49);
-            this.btnOpenDevDummyDataScriptsFolder.TabIndex = 72;
-            this.btnOpenDevDummyDataScriptsFolder.UseVisualStyleBackColor = false;
-            this.btnOpenDevDummyDataScriptsFolder.Click += new System.EventHandler(this.BtnOpenDevDummyDataScriptsFolder_Click);
-            // 
-            // btnCreateNewDevDummyDataScriptFile
-            // 
-            this.btnCreateNewDevDummyDataScriptFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCreateNewDevDummyDataScriptFile.BackColor = System.Drawing.Color.Transparent;
-            this.btnCreateNewDevDummyDataScriptFile.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCreateNewDevDummyDataScriptFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnCreateNewDevDummyDataScriptFile.FlatAppearance.BorderSize = 0;
-            this.btnCreateNewDevDummyDataScriptFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCreateNewDevDummyDataScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.btnCreateNewDevDummyDataScriptFile.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnCreateNewDevDummyDataScriptFile.Image = global::AutoVersionsDB.WinApp.Properties.Resources.AddIcon321;
-            this.btnCreateNewDevDummyDataScriptFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnCreateNewDevDummyDataScriptFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCreateNewDevDummyDataScriptFile.Location = new System.Drawing.Point(1095, 12);
-            this.btnCreateNewDevDummyDataScriptFile.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCreateNewDevDummyDataScriptFile.Name = "btnCreateNewDevDummyDataScriptFile";
-            this.btnCreateNewDevDummyDataScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnCreateNewDevDummyDataScriptFile.Size = new System.Drawing.Size(51, 49);
-            this.btnCreateNewDevDummyDataScriptFile.TabIndex = 70;
-            this.btnCreateNewDevDummyDataScriptFile.UseVisualStyleBackColor = false;
-            this.btnCreateNewDevDummyDataScriptFile.Click += new System.EventHandler(this.BtnCreateNewDevDummyDataScriptFile_Click);
-            // 
-            // label22
-            // 
-            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label22.BackColor = System.Drawing.Color.Aqua;
-            this.label22.Location = new System.Drawing.Point(0, 0);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(5, 402);
-            this.label22.TabIndex = 66;
-            // 
-            // dgDevDummyDataScriptsFiles
-            // 
-            this.dgDevDummyDataScriptsFiles.AllowUserToAddRows = false;
-            this.dgDevDummyDataScriptsFiles.AllowUserToDeleteRows = false;
-            this.dgDevDummyDataScriptsFiles.AllowUserToResizeColumns = false;
-            this.dgDevDummyDataScriptsFiles.AllowUserToResizeRows = false;
-            this.dgDevDummyDataScriptsFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgDevDummyDataScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgDevDummyDataScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgDevDummyDataScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgDevDummyDataScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgDevDummyDataScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.btnSelectTargetScript});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgDevDummyDataScriptsFiles.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dgDevDummyDataScriptsFiles.GridColor = System.Drawing.Color.White;
-            this.dgDevDummyDataScriptsFiles.Location = new System.Drawing.Point(33, 64);
-            this.dgDevDummyDataScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
-            this.dgDevDummyDataScriptsFiles.Name = "dgDevDummyDataScriptsFiles";
-            this.dgDevDummyDataScriptsFiles.ReadOnly = true;
-            this.dgDevDummyDataScriptsFiles.RowHeadersVisible = false;
-            this.dgDevDummyDataScriptsFiles.RowHeadersWidth = 51;
-            this.dgDevDummyDataScriptsFiles.ShowCellErrors = false;
-            this.dgDevDummyDataScriptsFiles.ShowCellToolTips = false;
-            this.dgDevDummyDataScriptsFiles.ShowEditingIcon = false;
-            this.dgDevDummyDataScriptsFiles.ShowRowErrors = false;
-            this.dgDevDummyDataScriptsFiles.Size = new System.Drawing.Size(1109, 306);
-            this.dgDevDummyDataScriptsFiles.TabIndex = 47;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn4.FillWeight = 40.92313F;
-            this.dataGridViewTextBoxColumn4.HeaderText = "";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 30;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Filename";
-            this.dataGridViewTextBoxColumn5.FillWeight = 157.554F;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Filename";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // btnSelectTargetScript
-            // 
-            this.btnSelectTargetScript.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.btnSelectTargetScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectTargetScript.HeaderText = "";
-            this.btnSelectTargetScript.MinimumWidth = 6;
-            this.btnSelectTargetScript.Name = "btnSelectTargetScript";
-            this.btnSelectTargetScript.ReadOnly = true;
-            this.btnSelectTargetScript.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.btnSelectTargetScript.Text = "Set as Target State";
-            this.btnSelectTargetScript.UseColumnTextForButtonValue = true;
-            this.btnSelectTargetScript.Width = 140;
-            // 
-            // label23
-            // 
-            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label23.ForeColor = System.Drawing.Color.Black;
-            this.label23.Location = new System.Drawing.Point(32, 26);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(231, 25);
-            this.label23.TabIndex = 43;
-            this.label23.Text = "Dev Dummy Data Files";
-            // 
-            // pnlActionButtons
-            // 
-            this.pnlActionButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlActionButtons.BackColor = System.Drawing.Color.White;
-            this.pnlActionButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlActionButtons.Controls.Add(this.pnlRestoreDBError);
-            this.pnlActionButtons.Controls.Add(this.pnlSetDBStateManually);
-            this.pnlActionButtons.Controls.Add(this.pnlMissingSystemTables);
-            this.pnlActionButtons.Controls.Add(this.pnlMainActions);
-            this.pnlActionButtons.Controls.Add(this.pnlSyncToSpecificState);
-            this.pnlActionButtons.Location = new System.Drawing.Point(20, 1428);
-            this.pnlActionButtons.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlActionButtons.Name = "pnlActionButtons";
-            this.pnlActionButtons.Size = new System.Drawing.Size(1169, 275);
-            this.pnlActionButtons.TabIndex = 75;
-            // 
-            // pnlRestoreDBError
-            // 
-            this.pnlRestoreDBError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlRestoreDBError.BackColor = System.Drawing.Color.White;
-            this.pnlRestoreDBError.Controls.Add(this.label34);
-            this.pnlRestoreDBError.Controls.Add(this.btnShowHistoricalBackups);
-            this.pnlRestoreDBError.Location = new System.Drawing.Point(372, 23);
-            this.pnlRestoreDBError.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlRestoreDBError.Name = "pnlRestoreDBError";
-            this.pnlRestoreDBError.Size = new System.Drawing.Size(145, 87);
-            this.pnlRestoreDBError.TabIndex = 83;
-            // 
-            // label34
-            // 
-            this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label34.AutoSize = true;
-            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label34.Location = new System.Drawing.Point(28, 53);
-            this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(92, 15);
-            this.label34.TabIndex = 80;
-            this.label34.Text = "Backups Folder";
-            // 
-            // btnShowHistoricalBackups
-            // 
-            this.btnShowHistoricalBackups.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowHistoricalBackups.BackColor = System.Drawing.Color.White;
-            this.btnShowHistoricalBackups.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnShowHistoricalBackups.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnShowHistoricalBackups.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnShowHistoricalBackups.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShowHistoricalBackups.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.btnShowHistoricalBackups.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnShowHistoricalBackups.Image = global::AutoVersionsDB.WinApp.Properties.Resources.HistoricalBackups;
-            this.btnShowHistoricalBackups.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnShowHistoricalBackups.Location = new System.Drawing.Point(52, 5);
-            this.btnShowHistoricalBackups.Margin = new System.Windows.Forms.Padding(0);
-            this.btnShowHistoricalBackups.Name = "btnShowHistoricalBackups";
-            this.btnShowHistoricalBackups.Size = new System.Drawing.Size(63, 48);
-            this.btnShowHistoricalBackups.TabIndex = 79;
-            this.btnShowHistoricalBackups.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnShowHistoricalBackups.UseVisualStyleBackColor = false;
-            this.btnShowHistoricalBackups.Click += new System.EventHandler(this.BtnShowHistoricalBackups_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoEllipsis = true;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DimGray;
-            this.label1.Location = new System.Drawing.Point(265, 11);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(184, 20);
-            this.label1.TabIndex = 72;
-            this.label1.Text = "Virtually Executed Files";
-            // 
-            // lblIncNumOfVirtual
-            // 
-            this.lblIncNumOfVirtual.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.lblIncNumOfVirtual.Location = new System.Drawing.Point(229, 12);
-            this.lblIncNumOfVirtual.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblIncNumOfVirtual.Name = "lblIncNumOfVirtual";
-            this.lblIncNumOfVirtual.Size = new System.Drawing.Size(32, 18);
-            this.lblIncNumOfVirtual.TabIndex = 73;
-            this.lblIncNumOfVirtual.Text = "0";
-            this.lblIncNumOfVirtual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.label4);
@@ -1469,6 +1091,173 @@
             this.lblRptNumOfExecuted.TabIndex = 69;
             this.lblRptNumOfExecuted.Text = "0";
             this.lblRptNumOfExecuted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnOpenRepeatableScriptsFolder
+            // 
+            this.btnOpenRepeatableScriptsFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenRepeatableScriptsFolder.BackColor = System.Drawing.Color.Transparent;
+            this.btnOpenRepeatableScriptsFolder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnOpenRepeatableScriptsFolder.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnOpenRepeatableScriptsFolder.FlatAppearance.BorderSize = 0;
+            this.btnOpenRepeatableScriptsFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenRepeatableScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnOpenRepeatableScriptsFolder.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnOpenRepeatableScriptsFolder.Image = global::AutoVersionsDB.WinApp.Properties.Resources.OpenIcon32;
+            this.btnOpenRepeatableScriptsFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnOpenRepeatableScriptsFolder.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnOpenRepeatableScriptsFolder.Location = new System.Drawing.Point(1036, 14);
+            this.btnOpenRepeatableScriptsFolder.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenRepeatableScriptsFolder.Name = "btnOpenRepeatableScriptsFolder";
+            this.btnOpenRepeatableScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnOpenRepeatableScriptsFolder.Size = new System.Drawing.Size(51, 49);
+            this.btnOpenRepeatableScriptsFolder.TabIndex = 72;
+            this.btnOpenRepeatableScriptsFolder.UseVisualStyleBackColor = false;
+            this.btnOpenRepeatableScriptsFolder.Click += new System.EventHandler(this.BtnOpenRepeatableScriptsFolder_Click);
+            // 
+            // btnCreateNewRepeatableScriptFile
+            // 
+            this.btnCreateNewRepeatableScriptFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreateNewRepeatableScriptFile.BackColor = System.Drawing.Color.Transparent;
+            this.btnCreateNewRepeatableScriptFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCreateNewRepeatableScriptFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnCreateNewRepeatableScriptFile.FlatAppearance.BorderSize = 0;
+            this.btnCreateNewRepeatableScriptFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCreateNewRepeatableScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCreateNewRepeatableScriptFile.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnCreateNewRepeatableScriptFile.Image = global::AutoVersionsDB.WinApp.Properties.Resources.AddIcon321;
+            this.btnCreateNewRepeatableScriptFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCreateNewRepeatableScriptFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCreateNewRepeatableScriptFile.Location = new System.Drawing.Point(1095, 14);
+            this.btnCreateNewRepeatableScriptFile.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCreateNewRepeatableScriptFile.Name = "btnCreateNewRepeatableScriptFile";
+            this.btnCreateNewRepeatableScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnCreateNewRepeatableScriptFile.Size = new System.Drawing.Size(51, 49);
+            this.btnCreateNewRepeatableScriptFile.TabIndex = 70;
+            this.btnCreateNewRepeatableScriptFile.UseVisualStyleBackColor = false;
+            this.btnCreateNewRepeatableScriptFile.Click += new System.EventHandler(this.BtnCreateNewRepeatableScriptFile_Click);
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.label18.BackColor = System.Drawing.Color.Aqua;
+            this.label18.Location = new System.Drawing.Point(0, 0);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(5, 402);
+            this.label18.TabIndex = 66;
+            // 
+            // dgRepeatableScriptsFiles
+            // 
+            this.dgRepeatableScriptsFiles.AllowUserToAddRows = false;
+            this.dgRepeatableScriptsFiles.AllowUserToDeleteRows = false;
+            this.dgRepeatableScriptsFiles.AllowUserToResizeColumns = false;
+            this.dgRepeatableScriptsFiles.AllowUserToResizeRows = false;
+            this.dgRepeatableScriptsFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgRepeatableScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgRepeatableScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgRepeatableScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgRepeatableScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgRepeatableScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.btnSelectTargetState});
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgRepeatableScriptsFiles.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgRepeatableScriptsFiles.GridColor = System.Drawing.Color.White;
+            this.dgRepeatableScriptsFiles.Location = new System.Drawing.Point(33, 64);
+            this.dgRepeatableScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.dgRepeatableScriptsFiles.Name = "dgRepeatableScriptsFiles";
+            this.dgRepeatableScriptsFiles.ReadOnly = true;
+            this.dgRepeatableScriptsFiles.RowHeadersVisible = false;
+            this.dgRepeatableScriptsFiles.RowHeadersWidth = 51;
+            this.dgRepeatableScriptsFiles.ShowCellErrors = false;
+            this.dgRepeatableScriptsFiles.ShowCellToolTips = false;
+            this.dgRepeatableScriptsFiles.ShowEditingIcon = false;
+            this.dgRepeatableScriptsFiles.ShowRowErrors = false;
+            this.dgRepeatableScriptsFiles.Size = new System.Drawing.Size(1109, 306);
+            this.dgRepeatableScriptsFiles.TabIndex = 47;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn2.FillWeight = 40.92313F;
+            this.dataGridViewTextBoxColumn2.HeaderText = "";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 30;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Filename";
+            this.dataGridViewTextBoxColumn3.FillWeight = 157.554F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Filename";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // btnSelectTargetState
+            // 
+            this.btnSelectTargetState.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.btnSelectTargetState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelectTargetState.HeaderText = "";
+            this.btnSelectTargetState.MinimumWidth = 6;
+            this.btnSelectTargetState.Name = "btnSelectTargetState";
+            this.btnSelectTargetState.ReadOnly = true;
+            this.btnSelectTargetState.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.btnSelectTargetState.Text = "Set as Target State";
+            this.btnSelectTargetState.UseColumnTextForButtonValue = true;
+            this.btnSelectTargetState.Width = 140;
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label19.ForeColor = System.Drawing.Color.Black;
+            this.label19.Location = new System.Drawing.Point(32, 28);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(173, 25);
+            this.label19.TabIndex = 43;
+            this.label19.Text = "Repeatable Files";
+            // 
+            // pnlDevDummyDataFiles
+            // 
+            this.pnlDevDummyDataFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlDevDummyDataFiles.BackColor = System.Drawing.Color.White;
+            this.pnlDevDummyDataFiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlDevDummyDataFiles.Controls.Add(this.panel4);
+            this.pnlDevDummyDataFiles.Controls.Add(this.btnOpenDevDummyDataScriptsFolder);
+            this.pnlDevDummyDataFiles.Controls.Add(this.btnCreateNewDevDummyDataScriptFile);
+            this.pnlDevDummyDataFiles.Controls.Add(this.label22);
+            this.pnlDevDummyDataFiles.Controls.Add(this.dgDevDummyDataScriptsFiles);
+            this.pnlDevDummyDataFiles.Controls.Add(this.label23);
+            this.pnlDevDummyDataFiles.Location = new System.Drawing.Point(20, 1003);
+            this.pnlDevDummyDataFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlDevDummyDataFiles.Name = "pnlDevDummyDataFiles";
+            this.pnlDevDummyDataFiles.Size = new System.Drawing.Size(1169, 404);
+            this.pnlDevDummyDataFiles.TabIndex = 74;
             // 
             // panel4
             // 
@@ -1581,6 +1370,217 @@
             this.lblDDDNumOfExecuted.Text = "0";
             this.lblDDDNumOfExecuted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnOpenDevDummyDataScriptsFolder
+            // 
+            this.btnOpenDevDummyDataScriptsFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenDevDummyDataScriptsFolder.BackColor = System.Drawing.Color.Transparent;
+            this.btnOpenDevDummyDataScriptsFolder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnOpenDevDummyDataScriptsFolder.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnOpenDevDummyDataScriptsFolder.FlatAppearance.BorderSize = 0;
+            this.btnOpenDevDummyDataScriptsFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenDevDummyDataScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnOpenDevDummyDataScriptsFolder.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnOpenDevDummyDataScriptsFolder.Image = global::AutoVersionsDB.WinApp.Properties.Resources.OpenIcon32;
+            this.btnOpenDevDummyDataScriptsFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnOpenDevDummyDataScriptsFolder.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnOpenDevDummyDataScriptsFolder.Location = new System.Drawing.Point(1036, 14);
+            this.btnOpenDevDummyDataScriptsFolder.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenDevDummyDataScriptsFolder.Name = "btnOpenDevDummyDataScriptsFolder";
+            this.btnOpenDevDummyDataScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnOpenDevDummyDataScriptsFolder.Size = new System.Drawing.Size(51, 49);
+            this.btnOpenDevDummyDataScriptsFolder.TabIndex = 72;
+            this.btnOpenDevDummyDataScriptsFolder.UseVisualStyleBackColor = false;
+            this.btnOpenDevDummyDataScriptsFolder.Click += new System.EventHandler(this.BtnOpenDevDummyDataScriptsFolder_Click);
+            // 
+            // btnCreateNewDevDummyDataScriptFile
+            // 
+            this.btnCreateNewDevDummyDataScriptFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCreateNewDevDummyDataScriptFile.BackColor = System.Drawing.Color.Transparent;
+            this.btnCreateNewDevDummyDataScriptFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCreateNewDevDummyDataScriptFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnCreateNewDevDummyDataScriptFile.FlatAppearance.BorderSize = 0;
+            this.btnCreateNewDevDummyDataScriptFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCreateNewDevDummyDataScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCreateNewDevDummyDataScriptFile.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnCreateNewDevDummyDataScriptFile.Image = global::AutoVersionsDB.WinApp.Properties.Resources.AddIcon321;
+            this.btnCreateNewDevDummyDataScriptFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnCreateNewDevDummyDataScriptFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCreateNewDevDummyDataScriptFile.Location = new System.Drawing.Point(1095, 14);
+            this.btnCreateNewDevDummyDataScriptFile.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCreateNewDevDummyDataScriptFile.Name = "btnCreateNewDevDummyDataScriptFile";
+            this.btnCreateNewDevDummyDataScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnCreateNewDevDummyDataScriptFile.Size = new System.Drawing.Size(51, 49);
+            this.btnCreateNewDevDummyDataScriptFile.TabIndex = 70;
+            this.btnCreateNewDevDummyDataScriptFile.UseVisualStyleBackColor = false;
+            this.btnCreateNewDevDummyDataScriptFile.Click += new System.EventHandler(this.BtnCreateNewDevDummyDataScriptFile_Click);
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.label22.BackColor = System.Drawing.Color.Aqua;
+            this.label22.Location = new System.Drawing.Point(0, 0);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(5, 402);
+            this.label22.TabIndex = 66;
+            // 
+            // dgDevDummyDataScriptsFiles
+            // 
+            this.dgDevDummyDataScriptsFiles.AllowUserToAddRows = false;
+            this.dgDevDummyDataScriptsFiles.AllowUserToDeleteRows = false;
+            this.dgDevDummyDataScriptsFiles.AllowUserToResizeColumns = false;
+            this.dgDevDummyDataScriptsFiles.AllowUserToResizeRows = false;
+            this.dgDevDummyDataScriptsFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgDevDummyDataScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgDevDummyDataScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgDevDummyDataScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgDevDummyDataScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgDevDummyDataScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.btnSelectTargetScript});
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgDevDummyDataScriptsFiles.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgDevDummyDataScriptsFiles.GridColor = System.Drawing.Color.White;
+            this.dgDevDummyDataScriptsFiles.Location = new System.Drawing.Point(33, 64);
+            this.dgDevDummyDataScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.dgDevDummyDataScriptsFiles.Name = "dgDevDummyDataScriptsFiles";
+            this.dgDevDummyDataScriptsFiles.ReadOnly = true;
+            this.dgDevDummyDataScriptsFiles.RowHeadersVisible = false;
+            this.dgDevDummyDataScriptsFiles.RowHeadersWidth = 51;
+            this.dgDevDummyDataScriptsFiles.ShowCellErrors = false;
+            this.dgDevDummyDataScriptsFiles.ShowCellToolTips = false;
+            this.dgDevDummyDataScriptsFiles.ShowEditingIcon = false;
+            this.dgDevDummyDataScriptsFiles.ShowRowErrors = false;
+            this.dgDevDummyDataScriptsFiles.Size = new System.Drawing.Size(1109, 306);
+            this.dgDevDummyDataScriptsFiles.TabIndex = 47;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn4.FillWeight = 40.92313F;
+            this.dataGridViewTextBoxColumn4.HeaderText = "";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 30;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Filename";
+            this.dataGridViewTextBoxColumn5.FillWeight = 157.554F;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Filename";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // btnSelectTargetScript
+            // 
+            this.btnSelectTargetScript.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.btnSelectTargetScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelectTargetScript.HeaderText = "";
+            this.btnSelectTargetScript.MinimumWidth = 6;
+            this.btnSelectTargetScript.Name = "btnSelectTargetScript";
+            this.btnSelectTargetScript.ReadOnly = true;
+            this.btnSelectTargetScript.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.btnSelectTargetScript.Text = "Set as Target State";
+            this.btnSelectTargetScript.UseColumnTextForButtonValue = true;
+            this.btnSelectTargetScript.Width = 140;
+            // 
+            // label23
+            // 
+            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label23.ForeColor = System.Drawing.Color.Black;
+            this.label23.Location = new System.Drawing.Point(32, 28);
+            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(231, 25);
+            this.label23.TabIndex = 43;
+            this.label23.Text = "Dev Dummy Data Files";
+            // 
+            // pnlActionButtons
+            // 
+            this.pnlActionButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlActionButtons.BackColor = System.Drawing.Color.White;
+            this.pnlActionButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlActionButtons.Controls.Add(this.pnlRestoreDBError);
+            this.pnlActionButtons.Controls.Add(this.pnlSetDBStateManually);
+            this.pnlActionButtons.Controls.Add(this.pnlMissingSystemTables);
+            this.pnlActionButtons.Controls.Add(this.pnlMainActions);
+            this.pnlActionButtons.Controls.Add(this.pnlSyncToSpecificState);
+            this.pnlActionButtons.Location = new System.Drawing.Point(20, 1428);
+            this.pnlActionButtons.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlActionButtons.Name = "pnlActionButtons";
+            this.pnlActionButtons.Size = new System.Drawing.Size(1169, 275);
+            this.pnlActionButtons.TabIndex = 75;
+            // 
+            // pnlRestoreDBError
+            // 
+            this.pnlRestoreDBError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlRestoreDBError.BackColor = System.Drawing.Color.White;
+            this.pnlRestoreDBError.Controls.Add(this.label34);
+            this.pnlRestoreDBError.Controls.Add(this.btnShowHistoricalBackups);
+            this.pnlRestoreDBError.Location = new System.Drawing.Point(372, 23);
+            this.pnlRestoreDBError.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlRestoreDBError.Name = "pnlRestoreDBError";
+            this.pnlRestoreDBError.Size = new System.Drawing.Size(145, 87);
+            this.pnlRestoreDBError.TabIndex = 83;
+            // 
+            // label34
+            // 
+            this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.label34.Location = new System.Drawing.Point(28, 53);
+            this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(92, 15);
+            this.label34.TabIndex = 80;
+            this.label34.Text = "Backups Folder";
+            // 
+            // btnShowHistoricalBackups
+            // 
+            this.btnShowHistoricalBackups.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShowHistoricalBackups.BackColor = System.Drawing.Color.White;
+            this.btnShowHistoricalBackups.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnShowHistoricalBackups.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnShowHistoricalBackups.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnShowHistoricalBackups.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnShowHistoricalBackups.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnShowHistoricalBackups.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnShowHistoricalBackups.Image = global::AutoVersionsDB.WinApp.Properties.Resources.HistoricalBackups;
+            this.btnShowHistoricalBackups.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnShowHistoricalBackups.Location = new System.Drawing.Point(52, 5);
+            this.btnShowHistoricalBackups.Margin = new System.Windows.Forms.Padding(0);
+            this.btnShowHistoricalBackups.Name = "btnShowHistoricalBackups";
+            this.btnShowHistoricalBackups.Size = new System.Drawing.Size(63, 48);
+            this.btnShowHistoricalBackups.TabIndex = 79;
+            this.btnShowHistoricalBackups.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btnShowHistoricalBackups.UseVisualStyleBackColor = false;
+            this.btnShowHistoricalBackups.Click += new System.EventHandler(this.BtnShowHistoricalBackups_Click);
+            // 
             // DBVersionsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1613,17 +1613,17 @@
             this.pnlSetDBStateManually.PerformLayout();
             this.pnlRepeatableFiles.ResumeLayout(false);
             this.pnlRepeatableFiles.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgRepeatableScriptsFiles)).EndInit();
             this.pnlDevDummyDataFiles.ResumeLayout(false);
             this.pnlDevDummyDataFiles.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgDevDummyDataScriptsFiles)).EndInit();
             this.pnlActionButtons.ResumeLayout(false);
             this.pnlRestoreDBError.ResumeLayout(false);
             this.pnlRestoreDBError.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }

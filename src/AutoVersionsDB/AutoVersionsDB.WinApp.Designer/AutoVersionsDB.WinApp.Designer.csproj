@@ -279,6 +279,7 @@
     <Content Include="Resources\Doc_32.png" />
     <Content Include="Resources\HistoricalBackups.png" />
     <Content Include="Resources\historyIcon.png" />
+    <Content Include="Resources\listIcon_32.png" />
     <Content Include="Resources\plus32.png" />
     <Content Include="Resources\SaveIcon.png" />
     <Content Include="Resources\Spinner3_32.gif" />

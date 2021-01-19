@@ -33,7 +33,7 @@ namespace AutoVersionsDB.WinApp
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
             this.tabMainLayout = new System.Windows.Forms.TabControl();
             this.tbChooseProject = new System.Windows.Forms.TabPage();
-            this.chooseProject1 = new ChooseProjectView();
+            this.chooseProject1 = new AutoVersionsDB.WinApp.ChooseProjectView();
             this.tbEditProjectConfig = new System.Windows.Forms.TabPage();
             this.editProjectConfigDetails1 = new AutoVersionsDB.WinApp.EditProjectView();
             this.tbDBVersionsMangement = new System.Windows.Forms.TabPage();
@@ -48,16 +48,17 @@ namespace AutoVersionsDB.WinApp
             // 
             // tabMainLayout
             // 
-            this.tabMainLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.tabMainLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMainLayout.Controls.Add(this.tbChooseProject);
             this.tabMainLayout.Controls.Add(this.tbEditProjectConfig);
             this.tabMainLayout.Controls.Add(this.tbDBVersionsMangement);
-            this.tabMainLayout.Location = new System.Drawing.Point(-5, 37);
+            this.tabMainLayout.Location = new System.Drawing.Point(-7, 46);
+            this.tabMainLayout.Margin = new System.Windows.Forms.Padding(4);
             this.tabMainLayout.Name = "tabMainLayout";
             this.tabMainLayout.SelectedIndex = 0;
-            this.tabMainLayout.Size = new System.Drawing.Size(1004, 586);
+            this.tabMainLayout.Size = new System.Drawing.Size(1090, 611);
             this.tabMainLayout.TabIndex = 1;
             // 
             // tbChooseProject
@@ -65,24 +66,26 @@ namespace AutoVersionsDB.WinApp
             this.tbChooseProject.AutoScroll = true;
             this.tbChooseProject.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tbChooseProject.Controls.Add(this.chooseProject1);
-            this.tbChooseProject.Location = new System.Drawing.Point(4, 22);
+            this.tbChooseProject.Location = new System.Drawing.Point(4, 25);
+            this.tbChooseProject.Margin = new System.Windows.Forms.Padding(4);
             this.tbChooseProject.Name = "tbChooseProject";
-            this.tbChooseProject.Padding = new System.Windows.Forms.Padding(3);
-            this.tbChooseProject.Size = new System.Drawing.Size(996, 560);
+            this.tbChooseProject.Padding = new System.Windows.Forms.Padding(4);
+            this.tbChooseProject.Size = new System.Drawing.Size(1082, 582);
             this.tbChooseProject.TabIndex = 0;
             this.tbChooseProject.Text = "Choose Project";
             // 
             // chooseProject1
             // 
-            this.chooseProject1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.chooseProject1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chooseProject1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.chooseProject1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.chooseProject1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chooseProject1.Location = new System.Drawing.Point(3, 3);
+            this.chooseProject1.Location = new System.Drawing.Point(4, 4);
+            this.chooseProject1.Margin = new System.Windows.Forms.Padding(5);
             this.chooseProject1.Name = "chooseProject1";
-            this.chooseProject1.Size = new System.Drawing.Size(993, 554);
+            this.chooseProject1.Size = new System.Drawing.Size(1082, 571);
             this.chooseProject1.TabIndex = 0;
             // 
             // tbEditProjectConfig
@@ -90,10 +93,11 @@ namespace AutoVersionsDB.WinApp
             this.tbEditProjectConfig.AutoScroll = true;
             this.tbEditProjectConfig.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tbEditProjectConfig.Controls.Add(this.editProjectConfigDetails1);
-            this.tbEditProjectConfig.Location = new System.Drawing.Point(4, 22);
+            this.tbEditProjectConfig.Location = new System.Drawing.Point(4, 25);
+            this.tbEditProjectConfig.Margin = new System.Windows.Forms.Padding(4);
             this.tbEditProjectConfig.Name = "tbEditProjectConfig";
-            this.tbEditProjectConfig.Padding = new System.Windows.Forms.Padding(3);
-            this.tbEditProjectConfig.Size = new System.Drawing.Size(996, 560);
+            this.tbEditProjectConfig.Padding = new System.Windows.Forms.Padding(4);
+            this.tbEditProjectConfig.Size = new System.Drawing.Size(1182, 582);
             this.tbEditProjectConfig.TabIndex = 1;
             this.tbEditProjectConfig.Text = "Edit Project Config";
             // 
@@ -103,9 +107,10 @@ namespace AutoVersionsDB.WinApp
             this.editProjectConfigDetails1.AutoSize = true;
             this.editProjectConfigDetails1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.editProjectConfigDetails1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.editProjectConfigDetails1.Location = new System.Drawing.Point(3, 3);
+            this.editProjectConfigDetails1.Location = new System.Drawing.Point(4, 4);
+            this.editProjectConfigDetails1.Margin = new System.Windows.Forms.Padding(5);
             this.editProjectConfigDetails1.Name = "editProjectConfigDetails1";
-            this.editProjectConfigDetails1.Size = new System.Drawing.Size(990, 554);
+            this.editProjectConfigDetails1.Size = new System.Drawing.Size(1174, 574);
             this.editProjectConfigDetails1.TabIndex = 0;
             // 
             // tbDBVersionsMangement
@@ -113,10 +118,11 @@ namespace AutoVersionsDB.WinApp
             this.tbDBVersionsMangement.AutoScroll = true;
             this.tbDBVersionsMangement.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tbDBVersionsMangement.Controls.Add(this.dbVersionsMangement1);
-            this.tbDBVersionsMangement.Location = new System.Drawing.Point(4, 22);
+            this.tbDBVersionsMangement.Location = new System.Drawing.Point(4, 25);
+            this.tbDBVersionsMangement.Margin = new System.Windows.Forms.Padding(4);
             this.tbDBVersionsMangement.Name = "tbDBVersionsMangement";
-            this.tbDBVersionsMangement.Padding = new System.Windows.Forms.Padding(3);
-            this.tbDBVersionsMangement.Size = new System.Drawing.Size(996, 560);
+            this.tbDBVersionsMangement.Padding = new System.Windows.Forms.Padding(4);
+            this.tbDBVersionsMangement.Size = new System.Drawing.Size(1182, 582);
             this.tbDBVersionsMangement.TabIndex = 2;
             this.tbDBVersionsMangement.Text = "DB Versions Mangement";
             // 
@@ -125,20 +131,22 @@ namespace AutoVersionsDB.WinApp
             this.dbVersionsMangement1.AutoScroll = true;
             this.dbVersionsMangement1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.dbVersionsMangement1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dbVersionsMangement1.Location = new System.Drawing.Point(3, 3);
+            this.dbVersionsMangement1.Location = new System.Drawing.Point(4, 4);
+            this.dbVersionsMangement1.Margin = new System.Windows.Forms.Padding(5);
             this.dbVersionsMangement1.Name = "dbVersionsMangement1";
-            this.dbVersionsMangement1.Size = new System.Drawing.Size(990, 554);
+            this.dbVersionsMangement1.Size = new System.Drawing.Size(1174, 574);
             this.dbVersionsMangement1.TabIndex = 0;
             // 
             // lnkBtnChooseProject
             // 
             this.lnkBtnChooseProject.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lnkBtnChooseProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lnkBtnChooseProject.Location = new System.Drawing.Point(10, 4);
             this.lnkBtnChooseProject.Image = global::AutoVersionsDB.WinApp.Properties.Resources.listIcon_32;
+            this.lnkBtnChooseProject.Location = new System.Drawing.Point(13, 5);
+            this.lnkBtnChooseProject.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkBtnChooseProject.Name = "lnkBtnChooseProject";
             this.lnkBtnChooseProject.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lnkBtnChooseProject.Size = new System.Drawing.Size(37, 27);
+            this.lnkBtnChooseProject.Size = new System.Drawing.Size(49, 33);
             this.lnkBtnChooseProject.TabIndex = 2;
             this.lnkBtnChooseProject.Click += new System.EventHandler(this.LnkBtnChooseProject_Click);
             // 
@@ -147,23 +155,25 @@ namespace AutoVersionsDB.WinApp
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Matura MT Script Capitals", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label1.Location = new System.Drawing.Point(55, 2);
+            this.label1.Location = new System.Drawing.Point(73, 2);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(273, 32);
+            this.label1.Size = new System.Drawing.Size(335, 40);
             this.label1.TabIndex = 3;
             this.label1.Text = "Auto Versions DB";
             // 
-            // Main
+            // MainView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(998, 620);
+            this.ClientSize = new System.Drawing.Size(1082, 653);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lnkBtnChooseProject);
             this.Controls.Add(this.tabMainLayout);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Main";
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "MainView";
             this.Text = "Auto Versions DB";
             this.tabMainLayout.ResumeLayout(false);
             this.tbChooseProject.ResumeLayout(false);
