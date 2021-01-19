@@ -68,6 +68,9 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                      message = $"{"DBPassword",-c_paddingRightForCaprions}: {projectConfig.Password}";
                      _consoleProcessMessages.SetInfoMessage(message);
 
+                     message = $"{"ConncetionTimeout",-c_paddingRightForCaprions}: {projectConfig.ConncetionTimeout}";
+                     _consoleProcessMessages.SetInfoMessage(message);
+
                      message = $"{"Backup Folder Path",-c_paddingRightForCaprions}: {projectConfig.BackupFolderPath}";
                      _consoleProcessMessages.SetInfoMessage(message);
 

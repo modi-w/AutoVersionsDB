@@ -12,7 +12,6 @@ namespace AutoVersionsDB.DB.Contract
         void Close();
 
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1021:Avoid out parameters", Justification = "<Pending>")]
         bool CheckConnection(out string outErrorMseeage);
 
         string DataBaseName { get; }

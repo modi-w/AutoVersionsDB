@@ -61,6 +61,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tbUsername = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbDBName = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbServer = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label20 = new System.Windows.Forms.Label();
@@ -85,14 +93,8 @@
             this.notificationsControl1 = new AutoVersionsDB.WinApp.NotificationsView();
             this.pnlDevEnvDeplyFolder = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
-            this.tbServer = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbDBName = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tbUsername = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.tbPassword = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.tbConncetionTimeout = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -182,8 +184,6 @@
             // 
             // label6
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
             this.label6.Location = new System.Drawing.Point(24, 12);
@@ -234,7 +234,7 @@
             this.label12.TabIndex = 23;
             this.label12.Text = "Incremental Scripts Folder Path:";
             // 
-            // lbllncrementalScriptsFolderPath
+            // lblIncrementalScriptsFolderPath
             // 
             this.lblIncrementalScriptsFolderPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -244,7 +244,7 @@
             this.errPrvProjectDetails.SetIconAlignment(this.lblIncrementalScriptsFolderPath, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
             this.lblIncrementalScriptsFolderPath.Location = new System.Drawing.Point(19, 128);
             this.lblIncrementalScriptsFolderPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblIncrementalScriptsFolderPath.Name = "lbllncrementalScriptsFolderPath";
+            this.lblIncrementalScriptsFolderPath.Name = "lblIncrementalScriptsFolderPath";
             this.lblIncrementalScriptsFolderPath.Size = new System.Drawing.Size(915, 30);
             this.lblIncrementalScriptsFolderPath.TabIndex = 24;
             this.lblIncrementalScriptsFolderPath.Text = "C:\\Projects\\DBAutoVersions\\Code\\DBAutoVersions\\DBAutoVersions.BL.IntegrationTests" +
@@ -556,6 +556,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.tbConncetionTimeout);
+            this.panel2.Controls.Add(this.label31);
             this.panel2.Controls.Add(this.tbPassword);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.tbUsername);
@@ -572,6 +574,86 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(995, 271);
             this.panel2.TabIndex = 71;
+            // 
+            // tbPassword
+            // 
+            this.tbPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPassword.Location = new System.Drawing.Point(205, 200);
+            this.tbPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.Size = new System.Drawing.Size(464, 30);
+            this.tbPassword.TabIndex = 74;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label14.Location = new System.Drawing.Point(24, 195);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(155, 36);
+            this.label14.TabIndex = 73;
+            this.label14.Text = "Password:";
+            // 
+            // tbUsername
+            // 
+            this.tbUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbUsername.Location = new System.Drawing.Point(205, 157);
+            this.tbUsername.Margin = new System.Windows.Forms.Padding(4);
+            this.tbUsername.Name = "tbUsername";
+            this.tbUsername.Size = new System.Drawing.Size(464, 30);
+            this.tbUsername.TabIndex = 72;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label13.Location = new System.Drawing.Point(24, 152);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(158, 36);
+            this.label13.TabIndex = 71;
+            this.label13.Text = "Username:";
+            // 
+            // tbDBName
+            // 
+            this.tbDBName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDBName.Location = new System.Drawing.Point(205, 115);
+            this.tbDBName.Margin = new System.Windows.Forms.Padding(4);
+            this.tbDBName.Name = "tbDBName";
+            this.tbDBName.Size = new System.Drawing.Size(464, 30);
+            this.tbDBName.TabIndex = 70;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label10.Location = new System.Drawing.Point(24, 110);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(141, 36);
+            this.label10.TabIndex = 69;
+            this.label10.Text = "DB Name";
+            // 
+            // tbServer
+            // 
+            this.tbServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbServer.Location = new System.Drawing.Point(204, 74);
+            this.tbServer.Margin = new System.Windows.Forms.Padding(4);
+            this.tbServer.Name = "tbServer";
+            this.tbServer.Size = new System.Drawing.Size(464, 30);
+            this.tbServer.TabIndex = 68;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label5.Location = new System.Drawing.Point(23, 69);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 36);
+            this.label5.TabIndex = 67;
+            this.label5.Text = "Server:";
             // 
             // label17
             // 
@@ -880,103 +962,27 @@
             this.label26.Size = new System.Drawing.Size(5, 123);
             this.label26.TabIndex = 64;
             // 
-            // tbServer
+            // tbConncetionTimeout
             // 
-            this.tbServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbServer.Location = new System.Drawing.Point(204, 74);
-            this.tbServer.Margin = new System.Windows.Forms.Padding(4);
-            this.tbServer.Name = "tbServer";
-            this.tbServer.Size = new System.Drawing.Size(464, 30);
-            this.tbServer.TabIndex = 68;
+            this.tbConncetionTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbConncetionTimeout.Location = new System.Drawing.Point(862, 80);
+            this.tbConncetionTimeout.Margin = new System.Windows.Forms.Padding(4);
+            this.tbConncetionTimeout.Name = "tbConncetionTimeout";
+            this.tbConncetionTimeout.Size = new System.Drawing.Size(89, 30);
+            this.tbConncetionTimeout.TabIndex = 76;
             // 
-            // label5
+            // label31
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label5.Location = new System.Drawing.Point(23, 69);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(110, 36);
-            this.label5.TabIndex = 67;
-            this.label5.Text = "Server:";
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label31.Location = new System.Drawing.Point(716, 74);
+            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(129, 36);
+            this.label31.TabIndex = 75;
+            this.label31.Text = "Timeout:";
             // 
-            // tbDBName
-            // 
-            this.tbDBName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbDBName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDBName.Location = new System.Drawing.Point(205, 115);
-            this.tbDBName.Margin = new System.Windows.Forms.Padding(4);
-            this.tbDBName.Name = "tbDBName";
-            this.tbDBName.Size = new System.Drawing.Size(464, 30);
-            this.tbDBName.TabIndex = 70;
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label10.Location = new System.Drawing.Point(24, 110);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(141, 36);
-            this.label10.TabIndex = 69;
-            this.label10.Text = "DB Name";
-            // 
-            // tbDBUsername
-            // 
-            this.tbUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbUsername.Location = new System.Drawing.Point(205, 157);
-            this.tbUsername.Margin = new System.Windows.Forms.Padding(4);
-            this.tbUsername.Name = "tbDBUsername";
-            this.tbUsername.Size = new System.Drawing.Size(464, 30);
-            this.tbUsername.TabIndex = 72;
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label13.Location = new System.Drawing.Point(24, 152);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(158, 36);
-            this.label13.TabIndex = 71;
-            this.label13.Text = "Username:";
-            // 
-            // tbDBPassword
-            // 
-            this.tbPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPassword.Location = new System.Drawing.Point(205, 200);
-            this.tbPassword.Margin = new System.Windows.Forms.Padding(4);
-            this.tbPassword.Name = "tbDBPassword";
-            this.tbPassword.Size = new System.Drawing.Size(464, 30);
-            this.tbPassword.TabIndex = 74;
-            // 
-            // label14
-            // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label14.Location = new System.Drawing.Point(24, 195);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(155, 36);
-            this.label14.TabIndex = 73;
-            this.label14.Text = "Password:";
-            // 
-            // EditProjectConfigDetails
+            // EditProjectView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -992,7 +998,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel5);
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "EditProjectConfigDetails";
+            this.Name = "EditProjectView";
             this.Size = new System.Drawing.Size(1037, 1594);
             ((System.ComponentModel.ISupportInitialize)(this.errPrvProjectDetails)).EndInit();
             this.panel5.ResumeLayout(false);
@@ -1080,5 +1086,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox tbServer;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbConncetionTimeout;
+        private System.Windows.Forms.Label label31;
     }
 }

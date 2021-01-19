@@ -22,8 +22,10 @@ namespace AutoVersionsDB.Core.ConfigProjects
         public string Username { get; set; }
         public string Password { get; set; }
 
+        public int ConncetionTimeout { get; set; }
+
         public DBConnectionInfo DBConnectionInfo =>
-            new DBConnectionInfo(DBType, Server, DBName, Username, Password);
+            new DBConnectionInfo(DBType, Server, DBName, Username, Password, ConncetionTimeout);
 
 
         public string BackupFolderPath { get; set; }

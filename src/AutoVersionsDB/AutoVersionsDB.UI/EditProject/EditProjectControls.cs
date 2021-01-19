@@ -150,6 +150,13 @@ namespace AutoVersionsDB.UI.EditProject
             get => _tbPasswordEnabled;
             set => SetField(ref _tbPasswordEnabled, value);
         }
+        private bool _tbConncetionTimeoutEnabled;
+        public bool TbConncetionTimeoutEnabled
+        {
+            get => _tbConncetionTimeoutEnabled;
+            set => SetField(ref _tbConncetionTimeoutEnabled, value);
+        }
+
         private bool _tbDevScriptsFolderPathEnabled;
         public bool TbDevScriptsFolderPathEnabled
         {

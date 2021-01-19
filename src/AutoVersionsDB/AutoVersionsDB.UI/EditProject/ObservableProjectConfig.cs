@@ -1,5 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
+using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace AutoVersionsDB.UI.EditProject
@@ -86,6 +88,16 @@ namespace AutoVersionsDB.UI.EditProject
             {
                 ActualProjectConfig.Password = value;
                 OnPropertyChanged(nameof(Password));
+            }
+        }
+
+        public string ConncetionTimeout
+        {
+            get => Convert.ToString(ActualProjectConfig.ConncetionTimeout, CultureInfo.InvariantCulture);
+            set
+            {
+                ActualProjectConfig.ConncetionTimeout = Convert.ToInt32(value, CultureInfo.InvariantCulture);
+                OnPropertyChanged(nameof(ConncetionTimeout));
             }
         }
 

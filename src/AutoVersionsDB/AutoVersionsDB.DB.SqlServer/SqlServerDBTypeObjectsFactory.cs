@@ -15,14 +15,16 @@ namespace AutoVersionsDB.DB.SqlServer
         {
             dbConnectionInfo.ThrowIfNull(nameof(dbConnectionInfo));
 
-            SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateConnectionString(dbConnectionInfo), 0);
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateConnectionString(dbConnectionInfo), dbConnectionInfo.Timeout);
 
             return sqlServerConnection;
         }
 
         public IDBConnection CreateAdminDBConnection(DBConnectionInfo dbConnectionInfo)
         {
-            SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateAdminConnectionString(dbConnectionInfo), 0);
+            dbConnectionInfo.ThrowIfNull(nameof(dbConnectionInfo));
+
+            SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateAdminConnectionString(dbConnectionInfo), dbConnectionInfo.Timeout);
 
             return sqlServerConnection;
         }

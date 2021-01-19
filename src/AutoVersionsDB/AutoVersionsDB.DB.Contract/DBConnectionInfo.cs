@@ -8,6 +8,9 @@
         public string Username { get; }
         public string Password { get; }
 
+        public int Timeout { get; }
+
+
         public bool HasValues => !string.IsNullOrWhiteSpace(DBType)
                             && !string.IsNullOrWhiteSpace(Server)
                             && !string.IsNullOrWhiteSpace(DBName);
@@ -16,13 +19,15 @@
                                 string serverInstance,
                                 string dataBaseName,
                                 string username,
-                                string password)
+                                string password,
+                                int timeout)
         {
             DBType = dbType;
             Server = serverInstance;
             DBName = dataBaseName;
             Username = username;
             Password = password;
+            Timeout = timeout;
         }
 
 

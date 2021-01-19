@@ -139,6 +139,11 @@ namespace AutoVersionsDB.CLI.ConfigProjects
             {
                 existProjectConfig.Password = projectConfig.Password;
             }
+            if (projectConfig.ConncetionTimeout != 0)
+            {
+                existProjectConfig.ConncetionTimeout = projectConfig.ConncetionTimeout;
+            }
+
             if (projectConfig.BackupFolderPath != null)
             {
                 existProjectConfig.BackupFolderPath = projectConfig.BackupFolderPath;

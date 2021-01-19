@@ -187,6 +187,26 @@ namespace AutoVersionsDB.WinApp
                         )
                     );
 
+                tbConncetionTimeout.DataBindings.Clear();
+                tbConncetionTimeout.DataBindings.Add(
+                    AsyncBindingHelper.GetBinding(
+                        tbConncetionTimeout,
+                        nameof(tbConncetionTimeout.Text),
+                        ViewModel.ProjectConfig,
+                        nameof(ViewModel.ProjectConfig.ConncetionTimeout)
+                    )
+                );
+                tbConncetionTimeout.DataBindings.Add(
+                    AsyncBindingHelper.GetBinding(
+                        tbConncetionTimeout,
+                        nameof(tbConncetionTimeout.Enabled),
+                        ViewModel.EditProjectControls,
+                        nameof(ViewModel.EditProjectControls.TbConncetionTimeoutEnabled)
+                        )
+                    );
+
+
+
                 tbDBBackupFolder.DataBindings.Clear();
                 tbDBBackupFolder.DataBindings.Add(
                     AsyncBindingHelper.GetBinding(

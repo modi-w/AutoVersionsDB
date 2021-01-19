@@ -49,6 +49,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDBNameEnabled), editProjectControls.TbDBNameEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbUsernameEnabled), editProjectControls.TbUsernameEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbPasswordEnabled), editProjectControls.TbPasswordEnabled, true);
+            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbConncetionTimeoutEnabled), editProjectControls.TbConncetionTimeoutEnabled, true);
+            
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDevScriptsFolderPathEnabled), editProjectControls.TbDevScriptsFolderPathEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDBBackupFolderEnabled), editProjectControls.TbDBBackupFolderEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbIdEnabled), editProjectControls.TbIdEnabled, true);
@@ -80,6 +82,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDBNameEnabled), editProjectControls.TbDBNameEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbUsernameEnabled), editProjectControls.TbUsernameEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbPasswordEnabled), editProjectControls.TbPasswordEnabled, true);
+            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbConncetionTimeoutEnabled), editProjectControls.TbConncetionTimeoutEnabled, true);
+
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDevScriptsFolderPathEnabled), editProjectControls.TbDevScriptsFolderPathEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDBBackupFolderEnabled), editProjectControls.TbDBBackupFolderEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbIdEnabled), editProjectControls.TbIdEnabled, false);
@@ -111,6 +115,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDBNameEnabled), editProjectControls.TbDBNameEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbUsernameEnabled), editProjectControls.TbUsernameEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbPasswordEnabled), editProjectControls.TbPasswordEnabled, true);
+            _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbConncetionTimeoutEnabled), editProjectControls.TbConncetionTimeoutEnabled, true);
+
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDevScriptsFolderPathEnabled), editProjectControls.TbDevScriptsFolderPathEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbDBBackupFolderEnabled), editProjectControls.TbDBBackupFolderEnabled, true);
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.TbIdEnabled), editProjectControls.TbIdEnabled, true);

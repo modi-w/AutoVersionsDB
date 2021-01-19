@@ -93,6 +93,8 @@ namespace AutoVersionsDB.UI.EditProject
             _editProjectControls.TbDBNameEnabled = isEnable;
             _editProjectControls.TbUsernameEnabled = isEnable;
             _editProjectControls.TbPasswordEnabled = isEnable;
+            _editProjectControls.TbConncetionTimeoutEnabled = isEnable;
+
             _editProjectControls.TbDevScriptsFolderPathEnabled = isEnable;
             _editProjectControls.TbDBBackupFolderEnabled = isEnable;
             _editProjectControls.TbIdEnabled = isEnable;

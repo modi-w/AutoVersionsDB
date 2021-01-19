@@ -26,7 +26,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
                                 SqlServerLocalDBConnection.ConnectionStringBuilder.DataSource,
                                 IntegrationTestsConsts.TestDBName,
                                 SqlServerLocalDBConnection.ConnectionStringBuilder.UserID,
-                                SqlServerLocalDBConnection.ConnectionStringBuilder.Password)
+                                SqlServerLocalDBConnection.ConnectionStringBuilder.Password,
+                                0)
         };
 
 
