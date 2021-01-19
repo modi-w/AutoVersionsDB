@@ -182,6 +182,67 @@ namespace AutoVersionsDB.UI.DBVersions
         }
 
 
+        private string _lblIncNumOfExecutedText;
+        public string LblIncNumOfExecutedText
+        {
+            get => _lblIncNumOfExecutedText;
+            set => SetField(ref _lblIncNumOfExecutedText, value);
+        }
+        private string _lblIncNumOfVirtualText;
+        public string LblIncNumOfVirtualText
+        {
+            get => _lblIncNumOfVirtualText;
+            set => SetField(ref _lblIncNumOfVirtualText, value);
+        }
+        private string _lblIncNumOfChangedText;
+        public string LblIncNumOfChangedText
+        {
+            get => _lblIncNumOfChangedText;
+            set => SetField(ref _lblIncNumOfChangedText, value);
+        }
+
+        private string _lblRptNumOfExecutedText;
+        public string LblRptNumOfExecutedText
+        {
+            get => _lblRptNumOfExecutedText;
+            set => SetField(ref _lblRptNumOfExecutedText, value);
+        }
+        private string _lblRptNumOfVirtualText;
+        public string LblRptNumOfVirtualText
+        {
+            get => _lblRptNumOfVirtualText;
+            set => SetField(ref _lblRptNumOfVirtualText, value);
+        }
+        private string _lblRptNumOfChangedText;
+        public string LblRptNumOfChangedText
+        {
+            get => _lblRptNumOfChangedText;
+            set => SetField(ref _lblRptNumOfChangedText, value);
+        }
+
+        private string _lblDDDNumOfExecutedText;
+        public string LblDDDNumOfExecutedText
+        {
+            get => _lblDDDNumOfExecutedText;
+            set => SetField(ref _lblDDDNumOfExecutedText, value);
+        }
+        private string _lblDDDNumOfVirtualText;
+        public string LblDDDNumOfVirtualText
+        {
+            get => _lblDDDNumOfVirtualText;
+            set => SetField(ref _lblDDDNumOfVirtualText, value);
+        }
+        private string _lblDDDNumOfChangedText;
+        public string LblDDDNumOfChangedText
+        {
+            get => _lblDDDNumOfChangedText;
+            set => SetField(ref _lblDDDNumOfChangedText, value);
+        }
+
+
+
+
+
 
         private string _btnRefreshTooltip;
         public string BtnRefreshTooltip

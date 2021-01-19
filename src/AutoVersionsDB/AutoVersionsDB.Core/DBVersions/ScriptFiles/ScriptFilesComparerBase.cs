@@ -20,11 +20,20 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         public string LastFileOfLastExecutedFilename => DBExecutedFiles.LastFileOfLastExecutedFilename;
 
         public List<RuntimeScriptFileBase> AllFileSystemScriptFiles => FileSystemScriptFiles.ScriptFilesList;
-        public List<RuntimeScriptFileBase> ExecutedFiles => 
+        public List<RuntimeScriptFileBase> ExecutedFilesAll => 
             AllFileSystemScriptFiles
             .Where(e => e.HashDiffType == HashDiffType.Equal 
                     || e.HashDiffType == HashDiffType.EqualVirtual)
             .ToList();
+        public List<RuntimeScriptFileBase> ExecutedFilesActual =>
+            AllFileSystemScriptFiles
+            .Where(e => e.HashDiffType == HashDiffType.Equal)
+            .ToList();
+        public List<RuntimeScriptFileBase> ExecutedFilesVirtual =>
+            AllFileSystemScriptFiles
+            .Where(e => e.HashDiffType == HashDiffType.EqualVirtual)
+            .ToList();
+
         public List<RuntimeScriptFileBase> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Different).ToList();
         public List<RuntimeScriptFileBase> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.NotExist).ToList();
 

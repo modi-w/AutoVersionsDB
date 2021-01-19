@@ -381,28 +381,148 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
-            lblColorTargetState_Square.DataBindings.Clear();
-            lblColorTargetState_Square.DataBindings.Add(
+            lblIncColorTargetState_Square.DataBindings.Clear();
+            lblIncColorTargetState_Square.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
-                    lblColorTargetState_Square,
-                    nameof(lblColorTargetState_Square.Visible),
+                    lblIncColorTargetState_Square,
+                    nameof(lblIncColorTargetState_Square.Visible),
                     ViewModel.DBVersionsControls,
                     nameof(ViewModel.DBVersionsControls.LblColorTargetStateSquareVisible)
                     )
                 );
 
-            lblColorTargetState_Caption.DataBindings.Clear();
-            lblColorTargetState_Caption.DataBindings.Add(
+            lblIncColorTargetState_Caption.DataBindings.Clear();
+            lblIncColorTargetState_Caption.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
-                    lblColorTargetState_Caption,
-                    nameof(lblColorTargetState_Caption.Visible),
+                    lblIncColorTargetState_Caption,
+                    nameof(lblIncColorTargetState_Caption.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
+                    )
+                );
+            lblRptColorTargetState_Square.DataBindings.Clear();
+            lblRptColorTargetState_Square.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblRptColorTargetState_Square,
+                    nameof(lblRptColorTargetState_Square.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateSquareVisible)
+                    )
+                );
+
+            lblRptColorTargetState_Caption.DataBindings.Clear();
+            lblRptColorTargetState_Caption.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblRptColorTargetState_Caption,
+                    nameof(lblRptColorTargetState_Caption.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
+                    )
+                );
+            lblDDDColorTargetState_Square.DataBindings.Clear();
+            lblDDDColorTargetState_Square.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblDDDColorTargetState_Square,
+                    nameof(lblDDDColorTargetState_Square.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateSquareVisible)
+                    )
+                );
+
+            lblDDDColorTargetState_Caption.DataBindings.Clear();
+            lblDDDColorTargetState_Caption.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblDDDColorTargetState_Caption,
+                    nameof(lblDDDColorTargetState_Caption.Visible),
                     ViewModel.DBVersionsControls,
                     nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
                     )
                 );
 
 
+            lblIncNumOfExecuted.DataBindings.Clear();
+            lblIncNumOfExecuted.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblIncNumOfExecuted,
+                    nameof(lblIncNumOfExecuted.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblIncNumOfExecutedText)
+                    )
+                );
+            lblIncNumOfVirtual.DataBindings.Clear();
+            lblIncNumOfVirtual.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblIncNumOfVirtual,
+                    nameof(lblIncNumOfVirtual.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblIncNumOfVirtualText)
+                    )
+                );
+            lblIncNumOfChanged.DataBindings.Clear();
+            lblIncNumOfChanged.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblIncNumOfChanged,
+                    nameof(lblIncNumOfChanged.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblIncNumOfChangedText)
+                    )
+                );
 
+            lblRptNumOfExecuted.DataBindings.Clear();
+            lblRptNumOfExecuted.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblRptNumOfExecuted,
+                    nameof(lblRptNumOfExecuted.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblRptNumOfExecutedText)
+                    )
+                );
+            lblRptNumOfVirtual.DataBindings.Clear();
+            lblRptNumOfVirtual.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblRptNumOfVirtual,
+                    nameof(lblRptNumOfVirtual.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblRptNumOfVirtualText)
+                    )
+                );
+            lblRptNumOfChanged.DataBindings.Clear();
+            lblRptNumOfChanged.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblRptNumOfChanged,
+                    nameof(lblRptNumOfChanged.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblRptNumOfChangedText)
+                    )
+                );
+
+            lblDDDNumOfExecuted.DataBindings.Clear();
+            lblDDDNumOfExecuted.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblDDDNumOfExecuted,
+                    nameof(lblDDDNumOfExecuted.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblDDDNumOfExecutedText)
+                    )
+                );
+            lblDDDNumOfVirtual.DataBindings.Clear();
+            lblDDDNumOfVirtual.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblDDDNumOfVirtual,
+                    nameof(lblDDDNumOfVirtual.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblDDDNumOfVirtualText)
+                    )
+                );
+            lblDDDNumOfChanged.DataBindings.Clear();
+            lblDDDNumOfChanged.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblDDDNumOfChanged,
+                    nameof(lblDDDNumOfChanged.Text),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.LblDDDNumOfChangedText)
+                    )
+                );
         }
 
 

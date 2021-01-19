@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                 && _targetStateScriptFileName.Trim().ToUpperInvariant() != RuntimeScriptFileBase.TargetLastScriptFileName.Trim().ToUpperInvariant())
             {
                 var isTargetFileExecuted =
-                    _scriptFilesState.IncrementalScriptFilesComparer.ExecutedFiles
+                    _scriptFilesState.IncrementalScriptFilesComparer.ExecutedFilesAll
                         .Any(e => e.Filename.Trim().ToUpperInvariant() == _targetStateScriptFileName.Trim().ToUpperInvariant());
 
                 if (isTargetFileExecuted)

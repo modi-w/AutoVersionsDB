@@ -7,6 +7,7 @@ using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.Notifications;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace AutoVersionsDB.UI.DBVersions
@@ -56,17 +57,38 @@ namespace AutoVersionsDB.UI.DBVersions
             if (_dbVersionsViewModelData.ScriptFilesState == null)
             {
                 _dbVersionsViewModelData.IncrementalScriptFiles = new List<RuntimeScriptFileBase>();
+                _dbVersionsControls.LblIncNumOfExecutedText = "0";
+                _dbVersionsControls.LblIncNumOfVirtualText = "0";
+                _dbVersionsControls.LblIncNumOfChangedText = "0";
+
                 _dbVersionsViewModelData.RepeatableScriptFiles = new List<RuntimeScriptFileBase>();
+                _dbVersionsControls.LblRptNumOfExecutedText = "0";
+                _dbVersionsControls.LblRptNumOfVirtualText = "0";
+                _dbVersionsControls.LblRptNumOfChangedText = "0";
+
                 _dbVersionsViewModelData.DevDummyDataScriptFiles = new List<RuntimeScriptFileBase>();
+                _dbVersionsControls.LblDDDNumOfExecutedText = "0";
+                _dbVersionsControls.LblDDDNumOfVirtualText = "0";
+                _dbVersionsControls.LblDDDNumOfChangedText = "0";
             }
             else
             {
                 _dbVersionsViewModelData.IncrementalScriptFiles = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                _dbVersionsControls.LblIncNumOfExecutedText = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.ExecutedFilesActual.Count.ToString(CultureInfo.InvariantCulture);
+                _dbVersionsControls.LblIncNumOfVirtualText = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.ExecutedFilesVirtual.Count.ToString(CultureInfo.InvariantCulture);
+                _dbVersionsControls.LblIncNumOfChangedText = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.ChangedFiles.Count.ToString(CultureInfo.InvariantCulture);
+
                 _dbVersionsViewModelData.RepeatableScriptFiles = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                _dbVersionsControls.LblRptNumOfExecutedText = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.ExecutedFilesActual.Count.ToString(CultureInfo.InvariantCulture);
+                _dbVersionsControls.LblRptNumOfVirtualText = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.ExecutedFilesVirtual.Count.ToString(CultureInfo.InvariantCulture);
+                _dbVersionsControls.LblRptNumOfChangedText = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.ChangedFiles.Count.ToString(CultureInfo.InvariantCulture);
 
                 if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
                 {
                     _dbVersionsViewModelData.DevDummyDataScriptFiles = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+                    _dbVersionsControls.LblDDDNumOfExecutedText = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.ExecutedFilesActual.Count.ToString(CultureInfo.InvariantCulture);
+                    _dbVersionsControls.LblDDDNumOfVirtualText = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.ExecutedFilesVirtual.Count.ToString(CultureInfo.InvariantCulture);
+                    _dbVersionsControls.LblDDDNumOfChangedText = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.ChangedFiles.Count.ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
