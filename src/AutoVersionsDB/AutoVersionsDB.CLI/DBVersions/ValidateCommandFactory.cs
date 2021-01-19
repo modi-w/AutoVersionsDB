@@ -27,7 +27,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 _idOption,
             };
 
-            command.Description = "Validate all relevant relevant properties for run sync on the project.";
+            command.Description = CLITextResources.ValidateCommandDescription;
 
             command.Handler = CommandHandler.Create<string>((id) =>
             {

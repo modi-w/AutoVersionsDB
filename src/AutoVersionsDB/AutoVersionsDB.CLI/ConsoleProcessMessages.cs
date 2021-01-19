@@ -45,11 +45,14 @@ namespace AutoVersionsDB.CLI
 
         public void SetErrorInstruction(string message, NotificationErrorType notificationErrorType)
         {
+
             IStandardStreamWriter errorWriter = _console.Error;
 
             switch (notificationErrorType)
             {
                 case NotificationErrorType.Error:
+
+                    Environment.ExitCode = CLIConsts.ExistErrorCode;
 
                     _console.ForegroundColor = ConsoleColor.DarkRed;
                     break;
@@ -97,11 +100,11 @@ namespace AutoVersionsDB.CLI
 
             if (!string.IsNullOrWhiteSpace(args))
             {
-                _console.Out.WriteLine($"> Run '{processName}' for '{args}'");
+                _console.Out.WriteLine(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", processName).Replace("[args]", args));
             }
             else
             {
-                _console.Out.WriteLine($"> Run '{processName}' (no arguments)");
+                _console.Out.WriteLine(CLITextResources.StartProcessMessageNoArgs.Replace("[processName]", processName));
             }
 
         }
@@ -126,7 +129,7 @@ namespace AutoVersionsDB.CLI
                     }
                     else
                     {
-                        SetErrorInstruction("The process complete with errors:",NotificationErrorType.Error);
+                        SetErrorInstruction(CLITextResources.ProcessCompleteWithErrors, NotificationErrorType.Error);
                         SetErrorInstruction("--------------------------------", NotificationErrorType.Error);
                         SetErrorMessage(processReults.Trace.GetOnlyErrorsStatesLogAsString());
                         SetErrorInstruction(processReults.Trace.InstructionsMessage, processReults.Trace.NotificationErrorType);
@@ -137,7 +140,7 @@ namespace AutoVersionsDB.CLI
                 else
                 {
                     _console.ForegroundColor = ConsoleColor.Green;
-                    _console.Out.WriteLine("The process complete successfully");
+                    _console.Out.WriteLine(CLITextResources.ProcessCompleteSuccessfully);
                     _console.ForegroundColor = ConsoleColor.White;
                 }
 

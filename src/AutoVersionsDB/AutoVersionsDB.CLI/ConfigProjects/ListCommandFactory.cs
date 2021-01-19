@@ -26,7 +26,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
         {
             Command command = new Command("list")
             {
-                Description = "Show list of all projects",
+                Description = CLITextResources.ListCommandDescription,
 
                 Handler = CommandHandler
                 .Create(() =>
@@ -39,7 +39,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
                     if (!projectsList.Any())
                     {
-                        _consoleProcessMessages.SetInfoMessage("----  No projects found on this machine  ----");
+                        _consoleProcessMessages.SetInfoMessage(CLITextResources.ProjectNotFoundInfoMessage);
                     }
                     else
                     {

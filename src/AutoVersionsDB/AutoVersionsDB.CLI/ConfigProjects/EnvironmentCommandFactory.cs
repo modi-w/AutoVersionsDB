@@ -36,7 +36,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                 _devEnvironmentOption,
             };
 
-            command.Description = "Change project environment configuration. Is run on dev environment (use scripts files) or on a delivery environment (use artifact file).";
+            command.Description = CLITextResources.EnvironmentCommandDescription;
 
             command.Handler = CommandHandler
                 .Create<string, bool>((id, dev) =>
@@ -47,7 +47,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
                     if (existProjectConfig == null)
                     {
-                        _consoleProcessMessages.SetErrorMessage($"Id: '{id}' is not exist. You can use the 'init' command to define new project.");
+                        _consoleProcessMessages.SetErrorInstruction(CLITextResources.IdNotExistCommandError.Replace("[Id]", id), NotificationErrorType.Error);
                     }
                     else
                     {

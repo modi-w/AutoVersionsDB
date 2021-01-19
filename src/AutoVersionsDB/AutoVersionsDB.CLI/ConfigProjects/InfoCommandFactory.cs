@@ -43,7 +43,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
                  if (projectConfig == null)
                  {
-                     _consoleProcessMessages.SetErrorInstruction($"Id '{id}' not exist. Try run list command to see the existing projects on this machine.", NotificationErrorType.Error);
+                     _consoleProcessMessages.SetErrorInstruction(CLITextResources.IdNotExistCommandError.Replace("[Id]", id), NotificationErrorType.Error);
                  }
                  else
                  {

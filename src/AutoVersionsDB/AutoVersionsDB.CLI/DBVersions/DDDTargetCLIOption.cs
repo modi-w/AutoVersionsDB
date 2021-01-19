@@ -6,7 +6,12 @@ namespace AutoVersionsDB.CLI.DBVersions
     public class DDDTargetCLIOption : Option<string>
     {
         public DDDTargetCLIOption()
-            : base(new string[] { "--ddd-target", "-dt" }, $"The DevDummyData target file script name that set the db in the desired state. Set {RuntimeScriptFileBase.TargetNoneScriptFileName} if you want to that system not run any DevDummyData script; Set {RuntimeScriptFileBase.TargetLastScriptFileName} if you want to that system not run all DevDummyData scripts; Otherwise, set the target script name.")
+            : base(new string[] { "--ddd-target", "-dt" }, 
+                    CLITextResources.TargetCLIOptionDescription
+                                    .Replace("[ScriptFileType]", "DevDummyData")
+                                    .Replace("[TargetNoneScriptFileName]", RuntimeScriptFileBase.TargetNoneScriptFileName)
+                                    .Replace("[TargetLastScriptFileName]", RuntimeScriptFileBase.TargetLastScriptFileName))
+                  
         {
         }
     }

@@ -27,7 +27,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 _idOption,
             };
 
-            command.Description = "Deploy the project. Create an artifact file ready to use on delivery enviornment.";
+            command.Description = CLITextResources.DeployCommandDescription;
 
             command.Handler = CommandHandler.Create<string>((id) =>
             {
@@ -42,7 +42,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 if (!processResults.Trace.HasError)
                 {
                     string deployFilePath = (string)processResults.Results;
-                    _consoleProcessMessages.SetInfoMessage($"Artifact file created: '{deployFilePath}'");
+                    _consoleProcessMessages.SetInfoMessage(CLITextResources.ArtifactFileCreatedInfoMessage.Replace("[deployFilePath]", deployFilePath));
                 }
             });
 

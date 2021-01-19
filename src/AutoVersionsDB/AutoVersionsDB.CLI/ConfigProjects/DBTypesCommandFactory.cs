@@ -25,7 +25,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
         {
             Command command = new Command("dbtypes")
             {
-                Description = "Show list of the supported DataBase Types.",
+                Description = CLITextResources.DBTypesCommandDescription,
 
                 Handler = CommandHandler
                 .Create(() =>

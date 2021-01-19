@@ -27,7 +27,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 _idOption,
             };
 
-            command.Description = "Sync the database to the last state by the scripts files";
+            command.Description = CLITextResources.SyncCommandDescription;
 
             command.Handler = CommandHandler.Create<string>((id) =>
             {

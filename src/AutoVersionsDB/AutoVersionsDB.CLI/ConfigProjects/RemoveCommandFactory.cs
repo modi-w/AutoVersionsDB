@@ -31,7 +31,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                 _idOption,
             };
 
-            command.Description = "Remove project";
+            command.Description = CLITextResources.RemoveCommandDescription;
 
             command.Handler = CommandHandler
                 .Create<string>((id) =>

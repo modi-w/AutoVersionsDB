@@ -29,7 +29,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 _idOption,
             };
 
-            command.Description = "Show list of the scripts files.";
+            command.Description = CLITextResources.FilesCommandDescription;
 
             command.Handler = CommandHandler.Create<string>((id) =>
             {
@@ -69,7 +69,7 @@ namespace AutoVersionsDB.CLI.DBVersions
             {
                 _idOption,
             };
-            incrementalCommand.Description = "Show only the incremental scripts files.";
+            incrementalCommand.Description = CLITextResources.FilesSignleTypeCommandDescription.Replace("[ScriptFileType]", "Incremental");
 
             incrementalCommand.Handler = CommandHandler.Create<string>((id) =>
             {
@@ -94,13 +94,13 @@ namespace AutoVersionsDB.CLI.DBVersions
 
         private void AppendRepeatableCommand(Command command)
         {
-            Command incrementalCommand = new Command("repeatable")
+            Command repeatableCommand = new Command("repeatable")
             {
                 _idOption,
             };
-            incrementalCommand.Description = "Show only the repeatable scripts files.";
+            repeatableCommand.Description = CLITextResources.FilesSignleTypeCommandDescription.Replace("[ScriptFileType]", "Repeatable"); 
 
-            incrementalCommand.Handler = CommandHandler.Create<string>((id) =>
+            repeatableCommand.Handler = CommandHandler.Create<string>((id) =>
             {
                 _consoleProcessMessages.StartProcessMessage("files repeatable", id);
 
@@ -118,7 +118,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 }
             });
 
-            command.Add(incrementalCommand);
+            command.Add(repeatableCommand);
         }
 
         private void AppendDevDummyDataCommand(Command command)
@@ -127,7 +127,7 @@ namespace AutoVersionsDB.CLI.DBVersions
             {
                 _idOption,
             };
-            incrementalCommand.Description = "Show only the DevDummyData scripts files.";
+            incrementalCommand.Description = CLITextResources.FilesSignleTypeCommandDescription.Replace("[ScriptFileType]", "DevDummyData"); 
 
             incrementalCommand.Handler = CommandHandler.Create<string>((id) =>
             {

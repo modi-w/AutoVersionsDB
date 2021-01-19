@@ -23,7 +23,7 @@ namespace AutoVersionsDB.CLI.DBVersions
         {
             Command command = new Command("new")
             {
-                Description = "Create new script file. The type of script file is required."
+                Description = CLITextResources.CreateNewScriptFileCommandDescription
             };
 
             Command incrementalScriptFileCommand = _createNewIncrementalScriptFileCommandFactory.Create();

@@ -31,7 +31,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 _scriptNameOption,
             };
 
-            command.Description = "Create new repeatable script file";
+            command.Description = CLITextResources.CreateNewRepeatableScriptFileCommandDescription;
 
             command.Handler = CommandHandler.Create<string, string>((id, scriptName) =>
             {
@@ -46,7 +46,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 if (!processResults.Trace.HasError)
                 {
                     string newFilePath = (string)processResults.Results;
-                    _consoleProcessMessages.SetInfoMessage($"The file: '{newFilePath}' is created.");
+                    _consoleProcessMessages.SetInfoMessage(CLITextResources.TheFileIsCreatedInfoMessage.Replace("[newFilePath]", newFilePath));
                 }
             });
 

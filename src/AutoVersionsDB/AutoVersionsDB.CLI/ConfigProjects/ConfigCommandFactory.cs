@@ -79,7 +79,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                 _deliveryArtifactFolderPathOption,
             };
 
-            command.Description = "Change project configuration.";
+            command.Description = CLITextResources.ConfigCommandDescription;
 
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>
@@ -90,7 +90,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
 
                     if (existProjectConfig == null)
                     {
-                        _consoleProcessMessages.SetErrorMessage($"Id: '{projectConfig.Id}' is not exist. You can use the 'init' command to define new project.");
+                        _consoleProcessMessages.SetErrorInstruction(CLITextResources.IdNotExistCommandError.Replace("[Id]",projectConfig.Id), NotificationErrorType.Error);
                     }
                     else
                     {

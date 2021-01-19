@@ -36,7 +36,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                 _newIdCLIOption
             };
 
-            command.Description = "Change project project id. Change the identifier of the project.";
+            command.Description = CLITextResources.ChangeIdCommandDescription;
 
             command.Handler = CommandHandler
                 .Create<string, string>((id, newId) =>

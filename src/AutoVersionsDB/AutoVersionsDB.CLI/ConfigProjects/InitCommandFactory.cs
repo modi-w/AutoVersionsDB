@@ -78,7 +78,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects
                 _deliveryArtifactFolderPathOption,
             };
 
-            command.Description = "Initiate project. Define a new project for AutoVersionsDB.";
+            command.Description = CLITextResources.InitCommandDescription;
 
             command.Handler = CommandHandler
                 .Create((ProjectConfigItem projectConfig) =>

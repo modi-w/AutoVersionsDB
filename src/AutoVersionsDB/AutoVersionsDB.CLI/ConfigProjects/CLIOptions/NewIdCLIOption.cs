@@ -5,7 +5,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects.CLIOptions
     public class NewIdCLIOption : Option<string>
     {
         public NewIdCLIOption()
-            : base(new string[] { "--new-id", "-nid" }, "The new project id")
+            : base(new string[] { "--new-id", "-nid" }, CLITextResources.NewIdCLIOptionDescription)
         {
             IsRequired = true;
         }

@@ -41,7 +41,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 _dddTargetCLIOption,
          };
 
-            command.Description = "Set the Database to specific state by virtually executions the scripts file. This command is useful when production database didnt use this tool yet. Insert into the 'Target' option the target script file name that you want to set the db state.";
+            command.Description = CLITextResources.VirtualCommandDescription;
 
             command.Handler = CommandHandler.Create<string, string, string, string>((id, incTarget, rptTarget, dddTarget) =>
             {

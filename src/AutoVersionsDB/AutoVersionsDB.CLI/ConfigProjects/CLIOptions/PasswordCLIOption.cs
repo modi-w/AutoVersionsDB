@@ -5,7 +5,7 @@ namespace AutoVersionsDB.CLI.ConfigProjects.CLIOptions
     public class PasswordCLIOption : Option<string>
     {
         public PasswordCLIOption()
-            : base(new string[] { "--password", "-pass" }, "DB Password")
+            : base(new string[] { "--password", "-pass" }, CLITextResources.PasswordCLIOptionDescription)
         {
         }
     }

@@ -28,7 +28,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 _idOption,
             };
 
-            command.Description = "Recreate the database from scratch to the last state only by the scripts files";
+            command.Description = CLITextResources.RecreateCommandDescription;
 
             command.Handler = CommandHandler.Create<string>((id) =>
             {
