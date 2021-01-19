@@ -169,8 +169,9 @@ namespace AutoVersionsDB.UI.DBVersions
         }
         private void CancelSyncToSpecificState()
         {
-            NotificationsViewModel.WaitingForUser();
-            _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
+            //NotificationsViewModel.WaitingForUser();
+            //_dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
+            RefreshAll();
         }
 
 
@@ -181,7 +182,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void CancelStateByVirtualExecutionViewState()
         {
-            _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);
+            RefreshAll();
         }
 
 

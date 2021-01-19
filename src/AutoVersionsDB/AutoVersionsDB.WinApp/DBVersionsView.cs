@@ -641,11 +641,21 @@ namespace AutoVersionsDB.WinApp
                 dgIncrementalScriptsFiles.BeginInvoke((MethodInvoker)(() =>
                 {
                     MarkUnMarkSelectedTargetInGrid(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.TargetIncScriptFileName, isEnable);
+
+                    if (isEnable && dgIncrementalScriptsFiles.RowCount > 0)
+                    {
+                        dgIncrementalScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+                    }
                 }));
             }
             else
             {
                 MarkUnMarkSelectedTargetInGrid(dgIncrementalScriptsFiles, ViewModel.DBVersionsViewModelData.TargetIncScriptFileName, isEnable);
+
+                if (isEnable && dgIncrementalScriptsFiles.RowCount > 0)
+                {
+                    dgIncrementalScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+                }
             }
 
             if (dgRepeatableScriptsFiles.InvokeRequired)
@@ -653,11 +663,22 @@ namespace AutoVersionsDB.WinApp
                 dgRepeatableScriptsFiles.BeginInvoke((MethodInvoker)(() =>
                 {
                     MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
+
+                    if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
+                    {
+                        dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+                    }
                 }));
             }
             else
             {
                 MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
+
+                if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
+                {
+                    dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+                }
+
             }
 
             if (dgDevDummyDataScriptsFiles.InvokeRequired)
@@ -665,11 +686,23 @@ namespace AutoVersionsDB.WinApp
                 dgDevDummyDataScriptsFiles.BeginInvoke((MethodInvoker)(() =>
                 {
                     MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
+
+                    if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
+                    {
+                        dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+                    }
+
                 }));
             }
             else
             {
                 MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
+
+                if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
+                {
+                    dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+                }
+
             }
 
         }
@@ -695,6 +728,8 @@ namespace AutoVersionsDB.WinApp
                     currGridRow.Cells[2].Style.BackColor = Color.White;
                 }
             }
+
+            
 
         }
 

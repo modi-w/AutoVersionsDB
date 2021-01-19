@@ -14,10 +14,12 @@ namespace AutoVersionsDB.ConsoleApp
 
             return CLIRunner.CLIRun(args);
 
-             //   return CLIRunner.CLIRun("sync -id=testP2");
+               //return CLIRunner.CLIRun("list");
 
             //
             //return CLIRunner.CLIRun("recreate -id=Bandana");
+
+            //return CLIRunner.CLIRun("config -id=testp11 -ser=aaa");
 
 
             //  return CLIRunner.CLIRun("-h");
