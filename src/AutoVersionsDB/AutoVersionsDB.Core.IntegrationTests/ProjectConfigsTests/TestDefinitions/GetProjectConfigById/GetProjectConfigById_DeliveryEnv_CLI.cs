@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
-            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 11);
+            AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 12);
             assertTextByLines.AssertLineMessage("> Run 'info' for 'IntegrationTestProject'", true);
             assertTextByLines.AssertLineMessage($"Id                                 : {IntegrationTestsConsts.DummyProjectConfigValid.Id}", true);
             assertTextByLines.AssertLineMessage($"Description                        : {IntegrationTestsConsts.DummyProjectConfigValid.Description}", true);
@@ -59,6 +59,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             assertTextByLines.AssertLineMessage($"DataBaseName                       : {IntegrationTestsConsts.DummyProjectConfigValid.DBName}", true);
             assertTextByLines.AssertLineMessage($"DBUsername                         : {IntegrationTestsConsts.DummyProjectConfigValid.Username}", true);
             assertTextByLines.AssertLineMessage($"DBPassword                         : {IntegrationTestsConsts.DummyProjectConfigValid.Password}", true);
+            assertTextByLines.AssertLineMessage($"ConncetionTimeout                  : {IntegrationTestsConsts.DummyProjectConfigValid.ConncetionTimeout}", true);
             assertTextByLines.AssertLineMessage($"Backup Folder Path                 : {IntegrationTestsConsts.DummyProjectConfigValid.BackupFolderPath}", true);
             assertTextByLines.AssertLineMessage($"Dev Environment                    : {false}", true);
             assertTextByLines.AssertLineMessage($"Delivery Artifact Folder Path      : {IntegrationTestsConsts.DummyProjectConfigValid.DeliveryArtifactFolderPath}", true);
