@@ -49,10 +49,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _deliveryEnv_New_Repeatable_API.Asserts(testContext);
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 1);
-            assertConsoleOutTextByLines.AssertLineMessage("> Run 'new repeatable' for 'IntegrationTestProject'", true);
+            assertConsoleOutTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "new repeatable").Replace("[args]", "IntegrationTestProject"), true);
 
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
-            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteWithErrors, true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
             assertErrorsTextByLines.AssertLineMessage($"{CheckDeliveryEnvValidator.Name}. Error: Could not run this command on Delivery Environment", false);
             assertErrorsTextByLines.AssertLineMessage("", true);

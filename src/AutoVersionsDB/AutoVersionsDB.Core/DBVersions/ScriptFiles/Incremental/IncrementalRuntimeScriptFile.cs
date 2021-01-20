@@ -57,7 +57,6 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 
             if (!isFilenameValid)
             {
-                ScriptFileTypeBase incrementalScriptFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
 
                 string errorMessage =
                     CoreTextResources

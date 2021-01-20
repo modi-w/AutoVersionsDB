@@ -61,7 +61,7 @@ namespace AutoVersionsDB.Core
         public const string InvalidDateInTheFutureForIncScriptException = "Filename not valid date script pattern: '[Filename]'. '[Date]' Can't be in the future";
         public const string InvalidVersionNumForIncScriptException = "Filename not valid for script pattern: '[filename]', the version is not an integer number";
         public const string InvalidOrderNumForIncScriptException = "Filename not valid for script pattern: '[filename]', the 'OrderNum' is not an integer number";
-s
+
 
 
     }

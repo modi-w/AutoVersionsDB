@@ -51,7 +51,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 16);
-            assertTextByLines.AssertLineMessage("> Run 'info' for 'IntegrationTestProject'", true);
+            assertTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "info").Replace("[args]", "IntegrationTestProject"), true);
             assertTextByLines.AssertLineMessage($"Id                                 : {IntegrationTestsConsts.DummyProjectConfigValid.Id}", true);
             assertTextByLines.AssertLineMessage($"Description                        : {IntegrationTestsConsts.DummyProjectConfigValid.Description}", true);
             assertTextByLines.AssertLineMessage($"DBType                             : {IntegrationTestsConsts.DummyProjectConfigValid.DBType}", true);
