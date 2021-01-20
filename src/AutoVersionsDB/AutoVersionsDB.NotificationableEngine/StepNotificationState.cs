@@ -96,7 +96,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
                         //if (!string.IsNullOrWhiteSpace(outErrorMessage))
                         //{
-                        //    outErrorMessage = $"{outErrorMessage} -> {internalErrorMessage}";
+                        //    outErrorMessage = $"{outErrorMessage} >>> {internalErrorMessage}";
                         //}
                         //else
                         //{
@@ -192,11 +192,11 @@ namespace AutoVersionsDB.NotificationableEngine
 
             //if (NumOfSteps > 0)
             //{
-            //    outStr = $"{Precents:N0}%{stepStageStr} -> {StepName}";
+            //    outStr = $"{Precents:N0}%{stepStageStr} >>> {StepName}";
             //}
             //else
             //{
-            //    outStr = $" -> {StepName}";
+            //    outStr = $" >>> {StepName}";
             //}
 
             if (NumOfSteps > 0)
@@ -211,7 +211,7 @@ namespace AutoVersionsDB.NotificationableEngine
 
             if (InternalStepNotificationState != null)
             {
-                outStr = $"{outStr} -> {InternalStepNotificationState.ToString(false, isIncludeStepStage)}";
+                outStr = $"{outStr} >>> {InternalStepNotificationState.ToString(false, isIncludeStepStage)}";
             }
             else if (HasError)
             {
@@ -221,14 +221,14 @@ namespace AutoVersionsDB.NotificationableEngine
 
             //if (InternalNotificationStateItem != null)
             //{
-            //    outStr = $"{outStr} -> {InternalNotificationStateItem.ToString(this,false, isIncludeStepStage)}";
+            //    outStr = $"{outStr} >>> {InternalNotificationStateItem.ToString(this,false, isIncludeStepStage)}";
             //}
 
 
 
             if (isIncludeTimestamp)
             {
-                outStr = $"{SnapshotTimeStemp:HH:mm:ss.fff} >> {outStr}";
+                outStr = $"{SnapshotTimeStemp:HH:mm:ss.fff} >>> {outStr}";
             }
 
             return outStr;

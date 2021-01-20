@@ -5,7 +5,9 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData
 {
     public class DevDummyDataScriptFileType : RepeatableScriptFileType
     {
-        public static string DevDummyDataFileTypeCode => ScriptFileTypeBase.Create<DevDummyDataScriptFileType>().FileTypeCode;
+        public new const string Code = "DevDummyData";
+        public override string FileTypeCode => Code;
+
 
         private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory;
         public override RuntimeScriptFileFactoryBase RuntimeScriptFileFactory
@@ -21,7 +23,6 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData
             }
         }
 
-        public override string FileTypeCode => "DevDummyData";
 
         public override string Prefix => "dddScript";
 

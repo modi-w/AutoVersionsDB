@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         public override string ValidatorName => Name;
 
 
-        public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
+        public override string ErrorInstructionsMessage => CoreTextResources.TableColumnIvalidTypeErrorMessage;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -36,9 +36,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
                 if (isTargetFileExecuted)
                 {
-
-                    string errorMsg = $"The target file '{_targetStateScriptFileName}' is already executed on this database.";
-                    return errorMsg;
+                    return CoreTextResources.HistoricalTargetStateScriptErrorMessage.Replace("[FileName]", _targetStateScriptFileName);
                 }
             }
 

@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         public override string ValidatorName => Name;
 
 
-        public override string ErrorInstructionsMessage => "Invalid script name";
+        public override string ErrorInstructionsMessage => CoreTextResources.NextScriptFileNameInstructionsMessage;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -29,13 +29,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
             if (string.IsNullOrWhiteSpace(_scriptName))
             {
-                string errorMsg = "Script Name is mandatory";
-                return errorMsg;
+                return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "Script Name");
             }
             else if (!_scriptFilesComparer.TryParseNextRuntimeScriptFileName(_scriptName, out RuntimeScriptFileBase newRuntimeScriptFile))
             {
-                string errorMsg = $"Filename '{newRuntimeScriptFile.Filename}' not valid for script type: '{newRuntimeScriptFile.ScriptFileType.FileTypeCode}'. Should be like the following pattern: '{newRuntimeScriptFile.ScriptFileType.FilenamePattern}'";
-                return errorMsg;
+                return CoreTextResources
+                    .InvalidFilenameErrorMessage
+                    .Replace("[Filename]", newRuntimeScriptFile.Filename)
+                    .Replace("[FileTypeCode]", newRuntimeScriptFile.ScriptFileType.FileTypeCode)
+                    .Replace("[FilenamePattern]", newRuntimeScriptFile.ScriptFileType.FilenamePattern);
             }
 
 

@@ -25,11 +25,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
             {
                 if (_isDevEnvironment)
                 {
-                    return "The system tables has invalid structure. Please try to 'Recreate DB From Scratch' or 'Set DB State by Virtual Execution'.";
+                    return CoreTextResources.SystemTablesDevEnvInstructionsMessage;
                 }
                 else
                 {
-                    return "The system tables has invalid structure. Please try to 'Set DB State by Virtual Execution'.";
+                    return CoreTextResources.SystemTablesDeliveryEnvInstructionsMessage;
                 }
             }
         }
@@ -51,14 +51,12 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
             {
                 if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DBSchemaName, DBCommandsConsts.DBScriptsExecutionHistoryTableName))
                 {
-                    string errorMsg = $"The table '{DBCommandsConsts.DBScriptsExecutionHistoryFullTableName}' is not exist in the db";
-                    return errorMsg;
+                    return CoreTextResources.TableNotExistErrorMessage.Replace("[TableName]", DBCommandsConsts.DBScriptsExecutionHistoryFullTableName);
                 }
 
                 if (!dbCommands.CheckIfTableExist(DBCommandsConsts.DBSchemaName, DBCommandsConsts.DBScriptsExecutionHistoryFilesTableName))
                 {
-                    string errorMsg = $"The table '{DBCommandsConsts.DBScriptsExecutionHistoryFilesTableName}' is not exist in the db";
-                    return errorMsg;
+                    return CoreTextResources.TableNotExistErrorMessage.Replace("[TableName]", DBCommandsConsts.DBScriptsExecutionHistoryFilesTableName);
                 }
 
 
@@ -72,16 +70,23 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                     {
                         if (!scriptsExecutionHistoryTableFromDB.Columns.Contains(colFromStruct.ColumnName))
                         {
-                            string errorMsg = $"The table '{DBCommandsConsts.DBScriptsExecutionHistoryFullTableName}' is missing the column '{colFromStruct}'";
-                            return errorMsg;
+                            return CoreTextResources
+                                .TableMissingColumnErrorMessage
+                                .Replace("[TableName]", DBCommandsConsts.DBScriptsExecutionHistoryFullTableName)
+                                .Replace("[ColumnName]", colFromStruct.ColumnName);
+
                         }
                         else
                         {
                             DataColumn colFromDB = scriptsExecutionHistoryTableFromDB.Columns[colFromStruct.ColumnName];
                             if (colFromDB.DataType != colFromStruct.DataType)
                             {
-                                string errorMsg = $"The column '{colFromStruct.ColumnName}' has the type '{colFromDB.DataType}' instead of '{colFromStruct.DataType}', in the table {DBCommandsConsts.DBScriptsExecutionHistoryFullTableName}";
-                                return errorMsg;
+                                return CoreTextResources
+                                    .TableColumnIvalidTypeErrorMessage
+                                    .Replace("[ColumnName]", colFromStruct.ColumnName)
+                                    .Replace("[DBDataType]", colFromDB.DataType.Name)
+                                    .Replace("[StructDataType]", colFromStruct.DataType.Name)
+                                    .Replace("[TableName]", DBCommandsConsts.DBScriptsExecutionHistoryFullTableName);
                             }
                         }
                     }
@@ -97,16 +102,22 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                     {
                         if (!scriptsExecutionHistoryFilesTableFromDB.Columns.Contains(colFromStruct.ColumnName))
                         {
-                            string errorMsg = $"The table '{DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName}' is missing the column '{colFromStruct}'";
-                            return errorMsg;
+                            return CoreTextResources
+                               .TableMissingColumnErrorMessage
+                               .Replace("[TableName]", DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName)
+                               .Replace("[ColumnName]", colFromStruct.ColumnName);
                         }
                         else
                         {
                             DataColumn colFromDB = scriptsExecutionHistoryFilesTableFromStructure.Columns[colFromStruct.ColumnName];
                             if (colFromDB.DataType != colFromStruct.DataType)
                             {
-                                string errorMsg = $"The column '{colFromStruct.ColumnName}' has the type '{colFromDB.DataType}' instead of '{colFromStruct.DataType}', in the table {DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName}";
-                                return errorMsg;
+                                return CoreTextResources
+                                   .TableColumnIvalidTypeErrorMessage
+                                   .Replace("[ColumnName]", colFromStruct.ColumnName)
+                                   .Replace("[DBDataType]", colFromDB.DataType.Name)
+                                   .Replace("[StructDataType]", colFromStruct.DataType.Name)
+                                   .Replace("[TableName]", DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName);
                             }
                         }
                     }

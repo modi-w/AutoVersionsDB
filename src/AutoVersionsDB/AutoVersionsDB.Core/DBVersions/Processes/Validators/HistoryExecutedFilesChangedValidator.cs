@@ -13,7 +13,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         public const string Name = "HistoryExecutedFilesChanged";
         public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";
+        public override string ErrorInstructionsMessage => CoreTextResources.HistoryExecutedFilesChangedInstructionsMessage;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -31,8 +31,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
             {
                 IEnumerable<string> changeFilenamesList = _scriptFilesState.IncrementalScriptFilesComparer.ChangedFiles.Select(e => e.Filename);
 
-                string errorMsg = $"The following files changed: '{string.Join(", ", changeFilenamesList)}'";
-                return errorMsg;
+                return CoreTextResources.FilesChangedErrorMessage.Replace("[FilesList]", string.Join(", ", changeFilenamesList));
             }
 
             if (!string.IsNullOrWhiteSpace(_scriptFilesState.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename))
@@ -49,8 +48,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
                         if (isFileNotExecuted)
                         {
-                            string errorMsg = $"The history file '{scriptFileItem.Filename}' is not executed on this Database";
-                            return errorMsg;
+                            return CoreTextResources.HistoryFilesNotExecutedErrorMessage.Replace("[FileName]", scriptFileItem.Filename);
                         }
                     }
                 }
@@ -58,10 +56,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                 if (_scriptFilesState.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Count > 0)
                 {
                     IEnumerable<string> notExistInFileSystemFilenamesList = _scriptFilesState.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Select(e => e.Filename);
-
-                    string errorMsg = $"The following files missing from the scripts folder: '{string.Join(", ", notExistInFileSystemFilenamesList)}'";
-                    return errorMsg;
-                }
+             
+                    return CoreTextResources.HistoryExecutedFilesMissingErrorMessage.Replace("[FilesList]", string.Join(", ", notExistInFileSystemFilenamesList));
+                 }
             }
 
 

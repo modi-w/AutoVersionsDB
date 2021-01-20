@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             if (!processContext.ProjectConfig.DevEnvironment)
             {
-                throw new Exception("Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).");
+                throw new Exception(CoreTextResources.CantDropDBOnDelEnvExecption);
             }
 
             using (var dbCommands = _dbCommandsFactory.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))
