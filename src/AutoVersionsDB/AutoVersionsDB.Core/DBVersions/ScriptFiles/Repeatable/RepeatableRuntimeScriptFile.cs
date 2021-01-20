@@ -56,7 +56,13 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable
             {
                 ScriptFileTypeBase repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
 
-                string errorMessage = $"Filename '{filename}' not valid for script type: '{repeatableScriptFileType.FileTypeCode}'. Should be like the following pattern: '{ScriptFileType.FilenamePattern}'";
+                string errorMessage =
+                    CoreTextResources
+                    .InvalidFilenameErrorMessage
+                    .Replace("[Filename]", filename)
+                    .Replace("[FileTypeCode]", repeatableScriptFileType.FileTypeCode)
+                    .Replace("[FilenamePattern]", ScriptFileType.FilenamePattern);
+
                 throw new Exception(errorMessage);
             }
 
@@ -68,7 +74,11 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable
 
             if (!int.TryParse(fileOrderNumStr, out int tempOrderNum_FromFilename))
             {
-                string errorMessage = $"Filename not valid for script pattern: '{filename}', the 'OrderNum' is not an integer number";
+                string errorMessage =
+                    CoreTextResources
+                    .InvalidOrderNumForIncScriptException
+                    .Replace("[Filename]", filename);
+
                 throw new Exception(errorMessage);
             }
 

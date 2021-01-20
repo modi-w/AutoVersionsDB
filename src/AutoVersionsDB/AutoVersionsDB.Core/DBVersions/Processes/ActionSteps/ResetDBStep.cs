@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             if (!processContext.ProjectConfig.DevEnvironment)
             {
-                throw new Exception(CoreTextResources.CantDropDBOnDelEnvExecption);
+                throw new Exception(CoreTextResources.CantDropDBOnDelEnvException);
             }
 
             using (var dbCommands = _dbCommandsFactory.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))

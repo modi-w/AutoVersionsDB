@@ -52,13 +52,16 @@ namespace AutoVersionsDB.Core
         //Core Process Messages
         public const string IgnoreBecauseVirtualExecution = " - Ignore (virtual execution)";
 
-        
-        //Core Exceptions Messages
-        public const string CantDropDBOnDelEnvExecption = "Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).";
-        //TODO: IncrementalRuntimeScriptFile Exceptions
-        //TODO: RepeatableRuntimeScriptFile Exceptions
-        //TODO: FileSystemScriptFiles Exceptions
 
+        //Core Exceptions Messages
+        public const string ProjectIdIsAlreadyExistException = "Project Id: '[Id]' is already exist";
+        public const string ProjectIdIsNotExistException = "Project Id: '[Id]' is not exist.";
+        public const string CantDropDBOnDelEnvException = "Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).";
+        public const string InvalidDatePatternForIncScriptException = "Filename not valid date script pattern: '[Filename]'. Should be with pattern of '[ScriptFileDatePattern]'";
+        public const string InvalidDateInTheFutureForIncScriptException = "Filename not valid date script pattern: '[Filename]'. '[Date]' Can't be in the future";
+        public const string InvalidVersionNumForIncScriptException = "Filename not valid for script pattern: '[filename]', the version is not an integer number";
+        public const string InvalidOrderNumForIncScriptException = "Filename not valid for script pattern: '[filename]', the 'OrderNum' is not an integer number";
+s
 
 
     }
