@@ -7,7 +7,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 {
     public class DBStateValidationsFactory : ValidationsFactory
     {
-        public override string ValidationName => "DB State";
+        public const string Name = "DB State";
+        public override string ValidationName => Name;
+
 
         public override ValidationsGroup Create(ProcessContext processContext)
         {

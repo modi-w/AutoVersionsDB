@@ -7,7 +7,6 @@ namespace AutoVersionsDB.Core
     public static class CoreTextResources
     {
         public const string ProjectConfigValidation = "Project Config Validation Error";
-        public const string ProjectIdNotExistValidation = "Validate Project Id Not Exist";
 
         public const string MandatoryFieldErrorMessage = "'[FieldName]' is mandatory";
 

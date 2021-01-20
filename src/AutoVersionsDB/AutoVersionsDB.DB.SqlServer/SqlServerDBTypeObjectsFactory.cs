@@ -6,7 +6,9 @@ namespace AutoVersionsDB.DB.SqlServer
 {
     public class SqlServerDBTypeObjectsFactory : IDBTypeObjectsFactory
     {
-        public DBType DBType => new DBType("SqlServer", "Sql Server");
+        public const string DBTypeCode = "SqlServer";
+
+        public DBType DBType => new DBType(DBTypeCode, "Sql Server");
 
 
 

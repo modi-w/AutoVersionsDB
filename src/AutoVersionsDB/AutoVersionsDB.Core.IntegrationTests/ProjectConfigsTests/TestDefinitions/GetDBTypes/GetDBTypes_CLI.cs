@@ -13,6 +13,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEn
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.GetDBTypes;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.DB.SqlServer;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -52,7 +53,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             assertTextByLines.AssertLineMessage("", true);
             assertTextByLines.AssertLineMessage("  Code       |  Name", true);
             assertTextByLines.AssertLineMessage("--------------------", true);
-            assertTextByLines.AssertLineMessage("+ SqlServer  | Sql Server", true);
+            assertTextByLines.AssertLineMessage($"+ {SqlServerDBTypeObjectsFactory.DBTypeCode} | Sql Server", true);
 
         }
 

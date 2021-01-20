@@ -11,7 +11,9 @@ namespace AutoVersionsDB.Core.Common
     {
         private readonly DBCommandsFactory _dbCommandsFactory;
 
-        public override string ValidationName => "Project Config";
+        public const string Name = "Project Config";
+        public override string ValidationName => Name;
+
 
 
         public ProjectConfigValidationsFactory(DBCommandsFactory dbCommandsFactory)

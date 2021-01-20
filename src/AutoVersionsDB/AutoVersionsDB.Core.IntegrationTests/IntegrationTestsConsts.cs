@@ -2,6 +2,7 @@
 using AutoVersionsDB.Core.DBVersions.Processes;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB;
+using AutoVersionsDB.DB.SqlServer;
 using AutoVersionsDB.Helpers;
 using Newtonsoft.Json;
 using System;
@@ -14,7 +15,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
     {
         public const string TestProjectId = "IntegrationTestProject";
 
-        public const string SqlServerDBType = "SqlServer";
+        public const string SqlServerDBType = SqlServerDBTypeObjectsFactory.DBTypeCode;
         public const string TestDBName = "AutoVersionsDB.Tests";
 
 

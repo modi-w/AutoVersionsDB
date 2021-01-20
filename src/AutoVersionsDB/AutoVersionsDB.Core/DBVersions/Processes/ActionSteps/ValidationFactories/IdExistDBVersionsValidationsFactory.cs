@@ -10,7 +10,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
     {
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public override string ValidationName => "Id Exist";
+        public const string Name = "Id Exist";
+        public override string ValidationName => Name;
+
 
 
         public IdExistDBVersionsValidationsFactory(ProjectConfigsStorage projectConfigsStorage)

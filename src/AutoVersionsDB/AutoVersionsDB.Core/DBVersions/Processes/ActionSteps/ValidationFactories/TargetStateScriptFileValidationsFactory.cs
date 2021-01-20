@@ -7,7 +7,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 {
     public class TargetStateScriptFileValidationsFactory : ValidationsFactory
     {
-        public override string ValidationName => "Target State Script File";
+        public const string Name = "Target State Script File";
+        public override string ValidationName => Name;
+
 
 
         public override ValidationsGroup Create(ProcessContext processContext)

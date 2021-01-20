@@ -11,7 +11,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
     {
         private readonly TScriptFileType _scriptFileType;
 
-        public override string ValidationName => "NextRuntimeScriptFileName";
+        public const string Name = "Next Runtime Script File Name";
+        public override string ValidationName => Name;
+
 
         public NextScriptFileNameValidationsFactory(TScriptFileType scriptFileType)
         {
