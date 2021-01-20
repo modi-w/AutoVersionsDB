@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core
         public const string InvalidFilenameErrorMessage = "Filename '[Filename]' not valid for script type: '[FileTypeCode]'. Should be like the following pattern: '[FilenamePattern]'";
         public const string TableNotExistErrorMessage = "The table '[TableName]' is not exist in the DB";
         public const string TableMissingColumnErrorMessage = "The table '[TableName]' is missing the column '[ColumnName]'";
-        public const string TableColumnIvalidTypeErrorMessage = "The column '[ColumnName]' has the type '[DBDataType]' instead of '[StructDataType]', in the table {DBCommandsConsts.DBScriptsExecutionHistoryFullTableName}";
+        public const string TableColumnIvalidTypeErrorMessage = "The column '[ColumnName]' has the type '[DBDataType]' instead of '[StructDataType]', in the table [TableName]";
         public const string HistoricalTargetStateScriptErrorMessage = "The target file '[FileName]' is already executed on this database.";
         public const string TargetStateScriptFileNotExistErrorMessage = "The target file '[FileName]' is not exsit.";
 

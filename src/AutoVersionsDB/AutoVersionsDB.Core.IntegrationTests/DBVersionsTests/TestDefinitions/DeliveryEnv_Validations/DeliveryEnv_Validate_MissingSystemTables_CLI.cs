@@ -13,6 +13,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.DB;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -55,9 +56,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
             assertErrorsTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteWithErrors, true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage($"{SystemTablesValidator.Name}. Error: The table 'AutoVersionsDB.DBScriptsExecutionHistory' is not exist in the DB", false);
+            assertErrorsTextByLines.AssertLineMessage($"{SystemTablesValidator.Name}. Error: {CoreTextResources.TableNotExistErrorMessage.Replace("[TableName]", DBCommandsConsts.DBScriptsExecutionHistoryFullTableName)}", false);
             assertErrorsTextByLines.AssertLineMessage("", true);
-            assertErrorsTextByLines.AssertLineMessage("The system tables has invalid structure. Please try to 'Set DB State by Virtual Execution'.", true);
+            assertErrorsTextByLines.AssertLineMessage(CoreTextResources.SystemTablesDeliveryEnvInstructionsMessage, true);
         }
 
 

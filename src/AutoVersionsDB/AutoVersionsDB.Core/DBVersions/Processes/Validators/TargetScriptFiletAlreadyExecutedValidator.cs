@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         public override string ValidatorName => Name;
 
 
-        public override string ErrorInstructionsMessage => CoreTextResources.TableColumnIvalidTypeErrorMessage;
+        public override string ErrorInstructionsMessage => CoreTextResources.HistoricalTargetStateScriptInstructionsMessage;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 

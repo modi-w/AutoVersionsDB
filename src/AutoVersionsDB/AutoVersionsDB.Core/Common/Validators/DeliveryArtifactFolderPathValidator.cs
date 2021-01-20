@@ -24,7 +24,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_deliveryArtifactFolderPath))
             {
-                return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "Delivery Artifact Folder Pat");
+                return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "Delivery Artifact Folder Path");
             }
             else
             {

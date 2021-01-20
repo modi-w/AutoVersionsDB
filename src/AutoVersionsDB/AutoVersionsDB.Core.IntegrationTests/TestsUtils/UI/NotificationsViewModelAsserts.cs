@@ -42,7 +42,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI
         public void AssertNotificationsViewModelWaitingForUser(string testName, NotificationsViewModelData notificationsViewModelData)
         {
             _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), NotificationStatus.WaitingForUser.ToString());
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, "Waiting for your command.");
+            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, UITextResources.WaitingForUserMessage);
             _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), StatusImageType.Succeed.ToString());
         }
 

@@ -159,7 +159,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
             if (expectError)
             {
-                _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, notificationsViewModelData, "Project Config Validation Error");
+                _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, notificationsViewModelData, CoreTextResources.ProjectConfigValidation);
             }
             else
             {
