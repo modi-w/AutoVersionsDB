@@ -138,7 +138,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNoFiles(testName, dbVersionsViewModel.DBVersionsViewModelData);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, false);
-            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "Artifact File not exist");
+            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "Delivery Artifact File does not exist");
         }
 
         public void AssertNotAllowMethodDBMiddleState(string testName, DBVersionsViewModel dbVersionsViewModel)
@@ -188,31 +188,31 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
         public void AssertViewStateHistory(string testName, IList<DBVersionsViewStateType> viewStateHistory, DBVersionsViewStateType finalViewState)
         {
-            Assert.That(viewStateHistory.Count == 2, $"{testName} -> Number of process ViewStates should be 2, but was {viewStateHistory.Count}");
-            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
-            Assert.That(viewStateHistory[1] == finalViewState, $"{testName} -> ViewState 2 should be {finalViewState}, but was '{viewStateHistory[1]}'");
+            Assert.That(viewStateHistory.Count == 2, $"{testName} >>> Number of process ViewStates should be 2, but was {viewStateHistory.Count}");
+            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
+            Assert.That(viewStateHistory[1] == finalViewState, $"{testName} >>> ViewState 2 should be {finalViewState}, but was '{viewStateHistory[1]}'");
         }
 
         public void AssertViewStateHistoryForNewTwoScriptFiles(string testName, IList<DBVersionsViewStateType> viewStateHistory)
         {
-            Assert.That(viewStateHistory.Count == 8, $"{testName} -> Number of process ViewStates should be 8, but was {viewStateHistory.Count}");
-            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
-            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[1]}'");
-            Assert.That(viewStateHistory[2] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[2]}'");
-            Assert.That(viewStateHistory[3] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[3]}'");
-            Assert.That(viewStateHistory[4] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[4]}'");
-            Assert.That(viewStateHistory[5] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[5]}'");
-            Assert.That(viewStateHistory[6] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[6]}'");
-            Assert.That(viewStateHistory[7] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[7]}'");
+            Assert.That(viewStateHistory.Count == 8, $"{testName} >>> Number of process ViewStates should be 8, but was {viewStateHistory.Count}");
+            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
+            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[1]}'");
+            Assert.That(viewStateHistory[2] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[2]}'");
+            Assert.That(viewStateHistory[3] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[3]}'");
+            Assert.That(viewStateHistory[4] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[4]}'");
+            Assert.That(viewStateHistory[5] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[5]}'");
+            Assert.That(viewStateHistory[6] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[6]}'");
+            Assert.That(viewStateHistory[7] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[7]}'");
         }
 
         public void AssertViewStateHistoryForNewSingleScriptFile(string testName, IList<DBVersionsViewStateType> viewStateHistory)
         {
-            Assert.That(viewStateHistory.Count == 4, $"{testName} -> Number of process ViewStates should be 4, but was {viewStateHistory.Count}");
-            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
-            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[1]}'");
-            Assert.That(viewStateHistory[2] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[2]}'");
-            Assert.That(viewStateHistory[3] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[3]}'");
+            Assert.That(viewStateHistory.Count == 4, $"{testName} >>> Number of process ViewStates should be 4, but was {viewStateHistory.Count}");
+            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
+            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[1]}'");
+            Assert.That(viewStateHistory[2] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[2]}'");
+            Assert.That(viewStateHistory[3] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[3]}'");
         }
 
 

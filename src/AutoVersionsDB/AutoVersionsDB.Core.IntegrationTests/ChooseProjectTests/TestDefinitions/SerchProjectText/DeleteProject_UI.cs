@@ -81,7 +81,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ChooseProjectTests.TestDefinition
 
         public override void Asserts(ITestContext testContext)
         {
-            Assert.That(!_projectConfigsStorageHelper.IsIdExsit("Id3"), $"{this.GetType().Name} -> projects storage should not include project with Id='Id3'");
+            Assert.That(!_projectConfigsStorageHelper.IsIdExsit("Id3"), $"{this.GetType().Name} >>> projects storage should not include project with Id='Id3'");
         }
 
         public override void Release(ITestContext testContext)

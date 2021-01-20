@@ -128,13 +128,13 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void SetToolTips()
         {
-            DBVersionsControls.BtnRefreshTooltip = "Refresh";
-            DBVersionsControls.BtnRunSyncTooltip = "Sync the db with the missing scripts";
-            DBVersionsControls.BtnRecreateDBFromScratchMainTooltip = "Recreate DB From Scratch";
-            DBVersionsControls.BtnDeployTooltip = "Create Deploy Package";
-            DBVersionsControls.BtnSetDBToSpecificStateTooltip = "Set DB To Specific State";
-            DBVersionsControls.BtnVirtualExecutionTooltip = "Set DB to specific state virtually. Use it if your DB is not empty but you never use our migration tool on it yet.";
-            DBVersionsControls.BtnShowHistoricalBackupsTooltip = "Open the backup history folder.";
+            DBVersionsControls.BtnRefreshTooltip = UITextResources.BtnRefreshTooltip;
+            DBVersionsControls.BtnRunSyncTooltip = UITextResources.BtnRunSyncTooltip;
+            DBVersionsControls.BtnRecreateDBFromScratchMainTooltip = UITextResources.BtnRecreateDBFromScratchMainTooltip;
+            DBVersionsControls.BtnDeployTooltip = UITextResources.BtnDeployTooltip;
+            DBVersionsControls.BtnSetDBToSpecificStateTooltip = UITextResources.BtnSetDBToSpecificStateTooltip;
+            DBVersionsControls.BtnVirtualExecutionTooltip = UITextResources.BtnVirtualExecutionTooltip;
+            DBVersionsControls.BtnShowHistoricalBackupsTooltip = UITextResources.BtnShowHistoricalBackupsTooltip;
         }
 
 
@@ -178,7 +178,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void StateByVirtualExecutionViewState()
         {
-            _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.SetDBStateManually);
+            _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.SetVirtual);
         }
 
         private void CancelStateByVirtualExecutionViewState()
@@ -217,7 +217,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void CreateNewIncrementalScriptFile()
         {
-            TextInputResults results = FireOnTextInput("Create new script script file, insert the script name:");
+            TextInputResults results = FireOnTextInput(UITextResources.CreateNewScriptFileInstructions);
 
             if (results.IsApply)
             {
@@ -240,7 +240,7 @@ namespace AutoVersionsDB.UI.DBVersions
         }
         private void CreateNewRepeatableScriptFile()
         {
-            TextInputResults results = FireOnTextInput("Create new script script file, insert the script name:");
+            TextInputResults results = FireOnTextInput(UITextResources.CreateNewScriptFileInstructions);
 
             if (results.IsApply)
             {
@@ -265,7 +265,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void CreateNewDevDummyDataScriptFile()
         {
-            TextInputResults results = FireOnTextInput("Create new script script file, insert the script name:");
+            TextInputResults results = FireOnTextInput(UITextResources.CreateNewScriptFileInstructions);
 
 
             if (results.IsApply)
@@ -291,39 +291,39 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void RefreshAll()
         {
-            //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> Start");
+            //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> Start");
 
             DBVersionsViewModelData.TargetIncScriptFileName = null;
 
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
-            //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> After change to InProcess");
+            //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> After change to InProcess");
 
             NotificationsViewModel.BeforeStartProcess();
-            //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> after call to AfterBeforeStartProcess()");
+            //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> after call to AfterBeforeStartProcess()");
 
             if (RefreshScriptFilesState(true))
             {
-                //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> after call to RefreshScriptFilesState(true)");
+                //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> after call to RefreshScriptFilesState(true)");
 
                 ProcessResults processResults = _dbVersionsAPI.ValidateDBVersions(DBVersionsViewModelData.ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
-                //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> after call to ValidateDBVersions()");
+                //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> after call to ValidateDBVersions()");
 
 
                 if (processResults.Trace.HasError)
                 {
                     NotificationsViewModel.AfterComplete(processResults);
-                    //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  AfterComplete()");
+                    //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> HasError >>> after call to  AfterComplete()");
 
                     if (processResults.Trace.ContainErrorCode(NewProjectValidator.Name)
                         || processResults.Trace.ContainErrorCode(SystemTablesValidator.Name))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);
-                        //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  MissingSystemTables()");
+                        //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> HasError >>> after call to  MissingSystemTables()");
                     }
                     else if (processResults.Trace.ContainErrorCode(HistoryExecutedFilesChangedValidator.Name))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.HistoryExecutedFilesChanged);
-                        //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  HistoryExecutedFilesChanged()");
+                        //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> HasError >>> after call to  HistoryExecutedFilesChanged()");
                     }
                     else
                     {
@@ -338,21 +338,21 @@ namespace AutoVersionsDB.UI.DBVersions
                         //   }
 
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
-                        //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  ReadyToRunSync()");
+                        //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> HasError >>> after call to  ReadyToRunSync()");
                     }
                 }
                 else
                 {
                     //RefreshScriptFilesState();
                     NotificationsViewModel.AfterComplete(processResults);
-                    //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> No Error -> after call to  AfterComplete()");
+                    //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> No Error >>> after call to  AfterComplete()");
 
 
                     NotificationsViewModel.WaitingForUser();
-                    //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> No Error -> after call to  WaitingForUser()");
+                    //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> No Error >>> after call to  WaitingForUser()");
 
                     _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.ReadyToRunSync);
-                    //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> No Error -> after call to  ReadyToRunSync()");
+                    //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> No Error >>> after call to  ReadyToRunSync()");
                 }
             }
 
@@ -374,7 +374,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private void RecreateDBFromScratch()
         {
-            bool isAllowRun = UIGeneralEvents.FireOnConfirm(this, $"This action will drop the Database and recreate it only by the scripts, you may loose Data. Are you sure?");
+            bool isAllowRun = UIGeneralEvents.FireOnConfirm(this, UITextResources.RecreateDBConfirmaion);
 
             if (isAllowRun)
             {
@@ -488,7 +488,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (_dbVersionsAPI.ValdiateTargetStateAlreadyExecuted(DBVersionsViewModelData.ProjectConfig.Id, DBVersionsViewModelData.TargetIncScriptFileName, NotificationsViewModel.OnNotificationStateChanged).Trace.HasError)
             {
-                isAllowRun = UIGeneralEvents.FireOnConfirm(this, $"This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?");
+                isAllowRun = UIGeneralEvents.FireOnConfirm(this, UITextResources.TargetStateHistoryConfirmaion);
             }
 
             return isAllowRun;

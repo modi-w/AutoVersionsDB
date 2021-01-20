@@ -172,7 +172,7 @@ namespace AutoVersionsDB.NotificationableEngine
                  }
                  catch (Exception ex)
                  {
-                     Console.WriteLine($"ProcessTraceHandler.RiseStepNotificationStateChanges() -> {ex}");
+                     Console.WriteLine($"ProcessTraceHandler.RiseStepNotificationStateChanges() >>> {ex}");
                  }
 
              });

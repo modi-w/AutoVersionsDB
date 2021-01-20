@@ -77,12 +77,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _processAsserts.AssertProccessValid(GetType().Name, testContext.ProcessResults.Trace);
 
             ProjectConfigItem oldProjectByProjectId = _projectConfigsStorage.GetProjectConfigById(OldProjectId);
-            Assert.That(oldProjectByProjectId == null, $"{this.GetType().Name} -> Chuold not find project with the old ProjectId.");
+            Assert.That(oldProjectByProjectId == null, $"{this.GetType().Name} >>> Chuold not find project with the old ProjectId.");
 
             ProjectConfigItem newProjectByProjectId = _projectConfigsStorage.GetProjectConfigById(NewProjectId);
-            Assert.That(newProjectByProjectId != null, $"{this.GetType().Name} -> Could not find project with the new ProjectId.");
-            Assert.That(newProjectByProjectId.Id == NewProjectId, $"{this.GetType().Name} -> The new ProjectId should be: '{NewProjectId}', but was: '{newProjectByProjectId.Id}'");
-            Assert.That(newProjectByProjectId.Description == ProjectDesc, $"{this.GetType().Name} -> Project Description should be: '{ProjectDesc}', but was:'{newProjectByProjectId.Description}'.");
+            Assert.That(newProjectByProjectId != null, $"{this.GetType().Name} >>> Could not find project with the new ProjectId.");
+            Assert.That(newProjectByProjectId.Id == NewProjectId, $"{this.GetType().Name} >>> The new ProjectId should be: '{NewProjectId}', but was: '{newProjectByProjectId.Id}'");
+            Assert.That(newProjectByProjectId.Description == ProjectDesc, $"{this.GetType().Name} >>> Project Description should be: '{ProjectDesc}', but was:'{newProjectByProjectId.Description}'.");
         }
 
         public override void Release(ITestContext testContext)

@@ -36,8 +36,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         {
             NumOfDBConnections numOfOpenConnections_After = _dbHandler.GetNumOfOpenConnection(dbConnectionInfo);
 
-            Assert.That(numOfOpenConnections_Before.NumOfConnectionsToDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToDB), $"{testName} -> NumOfConnectionsToDB after '{numOfOpenConnections_After.NumOfConnectionsToDB}', is grater then before '{numOfOpenConnections_Before.NumOfConnectionsToDB}'");
-            Assert.That(numOfOpenConnections_Before.NumOfConnectionsToAdminDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToAdminDB), $"{testName} -> NumOfConnectionsToAdminDB after '{numOfOpenConnections_After.NumOfConnectionsToAdminDB}', is grater then before '{numOfOpenConnections_Before.NumOfConnectionsToAdminDB}'");
+            Assert.That(numOfOpenConnections_Before.NumOfConnectionsToDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToDB), $"{testName} >>> NumOfConnectionsToDB after '{numOfOpenConnections_After.NumOfConnectionsToDB}', is grater then before '{numOfOpenConnections_Before.NumOfConnectionsToDB}'");
+            Assert.That(numOfOpenConnections_Before.NumOfConnectionsToAdminDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToAdminDB), $"{testName} >>> NumOfConnectionsToAdminDB after '{numOfOpenConnections_After.NumOfConnectionsToAdminDB}', is grater then before '{numOfOpenConnections_Before.NumOfConnectionsToAdminDB}'");
         }
 
         public void AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(string testName, DBConnectionInfo dbConnectionInfo, DBBackupFileType dbBackupFileType)
@@ -75,7 +75,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
                                         && !string.IsNullOrWhiteSpace(e.InternalStepNotificationState.StepName)
                                         && e.InternalStepNotificationState.StepName.StartsWith(RestoreDatabaseStep.Name));
 
-            Assert.That(isRestoreExecuted, $"{testName} -> Restore step was not executed");
+            Assert.That(isRestoreExecuted, $"{testName} >>> Restore step was not executed");
 
 
 
@@ -97,7 +97,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         {
             DataTable allSchemaTable = _dbHandler.GetAllDBSchemaExceptDBVersionSchema(dbConnectionInfo);
 
-            Assert.That(allSchemaTable.Rows.Count, Is.EqualTo(0), $"{testName} -> The DB should be empty except schema tables, but its not.");
+            Assert.That(allSchemaTable.Rows.Count, Is.EqualTo(0), $"{testName} >>> The DB should be empty except schema tables, but its not.");
         }
 
 
@@ -267,17 +267,17 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         private void AssertTableExsit(string testName, DBConnectionInfo dbConnectionInfo, string schemaName, string tableName)
         {
             bool isTableExist = _dbHandler.CheckIfTableExist(dbConnectionInfo, schemaName, tableName);
-            Assert.That(isTableExist, Is.True, $"{testName} -> the table [{schemaName}].[{tableName}] is not exist");
+            Assert.That(isTableExist, Is.True, $"{testName} >>> the table [{schemaName}].[{tableName}] is not exist");
         }
 
 
         private static void assertTableNumOfRows(string testName, string tableName, DataTable table1Data, int numOfRows)
         {
-            Assert.That(table1Data.Rows.Count, Is.EqualTo(numOfRows), $"{testName} -> The table {tableName} should be {numOfRows} rows, but has {table1Data.Rows.Count}");
+            Assert.That(table1Data.Rows.Count, Is.EqualTo(numOfRows), $"{testName} >>> The table {tableName} should be {numOfRows} rows, but has {table1Data.Rows.Count}");
         }
         private static void assertTableCellValue(string testName, string tableName, DataTable table1Data, int rowIndex, string colName, object cellValue)
         {
-            Assert.That(table1Data.Rows[rowIndex][colName], Is.EqualTo(cellValue), $"{testName} -> For table '{tableName}' cell [{rowIndex}][{colName}] should be '{cellValue}', but was '{table1Data.Rows[rowIndex][colName]}' ");
+            Assert.That(table1Data.Rows[rowIndex][colName], Is.EqualTo(cellValue), $"{testName} >>> For table '{tableName}' cell [{rowIndex}][{colName}] should be '{cellValue}', but was '{table1Data.Rows[rowIndex][colName]}' ");
         }
 
 
@@ -285,7 +285,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         private void AssertSpExsit(string testName, DBConnectionInfo dbConnectionInfo, string schemaName, string spName)
         {
             bool isTableExist = _dbHandler.CheckIfStoredProcedureExist(dbConnectionInfo, schemaName, spName);
-            Assert.That(isTableExist, Is.True, $"{testName} -> the stored procedure [{schemaName}].[{spName}] is not exist");
+            Assert.That(isTableExist, Is.True, $"{testName} >>> the stored procedure [{schemaName}].[{spName}] is not exist");
         }
 
     }

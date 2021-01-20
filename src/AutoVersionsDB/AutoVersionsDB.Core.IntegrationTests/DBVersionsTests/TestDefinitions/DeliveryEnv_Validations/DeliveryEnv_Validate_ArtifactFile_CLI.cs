@@ -55,9 +55,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
             assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage($"{ArtifactFileValidator.Name}. Error: Delivery Foder not exist", false);
+            assertErrorsTextByLines.AssertLineMessage($"{ArtifactFileValidator.Name}. Error: Delivery Artifact Folder does not exist", false);
             assertErrorsTextByLines.AssertLineMessage("", true);
-            assertErrorsTextByLines.AssertLineMessage("Artifact File not exist", true);
+            assertErrorsTextByLines.AssertLineMessage("Delivery Artifact File does not exist", true);
 
 
         }

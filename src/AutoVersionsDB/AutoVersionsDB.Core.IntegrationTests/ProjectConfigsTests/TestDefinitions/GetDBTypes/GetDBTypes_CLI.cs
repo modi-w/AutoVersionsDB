@@ -53,7 +53,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             assertTextByLines.AssertLineMessage("", true);
             assertTextByLines.AssertLineMessage("  Code       |  Name", true);
             assertTextByLines.AssertLineMessage("--------------------", true);
-            assertTextByLines.AssertLineMessage($"+ {SqlServerDBTypeObjectsFactory.DBTypeCode} | Sql Server", true);
+            assertTextByLines.AssertLineMessage($"+ {SqlServerDBTypeObjectsFactory.DBTypeCode}  | Sql Server", true);
 
         }
 

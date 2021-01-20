@@ -169,7 +169,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         private void AssertErrorMessage(string testName, bool isErrorCodeExist, string errorMessageValue, string errorMessagePropertyName)
         {
-            Assert.That(isErrorCodeExist == !string.IsNullOrWhiteSpace(errorMessageValue), $"{testName} -> Missing error message for '{errorMessagePropertyName}'");
+            Assert.That(isErrorCodeExist == !string.IsNullOrWhiteSpace(errorMessageValue), $"{testName} >>> Missing error message for '{errorMessagePropertyName}'");
 
         }
 

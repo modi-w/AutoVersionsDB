@@ -162,13 +162,13 @@ namespace AutoVersionsDB.UI.Notifications
             System.Threading.Thread.Sleep(500);
 
             NotificationsViewModelData.NotificationStatus = NotificationStatus.WaitingForUser;
-            NotificationsViewModelData.ProcessStatusMessage = "Waiting for your command.";
+            NotificationsViewModelData.ProcessStatusMessage = UITextResources.WaitingForUserMessage;
         }
 
         public void Preparing()
         {
             NotificationsViewModelData.NotificationStatus = NotificationStatus.InProgress;
-            NotificationsViewModelData.ProcessStatusMessage = "Please wait, preparing...";
+            NotificationsViewModelData.ProcessStatusMessage = UITextResources.PreparingMessage;
         }
 
 
@@ -201,7 +201,7 @@ namespace AutoVersionsDB.UI.Notifications
             {
                 NotificationsViewModelData.ProcessStatusMessage = _processTrace.InstructionsMessage;
 
-                NotificationsViewModelData.NotificationStatus = _processTrace.NotificationErrorType 
+                NotificationsViewModelData.NotificationStatus = _processTrace.NotificationErrorType
                     switch
                 {
                     NotificationErrorType.Error => NotificationStatus.Error,
@@ -212,7 +212,7 @@ namespace AutoVersionsDB.UI.Notifications
             else
             {
                 NotificationsViewModelData.NotificationStatus = NotificationStatus.CompleteSuccessfully;
-                NotificationsViewModelData.ProcessStatusMessage = "The process complete successfully";
+                NotificationsViewModelData.ProcessStatusMessage = UITextResources.CompleteSuccessfullyMessage;
             }
 
         }

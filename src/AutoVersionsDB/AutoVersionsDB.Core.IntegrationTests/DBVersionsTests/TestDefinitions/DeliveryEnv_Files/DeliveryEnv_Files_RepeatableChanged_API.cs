@@ -70,7 +70,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             rptfileStateListAssert.AssertFileState(0, "rptScript_001_DataForLookupTable1.sql", HashDiffType.Different);
             rptfileStateListAssert.AssertFileState(1, "rptScript_002_DataForLookupTable2.sql", HashDiffType.Equal);
 
-            Assert.That(scriptFilesState.DevDummyDataScriptFilesComparer == null, $"{this.GetType().Name} -> DevDummyDataScriptFilesComparer should be null on delivery environment");
+            Assert.That(scriptFilesState.DevDummyDataScriptFilesComparer == null, $"{this.GetType().Name} >>> DevDummyDataScriptFilesComparer should be null on delivery environment");
         }
 
         public override void Release(ITestContext testContext)

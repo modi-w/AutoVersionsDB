@@ -26,7 +26,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 
         public void AssertNumOfFiles(int numOfFiles)
         {
-            Assert.That(_scriptFilesComparer.AllFileSystemScriptFiles.Count == numOfFiles, $"{_testName} -> Num of {_scriptFilesComparer.ScriptFileType.FileTypeCode} should be: '{numOfFiles}' but was: '{_scriptFilesComparer.AllFileSystemScriptFiles.Count}'");
+            Assert.That(_scriptFilesComparer.AllFileSystemScriptFiles.Count == numOfFiles, $"{_testName} >>> Num of {_scriptFilesComparer.ScriptFileType.FileTypeCode} should be: '{numOfFiles}' but was: '{_scriptFilesComparer.AllFileSystemScriptFiles.Count}'");
         }
 
 
@@ -34,8 +34,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
         {
             RuntimeScriptFileBase scriptFileState = _scriptFilesComparer.AllFileSystemScriptFiles[fileIndex];
 
-            Assert.That(scriptFileState.Filename == expectedFilename, $"{_testName} -> The {fileIndex + 1}st {_scriptFilesComparer.ScriptFileType.FileTypeCode} file should be: '{expectedFilename}' but was: '{scriptFileState.Filename}'");
-            Assert.That(scriptFileState.HashDiffType == expectedSyncState, $"{_testName} -> The {fileIndex + 1}st {_scriptFilesComparer.ScriptFileType.FileTypeCode} SyncType should be: '{expectedSyncState}' but was: '{scriptFileState.HashDiffType}'");
+            Assert.That(scriptFileState.Filename == expectedFilename, $"{_testName} >>> The {fileIndex + 1}st {_scriptFilesComparer.ScriptFileType.FileTypeCode} file should be: '{expectedFilename}' but was: '{scriptFileState.Filename}'");
+            Assert.That(scriptFileState.HashDiffType == expectedSyncState, $"{_testName} >>> The {fileIndex + 1}st {_scriptFilesComparer.ScriptFileType.FileTypeCode} SyncType should be: '{expectedSyncState}' but was: '{scriptFileState.HashDiffType}'");
         }
     }
 }

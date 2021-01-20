@@ -183,8 +183,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
                     try
                     {
-                        Console.WriteLine($"{test.GetType().Name} -> Start");
-                        Debug.WriteLine($"{test.GetType().Name} -> Start");
+                        Console.WriteLine($"{test.GetType().Name} >>> Start");
+                        Debug.WriteLine($"{test.GetType().Name} >>> Start");
 
                         testContext = test.Arrange(testArgs);
 
@@ -208,8 +208,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
                     {
                         test.Release(testContext);
 
-                        Console.WriteLine($"{test.GetType().Name} -> Complete");
-                        Debug.WriteLine($"{test.GetType().Name} -> Complete");
+                        Console.WriteLine($"{test.GetType().Name} >>> Complete");
+                        Debug.WriteLine($"{test.GetType().Name} >>> Complete");
                     }
                 }
             }

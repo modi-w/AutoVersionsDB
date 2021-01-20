@@ -132,7 +132,7 @@ namespace AutoVersionsDB.UI.DBVersions
                     _dbVersionsControls.PnlRepeatableFilesVisible = false;
                     _dbVersionsControls.PnlDevDummyDataFilesVisible = false;
 
-                    _notificationsViewModel.SetAttentionMessage("Select the target Database State (on every script type), and click on Apply");
+                    _notificationsViewModel.SetAttentionMessage(UITextResources.SyncToSpecificStateInstructions);
 
                     _dbVersionsControls.GridToSelectTargetStateEnabled = true;
 
@@ -156,7 +156,7 @@ namespace AutoVersionsDB.UI.DBVersions
                     SetAllControlsEnableDisable(true);
                     break;
 
-                case DBVersionsViewStateType.SetDBStateManually:
+                case DBVersionsViewStateType.SetVirtual:
 
                     AppendNoneDBTargetState();
 
@@ -167,7 +167,7 @@ namespace AutoVersionsDB.UI.DBVersions
                     _dbVersionsControls.PnlRepeatableFilesVisible = false;
                     _dbVersionsControls.PnlDevDummyDataFilesVisible = false;
 
-                    _notificationsViewModel.SetAttentionMessage("Select the Target (on every script type) Database State to virtually mark, and click on Apply");
+                    _notificationsViewModel.SetAttentionMessage(UITextResources.SetVirtualInstructions);
 
                     _dbVersionsControls.GridToSelectTargetStateEnabled = true;
 

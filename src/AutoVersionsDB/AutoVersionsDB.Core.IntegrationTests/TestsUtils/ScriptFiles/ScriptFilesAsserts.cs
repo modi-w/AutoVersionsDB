@@ -42,7 +42,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 
         public void AssertScriptFileExsit(string testName, string scriptFilename)
         {
-            Assert.That(File.Exists(scriptFilename), $"{testName} -> The file: '{scriptFilename}', is missing");
+            Assert.That(File.Exists(scriptFilename), $"{testName} >>> The file: '{scriptFilename}', is missing");
         }
 
 
@@ -189,7 +189,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 FileInfo fiScriptFile = new FileInfo(scriptFile);
 
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
-                Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
+                Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} >>> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
 
                 DataRow executedScriptRow = executedScriptRows.First();
 
@@ -207,7 +207,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 FileInfo fiScriptFile = new FileInfo(scriptFile);
 
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
-                Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
+                Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} >>> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
 
                 DataRow executedScriptRow = executedScriptRows.First();
 
@@ -228,7 +228,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 
                 if (fiScriptFile.Name == "rptScript_001_DataForLookupTable1.sql")
                 {
-                    Assert.That(executedScriptRows.Count, Is.EqualTo(2), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 2 times.");
+                    Assert.That(executedScriptRows.Count, Is.EqualTo(2), $"{testName} >>> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 2 times.");
 
                     string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
                     DataRow firstInstance = executedScriptRows[0];
@@ -239,7 +239,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 }
                 else
                 {
-                    Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
+                    Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} >>> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
 
                     DataRow executedScriptRow = executedScriptRows.First();
                     AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
@@ -256,7 +256,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 FileInfo fiScriptFile = new FileInfo(scriptFile);
 
                 List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
-                Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} -> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
+                Assert.That(executedScriptRows.Count, Is.EqualTo(1), $"{testName} >>> The file '{fiScriptFile.Name}' exsit in the db '{executedScriptRows.Count}' times, should be 1 time.");
 
                 DataRow executedScriptRow = executedScriptRows.First();
                 AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
@@ -320,13 +320,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
         private void AssertScriptFileAndDBRowHasSameHash(string testName, FileInfo fiScriptFile, DataRow executedScriptRow)
         {
             string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
-            Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} -> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
+            Assert.That(executedScriptRow["ComputedFileHash"], Is.EqualTo(computedFileHash), $"{testName} >>> The file '{fiScriptFile.Name}' has diffrent hash from the file in the db.");
         }
 
 
         private static void AssertFileFromDBExistInDictionaryFolderFiles(string testName, Dictionary<string, FileInfo> incSctipFilesDictionary, string filename)
         {
-            Assert.That(incSctipFilesDictionary.ContainsKey(filename), $"{testName} -> The file '{filename}' exist in the DB but not exsit in the scripts folder.");
+            Assert.That(incSctipFilesDictionary.ContainsKey(filename), $"{testName} >>> The file '{filename}' exist in the DB but not exsit in the scripts folder.");
         }
 
 
@@ -336,7 +336,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
         {
             string[] allArtifactFiles = Directory.GetFiles(projectConfig.DeployArtifactFolderPath, $"*{ArtifactExtractor.ArtifactFilenameExtension}", SearchOption.TopDirectoryOnly);
 
-            Assert.That(allArtifactFiles.Length, Is.EqualTo(1), $"{testName} -> Found '{allArtifactFiles.Length}' Artifact Files, Should be only 1");
+            Assert.That(allArtifactFiles.Length, Is.EqualTo(1), $"{testName} >>> Found '{allArtifactFiles.Length}' Artifact Files, Should be only 1");
 
             string artifactFile = allArtifactFiles[0];
 
@@ -368,7 +368,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 compareTwoFoldersFiles(testName, repeatableScriptFilesFromDevFolder, repeatableScriptFilesExtractFolder);
 
                 string devDummyDataTempFolder = Path.Combine(tempFolder, _devDummyDataScriptFileType.RelativeFolderName);
-                Assert.That(!Directory.Exists(devDummyDataTempFolder), $"{testName} -> The folder: '{devDummyDataTempFolder}' should be deleted");
+                Assert.That(!Directory.Exists(devDummyDataTempFolder), $"{testName} >>> The folder: '{devDummyDataTempFolder}' should be deleted");
             }
             finally
             {
@@ -382,18 +382,18 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 
             Dictionary<string, FileInfo> extractFolderFileInfosDictionary = scriptFilesExtractFolder.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
 
-            Assert.That(devFolderFileInfosDictionary.Count == extractFolderFileInfosDictionary.Count, $"{testName} -> Should be same number of files in the 'DevScriptsFiles' folder and in the zip folders");
+            Assert.That(devFolderFileInfosDictionary.Count == extractFolderFileInfosDictionary.Count, $"{testName} >>> Should be same number of files in the 'DevScriptsFiles' folder and in the zip folders");
 
             foreach (FileInfo devFolderFileInfo in devFolderFileInfosDictionary.Values)
             {
-                Assert.That(extractFolderFileInfosDictionary.ContainsKey(devFolderFileInfo.Name), $"{testName} -> The file '{devFolderFileInfo.Name}' not exist in the related folder in the zip file");
+                Assert.That(extractFolderFileInfosDictionary.ContainsKey(devFolderFileInfo.Name), $"{testName} >>> The file '{devFolderFileInfo.Name}' not exist in the related folder in the zip file");
 
                 FileInfo extractFileInfo = extractFolderFileInfosDictionary[devFolderFileInfo.Name];
 
                 string devFolderFileHash = _fileChecksum.GetHashByFilePath(devFolderFileInfo.FullName);
                 string extractFolderFileHash = _fileChecksum.GetHashByFilePath(extractFileInfo.FullName);
 
-                Assert.That(devFolderFileHash, Is.EqualTo(devFolderFileHash), $"{testName} -> The file from Dev folder and the file from the zip, should be the same Hash");
+                Assert.That(devFolderFileHash, Is.EqualTo(devFolderFileHash), $"{testName} >>> The file from Dev folder and the file from the zip, should be the same Hash");
             }
         }
 

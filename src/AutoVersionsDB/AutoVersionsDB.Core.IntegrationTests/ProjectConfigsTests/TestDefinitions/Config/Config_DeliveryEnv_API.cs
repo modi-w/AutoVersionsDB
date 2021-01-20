@@ -88,7 +88,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         public override void Asserts(ITestContext testContext)
         {
             ProjectConfigItem newProjectConfig = _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfigValid.Id);
-            Assert.That(newProjectConfig != null, $"{GetType().Name} -> Could not find project with the new ProjectId.");
+            Assert.That(newProjectConfig != null, $"{GetType().Name} >>> Could not find project with the new ProjectId.");
 
             _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.Description), newProjectConfig.Description, IntegrationTestsConsts.DummyProjectConfigValid.Description);
             _properiesAsserts.AssertProperty(GetType().Name, nameof(newProjectConfig.DBName), newProjectConfig.DBName, IntegrationTestsConsts.DummyProjectConfigValid.DBName);

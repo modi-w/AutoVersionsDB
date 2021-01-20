@@ -49,6 +49,7 @@ namespace AutoVersionsDB.Core
         public static string NewProjectDeliveryEnvNoscriptsFilesInstructionsMessage => $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Copy the artifact file that deployed from your dev environment >> 2) Run 'Virtual' to set the current DB state related to the scripts file >> 3) Run 'Sync' for executing the rest of the scripts files";
 
 
+        //Core Process Messages
         public const string IgnoreBecauseVirtualExecution = " - Ignore (virtual execution)";
 
         
