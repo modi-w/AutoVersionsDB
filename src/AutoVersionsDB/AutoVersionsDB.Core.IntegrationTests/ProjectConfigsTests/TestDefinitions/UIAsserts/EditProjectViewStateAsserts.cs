@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.Common.Validators;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
@@ -148,13 +149,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             _propertiesAsserts.AssertProperty(testName, nameof(editProjectControls.BtnNavToProcessVisible), editProjectControls.BtnNavToProcessVisible, !expectError);
 
 
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("IdMandatory"), projectConfigErrorMessages.IdErrorMessage, nameof(projectConfigErrorMessages.IdErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("DBType"), projectConfigErrorMessages.DBTypeCodeErrorMessage, nameof(projectConfigErrorMessages.DBTypeCodeErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("DBName"), projectConfigErrorMessages.DBNameErrorMessage, nameof(projectConfigErrorMessages.DBNameErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("DBBackupFolderPath"), projectConfigErrorMessages.BackupFolderPathErrorMessage, nameof(projectConfigErrorMessages.BackupFolderPathErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("DeliveryArtifactFolderPath"), projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage, nameof(projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("DeployArtifactFolderPath"), projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage, nameof(projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains("DevScriptsBaseFolder"), projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage, nameof(projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage));
+            AssertErrorMessage(testName, expctedErrorCodes.Contains(IdMandatory.Name), projectConfigErrorMessages.IdErrorMessage, nameof(projectConfigErrorMessages.IdErrorMessage));
+            AssertErrorMessage(testName, expctedErrorCodes.Contains(DBTypeValidator.Name), projectConfigErrorMessages.DBTypeCodeErrorMessage, nameof(projectConfigErrorMessages.DBTypeCodeErrorMessage));
+            AssertErrorMessage(testName, expctedErrorCodes.Contains(DBNameValidator.Name), projectConfigErrorMessages.DBNameErrorMessage, nameof(projectConfigErrorMessages.DBNameErrorMessage));
+            AssertErrorMessage(testName, expctedErrorCodes.Contains(DBBackupFolderValidator.Name), projectConfigErrorMessages.BackupFolderPathErrorMessage, nameof(projectConfigErrorMessages.BackupFolderPathErrorMessage));
+            AssertErrorMessage(testName, expctedErrorCodes.Contains(DeliveryArtifactFolderPathValidator.Name), projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage, nameof(projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage));
+            AssertErrorMessage(testName, expctedErrorCodes.Contains(DeployArtifactFolderPathValidator.Name), projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage, nameof(projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage));
+            AssertErrorMessage(testName, expctedErrorCodes.Contains(DevScriptsBaseFolderPathValidator.Name), projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage, nameof(projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage));
 
             if (expectError)
             {

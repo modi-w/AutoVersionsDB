@@ -16,7 +16,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         private readonly bool _isDevEnvironment;
         private readonly ScriptFilesState _scriptFilesState;
 
-        public override string ValidatorName => "NewProject";
+        public const string Name = "NewProject";
+        public override string ValidatorName => Name;
+
 
         private string _errorInstructionsMessage;
         public override string ErrorInstructionsMessage => _errorInstructionsMessage;

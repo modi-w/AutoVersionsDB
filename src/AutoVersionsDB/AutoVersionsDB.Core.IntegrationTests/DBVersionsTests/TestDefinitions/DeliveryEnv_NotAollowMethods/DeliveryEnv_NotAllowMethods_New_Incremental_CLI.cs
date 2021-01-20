@@ -2,6 +2,7 @@
 using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.Processes.Validators;
 using AutoVersionsDB.Core.IntegrationTests;
 
 
@@ -55,7 +56,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
             assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage("DeliveryEnvironment. Error: Could not run this command on Delivery Environment", false);
+            assertErrorsTextByLines.AssertLineMessage($"{CheckDeliveryEnvValidator.Name}. Error: Could not run this command on Delivery Environment", false);
             assertErrorsTextByLines.AssertLineMessage("", true);
             assertErrorsTextByLines.AssertLineMessage("Could not run this command on Delivery Environment", true);
 

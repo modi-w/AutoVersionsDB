@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.Common.Validators;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 
@@ -57,10 +58,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Asserts(ITestContext testContext)
         {
-            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DBType");
-            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DBName");
-            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DBBackupFolderPath");
-            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DeliveryArtifactFolderPath");
+            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DBTypeValidator.Name);
+            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DBNameValidator.Name);
+            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DBBackupFolderValidator.Name);
+            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DeliveryArtifactFolderPathValidator.Name);
         }
 
 

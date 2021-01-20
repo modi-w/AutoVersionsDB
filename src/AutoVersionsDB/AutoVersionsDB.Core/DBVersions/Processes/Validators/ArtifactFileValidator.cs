@@ -10,7 +10,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         private readonly bool _isDevEnvironment;
         private readonly string _deliveryArtifactFolderPath;
 
-        public override string ValidatorName => "ArtifactFile";
+        public const string Name = "ArtifactFile";
+        public override string ValidatorName => Name;
 
         public override string ErrorInstructionsMessage => "Artifact File not exist";
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;

@@ -10,7 +10,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         private readonly ScriptFilesState _scriptFilesState;
         private readonly string _targetStateScriptFileName;
 
-        public override string ValidatorName => "TargetScriptFileAlreadyExecuted";
+        public const string Name = "TargetScriptFileAlreadyExecuted";
+        public override string ValidatorName => Name;
+
 
         public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
 

@@ -9,7 +9,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 {
     public class ArtifactFileValidationsFactory : ValidationsFactory
     {
-        public override string ValidationName => "ArtifactFile";
+        public override string ValidationName => "Artifact File";
 
         public override ValidationsGroup Create(ProcessContext processContext)
         {

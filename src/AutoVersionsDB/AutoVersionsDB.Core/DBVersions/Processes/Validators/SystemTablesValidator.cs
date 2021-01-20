@@ -13,8 +13,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         private readonly bool _isDevEnvironment;
         private readonly DBConnectionInfo _dbConnectionInfo;
 
+        public const string Name = "SystemTables";
+        public override string ValidatorName => Name;
 
-        public override string ValidatorName => "SystemTables";
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error; 
 

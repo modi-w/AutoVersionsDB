@@ -10,7 +10,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
     {
         private readonly ScriptFilesState _scriptFilesState;
 
-        public override string ValidatorName => "HistoryExecutedFilesChanged";
+        public const string Name = "HistoryExecutedFilesChanged";
+        public override string ValidatorName => Name;
 
         public override string ErrorInstructionsMessage => "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";
 

@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions;
 using AutoVersionsDB.Core.DBVersions.Processes;
+using AutoVersionsDB.Core.DBVersions.Processes.Validators;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
@@ -313,13 +314,13 @@ namespace AutoVersionsDB.UI.DBVersions
                     NotificationsViewModel.AfterComplete(processResults);
                     //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  AfterComplete()");
 
-                    if (processResults.Trace.ContainErrorCode("NewProject")
-                        || processResults.Trace.ContainErrorCode("SystemTables"))
+                    if (processResults.Trace.ContainErrorCode(NewProjectValidator.Name)
+                        || processResults.Trace.ContainErrorCode(SystemTablesValidator.Name))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);
                         //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  MissingSystemTables()");
                     }
-                    else if (processResults.Trace.ContainErrorCode("HistoryExecutedFilesChanged"))
+                    else if (processResults.Trace.ContainErrorCode(HistoryExecutedFilesChangedValidator.Name))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.HistoryExecutedFilesChanged);
                         //Console.WriteLine("DBVersionsViewModel.RefreshAll() -> HasError -> after call to  HistoryExecutedFilesChanged()");
@@ -455,7 +456,7 @@ namespace AutoVersionsDB.UI.DBVersions
             {
                 NotificationsViewModel.AfterComplete(processResults);
 
-                if (processResults.Trace.ContainErrorCode("SystemTables"))
+                if (processResults.Trace.ContainErrorCode(SystemTablesValidator.Name))
                 {
                     _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);
                 }

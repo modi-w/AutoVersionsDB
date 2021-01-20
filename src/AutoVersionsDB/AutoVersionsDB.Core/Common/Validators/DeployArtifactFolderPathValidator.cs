@@ -7,9 +7,11 @@ namespace AutoVersionsDB.Core.Common.Validators
     {
         private readonly string _deployArtifactFolderPath;
 
-        public override string ValidatorName => "DeployArtifactFolderPath";
+        public const string Name = "DeployArtifactFolderPath";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+
+        public override string ErrorInstructionsMessage => CoreTextResources.ProjectConfigValidation;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -22,8 +24,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_deployArtifactFolderPath))
             {
-                string errorMsg = "Deploy Artifact Folder Path is Mandatory";
-                return errorMsg;
+                return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "Deploy Artifact Folder Path");
             }
 
 

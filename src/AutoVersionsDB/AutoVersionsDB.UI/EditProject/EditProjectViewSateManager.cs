@@ -1,4 +1,5 @@
-﻿using AutoVersionsDB.Helpers;
+﻿using AutoVersionsDB.Core.Common.Validators;
+using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.UI.Notifications;
 using System.Collections.Generic;
@@ -164,17 +165,17 @@ namespace AutoVersionsDB.UI.EditProject
                 {
                     switch (errorStateItem.LowLevelErrorCode)
                     {
-                        case "IdMandatory":
+                        case IdMandatory.Name:
 
                             _projectConfigErrorMessages.IdErrorMessage = errorStateItem.LowLevelErrorMessage;
                             break;
 
-                        case "DBType":
+                        case DBTypeValidator.Name:
 
                             _projectConfigErrorMessages.DBTypeCodeErrorMessage = errorStateItem.LowLevelErrorMessage;
                             break;
 
-                        case "DBName":
+                        case DBNameValidator.Name:
 
                             _projectConfigErrorMessages.DBNameErrorMessage = errorStateItem.LowLevelErrorMessage;
                             break;
@@ -189,22 +190,22 @@ namespace AutoVersionsDB.UI.EditProject
                         //    SetErrorInErrorProvider(tbConnStrToMasterDB, errorStateItem.LowLevelErrorMessage);
                         //    break;
 
-                        case "DBBackupFolderPath":
+                        case DBBackupFolderValidator.Name:
 
                             _projectConfigErrorMessages.BackupFolderPathErrorMessage = errorStateItem.LowLevelErrorMessage;
                             break;
 
-                        case "DeliveryArtifactFolderPath":
+                        case DeliveryArtifactFolderPathValidator.Name:
 
                             _projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage = errorStateItem.LowLevelErrorMessage;
                             break;
 
-                        case "DeployArtifactFolderPath":
+                        case DeployArtifactFolderPathValidator.Name:
 
                             _projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage = errorStateItem.LowLevelErrorMessage;
                             break;
 
-                        case "DevScriptsBaseFolder":
+                        case DevScriptsBaseFolderPathValidator.Name:
 
                             _projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage = errorStateItem.LowLevelErrorMessage;
                             break;

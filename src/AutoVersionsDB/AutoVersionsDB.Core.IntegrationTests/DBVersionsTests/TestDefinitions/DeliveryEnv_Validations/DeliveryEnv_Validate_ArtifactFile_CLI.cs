@@ -2,6 +2,7 @@
 using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.Processes.Validators;
 using AutoVersionsDB.Core.IntegrationTests;
 
 
@@ -54,7 +55,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
             assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage("ArtifactFile. Error: Delivery Foder not exist", false);
+            assertErrorsTextByLines.AssertLineMessage($"{ArtifactFileValidator.Name}. Error: Delivery Foder not exist", false);
             assertErrorsTextByLines.AssertLineMessage("", true);
             assertErrorsTextByLines.AssertLineMessage("Artifact File not exist", true);
 

@@ -9,7 +9,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         private readonly ScriptFilesComparerBase _scriptFilesComparer;
         private readonly string _scriptName;
 
-        public override string ValidatorName => "Next Runtime Script Filename";
+        public const string Name = "NextRuntimeScriptFilename";
+        public override string ValidatorName => Name;
+
 
         public override string ErrorInstructionsMessage => "Invalid script name";
 

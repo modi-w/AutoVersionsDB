@@ -9,9 +9,10 @@ namespace AutoVersionsDB.Core.Common.Validators
         private readonly string _dbTypeCode;
         private readonly DBCommandsFactory _dbCommandsFactory;
 
-        public override string ValidatorName => "DBType";
+        public const string Name = "DBType";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => CoreTextResources.ProjectConfigValidation;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -26,15 +27,13 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_dbTypeCode))
             {
-                string errorMsg = "DB Type is mandatory";
-                return errorMsg;
+                return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "DB Type");
             }
             else
             {
                 if (!_dbCommandsFactory.ContainDBType(_dbTypeCode))
                 {
-                    string errorMsg = $"DB Type Code '{_dbTypeCode}' is not valid";
-                    return errorMsg;
+                    return CoreTextResources.DBTypeCodeNotValidErrorMessage.Replace("[DBTypeCode]", _dbTypeCode);
                 }
             }
 
