@@ -9,7 +9,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         private readonly TScriptFileType _scriptFileType;
 
-        public override string StepName => "Create Next Script File";
+        public const string Name = "Create Next Script File";
+        public override string StepName => Name;
+
 
 
 

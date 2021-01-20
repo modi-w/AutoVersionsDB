@@ -5,7 +5,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class SetScriptFilesStateAsResultsStep : DBVersionsStep
     {
-        public override string StepName => "Set ScriptFilesState As Results";
+        public const string Name = "Set ScriptFilesState As Results";
+        public override string StepName => Name;
 
 
         public SetScriptFilesStateAsResultsStep()

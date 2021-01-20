@@ -9,7 +9,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         private readonly DBCommandsFactory _dbCommandsFactory;
 
-        public override string StepName => "Resolve Reset Database";
+        public const string Name = "Resolve Reset Database";
+        public override string StepName => Name;
+
 
 
 

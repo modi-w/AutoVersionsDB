@@ -5,7 +5,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
     public class ChangeIdStep : ProjectConfigStep
     {
-        public override string StepName => "Change Id";
+        public const string Name = "Change Id";
+        public override string StepName => Name;
 
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 

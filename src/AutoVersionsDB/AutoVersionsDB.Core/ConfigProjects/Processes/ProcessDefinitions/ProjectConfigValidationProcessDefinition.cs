@@ -5,7 +5,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
 {
     public class ProjectConfigValidationProcessDefinition : ProjectConfigProcessDefinition
     {
-        public override string EngineTypeName => "Project Config Validation";
+        public const string Name = "Project Config Validation";
+        public override string EngineTypeName => Name;
+
 
 
         public ProjectConfigValidationProcessDefinition(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep)

@@ -8,7 +8,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
         private readonly DBCommands _dbCommands;
         private readonly string _scriptBlockToExecute;
 
-        public override string StepName => "Execute Script Block";
+        public const string Name = "Execute Script Block";
+        public override string StepName => Name;
+
 
         public ExecuteScriptBlockStep(DBCommands dbCommands, string scriptBlockToExecute)
         {

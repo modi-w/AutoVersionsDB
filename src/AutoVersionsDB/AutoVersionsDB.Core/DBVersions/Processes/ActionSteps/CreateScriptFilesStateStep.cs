@@ -6,7 +6,10 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class CreateScriptFilesStateStep : DBVersionsStep
     {
-        public override string StepName => "Create Script Files State";
+        public const string Name = "Create Script Files State";
+        public override string StepName => Name;
+
+
         private readonly ScriptFilesStateFactory _scriptFilesStateFactory;
 
 

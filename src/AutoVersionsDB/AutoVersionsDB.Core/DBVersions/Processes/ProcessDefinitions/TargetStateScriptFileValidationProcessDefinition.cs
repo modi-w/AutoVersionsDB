@@ -6,7 +6,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
     public class TargetStateScriptFileValidationProcessDefinition : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "Target State Script File Validation";
+        public const string Name = "Target State Script File Validation";
+        public override string EngineTypeName => Name;
+
 
 
         public TargetStateScriptFileValidationProcessDefinition(ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,

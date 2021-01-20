@@ -8,7 +8,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
     public class RecreateDBFromScratchProcessDefinition : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "Recreate DB From Scratch";
+        public const string Name = "Recreate DB From Scratch";
+        public override string EngineTypeName => Name;
+
 
 
         public RecreateDBFromScratchProcessDefinition(RestoreDatabaseStep rollbackStep,

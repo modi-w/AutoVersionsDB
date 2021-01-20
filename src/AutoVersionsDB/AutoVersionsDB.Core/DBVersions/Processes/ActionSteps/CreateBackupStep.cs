@@ -13,7 +13,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class CreateBackupStep : DBVersionsStep
     {
-        public override string StepName => "Create Backup";
+        public const string Name = "Create Backup";
+        public override string StepName => Name;
 
         private readonly DBCommandsFactory _dbCommandsFactory;
 

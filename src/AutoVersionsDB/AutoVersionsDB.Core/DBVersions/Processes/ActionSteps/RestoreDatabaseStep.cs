@@ -11,9 +11,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class RestoreDatabaseStep : DBVersionsStep
     {
-        public const string StepNameStr = "Rollback (Restore) Database";
+        public const string Name = "Rollback (Restore) Database";
 
-        public override string StepName => StepNameStr;
+        public override string StepName => Name;
 
 
         private readonly DBCommandsFactory _dbCommandsFactory;

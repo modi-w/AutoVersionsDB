@@ -38,7 +38,7 @@ namespace AutoVersionsDB.UI.DBVersions
 
             if (processResults.HasError
                 && !string.IsNullOrWhiteSpace(processResults.InstructionsMessageStepName)
-                && string.CompareOrdinal(processResults.InstructionsMessageStepName, RestoreDatabaseStep.StepNameStr) == 0)
+                && string.CompareOrdinal(processResults.InstructionsMessageStepName, RestoreDatabaseStep.Name) == 0)
             {
                 ChangeViewState(DBVersionsViewStateType.RestoreDatabaseError);
             }

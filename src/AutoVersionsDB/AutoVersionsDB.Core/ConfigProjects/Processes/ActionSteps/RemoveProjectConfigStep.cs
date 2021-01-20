@@ -4,7 +4,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
     public class RemoveProjectConfigStep : ProjectConfigStep
     {
-        public override string StepName => "Remove Project Config";
+        public const string Name = "Remove Project Config";
+        public override string StepName => Name;
+
 
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 

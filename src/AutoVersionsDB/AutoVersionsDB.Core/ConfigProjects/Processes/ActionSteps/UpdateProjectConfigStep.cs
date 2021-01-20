@@ -4,7 +4,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
     public class UpdateProjectConfigStep : ProjectConfigStep
     {
-        public override string StepName => "Update Project Config";
+        public const string Name = "Update Project Config";
+        public override string StepName => Name;
+
 
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 

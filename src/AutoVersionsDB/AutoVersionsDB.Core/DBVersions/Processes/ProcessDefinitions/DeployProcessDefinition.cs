@@ -7,7 +7,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
     public class DeployProcessDefinition : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "Deploy";
+        public const string Name = "Deploy";
+        public override string EngineTypeName => Name;
 
 
         public DeployProcessDefinition(ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,

@@ -6,7 +6,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ProcessDefinitions
 {
     public class RemoveProjectConfigProcessDefinition : ProjectConfigProcessDefinition
     {
-        public override string EngineTypeName => "Save New Config Validation";
+        public const string Name = "Save New Config Validation";
+        public override string EngineTypeName => Name;
 
 
         public RemoveProjectConfigProcessDefinition(ValidationsStep<IdExistValidationsFactory> idNotExistValidationStep,

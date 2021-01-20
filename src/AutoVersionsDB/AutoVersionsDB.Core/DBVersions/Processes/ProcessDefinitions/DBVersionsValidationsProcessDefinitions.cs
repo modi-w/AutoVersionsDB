@@ -7,7 +7,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
     public class DBVersionsValidationsProcessDefinitions : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "DB Versions Validations";
+        public const string Name = "DB Versions Validations";
+        public override string EngineTypeName => Name;
+
 
         public DBVersionsValidationsProcessDefinitions(ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                                         SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,

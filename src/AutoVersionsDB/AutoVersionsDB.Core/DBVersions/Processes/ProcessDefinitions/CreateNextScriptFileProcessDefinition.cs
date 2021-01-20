@@ -9,7 +9,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
     public class CreateNextScriptFileProcessDefinition<TScriptFileType> : DBVersionsProcessDefinition
       where TScriptFileType : ScriptFileTypeBase
     {
-        public override string EngineTypeName => "Create Next Script File";
+        public const string Name = "Create Next Script File";
+        public override string EngineTypeName => Name;
 
 
         public CreateNextScriptFileProcessDefinition(ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,

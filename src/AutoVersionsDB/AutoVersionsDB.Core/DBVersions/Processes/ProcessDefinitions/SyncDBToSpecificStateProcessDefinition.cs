@@ -8,7 +8,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
     public class SyncDBToSpecificStateProcessDefinition : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "Set DB To Specific State";
+        public const string Name = "Set DB To Specific State";
+        public override string EngineTypeName => Name;
+
 
 
         public SyncDBToSpecificStateProcessDefinition(RestoreDatabaseStep rollbackStep,
