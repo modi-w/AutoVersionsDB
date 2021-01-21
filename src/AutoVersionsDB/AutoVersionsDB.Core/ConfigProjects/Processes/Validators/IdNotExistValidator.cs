@@ -8,14 +8,16 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.Validators
         private readonly ProjectConfigsStorage _projectConfigsStorage;
         private readonly string _id;
 
-        public override string ValidatorName => "IdNotExist";
+        public const string Name = "ValidateProjectIdNotExist";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+
+        public override string ErrorInstructionsMessage => CoreTextResources.ProjectIdIsAlreadyExistErrorMessage;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
         public IdNotExistValidator(string id,
-                                                ProjectConfigsStorage projectConfigsStorage)
+                                    ProjectConfigsStorage projectConfigsStorage)
         {
             _id = id;
             _projectConfigsStorage = projectConfigsStorage;
@@ -27,8 +29,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.Validators
             {
                 if (_projectConfigsStorage.IsIdExsit(_id))
                 {
-                    string errorMsg = $"Id: '{_id}' is aready exist.";
-                    return errorMsg;
+                    return CoreTextResources.ProjectIdIsAlreadyExistWithIdErrorMessage.Replace("[Id]", _id);
                 }
             }
 

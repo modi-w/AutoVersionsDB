@@ -8,7 +8,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
     public class CreateVirtualExecutionsProcessDefinition : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "Create Virtual Executions";
+        public const string Name = "Create Virtual Executions";
+        public override string EngineTypeName => Name;
+
 
 
         public CreateVirtualExecutionsProcessDefinition(RestoreDatabaseStep rollbackStep,

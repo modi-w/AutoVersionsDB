@@ -74,9 +74,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             ProjectConfigItem projectConfig =
                 _projectConfigsStorage.GetProjectConfigById(IntegrationTestsConsts.DummyProjectConfigValid.Id);
 
-            Assert.That(projectConfig != null, $"{GetType().Name} -> ProjectConfig not found.");
+            Assert.That(projectConfig != null, $"{GetType().Name} >>> ProjectConfig not found.");
 
-            Assert.That(projectConfig.Description == IntegrationTestsConsts.DummyProjectConfigValid.Description, $"{GetType().Name} -> ProjectConfig not found.");
+            Assert.That(projectConfig.Description == IntegrationTestsConsts.DummyProjectConfigValid.Description, $"{GetType().Name} >>> ProjectConfig not found.");
         }
 
         public override void Release(ITestContext testContext)

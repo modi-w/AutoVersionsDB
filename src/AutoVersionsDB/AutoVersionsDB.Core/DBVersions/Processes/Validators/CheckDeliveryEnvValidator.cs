@@ -5,9 +5,10 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class CheckDeliveryEnvValidator : ValidatorBase
     {
-        public override string ValidatorName => "DeliveryEnvironment";
+        public const string Name = "DeliveryEnvironment";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Could not run this command on Delivery Environment";
+        public override string ErrorInstructionsMessage => CoreTextResources.DeliveryEnvErrorMessage;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -23,8 +24,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         {
             if (!_isDevEnvironment)
             {
-                string errorMsg = "Could not run this command on Delivery Environment";
-                return errorMsg;
+                return CoreTextResources.DeliveryEnvErrorMessage;
             }
 
             return "";

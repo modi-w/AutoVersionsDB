@@ -12,7 +12,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
     {
         private readonly DBCommandsFactory _dbCommandsFactory;
 
-        public override string ValidationName => "System Tables";
+        public const string Name = "System Tables";
+        public override string ValidationName => Name;
+
 
         public SystemTableValidationsFactory(DBCommandsFactory dbCommandsFactory)
         {

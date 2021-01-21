@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.Processes.Validators;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
@@ -61,7 +62,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         public override void Asserts(DBVersionsUITestContext testContext)
         {
             _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
-            _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, "HistoryExecutedFilesChanged");
+            _processAsserts.AssertContainError(this.GetType().Name, testContext.ProcessResults.Trace, HistoryExecutedFilesChangedValidator.Name);
 
 
             _dbVersionsViewModelAsserts.AssertIncrementalChanged(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);

@@ -5,7 +5,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 {
     public class SetProjectConfigInProcessContextStep : DBVersionsStep
     {
-        public override string StepName => "Set Project Config In Process Context";
+        public const string Name = "Set Project Config In Process Context";
+        public override string StepName => Name;
+
 
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 

@@ -83,7 +83,13 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
             if (!ScriptFileType.RuntimeScriptFileFactory.TryParseNextRuntimeScriptFileName(FolderPath, scriptName, prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile))
             {
-                string errorMessage = $"Filename '{newRuntimeScriptFile.Filename}' not valid for script type: '{ScriptFileType.FileTypeCode}'. Should be like the following pattern: '{ScriptFileType.FilenamePattern}'";
+                string errorMessage =
+                    CoreTextResources
+                    .InvalidFilenameErrorMessage
+                    .Replace("[Filename]", newRuntimeScriptFile.Filename)
+                    .Replace("[FileTypeCode]", ScriptFileType.FileTypeCode)
+                    .Replace("[FilenamePattern]", ScriptFileType.FilenamePattern);
+
                 throw new Exception(errorMessage);
             }
 

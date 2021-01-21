@@ -10,7 +10,8 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps.ValidationFac
     {
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 
-        public override string ValidationName => "IdNotExist";
+        public const string Name = "Validate Project Id Not Exist";
+        public override string ValidationName => Name;
 
 
         public IdNotExistValidationsFactory(ProjectConfigsStorage projectConfigsStorage)

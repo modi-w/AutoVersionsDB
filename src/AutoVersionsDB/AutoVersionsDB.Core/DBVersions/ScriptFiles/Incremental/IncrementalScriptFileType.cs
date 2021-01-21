@@ -2,7 +2,9 @@
 {
     public class IncrementalScriptFileType : ScriptFileTypeBase
     {
-        public static string IncrementalFileTypeCode => ScriptFileTypeBase.Create<IncrementalScriptFileType>().FileTypeCode;
+        public const string Code = "Incremental";
+        public override string FileTypeCode => Code;
+
 
         private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory;
         public override RuntimeScriptFileFactoryBase RuntimeScriptFileFactory
@@ -19,7 +21,6 @@
         }
 
 
-        public override string FileTypeCode => "Incremental";
 
         public const string ScriptFileDatePattern = "yyyy-MM-dd";
 

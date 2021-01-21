@@ -9,7 +9,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 {
     public class CheckDeliveryEnvValidationsFactory : ValidationsFactory
     {
-        public override string ValidationName => "Check Delivery Environment";
+        public const string Name = "Check Delivery Environment";
+        public override string ValidationName => Name;
+
 
         public override ValidationsGroup Create(ProcessContext processContext)
         {

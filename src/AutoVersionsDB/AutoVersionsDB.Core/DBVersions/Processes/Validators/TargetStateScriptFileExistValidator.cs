@@ -10,9 +10,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         private readonly ScriptFilesState _scriptFilesState;
         private readonly string _targetStateScriptFileName;
 
-        public override string ValidatorName => "TargetStateScriptFileExist";
+        public const string Name = "TargetStateScriptFileExist";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Target State Script Should Not Be Historical";
+
+        public override string ErrorInstructionsMessage => CoreTextResources.TargetStateScriptFileNotExistInstructionsMessage;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -34,8 +36,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
                 if (!isTargetFileExsit)
                 {
-                    string errorMsg = $"The target file '{_targetStateScriptFileName}' is not exsit.";
-                    return errorMsg;
+                    return CoreTextResources.TargetStateScriptFileNotExistErrorMessage.Replace("[FileName]", _targetStateScriptFileName);
                 }
             }
 

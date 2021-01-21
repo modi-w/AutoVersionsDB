@@ -8,9 +8,10 @@ namespace AutoVersionsDB.Core.Common.Validators
     {
         private readonly string _deliveryArtifactFolderPath;
 
-        public override string ValidatorName => "DeliveryArtifactFolderPath";
+        public const string Name = "DeliveryArtifactFolderPath";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => CoreTextResources.ProjectConfigValidation;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -23,15 +24,13 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_deliveryArtifactFolderPath))
             {
-                string errorMsg = "Delivery Artifact Folder Path is mandatory";
-                return errorMsg;
+                return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "Delivery Artifact Folder Path");
             }
             else
             {
                 if (!Directory.Exists(_deliveryArtifactFolderPath))
                 {
-                    string errorMsg = "Delivery Artifact Folder is not exist";
-                    return errorMsg;
+                    return CoreTextResources.DeliveryArtifactFolderNotExistErrorMessage;
                 }
             }
 

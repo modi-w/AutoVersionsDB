@@ -9,7 +9,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         private readonly DBCommandsFactory _dbCommandsFactory;
 
-        public override string StepName => "Resolve Reset Database";
+        public const string Name = "Resolve Reset Database";
+        public override string StepName => Name;
+
 
 
 
@@ -27,7 +29,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             if (!processContext.ProjectConfig.DevEnvironment)
             {
-                throw new Exception("Can't Drop DB when running on none dev enviroment (you can change the parameter in project setting).");
+                throw new Exception(CoreTextResources.CantDropDBOnDelEnvException);
             }
 
             using (var dbCommands = _dbCommandsFactory.CreateDBCommand(processContext.ProjectConfig.DBConnectionInfo))

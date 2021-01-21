@@ -11,9 +11,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
     public class RestoreDatabaseStep : DBVersionsStep
     {
-        public const string StepNameStr = "Rollback (Restore) Database";
+        public const string Name = "Rollback (Restore) Database";
 
-        public override string StepName => StepNameStr;
+        public override string StepName => Name;
 
 
         private readonly DBCommandsFactory _dbCommandsFactory;
@@ -84,9 +84,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
                     }
                     catch (Exception ex)
                     {
-                        string errorInstructionsMessage = "The process fail when trying to 'Restore the Database', try to change the Timeout parameter and restore the database manually.";
-
-                        processExpetion = new NotificationProcessException(StepName, ex.Message, errorInstructionsMessage, NotificationErrorType.Error, ex);
+                        processExpetion = new NotificationProcessException(StepName, ex.Message, CoreTextResources.RestoreDBFailInstructionsMessage, NotificationErrorType.Error, ex);
                     }
                 });
 

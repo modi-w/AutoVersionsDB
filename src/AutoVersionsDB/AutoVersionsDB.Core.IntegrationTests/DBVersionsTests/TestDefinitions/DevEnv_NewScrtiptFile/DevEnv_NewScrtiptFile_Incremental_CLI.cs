@@ -50,13 +50,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 6);
 
-            assertTextByLines.AssertLineMessage("> Run 'new incremental' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage("The process complete successfully", true);
-            assertTextByLines.AssertLineMessage($"The file: '{_devEnv_NewScrtiptFile_Incremental_API.GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
+            assertTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "new incremental").Replace("[args]", "IntegrationTestProject"), true);
+            assertTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteSuccessfully, true);
+            assertTextByLines.AssertLineMessage(CLITextResources.TheFileIsCreatedInfoMessage.Replace("[newFilePath]", _devEnv_NewScrtiptFile_Incremental_API.GetScriptFullPath_Incremental_scriptName1(testContext.ProjectConfig.DBConnectionInfo)), true);
 
-            assertTextByLines.AssertLineMessage("> Run 'new incremental' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage("The process complete successfully", true);
-            assertTextByLines.AssertLineMessage($"The file: '{_devEnv_NewScrtiptFile_Incremental_API.GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
+            assertTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "new incremental").Replace("[args]", "IntegrationTestProject"), true);
+            assertTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteSuccessfully, true);
+            assertTextByLines.AssertLineMessage(CLITextResources.TheFileIsCreatedInfoMessage.Replace("[newFilePath]", _devEnv_NewScrtiptFile_Incremental_API.GetScriptFullPath_Incremental_scriptName2(testContext.ProjectConfig.DBConnectionInfo)), true);
+            
         }
 
 

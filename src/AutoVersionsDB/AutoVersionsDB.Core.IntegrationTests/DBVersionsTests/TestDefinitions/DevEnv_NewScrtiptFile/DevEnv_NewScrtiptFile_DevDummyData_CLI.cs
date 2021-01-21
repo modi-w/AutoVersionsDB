@@ -51,9 +51,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 3);
 
-            assertTextByLines.AssertLineMessage("> Run 'new ddd' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage("The process complete successfully", true);
-            assertTextByLines.AssertLineMessage($"The file: '{_devEnv_NewScrtiptFile_DevDummyData_API.GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo)}' is created.", true);
+            assertTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "new ddd").Replace("[args]", "IntegrationTestProject"), true);
+            assertTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteSuccessfully, true);
+            assertTextByLines.AssertLineMessage(CLITextResources.TheFileIsCreatedInfoMessage.Replace("[newFilePath]", _devEnv_NewScrtiptFile_DevDummyData_API.GetScriptFullPath_DevDummyData_scriptName1(testContext.ProjectConfig.DBConnectionInfo)), true);
         }
 
 

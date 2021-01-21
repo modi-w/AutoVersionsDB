@@ -38,7 +38,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ProjectConfigsUtils
 
         public void AssertDirectoryExist(string testName, string path)
         {
-            Assert.That(Directory.Exists(path), $"{testName} -> The BackupFolderPath folder ('{path}') is not exist");
+            Assert.That(Directory.Exists(path), $"{testName} >>> The BackupFolderPath folder ('{path}') is not exist");
         }
 
 

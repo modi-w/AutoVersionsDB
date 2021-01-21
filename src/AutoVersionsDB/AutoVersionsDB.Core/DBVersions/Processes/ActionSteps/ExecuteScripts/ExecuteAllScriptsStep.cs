@@ -17,7 +17,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
         private readonly ExecuteScriptsByTypeStepFactory _executeScriptsByTypeStepFactory;
         private readonly ArtifactExtractorFactory _artifactExtractorFactory;
 
-        public override string StepName => $"Run Scripts";
+        public const string Name = "Run Scripts";
+        public override string StepName => Name;
 
 
 

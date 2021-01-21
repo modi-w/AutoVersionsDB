@@ -76,9 +76,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ChooseProjectTests.TestDefinition
 
         public override void Asserts(ITestContext testContext)
         {
-            Assert.That(_chooseProjectViewModel.ChooseProjectViewModelData.FilteredProjectList.Count == 2, $"{this.GetType().Name} -> FilteredProjectList Count should be 2, but was '{_chooseProjectViewModel.ChooseProjectViewModelData.FilteredProjectList.Count}'");
-            Assert.That(_chooseProjectViewModel.ChooseProjectViewModelData.FilteredProjectList.Any(e => e.Id == "aa1"), $"{this.GetType().Name} -> FilteredProjectList should include project with Id='aa1'");
-            Assert.That(_chooseProjectViewModel.ChooseProjectViewModelData.FilteredProjectList.Any(e => e.Description == "aa2"), $"{this.GetType().Name} -> FilteredProjectList should include project with Description='aa2'");
+            Assert.That(_chooseProjectViewModel.ChooseProjectViewModelData.FilteredProjectList.Count == 2, $"{this.GetType().Name} >>> FilteredProjectList Count should be 2, but was '{_chooseProjectViewModel.ChooseProjectViewModelData.FilteredProjectList.Count}'");
+            Assert.That(_chooseProjectViewModel.ChooseProjectViewModelData.FilteredProjectList.Any(e => e.Id == "aa1"), $"{this.GetType().Name} >>> FilteredProjectList should include project with Id='aa1'");
+            Assert.That(_chooseProjectViewModel.ChooseProjectViewModelData.FilteredProjectList.Any(e => e.Description == "aa2"), $"{this.GetType().Name} >>> FilteredProjectList should include project with Description='aa2'");
         }
 
         public override void Release(ITestContext testContext)

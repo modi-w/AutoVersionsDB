@@ -7,7 +7,10 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
     public class GetScriptFilesStateProcessDefinitions : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "Get Script Files State";
+        public const string Name = "Get Script Files State";
+        public override string EngineTypeName => Name;
+
+
 
         public GetScriptFilesStateProcessDefinitions(ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                                         SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,

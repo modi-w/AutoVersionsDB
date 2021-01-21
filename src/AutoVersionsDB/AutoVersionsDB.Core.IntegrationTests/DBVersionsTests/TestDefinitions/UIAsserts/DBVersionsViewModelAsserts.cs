@@ -95,13 +95,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataIncrementalChanged(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
-            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'");
+            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.HistoryExecutedFilesChangedInstructionsMessage);
         }
         public void AssertIncrementalMissing(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataIncrementalMissing(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
-            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'");
+            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.HistoryExecutedFilesChangedInstructionsMessage);
         }
 
         public void AssertNewProject(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
@@ -110,11 +110,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             if (isDevEnv)
             {
-                _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Run 'Recreate' or 'Virtual' for creating our DB system tables >> 2) Add your scripts files >> 3) Run 'Sync'");
+                _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.NewProjectDevEnvInstructionsMessage);
             }
             else
             {
-                _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Copy the artifact file that deployed from your dev environment >> 2) Run 'Virtual' to set the current DB state related to the scripts file >> 3) Run 'Sync' for executing the rest of the scripts files");
+                _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.NewProjectDeliveryEnvNoscriptsFilesInstructionsMessage);
             }
 
         }
@@ -125,11 +125,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             if (isDevEnv)
             {
-                _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "The system tables has invalid structure. Please try to 'Recreate DB From Scratch' or 'Set DB State by Virtual Execution'.");
+                _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.SystemTablesDevEnvInstructionsMessage);
             }
             else
             {
-                _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "The system tables has invalid structure. Please try to 'Set DB State by Virtual Execution'.");
+                _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.SystemTablesDeliveryEnvInstructionsMessage);
             }
 
         }
@@ -138,21 +138,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNoFiles(testName, dbVersionsViewModel.DBVersionsViewModelData);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, false);
-            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "Artifact File not exist");
+            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.ArtifactFileNotExistErrorMessage);
         }
 
         public void AssertNotAllowMethodDBMiddleState(string testName, DBVersionsViewModel dbVersionsViewModel)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMiddleState(testName, dbVersionsViewModel.DBVersionsViewModelData, false);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, false);
-            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "Could not run this command on Delivery Environment");
+            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.DeliveryEnvErrorMessage);
         }
 
         public void AssertNotAllowMethodDBFinalState(string testName, DBVersionsViewModel dbVersionsViewModel)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataDBFinalState(testName, dbVersionsViewModel.DBVersionsViewModelData, false);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateProcessError(testName, dbVersionsViewModel.DBVersionsControls, false);
-            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, "Could not run this command on Delivery Environment");
+            _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.DeliveryEnvErrorMessage);
         }
 
 
@@ -188,31 +188,31 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
         public void AssertViewStateHistory(string testName, IList<DBVersionsViewStateType> viewStateHistory, DBVersionsViewStateType finalViewState)
         {
-            Assert.That(viewStateHistory.Count == 2, $"{testName} -> Number of process ViewStates should be 2, but was {viewStateHistory.Count}");
-            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
-            Assert.That(viewStateHistory[1] == finalViewState, $"{testName} -> ViewState 2 should be {finalViewState}, but was '{viewStateHistory[1]}'");
+            Assert.That(viewStateHistory.Count == 2, $"{testName} >>> Number of process ViewStates should be 2, but was {viewStateHistory.Count}");
+            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
+            Assert.That(viewStateHistory[1] == finalViewState, $"{testName} >>> ViewState 2 should be {finalViewState}, but was '{viewStateHistory[1]}'");
         }
 
         public void AssertViewStateHistoryForNewTwoScriptFiles(string testName, IList<DBVersionsViewStateType> viewStateHistory)
         {
-            Assert.That(viewStateHistory.Count == 8, $"{testName} -> Number of process ViewStates should be 8, but was {viewStateHistory.Count}");
-            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
-            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[1]}'");
-            Assert.That(viewStateHistory[2] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[2]}'");
-            Assert.That(viewStateHistory[3] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[3]}'");
-            Assert.That(viewStateHistory[4] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[4]}'");
-            Assert.That(viewStateHistory[5] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[5]}'");
-            Assert.That(viewStateHistory[6] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[6]}'");
-            Assert.That(viewStateHistory[7] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[7]}'");
+            Assert.That(viewStateHistory.Count == 8, $"{testName} >>> Number of process ViewStates should be 8, but was {viewStateHistory.Count}");
+            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
+            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[1]}'");
+            Assert.That(viewStateHistory[2] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[2]}'");
+            Assert.That(viewStateHistory[3] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[3]}'");
+            Assert.That(viewStateHistory[4] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[4]}'");
+            Assert.That(viewStateHistory[5] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[5]}'");
+            Assert.That(viewStateHistory[6] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[6]}'");
+            Assert.That(viewStateHistory[7] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[7]}'");
         }
 
         public void AssertViewStateHistoryForNewSingleScriptFile(string testName, IList<DBVersionsViewStateType> viewStateHistory)
         {
-            Assert.That(viewStateHistory.Count == 4, $"{testName} -> Number of process ViewStates should be 4, but was {viewStateHistory.Count}");
-            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
-            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[1]}'");
-            Assert.That(viewStateHistory[2] == DBVersionsViewStateType.InProcess, $"{testName} -> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[2]}'");
-            Assert.That(viewStateHistory[3] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} -> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[3]}'");
+            Assert.That(viewStateHistory.Count == 4, $"{testName} >>> Number of process ViewStates should be 4, but was {viewStateHistory.Count}");
+            Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
+            Assert.That(viewStateHistory[1] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[1]}'");
+            Assert.That(viewStateHistory[2] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[2]}'");
+            Assert.That(viewStateHistory[3] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[3]}'");
         }
 
 

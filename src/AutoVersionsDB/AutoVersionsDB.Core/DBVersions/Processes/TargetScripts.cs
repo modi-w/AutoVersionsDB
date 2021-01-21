@@ -27,9 +27,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 
             TargetScriptsByType = new Dictionary<string, string>
             {
-                { IncrementalScriptFileType.IncrementalFileTypeCode, IncScriptFileName },
-                { RepeatableScriptFileType.RepeatableFileTypeCode, RptScriptFileName },
-                { DevDummyDataScriptFileType.DevDummyDataFileTypeCode, DDDScriptFileName }
+                { IncrementalScriptFileType.Code, IncScriptFileName },
+                { RepeatableScriptFileType.Code, RptScriptFileName },
+                { DevDummyDataScriptFileType.Code, DDDScriptFileName }
             };
         }
 

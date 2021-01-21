@@ -9,9 +9,10 @@ namespace AutoVersionsDB.Core.Common.Validators
         private readonly bool _isDevEnvironment;
         private readonly string _devScriptsBaseFolderPath;
 
-        public override string ValidatorName => "DevScriptsBaseFolder";
+        public const string Name = "DevScriptsBaseFolder";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => CoreTextResources.ProjectConfigValidation;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -28,15 +29,13 @@ namespace AutoVersionsDB.Core.Common.Validators
             {
                 if (string.IsNullOrWhiteSpace(_devScriptsBaseFolderPath))
                 {
-                    string errorMsg = "Scripts Folder Path is mandatory";
-                    return errorMsg;
+                    return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "Scripts Folder Path");
                 }
                 else
                 {
                     if (!Directory.Exists(_devScriptsBaseFolderPath))
                     {
-                        string errorMsg = "Scripts Folder is not exist";
-                        return errorMsg;
+                        return CoreTextResources.DevScriptsFolderNotExistErrorMessage;
                     }
                 }
             }

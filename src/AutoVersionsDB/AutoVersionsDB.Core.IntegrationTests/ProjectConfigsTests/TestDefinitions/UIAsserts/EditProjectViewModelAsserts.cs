@@ -40,13 +40,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public void AssertViewStateHistory(string testName, IList<EditProjectViewStateType> actualViewStateHistory, IList<EditProjectViewStateType> expectedViewStateHistory)
         {
-            Assert.That(actualViewStateHistory.Count == expectedViewStateHistory.Count, $"{testName} -> Number of process ViewStates should be {expectedViewStateHistory.Count}, but was {actualViewStateHistory.Count}");
+            Assert.That(actualViewStateHistory.Count == expectedViewStateHistory.Count, $"{testName} >>> Number of process ViewStates should be {expectedViewStateHistory.Count}, but was {actualViewStateHistory.Count}");
             for (int i = 0; i < expectedViewStateHistory.Count; i++)
             {
                 var expectedViewStateItem = expectedViewStateHistory[i];
                 var actualViewStateItem = actualViewStateHistory[i];
 
-                Assert.That(actualViewStateItem == expectedViewStateItem, $"{testName} -> ViewState {i + 1} should be {expectedViewStateItem}, but was '{actualViewStateItem}'");
+                Assert.That(actualViewStateItem == expectedViewStateItem, $"{testName} >>> ViewState {i + 1} should be {expectedViewStateItem}, but was '{actualViewStateItem}'");
             }
         }
 

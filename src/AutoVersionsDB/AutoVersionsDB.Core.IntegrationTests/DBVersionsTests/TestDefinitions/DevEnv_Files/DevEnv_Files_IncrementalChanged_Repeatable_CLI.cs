@@ -52,8 +52,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 8);
 
-            assertTextByLines.AssertLineMessage("> Run 'files repeatable' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "files repeatable").Replace("[args]", "IntegrationTestProject"), true);
+            assertTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteSuccessfully, true);
             assertTextByLines.AssertLineMessage("", true);
             assertTextByLines.AssertLineMessage("++ Repeatable Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);

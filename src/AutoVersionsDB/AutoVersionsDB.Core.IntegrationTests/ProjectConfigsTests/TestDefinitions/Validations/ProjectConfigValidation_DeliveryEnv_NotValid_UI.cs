@@ -1,5 +1,6 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
+using AutoVersionsDB.Core.Common.Validators;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.IntegrationTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
@@ -73,10 +74,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
                 _editProjectViewModel.ProjectConfigErrorMessages,
                 new List<string>()
                 {
-                    "DBType",
-                    "DBName",
-                    "DBBackupFolderPath",
-                    "DeliveryArtifactFolderPath",
+                    DBTypeValidator.Name,
+                    DBNameValidator.Name,
+                    DBBackupFolderValidator.Name,
+                    DeliveryArtifactFolderPathValidator.Name,
                 }
                 );
             _editProjectViewModelAsserts.AssertViewStateHistory(GetType().Name,

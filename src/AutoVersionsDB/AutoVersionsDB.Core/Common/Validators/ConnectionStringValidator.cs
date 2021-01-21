@@ -10,9 +10,10 @@ namespace AutoVersionsDB.Core.Common.Validators
         private readonly DBConnectionInfo _dbConnectionInfo;
         private readonly DBCommandsFactory _dbCommandsFactory;
 
-        public override string ValidatorName => "ConnectionString";
+        public const string Name = "ConnectionString";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => CoreTextResources.ProjectConfigValidation;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -34,7 +35,12 @@ namespace AutoVersionsDB.Core.Common.Validators
                     {
                         if (!dbConnection.CheckConnection(out string exMessage))
                         {
-                            string errorMsg = $"Could not connect to the Database with the following properties: {_dbConnectionInfo}, Check each of the above properties. The used connection String was: '{dbConnection.ConnectionString}'. Error Message: '{exMessage}'";
+                            string errorMsg = CoreTextResources
+                                .ConnectionStringValidatorErrorMessage
+                                .Replace("[DBConnectionInfo]", _dbConnectionInfo.ToString())
+                                .Replace("[ConnectionString]", dbConnection.ConnectionString)
+                                .Replace("[exMessage]", exMessage);
+
                             return errorMsg;
                         }
                     }

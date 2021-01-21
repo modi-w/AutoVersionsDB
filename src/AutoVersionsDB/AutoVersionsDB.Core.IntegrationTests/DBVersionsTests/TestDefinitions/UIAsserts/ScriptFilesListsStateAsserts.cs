@@ -286,7 +286,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
         private void AssertFilesListSize(string testName, string listName, IList<RuntimeScriptFileBase> runtimeFiles, int targetSize)
         {
-            Assert.That(runtimeFiles.Count == targetSize, $"{testName} -> {listName} size should be {targetSize}, but was '{runtimeFiles.Count}'");
+            Assert.That(runtimeFiles.Count == targetSize, $"{testName} >>> {listName} size should be {targetSize}, but was '{runtimeFiles.Count}'");
 
         }
 
@@ -300,7 +300,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
         private void AssertFileHashState(string testName, RuntimeScriptFileBase runtimeFile, HashDiffType targetHashState)
         {
-            Assert.That(runtimeFile.HashDiffType == targetHashState, $"{testName} -> The {runtimeFile.ScriptFileType.FileTypeCode} file: '{runtimeFile.Filename}' should be '{targetHashState}' hash state, but was '{runtimeFile.HashDiffType}'");
+            Assert.That(runtimeFile.HashDiffType == targetHashState, $"{testName} >>> The {runtimeFile.ScriptFileType.FileTypeCode} file: '{runtimeFile.Filename}' should be '{targetHashState}' hash state, but was '{runtimeFile.HashDiffType}'");
 
         }
     }

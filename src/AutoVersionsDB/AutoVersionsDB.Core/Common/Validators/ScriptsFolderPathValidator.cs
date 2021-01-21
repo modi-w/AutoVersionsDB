@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.Common.Validators
 
         public override string ValidatorName { get; }
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => CoreTextResources.ProjectConfigValidation;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -26,8 +26,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (!Directory.Exists(_scriptFolderPath))
             {
-                string errorMsg = $"'{_scriptFolderPath}' Scripts Folder is not exist";
-                return errorMsg;
+                return CoreTextResources.ScriptTypeFolderNotExistErrorMessage.Replace("[ScriptFolderPath]", _scriptFolderPath);
             }
 
             return "";

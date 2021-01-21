@@ -49,7 +49,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
                 string ignoreStr = "";
                 if (processContext.IsVirtualExecution)
                 {
-                    ignoreStr = " - Ignore (virtual execution)";
+                    ignoreStr = CoreTextResources.IgnoreBecauseVirtualExecution;
                 }
 
                 string stepName = $"{scriptFile.Filename}{ignoreStr}";

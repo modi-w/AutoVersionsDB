@@ -8,7 +8,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 {
     public class FinalizeProcessStep : DBVersionsStep
     {
-        public override string StepName => "Finalize Process";
+        public const string Name = "Finalize Process";
+        public override string StepName => Name;
+
 
         private readonly DBCommandsFactory _dbCommandsFactory;
 

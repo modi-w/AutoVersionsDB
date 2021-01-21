@@ -7,9 +7,10 @@ namespace AutoVersionsDB.Core.Common.Validators
     {
         private readonly string _id;
 
-        public override string ValidatorName => "IdMandatory";
+        public const string Name = "IdMandatory";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Project Config Validation Error";
+        public override string ErrorInstructionsMessage => CoreTextResources.ProjectConfigValidation;
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
@@ -22,8 +23,7 @@ namespace AutoVersionsDB.Core.Common.Validators
         {
             if (string.IsNullOrWhiteSpace(_id))
             {
-                string errorMsg = "Id is mandatory";
-                return errorMsg;
+                return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "Id");
             }
 
             return "";

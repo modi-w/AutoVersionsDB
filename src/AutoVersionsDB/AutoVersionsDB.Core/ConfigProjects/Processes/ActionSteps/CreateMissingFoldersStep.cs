@@ -5,7 +5,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
     public class CreateMissingFoldersStep : ProjectConfigStep
     {
-        public override string StepName => "Create Missing Folders";
+        public const string Name = "Create Missing Folders";
+        public override string StepName => Name;
+
 
 
         public CreateMissingFoldersStep()

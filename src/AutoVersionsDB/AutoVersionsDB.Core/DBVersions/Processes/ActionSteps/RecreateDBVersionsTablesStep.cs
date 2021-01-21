@@ -8,7 +8,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         private readonly DBCommandsFactory _dbCommandsFactory;
 
-        public override string StepName => "Recreate System Tables";
+        public const string Name = "Recreate System Tables";
+        public override string StepName => Name;
+
 
         public RecreateDBVersionsTablesStep(DBCommandsFactory dbCommandsFactory)
         {

@@ -4,6 +4,7 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable;
 using AutoVersionsDB.DB.Contract;
+using AutoVersionsDB.DB.SqlServer;
 using AutoVersionsDB.Helpers;
 using System.IO;
 
@@ -130,7 +131,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
         {
             if (string.IsNullOrWhiteSpace(DBType))
             {
-                DBType = "SqlServer";
+                DBType = SqlServerDBTypeObjectsFactory.DBTypeCode;
             }
             if (string.IsNullOrWhiteSpace(Server))
             {

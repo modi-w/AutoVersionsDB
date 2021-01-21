@@ -41,8 +41,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(this.GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 2);
-            assertTextByLines.AssertLineMessage("> Run 'sync' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "sync").Replace("[args]", "IntegrationTestProject"), true);
+            assertTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteSuccessfully, true);
         }
 
 

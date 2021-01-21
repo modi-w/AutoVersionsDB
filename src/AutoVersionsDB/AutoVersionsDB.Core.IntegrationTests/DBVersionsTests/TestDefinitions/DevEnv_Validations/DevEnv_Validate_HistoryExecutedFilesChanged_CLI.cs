@@ -2,6 +2,7 @@
 using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.Processes.Validators;
 using AutoVersionsDB.Core.IntegrationTests;
 
 
@@ -50,14 +51,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _devEnv_Validate_HistoryExecutedFilesChanged_API.Asserts(testContext);
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 1);
-            assertConsoleOutTextByLines.AssertLineMessage("> Run 'validate' for 'IntegrationTestProject'", true);
+            assertConsoleOutTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "validate").Replace("[args]", "IntegrationTestProject"), true);
 
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
-            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteWithErrors, true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage("HistoryExecutedFilesChanged. Error: The following files changed: 'incScript_2020-02-25.102_CreateLookupTable2.sql'", false);
+            assertErrorsTextByLines.AssertLineMessage($"{HistoryExecutedFilesChangedValidator.Name}. Error: {CoreTextResources.FilesChangedErrorMessage.Replace("[FilesList]", "incScript_2020-02-25.102_CreateLookupTable2.sql")}", false);
             assertErrorsTextByLines.AssertLineMessage("", true);
-            assertErrorsTextByLines.AssertLineMessage("History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'", true);
+            assertErrorsTextByLines.AssertLineMessage(CoreTextResources.HistoryExecutedFilesChangedInstructionsMessage, true);
 
         }
 

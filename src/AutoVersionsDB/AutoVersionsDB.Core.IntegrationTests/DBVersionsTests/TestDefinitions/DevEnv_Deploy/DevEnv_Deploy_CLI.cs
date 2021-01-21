@@ -49,8 +49,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             AssertTextByLines.AssertEmpty(GetType().Name, nameof(testContext.ConsoleError), testContext.ConsoleError);
 
             AssertTextByLines assertTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 3);
-            assertTextByLines.AssertLineMessage("> Run 'deploy' for 'IntegrationTestProject'", true);
-            assertTextByLines.AssertLineMessage("The process complete successfully", true);
+            assertTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "deploy").Replace("[args]", "IntegrationTestProject"), true);
+            assertTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteSuccessfully, true);
             assertTextByLines.AssertLineMessage("Artifact file created: ", false, 2);
             assertTextByLines.AssertLineMessage(@"Deploy\AutoVersionsDB.Tests.avdb'", false, 2);
         }

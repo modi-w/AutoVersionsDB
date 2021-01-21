@@ -14,7 +14,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
     {
         private readonly AutoVersionsDBSettings _settings;
 
-        public override string StepName => "Build Deploy Artifact File";
+        public const string Name = "Build Deploy Artifact File";
+        public override string StepName => Name;
+
 
         private readonly DBCommandsFactory _dbCommandsFactory;
 

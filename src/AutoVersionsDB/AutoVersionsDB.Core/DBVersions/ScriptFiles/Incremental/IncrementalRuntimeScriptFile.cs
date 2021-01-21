@@ -57,9 +57,14 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 
             if (!isFilenameValid)
             {
-                ScriptFileTypeBase incrementalScriptFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
 
-                string errorMessage = $"Filename '{filename}' not valid for script type: '{incrementalScriptFileType.FileTypeCode}'. Should be like the following pattern: '{ScriptFileType.FilenamePattern}'";
+                string errorMessage =
+                    CoreTextResources
+                    .InvalidFilenameErrorMessage
+                    .Replace("[Filename]", filename)
+                    .Replace("[FileTypeCode]", ScriptFileType.FileTypeCode)
+                    .Replace("[FilenamePattern]", ScriptFileType.FilenamePattern);
+
                 throw new Exception(errorMessage);
             }
 
@@ -76,13 +81,23 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 
             if (!DateTime.TryParseExact(currDTFromFilenameStr, IncrementalScriptFileType.ScriptFileDatePattern, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime tempDate_FromFilename))
             {
-                string errorMessage = $"Filename not valid date script pattern: '{filename}'. Should be with pattern of '{ IncrementalScriptFileType.ScriptFileDatePattern}'";
+                string errorMessage =
+                    CoreTextResources
+                    .InvalidDatePatternForIncScriptException
+                    .Replace("[Filename]", filename)
+                    .Replace("[ScriptFileDatePattern]", IncrementalScriptFileType.ScriptFileDatePattern);
+
                 throw new Exception(errorMessage);
             }
 
             if (tempDate_FromFilename > DateTime.Today)
             {
-                string errorMessage = $"Filename not valid date script pattern: '{filename}'. '{tempDate_FromFilename}' Can't be in the future";
+                string errorMessage =
+                    CoreTextResources
+                    .InvalidDateInTheFutureForIncScriptException
+                    .Replace("[Filename]", filename)
+                    .Replace("[Date]", tempDate_FromFilename.ToString(CultureInfo.InvariantCulture));
+
                 throw new Exception(errorMessage);
             }
 
@@ -93,7 +108,11 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental
 
             if (!int.TryParse(currDayVersionFromFilenameStr, out int tempDateVersion_FromFilename))
             {
-                string errorMessage = $"Filename not valid for script pattern: '{filename}', the version is not an integer number";
+                string errorMessage =
+                CoreTextResources
+                .InvalidVersionNumForIncScriptException
+                .Replace("[Filename]", filename);
+
                 throw new Exception(errorMessage);
             }
 

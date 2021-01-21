@@ -2,6 +2,7 @@
 using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.Processes.Validators;
 using AutoVersionsDB.Core.IntegrationTests;
 
 
@@ -12,6 +13,7 @@ using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.Deliv
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_Virtual;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
+using AutoVersionsDB.DB;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -49,14 +51,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             _deliveryEnv_Validate_MissingSystemTables_API.Asserts(testContext);
 
             AssertTextByLines assertConsoleOutTextByLines = new AssertTextByLines(GetType().Name, "FinalConsoleOut", testContext.FinalConsoleOut, 1);
-            assertConsoleOutTextByLines.AssertLineMessage("> Run 'validate' for 'IntegrationTestProject'", true);
+            assertConsoleOutTextByLines.AssertLineMessage(CLITextResources.StartProcessMessageWithArgs.Replace("[processName]", "validate").Replace("[args]", "IntegrationTestProject"), true);
 
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
-            assertErrorsTextByLines.AssertLineMessage("The process complete with errors:", true);
+            assertErrorsTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteWithErrors, true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage("SystemTables. Error: The table 'AutoVersionsDB.DBScriptsExecutionHistory' is not exist in the db", false);
+            assertErrorsTextByLines.AssertLineMessage($"{SystemTablesValidator.Name}. Error: {CoreTextResources.TableNotExistErrorMessage.Replace("[TableName]", DBCommandsConsts.DBScriptsExecutionHistoryFullTableName)}", false);
             assertErrorsTextByLines.AssertLineMessage("", true);
-            assertErrorsTextByLines.AssertLineMessage("The system tables has invalid structure. Please try to 'Set DB State by Virtual Execution'.", true);
+            assertErrorsTextByLines.AssertLineMessage(CoreTextResources.SystemTablesDeliveryEnvInstructionsMessage, true);
         }
 
 

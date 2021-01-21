@@ -4,7 +4,9 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
 {
     public class SaveNewProjectConfigStep : ProjectConfigStep
     {
-        public override string StepName => "Save New Project Config";
+        public const string Name = "Save New Project Config";
+        public override string StepName => Name;
+
 
         private readonly ProjectConfigsStorage _projectConfigsStorage;
 

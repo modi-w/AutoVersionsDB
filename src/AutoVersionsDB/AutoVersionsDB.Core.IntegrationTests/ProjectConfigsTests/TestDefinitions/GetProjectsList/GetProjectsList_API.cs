@@ -64,15 +64,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
         {
             List<ProjectConfigItem> projectConfigsResults = testContext.Result as List<ProjectConfigItem>;
 
-            Assert.That(projectConfigsResults.Count == 2, $"{GetType().Name} -> The number projectConfigs DBTypes should be 2, but was: {projectConfigsResults.Count}");
+            Assert.That(projectConfigsResults.Count == 2, $"{GetType().Name} >>> The number projectConfigs DBTypes should be 2, but was: {projectConfigsResults.Count}");
 
             ProjectConfigItem projectConfig1 = projectConfigsResults[0];
-            Assert.That(projectConfig1.Id == _testProjectId1, $"{GetType().Name} -> ProjectConfig1 Id should be: '{_testProjectId1}', but was: '{projectConfig1.Id}'");
-            Assert.That(projectConfig1.Description == _testProjectDesc1, $"{GetType().Name} -> ProjectConfig1 Description should be: '{_testProjectDesc1}', but was: '{projectConfig1.Description}'");
+            Assert.That(projectConfig1.Id == _testProjectId1, $"{GetType().Name} >>> ProjectConfig1 Id should be: '{_testProjectId1}', but was: '{projectConfig1.Id}'");
+            Assert.That(projectConfig1.Description == _testProjectDesc1, $"{GetType().Name} >>> ProjectConfig1 Description should be: '{_testProjectDesc1}', but was: '{projectConfig1.Description}'");
 
             ProjectConfigItem projectConfig2 = projectConfigsResults[1];
-            Assert.That(projectConfig2.Id == _testProjectId2, $"{GetType().Name} -> ProjectConfig2 Id should be: '{_testProjectId2}', but was: '{projectConfig2.Id}'");
-            Assert.That(projectConfig2.Description == _testProjectDesc2, $"{GetType().Name} -> ProjectConfig2 Description should be: '{_testProjectDesc2}', but was: '{projectConfig2.Description}'");
+            Assert.That(projectConfig2.Id == _testProjectId2, $"{GetType().Name} >>> ProjectConfig2 Id should be: '{_testProjectId2}', but was: '{projectConfig2.Id}'");
+            Assert.That(projectConfig2.Description == _testProjectDesc2, $"{GetType().Name} >>> ProjectConfig2 Description should be: '{_testProjectDesc2}', but was: '{projectConfig2.Description}'");
         }
 
         public override void Release(ITestContext testContext)

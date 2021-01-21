@@ -8,7 +8,9 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
     public class SyncDBProcessDefinition : DBVersionsProcessDefinition
     {
-        public override string EngineTypeName => "Sync DB";
+        public const string Name = "Sync DB";
+        public override string EngineTypeName => Name;
+
 
 
         public SyncDBProcessDefinition(RestoreDatabaseStep rollbackStep,

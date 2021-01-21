@@ -16,8 +16,7 @@ namespace AutoVersionsDB.CLI
         public const string IdCLIOptionDescription = "The project Id";
         public const string BackupFolderPathCLIOptionDescription = "Backup up folder path for saving the database before run";
         public const string DBNameCLIOptionDescription = "Data Base Name";
-        public const string DBTypeCLIOptionDescription = "";
-        public const string Description = "Database Type (SqlServer)";
+        public const string DBTypeCLIOptionDescription = "Database Type (SqlServer)";
         public const string DeliveryArtifactFolderPathCLIOptionDescription = "For delivery environment only - The folder where artifact file is located";
         public const string DeployArtifactFolderPathCLIOptionDescription = "Deploy folder path for exporting the artifact file";
         public const string DescriptionCLIOptionDescription = "Description for the project";

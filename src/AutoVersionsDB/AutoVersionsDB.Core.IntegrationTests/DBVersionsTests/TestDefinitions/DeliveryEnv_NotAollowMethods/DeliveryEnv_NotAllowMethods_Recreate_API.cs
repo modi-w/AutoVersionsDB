@@ -2,6 +2,7 @@
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.Processes;
+using AutoVersionsDB.Core.DBVersions.Processes.Validators;
 using AutoVersionsDB.Core.IntegrationTests;
 
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
@@ -49,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
 
-            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, "DeliveryEnvironment");
+            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, CheckDeliveryEnvValidator.Name);
 
         }
 

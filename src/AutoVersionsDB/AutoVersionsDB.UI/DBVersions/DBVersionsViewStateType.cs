@@ -8,7 +8,7 @@ namespace AutoVersionsDB.UI.DBVersions
         ReadyToSyncToSpecificState,
         MissingSystemTables,
         HistoryExecutedFilesChanged,
-        SetDBStateManually,
+        SetVirtual,
         InProcess,
         RestoreDatabaseError
     }

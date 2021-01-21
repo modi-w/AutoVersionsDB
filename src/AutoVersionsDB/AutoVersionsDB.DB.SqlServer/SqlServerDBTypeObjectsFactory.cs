@@ -6,7 +6,9 @@ namespace AutoVersionsDB.DB.SqlServer
 {
     public class SqlServerDBTypeObjectsFactory : IDBTypeObjectsFactory
     {
-        public DBType DBType => new DBType("SqlServer", "Sql Server");
+        public const string DBTypeCode = "SqlServer";
+
+        public DBType DBType => new DBType(DBTypeCode, "Sql Server");
 
 
 
@@ -36,29 +38,7 @@ namespace AutoVersionsDB.DB.SqlServer
 
 
 
-        //public DBCommands CreateDBCommands(DBConnectionInfo dbConnectionInfo)
-        //{
-        //    SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateConnectionString(dbConnectionInfo), 0);
-        //    DBCommands sqlServerDBCommands = new DBCommands(sqlServerConnection);
 
-        //    return sqlServerDBCommands;
-        //}
-
-        //public IDBBackupRestoreCommands CreateBackupRestoreCommands(DBConnectionInfo dbConnectionInfo)
-        //{
-        //    SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateAdminConnectionString(dbConnectionInfo), 0);
-        //    DBBackupRestoreCommands sqlServerDBBackupRestoreCommands = new DBBackupRestoreCommands(sqlServerConnection);
-
-        //    return sqlServerDBBackupRestoreCommands;
-        //}
-
-        //public DBQueryStatus CreateDBQueryStatus(DBConnectionInfo dbConnectionInfo)
-        //{
-        //    SqlServerConnection sqlServerConnection = new SqlServerConnection(CreateAdminConnectionString(dbConnectionInfo), 0);
-        //    DBQueryStatus sqlServerDBQueryStatus = new DBQueryStatus(sqlServerConnection);
-
-        //    return sqlServerDBQueryStatus;
-        //}
 
 
         private static string CreateConnectionString(DBConnectionInfo dbConnectionInfo)

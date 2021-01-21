@@ -72,7 +72,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
             ProjectConfigItem projectByProjectId =
                 _projectConfigsStorage.GetProjectConfigById(
                     (testContext.TestArgs as ProjectConfigTestArgs).ProjectConfig.Id);
-            Assert.That(projectByProjectId == null, $"{GetType().Name} -> ProjectConfig didnt remove from storage.");
+            Assert.That(projectByProjectId == null, $"{GetType().Name} >>> ProjectConfig didnt remove from storage.");
         }
 
         public override void Release(ITestContext testContext)

@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 if (dicAllProjectConfigs.ContainsKey(projectConfig.Id.ToTrimedInvariant()))
                 {
-                    throw new Exception($"Id: '{projectConfig.Id}' is aready exist.");
+                    throw new Exception(CoreTextResources.ProjectIdIsAlreadyExistException.Replace("[Id]", projectConfig.Id));
                 }
 
                 dicAllProjectConfigs.Add(projectConfig.Id.ToTrimedInvariant(), projectConfig);
@@ -53,7 +53,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 if (!dicAllProjectConfigs.ContainsKey(projectConfig.Id.ToTrimedInvariant()))
                 {
-                    throw new Exception($"Id: '{projectConfig.Id}' is not exist.");
+                    throw new Exception(CoreTextResources.ProjectIdIsNotExistException.Replace("[Id]", projectConfig.Id));
                 }
 
 
@@ -74,7 +74,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 if (!dicAllProjectConfigs.TryGetValue(prevId.ToTrimedInvariant(), out ProjectConfigItem projectConfig))
                 {
-                    throw new Exception($"Id: '{projectConfig.Id}' is not exist.");
+                    throw new Exception(CoreTextResources.ProjectIdIsNotExistException.Replace("[Id]", projectConfig.Id));
                 }
 
                 projectConfig.Id = newId;
@@ -91,7 +91,7 @@ namespace AutoVersionsDB.Core.ConfigProjects
 
                 if (!dicAllProjectConfigs.ContainsKey(id.ToTrimedInvariant()))
                 {
-                    throw new Exception($"Id: '{id}' is not exist.");
+                    throw new Exception(CoreTextResources.ProjectIdIsNotExistException.Replace("[Id]", id));
                 }
 
 

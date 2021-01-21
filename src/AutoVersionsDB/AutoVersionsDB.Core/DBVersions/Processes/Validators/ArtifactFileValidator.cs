@@ -10,9 +10,10 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         private readonly bool _isDevEnvironment;
         private readonly string _deliveryArtifactFolderPath;
 
-        public override string ValidatorName => "ArtifactFile";
+        public const string Name = "ArtifactFile";
+        public override string ValidatorName => Name;
 
-        public override string ErrorInstructionsMessage => "Artifact File not exist";
+        public override string ErrorInstructionsMessage => CoreTextResources.ArtifactFileNotExistErrorMessage;
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
         public ArtifactFileValidator(bool isDevEnvironment,
@@ -28,16 +29,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
             {
                 if (!Directory.Exists(_deliveryArtifactFolderPath))
                 {
-                    string errorMsg = "Delivery Foder not exist";
-                    return errorMsg;
+                    return CoreTextResources.ArtifactFolderExistErrorMessage;
                 }
 
                 string[] artifactFiles = Directory.GetFiles(_deliveryArtifactFolderPath, $"*{ArtifactExtractor.ArtifactFilenameExtension}");
 
                 if (artifactFiles.Length == 0)
                 {
-                    string errorMsg = "Delivery Artifact File not exist";
-                    return errorMsg;
+                    return CoreTextResources.ArtifactFileNotExistErrorMessage;
                 }
             }
 
