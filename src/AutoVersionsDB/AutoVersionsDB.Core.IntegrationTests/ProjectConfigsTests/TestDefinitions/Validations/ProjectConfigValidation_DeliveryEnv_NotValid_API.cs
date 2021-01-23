@@ -58,9 +58,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public override void Asserts(ITestContext testContext)
         {
-            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DBTypeValidator.Name);
+            //_processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DBTypeValidator.Name);
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DBNameValidator.Name);
-            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DBBackupFolderValidator.Name);
+            //_processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DBBackupFolderValidator.Name);
             _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, DeliveryArtifactFolderPathValidator.Name);
         }
 

@@ -253,13 +253,16 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsViewModelData.TargetRptScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
 
 
-            List<RuntimeScriptFileBase> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            if (_dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer!= null)
+            {
+                List<RuntimeScriptFileBase> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFileBase dddNoneTargetState = new RuntimeScriptFileBase(RuntimeScriptFileBase.TargetNoneScriptFileName);
-            dddScripts.Insert(0, dddNoneTargetState);
+                RuntimeScriptFileBase dddNoneTargetState = new RuntimeScriptFileBase(RuntimeScriptFileBase.TargetNoneScriptFileName);
+                dddScripts.Insert(0, dddNoneTargetState);
 
-            _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
-            _dbVersionsViewModelData.TargetDDDScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
+                _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
+                _dbVersionsViewModelData.TargetDDDScriptFileName = RuntimeScriptFileBase.TargetNoneScriptFileName;
+            }
         }
 
 

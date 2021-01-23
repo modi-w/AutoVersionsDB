@@ -362,7 +362,7 @@ namespace AutoVersionsDB.WinApp
 
                 case nameof(ViewModel.ProjectConfigErrorMessages.DBTypeCodeErrorMessage):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DBTypeCodeErrorMessage);
+                    SetErrorInErrorProvider(cboConncectionType, ViewModel.ProjectConfigErrorMessages.DBTypeCodeErrorMessage);
                     break;
 
                 //case nameof(ViewModel.ProjectConfigErrorMessages.ServerErrorMessage):
@@ -372,7 +372,7 @@ namespace AutoVersionsDB.WinApp
 
                 case nameof(ViewModel.ProjectConfigErrorMessages.DBNameErrorMessage):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DBNameErrorMessage);
+                    SetErrorInErrorProvider(tbDBName, ViewModel.ProjectConfigErrorMessages.DBNameErrorMessage);
                     break;
 
                 //case nameof(ViewModel.ProjectConfigErrorMessages.UsernameErrorMessage):
@@ -387,22 +387,22 @@ namespace AutoVersionsDB.WinApp
 
                 case nameof(ViewModel.ProjectConfigErrorMessages.BackupFolderPathErrorMessage):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.BackupFolderPathErrorMessage);
+                    SetErrorInErrorProvider(tbDBBackupFolder, ViewModel.ProjectConfigErrorMessages.BackupFolderPathErrorMessage);
                     break;
 
                 case nameof(ViewModel.ProjectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage);
+                    SetErrorInErrorProvider(tbDevScriptsFolderPath, ViewModel.ProjectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage);
                     break;
 
                 case nameof(ViewModel.ProjectConfigErrorMessages.DeployArtifactFolderPathErrorMessage):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DeployArtifactFolderPathErrorMessage);
+                    SetErrorInErrorProvider(tbDeployArtifactFolderPath, ViewModel.ProjectConfigErrorMessages.DeployArtifactFolderPathErrorMessage);
                     break;
 
                 case nameof(ViewModel.ProjectConfig.DeliveryArtifactFolderPath):
 
-                    SetErrorInErrorProvider(tbId, ViewModel.ProjectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage);
+                    SetErrorInErrorProvider(tbDeliveryArtifactFolderPath, ViewModel.ProjectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage);
                     break;
 
                 default:

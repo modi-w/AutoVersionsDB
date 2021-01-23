@@ -24,6 +24,7 @@ namespace AutoVersionsDB.Core.ConfigProjects.Processes.ActionSteps
         {
             processContext.ThrowIfNull(nameof(processContext));
 
+            processContext.ProjectConfig.SetDefaltValues();
             _projectConfigsStorage.UpdateProjectConfig(processContext.ProjectConfig);
         }
 

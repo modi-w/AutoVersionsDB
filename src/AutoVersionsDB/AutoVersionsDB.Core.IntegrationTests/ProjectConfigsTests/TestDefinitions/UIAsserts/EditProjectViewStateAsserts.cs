@@ -150,9 +150,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
 
             AssertErrorMessage(testName, expctedErrorCodes.Contains(IdMandatory.Name), projectConfigErrorMessages.IdErrorMessage, nameof(projectConfigErrorMessages.IdErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains(DBTypeValidator.Name), projectConfigErrorMessages.DBTypeCodeErrorMessage, nameof(projectConfigErrorMessages.DBTypeCodeErrorMessage));
+            //AssertErrorMessage(testName, expctedErrorCodes.Contains(DBTypeValidator.Name), projectConfigErrorMessages.DBTypeCodeErrorMessage, nameof(projectConfigErrorMessages.DBTypeCodeErrorMessage));
             AssertErrorMessage(testName, expctedErrorCodes.Contains(DBNameValidator.Name), projectConfigErrorMessages.DBNameErrorMessage, nameof(projectConfigErrorMessages.DBNameErrorMessage));
-            AssertErrorMessage(testName, expctedErrorCodes.Contains(DBBackupFolderValidator.Name), projectConfigErrorMessages.BackupFolderPathErrorMessage, nameof(projectConfigErrorMessages.BackupFolderPathErrorMessage));
+            //AssertErrorMessage(testName, expctedErrorCodes.Contains(DBBackupFolderValidator.Name), projectConfigErrorMessages.BackupFolderPathErrorMessage, nameof(projectConfigErrorMessages.BackupFolderPathErrorMessage));
             AssertErrorMessage(testName, expctedErrorCodes.Contains(DeliveryArtifactFolderPathValidator.Name), projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage, nameof(projectConfigErrorMessages.DeliveryArtifactFolderPathErrorMessage));
             AssertErrorMessage(testName, expctedErrorCodes.Contains(DeployArtifactFolderPathValidator.Name), projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage, nameof(projectConfigErrorMessages.DeployArtifactFolderPathErrorMessage));
             AssertErrorMessage(testName, expctedErrorCodes.Contains(DevScriptsBaseFolderPathValidator.Name), projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage, nameof(projectConfigErrorMessages.DevScriptsBaseFolderPathErrorMessage));
