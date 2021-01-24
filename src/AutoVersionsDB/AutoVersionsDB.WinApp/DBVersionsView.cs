@@ -585,7 +585,7 @@ namespace AutoVersionsDB.WinApp
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
-                RuntimeScriptFileBase currScriptFileInfo = (dgIncrementalScriptsFiles.DataSource as List<RuntimeScriptFileBase>)[e.RowIndex];
+                RuntimeScriptFile currScriptFileInfo = (dgIncrementalScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
 
                 Task task = ViewModel.SelectTargetIncScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
                 task.Wait();
@@ -600,7 +600,7 @@ namespace AutoVersionsDB.WinApp
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
-                RuntimeScriptFileBase currScriptFileInfo = (dgRepeatableScriptsFiles.DataSource as List<RuntimeScriptFileBase>)[e.RowIndex];
+                RuntimeScriptFile currScriptFileInfo = (dgRepeatableScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
 
                 Task task = ViewModel.SelectTargetRptScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
                 task.Wait();
@@ -616,7 +616,7 @@ namespace AutoVersionsDB.WinApp
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
-                RuntimeScriptFileBase currScriptFileInfo = (dgDevDummyDataScriptsFiles.DataSource as List<RuntimeScriptFileBase>)[e.RowIndex];
+                RuntimeScriptFile currScriptFileInfo = (dgDevDummyDataScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
 
                 Task task = ViewModel.SelectTargetDDDScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
                 task.Wait();
@@ -717,7 +717,7 @@ namespace AutoVersionsDB.WinApp
         #region Set View State
 
 
-        private static void BindGridDataSource(DataGridView dataGridView, IList<RuntimeScriptFileBase> scriptFilesList)
+        private static void BindGridDataSource(DataGridView dataGridView, IList<RuntimeScriptFile> scriptFilesList)
         {
 
             dataGridView.BeginInvoke((MethodInvoker)(() =>
@@ -731,7 +731,7 @@ namespace AutoVersionsDB.WinApp
                     currGridRow.Cells[0].Value = currGridRow.Index + 1;
                     currGridRow.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                    RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
+                    RuntimeScriptFile currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFile;
 
                     currGridRow.Cells[1].Style.BackColor = currRowFileInfo.HashDiffType switch
                     {
@@ -836,7 +836,7 @@ namespace AutoVersionsDB.WinApp
                 currGridRow.Cells[0].Value = (currGridRow.Index + 1).ToString(CultureInfo.InvariantCulture);
                 currGridRow.Cells[0].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-                RuntimeScriptFileBase currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFileBase;
+                RuntimeScriptFile currRowFileInfo = currGridRow.DataBoundItem as RuntimeScriptFile;
 
                 if (targetScriptFileName != null
                     && currRowFileInfo.Filename.Trim().ToUpperInvariant() == targetScriptFileName.Trim().ToUpperInvariant())

@@ -9,8 +9,8 @@ namespace AutoVersionsDB.CLI.DBVersions
             : base(new string[] { "--ddd-target", "-dt" }, 
                     CLITextResources.TargetCLIOptionDescription
                                     .Replace("[ScriptFileType]", "DevDummyData")
-                                    .Replace("[TargetNoneScriptFileName]", RuntimeScriptFileBase.TargetNoneScriptFileName)
-                                    .Replace("[TargetLastScriptFileName]", RuntimeScriptFileBase.TargetLastScriptFileName))
+                                    .Replace("[TargetNoneScriptFileName]", RuntimeScriptFile.TargetNoneScriptFileName)
+                                    .Replace("[TargetLastScriptFileName]", RuntimeScriptFile.TargetLastScriptFileName))
                   
         {
         }

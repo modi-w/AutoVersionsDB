@@ -29,7 +29,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
             var scriptFilesComparer = processContext.ScriptFilesState.ScriptFilesComparers[_scriptFileType.FileTypeCode];
 
-            RuntimeScriptFileBase newScriptFile = scriptFilesComparer.CreateNextNewScriptFile(dbVersionsProcessArgs.NewScriptName);
+            RuntimeScriptFile newScriptFile = scriptFilesComparer.CreateNextNewScriptFile(dbVersionsProcessArgs.NewScriptName);
 
             processContext.Results = newScriptFile.FileFullPath;
         }

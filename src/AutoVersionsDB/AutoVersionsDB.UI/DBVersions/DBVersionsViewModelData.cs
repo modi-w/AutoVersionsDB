@@ -46,26 +46,26 @@ namespace AutoVersionsDB.UI.DBVersions
 
 
 
-        private IList<RuntimeScriptFileBase> _incrementalScriptFiles;
+        private IList<RuntimeScriptFile> _incrementalScriptFiles;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
-        public IList<RuntimeScriptFileBase> IncrementalScriptFiles
+        public IList<RuntimeScriptFile> IncrementalScriptFiles
         {
             get => _incrementalScriptFiles;
             set => SetField(ref _incrementalScriptFiles, value);
         }
 
-        private IList<RuntimeScriptFileBase> _repeatableSScriptFiles;
+        private IList<RuntimeScriptFile> _repeatableSScriptFiles;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
-        public IList<RuntimeScriptFileBase> RepeatableScriptFiles
+        public IList<RuntimeScriptFile> RepeatableScriptFiles
         {
             get => _repeatableSScriptFiles;
             set => SetField(ref _repeatableSScriptFiles, value);
         }
 
-        private IList<RuntimeScriptFileBase> _devDummyDataSScriptFiles;
+        private IList<RuntimeScriptFile> _devDummyDataSScriptFiles;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
-        public IList<RuntimeScriptFileBase> DevDummyDataScriptFiles
+        public IList<RuntimeScriptFile> DevDummyDataScriptFiles
         {
             get => _devDummyDataSScriptFiles;
             set => SetField(ref _devDummyDataSScriptFiles, value);

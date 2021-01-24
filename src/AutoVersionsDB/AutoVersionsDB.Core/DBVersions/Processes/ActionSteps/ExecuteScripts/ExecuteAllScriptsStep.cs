@@ -89,7 +89,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
             string lastIncStriptFilename = "";
 
 
-            RuntimeScriptFileBase lastIncScriptFiles = processContext.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.LastOrDefault();
+            RuntimeScriptFile lastIncScriptFiles = processContext.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.LastOrDefault();
             if (lastIncScriptFiles != null)
             {
                 lastIncStriptFilename = lastIncScriptFiles.Filename;

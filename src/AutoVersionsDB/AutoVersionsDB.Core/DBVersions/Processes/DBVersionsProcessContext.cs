@@ -29,15 +29,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 
 
 
-        public List<RuntimeScriptFileBase> ExecutedFiles { get; private set; }
+        public List<RuntimeScriptFile> ExecutedFiles { get; private set; }
 
         public DBVersionsProcessContext()
         {
-            ExecutedFiles = new List<RuntimeScriptFileBase>();
+            ExecutedFiles = new List<RuntimeScriptFile>();
         }
 
 
-        public void AppendExecutedFile(RuntimeScriptFileBase runtimeScriptFile)
+        public void AppendExecutedFile(RuntimeScriptFile runtimeScriptFile)
         {
             runtimeScriptFile.ThrowIfNull(nameof(runtimeScriptFile));
 

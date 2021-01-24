@@ -8,8 +8,8 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 {
     public class TargetScripts
     {
-        public static TargetScripts CreateNoneState() => new TargetScripts(RuntimeScriptFileBase.TargetNoneScriptFileName, RuntimeScriptFileBase.TargetNoneScriptFileName, RuntimeScriptFileBase.TargetNoneScriptFileName);
-        public static TargetScripts CreateLastState() => new TargetScripts(RuntimeScriptFileBase.TargetLastScriptFileName, RuntimeScriptFileBase.TargetLastScriptFileName, RuntimeScriptFileBase.TargetLastScriptFileName);
+        public static TargetScripts CreateNoneState() => new TargetScripts(RuntimeScriptFile.TargetNoneScriptFileName, RuntimeScriptFile.TargetNoneScriptFileName, RuntimeScriptFile.TargetNoneScriptFileName);
+        public static TargetScripts CreateLastState() => new TargetScripts(RuntimeScriptFile.TargetLastScriptFileName, RuntimeScriptFile.TargetLastScriptFileName, RuntimeScriptFile.TargetLastScriptFileName);
 
         public string IncScriptFileName { get; set; }
         public string RptScriptFileName { get; set; }
@@ -37,7 +37,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
         {
             if (string.IsNullOrWhiteSpace(targetScriptName))
             {
-                return RuntimeScriptFileBase.TargetNoneScriptFileName;
+                return RuntimeScriptFile.TargetNoneScriptFileName;
             }
             else
             {

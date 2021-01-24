@@ -8,15 +8,14 @@
             return new TScriptFileType();
         }
 
-        public abstract RuntimeScriptFileFactoryBase RuntimeScriptFileFactory { get; }
-
 
 
         public abstract string FileTypeCode { get; }
 
-        public abstract string FilenamePattern { get; }
+        public string FilenamePattern => Prefix + "_[OrderNum]_[ScriptName].sql";
 
-        public abstract string RegexFilenamePattern { get; }
+        //http://regexstorm.net/tester
+        public string RegexFilenamePattern => "^" + Prefix + "_" + "[0-9]{4}_[a-zA-Z_0-9]{1,}.sql$";
 
         public abstract string Prefix { get; }
         public string RelativeFolderName => FileTypeCode;

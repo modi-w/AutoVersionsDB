@@ -13,8 +13,8 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
         public ScriptFileTypeBase ScriptFileType { get; }
 
-        public List<RuntimeScriptFileBase> ScriptFilesList { get; private set; }
-        public Dictionary<string, RuntimeScriptFileBase> ScriptFilesDictionary { get; private set; }
+        public List<RuntimeScriptFile> ScriptFilesList { get; private set; }
+        public Dictionary<string, RuntimeScriptFile> ScriptFilesDictionary { get; private set; }
 
 
         public string FolderPath { get; private set; }
@@ -45,7 +45,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
         protected void LoadScriptFilesList()
         {
-            List<RuntimeScriptFileBase> newScriptFilesList = new List<RuntimeScriptFileBase>();
+            List<RuntimeScriptFile> newScriptFilesList = new List<RuntimeScriptFile>();
 
             if (Directory.Exists(FolderPath))
             {
@@ -53,7 +53,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
                 foreach (string fileFullPath in arrAllScriptFiles)
                 {
-                    RuntimeScriptFileBase currScriptFile = ScriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
+                    RuntimeScriptFile currScriptFile = new RuntimeScriptFile(ScriptFileType, FolderPath, fileFullPath);
 
                     string computedFileHash = _fileChecksum.GetHashByFilePath(fileFullPath);
                     currScriptFile.ComputedHash = computedFileHash;
@@ -67,21 +67,21 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         }
 
 
-        public RuntimeScriptFileBase CreateRuntimeScriptFileInstanceByFilename(string fileFullPath)
+        public RuntimeScriptFile CreateRuntimeScriptFileInstanceByFilename(string fileFullPath)
         {
-            return ScriptFileType.RuntimeScriptFileFactory.CreateRuntimeScriptFileInstanceByFilename(FolderPath, fileFullPath);
+            return new RuntimeScriptFile(ScriptFileType, FolderPath, fileFullPath);
         }
 
-        public bool TryParseNextRuntimeScriptFileName(string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile)
+        public bool TryParseNextRuntimeScriptFileName(string scriptName, RuntimeScriptFile prevRuntimeScriptFile, out RuntimeScriptFile newRuntimeScriptFile)
         {
-            return ScriptFileType.RuntimeScriptFileFactory.TryParseNextRuntimeScriptFileName(FolderPath, scriptName, prevRuntimeScriptFile, out newRuntimeScriptFile);
+            return RuntimeScriptFile.TryParseNextRuntimeScriptFileInstance(ScriptFileType, FolderPath, scriptName, prevRuntimeScriptFile, out newRuntimeScriptFile);
         }
 
-        public RuntimeScriptFileBase CreateNextRuntimeScriptFileInstance(string scriptName, RuntimeScriptFileBase prevRuntimeScriptFile)
+        public RuntimeScriptFile CreateNextRuntimeScriptFileInstance(string scriptName, RuntimeScriptFile prevRuntimeScriptFile)
         {
             scriptName.ThrowIfNull(nameof(scriptName));
 
-            if (!ScriptFileType.RuntimeScriptFileFactory.TryParseNextRuntimeScriptFileName(FolderPath, scriptName, prevRuntimeScriptFile, out RuntimeScriptFileBase newRuntimeScriptFile))
+            if (!RuntimeScriptFile.TryParseNextRuntimeScriptFileInstance(ScriptFileType,FolderPath, scriptName, prevRuntimeScriptFile, out RuntimeScriptFile newRuntimeScriptFile))
             {
                 string errorMessage =
                     CoreTextResources
