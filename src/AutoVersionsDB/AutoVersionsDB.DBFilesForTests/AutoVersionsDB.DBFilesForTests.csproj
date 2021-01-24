@@ -20,50 +20,50 @@
     <None Remove="SqlServer\Scripts\Delivery_NoScriptFiles\AutoVersionsDB.Tests_NoScriptFiles.avdb" />
     <None Remove="SqlServer\Scripts\Delivery_ScriptError\AutoVersionsDB.Tests_ScriptError.avdb" />
     <None Remove="SqlServer\Scripts\Delivery_WithDevDummyDataFiles\AutoVersionsDB.Tests.avdb" />
-    <None Remove="SqlServer\Scripts\DevScripts\DevDummyData\dddScript_001_DataForInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts\DevDummyData\dddScript_002_DataForTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-02-25.100_initState.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-02-25.102_CreateLookupTable2.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts\Repeatable\rptScript_001_DataForLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts\Repeatable\rptScript_002_DataForLookupTable2.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\DevDummyData\dddScript_001_DataForInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\DevDummyData\dddScript_002_DataForTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-02-25.100_initState.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-02-25.102_CreateLookupTable2.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Repeatable\rptScript_001_DataForLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Repeatable\rptScript_002_DataForLookupTable2.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\DevDummyData\dddScript_001_DataForInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\DevDummyData\dddScript_002_DataForTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-02-25.100_initState.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-02-25.102_CreateLookupTable2.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Repeatable\rptScript_001_DataForLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Repeatable\rptScript_002_DataForLookupTable2.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_001_DataForInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_002_DataForTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_2020-02-25.100_initState.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_001_DataForLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_002_DataForLookupTable2.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_001_DataForInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_002_DataForTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-02-25.100_initState.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-02-25.102_CreateLookupTable2.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Repeatable\rptScript_001_DataForLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Repeatable\rptScript_002_DataForLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\DevDummyData\dddScript_0002_DataForTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_0001_initState.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_0002_CreateLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_0003_CreateLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_0004_CreateTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\Incremental\incScript_0005_CreateInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\Repeatable\rptScript_0001_DataForLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts\Repeatable\rptScript_0002_DataForLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\DevDummyData\dddScript_0002_DataForTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0001_initState.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0002_CreateLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0003_CreateLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0004_CreateTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0005_CreateInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Repeatable\rptScript_0001_DataForLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Repeatable\rptScript_0002_DataForLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\DevDummyData\dddScript_0002_DataForTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0001_initState.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0002_CreateLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0003_CreateLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0004_CreateTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0005_CreateInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Repeatable\rptScript_0001_DataForLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Repeatable\rptScript_0002_DataForLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_0002_DataForTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0001_initState.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0002_CreateLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0004_CreateInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0005_CreateTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_0001_DataForLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_0002_DataForLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_0002_DataForTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0001_initState.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0002_CreateLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0003_CreateLookupTable2.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0004_CreateTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0005_CreateInvoiceTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Repeatable\rptScript_0001_DataForLookupTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_ScriptError\Repeatable\rptScript_0002_DataForLookupTable2.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -112,136 +112,136 @@
     <Content Include="SqlServer\Scripts\Delivery_WithDevDummyDataFiles\AutoVersionsDB.Tests.avdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\DevDummyData\dddScript_001_DataForInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\DevDummyData\dddScript_002_DataForTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\DevDummyData\dddScript_0002_DataForTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-02-25.100_initState.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_0001_initState.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_0002_CreateLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-02-25.102_CreateLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_0003_CreateLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_0004_CreateTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\Incremental\incScript_0005_CreateInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\Repeatable\rptScript_001_DataForLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\Repeatable\rptScript_0001_DataForLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts\Repeatable\rptScript_002_DataForLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts\Repeatable\rptScript_0002_DataForLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\DevDummyData\dddScript_001_DataForInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\DevDummyData\dddScript_002_DataForTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\DevDummyData\dddScript_0002_DataForTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-02-25.100_initState.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0001_initState.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0002_CreateLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-02-25.102_CreateLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0003_CreateLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0004_CreateTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Incremental\incScript_0005_CreateInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Repeatable\rptScript_001_DataForLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Repeatable\rptScript_0001_DataForLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Repeatable\rptScript_002_DataForLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Incremental\Repeatable\rptScript_0002_DataForLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\DevDummyData\dddScript_001_DataForInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\DevDummyData\dddScript_002_DataForTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\DevDummyData\dddScript_0002_DataForTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-02-25.100_initState.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0001_initState.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0002_CreateLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-02-25.102_CreateLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0003_CreateLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0004_CreateTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Incremental\incScript_0005_CreateInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Repeatable\rptScript_001_DataForLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Repeatable\rptScript_0001_DataForLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Repeatable\rptScript_002_DataForLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ChangedHistoryFiles_Repeatable\Repeatable\rptScript_0002_DataForLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_001_DataForInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_002_DataForTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_0002_DataForTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_2020-02-25.100_initState.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0001_initState.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0002_CreateLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0005_CreateTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0004_CreateInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_001_DataForLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_0001_DataForLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_002_DataForLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_0002_DataForLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_001_DataForInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_002_DataForTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_0002_DataForTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-02-25.100_initState.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0001_initState.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-02-25.101_CreateLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0002_CreateLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-02-25.102_CreateLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0003_CreateLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-03-02.100_CreateTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0004_CreateTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_2020-03-02.101_CreateInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Incremental\incScript_0005_CreateInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Repeatable\rptScript_001_DataForLookupTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Repeatable\rptScript_0001_DataForLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Repeatable\rptScript_002_DataForLookupTable2.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_ScriptError\Repeatable\rptScript_0002_DataForLookupTable2.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
