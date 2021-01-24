@@ -1192,6 +1192,8 @@
             this.dgRepeatableScriptsFiles.ShowRowErrors = false;
             this.dgRepeatableScriptsFiles.Size = new System.Drawing.Size(1109, 306);
             this.dgRepeatableScriptsFiles.TabIndex = 47;
+            this.dgRepeatableScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgRepeatableScriptsFiles_CellContentClick);
+
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -1470,6 +1472,8 @@
             this.dgDevDummyDataScriptsFiles.ShowRowErrors = false;
             this.dgDevDummyDataScriptsFiles.Size = new System.Drawing.Size(1109, 306);
             this.dgDevDummyDataScriptsFiles.TabIndex = 47;
+            this.dgDevDummyDataScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgDevDummyDataScriptsFiles_CellContentClick);
+
             // 
             // dataGridViewTextBoxColumn4
             // 
