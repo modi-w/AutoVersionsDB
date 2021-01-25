@@ -57,7 +57,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
             assertTextByLines.AssertLineMessage("   sync    | dddScript_0001_DataForInvoiceTable1.sql", true);
-            assertTextByLines.AssertLineMessage("   changed | dddScript_0002_DataForTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | dddScript_0002_DataForTransTable1.sql", true);
         }
 
 

@@ -1,4 +1,6 @@
 ﻿using AutoVersionsDB.Core.DBVersions.Processes.Validators;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Helpers;
 using AutoVersionsDB.NotificationableEngine;
 using AutoVersionsDB.NotificationableEngine.Validations;
@@ -19,9 +21,16 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
 
             DBVersionsProcessContext dbVersionsProcessContext = processContext as DBVersionsProcessContext;
 
-            HistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidator =
-                new HistoryExecutedFilesChangedValidator(dbVersionsProcessContext.ScriptFilesState);
-            validationsGroup.Add(isHistoryExecutedFilesChangedValidator);
+            HistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidatorInc =
+                new HistoryExecutedFilesChangedValidator(dbVersionsProcessContext.ScriptFilesState.IncrementalScriptFilesComparer);
+            validationsGroup.Add(isHistoryExecutedFilesChangedValidatorInc);
+
+            if (dbVersionsProcessContext.ProjectConfig.DevEnvironment)
+            {
+                HistoryExecutedFilesChangedValidator isHistoryExecutedFilesChangedValidatorDDD =
+                    new HistoryExecutedFilesChangedValidator(dbVersionsProcessContext.ScriptFilesState.DevDummyDataScriptFilesComparer);
+                validationsGroup.Add(isHistoryExecutedFilesChangedValidatorDDD);
+            }
 
             return validationsGroup;
         }

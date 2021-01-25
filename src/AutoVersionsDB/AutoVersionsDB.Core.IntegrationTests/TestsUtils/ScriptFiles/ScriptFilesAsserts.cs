@@ -175,7 +175,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 
                 AssertMatchRepeatableFilesWithDBExecuted_ForRunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
 
-                AssertDevDummyDataFilesWithDBExecuted_RunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
+          //      AssertDevDummyDataFilesWithDBExecuted_RunAgainAfterRepetableFilesChanged(testName, projectConfig, dbScriptsExecutionHistoryFilesTable);
             }
         }
 
@@ -278,38 +278,38 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
             }
 
         }
-        public void AssertDevDummyDataFilesWithDBExecuted_RunAgainAfterRepetableFilesChanged(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
-        {
-            string[] arrAllDevDummyDataScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
+        //public void AssertDevDummyDataFilesWithDBExecuted_RunAgainAfterRepetableFilesChanged(string testName, ProjectConfigItem projectConfig, DataTable dbScriptsExecutionHistoryFilesTable)
+        //{
+        //    string[] arrAllDevDummyDataScriptFiles = Directory.GetFiles(projectConfig.DevDummyDataScriptsFolderPath, $"{_devDummyDataScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
-            foreach (string scriptFile in arrAllDevDummyDataScriptFiles)
-            {
-                FileInfo fiScriptFile = new FileInfo(scriptFile);
+        //    foreach (string scriptFile in arrAllDevDummyDataScriptFiles)
+        //    {
+        //        FileInfo fiScriptFile = new FileInfo(scriptFile);
 
-                List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
+        //        List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
 
-                string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
+        //        string computedFileHash = _fileChecksum.GetHashByFilePath(fiScriptFile.FullName);
 
-                if (fiScriptFile.Name == "dddScript_0002_DataForTransTable1.sql")
-                {
-                    Assert.That(executedScriptRows.Count, Is.EqualTo(2));
+        //        if (fiScriptFile.Name == "dddScript_0002_DataForTransTable1.sql")
+        //        {
+        //            Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
-                    DataRow firstInstance = executedScriptRows[0];
-                    Assert.That(firstInstance["ComputedFileHash"].ToString() != computedFileHash);
+        //            DataRow firstInstance = executedScriptRows[0];
+        //            Assert.That(firstInstance["ComputedFileHash"].ToString() != computedFileHash);
 
-                    DataRow secondInstance = executedScriptRows[1];
-                    AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, secondInstance);
-                }
-                else
-                {
+        //            //DataRow secondInstance = executedScriptRows[1];
+        //            //AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, secondInstance);
+        //        }
+        //        else
+        //        {
 
-                    Assert.That(executedScriptRows.Count, Is.EqualTo(1));
+        //            Assert.That(executedScriptRows.Count, Is.EqualTo(1));
 
-                    DataRow executedScriptRow = executedScriptRows.First();
-                    AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
-                }
-            }
-        }
+        //            DataRow executedScriptRow = executedScriptRows.First();
+        //            AssertScriptFileAndDBRowHasSameHash(testName, fiScriptFile, executedScriptRow);
+        //        }
+        //    }
+      //  }
 
 
 

@@ -22,9 +22,9 @@ namespace AutoVersionsDB.Core
         public const string ArtifactFileNotExistErrorMessage = "Delivery Artifact File does not exist";
         public const string ArtifactFolderExistErrorMessage = "Delivery Artifact Folder does not exist";
         public const string DeliveryEnvErrorMessage = "Could not run this command on Delivery Environment";
-        public const string FilesChangedErrorMessage = "The following files changed: '[FilesList]'";
-        public const string HistoryFilesNotExecutedErrorMessage = "The history file '[FileName]' is not executed on this Database";
-        public const string HistoryExecutedFilesMissingErrorMessage = "The following files missing from the scripts folder: '[FilesList]'";
+        public const string FilesChangedErrorMessage = "The following files changed: '[FilesList]' in the '[FileTypeCode]' list";
+        public const string HistoryFilesNotExecutedErrorMessage = "The history file '[FileName]' is not executed on this Database in the '[FileTypeCode]' list";
+        public const string HistoryExecutedFilesMissingErrorMessage = "The following files missing from the scripts folder: '[FilesList]' in the '[FileTypeCode]' list";
         public const string NewProjectDevEnvErrorMessage = "No scripts file, and no system tables on the DB, its probably a new project on dev environment.";
         public const string NewProjectDeliveryEnvErrorMessage = "No system tables on the DB, its probably a new project on delivery environment.";
         public const string NewProjectDeliveryEnvNoscriptsFilesEnvErrorMessage = "No scripts file, and no system tables on the DB, its probably a new project on delivery environment.";
@@ -32,8 +32,8 @@ namespace AutoVersionsDB.Core
         public const string TableNotExistErrorMessage = "The table '[TableName]' is not exist in the DB";
         public const string TableMissingColumnErrorMessage = "The table '[TableName]' is missing the column '[ColumnName]'";
         public const string TableColumnIvalidTypeErrorMessage = "The column '[ColumnName]' has the type '[DBDataType]' instead of '[StructDataType]', in the table [TableName]";
-        public const string HistoricalTargetStateScriptErrorMessage = "The target file '[FileName]' is already executed on this database.";
-        public const string TargetStateScriptFileNotExistErrorMessage = "The target file '[FileName]' is not exsit.";
+        public const string HistoricalTargetStateScriptErrorMessage = "The target file '[FileName]' in the '[FileTypeCode]' list is already executed on this database.";
+        public const string TargetStateScriptFileNotExistErrorMessage = "The target file '[FileName]' is not exsit in the '[FileTypeCode]' list";
 
 
         //Core Validators Instructions Messages

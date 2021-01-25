@@ -3,6 +3,7 @@ using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
 using AutoVersionsDB.Core.DBVersions.Processes.Validators;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles.Incremental;
 using AutoVersionsDB.Core.IntegrationTests;
 
 
@@ -57,7 +58,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
             assertErrorsTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteWithErrors, true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage($"{HistoryExecutedFilesChangedValidator.Name}. Error: {CoreTextResources.FilesChangedErrorMessage.Replace("[FilesList]", "incScript_0003_CreateLookupTable2.sql")}", false);
+            assertErrorsTextByLines.AssertLineMessage($"{HistoryExecutedFilesChangedValidator.Name}. Error: {CoreTextResources.FilesChangedErrorMessage.Replace("[FilesList]", "incScript_0003_CreateLookupTable2.sql").Replace("[FileTypeCode]", IncrementalScriptFileType.Code)}", false);
             assertErrorsTextByLines.AssertLineMessage("", true);
             assertErrorsTextByLines.AssertLineMessage(CoreTextResources.HistoryExecutedFilesChangedInstructionsMessage, true);
 

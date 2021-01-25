@@ -48,7 +48,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
 
-            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, TargetScriptFiletAlreadyExecutedValidator.Name);
+            _processAsserts.AssertContainError(GetType().Name, testContext.ProcessResults.Trace, TargetScriptFileAlreadyExecutedValidator.Name);
         }
 
 

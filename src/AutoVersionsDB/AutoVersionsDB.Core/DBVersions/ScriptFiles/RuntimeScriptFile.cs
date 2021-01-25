@@ -12,6 +12,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         public const string TargetLastScriptFileName = "#Last";
 
 
+
         public static bool TryParseNextRuntimeScriptFileInstance(ScriptFileTypeBase scriptFileType, string folderPath, string scriptName, RuntimeScriptFile prevRuntimeScriptFile, out RuntimeScriptFile newRuntimeScriptFile)
         {
             int nextOrderNum = 1;
@@ -40,7 +41,24 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
         public string SortKey => $"{OrderNum:0000}{ScriptName}";
 
-        public string Filename => $"{ScriptFileType.Prefix}_{OrderNum:0000}_{ScriptName}.sql";
+        public string Filename
+        {
+            get
+            {
+                if (ScriptName.Trim().ToUpperInvariant() == TargetNoneScriptFileName.Trim().ToUpperInvariant())
+                {
+                    return TargetNoneScriptFileName;
+                }
+                else if (ScriptName.Trim().ToUpperInvariant() == TargetLastScriptFileName.Trim().ToUpperInvariant())
+                {
+                    return TargetLastScriptFileName;
+                }
+                else
+                {
+                    return $"{ScriptFileType.Prefix}_{OrderNum:0000}_{ScriptName}.sql";
+                }
+            }
+        }
 
 
         public virtual string FolderPath { get; protected set; }

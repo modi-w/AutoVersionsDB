@@ -3,9 +3,9 @@
 
 namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData
 {
-    public class DevDummyDataScriptFileType : RepeatableScriptFileType
+    public class DevDummyDataScriptFileType : ScriptFileTypeBase
     {
-        public new const string Code = "DevDummyData";
+        public const string Code = "DevDummyData";
         public override string FileTypeCode => Code;
 
 

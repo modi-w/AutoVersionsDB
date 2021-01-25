@@ -8,7 +8,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class HistoryExecutedFilesChangedValidator : ValidatorBase
     {
-        private readonly ScriptFilesState _scriptFilesState;
+        private readonly ScriptFilesComparerBase _scriptFilesComparer;
 
         public const string Name = "HistoryExecutedFilesChanged";
         public override string ValidatorName => Name;
@@ -18,47 +18,54 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
 
-        public HistoryExecutedFilesChangedValidator(ScriptFilesState scriptFilesState)
+        public HistoryExecutedFilesChangedValidator(ScriptFilesComparerBase scriptFilesComparer)
         {
-            _scriptFilesState = scriptFilesState;
+            _scriptFilesComparer = scriptFilesComparer;
         }
 
 
         public override string Validate()
         {
 
-            if (_scriptFilesState.IncrementalScriptFilesComparer.ChangedFiles.Count > 0)
+            if (_scriptFilesComparer.ChangedFiles.Count > 0)
             {
-                IEnumerable<string> changeFilenamesList = _scriptFilesState.IncrementalScriptFilesComparer.ChangedFiles.Select(e => e.Filename);
+                IEnumerable<string> changeFilenamesList = _scriptFilesComparer.ChangedFiles.Select(e => e.Filename);
 
-                return CoreTextResources.FilesChangedErrorMessage.Replace("[FilesList]", string.Join(", ", changeFilenamesList));
+                return CoreTextResources.FilesChangedErrorMessage
+                    .Replace("[FilesList]", string.Join(", ", changeFilenamesList))
+                    .Replace("[FileTypeCode]", _scriptFilesComparer.ScriptFileType.FileTypeCode);
             }
 
-            if (!string.IsNullOrWhiteSpace(_scriptFilesState.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename))
+            if (!string.IsNullOrWhiteSpace(_scriptFilesComparer.LastFileOfLastExecutedFilename))
             {
-                foreach (var scriptFileItem in _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles)
+                foreach (var scriptFileItem in _scriptFilesComparer.AllFileSystemScriptFiles)
                 {
-                    if (scriptFileItem.Filename.Trim().ToUpperInvariant() == _scriptFilesState.IncrementalScriptFilesComparer.LastFileOfLastExecutedFilename.Trim().ToUpperInvariant())
+                    if (scriptFileItem.Filename.Trim().ToUpperInvariant() == _scriptFilesComparer.LastFileOfLastExecutedFilename.Trim().ToUpperInvariant())
                     {
                         break;
                     }
                     else
                     {
-                        bool isFileNotExecuted = _scriptFilesState.IncrementalScriptFilesComparer.NotExistInDBButExistInFileSystem.Any(e => e.Filename.Trim().ToUpperInvariant() == scriptFileItem.Filename.Trim().ToUpperInvariant());
+                        bool isFileNotExecuted = _scriptFilesComparer.NotExistInDBButExistInFileSystem.Any(e => e.Filename.Trim().ToUpperInvariant() == scriptFileItem.Filename.Trim().ToUpperInvariant());
 
                         if (isFileNotExecuted)
                         {
-                            return CoreTextResources.HistoryFilesNotExecutedErrorMessage.Replace("[FileName]", scriptFileItem.Filename);
+                            return CoreTextResources.HistoryFilesNotExecutedErrorMessage
+                                .Replace("[FileName]", scriptFileItem.Filename)
+                                .Replace("[FileTypeCode]", _scriptFilesComparer.ScriptFileType.FileTypeCode);
+
                         }
                     }
                 }
 
-                if (_scriptFilesState.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Count > 0)
+                if (_scriptFilesComparer.NotExistInFileSystemButExistInDB.Count > 0)
                 {
-                    IEnumerable<string> notExistInFileSystemFilenamesList = _scriptFilesState.IncrementalScriptFilesComparer.NotExistInFileSystemButExistInDB.Select(e => e.Filename);
+                    IEnumerable<string> notExistInFileSystemFilenamesList = _scriptFilesComparer.NotExistInFileSystemButExistInDB.Select(e => e.Filename);
              
-                    return CoreTextResources.HistoryExecutedFilesMissingErrorMessage.Replace("[FilesList]", string.Join(", ", notExistInFileSystemFilenamesList));
-                 }
+                    return CoreTextResources.HistoryExecutedFilesMissingErrorMessage
+                        .Replace("[FilesList]", string.Join(", ", notExistInFileSystemFilenamesList))
+                        .Replace("[FileTypeCode]", _scriptFilesComparer.ScriptFileType.FileTypeCode);
+                }
             }
 
 

@@ -7,7 +7,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
     public class TargetStateScriptFileExistValidator : ValidatorBase
     {
-        private readonly ScriptFilesState _scriptFilesState;
+        private readonly ScriptFilesComparerBase _scriptFilesComparer;
         private readonly string _targetStateScriptFileName;
 
         public const string Name = "TargetStateScriptFileExist";
@@ -18,25 +18,28 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
-        public TargetStateScriptFileExistValidator(ScriptFilesState scriptFilesState,
+        public TargetStateScriptFileExistValidator(ScriptFilesComparerBase scriptFilesComparer,
                                                     string targetStateScriptFileName)
         {
-            _scriptFilesState = scriptFilesState;
+            _scriptFilesComparer = scriptFilesComparer;
             _targetStateScriptFileName = targetStateScriptFileName;
         }
 
         public override string Validate()
         {
             if (!string.IsNullOrWhiteSpace(_targetStateScriptFileName)
+                && _targetStateScriptFileName.Trim().ToUpperInvariant() != RuntimeScriptFile.TargetNoneScriptFileName.Trim().ToUpperInvariant()
                 && _targetStateScriptFileName.Trim().ToUpperInvariant() != RuntimeScriptFile.TargetLastScriptFileName.Trim().ToUpperInvariant())
             {
                 var isTargetFileExsit =
-                    _scriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles
+                    _scriptFilesComparer.AllFileSystemScriptFiles
                         .Any(e => e.Filename.Trim().ToUpperInvariant() == _targetStateScriptFileName.Trim().ToUpperInvariant());
 
                 if (!isTargetFileExsit)
                 {
-                    return CoreTextResources.TargetStateScriptFileNotExistErrorMessage.Replace("[FileName]", _targetStateScriptFileName);
+                    return CoreTextResources.TargetStateScriptFileNotExistErrorMessage
+                        .Replace("[FileName]", _targetStateScriptFileName)
+                        .Replace("[FileTypeCode]", _scriptFilesComparer.ScriptFileType.FileTypeCode);
                 }
             }
 
