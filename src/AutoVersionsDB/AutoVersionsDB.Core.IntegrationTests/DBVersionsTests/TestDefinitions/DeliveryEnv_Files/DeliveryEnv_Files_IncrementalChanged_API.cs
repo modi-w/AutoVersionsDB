@@ -66,7 +66,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             FileStateListAssert rptfileStateListAssert = new FileStateListAssert(this.GetType().Name, scriptFilesState.RepeatableScriptFilesComparer);
             rptfileStateListAssert.AssertNumOfFiles(2);
-            rptfileStateListAssert.AssertFileState(0, "rptScript_0001_DataForLookupTable1.sql", HashDiffType.Equal);
+            rptfileStateListAssert.AssertFileState(0, "rptScript_0001_DataForLookupTable1.sql", HashDiffType.NotExist);
             rptfileStateListAssert.AssertFileState(1, "rptScript_0002_DataForLookupTable2.sql", HashDiffType.NotExist);
 
             Assert.That(scriptFilesState.DevDummyDataScriptFilesComparer == null, $"{this.GetType().Name} >>> DevDummyDataScriptFilesComparer should be null on delivery environment");

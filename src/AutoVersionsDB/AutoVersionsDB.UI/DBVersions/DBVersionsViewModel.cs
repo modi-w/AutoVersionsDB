@@ -55,8 +55,8 @@ namespace AutoVersionsDB.UI.DBVersions
 
 
         public RelayCommand<string> SelectTargetIncScriptFileNameCommand { get; private set; }
-        public RelayCommand<string> SelectTargetRptScriptFileNameCommand { get; private set; }
-        public RelayCommand<string> SelectTargetDDDScriptFileNameCommand { get; private set; }
+        //public RelayCommand<string> SelectTargetRptScriptFileNameCommand { get; private set; }
+        //public RelayCommand<string> SelectTargetDDDScriptFileNameCommand { get; private set; }
 
         public RelayCommand OpenIncrementalScriptsFolderCommand { get; private set; }
         public RelayCommand OpenRepeatableScriptsFolderCommand { get; private set; }
@@ -104,8 +104,8 @@ namespace AutoVersionsDB.UI.DBVersions
             CancelStateByVirtualExecutionViewStateCommand = new RelayCommand(CancelStateByVirtualExecutionViewState);
 
             SelectTargetIncScriptFileNameCommand = new RelayCommand<string>(SelectTargetIncScriptFileName);
-            SelectTargetRptScriptFileNameCommand = new RelayCommand<string>(SelectTargetRptScriptFileName);
-            SelectTargetDDDScriptFileNameCommand = new RelayCommand<string>(SelectTargetDDDScriptFileName);
+            //SelectTargetRptScriptFileNameCommand = new RelayCommand<string>(SelectTargetRptScriptFileName);
+            //SelectTargetDDDScriptFileNameCommand = new RelayCommand<string>(SelectTargetDDDScriptFileName);
 
             OpenIncrementalScriptsFolderCommand = new RelayCommand(OpenIncrementalScriptsFolder);
             OpenRepeatableScriptsFolderCommand = new RelayCommand(OpenRepeatableScriptsFolder);
@@ -191,14 +191,14 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             DBVersionsViewModelData.TargetIncScriptFileName = targetScriptFileName;
         }
-        private void SelectTargetRptScriptFileName(string targetScriptFileName)
-        {
-            DBVersionsViewModelData.TargetRptScriptFileName = targetScriptFileName;
-        }
-        private void SelectTargetDDDScriptFileName(string targetScriptFileName)
-        {
-            DBVersionsViewModelData.TargetDDDScriptFileName = targetScriptFileName;
-        }
+        //private void SelectTargetRptScriptFileName(string targetScriptFileName)
+        //{
+        //    DBVersionsViewModelData.TargetRptScriptFileName = targetScriptFileName;
+        //}
+        //private void SelectTargetDDDScriptFileName(string targetScriptFileName)
+        //{
+        //    DBVersionsViewModelData.TargetDDDScriptFileName = targetScriptFileName;
+        //}
 
 
         private void OpenIncrementalScriptsFolder()
@@ -396,7 +396,7 @@ namespace AutoVersionsDB.UI.DBVersions
                 _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
                 NotificationsViewModel.BeforeStartProcess();
 
-                TargetScripts targetScripts = new TargetScripts(DBVersionsViewModelData.TargetIncScriptFileName, DBVersionsViewModelData.TargetRptScriptFileName, DBVersionsViewModelData.TargetDDDScriptFileName);
+                TargetScripts targetScripts = new TargetScripts(DBVersionsViewModelData.TargetIncScriptFileName);
 
                 ProcessResults processResults = _dbVersionsAPI.SetDBToSpecificState(DBVersionsViewModelData.ProjectConfig.Id, targetScripts, true, NotificationsViewModel.OnNotificationStateChanged);
                 RefreshScriptFilesState(false);
@@ -426,7 +426,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
             NotificationsViewModel.BeforeStartProcess();
 
-            TargetScripts targetScripts = new TargetScripts(DBVersionsViewModelData.TargetIncScriptFileName, DBVersionsViewModelData.TargetRptScriptFileName, DBVersionsViewModelData.TargetDDDScriptFileName);
+            TargetScripts targetScripts = new TargetScripts(DBVersionsViewModelData.TargetIncScriptFileName);
 
             ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(DBVersionsViewModelData.ProjectConfig.Id, targetScripts, NotificationsViewModel.OnNotificationStateChanged);
             RefreshScriptFilesState(false);

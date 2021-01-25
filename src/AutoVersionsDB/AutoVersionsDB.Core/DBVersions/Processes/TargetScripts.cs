@@ -8,28 +8,26 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 {
     public class TargetScripts
     {
-        public static TargetScripts CreateNoneState() => new TargetScripts(RuntimeScriptFile.TargetNoneScriptFileName, RuntimeScriptFile.TargetNoneScriptFileName, RuntimeScriptFile.TargetNoneScriptFileName);
-        public static TargetScripts CreateLastState() => new TargetScripts(RuntimeScriptFile.TargetLastScriptFileName, RuntimeScriptFile.TargetLastScriptFileName, RuntimeScriptFile.TargetLastScriptFileName);
+        public static TargetScripts CreateNoneState() => new TargetScripts(RuntimeScriptFile.TargetNoneScriptFileName);
+        public static TargetScripts CreateLastState() => new TargetScripts(RuntimeScriptFile.TargetLastScriptFileName);
 
         public string IncScriptFileName { get; set; }
-        public string RptScriptFileName { get; set; }
-        public string DDDScriptFileName { get; set; }
+        //public string RptScriptFileName { get; set; }
+        //public string DDDScriptFileName { get; set; }
 
         public Dictionary<string, string> TargetScriptsByType { get; }
 
-        public TargetScripts(string incScriptFileName,
-                            string rptScriptFileName,
-                            string dddScriptFileName)
+        public TargetScripts(string incScriptFileName)
         {
             IncScriptFileName = GetTargetScriptNameOrDefault(incScriptFileName);
-            RptScriptFileName = GetTargetScriptNameOrDefault(rptScriptFileName);
-            DDDScriptFileName = GetTargetScriptNameOrDefault(dddScriptFileName);
+            //RptScriptFileName = GetTargetScriptNameOrDefault(rptScriptFileName);
+            //DDDScriptFileName = GetTargetScriptNameOrDefault(dddScriptFileName);
 
             TargetScriptsByType = new Dictionary<string, string>
             {
                 { IncrementalScriptFileType.Code, IncScriptFileName },
-                { RepeatableScriptFileType.Code, RptScriptFileName },
-                { DevDummyDataScriptFileType.Code, DDDScriptFileName }
+                //{ RepeatableScriptFileType.Code, RptScriptFileName },
+                //{ DevDummyDataScriptFileType.Code, DDDScriptFileName }
             };
         }
 

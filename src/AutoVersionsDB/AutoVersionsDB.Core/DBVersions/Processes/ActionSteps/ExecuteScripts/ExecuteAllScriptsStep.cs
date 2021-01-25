@@ -63,18 +63,23 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
                         targetScripts = (processContext.ProcessArgs as DBVersionsProcessArgs).TargetScripts;
                     }
 
-
-                    ScriptFileTypeBase repeatableFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
-                    ExecuteScriptsByTypeStep repeatableFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(repeatableFileType.FileTypeCode, dbCommands);
-                    internalSteps.Add(repeatableFileTypeExecuteScriptsByTypeStep);
-
-
-                    if (processContext.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
+                    //Comment: We run the repeatable files and ddd files, onlyif we have all the schema on the DB. mean, only if we executed all incremiental files.
+                    if (targetScripts.IncScriptFileName.Trim().ToUpperInvariant() == lastIncStriptFilename.Trim().ToUpperInvariant()
+                        || targetScripts.IncScriptFileName.Trim().ToUpperInvariant() == RuntimeScriptFile.TargetLastScriptFileName.Trim().ToUpperInvariant())
                     {
-                        ScriptFileTypeBase devDummyDataFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
-                        ExecuteScriptsByTypeStep devDummyDataFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(devDummyDataFileType.FileTypeCode, dbCommands);
-                        internalSteps.Add(devDummyDataFileTypeExecuteScriptsByTypeStep);
+                        ScriptFileTypeBase repeatableFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
+                        ExecuteScriptsByTypeStep repeatableFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(repeatableFileType.FileTypeCode, dbCommands);
+                        internalSteps.Add(repeatableFileTypeExecuteScriptsByTypeStep);
+
+
+                        if (processContext.ScriptFilesState.DevDummyDataScriptFilesComparer != null)
+                        {
+                            ScriptFileTypeBase devDummyDataFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
+                            ExecuteScriptsByTypeStep devDummyDataFileTypeExecuteScriptsByTypeStep = _executeScriptsByTypeStepFactory.Create(devDummyDataFileType.FileTypeCode, dbCommands);
+                            internalSteps.Add(devDummyDataFileTypeExecuteScriptsByTypeStep);
+                        }
                     }
+
 
                     ExecuteInternalSteps(internalSteps, false);
                 }

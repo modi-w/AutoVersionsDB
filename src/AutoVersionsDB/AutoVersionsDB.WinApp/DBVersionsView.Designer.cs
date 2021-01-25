@@ -101,11 +101,9 @@
             this.btnCreateNewRepeatableScriptFile = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.dgRepeatableScriptsFiles = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnSelectTargetState = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label19 = new System.Windows.Forms.Label();
             this.pnlDevDummyDataFiles = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.lblDDDNumOfVirtual = new System.Windows.Forms.Label();
@@ -119,15 +117,15 @@
             this.btnCreateNewDevDummyDataScriptFile = new System.Windows.Forms.Button();
             this.label22 = new System.Windows.Forms.Label();
             this.dgDevDummyDataScriptsFiles = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnSelectTargetScript = new System.Windows.Forms.DataGridViewButtonColumn();
             this.label23 = new System.Windows.Forms.Label();
             this.pnlActionButtons = new System.Windows.Forms.Panel();
             this.pnlRestoreDBError = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
             this.btnShowHistoricalBackups = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgIncrementalScriptsFiles)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -852,7 +850,6 @@
             this.notificationsControl1.Name = "notificationsControl1";
             this.notificationsControl1.Size = new System.Drawing.Size(1169, 65);
             this.notificationsControl1.TabIndex = 64;
-            this.notificationsControl1.ViewModel = null;
             // 
             // label15
             // 
@@ -1171,8 +1168,7 @@
             this.dgRepeatableScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgRepeatableScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.btnSelectTargetState});
+            this.dataGridViewTextBoxColumn3});
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
@@ -1194,41 +1190,6 @@
             this.dgRepeatableScriptsFiles.ShowRowErrors = false;
             this.dgRepeatableScriptsFiles.Size = new System.Drawing.Size(1109, 306);
             this.dgRepeatableScriptsFiles.TabIndex = 47;
-            this.dgRepeatableScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgRepeatableScriptsFiles_CellContentClick);
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn2.FillWeight = 40.92313F;
-            this.dataGridViewTextBoxColumn2.HeaderText = "";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 30;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Filename";
-            this.dataGridViewTextBoxColumn3.FillWeight = 157.554F;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Filename";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // btnSelectTargetState
-            // 
-            this.btnSelectTargetState.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.btnSelectTargetState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectTargetState.HeaderText = "";
-            this.btnSelectTargetState.MinimumWidth = 6;
-            this.btnSelectTargetState.Name = "btnSelectTargetState";
-            this.btnSelectTargetState.ReadOnly = true;
-            this.btnSelectTargetState.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.btnSelectTargetState.Text = "Set as Target State";
-            this.btnSelectTargetState.UseColumnTextForButtonValue = true;
-            this.btnSelectTargetState.Width = 140;
             // 
             // label19
             // 
@@ -1262,6 +1223,16 @@
             this.pnlDevDummyDataFiles.Name = "pnlDevDummyDataFiles";
             this.pnlDevDummyDataFiles.Size = new System.Drawing.Size(1169, 435);
             this.pnlDevDummyDataFiles.TabIndex = 74;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(37, 64);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(689, 17);
+            this.label9.TabIndex = 75;
+            this.label9.Text = "* Pay Attention: The dev Dummy Data Files behave like incremental files, means it" +
+    " cannot run script file twice";
             // 
             // panel4
             // 
@@ -1451,8 +1422,7 @@
             this.dgDevDummyDataScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgDevDummyDataScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.btnSelectTargetScript});
+            this.dataGridViewTextBoxColumn5});
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
@@ -1474,41 +1444,6 @@
             this.dgDevDummyDataScriptsFiles.ShowRowErrors = false;
             this.dgDevDummyDataScriptsFiles.Size = new System.Drawing.Size(1109, 315);
             this.dgDevDummyDataScriptsFiles.TabIndex = 47;
-            this.dgDevDummyDataScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgDevDummyDataScriptsFiles_CellContentClick);
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn4.FillWeight = 40.92313F;
-            this.dataGridViewTextBoxColumn4.HeaderText = "";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 30;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Filename";
-            this.dataGridViewTextBoxColumn5.FillWeight = 157.554F;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Filename";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // btnSelectTargetScript
-            // 
-            this.btnSelectTargetScript.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.btnSelectTargetScript.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectTargetScript.HeaderText = "";
-            this.btnSelectTargetScript.MinimumWidth = 6;
-            this.btnSelectTargetScript.Name = "btnSelectTargetScript";
-            this.btnSelectTargetScript.ReadOnly = true;
-            this.btnSelectTargetScript.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.btnSelectTargetScript.Text = "Set as Target State";
-            this.btnSelectTargetScript.UseColumnTextForButtonValue = true;
-            this.btnSelectTargetScript.Width = 140;
             // 
             // label23
             // 
@@ -1586,15 +1521,47 @@
             this.btnShowHistoricalBackups.UseVisualStyleBackColor = false;
             this.btnShowHistoricalBackups.Click += new System.EventHandler(this.BtnShowHistoricalBackups_Click);
             // 
-            // label9
+            // dataGridViewTextBoxColumn2
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(37, 64);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(689, 17);
-            this.label9.TabIndex = 75;
-            this.label9.Text = "* Pay Attention: The dev Dummy Data Files behave like incremental files, means it" +
-    " cannot run script file twice";
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn2.FillWeight = 40.92313F;
+            this.dataGridViewTextBoxColumn2.HeaderText = "";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 30;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Filename";
+            this.dataGridViewTextBoxColumn3.FillWeight = 157.554F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Filename";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn4.FillWeight = 40.92313F;
+            this.dataGridViewTextBoxColumn4.HeaderText = "";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 30;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Filename";
+            this.dataGridViewTextBoxColumn5.FillWeight = 157.554F;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Filename";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // DBVersionsView
             // 
@@ -1715,12 +1682,6 @@
         private System.Windows.Forms.Button btnShowHistoricalBackups;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewButtonColumn btnSelectTargetState;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewButtonColumn btnSelectTargetScript;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblIncNumOfVirtual;
         private System.Windows.Forms.Panel panel3;
@@ -1742,5 +1703,9 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label lblDDDNumOfExecuted;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
     }
 }

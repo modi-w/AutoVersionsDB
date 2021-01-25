@@ -63,7 +63,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[4], HashDiffType.NotExist);
 
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 2);
-            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[0], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[0], HashDiffType.NotExist);
             AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[1], HashDiffType.NotExist);
 
             if (isDevEnv)
@@ -87,7 +87,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[4], HashDiffType.NotExist);
 
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 2);
-            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[0], HashDiffType.EqualVirtual);
+            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[0], HashDiffType.NotExist);
             AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[1], HashDiffType.NotExist);
 
             if (isDevEnv)
@@ -215,7 +215,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[4], HashDiffType.NotExist);
 
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 2);
-            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[0], HashDiffType.Equal);
+            AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[0], HashDiffType.NotExist);
             AssertFileHashState(testName, dbVersionsViewModelData.RepeatableScriptFiles[1], HashDiffType.NotExist);
 
             if (isDevEnv)

@@ -90,7 +90,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         protected virtual List<RuntimeScriptFile> FilterPendingScriptsFilesByTarget(RuntimeScriptFile prevExecutionLastScriptFile, RuntimeScriptFile targetScriptFile, List<RuntimeScriptFile> sourceRuntimeFiles)
         {
             sourceRuntimeFiles.ThrowIfNull(nameof(sourceRuntimeFiles));
-            targetScriptFile.ThrowIfNull(nameof(targetScriptFile));
+            //targetScriptFile.ThrowIfNull(nameof(targetScriptFile));
 
             List<RuntimeScriptFile> pendingScriptFilesList = new List<RuntimeScriptFile>();
 
@@ -99,7 +99,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
             {
                 // Comment:  We return all the files that after the preve executed file and before (and equal) to the target file.
                 if ((prevExecutionLastScriptFile == null || 0 < string.Compare(scriptFileItem.SortKey, prevExecutionLastScriptFile.SortKey, StringComparison.Ordinal))
-                    && (string.Compare(scriptFileItem.SortKey, targetScriptFile.SortKey, StringComparison.Ordinal) <= 0))
+                    && (targetScriptFile== null || string.Compare(scriptFileItem.SortKey, targetScriptFile.SortKey, StringComparison.Ordinal) <= 0))
                 {
                     pendingScriptFilesList.Add(scriptFileItem);
                 }

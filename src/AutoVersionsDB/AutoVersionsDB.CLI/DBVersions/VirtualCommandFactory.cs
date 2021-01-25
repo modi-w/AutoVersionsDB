@@ -13,22 +13,16 @@ namespace AutoVersionsDB.CLI.DBVersions
         private readonly IConsoleProcessMessages _consoleProcessMessages;
         private readonly IdCLIOption _idOption;
         private readonly IncTargetCLIOption _incTargetCLIOption;
-        private readonly RptTargetCLIOption _rptTargetCLIOption;
-        private readonly DDDTargetCLIOption _dddTargetCLIOption;
 
         public VirtualCommandFactory(DBVersionsAPI dbVersionsAPI,
                                         IConsoleProcessMessages consoleProcessMessages,
                                         IdCLIOption idOption,
-                                        IncTargetCLIOption incTargetCLIOption,
-                                        RptTargetCLIOption rptTargetCLIOption,
-                                        DDDTargetCLIOption dddTargetCLIOption)
+                                        IncTargetCLIOption incTargetCLIOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
             _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
             _incTargetCLIOption = incTargetCLIOption;
-            _rptTargetCLIOption = rptTargetCLIOption;
-            _dddTargetCLIOption = dddTargetCLIOption;
         }
 
         public override Command Create()
@@ -37,8 +31,6 @@ namespace AutoVersionsDB.CLI.DBVersions
             {
                 _idOption,
                 _incTargetCLIOption,
-                _rptTargetCLIOption,
-                _dddTargetCLIOption,
          };
 
             command.Description = CLITextResources.VirtualCommandDescription;
@@ -49,7 +41,7 @@ namespace AutoVersionsDB.CLI.DBVersions
 
                 _consoleProcessMessages.StartSpiiner();
 
-                TargetScripts targetScripts = new TargetScripts(incTarget, rptTarget, dddTarget);
+                TargetScripts targetScripts = new TargetScripts(incTarget);
 
                 ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(id, targetScripts, _consoleProcessMessages.OnNotificationStateChanged);
                 _consoleProcessMessages.StopSpinner();

@@ -245,27 +245,27 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsViewModelData.IncrementalScriptFiles = incScripts;
             _dbVersionsViewModelData.TargetIncScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
 
-            List<RuntimeScriptFile> rptScripts = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            //List<RuntimeScriptFile> rptScripts = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFile rptNoneTargetState =
-                new RuntimeScriptFile(new RepeatableScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
-            rptScripts.Insert(0, rptNoneTargetState);
+            //RuntimeScriptFile rptNoneTargetState =
+            //    new RuntimeScriptFile(new RepeatableScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
+            //rptScripts.Insert(0, rptNoneTargetState);
 
-            _dbVersionsViewModelData.RepeatableScriptFiles = rptScripts;
-            _dbVersionsViewModelData.TargetRptScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
+            //_dbVersionsViewModelData.RepeatableScriptFiles = rptScripts;
+            //_dbVersionsViewModelData.TargetRptScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
 
 
-            if (_dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer!= null)
-            {
-                List<RuntimeScriptFile> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            //if (_dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer!= null)
+            //{
+            //    List<RuntimeScriptFile> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-                RuntimeScriptFile dddNoneTargetState =
-                    new RuntimeScriptFile(new DevDummyDataScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
-                dddScripts.Insert(0, dddNoneTargetState);
+            //    RuntimeScriptFile dddNoneTargetState =
+            //        new RuntimeScriptFile(new DevDummyDataScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
+            //    dddScripts.Insert(0, dddNoneTargetState);
 
-                _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
-                _dbVersionsViewModelData.TargetDDDScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
-            }
+            //    _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
+            //    _dbVersionsViewModelData.TargetDDDScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
+            //}
         }
 
 

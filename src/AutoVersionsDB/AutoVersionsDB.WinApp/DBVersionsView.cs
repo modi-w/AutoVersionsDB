@@ -593,37 +593,37 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void DgRepeatableScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
-        {
-            var senderGrid = (DataGridView)sender;
+        //private void DgRepeatableScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        //{
+        //    var senderGrid = (DataGridView)sender;
 
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                e.RowIndex >= 0)
-            {
-                RuntimeScriptFile currScriptFileInfo = (dgRepeatableScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
+        //    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+        //        e.RowIndex >= 0)
+        //    {
+        //        RuntimeScriptFile currScriptFileInfo = (dgRepeatableScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
 
-                Task task = ViewModel.SelectTargetRptScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
-                task.Wait();
+        //        Task task = ViewModel.SelectTargetRptScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
+        //        task.Wait();
 
-                MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, true);
-            }
-        }
+        //        MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, true);
+        //    }
+        //}
 
-        private void DgDevDummyDataScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
-        {
-            var senderGrid = (DataGridView)sender;
+        //private void DgDevDummyDataScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        //{
+        //    var senderGrid = (DataGridView)sender;
 
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                e.RowIndex >= 0)
-            {
-                RuntimeScriptFile currScriptFileInfo = (dgDevDummyDataScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
+        //    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+        //        e.RowIndex >= 0)
+        //    {
+        //        RuntimeScriptFile currScriptFileInfo = (dgDevDummyDataScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
 
-                Task task = ViewModel.SelectTargetDDDScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
-                task.Wait();
+        //        Task task = ViewModel.SelectTargetDDDScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
+        //        task.Wait();
 
-                MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, true);
-            }
-        }
+        //        MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, true);
+        //    }
+        //}
 
 
         private void BtnCancelSetDBStateManually_Click(object sender, EventArgs e)
@@ -778,52 +778,52 @@ namespace AutoVersionsDB.WinApp
                 }
             }
 
-            if (dgRepeatableScriptsFiles.InvokeRequired)
-            {
-                dgRepeatableScriptsFiles.BeginInvoke((MethodInvoker)(() =>
-                {
-                    MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
+            //if (dgRepeatableScriptsFiles.InvokeRequired)
+            //{
+            //    dgRepeatableScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+            //    {
+            //        MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
 
-                    if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
-                    {
-                        dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
-                    }
-                }));
-            }
-            else
-            {
-                MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
+            //        if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
+            //        {
+            //            dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+            //        }
+            //    }));
+            //}
+            //else
+            //{
+            //    MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
 
-                if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
-                {
-                    dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
-                }
+            //    if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
+            //    {
+            //        dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+            //    }
 
-            }
+            //}
 
-            if (dgDevDummyDataScriptsFiles.InvokeRequired)
-            {
-                dgDevDummyDataScriptsFiles.BeginInvoke((MethodInvoker)(() =>
-                {
-                    MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
+            //if (dgDevDummyDataScriptsFiles.InvokeRequired)
+            //{
+            //    dgDevDummyDataScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+            //    {
+            //        MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
 
-                    if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
-                    {
-                        dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
-                    }
+            //        if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
+            //        {
+            //            dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+            //        }
 
-                }));
-            }
-            else
-            {
-                MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
+            //    }));
+            //}
+            //else
+            //{
+            //    MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
 
-                if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
-                {
-                    dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
-                }
+            //    if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
+            //    {
+            //        dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+            //    }
 
-            }
+            //}
 
         }
 

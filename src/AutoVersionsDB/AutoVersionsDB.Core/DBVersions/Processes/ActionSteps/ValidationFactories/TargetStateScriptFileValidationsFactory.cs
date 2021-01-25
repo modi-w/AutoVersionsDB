@@ -32,15 +32,15 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ValidationFactori
             validationsGroup.Add(isTargetScriptFiletAlreadyExecutedValidatorInc);
 
 
-            if (dbVersionsProcessContext.ProjectConfig.DevEnvironment)
-            {
-                TargetStateScriptFileExistValidator targetStateScriptFileExistValidatorDDD = new TargetStateScriptFileExistValidator(dbVersionsProcessContext.ScriptFilesState.DevDummyDataScriptFilesComparer, dbVersionsProcessArgs.TargetScripts.DDDScriptFileName);
-                validationsGroup.Add(targetStateScriptFileExistValidatorDDD);
+            //if (dbVersionsProcessContext.ProjectConfig.DevEnvironment)
+            //{
+            //    TargetStateScriptFileExistValidator targetStateScriptFileExistValidatorDDD = new TargetStateScriptFileExistValidator(dbVersionsProcessContext.ScriptFilesState.DevDummyDataScriptFilesComparer, dbVersionsProcessArgs.TargetScripts.DDDScriptFileName);
+            //    validationsGroup.Add(targetStateScriptFileExistValidatorDDD);
 
-                TargetScriptFileAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidatorDDD =
-                new TargetScriptFileAlreadyExecutedValidator(dbVersionsProcessContext.ScriptFilesState.DevDummyDataScriptFilesComparer, dbVersionsProcessArgs.TargetScripts.DDDScriptFileName);
-                validationsGroup.Add(isTargetScriptFiletAlreadyExecutedValidatorDDD);
-            }
+            //    TargetScriptFileAlreadyExecutedValidator isTargetScriptFiletAlreadyExecutedValidatorDDD =
+            //    new TargetScriptFileAlreadyExecutedValidator(dbVersionsProcessContext.ScriptFilesState.DevDummyDataScriptFilesComparer, dbVersionsProcessArgs.TargetScripts.DDDScriptFileName);
+            //    validationsGroup.Add(isTargetScriptFiletAlreadyExecutedValidatorDDD);
+            //}
 
             return validationsGroup;
         }
