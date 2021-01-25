@@ -51,8 +51,8 @@
     <None Remove="SqlServer\Scripts\DevScripts_MissingFile\DevDummyData\dddScript_0002_DataForTransTable1.sql" />
     <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0001_initState.sql" />
     <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0002_CreateLookupTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0004_CreateInvoiceTable1.sql" />
-    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0005_CreateTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0004_CreateTransTable1.sql" />
+    <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0005_CreateInvoiceTable1.sql" />
     <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_0001_DataForLookupTable1.sql" />
     <None Remove="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_0002_DataForLookupTable2.sql" />
     <None Remove="SqlServer\Scripts\DevScripts_ScriptError\DevDummyData\dddScript_0001_DataForInvoiceTable1.sql" />
@@ -205,10 +205,10 @@
     <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0002_CreateLookupTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0005_CreateTransTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0004_CreateTransTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0004_CreateInvoiceTable1.sql">
+    <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Incremental\incScript_0005_CreateInvoiceTable1.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SqlServer\Scripts\DevScripts_MissingFile\Repeatable\rptScript_0001_DataForLookupTable1.sql">

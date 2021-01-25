@@ -61,21 +61,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             FileStateListAssert incfileStateListAssert = new FileStateListAssert(this.GetType().Name, scriptFilesState.IncrementalScriptFilesComparer);
             incfileStateListAssert.AssertNumOfFiles(5);
-            incfileStateListAssert.AssertFileState(0, "incScript_2020-02-25.100_initState.sql", HashDiffType.Equal);
-            incfileStateListAssert.AssertFileState(1, "incScript_2020-02-25.101_CreateLookupTable1.sql", HashDiffType.Equal);
-            incfileStateListAssert.AssertFileState(2, "incScript_2020-02-25.102_CreateLookupTable2.sql", HashDiffType.Equal);
-            incfileStateListAssert.AssertFileState(3, "incScript_2020-03-02.100_CreateTransTable1.sql", HashDiffType.Equal);
-            incfileStateListAssert.AssertFileState(4, "incScript_2020-03-02.101_CreateInvoiceTable1.sql", HashDiffType.Equal);
+            incfileStateListAssert.AssertFileState(0, "incScript_0001_initState.sql", HashDiffType.Equal);
+            incfileStateListAssert.AssertFileState(1, "incScript_0002_CreateLookupTable1.sql", HashDiffType.Equal);
+            incfileStateListAssert.AssertFileState(2, "incScript_0003_CreateLookupTable2.sql", HashDiffType.Equal);
+            incfileStateListAssert.AssertFileState(3, "incScript_0004_CreateTransTable1.sql", HashDiffType.Equal);
+            incfileStateListAssert.AssertFileState(4, "incScript_0005_CreateInvoiceTable1.sql", HashDiffType.Equal);
 
             FileStateListAssert rptfileStateListAssert = new FileStateListAssert(this.GetType().Name, scriptFilesState.RepeatableScriptFilesComparer);
             rptfileStateListAssert.AssertNumOfFiles(2);
-            rptfileStateListAssert.AssertFileState(0, "rptScript_001_DataForLookupTable1.sql", HashDiffType.Different);
-            rptfileStateListAssert.AssertFileState(1, "rptScript_002_DataForLookupTable2.sql", HashDiffType.Equal);
+            rptfileStateListAssert.AssertFileState(0, "rptScript_0001_DataForLookupTable1.sql", HashDiffType.Different);
+            rptfileStateListAssert.AssertFileState(1, "rptScript_0002_DataForLookupTable2.sql", HashDiffType.Equal);
 
             FileStateListAssert dddfileStateListAssert = new FileStateListAssert(this.GetType().Name, scriptFilesState.DevDummyDataScriptFilesComparer);
             dddfileStateListAssert.AssertNumOfFiles(2);
-            dddfileStateListAssert.AssertFileState(0, "dddScript_001_DataForInvoiceTable1.sql", HashDiffType.Equal);
-            dddfileStateListAssert.AssertFileState(1, "dddScript_002_DataForTransTable1.sql", HashDiffType.Different);
+            dddfileStateListAssert.AssertFileState(0, "dddScript_0001_DataForInvoiceTable1.sql", HashDiffType.Equal);
+            dddfileStateListAssert.AssertFileState(1, "dddScript_0002_DataForTransTable1.sql", HashDiffType.Different);
         }
 
         public override void Release(ITestContext testContext)

@@ -58,8 +58,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage("++ Repeatable Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("   sync    | rptScript_001_DataForLookupTable1.sql", true);
-            assertTextByLines.AssertLineMessage("           | rptScript_002_DataForLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | rptScript_0001_DataForLookupTable1.sql", true);
+            assertTextByLines.AssertLineMessage("           | rptScript_0002_DataForLookupTable2.sql", true);
 
         }
 

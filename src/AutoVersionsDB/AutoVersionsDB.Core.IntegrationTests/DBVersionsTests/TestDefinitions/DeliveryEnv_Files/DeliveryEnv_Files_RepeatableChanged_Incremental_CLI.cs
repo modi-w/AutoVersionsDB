@@ -55,11 +55,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage("++ Incremental Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.100_initState.sql", true);
-            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.101_CreateLookupTable1.sql", true);
-            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.102_CreateLookupTable2.sql", true);
-            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-03-02.100_CreateTransTable1.sql", true);
-            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-03-02.101_CreateInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_0001_initState.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_0002_CreateLookupTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_0003_CreateLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_0004_CreateTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_0005_CreateInvoiceTable1.sql", true);
 
         }
 

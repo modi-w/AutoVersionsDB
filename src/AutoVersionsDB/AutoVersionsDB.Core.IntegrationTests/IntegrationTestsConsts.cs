@@ -20,8 +20,8 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
         public static TargetScripts MiddleStateTargetScripts =
-            new TargetScripts("incScript_2020-02-25.102_CreateLookupTable2.sql",
-                                "rptScript_001_DataForLookupTable1.sql",
+            new TargetScripts("incScript_0003_CreateLookupTable2.sql",
+                                "rptScript_0001_DataForLookupTable1.sql",
                                 RuntimeScriptFile.TargetNoneScriptFileName);
 
         public static TargetScripts FinalStateTargetScripts = TargetScripts.CreateLastState();

@@ -88,7 +88,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             devScriptsBaseFolderPath = devScriptsBaseFolderPath.Replace("[DBType]", dbConnectionInfo.DBType);
 
-            string scriptFilename = $"incScript_{DateTime.Today:yyyy-MM-dd}.001_{ScriptName1}.sql";
+            string scriptFilename = $"incScript_0006_{ScriptName1}.sql";
             string script1FullPath = Path.Combine(devScriptsBaseFolderPath, _relFolder_Incremental, scriptFilename);
 
             return script1FullPath;
@@ -99,7 +99,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             devScriptsBaseFolderPath = devScriptsBaseFolderPath.Replace("[DBType]", dbConnectionInfo.DBType);
 
-            string scriptFilename = $"incScript_{DateTime.Today:yyyy-MM-dd}.002_{ScriptName2}.sql";
+            string scriptFilename = $"incScript_0007_{ScriptName2}.sql";
             string script1FullPath = Path.Combine(devScriptsBaseFolderPath, _relFolder_Incremental, scriptFilename);
 
             return script1FullPath;

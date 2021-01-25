@@ -57,7 +57,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 5);
             assertErrorsTextByLines.AssertLineMessage(CLITextResources.ProcessCompleteWithErrors, true);
             assertErrorsTextByLines.AssertLineMessage("--------------------------------", true);
-            assertErrorsTextByLines.AssertLineMessage($"{HistoryExecutedFilesChangedValidator.Name}. Error: {CoreTextResources.HistoryExecutedFilesMissingErrorMessage.Replace("[FilesList]", "incScript_2020-02-25.102_CreateLookupTable2.sql")}", false);
+            assertErrorsTextByLines.AssertLineMessage($"{HistoryExecutedFilesChangedValidator.Name}. Error: {CoreTextResources.HistoryExecutedFilesMissingErrorMessage.Replace("[FilesList]", "incScript_0003_CreateLookupTable2.sql")}", false);
             assertErrorsTextByLines.AssertLineMessage("", true);
             assertErrorsTextByLines.AssertLineMessage(CoreTextResources.HistoryExecutedFilesChangedInstructionsMessage, true);
 
