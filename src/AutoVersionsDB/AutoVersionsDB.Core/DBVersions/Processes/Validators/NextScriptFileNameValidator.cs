@@ -31,7 +31,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
             {
                 return CoreTextResources.MandatoryFieldErrorMessage.Replace("[FieldName]", "Script Name");
             }
-            else if (!_scriptFilesComparer.TryParseNextRuntimeScriptFileName(_scriptName, out RuntimeScriptFileBase newRuntimeScriptFile))
+            else if (!_scriptFilesComparer.TryParseNextRuntimeScriptFileName(_scriptName, out RuntimeScriptFile newRuntimeScriptFile))
             {
                 return CoreTextResources
                     .InvalidFilenameErrorMessage

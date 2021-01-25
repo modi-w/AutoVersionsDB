@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 {
     public class ExecuteSingleFileScriptStep : DBVersionsStep
     {
-        private readonly RuntimeScriptFileBase _scriptFile;
+        private readonly RuntimeScriptFile _scriptFile;
         private readonly DBCommands _dbCommands;
         private readonly ExecuteScriptBlockStepFactory _executeScriptBlockStepFactory;
 
@@ -19,7 +19,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
         public override string StepName => _stepName;
 
 
-        public ExecuteSingleFileScriptStep(ExecuteScriptBlockStepFactory executeScriptBlockStepFactory, DBCommands dbCommands, string stepName, RuntimeScriptFileBase scriptFile)
+        public ExecuteSingleFileScriptStep(ExecuteScriptBlockStepFactory executeScriptBlockStepFactory, DBCommands dbCommands, string stepName, RuntimeScriptFile scriptFile)
         {
             dbCommands.ThrowIfNull(nameof(dbCommands));
 

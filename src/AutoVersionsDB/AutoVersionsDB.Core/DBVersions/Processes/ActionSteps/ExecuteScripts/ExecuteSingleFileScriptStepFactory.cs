@@ -10,7 +10,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
         {
             _executeScriptBlockStepFactory = executeScriptBlockStepFactory;
         }
-        public ExecuteSingleFileScriptStep Create(DBCommands dbCommands, string stepName, RuntimeScriptFileBase scriptFile)
+        public ExecuteSingleFileScriptStep Create(DBCommands dbCommands, string stepName, RuntimeScriptFile scriptFile)
         {
             return new ExecuteSingleFileScriptStep(_executeScriptBlockStepFactory, dbCommands, stepName, scriptFile);
         }

@@ -13,33 +13,33 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.Repeatable
 
         }
 
-        public override List<RuntimeScriptFileBase> GetPendingFilesToExecute(string targetScriptFilename)
+        public override List<RuntimeScriptFile> GetPendingFilesToExecute(string targetScriptFilename)
         {
             if (string.IsNullOrWhiteSpace(targetScriptFilename))
             {
                 throw new ArgumentNullException(nameof(targetScriptFilename));
             }
-            if (targetScriptFilename.Trim().ToUpperInvariant() == RuntimeScriptFileBase.TargetNoneScriptFileName.Trim().ToUpperInvariant())
+            if (targetScriptFilename.Trim().ToUpperInvariant() == RuntimeScriptFile.TargetNoneScriptFileName.Trim().ToUpperInvariant())
             {
-                return new List<RuntimeScriptFileBase>();
+                return new List<RuntimeScriptFile>();
             }
 
-            RuntimeScriptFileBase targetRuntimeScriptFile = GetTargetRuntimeScriptFile(targetScriptFilename);
+            RuntimeScriptFile targetRuntimeScriptFile = GetTargetRuntimeScriptFile(targetScriptFilename);
 
             if (targetRuntimeScriptFile == null)
             {
                 //Comment: targetScriptFile can be null if the user send #Last file, but thie is no file.
-                return new List<RuntimeScriptFileBase>();
+                return new List<RuntimeScriptFile>();
             }
 
 
-            List<RuntimeScriptFileBase> tempPendingScriptFilesList = new List<RuntimeScriptFileBase>();
+            List<RuntimeScriptFile> tempPendingScriptFilesList = new List<RuntimeScriptFile>();
 
             tempPendingScriptFilesList.AddRange(ChangedFiles);
             tempPendingScriptFilesList.AddRange(NotExistInDBButExistInFileSystem);
 
 
-            List<RuntimeScriptFileBase> pendingScriptFilesList =
+            List<RuntimeScriptFile> pendingScriptFilesList =
                 FilterPendingScriptsFilesByTarget(null, targetRuntimeScriptFile, tempPendingScriptFilesList);
 
             return pendingScriptFilesList;

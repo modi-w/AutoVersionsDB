@@ -9,8 +9,8 @@ namespace AutoVersionsDB.CLI.DBVersions
             : base(new string[] { "--rpt-target", "-rt" },
                     CLITextResources.TargetCLIOptionDescription
                                     .Replace("[ScriptFileType]", "Repeatable")
-                                    .Replace("[TargetNoneScriptFileName]", RuntimeScriptFileBase.TargetNoneScriptFileName)
-                                    .Replace("[TargetLastScriptFileName]", RuntimeScriptFileBase.TargetLastScriptFileName))
+                                    .Replace("[TargetNoneScriptFileName]", RuntimeScriptFile.TargetNoneScriptFileName)
+                                    .Replace("[TargetLastScriptFileName]", RuntimeScriptFile.TargetLastScriptFileName))
         {
         }
     }

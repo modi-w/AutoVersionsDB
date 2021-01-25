@@ -58,23 +58,23 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage("++ Incremental Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.100_initState.sql", true);
-            assertTextByLines.AssertLineMessage("   sync    | incScript_2020-02-25.101_CreateLookupTable1.sql", true);
-            assertTextByLines.AssertLineMessage("   changed | incScript_2020-02-25.102_CreateLookupTable2.sql", true);
-            assertTextByLines.AssertLineMessage("           | incScript_2020-03-02.100_CreateTransTable1.sql", true);
-            assertTextByLines.AssertLineMessage("           | incScript_2020-03-02.101_CreateInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_0001_initState.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | incScript_0002_CreateLookupTable1.sql", true);
+            assertTextByLines.AssertLineMessage("   changed | incScript_0003_CreateLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage("           | incScript_0004_CreateTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage("           | incScript_0005_CreateInvoiceTable1.sql", true);
             assertTextByLines.AssertLineMessage("", true);
             assertTextByLines.AssertLineMessage("++ Repeatable Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("   sync    | rptScript_001_DataForLookupTable1.sql", true);
-            assertTextByLines.AssertLineMessage("           | rptScript_002_DataForLookupTable2.sql", true);
+            assertTextByLines.AssertLineMessage("   sync    | rptScript_0001_DataForLookupTable1.sql", true);
+            assertTextByLines.AssertLineMessage("           | rptScript_0002_DataForLookupTable2.sql", true);
             assertTextByLines.AssertLineMessage("", true);
             assertTextByLines.AssertLineMessage("++ DevDummyData Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("           | dddScript_001_DataForInvoiceTable1.sql", true);
-            assertTextByLines.AssertLineMessage("           | dddScript_002_DataForTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage("           | dddScript_0001_DataForInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage("           | dddScript_0002_DataForTransTable1.sql", true);
         }
 
 

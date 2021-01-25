@@ -40,11 +40,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
             ScriptFilesComparerBase scriptFilesComparer = processContext.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);
 
             string targetStateScriptFileName = targetScripts.TargetScriptsByType[_fileTypeCode];
-            List<RuntimeScriptFileBase> scriptFilesList = scriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
+            List<RuntimeScriptFile> scriptFilesList = scriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
 
             List<ActionStepBase> internalSteps = new List<ActionStepBase>();
 
-            foreach (RuntimeScriptFileBase scriptFile in scriptFilesList)
+            foreach (RuntimeScriptFile scriptFile in scriptFilesList)
             {
                 string ignoreStr = "";
                 if (processContext.IsVirtualExecution)

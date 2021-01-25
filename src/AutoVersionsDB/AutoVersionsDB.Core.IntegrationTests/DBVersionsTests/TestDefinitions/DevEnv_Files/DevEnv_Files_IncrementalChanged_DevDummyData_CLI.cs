@@ -58,8 +58,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             assertTextByLines.AssertLineMessage("++ DevDummyData Scripts:", true);
             assertTextByLines.AssertLineMessage("  Status   |  File", true);
             assertTextByLines.AssertLineMessage("-------------------------------------------------------", true);
-            assertTextByLines.AssertLineMessage("           | dddScript_001_DataForInvoiceTable1.sql", true);
-            assertTextByLines.AssertLineMessage("           | dddScript_002_DataForTransTable1.sql", true);
+            assertTextByLines.AssertLineMessage("           | dddScript_0001_DataForInvoiceTable1.sql", true);
+            assertTextByLines.AssertLineMessage("           | dddScript_0002_DataForTransTable1.sql", true);
         }
 
 

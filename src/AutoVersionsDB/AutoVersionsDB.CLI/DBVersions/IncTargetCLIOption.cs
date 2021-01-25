@@ -9,8 +9,8 @@ namespace AutoVersionsDB.CLI.DBVersions
             : base(new string[] { "--inc-target", "-it" },
                     CLITextResources.TargetCLIOptionDescription
                                     .Replace("[ScriptFileType]", "Incremental")
-                                    .Replace("[TargetNoneScriptFileName]", RuntimeScriptFileBase.TargetNoneScriptFileName)
-                                    .Replace("[TargetLastScriptFileName]", RuntimeScriptFileBase.TargetLastScriptFileName))
+                                    .Replace("[TargetNoneScriptFileName]", RuntimeScriptFile.TargetNoneScriptFileName)
+                                    .Replace("[TargetLastScriptFileName]", RuntimeScriptFile.TargetLastScriptFileName))
         {
             
         }

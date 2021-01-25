@@ -19,27 +19,27 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
         public string LastFileOfLastExecutedFilename => DBExecutedFiles.LastFileOfLastExecutedFilename;
 
-        public List<RuntimeScriptFileBase> AllFileSystemScriptFiles => FileSystemScriptFiles.ScriptFilesList;
-        public List<RuntimeScriptFileBase> ExecutedFilesAll => 
+        public List<RuntimeScriptFile> AllFileSystemScriptFiles => FileSystemScriptFiles.ScriptFilesList;
+        public List<RuntimeScriptFile> ExecutedFilesAll => 
             AllFileSystemScriptFiles
             .Where(e => e.HashDiffType == HashDiffType.Equal 
                     || e.HashDiffType == HashDiffType.EqualVirtual)
             .ToList();
-        public List<RuntimeScriptFileBase> ExecutedFilesActual =>
+        public List<RuntimeScriptFile> ExecutedFilesActual =>
             AllFileSystemScriptFiles
             .Where(e => e.HashDiffType == HashDiffType.Equal)
             .ToList();
-        public List<RuntimeScriptFileBase> ExecutedFilesVirtual =>
+        public List<RuntimeScriptFile> ExecutedFilesVirtual =>
             AllFileSystemScriptFiles
             .Where(e => e.HashDiffType == HashDiffType.EqualVirtual)
             .ToList();
 
-        public List<RuntimeScriptFileBase> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Different).ToList();
-        public List<RuntimeScriptFileBase> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.NotExist).ToList();
+        public List<RuntimeScriptFile> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Different).ToList();
+        public List<RuntimeScriptFile> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.NotExist).ToList();
 
-        public List<RuntimeScriptFileBase> NotExistInFileSystemButExistInDB { get; private set; }
+        public List<RuntimeScriptFile> NotExistInFileSystemButExistInDB { get; private set; }
 
-        public RuntimeScriptFileBase LastScriptFile => AllFileSystemScriptFiles.LastOrDefault();
+        public RuntimeScriptFile LastScriptFile => AllFileSystemScriptFiles.LastOrDefault();
 
 
         public ScriptFilesComparerBase(FileSystemScriptFiles fileSystemScriptFiles,
@@ -58,14 +58,14 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         }
 
 
-        protected RuntimeScriptFileBase GetTargetRuntimeScriptFile(string targetScriptFilename)
+        protected RuntimeScriptFile GetTargetRuntimeScriptFile(string targetScriptFilename)
         {
             targetScriptFilename.ThrowIfNull(nameof(targetScriptFilename));
 
 
-            RuntimeScriptFileBase targetRuntimeScriptFile = null;
+            RuntimeScriptFile targetRuntimeScriptFile = null;
 
-            if (targetScriptFilename.Trim().ToUpperInvariant() == RuntimeScriptFileBase.TargetLastScriptFileName.Trim().ToUpperInvariant())
+            if (targetScriptFilename.Trim().ToUpperInvariant() == RuntimeScriptFile.TargetLastScriptFileName.Trim().ToUpperInvariant())
             {
                 targetRuntimeScriptFile = AllFileSystemScriptFiles.LastOrDefault();
             }
@@ -89,15 +89,15 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
         }
 
 
-        protected virtual List<RuntimeScriptFileBase> FilterPendingScriptsFilesByTarget(RuntimeScriptFileBase prevExecutionLastScriptFile, RuntimeScriptFileBase targetScriptFile, List<RuntimeScriptFileBase> sourceRuntimeFiles)
+        protected virtual List<RuntimeScriptFile> FilterPendingScriptsFilesByTarget(RuntimeScriptFile prevExecutionLastScriptFile, RuntimeScriptFile targetScriptFile, List<RuntimeScriptFile> sourceRuntimeFiles)
         {
             sourceRuntimeFiles.ThrowIfNull(nameof(sourceRuntimeFiles));
             targetScriptFile.ThrowIfNull(nameof(targetScriptFile));
 
-            List<RuntimeScriptFileBase> pendingScriptFilesList = new List<RuntimeScriptFileBase>();
+            List<RuntimeScriptFile> pendingScriptFilesList = new List<RuntimeScriptFile>();
 
 
-            foreach (RuntimeScriptFileBase scriptFileItem in sourceRuntimeFiles)
+            foreach (RuntimeScriptFile scriptFileItem in sourceRuntimeFiles)
             {
                 // Comment:  We return all the files that after the preve executed file and before (and equal) to the target file.
                 if ((prevExecutionLastScriptFile == null || 0 < string.Compare(scriptFileItem.SortKey, prevExecutionLastScriptFile.SortKey, StringComparison.Ordinal))
@@ -114,7 +114,7 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
         private void SetIsHashDifferentFlag()
         {
-            foreach (RuntimeScriptFileBase scriptFileItem in AllFileSystemScriptFiles)
+            foreach (RuntimeScriptFile scriptFileItem in AllFileSystemScriptFiles)
             {
                 DataRow lastExecutedCurrnetFileRow =
                             DBExecutedFiles.ExecutedFilesList
@@ -145,19 +145,19 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
         private void CreateFileExistInDBButNotExistInSystemList(FileSystemScriptFiles fileSystemScriptFiles)
         {
-            NotExistInFileSystemButExistInDB = new List<RuntimeScriptFileBase>();
+            NotExistInFileSystemButExistInDB = new List<RuntimeScriptFile>();
 
             foreach (DataRow dbExecutedFileRow in DBExecutedFiles.ExecutedFilesList)
             {
                 string dbFilename = Convert.ToString(dbExecutedFileRow["Filename"], CultureInfo.InvariantCulture);
 
-                RuntimeScriptFileBase fileSystemFile =
+                RuntimeScriptFile fileSystemFile =
                     AllFileSystemScriptFiles.FirstOrDefault(e => dbFilename.Trim().ToUpperInvariant() == e.Filename.Trim().ToUpperInvariant());
 
                 if (fileSystemFile == null)
                 {
                     string fileFullPath = Path.Combine(fileSystemScriptFiles.FolderPath, dbFilename);
-                    RuntimeScriptFileBase misssingFileSystemFileItem = fileSystemScriptFiles.CreateRuntimeScriptFileInstanceByFilename(fileFullPath);
+                    RuntimeScriptFile misssingFileSystemFileItem = fileSystemScriptFiles.CreateRuntimeScriptFileInstanceByFilename(fileFullPath);
                     NotExistInFileSystemButExistInDB.Add(misssingFileSystemFileItem);
                 }
 
@@ -170,23 +170,23 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
 
 
-        public abstract List<RuntimeScriptFileBase> GetPendingFilesToExecute(string targetScriptFilename);
+        public abstract List<RuntimeScriptFile> GetPendingFilesToExecute(string targetScriptFilename);
 
 
-        public bool TryParseNextRuntimeScriptFileName(string scriptName, out RuntimeScriptFileBase newRuntimeScriptFile)
+        public bool TryParseNextRuntimeScriptFileName(string scriptName, out RuntimeScriptFile newRuntimeScriptFile)
         {
             return FileSystemScriptFiles.TryParseNextRuntimeScriptFileName(scriptName, LastScriptFile, out newRuntimeScriptFile);
         }
 
-        public RuntimeScriptFileBase CreateNextNewScriptFile(string scriptName)
+        public RuntimeScriptFile CreateNextNewScriptFile(string scriptName)
         {
             return FileSystemScriptFiles.CreateNextRuntimeScriptFileInstance(scriptName, LastScriptFile);
         }
 
 
-        protected RuntimeScriptFileBase CreateLasetExecutedFileItem()
+        protected RuntimeScriptFile CreateLasetExecutedFileItem()
         {
-            RuntimeScriptFileBase prevExecutionLastScriptFile = null;
+            RuntimeScriptFile prevExecutionLastScriptFile = null;
             if (!string.IsNullOrWhiteSpace(DBExecutedFiles.LastFileOfLastExecutedFilename))
             {
                 string lastFileFullPath = Path.Combine(FileSystemScriptFiles.FolderPath, DBExecutedFiles.LastFileOfLastExecutedFilename);

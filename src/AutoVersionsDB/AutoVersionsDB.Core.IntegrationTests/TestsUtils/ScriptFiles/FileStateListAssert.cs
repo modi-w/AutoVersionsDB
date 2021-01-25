@@ -32,7 +32,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 
         public void AssertFileState(int fileIndex, string expectedFilename, HashDiffType expectedSyncState)
         {
-            RuntimeScriptFileBase scriptFileState = _scriptFilesComparer.AllFileSystemScriptFiles[fileIndex];
+            RuntimeScriptFile scriptFileState = _scriptFilesComparer.AllFileSystemScriptFiles[fileIndex];
 
             Assert.That(scriptFileState.Filename == expectedFilename, $"{_testName} >>> The {fileIndex + 1}st {_scriptFilesComparer.ScriptFileType.FileTypeCode} file should be: '{expectedFilename}' but was: '{scriptFileState.Filename}'");
             Assert.That(scriptFileState.HashDiffType == expectedSyncState, $"{_testName} >>> The {fileIndex + 1}st {_scriptFilesComparer.ScriptFileType.FileTypeCode} SyncType should be: '{expectedSyncState}' but was: '{scriptFileState.HashDiffType}'");

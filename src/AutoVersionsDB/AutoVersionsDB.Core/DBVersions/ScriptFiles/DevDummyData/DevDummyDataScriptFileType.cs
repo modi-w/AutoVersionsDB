@@ -9,21 +9,6 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles.DevDummyData
         public override string FileTypeCode => Code;
 
 
-        private RuntimeScriptFileFactoryBase _runtimeScriptFileFactory;
-        public override RuntimeScriptFileFactoryBase RuntimeScriptFileFactory
-        {
-            get
-            {
-                if (_runtimeScriptFileFactory == null)
-                {
-                    _runtimeScriptFileFactory = new DevDummyDataRuntimeScriptFileFactory();
-                }
-
-                return _runtimeScriptFileFactory;
-            }
-        }
-
-
         public override string Prefix => "dddScript";
 
     }
