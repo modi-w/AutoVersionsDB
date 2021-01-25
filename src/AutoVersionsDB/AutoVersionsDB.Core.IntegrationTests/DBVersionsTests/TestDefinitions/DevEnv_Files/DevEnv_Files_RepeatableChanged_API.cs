@@ -75,7 +75,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
             FileStateListAssert dddfileStateListAssert = new FileStateListAssert(this.GetType().Name, scriptFilesState.DevDummyDataScriptFilesComparer);
             dddfileStateListAssert.AssertNumOfFiles(2);
             dddfileStateListAssert.AssertFileState(0, "dddScript_0001_DataForInvoiceTable1.sql", HashDiffType.Equal);
-            dddfileStateListAssert.AssertFileState(1, "dddScript_0002_DataForTransTable1.sql", HashDiffType.Different);
+            dddfileStateListAssert.AssertFileState(1, "dddScript_0002_DataForTransTable1.sql", HashDiffType.Equal);
         }
 
         public override void Release(ITestContext testContext)

@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 {
-    public class TargetScriptFiletAlreadyExecutedValidator : ValidatorBase
+    public class TargetScriptFileAlreadyExecutedValidator : ValidatorBase
     {
-        private readonly ScriptFilesState _scriptFilesState;
+        private readonly ScriptFilesComparerBase _scriptFilesComparer;
         private readonly string _targetStateScriptFileName;
 
         public const string Name = "TargetScriptFileAlreadyExecuted";
@@ -18,10 +18,10 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
 
         public override NotificationErrorType NotificationErrorType => NotificationErrorType.Error;
 
-        public TargetScriptFiletAlreadyExecutedValidator(ScriptFilesState scriptFilesState,
+        public TargetScriptFileAlreadyExecutedValidator(ScriptFilesComparerBase scriptFilesComparer,
                                                             string targetStateScriptFileName)
         {
-            _scriptFilesState = scriptFilesState;
+            _scriptFilesComparer = scriptFilesComparer;
             _targetStateScriptFileName = targetStateScriptFileName;
         }
 
@@ -31,12 +31,14 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.Validators
                 && _targetStateScriptFileName.Trim().ToUpperInvariant() != RuntimeScriptFile.TargetLastScriptFileName.Trim().ToUpperInvariant())
             {
                 var isTargetFileExecuted =
-                    _scriptFilesState.IncrementalScriptFilesComparer.ExecutedFilesAll
+                    _scriptFilesComparer.ExecutedFilesAll
                         .Any(e => e.Filename.Trim().ToUpperInvariant() == _targetStateScriptFileName.Trim().ToUpperInvariant());
 
                 if (isTargetFileExecuted)
                 {
-                    return CoreTextResources.HistoricalTargetStateScriptErrorMessage.Replace("[FileName]", _targetStateScriptFileName);
+                    return CoreTextResources.HistoricalTargetStateScriptErrorMessage
+                        .Replace("[FileName]", _targetStateScriptFileName)
+                        .Replace("[FileTypeCode]", _scriptFilesComparer.ScriptFileType.FileTypeCode);
                 }
             }
 

@@ -197,7 +197,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             {
                 AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 2);
                 AssertFileHashState(testName, dbVersionsViewModelData.DevDummyDataScriptFiles[0], HashDiffType.Equal);
-                AssertFileHashState(testName, dbVersionsViewModelData.DevDummyDataScriptFiles[1], HashDiffType.Different);
+                AssertFileHashState(testName, dbVersionsViewModelData.DevDummyDataScriptFiles[1], HashDiffType.Equal);
             }
             else
             {

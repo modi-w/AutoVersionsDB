@@ -65,25 +65,23 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
 
             RuntimeScriptFile targetRuntimeScriptFile = null;
 
-            if (targetScriptFilename.Trim().ToUpperInvariant() == RuntimeScriptFile.TargetLastScriptFileName.Trim().ToUpperInvariant())
+            if (targetScriptFilename.Trim().ToUpperInvariant() != RuntimeScriptFile.TargetNoneScriptFileName.Trim().ToUpperInvariant())
             {
-                targetRuntimeScriptFile = AllFileSystemScriptFiles.LastOrDefault();
-            }
-            else
-            {
-                targetRuntimeScriptFile = AllFileSystemScriptFiles.FirstOrDefault(e => e.Filename.Trim().ToUpperInvariant() == targetScriptFilename.Trim().ToUpperInvariant());
-                if (targetRuntimeScriptFile == null)
+                if (targetScriptFilename.Trim().ToUpperInvariant() == RuntimeScriptFile.TargetLastScriptFileName.Trim().ToUpperInvariant())
                 {
-                    throw new ArgumentException($"{targetRuntimeScriptFile} is not exist in the {ScriptFileType.FileTypeCode} files", nameof(targetScriptFilename));
+                    targetRuntimeScriptFile = AllFileSystemScriptFiles.LastOrDefault();
+                }
+                else
+                {
+                    targetRuntimeScriptFile = AllFileSystemScriptFiles.FirstOrDefault(e => e.Filename.Trim().ToUpperInvariant() == targetScriptFilename.Trim().ToUpperInvariant());
+                    if (targetRuntimeScriptFile == null)
+                    {
+                        throw new ArgumentException($"{targetRuntimeScriptFile} is not exist in the {ScriptFileType.FileTypeCode} files", nameof(targetScriptFilename));
+                    }
                 }
             }
+   
 
-            //RuntimeScriptFileBase targetScriptFile = null;
-            //if (!string.IsNullOrWhiteSpace(targetScriptFilename))
-            //{
-            //    string targetFileFullPath = Path.Combine(FileSystemScriptFiles.FolderPath, targetScriptFilename);
-            //    targetScriptFile = FileSystemScriptFiles.CreateRuntimeScriptFileInstanceByFilename(targetFileFullPath);
-            //}
 
             return targetRuntimeScriptFile;
         }

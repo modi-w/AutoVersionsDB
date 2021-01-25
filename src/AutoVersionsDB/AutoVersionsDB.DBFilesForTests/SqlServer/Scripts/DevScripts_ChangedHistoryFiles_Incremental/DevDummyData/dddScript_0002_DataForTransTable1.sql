@@ -1,4 +1,4 @@
-
+--comment: changed file
 TRUNCATE TABLE  Schema3.[TransTable1]
 GO
 
