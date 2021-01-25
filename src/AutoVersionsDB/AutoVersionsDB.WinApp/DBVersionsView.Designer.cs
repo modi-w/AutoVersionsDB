@@ -127,6 +127,7 @@
             this.pnlRestoreDBError = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
             this.btnShowHistoricalBackups = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgIncrementalScriptsFiles)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -851,6 +852,7 @@
             this.notificationsControl1.Name = "notificationsControl1";
             this.notificationsControl1.Size = new System.Drawing.Size(1169, 65);
             this.notificationsControl1.TabIndex = 64;
+            this.notificationsControl1.ViewModel = null;
             // 
             // label15
             // 
@@ -1193,7 +1195,6 @@
             this.dgRepeatableScriptsFiles.Size = new System.Drawing.Size(1109, 306);
             this.dgRepeatableScriptsFiles.TabIndex = 47;
             this.dgRepeatableScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgRepeatableScriptsFiles_CellContentClick);
-
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -1249,6 +1250,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDevDummyDataFiles.BackColor = System.Drawing.Color.White;
             this.pnlDevDummyDataFiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlDevDummyDataFiles.Controls.Add(this.label9);
             this.pnlDevDummyDataFiles.Controls.Add(this.panel4);
             this.pnlDevDummyDataFiles.Controls.Add(this.btnOpenDevDummyDataScriptsFolder);
             this.pnlDevDummyDataFiles.Controls.Add(this.btnCreateNewDevDummyDataScriptFile);
@@ -1258,7 +1260,7 @@
             this.pnlDevDummyDataFiles.Location = new System.Drawing.Point(20, 1003);
             this.pnlDevDummyDataFiles.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDevDummyDataFiles.Name = "pnlDevDummyDataFiles";
-            this.pnlDevDummyDataFiles.Size = new System.Drawing.Size(1169, 404);
+            this.pnlDevDummyDataFiles.Size = new System.Drawing.Size(1169, 435);
             this.pnlDevDummyDataFiles.TabIndex = 74;
             // 
             // panel4
@@ -1424,7 +1426,7 @@
             this.label22.Location = new System.Drawing.Point(0, 0);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(5, 402);
+            this.label22.Size = new System.Drawing.Size(5, 433);
             this.label22.TabIndex = 66;
             // 
             // dgDevDummyDataScriptsFiles
@@ -1460,7 +1462,7 @@
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgDevDummyDataScriptsFiles.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgDevDummyDataScriptsFiles.GridColor = System.Drawing.Color.White;
-            this.dgDevDummyDataScriptsFiles.Location = new System.Drawing.Point(33, 64);
+            this.dgDevDummyDataScriptsFiles.Location = new System.Drawing.Point(33, 86);
             this.dgDevDummyDataScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
             this.dgDevDummyDataScriptsFiles.Name = "dgDevDummyDataScriptsFiles";
             this.dgDevDummyDataScriptsFiles.ReadOnly = true;
@@ -1470,10 +1472,9 @@
             this.dgDevDummyDataScriptsFiles.ShowCellToolTips = false;
             this.dgDevDummyDataScriptsFiles.ShowEditingIcon = false;
             this.dgDevDummyDataScriptsFiles.ShowRowErrors = false;
-            this.dgDevDummyDataScriptsFiles.Size = new System.Drawing.Size(1109, 306);
+            this.dgDevDummyDataScriptsFiles.Size = new System.Drawing.Size(1109, 315);
             this.dgDevDummyDataScriptsFiles.TabIndex = 47;
             this.dgDevDummyDataScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgDevDummyDataScriptsFiles_CellContentClick);
-
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -1534,7 +1535,7 @@
             this.pnlActionButtons.Controls.Add(this.pnlMissingSystemTables);
             this.pnlActionButtons.Controls.Add(this.pnlMainActions);
             this.pnlActionButtons.Controls.Add(this.pnlSyncToSpecificState);
-            this.pnlActionButtons.Location = new System.Drawing.Point(20, 1428);
+            this.pnlActionButtons.Location = new System.Drawing.Point(20, 1465);
             this.pnlActionButtons.Margin = new System.Windows.Forms.Padding(4);
             this.pnlActionButtons.Name = "pnlActionButtons";
             this.pnlActionButtons.Size = new System.Drawing.Size(1169, 275);
@@ -1584,6 +1585,16 @@
             this.btnShowHistoricalBackups.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnShowHistoricalBackups.UseVisualStyleBackColor = false;
             this.btnShowHistoricalBackups.Click += new System.EventHandler(this.BtnShowHistoricalBackups_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(37, 64);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(689, 17);
+            this.label9.TabIndex = 75;
+            this.label9.Text = "* Pay Attention: The dev Dummy Data Files behave like incremental files, means it" +
+    " cannot run script file twice";
             // 
             // DBVersionsView
             // 
@@ -1730,5 +1741,6 @@
         private System.Windows.Forms.Label lblDDDNumOfChanged;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label lblDDDNumOfExecuted;
+        private System.Windows.Forms.Label label9;
     }
 }
