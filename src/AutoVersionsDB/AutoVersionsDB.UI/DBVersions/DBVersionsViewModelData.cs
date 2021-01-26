@@ -31,18 +31,18 @@ namespace AutoVersionsDB.UI.DBVersions
             get => _targetIncScriptFileName;
             set => SetField(ref _targetIncScriptFileName, value);
         }
-        private string _targetRptScriptFileName;
-        public string TargetRptScriptFileName
-        {
-            get => _targetRptScriptFileName;
-            set => SetField(ref _targetRptScriptFileName, value);
-        }
-        private string _targetDDDScriptFileName;
-        public string TargetDDDScriptFileName
-        {
-            get => _targetDDDScriptFileName;
-            set => SetField(ref _targetDDDScriptFileName, value);
-        }
+        //private string _targetRptScriptFileName;
+        //public string TargetRptScriptFileName
+        //{
+        //    get => _targetRptScriptFileName;
+        //    set => SetField(ref _targetRptScriptFileName, value);
+        //}
+        //private string _targetDDDScriptFileName;
+        //public string TargetDDDScriptFileName
+        //{
+        //    get => _targetDDDScriptFileName;
+        //    set => SetField(ref _targetDDDScriptFileName, value);
+        //}
 
 
 

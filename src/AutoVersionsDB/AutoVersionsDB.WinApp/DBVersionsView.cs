@@ -55,6 +55,7 @@ namespace AutoVersionsDB.WinApp
             ChangeButtonsPanelsLocation(pnlRestoreDBError);
             ChangeButtonsPanelsLocation(pnlSyncToSpecificState);
             ChangeButtonsPanelsLocation(pnlSetDBStateManually);
+            ChangeButtonsPanelsLocation(pnlInitDB);
 
             Controls.Remove(pnlActionButtons);
 
@@ -142,6 +143,7 @@ namespace AutoVersionsDB.WinApp
                 tooltipControl.SetToolTip(btnDeploy, ViewModel.DBVersionsControls.BtnDeployTooltip);
                 tooltipControl.SetToolTip(btnSetDBToSpecificState, ViewModel.DBVersionsControls.BtnSetDBToSpecificStateTooltip);
                 tooltipControl.SetToolTip(btnVirtualExecution, ViewModel.DBVersionsControls.BtnVirtualExecutionTooltip);
+                tooltipControl.SetToolTip(btnVirtualDDD, ViewModel.DBVersionsControls.BtnVirtualDDDTooltip);
                 tooltipControl.SetToolTip(btnShowHistoricalBackups, ViewModel.DBVersionsControls.BtnShowHistoricalBackupsTooltip);
             }
 
@@ -220,6 +222,25 @@ namespace AutoVersionsDB.WinApp
                     nameof(pnlMissingSystemTables.Enabled),
                     ViewModel.DBVersionsControls,
                     nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesEnabled)
+                    )
+                );
+
+
+            pnlInitDB.DataBindings.Clear();
+            pnlInitDB.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    pnlInitDB,
+                    nameof(pnlInitDB.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlInitDBVisible)
+                    )
+                );
+            pnlInitDB.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    pnlInitDB,
+                    nameof(pnlInitDB.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlInitDBEnabled)
                     )
                 );
 
@@ -321,6 +342,39 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
+
+            btnVirtualDDD.DataBindings.Clear();
+            btnVirtualDDD.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    btnVirtualDDD,
+                    nameof(btnVirtualDDD.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnVirtualDDDVisible)
+                    )
+                );
+
+            lblVirtualDDD.DataBindings.Clear();
+            lblVirtualDDD.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblVirtualDDD,
+                    nameof(lblVirtualDDD.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnVirtualDDDVisible)
+                    )
+                );
+
+            btnVirtualDDD.DataBindings.Clear();
+            btnVirtualDDD.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    btnVirtualDDD,
+                    nameof(btnVirtualDDD.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnVirtualDDDEnabled)
+                    )
+                );
+            
+
+
             btnDeploy.DataBindings.Clear();
             btnDeploy.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
@@ -400,44 +454,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
                     )
                 );
-            lblRptColorTargetState_Square.DataBindings.Clear();
-            lblRptColorTargetState_Square.DataBindings.Add(
-                AsyncBindingHelper.GetBinding(
-                    lblRptColorTargetState_Square,
-                    nameof(lblRptColorTargetState_Square.Visible),
-                    ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateSquareVisible)
-                    )
-                );
 
-            lblRptColorTargetState_Caption.DataBindings.Clear();
-            lblRptColorTargetState_Caption.DataBindings.Add(
-                AsyncBindingHelper.GetBinding(
-                    lblRptColorTargetState_Caption,
-                    nameof(lblRptColorTargetState_Caption.Visible),
-                    ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
-                    )
-                );
-            lblDDDColorTargetState_Square.DataBindings.Clear();
-            lblDDDColorTargetState_Square.DataBindings.Add(
-                AsyncBindingHelper.GetBinding(
-                    lblDDDColorTargetState_Square,
-                    nameof(lblDDDColorTargetState_Square.Visible),
-                    ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateSquareVisible)
-                    )
-                );
-
-            lblDDDColorTargetState_Caption.DataBindings.Clear();
-            lblDDDColorTargetState_Caption.DataBindings.Add(
-                AsyncBindingHelper.GetBinding(
-                    lblDDDColorTargetState_Caption,
-                    nameof(lblDDDColorTargetState_Caption.Visible),
-                    ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
-                    )
-                );
 
 
             lblIncNumOfExecuted.DataBindings.Clear();
@@ -593,37 +610,37 @@ namespace AutoVersionsDB.WinApp
             }
         }
 
-        private void DgRepeatableScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
-        {
-            var senderGrid = (DataGridView)sender;
+        //private void DgRepeatableScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        //{
+        //    var senderGrid = (DataGridView)sender;
 
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                e.RowIndex >= 0)
-            {
-                RuntimeScriptFile currScriptFileInfo = (dgRepeatableScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
+        //    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+        //        e.RowIndex >= 0)
+        //    {
+        //        RuntimeScriptFile currScriptFileInfo = (dgRepeatableScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
 
-                Task task = ViewModel.SelectTargetRptScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
-                task.Wait();
+        //        Task task = ViewModel.SelectTargetRptScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
+        //        task.Wait();
 
-                MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, true);
-            }
-        }
+        //        MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, true);
+        //    }
+        //}
 
-        private void DgDevDummyDataScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
-        {
-            var senderGrid = (DataGridView)sender;
+        //private void DgDevDummyDataScriptsFiles_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        //{
+        //    var senderGrid = (DataGridView)sender;
 
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                e.RowIndex >= 0)
-            {
-                RuntimeScriptFile currScriptFileInfo = (dgDevDummyDataScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
+        //    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+        //        e.RowIndex >= 0)
+        //    {
+        //        RuntimeScriptFile currScriptFileInfo = (dgDevDummyDataScriptsFiles.DataSource as List<RuntimeScriptFile>)[e.RowIndex];
 
-                Task task = ViewModel.SelectTargetDDDScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
-                task.Wait();
+        //        Task task = ViewModel.SelectTargetDDDScriptFileNameCommand.ExecuteWrapped(currScriptFileInfo.Filename);
+        //        task.Wait();
 
-                MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, true);
-            }
-        }
+        //        MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, true);
+        //    }
+        //}
 
 
         private void BtnCancelSetDBStateManually_Click(object sender, EventArgs e)
@@ -677,6 +694,10 @@ namespace AutoVersionsDB.WinApp
             ViewModel.RecreateDBFromScratchCommand.Execute();
         }
 
+        private void BtnVirtualDDD_Click(object sender, EventArgs e)
+        {
+            ViewModel.VirtualDDDCommand.Execute();
+        }
 
         private void BtnApplySyncSpecificState_Click(object sender, EventArgs e)
         {
@@ -699,7 +720,10 @@ namespace AutoVersionsDB.WinApp
             ViewModel.RecreateDBFromScratchCommand.Execute();
         }
 
-
+        private void BtnInitDB_Click(object sender, EventArgs e)
+        {
+            ViewModel.InitDBCommand.Execute();
+        }
 
 
         private void BtnRunSetDBStateManally_Click(object sender, EventArgs e)
@@ -778,52 +802,52 @@ namespace AutoVersionsDB.WinApp
                 }
             }
 
-            if (dgRepeatableScriptsFiles.InvokeRequired)
-            {
-                dgRepeatableScriptsFiles.BeginInvoke((MethodInvoker)(() =>
-                {
-                    MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
+            //if (dgRepeatableScriptsFiles.InvokeRequired)
+            //{
+            //    dgRepeatableScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+            //    {
+            //        MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
 
-                    if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
-                    {
-                        dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
-                    }
-                }));
-            }
-            else
-            {
-                MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
+            //        if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
+            //        {
+            //            dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+            //        }
+            //    }));
+            //}
+            //else
+            //{
+            //    MarkUnMarkSelectedTargetInGrid(dgRepeatableScriptsFiles, ViewModel.DBVersionsViewModelData.TargetRptScriptFileName, isEnable);
 
-                if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
-                {
-                    dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
-                }
+            //    if (isEnable && dgRepeatableScriptsFiles.RowCount > 0)
+            //    {
+            //        dgRepeatableScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+            //    }
 
-            }
+            //}
 
-            if (dgDevDummyDataScriptsFiles.InvokeRequired)
-            {
-                dgDevDummyDataScriptsFiles.BeginInvoke((MethodInvoker)(() =>
-                {
-                    MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
+            //if (dgDevDummyDataScriptsFiles.InvokeRequired)
+            //{
+            //    dgDevDummyDataScriptsFiles.BeginInvoke((MethodInvoker)(() =>
+            //    {
+            //        MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
 
-                    if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
-                    {
-                        dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
-                    }
+            //        if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
+            //        {
+            //            dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+            //        }
 
-                }));
-            }
-            else
-            {
-                MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
+            //    }));
+            //}
+            //else
+            //{
+            //    MarkUnMarkSelectedTargetInGrid(dgDevDummyDataScriptsFiles, ViewModel.DBVersionsViewModelData.TargetDDDScriptFileName, isEnable);
 
-                if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
-                {
-                    dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
-                }
+            //    if (isEnable && dgDevDummyDataScriptsFiles.RowCount > 0)
+            //    {
+            //        dgDevDummyDataScriptsFiles.FirstDisplayedScrollingRowIndex = 0;
+            //    }
 
-            }
+            //}
 
         }
 
@@ -896,7 +920,9 @@ namespace AutoVersionsDB.WinApp
             base.Dispose(disposing);
         }
 
+
         #endregion
 
+      
     }
 }

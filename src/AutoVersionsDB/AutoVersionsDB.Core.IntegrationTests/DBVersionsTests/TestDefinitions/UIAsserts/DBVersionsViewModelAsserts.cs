@@ -37,8 +37,22 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             _notificationsViewModelAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
+        public void AssertCompleteSuccessfullyAllFilesSyncVrDDD(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataDBFinalStateVrDDD(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _notificationsViewModelAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+        }
 
-        
+        public void AssertCompleteSuccessfullyInitDBSync(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _notificationsViewModelAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
+        }
+
+
+
         public void AssertCompleteSuccessfullyAllFilesSyncVirtual(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataDBFinalStateVirtual(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);

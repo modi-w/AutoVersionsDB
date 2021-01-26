@@ -7,7 +7,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
 {
     public abstract class DBVersionsProcessDefinition : ProcessDefinition
     {
-        public bool IsVirtualExecution { get; protected set; }
+        public bool IsVirtualExecution { get; set; }
 
         public DBVersionsProcessDefinition(ActionStepBase rollbackStep,
                                                 ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,

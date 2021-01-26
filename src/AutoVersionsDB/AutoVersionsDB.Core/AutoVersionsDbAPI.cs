@@ -150,6 +150,22 @@ namespace AutoVersionsDB.Core
             }
         }
 
+        public static ProcessResults VirtualDDD(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        {
+            lock (_processSyncLock)
+            {
+                return _dbVersionsAPI.VirtualDDD(id, onNotificationStateChanged);
+            }
+        }
+
+        public static ProcessResults InitDB(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        {
+            lock (_processSyncLock)
+            {
+                return _dbVersionsAPI.InitDB(id, onNotificationStateChanged);
+            }
+        }
+
 
         #endregion
 

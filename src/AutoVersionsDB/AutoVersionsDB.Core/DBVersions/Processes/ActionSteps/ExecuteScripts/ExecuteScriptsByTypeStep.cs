@@ -39,7 +39,11 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
             ScriptFilesComparerBase scriptFilesComparer = processContext.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);
 
-            string targetStateScriptFileName = targetScripts.TargetScriptsByType[_fileTypeCode];
+            string targetStateScriptFileName;
+            if (!targetScripts.TargetScriptsByType.TryGetValue(_fileTypeCode, out targetStateScriptFileName))
+            {
+                targetStateScriptFileName = null;
+            }
             List<RuntimeScriptFile> scriptFilesList = scriptFilesComparer.GetPendingFilesToExecute(targetStateScriptFileName);
 
             List<ActionStepBase> internalSteps = new List<ActionStepBase>();

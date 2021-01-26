@@ -6,29 +6,31 @@ using AutoVersionsDB.NotificationableEngine.Validations;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes.ProcessDefinitions
 {
-    public class CreateVirtualExecutionsProcessDefinition : DBVersionsProcessDefinition
+    public class VirtualDDDExecutionsProcessDefinition : DBVersionsProcessDefinition
     {
-        public const string Name = "Create Virtual Executions";
+        public const string Name = "Virtual Executions For Dev Dummt Data Files";
         public override string EngineTypeName => Name;
 
 
 
-        public CreateVirtualExecutionsProcessDefinition(RestoreDatabaseStep rollbackStep,
+        public VirtualDDDExecutionsProcessDefinition(RestoreDatabaseStep rollbackStep,
                                                 ValidationsStep<IdExistDBVersionsValidationsFactory> idExistValidationStep,
                                                 SetProjectConfigInProcessContextStep setProjectConfigInProcessContextStep,
                                                 ValidationsStep<ProjectConfigValidationsFactory> projectConfigValidationStep,
+                                                ValidationsStep<CheckDeliveryEnvValidationsFactory> checkDeliveryEnvValidationStep,
                                                 CreateScriptFilesStateStep createScriptFilesStateStep,
+                                                ValidationsStep<SystemTableValidationsFactory> systemTableValidationStep,
                                                 CreateBackupStep createBackupStep,
-                                                RecreateDBVersionsTablesStep recreateDBVersionsTablesStep,
-                                                ExecuteAllScriptsStep executeScriptsStep,
+                                                ExecuteDDDScriptsVirtuallyStep executeDDDScriptsVirtuallyStep,
                                                 FinalizeProcessStep finalizeProcessStep)
             : base(rollbackStep, idExistValidationStep, setProjectConfigInProcessContextStep)
         {
             AddStep(projectConfigValidationStep);
+            AddStep(checkDeliveryEnvValidationStep);
             AddStep(createScriptFilesStateStep);
+            AddStep(systemTableValidationStep);
             AddStep(createBackupStep);
-            AddStep(recreateDBVersionsTablesStep);
-            AddStep(executeScriptsStep);
+            AddStep(executeDDDScriptsVirtuallyStep);
             AddStep(finalizeProcessStep);
 
             IsVirtualExecution = true;

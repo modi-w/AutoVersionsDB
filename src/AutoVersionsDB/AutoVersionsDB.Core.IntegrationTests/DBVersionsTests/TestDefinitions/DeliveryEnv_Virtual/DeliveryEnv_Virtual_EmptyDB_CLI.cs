@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(CLITestContext testContext)
         {
-            CLIRunner.CLIRun($"virtual -id={IntegrationTestsConsts.TestProjectId} -it={IntegrationTestsConsts.MiddleStateTargetScripts.IncScriptFileName} -rt={IntegrationTestsConsts.MiddleStateTargetScripts.RptScriptFileName} -dt={IntegrationTestsConsts.MiddleStateTargetScripts.DDDScriptFileName}");
+            CLIRunner.CLIRun($"virtual -id={IntegrationTestsConsts.TestProjectId} -it={IntegrationTestsConsts.MiddleStateTargetScripts.IncScriptFileName}");
         }
 
 

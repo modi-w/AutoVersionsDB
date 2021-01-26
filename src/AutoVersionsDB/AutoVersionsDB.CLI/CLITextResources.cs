@@ -59,6 +59,9 @@ namespace AutoVersionsDB.CLI
         public const string SyncCommandDescription = "Sync the database to the last state by the scripts files";
         public const string ValidateCommandDescription = "Validate all relevant relevant properties for run sync on the project.";
         public const string VirtualCommandDescription = "Set the Database to specific state by virtually executions the scripts file. This command is useful when production database didnt use this tool yet. Insert into the 'Targets' options (-it, -rt, -dt) the target script file name that you want to set the db state.";
+        public const string VirtualDDDCommandDescription = "Mark the Dev Dummy Data file as executed virtually. Use it when you have DB that you want to work with its original data instead of the Deveploment data.";
+        public const string InitDBCommandDescription = "Creating our DB system tables in the target DB";
+
 
         //CLI DBVersions Commands Info
         public const string TheFileIsCreatedInfoMessage = "The file: '[newFilePath]' is created.";

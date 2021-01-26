@@ -116,6 +116,14 @@ namespace AutoVersionsDB.UI.DBVersions
                     //    _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
                     //}
 
+                    if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
+                    {
+                        _dbVersionsControls.BtnVirtualDDDVisible =
+                            _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.Count > 0
+                            && _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.ExecutedFilesAll.Count == 0;
+                    }
+
+
                     _dbVersionsControls.GridToSelectTargetStateEnabled = false;
 
                     SetAllControlsEnableDisable(true);
@@ -139,21 +147,28 @@ namespace AutoVersionsDB.UI.DBVersions
                     SetAllControlsEnableDisable(true);
                     break;
 
+                case DBVersionsViewStateType.NewProject:
+
+                    if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
+                    {
+                        _dbVersionsControls.PnlInitDBVisible = true;
+                        _dbVersionsControls.LblColorTargetStateSquareVisible = false;
+                        _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
+
+                        _dbVersionsControls.GridToSelectTargetStateEnabled = false;
+
+                        SetAllControlsEnableDisable(true);
+                    }
+                    else
+                    {
+                        SystemTablesViewState();
+                    }
+                    break;
+
                 case DBVersionsViewStateType.MissingSystemTables:
                 case DBVersionsViewStateType.HistoryExecutedFilesChanged:
 
-                    _dbVersionsControls.PnlMissingSystemTablesVisible = true;
-                    _dbVersionsControls.LblColorTargetStateSquareVisible = false;
-                    _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
-
-                    if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
-                    {
-                        _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
-                    }
-
-                    _dbVersionsControls.GridToSelectTargetStateEnabled = false;
-
-                    SetAllControlsEnableDisable(true);
+                    SystemTablesViewState();
                     break;
 
                 case DBVersionsViewStateType.SetVirtual:
@@ -208,11 +223,27 @@ namespace AutoVersionsDB.UI.DBVersions
 
         }
 
+        private void SystemTablesViewState()
+        {
+            _dbVersionsControls.PnlMissingSystemTablesVisible = true;
+            _dbVersionsControls.LblColorTargetStateSquareVisible = false;
+            _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
+
+            if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
+            {
+                _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
+            }
+
+            _dbVersionsControls.GridToSelectTargetStateEnabled = false;
+
+            SetAllControlsEnableDisable(true);
+        }
 
         private void SetAllControlsEnableDisable(bool isEnable)
         {
             _dbVersionsControls.PnlMainActionsEnabled = isEnable;
             _dbVersionsControls.PnlMissingSystemTablesEnabled = isEnable;
+            _dbVersionsControls.PnlInitDBEnabled = isEnable;
             _dbVersionsControls.PnlSetDBStateManuallyEnabled = isEnable;
             _dbVersionsControls.BtnRefreshEnable = isEnable;
             _dbVersionsControls.IncrementalScriptsGridEnabled = isEnable;
@@ -220,6 +251,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled = isEnable;
             _dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled = isEnable;
             _dbVersionsControls.BtnCreateNewDevDummyDataScriptFileEnabled = isEnable;
+            _dbVersionsControls.BtnVirtualDDDEnabled = isEnable;
         }
 
 
@@ -228,8 +260,10 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls.PnlMainActionsVisible = false;
             _dbVersionsControls.PnlSyncToSpecificStateVisible = false;
             _dbVersionsControls.PnlMissingSystemTablesVisible = false;
+            _dbVersionsControls.PnlInitDBVisible = false;
             _dbVersionsControls.PnlSetDBStateManuallyVisible = false;
             _dbVersionsControls.PnlRestoreDBErrorVisible = false;
+            _dbVersionsControls.BtnVirtualDDDVisible = false;
         }
 
 
@@ -238,34 +272,34 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             List<RuntimeScriptFile> incScripts = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFile incNoneTargetState = 
-                new RuntimeScriptFile(new IncrementalScriptFileType(),"",RuntimeScriptFile.TargetNoneScriptFileName,0);
+            RuntimeScriptFile incNoneTargetState =
+                new RuntimeScriptFile(new IncrementalScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
             incScripts.Insert(0, incNoneTargetState);
 
             _dbVersionsViewModelData.IncrementalScriptFiles = incScripts;
             _dbVersionsViewModelData.TargetIncScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
 
-            List<RuntimeScriptFile> rptScripts = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            //List<RuntimeScriptFile> rptScripts = _dbVersionsViewModelData.ScriptFilesState.RepeatableScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFile rptNoneTargetState =
-                new RuntimeScriptFile(new RepeatableScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
-            rptScripts.Insert(0, rptNoneTargetState);
+            //RuntimeScriptFile rptNoneTargetState =
+            //    new RuntimeScriptFile(new RepeatableScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
+            //rptScripts.Insert(0, rptNoneTargetState);
 
-            _dbVersionsViewModelData.RepeatableScriptFiles = rptScripts;
-            _dbVersionsViewModelData.TargetRptScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
+            //_dbVersionsViewModelData.RepeatableScriptFiles = rptScripts;
+            //_dbVersionsViewModelData.TargetRptScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
 
 
-            if (_dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer!= null)
-            {
-                List<RuntimeScriptFile> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
+            //if (_dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer!= null)
+            //{
+            //    List<RuntimeScriptFile> dddScripts = _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-                RuntimeScriptFile dddNoneTargetState =
-                    new RuntimeScriptFile(new DevDummyDataScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
-                dddScripts.Insert(0, dddNoneTargetState);
+            //    RuntimeScriptFile dddNoneTargetState =
+            //        new RuntimeScriptFile(new DevDummyDataScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
+            //    dddScripts.Insert(0, dddNoneTargetState);
 
-                _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
-                _dbVersionsViewModelData.TargetDDDScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
-            }
+            //    _dbVersionsViewModelData.DevDummyDataScriptFiles = dddScripts;
+            //    _dbVersionsViewModelData.TargetDDDScriptFileName = RuntimeScriptFile.TargetNoneScriptFileName;
+            //}
         }
 
 
