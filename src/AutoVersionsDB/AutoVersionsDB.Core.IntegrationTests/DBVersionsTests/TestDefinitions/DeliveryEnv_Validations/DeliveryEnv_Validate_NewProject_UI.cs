@@ -57,8 +57,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _DeliveryEnv_Validate_NewProject_API.Asserts(testContext);
 
-            _dbVersionsViewModelAsserts.AssertNewProject(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
-            _dbVersionsViewModelAsserts.AssertViewStateHistory(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.MissingSystemTables);
+            _dbVersionsViewModelAsserts.AssertNewProjectDevEnv(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
+            _dbVersionsViewModelAsserts.AssertViewStateHistory(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.NewProject);
         }
 
 

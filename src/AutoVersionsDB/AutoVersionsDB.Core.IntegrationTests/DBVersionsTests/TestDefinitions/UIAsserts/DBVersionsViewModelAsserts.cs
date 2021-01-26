@@ -118,10 +118,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _notificationsViewModelAsserts.AssertNotificationsViewModelError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.HistoryExecutedFilesChangedInstructionsMessage);
         }
 
-        public void AssertNewProject(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        public void AssertNewProjectDevEnv(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
-            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateNewProject(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             if (isDevEnv)
             {
                 _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.NewProjectDevEnvInstructionsMessage);

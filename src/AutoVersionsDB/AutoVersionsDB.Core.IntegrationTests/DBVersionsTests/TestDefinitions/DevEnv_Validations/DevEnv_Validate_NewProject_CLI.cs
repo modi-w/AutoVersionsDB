@@ -53,7 +53,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             AssertTextByLines assertErrorsTextByLines = new AssertTextByLines(GetType().Name, "ConsoleError", testContext.ConsoleError, 2);
             assertErrorsTextByLines.AssertLineMessage("Welcome!!! This appear to be a new project.", true);
-            assertErrorsTextByLines.AssertLineMessage("1) Run 'Recreate' or 'Virtual' for creating our DB system tables >> 2) Add your scripts files >> 3) Run 'Sync'", true);
+            assertErrorsTextByLines.AssertLineMessage("1) Run 'Init DB' for creating our DB system tables >> 2) Add your scripts files >> 3) Run 'Sync'", true);
 
 
         }
