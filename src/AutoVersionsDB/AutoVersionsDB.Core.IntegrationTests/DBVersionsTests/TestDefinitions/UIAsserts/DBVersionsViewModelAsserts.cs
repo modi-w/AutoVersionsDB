@@ -133,6 +133,21 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
         }
 
+        public void AssertNewProjectDeliveryEnv(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
+        {
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
+            if (isDevEnv)
+            {
+                _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.NewProjectDevEnvInstructionsMessage);
+            }
+            else
+            {
+                _notificationsViewModelAsserts.AssertNotificationsViewModelAttention(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData, CoreTextResources.NewProjectDeliveryEnvNoscriptsFilesInstructionsMessage);
+            }
+
+        }
+
         public void AssertMissingSystemTables(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
             _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataMissingSystemTables(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
