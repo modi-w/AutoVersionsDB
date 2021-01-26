@@ -57,9 +57,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
         {
             TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_VirtualDDD_API, DeliveryEnv_NotAllowMethods_VirtualDDD_CLI, DeliveryEnv_NotAllowMethods_VirtualDDD_UI>();
         }
-        
 
-               [Test]
+        [Test]
+        public void DeliveryEnv_NotAollowMethods_InitDB()
+        {
+            TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_InitDB_API, DeliveryEnv_NotAllowMethods_InitDB_CLI, DeliveryEnv_NotAllowMethods_InitDB_UI>();
+        }
+
+        [Test]
         public void DeliveryEnv_NotAollowMethods_New_Incremental()
         {
             TestsRunner.RunTestsForeachDBType<DeliveryEnv_NotAllowMethods_New_Incremental_API, DeliveryEnv_NotAllowMethods_New_Incremental_CLI, DeliveryEnv_NotAllowMethods_New_Incremental_UI>();

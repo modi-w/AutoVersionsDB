@@ -12,10 +12,10 @@ namespace AutoVersionsDB.ConsoleApp
             Console.Title = "AutoVersionsDB";
 
 
-            //return CLIRunner.CLIRun(args);
+            return CLIRunner.CLIRun(args);
 
             // return CLIRunner.CLIRun("list");
-             return CLIRunner.CLIRun("initdb -id=TestP11");
+            // return CLIRunner.CLIRun("initdb -id=TestP11");
         //    return CLIRunner.CLIRun("files -id=TestP11");
 
 

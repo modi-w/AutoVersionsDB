@@ -1,40 +1,47 @@
 ﻿using AutoVersionsDB;
 using AutoVersionsDB.Core;
 using AutoVersionsDB.Core.ConfigProjects;
+using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Core.IntegrationTests;
+
+
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_InitDB;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_InitDB;
+using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_InitDB;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles;
 using AutoVersionsDB.UI;
 using AutoVersionsDB.UI.DBVersions;
+using AutoVersionsDB.UI.Notifications;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods
+namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_InitDB
 {
-    public class DeliveryEnv_NotAllowMethods_VirtualDDD_UI : TestDefinition<DBVersionsUITestContext>
+    public class DevEnv_InitDB_UI : TestDefinition<DBVersionsUITestContext>
     {
-        private readonly DeliveryEnv_NotAllowMethods_VirtualDDD_API _devEnv_NotAllowMethods_VirtualDDD_API;
+        private readonly DevEnv_InitDB_API _devEnv_InitDB_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
         private readonly DBVersionsViewModelAsserts _dbVersionsViewModelAsserts;
 
-        public DeliveryEnv_NotAllowMethods_VirtualDDD_UI(DeliveryEnv_NotAllowMethods_VirtualDDD_API devEnv_NotAllowMethods_VirtualDDD_API,
-                                                                DBVersionsViewModel dbVersionsViewModel,
-                                                                DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
+        public DevEnv_InitDB_UI(DevEnv_InitDB_API devEnv_InitDB_API,
+                                DBVersionsViewModel dbVersionsViewModel,
+                                DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
         {
-            _devEnv_NotAllowMethods_VirtualDDD_API = devEnv_NotAllowMethods_VirtualDDD_API;
+            _devEnv_InitDB_API = devEnv_InitDB_API;
             _dbVersionsViewModel = dbVersionsViewModel;
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_devEnv_NotAllowMethods_VirtualDDD_API.Arrange(testArgs));
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_devEnv_InitDB_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -43,37 +50,41 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
             UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
 
+
             return testContext;
         }
 
 
         public override void Act(DBVersionsUITestContext testContext)
         {
-            var task = _dbVersionsViewModel.VirtualDDDCommand.ExecuteWrapped();
+            var task = _dbVersionsViewModel.InitDBCommand.ExecuteWrapped();
             task.Wait();
         }
 
 
         public override void Asserts(DBVersionsUITestContext testContext)
         {
-            _devEnv_NotAllowMethods_VirtualDDD_API.Asserts(testContext);
+            _devEnv_InitDB_API.Asserts(testContext);
 
-            _dbVersionsViewModelAsserts.AssertNotAllowMethodDBFinalState(GetType().Name, _dbVersionsViewModel);
-            _dbVersionsViewModelAsserts.AssertViewStateHistory(GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
+            _dbVersionsViewModelAsserts.AssertCompleteSuccessfullyInitDBSync(this.GetType().Name, _dbVersionsViewModel, testContext.ProjectConfig.DevEnvironment);
+            _dbVersionsViewModelAsserts.AssertViewStateHistory(this.GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
         }
+
+
 
 
         public override void Release(DBVersionsUITestContext testContext)
         {
             UIGeneralEvents.OnConfirm -= UIGeneralEvents_OnConfirm;
 
-            _devEnv_NotAllowMethods_VirtualDDD_API.Release(testContext);
+            _devEnv_InitDB_API.Release(testContext);
         }
+
+
 
         private void UIGeneralEvents_OnConfirm(object sender, ConfirmEventArgs e)
         {
             e.IsConfirm = true;
         }
-
     }
 }
