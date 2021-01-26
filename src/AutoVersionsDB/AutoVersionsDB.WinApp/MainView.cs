@@ -29,23 +29,38 @@ namespace AutoVersionsDB.WinApp
 
             _viewModel = viewModel;
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                _viewModel.MainViewModelData.PropertyChanged += ViewModel_PropertyChanged;
-                SetDataBindings();
-            }
+            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //{
+            //    _viewModel.MainViewModelData.PropertyChanged += ViewModel_PropertyChanged;
+            //    SetDataBindings();
+            //}
 
             Load += Main_Load;
 
 
 
-            //chooseProject1.OnSetNewProject += ChooseProject1_OnSetNewProject1;
-            //chooseProject1.OnNavToProcess += ChooseProject1_OnNavToProcess;
-            //chooseProject1.OnEditProject += ChooseProject1_OnEditProject;
+            ////chooseProject1.OnSetNewProject += ChooseProject1_OnSetNewProject1;
+            ////chooseProject1.OnNavToProcess += ChooseProject1_OnNavToProcess;
+            ////chooseProject1.OnEditProject += ChooseProject1_OnEditProject;
 
-            //editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
-            //dbVersionsMangement1.OnEditProject += DBVersionsMangement1_OnEditProject;
+            ////editProjectConfigDetails1.OnNavToProcess += EditProjectConfigDetails1_OnNavToProcess;
+            ////dbVersionsMangement1.OnEditProject += DBVersionsMangement1_OnEditProject;
         }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!this.DesignMode)
+            {
+                _viewModel.MainViewModelData.PropertyChanged += ViewModel_PropertyChanged;
+                SetDataBindings();
+            }
+
+
+
+        }
+
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

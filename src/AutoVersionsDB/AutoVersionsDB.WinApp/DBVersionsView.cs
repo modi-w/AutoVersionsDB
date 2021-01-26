@@ -24,7 +24,61 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //{
+            //    ViewModel.OnTextInput += ViewModel_OnTextInput;
+            //    ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+            //    ViewModel.DBVersionsViewModelData.PropertyChanged += DBVersionsViewModelData_PropertyChanged;
+            //    ViewModel.DBVersionsControls.PropertyChanged += DBVersionsControls_PropertyChanged;
+            //    SetDataBindings();
+
+
+            //    EnableDisableGridToSelectTargetState(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled);
+
+            //    SetToolTips();
+
+            //}
+
+
+            //dgIncrementalScriptsFiles.AutoGenerateColumns = false;
+            //dgIncrementalScriptsFiles.SelectionChanged += DgIncrementalScriptsFiles_SelectionChanged;
+
+            //dgRepeatableScriptsFiles.AutoGenerateColumns = false;
+            //dgRepeatableScriptsFiles.SelectionChanged += DgRepeatableScriptsFiles_SelectionChanged;
+
+            //dgDevDummyDataScriptsFiles.AutoGenerateColumns = false;
+            //dgDevDummyDataScriptsFiles.SelectionChanged += DgDevDummyDataScriptsFiles_SelectionChanged;
+
+
+            //ChangeButtonsPanelsLocation(pnlMainActions);
+            //ChangeButtonsPanelsLocation(pnlMissingSystemTables);
+            //ChangeButtonsPanelsLocation(pnlRestoreDBError);
+            //ChangeButtonsPanelsLocation(pnlSyncToSpecificState);
+            //ChangeButtonsPanelsLocation(pnlSetDBStateManually);
+            //ChangeButtonsPanelsLocation(pnlInitDB);
+
+            //Controls.Remove(pnlActionButtons);
+
+            ////pnlSyncToSpecificState.Location = new Point(873, 14);
+            ////pnlMissingSystemTables.Location = new Point(600, 10);
+            ////pnlSetDBStateManually.Location = new Point(880, 24);
+            ////btnShowHistoricalBackups.Location = new Point(880, 24);
+
+
+            ////#if !DEBUG
+            //btnSetDBToSpecificState.Visible = false;
+            //lblSetDBToSpecificState.Visible = false;
+            ////#endif
+
+
+
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!this.DesignMode)
             {
                 ViewModel.OnTextInput += ViewModel_OnTextInput;
                 ViewModel.PropertyChanged += ViewModel_PropertyChanged;
@@ -36,7 +90,6 @@ namespace AutoVersionsDB.WinApp
                 EnableDisableGridToSelectTargetState(ViewModel.DBVersionsControls.GridToSelectTargetStateEnabled);
 
                 SetToolTips();
-
             }
 
 
@@ -69,7 +122,6 @@ namespace AutoVersionsDB.WinApp
             btnSetDBToSpecificState.Visible = false;
             lblSetDBToSpecificState.Visible = false;
             //#endif
-
 
 
         }

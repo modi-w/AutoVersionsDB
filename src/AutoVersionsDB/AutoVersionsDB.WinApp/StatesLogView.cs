@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.UI.Notifications;
 using AutoVersionsDB.UI.StatesLog;
 using AutoVersionsDB.WinApp.Properties;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -14,19 +15,36 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
+            ViewModel = viewModel;
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
-            {
-                ViewModel = viewModel;
+            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //{
+            //    ViewModel = viewModel;
 
-                ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+            //    ViewModel.PropertyChanged += ViewModel_PropertyChanged;
 
-                SetDataBindings();
+            //    SetDataBindings();
 
+            //    this.Load += StatesLogView_Load;
+            //}
 
-                this.Load += StatesLogView_Load;
-            }
+            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+
+            this.Load += StatesLogView_Load;
+
         }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+
+
+            SetDataBindings();
+
+
+        }
+
 
         private void StatesLogView_Load(object sender, System.EventArgs e)
         {

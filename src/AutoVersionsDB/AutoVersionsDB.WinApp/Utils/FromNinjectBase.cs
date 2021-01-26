@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp.Utils
@@ -7,10 +8,21 @@ namespace AutoVersionsDB.WinApp.Utils
     {
         public FromNinjectBase()
         {
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //if (this.DesignMode)
+            //{
+            //    DIConfig.Kernel.Inject(this);
+            //}
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!this.DesignMode)
             {
                 DIConfig.Kernel.Inject(this);
             }
+
         }
     }
 }

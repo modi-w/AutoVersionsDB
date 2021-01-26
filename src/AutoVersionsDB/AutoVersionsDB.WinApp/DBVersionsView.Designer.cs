@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DBVersionsView));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblProjectName = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.dgIncrementalScriptsFiles = new System.Windows.Forms.DataGridView();
@@ -151,12 +152,12 @@
             this.lblProjectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProjectName.AutoEllipsis = true;
-            this.lblProjectName.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblProjectName.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblProjectName.ForeColor = System.Drawing.Color.DimGray;
-            this.lblProjectName.Location = new System.Drawing.Point(131, 17);
+            this.lblProjectName.Location = new System.Drawing.Point(131, 21);
             this.lblProjectName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblProjectName.Name = "lblProjectName";
-            this.lblProjectName.Size = new System.Drawing.Size(611, 48);
+            this.lblProjectName.Size = new System.Drawing.Size(611, 60);
             this.lblProjectName.TabIndex = 16;
             this.lblProjectName.Text = "Project 1";
             // 
@@ -165,9 +166,9 @@
             this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(32, 28);
+            this.label17.Location = new System.Drawing.Point(32, 35);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(176, 25);
@@ -185,30 +186,30 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgIncrementalScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgIncrementalScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgIncrementalScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgIncrementalScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
             this.dgIncrementalScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgIncrementalScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.rowNumber,
             this.dataGridViewTextBoxColumn1,
             this.SetAsSyncState});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgIncrementalScriptsFiles.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgIncrementalScriptsFiles.DefaultCellStyle = dataGridViewCellStyle26;
             this.dgIncrementalScriptsFiles.GridColor = System.Drawing.Color.White;
-            this.dgIncrementalScriptsFiles.Location = new System.Drawing.Point(33, 64);
-            this.dgIncrementalScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.dgIncrementalScriptsFiles.Location = new System.Drawing.Point(33, 80);
+            this.dgIncrementalScriptsFiles.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgIncrementalScriptsFiles.Name = "dgIncrementalScriptsFiles";
             this.dgIncrementalScriptsFiles.ReadOnly = true;
             this.dgIncrementalScriptsFiles.RowHeadersVisible = false;
@@ -217,7 +218,7 @@
             this.dgIncrementalScriptsFiles.ShowCellToolTips = false;
             this.dgIncrementalScriptsFiles.ShowEditingIcon = false;
             this.dgIncrementalScriptsFiles.ShowRowErrors = false;
-            this.dgIncrementalScriptsFiles.Size = new System.Drawing.Size(1109, 306);
+            this.dgIncrementalScriptsFiles.Size = new System.Drawing.Size(1109, 382);
             this.dgIncrementalScriptsFiles.TabIndex = 47;
             this.dgIncrementalScriptsFiles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgIncrementalScriptsFiles_CellContentClick);
             // 
@@ -268,10 +269,10 @@
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.dgIncrementalScriptsFiles);
             this.panel1.Controls.Add(this.label17);
-            this.panel1.Location = new System.Drawing.Point(20, 178);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Location = new System.Drawing.Point(20, 222);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1169, 404);
+            this.panel1.Size = new System.Drawing.Size(1169, 504);
             this.panel1.TabIndex = 59;
             // 
             // btnOpenIncrementalScriptsFolder
@@ -282,16 +283,16 @@
             this.btnOpenIncrementalScriptsFolder.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnOpenIncrementalScriptsFolder.FlatAppearance.BorderSize = 0;
             this.btnOpenIncrementalScriptsFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenIncrementalScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnOpenIncrementalScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnOpenIncrementalScriptsFolder.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnOpenIncrementalScriptsFolder.Image = global::AutoVersionsDB.WinApp.Properties.Resources.OpenIcon32;
+            this.btnOpenIncrementalScriptsFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenIncrementalScriptsFolder.Image")));
             this.btnOpenIncrementalScriptsFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnOpenIncrementalScriptsFolder.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOpenIncrementalScriptsFolder.Location = new System.Drawing.Point(1036, 14);
-            this.btnOpenIncrementalScriptsFolder.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenIncrementalScriptsFolder.Location = new System.Drawing.Point(1036, 18);
+            this.btnOpenIncrementalScriptsFolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnOpenIncrementalScriptsFolder.Name = "btnOpenIncrementalScriptsFolder";
-            this.btnOpenIncrementalScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnOpenIncrementalScriptsFolder.Size = new System.Drawing.Size(51, 49);
+            this.btnOpenIncrementalScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.btnOpenIncrementalScriptsFolder.Size = new System.Drawing.Size(51, 61);
             this.btnOpenIncrementalScriptsFolder.TabIndex = 72;
             this.btnOpenIncrementalScriptsFolder.UseVisualStyleBackColor = false;
             this.btnOpenIncrementalScriptsFolder.Click += new System.EventHandler(this.BtnOpenIncrementalScriptsFolder_Click);
@@ -306,19 +307,19 @@
             this.panel2.Controls.Add(this.lblIncNumOfChanged);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.lblIncNumOfExecuted);
-            this.panel2.Location = new System.Drawing.Point(211, 19);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4);
+            this.panel2.Location = new System.Drawing.Point(211, 24);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(745, 42);
+            this.panel2.Size = new System.Drawing.Size(745, 52);
             this.panel2.TabIndex = 71;
             // 
             // label1
             // 
             this.label1.AutoEllipsis = true;
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.DimGray;
-            this.label1.Location = new System.Drawing.Point(265, 11);
+            this.label1.Location = new System.Drawing.Point(265, 14);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(184, 20);
@@ -328,10 +329,10 @@
             // lblIncNumOfVirtual
             // 
             this.lblIncNumOfVirtual.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.lblIncNumOfVirtual.Location = new System.Drawing.Point(229, 12);
+            this.lblIncNumOfVirtual.Location = new System.Drawing.Point(229, 15);
             this.lblIncNumOfVirtual.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIncNumOfVirtual.Name = "lblIncNumOfVirtual";
-            this.lblIncNumOfVirtual.Size = new System.Drawing.Size(32, 18);
+            this.lblIncNumOfVirtual.Size = new System.Drawing.Size(32, 22);
             this.lblIncNumOfVirtual.TabIndex = 73;
             this.lblIncNumOfVirtual.Text = "0";
             this.lblIncNumOfVirtual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -340,9 +341,9 @@
             // 
             this.lblIncColorTargetState_Caption.AutoEllipsis = true;
             this.lblIncColorTargetState_Caption.AutoSize = true;
-            this.lblIncColorTargetState_Caption.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIncColorTargetState_Caption.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblIncColorTargetState_Caption.ForeColor = System.Drawing.Color.DimGray;
-            this.lblIncColorTargetState_Caption.Location = new System.Drawing.Point(642, 11);
+            this.lblIncColorTargetState_Caption.Location = new System.Drawing.Point(642, 14);
             this.lblIncColorTargetState_Caption.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIncColorTargetState_Caption.Name = "lblIncColorTargetState_Caption";
             this.lblIncColorTargetState_Caption.Size = new System.Drawing.Size(101, 20);
@@ -352,10 +353,10 @@
             // lblIncColorTargetState_Square
             // 
             this.lblIncColorTargetState_Square.BackColor = System.Drawing.Color.Yellow;
-            this.lblIncColorTargetState_Square.Location = new System.Drawing.Point(607, 12);
+            this.lblIncColorTargetState_Square.Location = new System.Drawing.Point(607, 15);
             this.lblIncColorTargetState_Square.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIncColorTargetState_Square.Name = "lblIncColorTargetState_Square";
-            this.lblIncColorTargetState_Square.Size = new System.Drawing.Size(32, 18);
+            this.lblIncColorTargetState_Square.Size = new System.Drawing.Size(32, 22);
             this.lblIncColorTargetState_Square.TabIndex = 67;
             this.lblIncColorTargetState_Square.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -363,9 +364,9 @@
             // 
             this.label2.AutoEllipsis = true;
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.Color.DimGray;
-            this.label2.Location = new System.Drawing.Point(492, 11);
+            this.label2.Location = new System.Drawing.Point(492, 14);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(107, 20);
@@ -375,10 +376,10 @@
             // lblIncNumOfChanged
             // 
             this.lblIncNumOfChanged.BackColor = System.Drawing.Color.LightSalmon;
-            this.lblIncNumOfChanged.Location = new System.Drawing.Point(458, 12);
+            this.lblIncNumOfChanged.Location = new System.Drawing.Point(458, 15);
             this.lblIncNumOfChanged.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIncNumOfChanged.Name = "lblIncNumOfChanged";
-            this.lblIncNumOfChanged.Size = new System.Drawing.Size(32, 18);
+            this.lblIncNumOfChanged.Size = new System.Drawing.Size(32, 22);
             this.lblIncNumOfChanged.TabIndex = 71;
             this.lblIncNumOfChanged.Text = "0";
             this.lblIncNumOfChanged.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -387,9 +388,9 @@
             // 
             this.label10.AutoEllipsis = true;
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label10.ForeColor = System.Drawing.Color.DimGray;
-            this.label10.Location = new System.Drawing.Point(44, 11);
+            this.label10.Location = new System.Drawing.Point(44, 14);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(180, 20);
@@ -399,10 +400,10 @@
             // lblIncNumOfExecuted
             // 
             this.lblIncNumOfExecuted.BackColor = System.Drawing.Color.LightGreen;
-            this.lblIncNumOfExecuted.Location = new System.Drawing.Point(9, 12);
+            this.lblIncNumOfExecuted.Location = new System.Drawing.Point(9, 15);
             this.lblIncNumOfExecuted.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIncNumOfExecuted.Name = "lblIncNumOfExecuted";
-            this.lblIncNumOfExecuted.Size = new System.Drawing.Size(32, 18);
+            this.lblIncNumOfExecuted.Size = new System.Drawing.Size(32, 22);
             this.lblIncNumOfExecuted.TabIndex = 69;
             this.lblIncNumOfExecuted.Text = "0";
             this.lblIncNumOfExecuted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -415,16 +416,16 @@
             this.btnCreateNewIncrementalScriptFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCreateNewIncrementalScriptFile.FlatAppearance.BorderSize = 0;
             this.btnCreateNewIncrementalScriptFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCreateNewIncrementalScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCreateNewIncrementalScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCreateNewIncrementalScriptFile.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnCreateNewIncrementalScriptFile.Image = global::AutoVersionsDB.WinApp.Properties.Resources.AddIcon321;
+            this.btnCreateNewIncrementalScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateNewIncrementalScriptFile.Image")));
             this.btnCreateNewIncrementalScriptFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCreateNewIncrementalScriptFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCreateNewIncrementalScriptFile.Location = new System.Drawing.Point(1095, 14);
-            this.btnCreateNewIncrementalScriptFile.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCreateNewIncrementalScriptFile.Location = new System.Drawing.Point(1095, 18);
+            this.btnCreateNewIncrementalScriptFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCreateNewIncrementalScriptFile.Name = "btnCreateNewIncrementalScriptFile";
-            this.btnCreateNewIncrementalScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnCreateNewIncrementalScriptFile.Size = new System.Drawing.Size(51, 49);
+            this.btnCreateNewIncrementalScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.btnCreateNewIncrementalScriptFile.Size = new System.Drawing.Size(51, 61);
             this.btnCreateNewIncrementalScriptFile.TabIndex = 70;
             this.btnCreateNewIncrementalScriptFile.UseVisualStyleBackColor = false;
             this.btnCreateNewIncrementalScriptFile.Click += new System.EventHandler(this.BtnCreateNewIncrementalScriptFile_Click);
@@ -437,7 +438,7 @@
             this.label5.Location = new System.Drawing.Point(0, 0);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(5, 402);
+            this.label5.Size = new System.Drawing.Size(5, 502);
             this.label5.TabIndex = 66;
             // 
             // pnlSyncToSpecificState
@@ -448,18 +449,18 @@
             this.pnlSyncToSpecificState.Controls.Add(this.btnCancelSyncSpecificState);
             this.pnlSyncToSpecificState.Controls.Add(this.label29);
             this.pnlSyncToSpecificState.Controls.Add(this.btnApplySyncSpecificState);
-            this.pnlSyncToSpecificState.Location = new System.Drawing.Point(189, 23);
-            this.pnlSyncToSpecificState.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlSyncToSpecificState.Location = new System.Drawing.Point(189, 29);
+            this.pnlSyncToSpecificState.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlSyncToSpecificState.Name = "pnlSyncToSpecificState";
-            this.pnlSyncToSpecificState.Size = new System.Drawing.Size(173, 87);
+            this.pnlSyncToSpecificState.Size = new System.Drawing.Size(173, 109);
             this.pnlSyncToSpecificState.TabIndex = 66;
             // 
             // label30
             // 
             this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label30.Location = new System.Drawing.Point(27, 55);
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label30.Location = new System.Drawing.Point(27, 69);
             this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(45, 15);
@@ -474,14 +475,14 @@
             this.btnCancelSyncSpecificState.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelSyncSpecificState.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCancelSyncSpecificState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelSyncSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnCancelSyncSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnCancelSyncSpecificState.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnCancelSyncSpecificState.Image = global::AutoVersionsDB.WinApp.Properties.Resources.CancelIcon;
+            this.btnCancelSyncSpecificState.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelSyncSpecificState.Image")));
             this.btnCancelSyncSpecificState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelSyncSpecificState.Location = new System.Drawing.Point(29, 7);
+            this.btnCancelSyncSpecificState.Location = new System.Drawing.Point(29, 9);
             this.btnCancelSyncSpecificState.Margin = new System.Windows.Forms.Padding(0);
             this.btnCancelSyncSpecificState.Name = "btnCancelSyncSpecificState";
-            this.btnCancelSyncSpecificState.Size = new System.Drawing.Size(47, 48);
+            this.btnCancelSyncSpecificState.Size = new System.Drawing.Size(47, 60);
             this.btnCancelSyncSpecificState.TabIndex = 85;
             this.btnCancelSyncSpecificState.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnCancelSyncSpecificState.UseVisualStyleBackColor = false;
@@ -491,8 +492,8 @@
             // 
             this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label29.Location = new System.Drawing.Point(111, 55);
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label29.Location = new System.Drawing.Point(111, 69);
             this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(36, 15);
@@ -507,14 +508,14 @@
             this.btnApplySyncSpecificState.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnApplySyncSpecificState.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnApplySyncSpecificState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnApplySyncSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnApplySyncSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnApplySyncSpecificState.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnApplySyncSpecificState.Image = global::AutoVersionsDB.WinApp.Properties.Resources.ApplyIcon;
+            this.btnApplySyncSpecificState.Image = ((System.Drawing.Image)(resources.GetObject("btnApplySyncSpecificState.Image")));
             this.btnApplySyncSpecificState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnApplySyncSpecificState.Location = new System.Drawing.Point(103, 7);
+            this.btnApplySyncSpecificState.Location = new System.Drawing.Point(103, 9);
             this.btnApplySyncSpecificState.Margin = new System.Windows.Forms.Padding(0);
             this.btnApplySyncSpecificState.Name = "btnApplySyncSpecificState";
-            this.btnApplySyncSpecificState.Size = new System.Drawing.Size(59, 48);
+            this.btnApplySyncSpecificState.Size = new System.Drawing.Size(59, 60);
             this.btnApplySyncSpecificState.TabIndex = 83;
             this.btnApplySyncSpecificState.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnApplySyncSpecificState.UseVisualStyleBackColor = false;
@@ -532,17 +533,17 @@
             this.pnlHeader.Controls.Add(this.btnRefresh);
             this.pnlHeader.Controls.Add(this.label8);
             this.pnlHeader.Controls.Add(this.lblProjectName);
-            this.pnlHeader.Location = new System.Drawing.Point(20, 16);
-            this.pnlHeader.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlHeader.Location = new System.Drawing.Point(20, 20);
+            this.pnlHeader.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1169, 82);
+            this.pnlHeader.Size = new System.Drawing.Size(1169, 102);
             this.pnlHeader.TabIndex = 63;
             // 
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label26.Location = new System.Drawing.Point(19, 57);
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label26.Location = new System.Drawing.Point(19, 71);
             this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(28, 15);
@@ -552,8 +553,8 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label25.Location = new System.Drawing.Point(71, 57);
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label25.Location = new System.Drawing.Point(71, 71);
             this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(50, 15);
@@ -567,16 +568,16 @@
             this.btnNavToEdit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnNavToEdit.FlatAppearance.BorderSize = 0;
             this.btnNavToEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNavToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnNavToEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnNavToEdit.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnNavToEdit.Image = global::AutoVersionsDB.WinApp.Properties.Resources.EditIcon32;
+            this.btnNavToEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnNavToEdit.Image")));
             this.btnNavToEdit.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnNavToEdit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnNavToEdit.Location = new System.Drawing.Point(12, 10);
-            this.btnNavToEdit.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNavToEdit.Location = new System.Drawing.Point(12, 12);
+            this.btnNavToEdit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnNavToEdit.Name = "btnNavToEdit";
-            this.btnNavToEdit.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnNavToEdit.Size = new System.Drawing.Size(51, 49);
+            this.btnNavToEdit.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.btnNavToEdit.Size = new System.Drawing.Size(51, 61);
             this.btnNavToEdit.TabIndex = 68;
             this.btnNavToEdit.UseVisualStyleBackColor = false;
             this.btnNavToEdit.Click += new System.EventHandler(this.BtnNavToEdit_Click);
@@ -588,16 +589,16 @@
             this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnRefresh.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnRefresh.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Refresh_icon32;
+            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
             this.btnRefresh.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnRefresh.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnRefresh.Location = new System.Drawing.Point(71, 12);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRefresh.Location = new System.Drawing.Point(71, 15);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnRefresh.Size = new System.Drawing.Size(51, 49);
+            this.btnRefresh.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.btnRefresh.Size = new System.Drawing.Size(51, 61);
             this.btnRefresh.TabIndex = 66;
             this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
@@ -607,10 +608,10 @@
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.label8.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.label8.Location = new System.Drawing.Point(0, 0);
+            this.label8.Location = new System.Drawing.Point(0, -125);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(5, 81);
+            this.label8.Size = new System.Drawing.Size(5, 201);
             this.label8.TabIndex = 64;
             // 
             // pnlMissingSystemTables
@@ -621,18 +622,18 @@
             this.pnlMissingSystemTables.Controls.Add(this.btnVirtualExecution);
             this.pnlMissingSystemTables.Controls.Add(this.lblRecreateDBFromScratch2);
             this.pnlMissingSystemTables.Controls.Add(this.btnRecreateDBFromScratch2);
-            this.pnlMissingSystemTables.Location = new System.Drawing.Point(529, 23);
-            this.pnlMissingSystemTables.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlMissingSystemTables.Location = new System.Drawing.Point(529, 29);
+            this.pnlMissingSystemTables.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlMissingSystemTables.Name = "pnlMissingSystemTables";
-            this.pnlMissingSystemTables.Size = new System.Drawing.Size(252, 87);
+            this.pnlMissingSystemTables.Size = new System.Drawing.Size(252, 109);
             this.pnlMissingSystemTables.TabIndex = 73;
             // 
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label6.Location = new System.Drawing.Point(132, 53);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label6.Location = new System.Drawing.Point(132, 66);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(98, 15);
@@ -647,14 +648,14 @@
             this.btnVirtualExecution.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnVirtualExecution.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnVirtualExecution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVirtualExecution.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnVirtualExecution.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnVirtualExecution.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnVirtualExecution.Image = global::AutoVersionsDB.WinApp.Properties.Resources.VirtualExecution2;
+            this.btnVirtualExecution.Image = ((System.Drawing.Image)(resources.GetObject("btnVirtualExecution.Image")));
             this.btnVirtualExecution.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVirtualExecution.Location = new System.Drawing.Point(156, 5);
+            this.btnVirtualExecution.Location = new System.Drawing.Point(156, 6);
             this.btnVirtualExecution.Margin = new System.Windows.Forms.Padding(0);
             this.btnVirtualExecution.Name = "btnVirtualExecution";
-            this.btnVirtualExecution.Size = new System.Drawing.Size(63, 48);
+            this.btnVirtualExecution.Size = new System.Drawing.Size(63, 60);
             this.btnVirtualExecution.TabIndex = 81;
             this.btnVirtualExecution.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnVirtualExecution.UseVisualStyleBackColor = false;
@@ -664,8 +665,8 @@
             // 
             this.lblRecreateDBFromScratch2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblRecreateDBFromScratch2.AutoSize = true;
-            this.lblRecreateDBFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblRecreateDBFromScratch2.Location = new System.Drawing.Point(29, 53);
+            this.lblRecreateDBFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblRecreateDBFromScratch2.Location = new System.Drawing.Point(29, 66);
             this.lblRecreateDBFromScratch2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRecreateDBFromScratch2.Name = "lblRecreateDBFromScratch2";
             this.lblRecreateDBFromScratch2.Size = new System.Drawing.Size(77, 15);
@@ -680,14 +681,14 @@
             this.btnRecreateDBFromScratch2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRecreateDBFromScratch2.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnRecreateDBFromScratch2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRecreateDBFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnRecreateDBFromScratch2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnRecreateDBFromScratch2.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnRecreateDBFromScratch2.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RecreateDBFromScratchIcon;
+            this.btnRecreateDBFromScratch2.Image = ((System.Drawing.Image)(resources.GetObject("btnRecreateDBFromScratch2.Image")));
             this.btnRecreateDBFromScratch2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecreateDBFromScratch2.Location = new System.Drawing.Point(40, 5);
+            this.btnRecreateDBFromScratch2.Location = new System.Drawing.Point(40, 6);
             this.btnRecreateDBFromScratch2.Margin = new System.Windows.Forms.Padding(0);
             this.btnRecreateDBFromScratch2.Name = "btnRecreateDBFromScratch2";
-            this.btnRecreateDBFromScratch2.Size = new System.Drawing.Size(63, 48);
+            this.btnRecreateDBFromScratch2.Size = new System.Drawing.Size(63, 60);
             this.btnRecreateDBFromScratch2.TabIndex = 79;
             this.btnRecreateDBFromScratch2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRecreateDBFromScratch2.UseVisualStyleBackColor = false;
@@ -705,18 +706,18 @@
             this.pnlMainActions.Controls.Add(this.btnDeploy);
             this.pnlMainActions.Controls.Add(this.btnRecreateDBFromScratchMain);
             this.pnlMainActions.Controls.Add(this.btnRunSync);
-            this.pnlMainActions.Location = new System.Drawing.Point(791, 23);
-            this.pnlMainActions.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlMainActions.Location = new System.Drawing.Point(791, 29);
+            this.pnlMainActions.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlMainActions.Name = "pnlMainActions";
-            this.pnlMainActions.Size = new System.Drawing.Size(352, 87);
+            this.pnlMainActions.Size = new System.Drawing.Size(352, 109);
             this.pnlMainActions.TabIndex = 73;
             // 
             // lblSetDBToSpecificState
             // 
             this.lblSetDBToSpecificState.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSetDBToSpecificState.AutoSize = true;
-            this.lblSetDBToSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblSetDBToSpecificState.Location = new System.Drawing.Point(23, 55);
+            this.lblSetDBToSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblSetDBToSpecificState.Location = new System.Drawing.Point(23, 69);
             this.lblSetDBToSpecificState.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSetDBToSpecificState.Name = "lblSetDBToSpecificState";
             this.lblSetDBToSpecificState.Size = new System.Drawing.Size(69, 15);
@@ -727,8 +728,8 @@
             // 
             this.lblDeploy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDeploy.AutoSize = true;
-            this.lblDeploy.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblDeploy.Location = new System.Drawing.Point(111, 54);
+            this.lblDeploy.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblDeploy.Location = new System.Drawing.Point(111, 68);
             this.lblDeploy.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDeploy.Name = "lblDeploy";
             this.lblDeploy.Size = new System.Drawing.Size(45, 15);
@@ -739,8 +740,8 @@
             // 
             this.lblRecreateDBFromScratchMain.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblRecreateDBFromScratchMain.AutoSize = true;
-            this.lblRecreateDBFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblRecreateDBFromScratchMain.Location = new System.Drawing.Point(169, 55);
+            this.lblRecreateDBFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblRecreateDBFromScratchMain.Location = new System.Drawing.Point(169, 69);
             this.lblRecreateDBFromScratchMain.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRecreateDBFromScratchMain.Name = "lblRecreateDBFromScratchMain";
             this.lblRecreateDBFromScratchMain.Size = new System.Drawing.Size(77, 15);
@@ -751,8 +752,8 @@
             // 
             this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(263, 53);
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label24.Location = new System.Drawing.Point(263, 66);
             this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(83, 20);
@@ -767,14 +768,14 @@
             this.btnSetDBToSpecificState.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSetDBToSpecificState.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnSetDBToSpecificState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSetDBToSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnSetDBToSpecificState.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnSetDBToSpecificState.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnSetDBToSpecificState.Image = global::AutoVersionsDB.WinApp.Properties.Resources.historyIcon;
+            this.btnSetDBToSpecificState.Image = ((System.Drawing.Image)(resources.GetObject("btnSetDBToSpecificState.Image")));
             this.btnSetDBToSpecificState.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSetDBToSpecificState.Location = new System.Drawing.Point(33, 7);
+            this.btnSetDBToSpecificState.Location = new System.Drawing.Point(33, 9);
             this.btnSetDBToSpecificState.Margin = new System.Windows.Forms.Padding(0);
             this.btnSetDBToSpecificState.Name = "btnSetDBToSpecificState";
-            this.btnSetDBToSpecificState.Size = new System.Drawing.Size(56, 48);
+            this.btnSetDBToSpecificState.Size = new System.Drawing.Size(56, 60);
             this.btnSetDBToSpecificState.TabIndex = 77;
             this.btnSetDBToSpecificState.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnSetDBToSpecificState.UseVisualStyleBackColor = false;
@@ -788,14 +789,14 @@
             this.btnDeploy.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDeploy.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnDeploy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeploy.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnDeploy.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnDeploy.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnDeploy.Image = global::AutoVersionsDB.WinApp.Properties.Resources.deployIcon;
+            this.btnDeploy.Image = ((System.Drawing.Image)(resources.GetObject("btnDeploy.Image")));
             this.btnDeploy.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDeploy.Location = new System.Drawing.Point(109, 6);
+            this.btnDeploy.Location = new System.Drawing.Point(109, 8);
             this.btnDeploy.Margin = new System.Windows.Forms.Padding(0);
             this.btnDeploy.Name = "btnDeploy";
-            this.btnDeploy.Size = new System.Drawing.Size(56, 48);
+            this.btnDeploy.Size = new System.Drawing.Size(56, 60);
             this.btnDeploy.TabIndex = 76;
             this.btnDeploy.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnDeploy.UseVisualStyleBackColor = false;
@@ -809,14 +810,14 @@
             this.btnRecreateDBFromScratchMain.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRecreateDBFromScratchMain.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnRecreateDBFromScratchMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRecreateDBFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnRecreateDBFromScratchMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnRecreateDBFromScratchMain.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnRecreateDBFromScratchMain.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RecreateDBFromScratchIcon;
+            this.btnRecreateDBFromScratchMain.Image = ((System.Drawing.Image)(resources.GetObject("btnRecreateDBFromScratchMain.Image")));
             this.btnRecreateDBFromScratchMain.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecreateDBFromScratchMain.Location = new System.Drawing.Point(180, 7);
+            this.btnRecreateDBFromScratchMain.Location = new System.Drawing.Point(180, 9);
             this.btnRecreateDBFromScratchMain.Margin = new System.Windows.Forms.Padding(0);
             this.btnRecreateDBFromScratchMain.Name = "btnRecreateDBFromScratchMain";
-            this.btnRecreateDBFromScratchMain.Size = new System.Drawing.Size(63, 48);
+            this.btnRecreateDBFromScratchMain.Size = new System.Drawing.Size(63, 60);
             this.btnRecreateDBFromScratchMain.TabIndex = 75;
             this.btnRecreateDBFromScratchMain.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRecreateDBFromScratchMain.UseVisualStyleBackColor = false;
@@ -830,14 +831,14 @@
             this.btnRunSync.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRunSync.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnRunSync.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRunSync.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnRunSync.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnRunSync.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnRunSync.Image = global::AutoVersionsDB.WinApp.Properties.Resources.RunIcon;
+            this.btnRunSync.Image = ((System.Drawing.Image)(resources.GetObject("btnRunSync.Image")));
             this.btnRunSync.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRunSync.Location = new System.Drawing.Point(277, 7);
+            this.btnRunSync.Location = new System.Drawing.Point(277, 9);
             this.btnRunSync.Margin = new System.Windows.Forms.Padding(0);
             this.btnRunSync.Name = "btnRunSync";
-            this.btnRunSync.Size = new System.Drawing.Size(57, 48);
+            this.btnRunSync.Size = new System.Drawing.Size(57, 60);
             this.btnRunSync.TabIndex = 30;
             this.btnRunSync.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRunSync.UseVisualStyleBackColor = false;
@@ -847,16 +848,17 @@
             // 
             this.notificationsControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.notificationsControl1.Location = new System.Drawing.Point(20, 106);
-            this.notificationsControl1.Margin = new System.Windows.Forms.Padding(5);
+            this.notificationsControl1.Location = new System.Drawing.Point(20, 132);
+            this.notificationsControl1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.notificationsControl1.Name = "notificationsControl1";
-            this.notificationsControl1.Size = new System.Drawing.Size(1169, 65);
+            this.notificationsControl1.Size = new System.Drawing.Size(1169, 81);
             this.notificationsControl1.TabIndex = 64;
+            this.notificationsControl1.ViewModel = null;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label15.ForeColor = System.Drawing.Color.Black;
             this.label15.Location = new System.Drawing.Point(18, 20);
             this.label15.Name = "label15";
@@ -892,18 +894,18 @@
             this.pnlSetDBStateManually.Controls.Add(this.btnCancelSetDBStateManually);
             this.pnlSetDBStateManually.Controls.Add(this.label32);
             this.pnlSetDBStateManually.Controls.Add(this.btnRunSetDBStateManally);
-            this.pnlSetDBStateManually.Location = new System.Drawing.Point(13, 23);
-            this.pnlSetDBStateManually.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlSetDBStateManually.Location = new System.Drawing.Point(13, 29);
+            this.pnlSetDBStateManually.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlSetDBStateManually.Name = "pnlSetDBStateManually";
-            this.pnlSetDBStateManually.Size = new System.Drawing.Size(163, 87);
+            this.pnlSetDBStateManually.Size = new System.Drawing.Size(163, 109);
             this.pnlSetDBStateManually.TabIndex = 73;
             // 
             // label31
             // 
             this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label31.Location = new System.Drawing.Point(20, 55);
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label31.Location = new System.Drawing.Point(20, 69);
             this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(45, 15);
@@ -918,14 +920,14 @@
             this.btnCancelSetDBStateManually.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelSetDBStateManually.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCancelSetDBStateManually.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelSetDBStateManually.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnCancelSetDBStateManually.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnCancelSetDBStateManually.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnCancelSetDBStateManually.Image = global::AutoVersionsDB.WinApp.Properties.Resources.CancelIcon;
+            this.btnCancelSetDBStateManually.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelSetDBStateManually.Image")));
             this.btnCancelSetDBStateManually.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelSetDBStateManually.Location = new System.Drawing.Point(23, 7);
+            this.btnCancelSetDBStateManually.Location = new System.Drawing.Point(23, 9);
             this.btnCancelSetDBStateManually.Margin = new System.Windows.Forms.Padding(0);
             this.btnCancelSetDBStateManually.Name = "btnCancelSetDBStateManually";
-            this.btnCancelSetDBStateManually.Size = new System.Drawing.Size(47, 48);
+            this.btnCancelSetDBStateManually.Size = new System.Drawing.Size(47, 60);
             this.btnCancelSetDBStateManually.TabIndex = 89;
             this.btnCancelSetDBStateManually.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnCancelSetDBStateManually.UseVisualStyleBackColor = false;
@@ -935,8 +937,8 @@
             // 
             this.label32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label32.Location = new System.Drawing.Point(104, 55);
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label32.Location = new System.Drawing.Point(104, 69);
             this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(36, 15);
@@ -951,14 +953,14 @@
             this.btnRunSetDBStateManally.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRunSetDBStateManally.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnRunSetDBStateManally.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRunSetDBStateManally.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnRunSetDBStateManally.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnRunSetDBStateManally.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnRunSetDBStateManally.Image = global::AutoVersionsDB.WinApp.Properties.Resources.ApplyIcon;
+            this.btnRunSetDBStateManally.Image = ((System.Drawing.Image)(resources.GetObject("btnRunSetDBStateManally.Image")));
             this.btnRunSetDBStateManally.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRunSetDBStateManally.Location = new System.Drawing.Point(96, 7);
+            this.btnRunSetDBStateManally.Location = new System.Drawing.Point(96, 9);
             this.btnRunSetDBStateManally.Margin = new System.Windows.Forms.Padding(0);
             this.btnRunSetDBStateManally.Name = "btnRunSetDBStateManally";
-            this.btnRunSetDBStateManally.Size = new System.Drawing.Size(59, 48);
+            this.btnRunSetDBStateManally.Size = new System.Drawing.Size(59, 60);
             this.btnRunSetDBStateManally.TabIndex = 87;
             this.btnRunSetDBStateManally.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnRunSetDBStateManally.UseVisualStyleBackColor = false;
@@ -976,10 +978,10 @@
             this.pnlRepeatableFiles.Controls.Add(this.label18);
             this.pnlRepeatableFiles.Controls.Add(this.dgRepeatableScriptsFiles);
             this.pnlRepeatableFiles.Controls.Add(this.label19);
-            this.pnlRepeatableFiles.Location = new System.Drawing.Point(20, 591);
-            this.pnlRepeatableFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlRepeatableFiles.Location = new System.Drawing.Point(20, 739);
+            this.pnlRepeatableFiles.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlRepeatableFiles.Name = "pnlRepeatableFiles";
-            this.pnlRepeatableFiles.Size = new System.Drawing.Size(1169, 404);
+            this.pnlRepeatableFiles.Size = new System.Drawing.Size(1169, 504);
             this.pnlRepeatableFiles.TabIndex = 73;
             // 
             // panel3
@@ -990,19 +992,19 @@
             this.panel3.Controls.Add(this.lblRptNumOfChanged);
             this.panel3.Controls.Add(this.label27);
             this.panel3.Controls.Add(this.lblRptNumOfExecuted);
-            this.panel3.Location = new System.Drawing.Point(211, 19);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4);
+            this.panel3.Location = new System.Drawing.Point(211, 24);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(599, 42);
+            this.panel3.Size = new System.Drawing.Size(599, 52);
             this.panel3.TabIndex = 73;
             // 
             // label4
             // 
             this.label4.AutoEllipsis = true;
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.DimGray;
-            this.label4.Location = new System.Drawing.Point(265, 11);
+            this.label4.Location = new System.Drawing.Point(265, 14);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(184, 20);
@@ -1012,10 +1014,10 @@
             // lblRptNumOfVirtual
             // 
             this.lblRptNumOfVirtual.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.lblRptNumOfVirtual.Location = new System.Drawing.Point(229, 12);
+            this.lblRptNumOfVirtual.Location = new System.Drawing.Point(229, 15);
             this.lblRptNumOfVirtual.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRptNumOfVirtual.Name = "lblRptNumOfVirtual";
-            this.lblRptNumOfVirtual.Size = new System.Drawing.Size(32, 18);
+            this.lblRptNumOfVirtual.Size = new System.Drawing.Size(32, 22);
             this.lblRptNumOfVirtual.TabIndex = 73;
             this.lblRptNumOfVirtual.Text = "0";
             this.lblRptNumOfVirtual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1024,9 +1026,9 @@
             // 
             this.label14.AutoEllipsis = true;
             this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label14.ForeColor = System.Drawing.Color.DimGray;
-            this.label14.Location = new System.Drawing.Point(492, 11);
+            this.label14.Location = new System.Drawing.Point(492, 14);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(107, 20);
@@ -1036,10 +1038,10 @@
             // lblRptNumOfChanged
             // 
             this.lblRptNumOfChanged.BackColor = System.Drawing.Color.LightSalmon;
-            this.lblRptNumOfChanged.Location = new System.Drawing.Point(458, 12);
+            this.lblRptNumOfChanged.Location = new System.Drawing.Point(458, 15);
             this.lblRptNumOfChanged.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRptNumOfChanged.Name = "lblRptNumOfChanged";
-            this.lblRptNumOfChanged.Size = new System.Drawing.Size(32, 18);
+            this.lblRptNumOfChanged.Size = new System.Drawing.Size(32, 22);
             this.lblRptNumOfChanged.TabIndex = 71;
             this.lblRptNumOfChanged.Text = "0";
             this.lblRptNumOfChanged.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1048,9 +1050,9 @@
             // 
             this.label27.AutoEllipsis = true;
             this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label27.ForeColor = System.Drawing.Color.DimGray;
-            this.label27.Location = new System.Drawing.Point(44, 11);
+            this.label27.Location = new System.Drawing.Point(44, 14);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(180, 20);
@@ -1060,10 +1062,10 @@
             // lblRptNumOfExecuted
             // 
             this.lblRptNumOfExecuted.BackColor = System.Drawing.Color.LightGreen;
-            this.lblRptNumOfExecuted.Location = new System.Drawing.Point(9, 12);
+            this.lblRptNumOfExecuted.Location = new System.Drawing.Point(9, 15);
             this.lblRptNumOfExecuted.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRptNumOfExecuted.Name = "lblRptNumOfExecuted";
-            this.lblRptNumOfExecuted.Size = new System.Drawing.Size(32, 18);
+            this.lblRptNumOfExecuted.Size = new System.Drawing.Size(32, 22);
             this.lblRptNumOfExecuted.TabIndex = 69;
             this.lblRptNumOfExecuted.Text = "0";
             this.lblRptNumOfExecuted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1076,16 +1078,16 @@
             this.btnOpenRepeatableScriptsFolder.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnOpenRepeatableScriptsFolder.FlatAppearance.BorderSize = 0;
             this.btnOpenRepeatableScriptsFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenRepeatableScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnOpenRepeatableScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnOpenRepeatableScriptsFolder.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnOpenRepeatableScriptsFolder.Image = global::AutoVersionsDB.WinApp.Properties.Resources.OpenIcon32;
+            this.btnOpenRepeatableScriptsFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenRepeatableScriptsFolder.Image")));
             this.btnOpenRepeatableScriptsFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnOpenRepeatableScriptsFolder.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOpenRepeatableScriptsFolder.Location = new System.Drawing.Point(1036, 14);
-            this.btnOpenRepeatableScriptsFolder.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenRepeatableScriptsFolder.Location = new System.Drawing.Point(1036, 18);
+            this.btnOpenRepeatableScriptsFolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnOpenRepeatableScriptsFolder.Name = "btnOpenRepeatableScriptsFolder";
-            this.btnOpenRepeatableScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnOpenRepeatableScriptsFolder.Size = new System.Drawing.Size(51, 49);
+            this.btnOpenRepeatableScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.btnOpenRepeatableScriptsFolder.Size = new System.Drawing.Size(51, 61);
             this.btnOpenRepeatableScriptsFolder.TabIndex = 72;
             this.btnOpenRepeatableScriptsFolder.UseVisualStyleBackColor = false;
             this.btnOpenRepeatableScriptsFolder.Click += new System.EventHandler(this.BtnOpenRepeatableScriptsFolder_Click);
@@ -1098,16 +1100,16 @@
             this.btnCreateNewRepeatableScriptFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCreateNewRepeatableScriptFile.FlatAppearance.BorderSize = 0;
             this.btnCreateNewRepeatableScriptFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCreateNewRepeatableScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCreateNewRepeatableScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCreateNewRepeatableScriptFile.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnCreateNewRepeatableScriptFile.Image = global::AutoVersionsDB.WinApp.Properties.Resources.AddIcon321;
+            this.btnCreateNewRepeatableScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateNewRepeatableScriptFile.Image")));
             this.btnCreateNewRepeatableScriptFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCreateNewRepeatableScriptFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCreateNewRepeatableScriptFile.Location = new System.Drawing.Point(1095, 14);
-            this.btnCreateNewRepeatableScriptFile.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCreateNewRepeatableScriptFile.Location = new System.Drawing.Point(1095, 18);
+            this.btnCreateNewRepeatableScriptFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCreateNewRepeatableScriptFile.Name = "btnCreateNewRepeatableScriptFile";
-            this.btnCreateNewRepeatableScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnCreateNewRepeatableScriptFile.Size = new System.Drawing.Size(51, 49);
+            this.btnCreateNewRepeatableScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.btnCreateNewRepeatableScriptFile.Size = new System.Drawing.Size(51, 61);
             this.btnCreateNewRepeatableScriptFile.TabIndex = 70;
             this.btnCreateNewRepeatableScriptFile.UseVisualStyleBackColor = false;
             this.btnCreateNewRepeatableScriptFile.Click += new System.EventHandler(this.BtnCreateNewRepeatableScriptFile_Click);
@@ -1120,7 +1122,7 @@
             this.label18.Location = new System.Drawing.Point(0, 0);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(5, 402);
+            this.label18.Size = new System.Drawing.Size(5, 502);
             this.label18.TabIndex = 66;
             // 
             // dgRepeatableScriptsFiles
@@ -1134,29 +1136,29 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgRepeatableScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgRepeatableScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgRepeatableScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgRepeatableScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
             this.dgRepeatableScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgRepeatableScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgRepeatableScriptsFiles.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgRepeatableScriptsFiles.DefaultCellStyle = dataGridViewCellStyle28;
             this.dgRepeatableScriptsFiles.GridColor = System.Drawing.Color.White;
-            this.dgRepeatableScriptsFiles.Location = new System.Drawing.Point(33, 64);
-            this.dgRepeatableScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.dgRepeatableScriptsFiles.Location = new System.Drawing.Point(33, 80);
+            this.dgRepeatableScriptsFiles.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgRepeatableScriptsFiles.Name = "dgRepeatableScriptsFiles";
             this.dgRepeatableScriptsFiles.ReadOnly = true;
             this.dgRepeatableScriptsFiles.RowHeadersVisible = false;
@@ -1165,7 +1167,7 @@
             this.dgRepeatableScriptsFiles.ShowCellToolTips = false;
             this.dgRepeatableScriptsFiles.ShowEditingIcon = false;
             this.dgRepeatableScriptsFiles.ShowRowErrors = false;
-            this.dgRepeatableScriptsFiles.Size = new System.Drawing.Size(1109, 306);
+            this.dgRepeatableScriptsFiles.Size = new System.Drawing.Size(1109, 382);
             this.dgRepeatableScriptsFiles.TabIndex = 47;
             // 
             // dataGridViewTextBoxColumn2
@@ -1194,9 +1196,9 @@
             this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label19.ForeColor = System.Drawing.Color.Black;
-            this.label19.Location = new System.Drawing.Point(32, 28);
+            this.label19.Location = new System.Drawing.Point(32, 35);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(173, 25);
@@ -1218,18 +1220,18 @@
             this.pnlDevDummyDataFiles.Controls.Add(this.label22);
             this.pnlDevDummyDataFiles.Controls.Add(this.dgDevDummyDataScriptsFiles);
             this.pnlDevDummyDataFiles.Controls.Add(this.label23);
-            this.pnlDevDummyDataFiles.Location = new System.Drawing.Point(20, 1003);
-            this.pnlDevDummyDataFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlDevDummyDataFiles.Location = new System.Drawing.Point(20, 1254);
+            this.pnlDevDummyDataFiles.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlDevDummyDataFiles.Name = "pnlDevDummyDataFiles";
-            this.pnlDevDummyDataFiles.Size = new System.Drawing.Size(1169, 435);
+            this.pnlDevDummyDataFiles.Size = new System.Drawing.Size(1169, 543);
             this.pnlDevDummyDataFiles.TabIndex = 74;
             // 
             // lblVirtualDDD
             // 
             this.lblVirtualDDD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVirtualDDD.AutoSize = true;
-            this.lblVirtualDDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblVirtualDDD.Location = new System.Drawing.Point(939, 60);
+            this.lblVirtualDDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblVirtualDDD.Location = new System.Drawing.Point(939, 75);
             this.lblVirtualDDD.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblVirtualDDD.Name = "lblVirtualDDD";
             this.lblVirtualDDD.Size = new System.Drawing.Size(94, 15);
@@ -1244,14 +1246,14 @@
             this.btnVirtualDDD.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnVirtualDDD.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnVirtualDDD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVirtualDDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnVirtualDDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnVirtualDDD.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnVirtualDDD.Image = global::AutoVersionsDB.WinApp.Properties.Resources.VirtualExecution2;
+            this.btnVirtualDDD.Image = ((System.Drawing.Image)(resources.GetObject("btnVirtualDDD.Image")));
             this.btnVirtualDDD.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVirtualDDD.Location = new System.Drawing.Point(963, 14);
+            this.btnVirtualDDD.Location = new System.Drawing.Point(963, 18);
             this.btnVirtualDDD.Margin = new System.Windows.Forms.Padding(0);
             this.btnVirtualDDD.Name = "btnVirtualDDD";
-            this.btnVirtualDDD.Size = new System.Drawing.Size(63, 48);
+            this.btnVirtualDDD.Size = new System.Drawing.Size(63, 60);
             this.btnVirtualDDD.TabIndex = 83;
             this.btnVirtualDDD.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnVirtualDDD.UseVisualStyleBackColor = false;
@@ -1260,9 +1262,9 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(37, 64);
+            this.label9.Location = new System.Drawing.Point(37, 80);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(689, 17);
+            this.label9.Size = new System.Drawing.Size(724, 20);
             this.label9.TabIndex = 75;
             this.label9.Text = "* Pay Attention: The dev Dummy Data Files behave like incremental files, means it" +
     " cannot run script file twice";
@@ -1275,19 +1277,19 @@
             this.panel4.Controls.Add(this.lblDDDNumOfChanged);
             this.panel4.Controls.Add(this.label28);
             this.panel4.Controls.Add(this.lblDDDNumOfExecuted);
-            this.panel4.Location = new System.Drawing.Point(271, 19);
-            this.panel4.Margin = new System.Windows.Forms.Padding(4);
+            this.panel4.Location = new System.Drawing.Point(271, 24);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(609, 42);
+            this.panel4.Size = new System.Drawing.Size(609, 52);
             this.panel4.TabIndex = 74;
             // 
             // label7
             // 
             this.label7.AutoEllipsis = true;
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label7.ForeColor = System.Drawing.Color.DimGray;
-            this.label7.Location = new System.Drawing.Point(265, 11);
+            this.label7.Location = new System.Drawing.Point(265, 14);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(184, 20);
@@ -1297,10 +1299,10 @@
             // lblDDDNumOfVirtual
             // 
             this.lblDDDNumOfVirtual.BackColor = System.Drawing.Color.LightSeaGreen;
-            this.lblDDDNumOfVirtual.Location = new System.Drawing.Point(229, 12);
+            this.lblDDDNumOfVirtual.Location = new System.Drawing.Point(229, 15);
             this.lblDDDNumOfVirtual.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDDDNumOfVirtual.Name = "lblDDDNumOfVirtual";
-            this.lblDDDNumOfVirtual.Size = new System.Drawing.Size(32, 18);
+            this.lblDDDNumOfVirtual.Size = new System.Drawing.Size(32, 22);
             this.lblDDDNumOfVirtual.TabIndex = 73;
             this.lblDDDNumOfVirtual.Text = "0";
             this.lblDDDNumOfVirtual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1309,9 +1311,9 @@
             // 
             this.label20.AutoEllipsis = true;
             this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label20.ForeColor = System.Drawing.Color.DimGray;
-            this.label20.Location = new System.Drawing.Point(492, 11);
+            this.label20.Location = new System.Drawing.Point(492, 14);
             this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(107, 20);
@@ -1321,10 +1323,10 @@
             // lblDDDNumOfChanged
             // 
             this.lblDDDNumOfChanged.BackColor = System.Drawing.Color.LightSalmon;
-            this.lblDDDNumOfChanged.Location = new System.Drawing.Point(458, 12);
+            this.lblDDDNumOfChanged.Location = new System.Drawing.Point(458, 15);
             this.lblDDDNumOfChanged.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDDDNumOfChanged.Name = "lblDDDNumOfChanged";
-            this.lblDDDNumOfChanged.Size = new System.Drawing.Size(32, 18);
+            this.lblDDDNumOfChanged.Size = new System.Drawing.Size(32, 22);
             this.lblDDDNumOfChanged.TabIndex = 71;
             this.lblDDDNumOfChanged.Text = "0";
             this.lblDDDNumOfChanged.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1333,9 +1335,9 @@
             // 
             this.label28.AutoEllipsis = true;
             this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label28.ForeColor = System.Drawing.Color.DimGray;
-            this.label28.Location = new System.Drawing.Point(44, 11);
+            this.label28.Location = new System.Drawing.Point(44, 14);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(180, 20);
@@ -1345,10 +1347,10 @@
             // lblDDDNumOfExecuted
             // 
             this.lblDDDNumOfExecuted.BackColor = System.Drawing.Color.LightGreen;
-            this.lblDDDNumOfExecuted.Location = new System.Drawing.Point(9, 12);
+            this.lblDDDNumOfExecuted.Location = new System.Drawing.Point(9, 15);
             this.lblDDDNumOfExecuted.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDDDNumOfExecuted.Name = "lblDDDNumOfExecuted";
-            this.lblDDDNumOfExecuted.Size = new System.Drawing.Size(32, 18);
+            this.lblDDDNumOfExecuted.Size = new System.Drawing.Size(32, 22);
             this.lblDDDNumOfExecuted.TabIndex = 69;
             this.lblDDDNumOfExecuted.Text = "0";
             this.lblDDDNumOfExecuted.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1361,16 +1363,16 @@
             this.btnOpenDevDummyDataScriptsFolder.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnOpenDevDummyDataScriptsFolder.FlatAppearance.BorderSize = 0;
             this.btnOpenDevDummyDataScriptsFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenDevDummyDataScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnOpenDevDummyDataScriptsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnOpenDevDummyDataScriptsFolder.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnOpenDevDummyDataScriptsFolder.Image = global::AutoVersionsDB.WinApp.Properties.Resources.OpenIcon32;
+            this.btnOpenDevDummyDataScriptsFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenDevDummyDataScriptsFolder.Image")));
             this.btnOpenDevDummyDataScriptsFolder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnOpenDevDummyDataScriptsFolder.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOpenDevDummyDataScriptsFolder.Location = new System.Drawing.Point(1036, 14);
-            this.btnOpenDevDummyDataScriptsFolder.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenDevDummyDataScriptsFolder.Location = new System.Drawing.Point(1036, 18);
+            this.btnOpenDevDummyDataScriptsFolder.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnOpenDevDummyDataScriptsFolder.Name = "btnOpenDevDummyDataScriptsFolder";
-            this.btnOpenDevDummyDataScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnOpenDevDummyDataScriptsFolder.Size = new System.Drawing.Size(51, 49);
+            this.btnOpenDevDummyDataScriptsFolder.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.btnOpenDevDummyDataScriptsFolder.Size = new System.Drawing.Size(51, 61);
             this.btnOpenDevDummyDataScriptsFolder.TabIndex = 72;
             this.btnOpenDevDummyDataScriptsFolder.UseVisualStyleBackColor = false;
             this.btnOpenDevDummyDataScriptsFolder.Click += new System.EventHandler(this.BtnOpenDevDummyDataScriptsFolder_Click);
@@ -1383,16 +1385,16 @@
             this.btnCreateNewDevDummyDataScriptFile.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCreateNewDevDummyDataScriptFile.FlatAppearance.BorderSize = 0;
             this.btnCreateNewDevDummyDataScriptFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCreateNewDevDummyDataScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnCreateNewDevDummyDataScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnCreateNewDevDummyDataScriptFile.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnCreateNewDevDummyDataScriptFile.Image = global::AutoVersionsDB.WinApp.Properties.Resources.AddIcon321;
+            this.btnCreateNewDevDummyDataScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateNewDevDummyDataScriptFile.Image")));
             this.btnCreateNewDevDummyDataScriptFile.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnCreateNewDevDummyDataScriptFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCreateNewDevDummyDataScriptFile.Location = new System.Drawing.Point(1095, 14);
-            this.btnCreateNewDevDummyDataScriptFile.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCreateNewDevDummyDataScriptFile.Location = new System.Drawing.Point(1095, 18);
+            this.btnCreateNewDevDummyDataScriptFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCreateNewDevDummyDataScriptFile.Name = "btnCreateNewDevDummyDataScriptFile";
-            this.btnCreateNewDevDummyDataScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
-            this.btnCreateNewDevDummyDataScriptFile.Size = new System.Drawing.Size(51, 49);
+            this.btnCreateNewDevDummyDataScriptFile.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.btnCreateNewDevDummyDataScriptFile.Size = new System.Drawing.Size(51, 61);
             this.btnCreateNewDevDummyDataScriptFile.TabIndex = 70;
             this.btnCreateNewDevDummyDataScriptFile.UseVisualStyleBackColor = false;
             this.btnCreateNewDevDummyDataScriptFile.Click += new System.EventHandler(this.BtnCreateNewDevDummyDataScriptFile_Click);
@@ -1405,7 +1407,7 @@
             this.label22.Location = new System.Drawing.Point(0, 0);
             this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(5, 433);
+            this.label22.Size = new System.Drawing.Size(5, 541);
             this.label22.TabIndex = 66;
             // 
             // dgDevDummyDataScriptsFiles
@@ -1419,29 +1421,29 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgDevDummyDataScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgDevDummyDataScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgDevDummyDataScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgDevDummyDataScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle29;
             this.dgDevDummyDataScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgDevDummyDataScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgDevDummyDataScriptsFiles.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle30.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgDevDummyDataScriptsFiles.DefaultCellStyle = dataGridViewCellStyle30;
             this.dgDevDummyDataScriptsFiles.GridColor = System.Drawing.Color.White;
-            this.dgDevDummyDataScriptsFiles.Location = new System.Drawing.Point(33, 86);
-            this.dgDevDummyDataScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
+            this.dgDevDummyDataScriptsFiles.Location = new System.Drawing.Point(33, 108);
+            this.dgDevDummyDataScriptsFiles.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgDevDummyDataScriptsFiles.Name = "dgDevDummyDataScriptsFiles";
             this.dgDevDummyDataScriptsFiles.ReadOnly = true;
             this.dgDevDummyDataScriptsFiles.RowHeadersVisible = false;
@@ -1450,7 +1452,7 @@
             this.dgDevDummyDataScriptsFiles.ShowCellToolTips = false;
             this.dgDevDummyDataScriptsFiles.ShowEditingIcon = false;
             this.dgDevDummyDataScriptsFiles.ShowRowErrors = false;
-            this.dgDevDummyDataScriptsFiles.Size = new System.Drawing.Size(1109, 315);
+            this.dgDevDummyDataScriptsFiles.Size = new System.Drawing.Size(1109, 394);
             this.dgDevDummyDataScriptsFiles.TabIndex = 47;
             // 
             // dataGridViewTextBoxColumn4
@@ -1479,9 +1481,9 @@
             this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label23.ForeColor = System.Drawing.Color.Black;
-            this.label23.Location = new System.Drawing.Point(32, 28);
+            this.label23.Location = new System.Drawing.Point(32, 35);
             this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(231, 25);
@@ -1500,10 +1502,10 @@
             this.pnlActionButtons.Controls.Add(this.pnlMissingSystemTables);
             this.pnlActionButtons.Controls.Add(this.pnlMainActions);
             this.pnlActionButtons.Controls.Add(this.pnlSyncToSpecificState);
-            this.pnlActionButtons.Location = new System.Drawing.Point(20, 1465);
-            this.pnlActionButtons.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlActionButtons.Location = new System.Drawing.Point(20, 1831);
+            this.pnlActionButtons.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlActionButtons.Name = "pnlActionButtons";
-            this.pnlActionButtons.Size = new System.Drawing.Size(1169, 275);
+            this.pnlActionButtons.Size = new System.Drawing.Size(1169, 343);
             this.pnlActionButtons.TabIndex = 75;
             // 
             // pnlInitDB
@@ -1512,10 +1514,10 @@
             this.pnlInitDB.BackColor = System.Drawing.Color.White;
             this.pnlInitDB.Controls.Add(this.btnInitDB);
             this.pnlInitDB.Controls.Add(this.label11);
-            this.pnlInitDB.Location = new System.Drawing.Point(1036, 118);
-            this.pnlInitDB.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlInitDB.Location = new System.Drawing.Point(1036, 148);
+            this.pnlInitDB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlInitDB.Name = "pnlInitDB";
-            this.pnlInitDB.Size = new System.Drawing.Size(107, 87);
+            this.pnlInitDB.Size = new System.Drawing.Size(107, 109);
             this.pnlInitDB.TabIndex = 83;
             // 
             // btnInitDB
@@ -1526,14 +1528,14 @@
             this.btnInitDB.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInitDB.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnInitDB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnInitDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnInitDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnInitDB.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnInitDB.Image = global::AutoVersionsDB.WinApp.Properties.Resources.historyIcon;
+            this.btnInitDB.Image = ((System.Drawing.Image)(resources.GetObject("btnInitDB.Image")));
             this.btnInitDB.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnInitDB.Location = new System.Drawing.Point(33, 5);
+            this.btnInitDB.Location = new System.Drawing.Point(33, 6);
             this.btnInitDB.Margin = new System.Windows.Forms.Padding(0);
             this.btnInitDB.Name = "btnInitDB";
-            this.btnInitDB.Size = new System.Drawing.Size(56, 48);
+            this.btnInitDB.Size = new System.Drawing.Size(56, 60);
             this.btnInitDB.TabIndex = 81;
             this.btnInitDB.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnInitDB.UseVisualStyleBackColor = false;
@@ -1543,8 +1545,8 @@
             // 
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label11.Location = new System.Drawing.Point(26, 53);
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label11.Location = new System.Drawing.Point(26, 66);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 15);
@@ -1557,18 +1559,18 @@
             this.pnlRestoreDBError.BackColor = System.Drawing.Color.White;
             this.pnlRestoreDBError.Controls.Add(this.label34);
             this.pnlRestoreDBError.Controls.Add(this.btnShowHistoricalBackups);
-            this.pnlRestoreDBError.Location = new System.Drawing.Point(372, 23);
-            this.pnlRestoreDBError.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlRestoreDBError.Location = new System.Drawing.Point(372, 29);
+            this.pnlRestoreDBError.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlRestoreDBError.Name = "pnlRestoreDBError";
-            this.pnlRestoreDBError.Size = new System.Drawing.Size(145, 87);
+            this.pnlRestoreDBError.Size = new System.Drawing.Size(145, 109);
             this.pnlRestoreDBError.TabIndex = 83;
             // 
             // label34
             // 
             this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label34.AutoSize = true;
-            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.label34.Location = new System.Drawing.Point(28, 53);
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label34.Location = new System.Drawing.Point(28, 66);
             this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(92, 15);
@@ -1583,14 +1585,14 @@
             this.btnShowHistoricalBackups.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnShowHistoricalBackups.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnShowHistoricalBackups.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnShowHistoricalBackups.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnShowHistoricalBackups.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnShowHistoricalBackups.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnShowHistoricalBackups.Image = global::AutoVersionsDB.WinApp.Properties.Resources.HistoricalBackups;
+            this.btnShowHistoricalBackups.Image = ((System.Drawing.Image)(resources.GetObject("btnShowHistoricalBackups.Image")));
             this.btnShowHistoricalBackups.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnShowHistoricalBackups.Location = new System.Drawing.Point(52, 5);
+            this.btnShowHistoricalBackups.Location = new System.Drawing.Point(52, 6);
             this.btnShowHistoricalBackups.Margin = new System.Windows.Forms.Padding(0);
             this.btnShowHistoricalBackups.Name = "btnShowHistoricalBackups";
-            this.btnShowHistoricalBackups.Size = new System.Drawing.Size(63, 48);
+            this.btnShowHistoricalBackups.Size = new System.Drawing.Size(63, 60);
             this.btnShowHistoricalBackups.TabIndex = 79;
             this.btnShowHistoricalBackups.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnShowHistoricalBackups.UseVisualStyleBackColor = false;
@@ -1598,7 +1600,7 @@
             // 
             // DBVersionsView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -1608,9 +1610,9 @@
             this.Controls.Add(this.notificationsControl1);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "DBVersionsView";
-            this.Size = new System.Drawing.Size(1221, 1889);
+            this.Size = new System.Drawing.Size(1221, 2361);
             ((System.ComponentModel.ISupportInitialize)(this.dgIncrementalScriptsFiles)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

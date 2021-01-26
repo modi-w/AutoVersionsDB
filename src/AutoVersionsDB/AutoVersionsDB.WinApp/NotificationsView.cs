@@ -20,21 +20,42 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //{
+            //    if (!ViewModel.IsEventsBinded)
+            //    {
+            //        ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog; 
+
+            //        ViewModel.IsEventsBinded = true;
+            //    }
+
+            //    ViewModel.NotificationsViewModelData.PropertyChanged += ViewModel_PropertyChanged;
+            //    SetDataBindings();
+
+            //}
+
+        }
+
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!this.DesignMode)
             {
                 if (!ViewModel.IsEventsBinded)
                 {
-                    ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog; 
+                    ViewModel.OnShowStatesLog += ViewModel_OnShowStatesLog;
 
                     ViewModel.IsEventsBinded = true;
                 }
 
                 ViewModel.NotificationsViewModelData.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
-
             }
 
         }
+
 
         private void ViewModel_OnShowStatesLog(object sender, StatesLogViewModelEventArgs e)
         {
