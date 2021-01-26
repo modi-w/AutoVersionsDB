@@ -17,24 +17,24 @@ using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DeliveryEnv_NotAollowMethods
 {
-    public class DeliveryEnv_NotAllowMethods_Recreate_UI : TestDefinition<DBVersionsUITestContext>
+    public class DeliveryEnv_NotAllowMethods_VirtualDDD_UI : TestDefinition<DBVersionsUITestContext>
     {
-        private readonly DeliveryEnv_NotAllowMethods_Recreate_API _devEnv_NotAllowMethods_Recreate_API;
+        private readonly DeliveryEnv_NotAllowMethods_VirtualDDD_API _devEnv_NotAllowMethods_VirtualDDD_API;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
         private readonly DBVersionsViewModelAsserts _dbVersionsViewModelAsserts;
 
-        public DeliveryEnv_NotAllowMethods_Recreate_UI(DeliveryEnv_NotAllowMethods_Recreate_API devEnv_NotAllowMethods_Recreate_API,
+        public DeliveryEnv_NotAllowMethods_VirtualDDD_UI(DeliveryEnv_NotAllowMethods_VirtualDDD_API devEnv_NotAllowMethods_VirtualDDD_API,
                                                                 DBVersionsViewModel dbVersionsViewModel,
                                                                 DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
         {
-            _devEnv_NotAllowMethods_Recreate_API = devEnv_NotAllowMethods_Recreate_API;
+            _devEnv_NotAllowMethods_VirtualDDD_API = devEnv_NotAllowMethods_VirtualDDD_API;
             _dbVersionsViewModel = dbVersionsViewModel;
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }
 
         public override ITestContext Arrange(TestArgs testArgs)
         {
-            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_devEnv_NotAllowMethods_Recreate_API.Arrange(testArgs));
+            DBVersionsUITestContext testContext = new DBVersionsUITestContext(_devEnv_NotAllowMethods_VirtualDDD_API.Arrange(testArgs));
 
             MockObjectsProvider.SetTestContextDataByMockCallbacksForUI(testContext);
 
@@ -49,14 +49,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(DBVersionsUITestContext testContext)
         {
-            var task = _dbVersionsViewModel.RecreateDBFromScratchCommand.ExecuteWrapped();
+            var task = _dbVersionsViewModel.DeployCommand.ExecuteWrapped();
             task.Wait();
         }
 
 
         public override void Asserts(DBVersionsUITestContext testContext)
         {
-            _devEnv_NotAllowMethods_Recreate_API.Asserts(testContext);
+            _devEnv_NotAllowMethods_VirtualDDD_API.Asserts(testContext);
 
             _dbVersionsViewModelAsserts.AssertNotAllowMethodDBFinalState(GetType().Name, _dbVersionsViewModel);
             _dbVersionsViewModelAsserts.AssertViewStateHistory(GetType().Name, testContext.ViewStatesHistory, DBVersionsViewStateType.ReadyToRunSync);
@@ -67,13 +67,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             UIGeneralEvents.OnConfirm -= UIGeneralEvents_OnConfirm;
 
-            _devEnv_NotAllowMethods_Recreate_API.Release(testContext);
+            _devEnv_NotAllowMethods_VirtualDDD_API.Release(testContext);
         }
-
 
         private void UIGeneralEvents_OnConfirm(object sender, ConfirmEventArgs e)
         {
             e.IsConfirm = true;
         }
+
     }
 }

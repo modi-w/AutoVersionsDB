@@ -62,19 +62,6 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
         }
 
 
-        private static string GetLastIncFilename(DBVersionsProcessContext processContext)
-        {
-            string lastIncStriptFilename = "";
-
-
-            RuntimeScriptFile lastIncScriptFiles = processContext.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.LastOrDefault();
-            if (lastIncScriptFiles != null)
-            {
-                lastIncStriptFilename = lastIncScriptFiles.Filename;
-            }
-
-            return lastIncStriptFilename;
-        }
 
 
     }
