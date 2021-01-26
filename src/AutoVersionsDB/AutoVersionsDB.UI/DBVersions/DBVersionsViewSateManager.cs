@@ -147,21 +147,28 @@ namespace AutoVersionsDB.UI.DBVersions
                     SetAllControlsEnableDisable(true);
                     break;
 
+                case DBVersionsViewStateType.NewProject:
+
+                    if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
+                    {
+                        _dbVersionsControls.PnlInitDBVisible = true;
+                        _dbVersionsControls.LblColorTargetStateSquareVisible = false;
+                        _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
+
+                        _dbVersionsControls.GridToSelectTargetStateEnabled = false;
+
+                        SetAllControlsEnableDisable(true);
+                    }
+                    else
+                    {
+                        SystemTablesViewState();
+                    }
+                    break;
+
                 case DBVersionsViewStateType.MissingSystemTables:
                 case DBVersionsViewStateType.HistoryExecutedFilesChanged:
 
-                    _dbVersionsControls.PnlMissingSystemTablesVisible = true;
-                    _dbVersionsControls.LblColorTargetStateSquareVisible = false;
-                    _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
-
-                    if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
-                    {
-                        _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
-                    }
-
-                    _dbVersionsControls.GridToSelectTargetStateEnabled = false;
-
-                    SetAllControlsEnableDisable(true);
+                    SystemTablesViewState();
                     break;
 
                 case DBVersionsViewStateType.SetVirtual:
@@ -216,11 +223,27 @@ namespace AutoVersionsDB.UI.DBVersions
 
         }
 
+        private void SystemTablesViewState()
+        {
+            _dbVersionsControls.PnlMissingSystemTablesVisible = true;
+            _dbVersionsControls.LblColorTargetStateSquareVisible = false;
+            _dbVersionsControls.LblColorTargetStateCaptionVisible = false;
+
+            if (_dbVersionsViewModelData.IncrementalScriptFiles.Count > 0)
+            {
+                _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
+            }
+
+            _dbVersionsControls.GridToSelectTargetStateEnabled = false;
+
+            SetAllControlsEnableDisable(true);
+        }
 
         private void SetAllControlsEnableDisable(bool isEnable)
         {
             _dbVersionsControls.PnlMainActionsEnabled = isEnable;
             _dbVersionsControls.PnlMissingSystemTablesEnabled = isEnable;
+            _dbVersionsControls.PnlInitDBEnabled = isEnable;
             _dbVersionsControls.PnlSetDBStateManuallyEnabled = isEnable;
             _dbVersionsControls.BtnRefreshEnable = isEnable;
             _dbVersionsControls.IncrementalScriptsGridEnabled = isEnable;
@@ -237,6 +260,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls.PnlMainActionsVisible = false;
             _dbVersionsControls.PnlSyncToSpecificStateVisible = false;
             _dbVersionsControls.PnlMissingSystemTablesVisible = false;
+            _dbVersionsControls.PnlInitDBVisible = false;
             _dbVersionsControls.PnlSetDBStateManuallyVisible = false;
             _dbVersionsControls.PnlRestoreDBErrorVisible = false;
             _dbVersionsControls.BtnVirtualDDDVisible = false;

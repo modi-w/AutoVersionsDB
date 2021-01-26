@@ -7,6 +7,7 @@ namespace AutoVersionsDB.UI.DBVersions
         ReadyToRunSync,
         ReadyToSyncToSpecificState,
         MissingSystemTables,
+        NewProject,
         HistoryExecutedFilesChanged,
         SetVirtual,
         InProcess,

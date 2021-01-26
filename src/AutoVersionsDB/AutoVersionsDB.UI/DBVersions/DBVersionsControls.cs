@@ -49,6 +49,21 @@ namespace AutoVersionsDB.UI.DBVersions
             set => SetField(ref _pnlMissingSystemTablesEnabled, value);
         }
 
+
+        private bool _pnlInitDBVisible;
+        public bool PnlInitDBVisible
+        {
+            get => _pnlInitDBVisible;
+            set => SetField(ref _pnlInitDBVisible, value);
+        }
+        private bool _pnlInitDBEnabled;
+        public bool PnlInitDBEnabled
+        {
+            get => _pnlInitDBEnabled;
+            set => SetField(ref _pnlInitDBEnabled, value);
+        }
+
+
         private bool _pnlSetDBStateManuallyVisible;
         public bool PnlSetDBStateManuallyVisible
         {

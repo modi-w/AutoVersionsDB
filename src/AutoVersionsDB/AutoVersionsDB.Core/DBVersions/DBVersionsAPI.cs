@@ -25,6 +25,7 @@ namespace AutoVersionsDB.Core.DBVersions
         private readonly NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> _syncDBToSpecificStateRunner;
         private readonly NotificationProcessRunner<VirtualExecutionsProcessDefinition, DBVersionsProcessContext> _virtualExecutionsRunner;
         private readonly NotificationProcessRunner<VirtualDDDExecutionsProcessDefinition, DBVersionsProcessContext> _virtualDDDRunner;
+        private readonly NotificationProcessRunner<InitDBProcessDefinition, DBVersionsProcessContext> _initDBRunner;
         
 
         private readonly NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> _deployExecutionsRunner;
@@ -42,6 +43,7 @@ namespace AutoVersionsDB.Core.DBVersions
                                NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> syncDBToSpecificStateRunner,
                                NotificationProcessRunner<VirtualExecutionsProcessDefinition, DBVersionsProcessContext> virtualExecutionsRunner,
                                NotificationProcessRunner<VirtualDDDExecutionsProcessDefinition, DBVersionsProcessContext> virtualDDDRunner,
+                               NotificationProcessRunner<InitDBProcessDefinition, DBVersionsProcessContext> initDBRunner,
                                NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> deployVirtualExecutionsRunner)
         {
             _dbVersionsValidationsRunner = dbVersionsValidationsRunner;
@@ -58,7 +60,7 @@ namespace AutoVersionsDB.Core.DBVersions
             _syncDBToSpecificStateRunner = syncDBToSpecificStateRunner;
             _virtualExecutionsRunner = virtualExecutionsRunner;
             _virtualDDDRunner = virtualDDDRunner;
-
+            _initDBRunner = initDBRunner;
             _deployExecutionsRunner = deployVirtualExecutionsRunner;
 
         }
@@ -121,6 +123,12 @@ namespace AutoVersionsDB.Core.DBVersions
         public ProcessResults SetDBStateByVirtualExecution(string id, TargetScripts targetScripts, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
             return _virtualExecutionsRunner.Run(new DBVersionsProcessArgs(id, null, targetScripts), onNotificationStateChanged);
+        }
+
+        
+        public ProcessResults InitDB(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        {
+            return _initDBRunner.Run(new DBVersionsProcessArgs(id, null, TargetScripts.CreateNoneState()), onNotificationStateChanged);
         }
 
 

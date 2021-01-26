@@ -72,11 +72,12 @@ namespace AutoVersionsDB.UI.DBVersions
         public RelayCommand RunSyncCommand { get; private set; }
         public RelayCommand RecreateDBFromScratchCommand { get; private set; }
         public RelayCommand VirtualDDDCommand { get; private set; }
-        
+
         public RelayCommand ApplySyncSpecificStateCommand { get; private set; }
         public RelayCommand DeployCommand { get; private set; }
         public RelayCommand RunStateByVirtualExecutionCommand { get; private set; }
-
+        public RelayCommand InitDBCommand { get; private set; }
+        
 
 
         public DBVersionsViewModel(ProjectConfigsAPI projectConfigsAPI,
@@ -122,10 +123,11 @@ namespace AutoVersionsDB.UI.DBVersions
             RunSyncCommand = new RelayCommand(RunSync);
             RecreateDBFromScratchCommand = new RelayCommand(RecreateDBFromScratch);
             VirtualDDDCommand = new RelayCommand(VirtualDDD);
-            
-                    ApplySyncSpecificStateCommand = new RelayCommand(ApplySyncSpecificState);
+
+            ApplySyncSpecificStateCommand = new RelayCommand(ApplySyncSpecificState);
             DeployCommand = new RelayCommand(Deploy);
             RunStateByVirtualExecutionCommand = new RelayCommand(RunStateByVirtualExecution);
+            InitDBCommand = new RelayCommand(InitDB);
 
             SetToolTips();
         }
@@ -139,7 +141,7 @@ namespace AutoVersionsDB.UI.DBVersions
             DBVersionsControls.BtnSetDBToSpecificStateTooltip = UITextResources.BtnSetDBToSpecificStateTooltip;
             DBVersionsControls.BtnVirtualExecutionTooltip = UITextResources.BtnVirtualExecutionTooltip;
             DBVersionsControls.BtnVirtualDDDTooltip = UITextResources.BtnVirtualDDDTooltip;
-            
+
             DBVersionsControls.BtnShowHistoricalBackupsTooltip = UITextResources.BtnShowHistoricalBackupsTooltip;
         }
 
@@ -320,8 +322,11 @@ namespace AutoVersionsDB.UI.DBVersions
                     NotificationsViewModel.AfterComplete(processResults);
                     //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> HasError >>> after call to  AfterComplete()");
 
-                    if (processResults.Trace.ContainErrorCode(NewProjectValidator.Name)
-                        || processResults.Trace.ContainErrorCode(SystemTablesValidator.Name))
+                    if (processResults.Trace.ContainErrorCode(NewProjectValidator.Name))
+                    {
+                        _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.NewProject);
+                    }
+                    else if (processResults.Trace.ContainErrorCode(SystemTablesValidator.Name))
                     {
                         _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.MissingSystemTables);
                         //Console.WriteLine("DBVersionsViewModel.RefreshAll() >>> HasError >>> after call to  MissingSystemTables()");
@@ -395,7 +400,7 @@ namespace AutoVersionsDB.UI.DBVersions
             }
         }
 
-        
+
         private void VirtualDDD()
         {
             bool isAllowRun = UIGeneralEvents.FireOnConfirm(this, UITextResources.VirtualDDDConfirmaion);
@@ -459,7 +464,18 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
         }
 
+        
+        private void InitDB()
+        {
+            _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
+            NotificationsViewModel.BeforeStartProcess();
 
+            ProcessResults processResults = _dbVersionsAPI.InitDB(DBVersionsViewModelData.ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
+            RefreshScriptFilesState(false);
+
+            NotificationsViewModel.AfterComplete(processResults);
+            _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
+        }
 
 
 

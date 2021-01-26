@@ -55,6 +55,7 @@ namespace AutoVersionsDB.WinApp
             ChangeButtonsPanelsLocation(pnlRestoreDBError);
             ChangeButtonsPanelsLocation(pnlSyncToSpecificState);
             ChangeButtonsPanelsLocation(pnlSetDBStateManually);
+            ChangeButtonsPanelsLocation(pnlInitDB);
 
             Controls.Remove(pnlActionButtons);
 
@@ -221,6 +222,25 @@ namespace AutoVersionsDB.WinApp
                     nameof(pnlMissingSystemTables.Enabled),
                     ViewModel.DBVersionsControls,
                     nameof(ViewModel.DBVersionsControls.PnlMissingSystemTablesEnabled)
+                    )
+                );
+
+
+            pnlInitDB.DataBindings.Clear();
+            pnlInitDB.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    pnlInitDB,
+                    nameof(pnlInitDB.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlInitDBVisible)
+                    )
+                );
+            pnlInitDB.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    pnlInitDB,
+                    nameof(pnlInitDB.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.PnlInitDBEnabled)
                     )
                 );
 
@@ -700,7 +720,10 @@ namespace AutoVersionsDB.WinApp
             ViewModel.RecreateDBFromScratchCommand.Execute();
         }
 
-
+        private void BtnInitDB_Click(object sender, EventArgs e)
+        {
+            ViewModel.InitDBCommand.Execute();
+        }
 
 
         private void BtnRunSetDBStateManally_Click(object sender, EventArgs e)
@@ -897,8 +920,9 @@ namespace AutoVersionsDB.WinApp
             base.Dispose(disposing);
         }
 
+
         #endregion
 
-        
+      
     }
 }

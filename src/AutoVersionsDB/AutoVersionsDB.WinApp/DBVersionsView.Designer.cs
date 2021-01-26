@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblProjectName = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.dgIncrementalScriptsFiles = new System.Windows.Forms.DataGridView();
@@ -103,6 +103,8 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label19 = new System.Windows.Forms.Label();
             this.pnlDevDummyDataFiles = new System.Windows.Forms.Panel();
+            this.lblVirtualDDD = new System.Windows.Forms.Label();
+            this.btnVirtualDDD = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
@@ -119,11 +121,12 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label23 = new System.Windows.Forms.Label();
             this.pnlActionButtons = new System.Windows.Forms.Panel();
+            this.pnlInitDB = new System.Windows.Forms.Panel();
+            this.btnInitDB = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
             this.pnlRestoreDBError = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
             this.btnShowHistoricalBackups = new System.Windows.Forms.Button();
-            this.lblVirtualDDD = new System.Windows.Forms.Label();
-            this.btnVirtualDDD = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgIncrementalScriptsFiles)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -139,6 +142,7 @@
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgDevDummyDataScriptsFiles)).BeginInit();
             this.pnlActionButtons.SuspendLayout();
+            this.pnlInitDB.SuspendLayout();
             this.pnlRestoreDBError.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -181,27 +185,27 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgIncrementalScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgIncrementalScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgIncrementalScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgIncrementalScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgIncrementalScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgIncrementalScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.rowNumber,
             this.dataGridViewTextBoxColumn1,
             this.SetAsSyncState});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgIncrementalScriptsFiles.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgIncrementalScriptsFiles.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgIncrementalScriptsFiles.GridColor = System.Drawing.Color.White;
             this.dgIncrementalScriptsFiles.Location = new System.Drawing.Point(33, 64);
             this.dgIncrementalScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
@@ -1130,26 +1134,26 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgRepeatableScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgRepeatableScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgRepeatableScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgRepeatableScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgRepeatableScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgRepeatableScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgRepeatableScriptsFiles.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgRepeatableScriptsFiles.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgRepeatableScriptsFiles.GridColor = System.Drawing.Color.White;
             this.dgRepeatableScriptsFiles.Location = new System.Drawing.Point(33, 64);
             this.dgRepeatableScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
@@ -1219,6 +1223,39 @@
             this.pnlDevDummyDataFiles.Name = "pnlDevDummyDataFiles";
             this.pnlDevDummyDataFiles.Size = new System.Drawing.Size(1169, 435);
             this.pnlDevDummyDataFiles.TabIndex = 74;
+            // 
+            // lblVirtualDDD
+            // 
+            this.lblVirtualDDD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblVirtualDDD.AutoSize = true;
+            this.lblVirtualDDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.lblVirtualDDD.Location = new System.Drawing.Point(939, 60);
+            this.lblVirtualDDD.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVirtualDDD.Name = "lblVirtualDDD";
+            this.lblVirtualDDD.Size = new System.Drawing.Size(94, 15);
+            this.lblVirtualDDD.TabIndex = 84;
+            this.lblVirtualDDD.Text = "Virtual Dev Files";
+            // 
+            // btnVirtualDDD
+            // 
+            this.btnVirtualDDD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVirtualDDD.BackColor = System.Drawing.Color.White;
+            this.btnVirtualDDD.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnVirtualDDD.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnVirtualDDD.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnVirtualDDD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVirtualDDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnVirtualDDD.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnVirtualDDD.Image = global::AutoVersionsDB.WinApp.Properties.Resources.VirtualExecution2;
+            this.btnVirtualDDD.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnVirtualDDD.Location = new System.Drawing.Point(963, 14);
+            this.btnVirtualDDD.Margin = new System.Windows.Forms.Padding(0);
+            this.btnVirtualDDD.Name = "btnVirtualDDD";
+            this.btnVirtualDDD.Size = new System.Drawing.Size(63, 48);
+            this.btnVirtualDDD.TabIndex = 83;
+            this.btnVirtualDDD.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btnVirtualDDD.UseVisualStyleBackColor = false;
+            this.btnVirtualDDD.Click += new System.EventHandler(this.BtnVirtualDDD_Click);
             // 
             // label9
             // 
@@ -1382,26 +1419,26 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgDevDummyDataScriptsFiles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgDevDummyDataScriptsFiles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgDevDummyDataScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgDevDummyDataScriptsFiles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgDevDummyDataScriptsFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgDevDummyDataScriptsFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5});
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgDevDummyDataScriptsFiles.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgDevDummyDataScriptsFiles.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgDevDummyDataScriptsFiles.GridColor = System.Drawing.Color.White;
             this.dgDevDummyDataScriptsFiles.Location = new System.Drawing.Point(33, 86);
             this.dgDevDummyDataScriptsFiles.Margin = new System.Windows.Forms.Padding(4);
@@ -1457,6 +1494,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlActionButtons.BackColor = System.Drawing.Color.White;
             this.pnlActionButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlActionButtons.Controls.Add(this.pnlInitDB);
             this.pnlActionButtons.Controls.Add(this.pnlRestoreDBError);
             this.pnlActionButtons.Controls.Add(this.pnlSetDBStateManually);
             this.pnlActionButtons.Controls.Add(this.pnlMissingSystemTables);
@@ -1467,6 +1505,51 @@
             this.pnlActionButtons.Name = "pnlActionButtons";
             this.pnlActionButtons.Size = new System.Drawing.Size(1169, 275);
             this.pnlActionButtons.TabIndex = 75;
+            // 
+            // pnlInitDB
+            // 
+            this.pnlInitDB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlInitDB.BackColor = System.Drawing.Color.White;
+            this.pnlInitDB.Controls.Add(this.btnInitDB);
+            this.pnlInitDB.Controls.Add(this.label11);
+            this.pnlInitDB.Location = new System.Drawing.Point(1036, 118);
+            this.pnlInitDB.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlInitDB.Name = "pnlInitDB";
+            this.pnlInitDB.Size = new System.Drawing.Size(107, 87);
+            this.pnlInitDB.TabIndex = 83;
+            // 
+            // btnInitDB
+            // 
+            this.btnInitDB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnInitDB.BackColor = System.Drawing.Color.White;
+            this.btnInitDB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnInitDB.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInitDB.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnInitDB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnInitDB.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.btnInitDB.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnInitDB.Image = global::AutoVersionsDB.WinApp.Properties.Resources.historyIcon;
+            this.btnInitDB.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnInitDB.Location = new System.Drawing.Point(33, 5);
+            this.btnInitDB.Margin = new System.Windows.Forms.Padding(0);
+            this.btnInitDB.Name = "btnInitDB";
+            this.btnInitDB.Size = new System.Drawing.Size(56, 48);
+            this.btnInitDB.TabIndex = 81;
+            this.btnInitDB.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btnInitDB.UseVisualStyleBackColor = false;
+            this.btnInitDB.Click += new System.EventHandler(this.BtnInitDB_Click);
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.label11.Location = new System.Drawing.Point(26, 53);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(63, 15);
+            this.label11.TabIndex = 82;
+            this.label11.Text = "Initiate DB";
             // 
             // pnlRestoreDBError
             // 
@@ -1513,39 +1596,6 @@
             this.btnShowHistoricalBackups.UseVisualStyleBackColor = false;
             this.btnShowHistoricalBackups.Click += new System.EventHandler(this.BtnShowHistoricalBackups_Click);
             // 
-            // lblVirtualDDD
-            // 
-            this.lblVirtualDDD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblVirtualDDD.AutoSize = true;
-            this.lblVirtualDDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
-            this.lblVirtualDDD.Location = new System.Drawing.Point(939, 60);
-            this.lblVirtualDDD.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblVirtualDDD.Name = "lblVirtualDDD";
-            this.lblVirtualDDD.Size = new System.Drawing.Size(94, 15);
-            this.lblVirtualDDD.TabIndex = 84;
-            this.lblVirtualDDD.Text = "Virtual Dev Files";
-            // 
-            // btnVirtualDDD
-            // 
-            this.btnVirtualDDD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnVirtualDDD.BackColor = System.Drawing.Color.White;
-            this.btnVirtualDDD.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnVirtualDDD.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnVirtualDDD.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnVirtualDDD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVirtualDDD.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.btnVirtualDDD.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnVirtualDDD.Image = global::AutoVersionsDB.WinApp.Properties.Resources.VirtualExecution2;
-            this.btnVirtualDDD.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVirtualDDD.Location = new System.Drawing.Point(963, 14);
-            this.btnVirtualDDD.Margin = new System.Windows.Forms.Padding(0);
-            this.btnVirtualDDD.Name = "btnVirtualDDD";
-            this.btnVirtualDDD.Size = new System.Drawing.Size(63, 48);
-            this.btnVirtualDDD.TabIndex = 83;
-            this.btnVirtualDDD.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnVirtualDDD.UseVisualStyleBackColor = false;
-            this.btnVirtualDDD.Click += new System.EventHandler(this.BtnVirtualDDD_Click);
-            // 
             // DBVersionsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1587,6 +1637,8 @@
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgDevDummyDataScriptsFiles)).EndInit();
             this.pnlActionButtons.ResumeLayout(false);
+            this.pnlInitDB.ResumeLayout(false);
+            this.pnlInitDB.PerformLayout();
             this.pnlRestoreDBError.ResumeLayout(false);
             this.pnlRestoreDBError.PerformLayout();
             this.ResumeLayout(false);
@@ -1688,5 +1740,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.Label lblVirtualDDD;
         private System.Windows.Forms.Button btnVirtualDDD;
+        private System.Windows.Forms.Panel pnlInitDB;
+        private System.Windows.Forms.Button btnInitDB;
+        private System.Windows.Forms.Label label11;
     }
 }

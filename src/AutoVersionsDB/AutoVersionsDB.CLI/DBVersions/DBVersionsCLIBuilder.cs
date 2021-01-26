@@ -12,6 +12,7 @@ namespace AutoVersionsDB.CLI.DBVersions
 
         public DBVersionsCLIBuilder(ValidateCommandFactory validateCommandFactory,
                                     FilesCommandFactory filesCommandFactory,
+                                    InitDBCommandFactory initDBCommandFactory,
                                     SyncCommandFactory syncCommandFactory,
                                     RecreateCommandFactory recreateCommandFactory,
                                     VirtualCommandFactory virtualCommandFactory,
@@ -23,6 +24,7 @@ namespace AutoVersionsDB.CLI.DBVersions
             {
                 validateCommandFactory,
                 filesCommandFactory,
+                initDBCommandFactory,
                 syncCommandFactory,
                 recreateCommandFactory,
                 virtualCommandFactory,

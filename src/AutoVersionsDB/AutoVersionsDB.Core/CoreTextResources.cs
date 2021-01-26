@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core
         public const string SystemTablesDeliveryEnvInstructionsMessage = "The system tables has invalid structure. Please try to 'Set DB State by Virtual Execution'.";
         public const string HistoricalTargetStateScriptInstructionsMessage = "Target State Script Should Not Be Historical";
         public const string TargetStateScriptFileNotExistInstructionsMessage = "Target State Script File does not exist";
-        public static string NewProjectDevEnvInstructionsMessage => $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Run 'Recreate' or 'Virtual' for creating our DB system tables >> 2) Add your scripts files >> 3) Run 'Sync'";
+        public static string NewProjectDevEnvInstructionsMessage => $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Run 'Init DB' for creating our DB system tables >> 2) Add your scripts files >> 3) Run 'Sync'";
         public static string NewProjectDeliveryEnvInstructionsMessage => $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Run 'Virtual' to set the current DB state related to the scripts file >> 2) Run 'Sync' for executing all other scripts files on the DB";
         public static string NewProjectDeliveryEnvNoscriptsFilesInstructionsMessage => $"Welcome!!! This appear to be a new project.{Environment.NewLine}1) Copy the artifact file that deployed from your dev environment >> 2) Run 'Virtual' to set the current DB state related to the scripts file >> 3) Run 'Sync' for executing the rest of the scripts files";
 
