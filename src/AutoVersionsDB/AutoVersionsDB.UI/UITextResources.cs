@@ -16,11 +16,13 @@ namespace AutoVersionsDB.UI
         public const string BtnRecreateDBFromScratchMainTooltip = "Recreate DB From Scratch";
         public const string BtnDeployTooltip = "Create Deploy Package";
         public const string BtnSetDBToSpecificStateTooltip = "Set DB To Specific State";
-        public const string BtnVirtualExecutionTooltip = "Set DB to specific state virtually. Use it if your DB is not empty but you never use our migration tool on it yet.";
+        public const string BtnVirtualExecutionTooltip = "Set DB to specific state virtually. Use it if your DB is not empty but you never use our tool on it yet.";
+        public const string BtnVirtualDDDTooltip = "Mark the Dev Dummy Data file as executed virtually. Use it when you have DB that you want to work with its original data instead of the Deveploment data.";
         public const string BtnShowHistoricalBackupsTooltip = "Open the backup history folder.";
    
         public const string CreateNewScriptFileInstructions = "Create new script script file, insert the script name:";
         public const string RecreateDBConfirmaion = "This action will drop the Database and recreate it only by the scripts, you may loose Data. Are you sure?";
+        public const string VirtualDDDConfirmaion = "This action will will mark all the Dev Dummy Data file as executed virtually. Are you sure?";
         public const string TargetStateHistoryConfirmaion = "This action will drop the Database and recreate it only by the scripts, you may lose Data. Are you sure?";
 
         public const string SyncToSpecificStateInstructions = "Select the target Database State (on every script type), and click on Apply";

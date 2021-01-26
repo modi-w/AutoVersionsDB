@@ -125,6 +125,22 @@ namespace AutoVersionsDB.UI.DBVersions
             set => SetField(ref _btnRecreateDBbFromScratchSecondaryVisible, value);
         }
 
+        
+        private bool _btnVirtualDDDVisible;
+        public bool BtnVirtualDDDVisible
+        {
+            get => _btnVirtualDDDVisible;
+            set => SetField(ref _btnVirtualDDDVisible, value);
+        }
+
+        private bool _btnVirtualDDDEnabled;
+        public bool BtnVirtualDDDEnabled
+        {
+            get => _btnVirtualDDDEnabled;
+            set => SetField(ref _btnVirtualDDDEnabled, value);
+        }
+        
+
 
         private bool _btnDeployVisible;
         public bool BtnDeployVisible
@@ -285,6 +301,14 @@ namespace AutoVersionsDB.UI.DBVersions
             get => _btnVirtualExecutionTooltip;
             set => SetField(ref _btnVirtualExecutionTooltip, value);
         }
+        private string _btnVirtualDDDTooltip;
+        public string BtnVirtualDDDTooltip
+        {
+            get => _btnVirtualDDDTooltip;
+            set => SetField(ref _btnVirtualDDDTooltip, value);
+        }
+
+        
 
         private string _btnShowHistoricalBackupsTooltip;
         public string BtnShowHistoricalBackupsTooltip

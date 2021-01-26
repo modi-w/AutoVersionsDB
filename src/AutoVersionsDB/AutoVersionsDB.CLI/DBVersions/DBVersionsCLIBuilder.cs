@@ -15,6 +15,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                                     SyncCommandFactory syncCommandFactory,
                                     RecreateCommandFactory recreateCommandFactory,
                                     VirtualCommandFactory virtualCommandFactory,
+                                    VirtualDDDCommandFactory virtualDDDCommandFactory,
                                     DeployCommandFactory deployCommandFactory,
                                     CreateNewScriptFileCommandFactory createNewScriptFileCommandFactory)
         {
@@ -25,6 +26,7 @@ namespace AutoVersionsDB.CLI.DBVersions
                 syncCommandFactory,
                 recreateCommandFactory,
                 virtualCommandFactory,
+                virtualDDDCommandFactory,
                 deployCommandFactory,
                 createNewScriptFileCommandFactory
             };

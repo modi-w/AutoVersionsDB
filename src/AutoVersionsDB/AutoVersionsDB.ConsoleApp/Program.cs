@@ -14,8 +14,9 @@ namespace AutoVersionsDB.ConsoleApp
 
             return CLIRunner.CLIRun(args);
 
-               //return CLIRunner.CLIRun("list");
-
+            // return CLIRunner.CLIRun("list");
+            // return CLIRunner.CLIRun("vrddd -id=TestP11");
+        //    return CLIRunner.CLIRun("files -id=TestP11");
 
 
         }

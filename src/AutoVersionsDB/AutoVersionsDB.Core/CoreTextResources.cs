@@ -35,6 +35,8 @@ namespace AutoVersionsDB.Core
         public const string HistoricalTargetStateScriptErrorMessage = "The target file '[FileName]' in the '[FileTypeCode]' list is already executed on this database.";
         public const string TargetStateScriptFileNotExistErrorMessage = "The target file '[FileName]' is not exsit in the '[FileTypeCode]' list";
 
+       
+
 
         //Core Validators Instructions Messages
         public const string HistoryExecutedFilesChangedInstructionsMessage = "History executed files changed, please 'Recreate DB From Scratch' or 'Set DB State as Virtual Execution'";

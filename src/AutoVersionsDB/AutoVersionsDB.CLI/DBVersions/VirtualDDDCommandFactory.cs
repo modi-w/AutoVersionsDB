@@ -7,43 +7,37 @@ using System.CommandLine.Invocation;
 
 namespace AutoVersionsDB.CLI.DBVersions
 {
-    public class VirtualCommandFactory : CLICommandFactory
+    public class VirtualDDDCommandFactory : CLICommandFactory
     {
         private readonly DBVersionsAPI _dbVersionsAPI;
         private readonly IConsoleProcessMessages _consoleProcessMessages;
         private readonly IdCLIOption _idOption;
-        private readonly IncTargetCLIOption _incTargetCLIOption;
 
-        public VirtualCommandFactory(DBVersionsAPI dbVersionsAPI,
+        public VirtualDDDCommandFactory(DBVersionsAPI dbVersionsAPI,
                                         IConsoleProcessMessages consoleProcessMessages,
-                                        IdCLIOption idOption,
-                                        IncTargetCLIOption incTargetCLIOption)
+                                        IdCLIOption idOption)
         {
             _dbVersionsAPI = dbVersionsAPI;
             _consoleProcessMessages = consoleProcessMessages;
             _idOption = idOption;
-            _incTargetCLIOption = incTargetCLIOption;
         }
 
         public override Command Create()
         {
-            Command command = new Command("virtual")
+            Command command = new Command("vrddd")
             {
                 _idOption,
-                _incTargetCLIOption,
-         };
+            };
 
-            command.Description = CLITextResources.VirtualCommandDescription;
+            command.Description = CLITextResources.VirtualDDDCommandDescription;
 
-            command.Handler = CommandHandler.Create<string, string>((id, incTarget) =>
+            command.Handler = CommandHandler.Create<string>((id) =>
             {
-                _consoleProcessMessages.StartProcessMessage("virtual", id);
+                _consoleProcessMessages.StartProcessMessage("vrddd", id);
 
                 _consoleProcessMessages.StartSpiiner();
 
-                TargetScripts targetScripts = new TargetScripts(incTarget);
-
-                ProcessResults processResults = _dbVersionsAPI.SetDBStateByVirtualExecution(id, targetScripts, _consoleProcessMessages.OnNotificationStateChanged);
+                ProcessResults processResults = _dbVersionsAPI.VirtualDDD(id, _consoleProcessMessages.OnNotificationStateChanged);
                 _consoleProcessMessages.StopSpinner();
 
                 _consoleProcessMessages.ProcessComplete(processResults);

@@ -23,7 +23,9 @@ namespace AutoVersionsDB.Core.DBVersions
         private readonly NotificationProcessRunner<SyncDBProcessDefinition, DBVersionsProcessContext> _syncDBRunner;
         private readonly NotificationProcessRunner<RecreateDBFromScratchProcessDefinition, DBVersionsProcessContext> _recreateDBFromScratchRunner;
         private readonly NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> _syncDBToSpecificStateRunner;
-        private readonly NotificationProcessRunner<CreateVirtualExecutionsProcessDefinition, DBVersionsProcessContext> _createVirtualExecutionsRunner;
+        private readonly NotificationProcessRunner<VirtualExecutionsProcessDefinition, DBVersionsProcessContext> _virtualExecutionsRunner;
+        private readonly NotificationProcessRunner<VirtualDDDExecutionsProcessDefinition, DBVersionsProcessContext> _virtualDDDRunner;
+        
 
         private readonly NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> _deployExecutionsRunner;
 
@@ -38,7 +40,8 @@ namespace AutoVersionsDB.Core.DBVersions
                                NotificationProcessRunner<SyncDBProcessDefinition, DBVersionsProcessContext> syncRunner,
                                NotificationProcessRunner<RecreateDBFromScratchProcessDefinition, DBVersionsProcessContext> recreateDBFromScratchRunner,
                                NotificationProcessRunner<SyncDBToSpecificStateProcessDefinition, DBVersionsProcessContext> syncDBToSpecificStateRunner,
-                               NotificationProcessRunner<CreateVirtualExecutionsProcessDefinition, DBVersionsProcessContext> createVirtualExecutionsRunner,
+                               NotificationProcessRunner<VirtualExecutionsProcessDefinition, DBVersionsProcessContext> virtualExecutionsRunner,
+                               NotificationProcessRunner<VirtualDDDExecutionsProcessDefinition, DBVersionsProcessContext> virtualDDDRunner,
                                NotificationProcessRunner<DeployProcessDefinition, DBVersionsProcessContext> deployVirtualExecutionsRunner)
         {
             _dbVersionsValidationsRunner = dbVersionsValidationsRunner;
@@ -53,7 +56,8 @@ namespace AutoVersionsDB.Core.DBVersions
             _syncDBRunner = syncRunner;
             _recreateDBFromScratchRunner = recreateDBFromScratchRunner;
             _syncDBToSpecificStateRunner = syncDBToSpecificStateRunner;
-            _createVirtualExecutionsRunner = createVirtualExecutionsRunner;
+            _virtualExecutionsRunner = virtualExecutionsRunner;
+            _virtualDDDRunner = virtualDDDRunner;
 
             _deployExecutionsRunner = deployVirtualExecutionsRunner;
 
@@ -90,6 +94,12 @@ namespace AutoVersionsDB.Core.DBVersions
             return _recreateDBFromScratchRunner.Run(new DBVersionsProcessArgs(id, null, targetScripts), onNotificationStateChanged);
         }
 
+        
+        public ProcessResults VirtualDDD(string id, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
+        {
+            return _virtualDDDRunner.Run(new DBVersionsProcessArgs(id, null, TargetScripts.CreateLastState()), onNotificationStateChanged);
+        }
+
 
         public ProcessResults SetDBToSpecificState(string id, TargetScripts targetScripts, bool isIgnoreHistoryWarning, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
@@ -110,7 +120,7 @@ namespace AutoVersionsDB.Core.DBVersions
 
         public ProcessResults SetDBStateByVirtualExecution(string id, TargetScripts targetScripts, Action<ProcessTrace, StepNotificationState> onNotificationStateChanged)
         {
-            return _createVirtualExecutionsRunner.Run(new DBVersionsProcessArgs(id, null, targetScripts), onNotificationStateChanged);
+            return _virtualExecutionsRunner.Run(new DBVersionsProcessArgs(id, null, targetScripts), onNotificationStateChanged);
         }
 
 

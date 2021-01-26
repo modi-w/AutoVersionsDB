@@ -142,6 +142,7 @@ namespace AutoVersionsDB.WinApp
                 tooltipControl.SetToolTip(btnDeploy, ViewModel.DBVersionsControls.BtnDeployTooltip);
                 tooltipControl.SetToolTip(btnSetDBToSpecificState, ViewModel.DBVersionsControls.BtnSetDBToSpecificStateTooltip);
                 tooltipControl.SetToolTip(btnVirtualExecution, ViewModel.DBVersionsControls.BtnVirtualExecutionTooltip);
+                tooltipControl.SetToolTip(btnVirtualDDD, ViewModel.DBVersionsControls.BtnVirtualDDDTooltip);
                 tooltipControl.SetToolTip(btnShowHistoricalBackups, ViewModel.DBVersionsControls.BtnShowHistoricalBackupsTooltip);
             }
 
@@ -321,6 +322,39 @@ namespace AutoVersionsDB.WinApp
                     )
                 );
 
+
+            btnVirtualDDD.DataBindings.Clear();
+            btnVirtualDDD.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    btnVirtualDDD,
+                    nameof(btnVirtualDDD.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnVirtualDDDVisible)
+                    )
+                );
+
+            lblVirtualDDD.DataBindings.Clear();
+            lblVirtualDDD.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    lblVirtualDDD,
+                    nameof(lblVirtualDDD.Visible),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnVirtualDDDVisible)
+                    )
+                );
+
+            btnVirtualDDD.DataBindings.Clear();
+            btnVirtualDDD.DataBindings.Add(
+                AsyncBindingHelper.GetBinding(
+                    btnVirtualDDD,
+                    nameof(btnVirtualDDD.Enabled),
+                    ViewModel.DBVersionsControls,
+                    nameof(ViewModel.DBVersionsControls.BtnVirtualDDDEnabled)
+                    )
+                );
+            
+
+
             btnDeploy.DataBindings.Clear();
             btnDeploy.DataBindings.Add(
                 AsyncBindingHelper.GetBinding(
@@ -400,44 +434,7 @@ namespace AutoVersionsDB.WinApp
                     nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
                     )
                 );
-            lblRptColorTargetState_Square.DataBindings.Clear();
-            lblRptColorTargetState_Square.DataBindings.Add(
-                AsyncBindingHelper.GetBinding(
-                    lblRptColorTargetState_Square,
-                    nameof(lblRptColorTargetState_Square.Visible),
-                    ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateSquareVisible)
-                    )
-                );
 
-            lblRptColorTargetState_Caption.DataBindings.Clear();
-            lblRptColorTargetState_Caption.DataBindings.Add(
-                AsyncBindingHelper.GetBinding(
-                    lblRptColorTargetState_Caption,
-                    nameof(lblRptColorTargetState_Caption.Visible),
-                    ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
-                    )
-                );
-            lblDDDColorTargetState_Square.DataBindings.Clear();
-            lblDDDColorTargetState_Square.DataBindings.Add(
-                AsyncBindingHelper.GetBinding(
-                    lblDDDColorTargetState_Square,
-                    nameof(lblDDDColorTargetState_Square.Visible),
-                    ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateSquareVisible)
-                    )
-                );
-
-            lblDDDColorTargetState_Caption.DataBindings.Clear();
-            lblDDDColorTargetState_Caption.DataBindings.Add(
-                AsyncBindingHelper.GetBinding(
-                    lblDDDColorTargetState_Caption,
-                    nameof(lblDDDColorTargetState_Caption.Visible),
-                    ViewModel.DBVersionsControls,
-                    nameof(ViewModel.DBVersionsControls.LblColorTargetStateCaptionVisible)
-                    )
-                );
 
 
             lblIncNumOfExecuted.DataBindings.Clear();
@@ -677,6 +674,10 @@ namespace AutoVersionsDB.WinApp
             ViewModel.RecreateDBFromScratchCommand.Execute();
         }
 
+        private void BtnVirtualDDD_Click(object sender, EventArgs e)
+        {
+            ViewModel.VirtualDDDCommand.Execute();
+        }
 
         private void BtnApplySyncSpecificState_Click(object sender, EventArgs e)
         {
@@ -898,5 +899,6 @@ namespace AutoVersionsDB.WinApp
 
         #endregion
 
+        
     }
 }

@@ -34,6 +34,8 @@ namespace AutoVersionsDB.Core.DBVersions.ScriptFiles
             .Where(e => e.HashDiffType == HashDiffType.EqualVirtual)
             .ToList();
 
+        public bool IsAllFilesExecuted => ExecutedFilesAll.Count == AllFileSystemScriptFiles.Count;
+
         public List<RuntimeScriptFile> ChangedFiles => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.Different).ToList();
         public List<RuntimeScriptFile> NotExistInDBButExistInFileSystem => AllFileSystemScriptFiles.Where(e => e.HashDiffType == HashDiffType.NotExist).ToList();
 

@@ -116,6 +116,14 @@ namespace AutoVersionsDB.UI.DBVersions
                     //    _dbVersionsViewModelData.TargetIncScriptFileName = _dbVersionsViewModelData.IncrementalScriptFiles.Last().Filename;
                     //}
 
+                    if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
+                    {
+                        _dbVersionsControls.BtnVirtualDDDVisible =
+                            _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.Count > 0
+                            && _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.ExecutedFilesAll.Count == 0;
+                    }
+
+
                     _dbVersionsControls.GridToSelectTargetStateEnabled = false;
 
                     SetAllControlsEnableDisable(true);
@@ -220,6 +228,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls.BtnCreateNewIncrementalScriptFileEnabled = isEnable;
             _dbVersionsControls.BtnCreateNewRepeatableScriptFileEnabled = isEnable;
             _dbVersionsControls.BtnCreateNewDevDummyDataScriptFileEnabled = isEnable;
+            _dbVersionsControls.BtnVirtualDDDEnabled = isEnable;
         }
 
 
@@ -230,6 +239,7 @@ namespace AutoVersionsDB.UI.DBVersions
             _dbVersionsControls.PnlMissingSystemTablesVisible = false;
             _dbVersionsControls.PnlSetDBStateManuallyVisible = false;
             _dbVersionsControls.PnlRestoreDBErrorVisible = false;
+            _dbVersionsControls.BtnVirtualDDDVisible = false;
         }
 
 
@@ -238,8 +248,8 @@ namespace AutoVersionsDB.UI.DBVersions
         {
             List<RuntimeScriptFile> incScripts = _dbVersionsViewModelData.ScriptFilesState.IncrementalScriptFilesComparer.AllFileSystemScriptFiles.ToList();
 
-            RuntimeScriptFile incNoneTargetState = 
-                new RuntimeScriptFile(new IncrementalScriptFileType(),"",RuntimeScriptFile.TargetNoneScriptFileName,0);
+            RuntimeScriptFile incNoneTargetState =
+                new RuntimeScriptFile(new IncrementalScriptFileType(), "", RuntimeScriptFile.TargetNoneScriptFileName, 0);
             incScripts.Insert(0, incNoneTargetState);
 
             _dbVersionsViewModelData.IncrementalScriptFiles = incScripts;

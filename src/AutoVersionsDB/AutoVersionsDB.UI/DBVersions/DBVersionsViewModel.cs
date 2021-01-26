@@ -71,6 +71,8 @@ namespace AutoVersionsDB.UI.DBVersions
         public RelayCommand RefreshAllCommand { get; private set; }
         public RelayCommand RunSyncCommand { get; private set; }
         public RelayCommand RecreateDBFromScratchCommand { get; private set; }
+        public RelayCommand VirtualDDDCommand { get; private set; }
+        
         public RelayCommand ApplySyncSpecificStateCommand { get; private set; }
         public RelayCommand DeployCommand { get; private set; }
         public RelayCommand RunStateByVirtualExecutionCommand { get; private set; }
@@ -119,7 +121,9 @@ namespace AutoVersionsDB.UI.DBVersions
             RefreshAllCommand = new RelayCommand(RefreshAll);
             RunSyncCommand = new RelayCommand(RunSync);
             RecreateDBFromScratchCommand = new RelayCommand(RecreateDBFromScratch);
-            ApplySyncSpecificStateCommand = new RelayCommand(ApplySyncSpecificState);
+            VirtualDDDCommand = new RelayCommand(VirtualDDD);
+            
+                    ApplySyncSpecificStateCommand = new RelayCommand(ApplySyncSpecificState);
             DeployCommand = new RelayCommand(Deploy);
             RunStateByVirtualExecutionCommand = new RelayCommand(RunStateByVirtualExecution);
 
@@ -134,6 +138,8 @@ namespace AutoVersionsDB.UI.DBVersions
             DBVersionsControls.BtnDeployTooltip = UITextResources.BtnDeployTooltip;
             DBVersionsControls.BtnSetDBToSpecificStateTooltip = UITextResources.BtnSetDBToSpecificStateTooltip;
             DBVersionsControls.BtnVirtualExecutionTooltip = UITextResources.BtnVirtualExecutionTooltip;
+            DBVersionsControls.BtnVirtualDDDTooltip = UITextResources.BtnVirtualDDDTooltip;
+            
             DBVersionsControls.BtnShowHistoricalBackupsTooltip = UITextResources.BtnShowHistoricalBackupsTooltip;
         }
 
@@ -382,6 +388,24 @@ namespace AutoVersionsDB.UI.DBVersions
                 NotificationsViewModel.BeforeStartProcess();
 
                 ProcessResults processResults = _dbVersionsAPI.RecreateDBFromScratch(DBVersionsViewModelData.ProjectConfig.Id, TargetScripts.CreateLastState(), NotificationsViewModel.OnNotificationStateChanged);
+                RefreshScriptFilesState(false);
+
+                NotificationsViewModel.AfterComplete(processResults);
+                _dbVersionsViewSateManager.ChangeViewStateAfterProcessComplete(processResults.Trace);
+            }
+        }
+
+        
+        private void VirtualDDD()
+        {
+            bool isAllowRun = UIGeneralEvents.FireOnConfirm(this, UITextResources.VirtualDDDConfirmaion);
+
+            if (isAllowRun)
+            {
+                _dbVersionsViewSateManager.ChangeViewState(DBVersionsViewStateType.InProcess);
+                NotificationsViewModel.BeforeStartProcess();
+
+                ProcessResults processResults = _dbVersionsAPI.VirtualDDD(DBVersionsViewModelData.ProjectConfig.Id, NotificationsViewModel.OnNotificationStateChanged);
                 RefreshScriptFilesState(false);
 
                 NotificationsViewModel.AfterComplete(processResults);
