@@ -147,7 +147,6 @@ namespace AutoVersionsDB.DB.SqlServer
                 .Select(x => x.Trim(' ', '\r', '\n'));
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         public int UpdateDataTableWithUpdateIdentityOnInsert(DataTable dataTable)
         {
             //Comment: dont work here with get changes and merge becase the UpdateIdentityOnInsert duplicate the inserted DataRows
@@ -349,7 +348,6 @@ namespace AutoVersionsDB.DB.SqlServer
             return myDataAdapter;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "<Pending>")]
         private SqlCommand CreateSqlCommand(CommandType commandType, string commandText, int overrideTimeout)
         {
             SqlCommand cmd = new SqlCommand

@@ -48,7 +48,6 @@ namespace AutoVersionsDB.UI.DBVersions
 
         private IList<RuntimeScriptFile> _incrementalScriptFiles;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public IList<RuntimeScriptFile> IncrementalScriptFiles
         {
             get => _incrementalScriptFiles;
@@ -56,7 +55,6 @@ namespace AutoVersionsDB.UI.DBVersions
         }
 
         private IList<RuntimeScriptFile> _repeatableSScriptFiles;
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public IList<RuntimeScriptFile> RepeatableScriptFiles
         {
             get => _repeatableSScriptFiles;
@@ -64,7 +62,6 @@ namespace AutoVersionsDB.UI.DBVersions
         }
 
         private IList<RuntimeScriptFile> _devDummyDataSScriptFiles;
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public IList<RuntimeScriptFile> DevDummyDataScriptFiles
         {
             get => _devDummyDataSScriptFiles;

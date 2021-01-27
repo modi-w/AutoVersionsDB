@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;x86</Platforms>
@@ -12,6 +12,7 @@
     <Description>Manage database scripts versions easily</Description>
     <PackageIcon>AppIcon.ico</PackageIcon>
     <RepositoryUrl>https://github.com/modi-w/AutoVersionsDB</RepositoryUrl>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,17 +26,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="GitVersionTask" Version="5.5.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AutoVersionsDB.Core\AutoVersionsDB.Core.csproj" />
@@ -69,6 +59,13 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" Version="5.6.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

@@ -57,7 +57,6 @@
             // 
             // pbStatus
             // 
-            this.pbStatus.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Spinner3_32;
             resources.ApplyResources(this.pbStatus, "pbStatus");
             this.pbStatus.Name = "pbStatus";
             this.pbStatus.TabStop = false;
@@ -70,7 +69,6 @@
             this.btnProcessLog.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnProcessLog.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnProcessLog.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnProcessLog.Image = global::AutoVersionsDB.WinApp.Properties.Resources.Doc_32;
             this.btnProcessLog.Name = "btnProcessLog";
             this.btnProcessLog.UseVisualStyleBackColor = false;
             this.btnProcessLog.Click += new System.EventHandler(this.BtnProcessLog_Click);
@@ -84,12 +82,12 @@
             this.lblProcessStatusMessage.Name = "lblProcessStatusMessage";
             this.lblProcessStatusMessage.Click += new System.EventHandler(this.LblProcessStatusMessage_Click);
             // 
-            // NotificationsControl
+            // NotificationsView
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel7);
-            this.Name = "NotificationsControl";
+            this.Name = "NotificationsView";
             this.panel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbStatus)).EndInit();
             this.ResumeLayout(false);

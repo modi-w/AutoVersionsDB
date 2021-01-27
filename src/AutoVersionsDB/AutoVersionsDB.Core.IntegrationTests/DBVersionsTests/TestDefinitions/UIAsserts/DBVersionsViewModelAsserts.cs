@@ -39,14 +39,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         }
         public void AssertCompleteSuccessfullyAllFilesSyncVrDDD(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
-            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataDBFinalStateVrDDD(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataDBFinalStateVrDDD(testName, dbVersionsViewModel.DBVersionsViewModelData);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             _notificationsViewModelAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
 
         public void AssertCompleteSuccessfullyInitDBSync(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
-            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateCompleteSuccessfully(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             _notificationsViewModelAsserts.AssertNotificationsViewModelCompleteSuccessfully(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
@@ -120,7 +120,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
         public void AssertNewProjectDevEnv(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
-            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateNewProject(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             if (isDevEnv)
             {
@@ -135,7 +135,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
         public void AssertNewProjectDeliveryEnv(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
         {
-            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData, isDevEnv);
+            _scriptFilesListsStateAsserts.AssertDBVersionsViewModelDataNewProject(testName, dbVersionsViewModel.DBVersionsViewModelData);
             _dbVersionsViewStateAsserts.AssertDBVersionsViewStateScriptsOrSystemTableError(testName, dbVersionsViewModel.DBVersionsControls, isDevEnv);
             if (isDevEnv)
             {
@@ -215,14 +215,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             _notificationsViewModelAsserts.AssertNotificationsViewModelProcessError(testName, dbVersionsViewModel.NotificationsViewModel.NotificationsViewModelData);
         }
 
-        public void AssertViewStateHistory(string testName, IList<DBVersionsViewStateType> viewStateHistory, DBVersionsViewStateType finalViewState)
+        public virtual void AssertViewStateHistory(string testName, IList<DBVersionsViewStateType> viewStateHistory, DBVersionsViewStateType finalViewState)
         {
             Assert.That(viewStateHistory.Count == 2, $"{testName} >>> Number of process ViewStates should be 2, but was {viewStateHistory.Count}");
             Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
             Assert.That(viewStateHistory[1] == finalViewState, $"{testName} >>> ViewState 2 should be {finalViewState}, but was '{viewStateHistory[1]}'");
         }
 
-        public void AssertViewStateHistoryForNewTwoScriptFiles(string testName, IList<DBVersionsViewStateType> viewStateHistory)
+        public virtual void AssertViewStateHistoryForNewTwoScriptFiles(string testName, IList<DBVersionsViewStateType> viewStateHistory)
         {
             Assert.That(viewStateHistory.Count == 8, $"{testName} >>> Number of process ViewStates should be 8, but was {viewStateHistory.Count}");
             Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");
@@ -235,7 +235,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             Assert.That(viewStateHistory[7] == DBVersionsViewStateType.ReadyToRunSync, $"{testName} >>> ViewState 2 should be {DBVersionsViewStateType.ReadyToRunSync}, but was '{viewStateHistory[7]}'");
         }
 
-        public void AssertViewStateHistoryForNewSingleScriptFile(string testName, IList<DBVersionsViewStateType> viewStateHistory)
+        public virtual void AssertViewStateHistoryForNewSingleScriptFile(string testName, IList<DBVersionsViewStateType> viewStateHistory)
         {
             Assert.That(viewStateHistory.Count == 4, $"{testName} >>> Number of process ViewStates should be 4, but was {viewStateHistory.Count}");
             Assert.That(viewStateHistory[0] == DBVersionsViewStateType.InProcess, $"{testName} >>> ViewState 1 should be {DBVersionsViewStateType.InProcess}, but was '{viewStateHistory[0]}'");

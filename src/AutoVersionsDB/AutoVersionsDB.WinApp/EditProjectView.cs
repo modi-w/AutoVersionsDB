@@ -20,7 +20,24 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //{
+            //    ViewModel.PropertyChanged += ViewModel_PropertyChanged;
+            //    SetDataBindings();
+            //}
+
+            //errPrvProjectDetails.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+
+            //imgError.Location = new Point(imgValid.Location.X, imgValid.Location.Y);
+            //pnlDelEnvFields.Location = new Point(pnlDevEnvFoldersFields.Location.X, pnlDevEnvFoldersFields.Location.Y);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+
+            if (!this.DesignMode)
             {
                 ViewModel.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
@@ -30,6 +47,7 @@ namespace AutoVersionsDB.WinApp
 
             imgError.Location = new Point(imgValid.Location.X, imgValid.Location.Y);
             pnlDelEnvFields.Location = new Point(pnlDevEnvFoldersFields.Location.X, pnlDevEnvFoldersFields.Location.Y);
+
         }
 
         private void EditProjectConfigDetails_Load(object sender, EventArgs e)

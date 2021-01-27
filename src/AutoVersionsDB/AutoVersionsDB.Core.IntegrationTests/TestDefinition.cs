@@ -1,11 +1,4 @@
-﻿using AutoVersionsDB;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests;
-
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-using AutoVersionsDB.Core.IntegrationTests.TestContexts;
+﻿using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 
 namespace AutoVersionsDB.Core.IntegrationTests
 {

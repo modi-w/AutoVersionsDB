@@ -16,7 +16,6 @@ namespace AutoVersionsDB.UI.ChooseProject
 
         private IList<ProjectConfigItem> _filteredProjectList;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "<Pending>")]
         public IList<ProjectConfigItem> FilteredProjectList
         {
             get => _filteredProjectList;

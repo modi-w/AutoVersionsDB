@@ -48,10 +48,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(DBVersionsUITestContext testContext)
         {
-            _dbVersionsViewModel.OnTextInput += _dbVersionsViewModel_OnTextInput;
+            _dbVersionsViewModel.OnTextInput += DbVersionsViewModel_OnTextInput;
             var task1 = _dbVersionsViewModel.CreateNewRepeatableScriptFileCommand.ExecuteWrapped();
             task1.Wait();
-            _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInput;
+            _dbVersionsViewModel.OnTextInput -= DbVersionsViewModel_OnTextInput;
         }
 
 
@@ -67,19 +67,19 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Release(DBVersionsUITestContext testContext)
         {
-            _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInput;
+            _dbVersionsViewModel.OnTextInput -= DbVersionsViewModel_OnTextInput;
 
             _devEnv_NewScrtiptFile_Repeatable_API.Release(testContext);
         }
 
 
 
-        private void _dbVersionsViewModel_OnTextInput(object sender, OnTextInputEventsEventArgs e)
+        private void DbVersionsViewModel_OnTextInput(object sender, OnTextInputEventsEventArgs e)
         {
             e.Results = new TextInputResults()
             {
                 IsApply = true,
-                ResultText = _devEnv_NewScrtiptFile_Repeatable_API.ScriptName1
+                ResultText = DevEnv_NewScrtiptFile_Repeatable_API.ScriptName1
             };
         }
 

@@ -1,14 +1,5 @@
-﻿using AutoVersionsDB;
-using AutoVersionsDB.CLI;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.IntegrationTests;
-using AutoVersionsDB.Core.IntegrationTests;
-
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
+﻿using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
-using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions;
 using AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
@@ -22,20 +13,13 @@ using AutoVersionsDB.UI.Notifications;
 using Moq;
 using Ninject;
 using System;
-using System.Collections.Generic;
-using System.CommandLine;
 using System.CommandLine.IO;
 using System.Diagnostics;
-using System.Reflection;
-using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests
 {
     public static class MockObjectsProvider
     {
-        private static StandardKernel _ninjectKernelContainer;
-
-
         public static Mock<IStandardStreamWriter> MockConsoleError { get; private set; }
         public static Mock<IStandardStreamWriter> MockConsoleOut { get; private set; }
         public static Mock<IConsoleExtended> MockConsole { get; private set; }

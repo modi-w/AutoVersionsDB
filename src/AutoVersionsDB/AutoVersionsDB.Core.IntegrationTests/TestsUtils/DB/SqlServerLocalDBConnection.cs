@@ -22,7 +22,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             {
                 if (_baseConnStr == null)
                 {
-                    _baseConnStr = initSqlLocalDB();
+                    _baseConnStr = InitSqlLocalDB();
                 }
 
                 return _baseConnStr;
@@ -46,7 +46,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 
 
 
-        private static string initSqlLocalDB()
+        private static string InitSqlLocalDB()
         {
             ISqlLocalDbApi localDB = new SqlLocalDbApi();
             ISqlLocalDbInstanceInfo instance = localDB.GetOrCreateInstance(@"localtestdb");

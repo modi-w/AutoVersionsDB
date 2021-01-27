@@ -22,13 +22,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
     public class DevEnv_Validate_TargetStateAlreadyExecuted_Valid_API : TestDefinition
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
-        private readonly ProcessAsserts _processAsserts;
 
-        public DevEnv_Validate_TargetStateAlreadyExecuted_Valid_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
-                                                                    ProcessAsserts processAsserts)
+        public DevEnv_Validate_TargetStateAlreadyExecuted_Valid_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
-            _processAsserts = processAsserts;
         }
 
 

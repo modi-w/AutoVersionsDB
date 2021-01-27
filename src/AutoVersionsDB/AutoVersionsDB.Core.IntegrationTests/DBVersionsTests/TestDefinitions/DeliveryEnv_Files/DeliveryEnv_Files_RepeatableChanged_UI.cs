@@ -23,17 +23,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
     public class DeliveryEnv_Files_RepeatableChanged_UI : TestDefinition<DBVersionsUITestContext>
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
-        private readonly ProcessAsserts _processAsserts;
         private readonly DBVersionsViewModel _dbVersionsViewModel;
         private readonly DBVersionsViewModelAsserts _dbVersionsViewModelAsserts;
 
         public DeliveryEnv_Files_RepeatableChanged_UI(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
-                                                        ProcessAsserts processAsserts,
                                                         DBVersionsViewModel dbVersionsViewModel,
                                                         DBVersionsViewModelAsserts dbVersionsViewModelAsserts)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
-            _processAsserts = processAsserts;
             _dbVersionsViewModel = dbVersionsViewModel;
             _dbVersionsViewModelAsserts = dbVersionsViewModelAsserts;
         }

@@ -39,8 +39,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
             ScriptFilesComparerBase scriptFilesComparer = processContext.ScriptFilesState.GetScriptFilesComparerByType(_fileTypeCode);
 
-            string targetStateScriptFileName;
-            if (!targetScripts.TargetScriptsByType.TryGetValue(_fileTypeCode, out targetStateScriptFileName))
+            if (!targetScripts.TargetScriptsByType.TryGetValue(_fileTypeCode, out string targetStateScriptFileName))
             {
                 targetStateScriptFileName = null;
             }

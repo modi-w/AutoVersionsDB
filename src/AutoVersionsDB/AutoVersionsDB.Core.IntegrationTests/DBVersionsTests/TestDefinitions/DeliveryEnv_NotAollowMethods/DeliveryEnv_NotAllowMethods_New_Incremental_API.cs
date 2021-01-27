@@ -25,9 +25,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_NotAllowMethods_New_Incremental_API : TestDefinition
     {
-        private string _relFolder_Incremental = "Incremental";
+        private readonly string _relFolder_Incremental = "Incremental";
 
-        private string _scriptFullPath_Incremental_scriptName1
+        private string ScriptFullPath_Incremental_scriptName1
         {
             get
             {
@@ -45,7 +45,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public string ScriptName1 => "TestIncScript1";
+        public static string ScriptName1 => "TestIncScript1";
 
 
         public DeliveryEnv_NotAllowMethods_New_Incremental_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
@@ -60,9 +60,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             ITestContext testContext = _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
 
-            if (File.Exists(_scriptFullPath_Incremental_scriptName1))
+            if (File.Exists(ScriptFullPath_Incremental_scriptName1))
             {
-                File.Delete(_scriptFullPath_Incremental_scriptName1);
+                File.Delete(ScriptFullPath_Incremental_scriptName1);
             }
 
 
@@ -87,9 +87,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Release(testContext);
 
-            if (File.Exists(_scriptFullPath_Incremental_scriptName1))
+            if (File.Exists(ScriptFullPath_Incremental_scriptName1))
             {
-                File.Delete(_scriptFullPath_Incremental_scriptName1);
+                File.Delete(ScriptFullPath_Incremental_scriptName1);
             }
 
         }

@@ -21,14 +21,24 @@ namespace AutoVersionsDB.WinApp
             _viewModel = viewModel;
             ProjectConfig = projectConfig;
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //{
+            //    _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            //    SetDataBindings();
+            //}
+
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!this.DesignMode)
             {
                 _viewModel.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
             }
-
         }
-
 
 
 

@@ -1,24 +1,6 @@
-﻿using AutoVersionsDB;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.DBVersions.ScriptFiles;
-using AutoVersionsDB.Core.IntegrationTests;
-
-
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+﻿using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.UI.DBVersions;
-using AutoVersionsDB.UI.Notifications;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB
 {

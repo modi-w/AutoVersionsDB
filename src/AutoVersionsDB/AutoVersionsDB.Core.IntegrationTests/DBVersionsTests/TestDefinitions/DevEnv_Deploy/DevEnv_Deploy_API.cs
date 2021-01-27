@@ -22,15 +22,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
-        private readonly DBAsserts _dbAsserts;
 
         public DevEnv_Deploy_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
-                                    ScriptFilesAsserts scriptFilesAsserts,
-                                    DBAsserts dbAsserts)
+                                    ScriptFilesAsserts scriptFilesAsserts)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
             _scriptFilesAsserts = scriptFilesAsserts;
-            _dbAsserts = dbAsserts;
         }
 
 

@@ -1,19 +1,6 @@
-﻿using AutoVersionsDB;
-using AutoVersionsDB.CLI;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.IntegrationTests;
-
-
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB;
+﻿using AutoVersionsDB.CLI;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
 using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_SyncDB
 {

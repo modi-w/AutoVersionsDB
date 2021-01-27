@@ -27,7 +27,6 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
     {
         private readonly ProjectConfigsStorageHelper _projectConfigsStorageHelper;
         private readonly ProjectConfigsStorage _projectConfigsStorage;
-        private readonly ProcessAsserts _processAsserts;
         private readonly ProjectConfigsDirectories _projectConfigsDirectoriesCleaner;
         private readonly PropertiesAsserts _properiesAsserts;
         private readonly DBHandler _dbHandler;
@@ -36,14 +35,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
         public Config_DeliveryEnv_API(ProjectConfigsStorageHelper projectConfigsStorageHelper,
                                 ProjectConfigsStorage projectConfigsStorage,
-                                ProcessAsserts processAsserts,
                                 ProjectConfigsDirectories projectConfigsDirectoriesCleaner,
                                 PropertiesAsserts properiesAsserts,
                                 DBHandler dbHandler)
         {
             _projectConfigsStorageHelper = projectConfigsStorageHelper;
             _projectConfigsStorage = projectConfigsStorage;
-            _processAsserts = processAsserts;
             _projectConfigsDirectoriesCleaner = projectConfigsDirectoriesCleaner;
             _properiesAsserts = properiesAsserts;
             _dbHandler = dbHandler;

@@ -1,21 +1,7 @@
-﻿using AutoVersionsDB;
-using AutoVersionsDB.Core;
-using AutoVersionsDB.Core.ConfigProjects;
-using AutoVersionsDB.Core.IntegrationTests;
-
-
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate;
-using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
+﻿using AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.UIAsserts;
 using AutoVersionsDB.Core.IntegrationTests.TestContexts;
-using AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI;
 using AutoVersionsDB.UI;
 using AutoVersionsDB.UI.DBVersions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.DevEnv_Recreate
 {

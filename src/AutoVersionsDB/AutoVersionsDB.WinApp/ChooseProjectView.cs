@@ -18,7 +18,22 @@ namespace AutoVersionsDB.WinApp
         {
             InitializeComponent();
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            //{
+            //    ViewModel.ChooseProjectViewModelData.PropertyChanged += ViewModel_PropertyChanged;
+            //    SetDataBindings();
+
+            //    flowLayoutPanel1.Resize += FlowLayoutPanel1_Resize;
+
+            //    RenderProjectList();
+            //}
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!this.DesignMode)
             {
                 ViewModel.ChooseProjectViewModelData.PropertyChanged += ViewModel_PropertyChanged;
                 SetDataBindings();
@@ -27,7 +42,10 @@ namespace AutoVersionsDB.WinApp
 
                 RenderProjectList();
             }
+
+
         }
+
 
 
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -26,14 +26,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
     public class DeliveryEnv_Files_RepeatableChanged_API : TestDefinition
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
-        private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public DeliveryEnv_Files_RepeatableChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
-                                                    ScriptFilesAsserts scriptFilesAsserts)
+        public DeliveryEnv_Files_RepeatableChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
-            _scriptFilesAsserts = scriptFilesAsserts;
         }
 
 

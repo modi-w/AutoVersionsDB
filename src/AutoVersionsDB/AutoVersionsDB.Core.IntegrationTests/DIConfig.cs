@@ -71,9 +71,10 @@ namespace AutoVersionsDB.Core.IntegrationTests
         public static IEnumerable<TestDefinition> GetTestDefinitions<T1>()
                 where T1 : TestDefinition
         {
-            List<TestDefinition> testDefinitions = new List<TestDefinition>();
-
-            testDefinitions.Add(Kernel.Get<T1>());
+            List<TestDefinition> testDefinitions = new List<TestDefinition>
+            {
+                Kernel.Get<T1>()
+            };
 
             return testDefinitions;
         }
@@ -81,10 +82,11 @@ namespace AutoVersionsDB.Core.IntegrationTests
             where T1 : TestDefinition
             where T2 : TestDefinition
         {
-            List<TestDefinition> testDefinitions = new List<TestDefinition>();
-
-            testDefinitions.Add(Kernel.Get<T1>());
-            testDefinitions.Add(Kernel.Get<T2>());
+            List<TestDefinition> testDefinitions = new List<TestDefinition>
+            {
+                Kernel.Get<T1>(),
+                Kernel.Get<T2>()
+            };
 
             return testDefinitions;
         }
@@ -94,11 +96,12 @@ namespace AutoVersionsDB.Core.IntegrationTests
             where T2 : TestDefinition
             where T3 : TestDefinition
         {
-            List<TestDefinition> testDefinitions = new List<TestDefinition>();
-
-            testDefinitions.Add(Kernel.Get<T1>());
-            testDefinitions.Add(Kernel.Get<T2>());
-            testDefinitions.Add(Kernel.Get<T3>());
+            List<TestDefinition> testDefinitions = new List<TestDefinition>
+            {
+                Kernel.Get<T1>(),
+                Kernel.Get<T2>(),
+                Kernel.Get<T3>()
+            };
 
             return testDefinitions;
         }
@@ -109,12 +112,13 @@ namespace AutoVersionsDB.Core.IntegrationTests
             where T3 : TestDefinition
             where T4 : TestDefinition
         {
-            List<TestDefinition> testDefinitions = new List<TestDefinition>();
-
-            testDefinitions.Add(Kernel.Get<T1>());
-            testDefinitions.Add(Kernel.Get<T2>());
-            testDefinitions.Add(Kernel.Get<T3>());
-            testDefinitions.Add(Kernel.Get<T4>());
+            List<TestDefinition> testDefinitions = new List<TestDefinition>
+            {
+                Kernel.Get<T1>(),
+                Kernel.Get<T2>(),
+                Kernel.Get<T3>(),
+                Kernel.Get<T4>()
+            };
 
             return testDefinitions;
         }
@@ -127,13 +131,14 @@ namespace AutoVersionsDB.Core.IntegrationTests
             where T4 : TestDefinition
             where T5 : TestDefinition
         {
-            List<TestDefinition> testDefinitions = new List<TestDefinition>();
-
-            testDefinitions.Add(Kernel.Get<T1>());
-            testDefinitions.Add(Kernel.Get<T2>());
-            testDefinitions.Add(Kernel.Get<T3>());
-            testDefinitions.Add(Kernel.Get<T4>());
-            testDefinitions.Add(Kernel.Get<T5>());
+            List<TestDefinition> testDefinitions = new List<TestDefinition>
+            {
+                Kernel.Get<T1>(),
+                Kernel.Get<T2>(),
+                Kernel.Get<T3>(),
+                Kernel.Get<T4>(),
+                Kernel.Get<T5>()
+            };
 
             return testDefinitions;
         }
@@ -146,14 +151,15 @@ namespace AutoVersionsDB.Core.IntegrationTests
           where T5 : TestDefinition
           where T6 : TestDefinition
         {
-            List<TestDefinition> testDefinitions = new List<TestDefinition>();
-
-            testDefinitions.Add(Kernel.Get<T1>());
-            testDefinitions.Add(Kernel.Get<T2>());
-            testDefinitions.Add(Kernel.Get<T3>());
-            testDefinitions.Add(Kernel.Get<T4>());
-            testDefinitions.Add(Kernel.Get<T5>());
-            testDefinitions.Add(Kernel.Get<T6>());
+            List<TestDefinition> testDefinitions = new List<TestDefinition>
+            {
+                Kernel.Get<T1>(),
+                Kernel.Get<T2>(),
+                Kernel.Get<T3>(),
+                Kernel.Get<T4>(),
+                Kernel.Get<T5>(),
+                Kernel.Get<T6>()
+            };
 
             return testDefinitions;
         }

@@ -25,13 +25,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_NewScrtiptFile_Repeatable_API : TestDefinition
     {
-        private string _relFolder_Repeatable = "Repeatable";
+        private readonly string _relFolder_Repeatable = "Repeatable";
 
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public string ScriptName1 => "TestRptScript1";
+        public static string ScriptName1 => "TestRptScript1";
 
 
 

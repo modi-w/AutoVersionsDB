@@ -25,9 +25,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_NotAllowMethods_New_DevDummyData_API : TestDefinition
     {
-        private string _relFolder_DevDummyData = "DevDummyData";
-
-        private string _scriptFullPath_DevDummyData_scriptName1
+        private static string ScriptFullPath_DevDummyData_scriptName1
         {
             get
             {
@@ -45,7 +43,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public string ScriptName1 => "TestDddScript1";
+        public static string ScriptName1 => "TestDddScript1";
 
 
         public DeliveryEnv_NotAllowMethods_New_DevDummyData_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
@@ -60,9 +58,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             ITestContext testContext = _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
 
-            if (File.Exists(_scriptFullPath_DevDummyData_scriptName1))
+            if (File.Exists(ScriptFullPath_DevDummyData_scriptName1))
             {
-                File.Delete(_scriptFullPath_DevDummyData_scriptName1);
+                File.Delete(ScriptFullPath_DevDummyData_scriptName1);
             }
 
 
@@ -87,9 +85,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Release(testContext);
 
-            if (File.Exists(_scriptFullPath_DevDummyData_scriptName1))
+            if (File.Exists(ScriptFullPath_DevDummyData_scriptName1))
             {
-                File.Delete(_scriptFullPath_DevDummyData_scriptName1);
+                File.Delete(ScriptFullPath_DevDummyData_scriptName1);
             }
 
         }

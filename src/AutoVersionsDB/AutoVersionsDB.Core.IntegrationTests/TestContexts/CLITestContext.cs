@@ -10,12 +10,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestContexts
 {
     public class CLITestContext : ITestContext
     {
-        private ITestContext _testContext;
+        private readonly ITestContext _testContext;
 
-        private StringBuilder _sbAllConsoleOut;
-        private StringBuilder _sbCurrentConsoleOut;
+        private readonly StringBuilder _sbAllConsoleOut;
+        private readonly StringBuilder _sbCurrentConsoleOut;
 
-        private StringBuilder _sbConsoleError;
+        private readonly StringBuilder _sbConsoleError;
 
         private int _lastLengthForCurrentConsoleOnLineAppended;
 

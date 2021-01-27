@@ -15,7 +15,6 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
     {
         private readonly DBCommandsFactory _dbCommandsFactory;
         private readonly ExecuteScriptsByTypeStepFactory _executeScriptsByTypeStepFactory;
-        private readonly ArtifactExtractorFactory _artifactExtractorFactory;
 
         public const string Name = "Execute DDD Scripts Virtually";
         public override string StepName => Name;
@@ -32,7 +31,6 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps.ExecuteScripts
 
             _dbCommandsFactory = dbCommandsFactory;
             _executeScriptsByTypeStepFactory = executeScriptsByTypeStepFactory;
-            _artifactExtractorFactory = artifactExtractorFactory;
         }
 
 

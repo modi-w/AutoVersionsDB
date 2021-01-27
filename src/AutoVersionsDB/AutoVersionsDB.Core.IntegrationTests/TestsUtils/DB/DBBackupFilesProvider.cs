@@ -13,56 +13,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
 {
     public class DBBackupFilesProvider
     {
-        public string GetDBBackupFilePath(DBBackupFileType dbBackupFileType, string dbType)
+        public virtual string GetDBBackupFilePath(DBBackupFileType dbBackupFileType, string dbType)
         {
-            string filePath;
-
-            switch (dbBackupFileType)
+            string filePath = dbBackupFileType switch
             {
-                case DBBackupFileType.EmptyDB:
-
-                    filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_EmptyDB).Replace("[DBType]", dbType);
-                    break;
-
-                case DBBackupFileType.EmptyDBWithSystemTables:
-
-                    filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_ExceptSystemTables).Replace("[DBType]", dbType);
-                    break;
-
-                case DBBackupFileType.AfterRunInitStateScript:
-
-                    filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_AfterRunInitStateScript).Replace("[DBType]", dbType);
-                    break;
-
-                case DBBackupFileType.MiddleState:
-
-                    filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_MiddleState).Replace("[DBType]", dbType);
-                    break;
-
-                case DBBackupFileType.FinalState_DevEnv:
-
-                    filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_FinalState_DevEnv).Replace("[DBType]", dbType);
-                    break;
-
-                case DBBackupFileType.FinalState_DeliveryEnv:
-
-                    filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_FinalState_DeliveryEnv).Replace("[DBType]", dbType);
-                    break;
-
-                case DBBackupFileType.FinalState_MissingSystemTables:
-
-                    filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_FinalState_MissingSystemTables).Replace("[DBType]", dbType);
-                    break;
-
-                case DBBackupFileType.AddDataAfterFinalState:
-
-                    filePath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_AddDataAfterFinalState).Replace("[DBType]", dbType);
-                    break;
-
-                default:
-                    throw new Exception($"Invalid DBBackupFileType: '{dbBackupFileType}'");
-            }
-
+                DBBackupFileType.EmptyDB => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_EmptyDB).Replace("[DBType]", dbType),
+                DBBackupFileType.EmptyDBWithSystemTables => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_ExceptSystemTables).Replace("[DBType]", dbType),
+                DBBackupFileType.AfterRunInitStateScript => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_AfterRunInitStateScript).Replace("[DBType]", dbType),
+                DBBackupFileType.MiddleState => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_MiddleState).Replace("[DBType]", dbType),
+                DBBackupFileType.FinalState_DevEnv => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_FinalState_DevEnv).Replace("[DBType]", dbType),
+                DBBackupFileType.FinalState_DeliveryEnv => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_FinalState_DeliveryEnv).Replace("[DBType]", dbType),
+                DBBackupFileType.FinalState_MissingSystemTables => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_FinalState_MissingSystemTables).Replace("[DBType]", dbType),
+                DBBackupFileType.AddDataAfterFinalState => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DBBackup_AddDataAfterFinalState).Replace("[DBType]", dbType),
+                _ => throw new Exception($"Invalid DBBackupFileType: '{dbBackupFileType}'"),
+            };
             return filePath;
         }
     }

@@ -15,7 +15,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 {
     public class ScriptFilesListsStateAsserts
     {
-        public void AssertDBVersionsViewModelDataDBFinalState(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataDBFinalState(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFilesListHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles, HashDiffType.Equal);
@@ -35,7 +35,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         }
 
 
-        public void AssertDBVersionsViewModelDataDBFinalStateVrDDD(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void AssertDBVersionsViewModelDataDBFinalStateVrDDD(string testName, DBVersionsViewModelData dbVersionsViewModelData)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFilesListHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles, HashDiffType.Equal);
@@ -47,7 +47,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             AssertFilesListHashState(testName, dbVersionsViewModelData.DevDummyDataScriptFiles, HashDiffType.EqualVirtual);
         }
 
-        public void AssertDBVersionsViewModelDataDBFinalStateVirtual(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void AssertDBVersionsViewModelDataDBFinalStateVirtual(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFilesListHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles, HashDiffType.EqualVirtual);
@@ -66,7 +66,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             }
         }
 
-        public void AssertDBVersionsViewModelDataMiddleState(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataMiddleState(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
@@ -90,7 +90,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             }
         }
 
-        public void AssertDBVersionsViewModelDataMiddleStateVirtual(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataMiddleStateVirtual(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.EqualVirtual);
@@ -118,7 +118,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
 
 
-        public void AssertDBVersionsViewModelDataNewIncScriptsFiles(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataNewIncScriptsFiles(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 7);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
@@ -143,7 +143,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             }
         }
 
-        public void AssertDBVersionsViewModelDataNewRptScriptFile(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataNewRptScriptFile(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
@@ -167,7 +167,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
                 AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 0);
             }
         }
-        public void AssertDBVersionsViewModelDataNewDDDScriptFile(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataNewDDDScriptFile(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
@@ -193,7 +193,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         }
 
 
-        public void AssertDBVersionsViewModelDataRepeatableChanged(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void AssertDBVersionsViewModelDataRepeatableChanged(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
@@ -218,7 +218,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             }
         }
 
-        public void AssertDBVersionsViewModelDataIncrementalChanged(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataIncrementalChanged(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFileHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles[0], HashDiffType.Equal);
@@ -241,7 +241,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
                 AssertFilesListSize(testName, nameof(dbVersionsViewModelData.DevDummyDataScriptFiles), dbVersionsViewModelData.DevDummyDataScriptFiles, 0);
             }
         }
-        public void AssertDBVersionsViewModelDataIncrementalMissing(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataIncrementalMissing(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 4);
             AssertFilesListHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles, HashDiffType.Equal);
@@ -260,7 +260,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             }
         }
 
-        public void AssertDBVersionsViewModelDataNoFiles(string testName, DBVersionsViewModelData dbVersionsViewModelData)
+        public virtual void AssertDBVersionsViewModelDataNoFiles(string testName, DBVersionsViewModelData dbVersionsViewModelData)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 0);
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.RepeatableScriptFiles), dbVersionsViewModelData.RepeatableScriptFiles, 0);
@@ -268,7 +268,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
 
         }
 
-        public void AssertDBVersionsViewModelDataMissingSystemTables(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataMissingSystemTables(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 5);
             AssertFilesListHashState(testName, dbVersionsViewModelData.IncrementalScriptFiles, HashDiffType.NotExist);
@@ -287,7 +287,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             }
         }
 
-        public void AssertDBVersionsViewModelDataNewProject(string testName, DBVersionsViewModelData dbVersionsViewModelData, bool isDevEnv)
+        public virtual void  AssertDBVersionsViewModelDataNewProject(string testName, DBVersionsViewModelData dbVersionsViewModelData)
         {
             AssertFilesListSize(testName, nameof(dbVersionsViewModelData.IncrementalScriptFiles), dbVersionsViewModelData.IncrementalScriptFiles, 0);
 
@@ -297,13 +297,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
         }
 
 
-        private void AssertFilesListSize(string testName, string listName, IList<RuntimeScriptFile> runtimeFiles, int targetSize)
+        private static void AssertFilesListSize(string testName, string listName, IList<RuntimeScriptFile> runtimeFiles, int targetSize)
         {
             Assert.That(runtimeFiles.Count == targetSize, $"{testName} >>> {listName} size should be {targetSize}, but was '{runtimeFiles.Count}'");
 
         }
 
-        private void AssertFilesListHashState(string testName, IEnumerable<RuntimeScriptFile> runtimeFiles, HashDiffType targetHashState)
+        private static void AssertFilesListHashState(string testName, IEnumerable<RuntimeScriptFile> runtimeFiles, HashDiffType targetHashState)
         {
             foreach (var file in runtimeFiles)
             {
@@ -311,7 +311,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.U
             }
         }
 
-        private void AssertFileHashState(string testName, RuntimeScriptFile runtimeFile, HashDiffType targetHashState)
+        private static void AssertFileHashState(string testName, RuntimeScriptFile runtimeFile, HashDiffType targetHashState)
         {
             Assert.That(runtimeFile.HashDiffType == targetHashState, $"{testName} >>> The {runtimeFile.ScriptFileType.FileTypeCode} file: '{runtimeFile.Filename}' should be '{targetHashState}' hash state, but was '{runtimeFile.HashDiffType}'");
 
