@@ -69,6 +69,25 @@ namespace AutoVersionsDB.NotificationableEngine
             }
         }
 
+        public string ErrorMessage
+        {
+            get
+            {
+                string outStr = "";
+
+                lock (_statesLog)
+                {
+                    var lastStateWithErrorMessage = _statesLog.LastOrDefault(e => !string.IsNullOrWhiteSpace(e.LowLevelErrorMessage));
+                    if (lastStateWithErrorMessage != null)
+                    {
+                        outStr = lastStateWithErrorMessage.LowLevelErrorMessage;
+                    }
+                }
+
+                return outStr;
+            }
+        }
+
         public NotificationErrorType NotificationErrorType
         {
             get

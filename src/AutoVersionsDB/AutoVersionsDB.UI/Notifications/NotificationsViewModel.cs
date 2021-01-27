@@ -200,9 +200,10 @@ namespace AutoVersionsDB.UI.Notifications
             if (_processTrace.HasError)
             {
                 NotificationsViewModelData.ProcessStatusMessage = _processTrace.InstructionsMessage;
+                    //$"{_processTrace.InstructionsMessage} -> {_processTrace.ErrorMessage}";
 
                 NotificationsViewModelData.NotificationStatus = _processTrace.NotificationErrorType
-                    switch
+                switch
                 {
                     NotificationErrorType.Error => NotificationStatus.Error,
                     NotificationErrorType.Attention => NotificationStatus.Attention,

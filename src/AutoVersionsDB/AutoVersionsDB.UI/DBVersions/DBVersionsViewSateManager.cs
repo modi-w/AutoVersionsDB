@@ -118,9 +118,12 @@ namespace AutoVersionsDB.UI.DBVersions
 
                     if (_dbVersionsViewModelData.ProjectConfig.DevEnvironment)
                     {
-                        _dbVersionsControls.BtnVirtualDDDVisible =
-                            _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.Count > 0
-                            && _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.ExecutedFilesAll.Count == 0;
+                        if (_dbVersionsViewModelData.ScriptFilesState!= null)
+                        {
+                            _dbVersionsControls.BtnVirtualDDDVisible =
+                                _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.AllFileSystemScriptFiles.Count > 0
+                                && _dbVersionsViewModelData.ScriptFilesState.DevDummyDataScriptFilesComparer.ExecutedFilesAll.Count == 0;
+                        }
                     }
 
 

@@ -107,7 +107,7 @@ namespace AutoVersionsDB.NotificationableEngine
                 }
                 catch (Exception ex)
                 {
-                    _processTraceHandler.StepError(step.StepName, ex.ToString(), "Error occurred during the process.", NotificationErrorType.Error);
+                    _processTraceHandler.StepError(step.StepName, ex.ToString(), ex.Message, NotificationErrorType.Error);
                 }
 
                 _processTraceHandler.StepEnd();

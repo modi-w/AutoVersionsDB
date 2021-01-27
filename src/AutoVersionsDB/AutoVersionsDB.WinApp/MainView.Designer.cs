@@ -58,7 +58,7 @@ namespace AutoVersionsDB.WinApp
             this.tabMainLayout.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabMainLayout.Name = "tabMainLayout";
             this.tabMainLayout.SelectedIndex = 0;
-            this.tabMainLayout.Size = new System.Drawing.Size(1090, 764);
+            this.tabMainLayout.Size = new System.Drawing.Size(1090, 599);
             this.tabMainLayout.TabIndex = 1;
             // 
             // tbChooseProject
@@ -70,7 +70,7 @@ namespace AutoVersionsDB.WinApp
             this.tbChooseProject.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbChooseProject.Name = "tbChooseProject";
             this.tbChooseProject.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tbChooseProject.Size = new System.Drawing.Size(1082, 731);
+            this.tbChooseProject.Size = new System.Drawing.Size(1082, 566);
             this.tbChooseProject.TabIndex = 0;
             this.tbChooseProject.Text = "Choose Project";
             // 
@@ -85,7 +85,7 @@ namespace AutoVersionsDB.WinApp
             this.chooseProject1.Location = new System.Drawing.Point(4, 5);
             this.chooseProject1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chooseProject1.Name = "chooseProject1";
-            this.chooseProject1.Size = new System.Drawing.Size(1082, 713);
+            this.chooseProject1.Size = new System.Drawing.Size(1082, 548);
             this.chooseProject1.TabIndex = 0;
             this.chooseProject1.ViewModel = null;
             // 
@@ -170,7 +170,7 @@ namespace AutoVersionsDB.WinApp
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1082, 816);
+            this.ClientSize = new System.Drawing.Size(1082, 651);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lnkBtnChooseProject);
             this.Controls.Add(this.tabMainLayout);
