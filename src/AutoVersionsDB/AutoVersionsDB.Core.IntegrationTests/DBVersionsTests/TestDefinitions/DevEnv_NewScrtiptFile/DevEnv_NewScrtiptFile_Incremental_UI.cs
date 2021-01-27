@@ -46,15 +46,15 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(DBVersionsUITestContext testContext)
         {
-            _dbVersionsViewModel.OnTextInput += _dbVersionsViewModel_OnTextInputScript1;
+            _dbVersionsViewModel.OnTextInput += DbVersionsViewModel_OnTextInputScript1;
             var task1 = _dbVersionsViewModel.CreateNewIncrementalScriptFileCommand.ExecuteWrapped();
             task1.Wait();
-            _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInputScript1;
+            _dbVersionsViewModel.OnTextInput -= DbVersionsViewModel_OnTextInputScript1;
 
-            _dbVersionsViewModel.OnTextInput += _dbVersionsViewModel_OnTextInputScript2;
+            _dbVersionsViewModel.OnTextInput += DbVersionsViewModel_OnTextInputScript2;
             var task2 = _dbVersionsViewModel.CreateNewIncrementalScriptFileCommand.ExecuteWrapped();
             task2.Wait();
-            _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInputScript2;
+            _dbVersionsViewModel.OnTextInput -= DbVersionsViewModel_OnTextInputScript2;
         }
 
 
@@ -71,8 +71,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Release(DBVersionsUITestContext testContext)
         {
-            _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInputScript1;
-            _dbVersionsViewModel.OnTextInput -= _dbVersionsViewModel_OnTextInputScript2;
+            _dbVersionsViewModel.OnTextInput -= DbVersionsViewModel_OnTextInputScript1;
+            _dbVersionsViewModel.OnTextInput -= DbVersionsViewModel_OnTextInputScript2;
 
             _devEnv_NewScrtiptFile_Incremental_API.Release(testContext);
         }
@@ -80,20 +80,20 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        private void _dbVersionsViewModel_OnTextInputScript1(object sender, OnTextInputEventsEventArgs e)
+        private void DbVersionsViewModel_OnTextInputScript1(object sender, OnTextInputEventsEventArgs e)
         {
             e.Results = new TextInputResults()
             {
                 IsApply = true,
-                ResultText = _devEnv_NewScrtiptFile_Incremental_API.ScriptName1
+                ResultText = DevEnv_NewScrtiptFile_Incremental_API.ScriptName1
             };
         }
-        private void _dbVersionsViewModel_OnTextInputScript2(object sender, OnTextInputEventsEventArgs e)
+        private void DbVersionsViewModel_OnTextInputScript2(object sender, OnTextInputEventsEventArgs e)
         {
             e.Results = new TextInputResults()
             {
                 IsApply = true,
-                ResultText = _devEnv_NewScrtiptFile_Incremental_API.ScriptName2
+                ResultText = DevEnv_NewScrtiptFile_Incremental_API.ScriptName2
             };
         }
 

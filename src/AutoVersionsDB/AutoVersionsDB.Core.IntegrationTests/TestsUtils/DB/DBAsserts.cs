@@ -22,13 +22,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
     public class DBAsserts
     {
         private readonly DBHandler _dbHandler;
-        private readonly DBBackupFilesProvider _dbBackupFilesProvider;
 
-        public DBAsserts(DBHandler dbHandler,
-                            DBBackupFilesProvider dbBackupFilesProvider)
+        public DBAsserts(DBHandler dbHandler)
         {
             _dbHandler = dbHandler;
-            _dbBackupFilesProvider = dbBackupFilesProvider;
         }
 
 
@@ -40,7 +37,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             Assert.That(numOfOpenConnections_Before.NumOfConnectionsToAdminDB, Is.GreaterThanOrEqualTo(numOfOpenConnections_After.NumOfConnectionsToAdminDB), $"{testName} >>> NumOfConnectionsToAdminDB after '{numOfOpenConnections_After.NumOfConnectionsToAdminDB}', is grater then before '{numOfOpenConnections_Before.NumOfConnectionsToAdminDB}'");
         }
 
-        public void AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(string testName, DBConnectionInfo dbConnectionInfo, DBBackupFileType dbBackupFileType)
+        //public void AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile(string testName, DBConnectionInfo dbConnectionInfo, DBBackupFileType dbBackupFileType)
+        public virtual void AssertThatTheProcessBackupDBFileEualToTheOriginalRestoreDBFile()
         {
             //Comment: this check is not work because the original bak files was backup on diffrent sql server
 
@@ -65,7 +63,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         }
 
 
-        public void AssertRestore(string testName, DBConnectionInfo dbConnectionInfo, DBBackupFileType dbBackupFileType, ProcessTrace processTrace)
+        //   public void AssertRestore(string testName, DBConnectionInfo dbConnectionInfo, DBBackupFileType dbBackupFileType, ProcessTrace processTrace)
+        public virtual void  AssertRestore(string testName, ProcessTrace processTrace)
         {
             Assert.That(processTrace.HasError);
 
@@ -106,10 +105,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         public void AssertThatDBExecutedFilesAreInMiddleState(string testName, DBConnectionInfo dbConnectionInfo)
         {
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName);
-            assertTableNumOfRows(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 3);
-            assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 0, "Filename", "incScript_0001_initState.sql");
-            assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 1, "Filename", "incScript_0002_CreateLookupTable1.sql");
-            assertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 2, "Filename", "incScript_0003_CreateLookupTable2.sql");
+            AssertTableNumOfRows(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 3);
+            AssertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 0, "Filename", "incScript_0001_initState.sql");
+            AssertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 1, "Filename", "incScript_0002_CreateLookupTable1.sql");
+            AssertTableCellValue(testName, DBCommandsConsts.DBScriptsExecutionHistoryFilesFullTableName, tableData, 2, "Filename", "incScript_0003_CreateLookupTable2.sql");
         }
 
 
@@ -120,12 +119,12 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string tableName = "[Schema2].[LookupTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable1");
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
             tableName = "[Schema2].[LookupTable2]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable2");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
 
             AssertSpExsit(testName, dbConnectionInfo, "Schema1", "SpOnTable1");
@@ -139,34 +138,34 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string tableName = "[Schema2].[LookupTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable1");
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 2);
-            assertTableCellValue(testName, tableName, tableData, 0, "Lookup1Value", "Value1");
-            assertTableCellValue(testName, tableName, tableData, 1, "Lookup1Value", "Value2");
+            AssertTableNumOfRows(testName, tableName, tableData, 2);
+            AssertTableCellValue(testName, tableName, tableData, 0, "Lookup1Value", "Value1");
+            AssertTableCellValue(testName, tableName, tableData, 1, "Lookup1Value", "Value2");
 
 
             tableName = "[Schema2].[LookupTable2]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable2");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 3);
-            assertTableCellValue(testName, tableName, tableData, 0, "Lookup2Value", "Value3");
-            assertTableCellValue(testName, tableName, tableData, 1, "Lookup2Value", "Value4");
-            assertTableCellValue(testName, tableName, tableData, 2, "Lookup2Value", "Value5");
+            AssertTableNumOfRows(testName, tableName, tableData, 3);
+            AssertTableCellValue(testName, tableName, tableData, 0, "Lookup2Value", "Value3");
+            AssertTableCellValue(testName, tableName, tableData, 1, "Lookup2Value", "Value4");
+            AssertTableCellValue(testName, tableName, tableData, 2, "Lookup2Value", "Value5");
 
 
             tableName = "[Schema3].[InvoiceTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema3", "InvoiceTable1");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 2);
-            assertTableCellValue(testName, tableName, tableData, 0, "Comments", "Comment 1");
-            assertTableCellValue(testName, tableName, tableData, 1, "Comments", "Comment 2");
+            AssertTableNumOfRows(testName, tableName, tableData, 2);
+            AssertTableCellValue(testName, tableName, tableData, 0, "Comments", "Comment 1");
+            AssertTableCellValue(testName, tableName, tableData, 1, "Comments", "Comment 2");
 
 
             tableName = "[Schema3].[TransTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema3", "TransTable1");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 2);
-            assertTableCellValue(testName, tableName, tableData, 0, "TotalPrice", 200);
-            assertTableCellValue(testName, tableName, tableData, 1, "TotalPrice", 1000);
+            AssertTableNumOfRows(testName, tableName, tableData, 2);
+            AssertTableCellValue(testName, tableName, tableData, 0, "TotalPrice", 200);
+            AssertTableCellValue(testName, tableName, tableData, 1, "TotalPrice", 1000);
 
 
             AssertSpExsit(testName, dbConnectionInfo, "Schema1", "SpOnTable1");
@@ -182,30 +181,30 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string tableName = "[Schema2].[LookupTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable1");
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 2);
-            assertTableCellValue(testName, tableName, tableData, 0, "Lookup1Value", "Value1");
-            assertTableCellValue(testName, tableName, tableData, 1, "Lookup1Value", "Value2");
+            AssertTableNumOfRows(testName, tableName, tableData, 2);
+            AssertTableCellValue(testName, tableName, tableData, 0, "Lookup1Value", "Value1");
+            AssertTableCellValue(testName, tableName, tableData, 1, "Lookup1Value", "Value2");
 
 
             tableName = "[Schema2].[LookupTable2]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable2");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 3);
-            assertTableCellValue(testName, tableName, tableData, 0, "Lookup2Value", "Value3");
-            assertTableCellValue(testName, tableName, tableData, 1, "Lookup2Value", "Value4");
-            assertTableCellValue(testName, tableName, tableData, 2, "Lookup2Value", "Value5");
+            AssertTableNumOfRows(testName, tableName, tableData, 3);
+            AssertTableCellValue(testName, tableName, tableData, 0, "Lookup2Value", "Value3");
+            AssertTableCellValue(testName, tableName, tableData, 1, "Lookup2Value", "Value4");
+            AssertTableCellValue(testName, tableName, tableData, 2, "Lookup2Value", "Value5");
 
 
             tableName = "[Schema3].[InvoiceTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema3", "InvoiceTable1");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
 
             tableName = "[Schema3].[TransTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema3", "TransTable1");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
 
             AssertSpExsit(testName, dbConnectionInfo, "Schema1", "SpOnTable1");
@@ -220,30 +219,30 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string tableName = "[Schema2].[LookupTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable1");
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 2);
-            assertTableCellValue(testName, tableName, tableData, 0, "Lookup1Value", "Value1");
-            assertTableCellValue(testName, tableName, tableData, 1, "Lookup1Value", "Value2");
+            AssertTableNumOfRows(testName, tableName, tableData, 2);
+            AssertTableCellValue(testName, tableName, tableData, 0, "Lookup1Value", "Value1");
+            AssertTableCellValue(testName, tableName, tableData, 1, "Lookup1Value", "Value2");
 
 
             tableName = "[Schema2].[LookupTable2]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable2");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 3);
-            assertTableCellValue(testName, tableName, tableData, 0, "Lookup2Value", "Value3");
-            assertTableCellValue(testName, tableName, tableData, 1, "Lookup2Value", "Value4");
-            assertTableCellValue(testName, tableName, tableData, 2, "Lookup2Value", "Value5");
+            AssertTableNumOfRows(testName, tableName, tableData, 3);
+            AssertTableCellValue(testName, tableName, tableData, 0, "Lookup2Value", "Value3");
+            AssertTableCellValue(testName, tableName, tableData, 1, "Lookup2Value", "Value4");
+            AssertTableCellValue(testName, tableName, tableData, 2, "Lookup2Value", "Value5");
 
 
             tableName = "[Schema3].[InvoiceTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema3", "InvoiceTable1");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
 
             tableName = "[Schema3].[TransTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema3", "TransTable1");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
 
             AssertSpExsit(testName, dbConnectionInfo, "Schema1", "SpOnTable1");
@@ -258,22 +257,22 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string tableName = "[Schema2].[LookupTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable1");
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
             tableName = "[Schema2].[LookupTable2]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema2", "LookupTable2");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
             tableName = "[Schema3].[InvoiceTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema3", "InvoiceTable1");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
             tableName = "[Schema3].[TransTable1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema3", "TransTable1");
             tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 0);
+            AssertTableNumOfRows(testName, tableName, tableData, 0);
 
             AssertSpExsit(testName, dbConnectionInfo, "Schema1", "SpOnTable1");
 
@@ -290,9 +289,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
             string tableName = "[Schema1].[Table1]";
             AssertTableExsit(testName, dbConnectionInfo, "Schema1", "Table1");
             DataTable tableData = _dbHandler.GetTable(dbConnectionInfo, tableName);
-            assertTableNumOfRows(testName, tableName, tableData, 2);
-            assertTableCellValue(testName, tableName, tableData, 0, "Col1", "aa");
-            assertTableCellValue(testName, tableName, tableData, 1, "Col1", "bb");
+            AssertTableNumOfRows(testName, tableName, tableData, 2);
+            AssertTableCellValue(testName, tableName, tableData, 0, "Col1", "aa");
+            AssertTableCellValue(testName, tableName, tableData, 1, "Col1", "bb");
         }
 
 
@@ -305,11 +304,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.DB
         }
 
 
-        private static void assertTableNumOfRows(string testName, string tableName, DataTable table1Data, int numOfRows)
+        private static void AssertTableNumOfRows(string testName, string tableName, DataTable table1Data, int numOfRows)
         {
             Assert.That(table1Data.Rows.Count, Is.EqualTo(numOfRows), $"{testName} >>> The table {tableName} should be {numOfRows} rows, but has {table1Data.Rows.Count}");
         }
-        private static void assertTableCellValue(string testName, string tableName, DataTable table1Data, int rowIndex, string colName, object cellValue)
+        private static void AssertTableCellValue(string testName, string tableName, DataTable table1Data, int rowIndex, string colName, object cellValue)
         {
             Assert.That(table1Data.Rows[rowIndex][colName], Is.EqualTo(cellValue), $"{testName} >>> For table '{tableName}' cell [{rowIndex}][{colName}] should be '{cellValue}', but was '{table1Data.Rows[rowIndex][colName]}' ");
         }

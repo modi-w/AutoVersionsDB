@@ -18,7 +18,7 @@ namespace AutoVersionsDB.Helpers
                 //string assemblyLocation = assemblyInfo.Location;
 
                 //CodeBase is the location of the ClickOnce deployment files
-                var uriCodeBase = new Uri(assemblyInfo.CodeBase);
+                var uriCodeBase = new Uri(assemblyInfo.Location);
                 return Path.GetDirectoryName(uriCodeBase.LocalPath);
             }
         }
@@ -59,7 +59,7 @@ namespace AutoVersionsDB.Helpers
         public static string GetDllFolderFullPath()
         {
             Assembly assemblyInfo = Assembly.GetExecutingAssembly();
-            var uriCodeBase = new Uri(assemblyInfo.CodeBase);
+            var uriCodeBase = new Uri(assemblyInfo.Location);
             string dllFolder = Path.GetDirectoryName(uriCodeBase.LocalPath);
 
             return dllFolder;

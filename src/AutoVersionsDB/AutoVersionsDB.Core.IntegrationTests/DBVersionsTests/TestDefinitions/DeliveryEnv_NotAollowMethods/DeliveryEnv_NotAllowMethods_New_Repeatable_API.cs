@@ -24,9 +24,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DeliveryEnv_NotAllowMethods_New_Repeatable_API : TestDefinition
     {
-        private string _relFolder_Repeatable = "Repeatable";
-
-        private string _scriptFullPath_Repeatable_scriptName1
+        private static string ScriptFullPath_Repeatable_scriptName1
         {
             get
             {
@@ -44,7 +42,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
 
 
-        public string ScriptName1 => "TestRptScript1";
+        public static string ScriptName1 => "TestRptScript1";
 
 
         public DeliveryEnv_NotAllowMethods_New_Repeatable_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
@@ -59,9 +57,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             ITestContext testContext = _projectConfigWithDBArrangeAndAssert.Arrange(testArgs, false, DBBackupFileType.FinalState_DeliveryEnv, ScriptFilesStateType.ValidScripts);
 
-            if (File.Exists(_scriptFullPath_Repeatable_scriptName1))
+            if (File.Exists(ScriptFullPath_Repeatable_scriptName1))
             {
-                File.Delete(_scriptFullPath_Repeatable_scriptName1);
+                File.Delete(ScriptFullPath_Repeatable_scriptName1);
             }
 
 
@@ -86,9 +84,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Release(testContext);
 
-            if (File.Exists(_scriptFullPath_Repeatable_scriptName1))
+            if (File.Exists(ScriptFullPath_Repeatable_scriptName1))
             {
-                File.Delete(_scriptFullPath_Repeatable_scriptName1);
+                File.Delete(ScriptFullPath_Repeatable_scriptName1);
             }
 
         }

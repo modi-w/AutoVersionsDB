@@ -1,6 +1,7 @@
 ﻿using AutoVersionsDB.CLI;
 using System;
 using System.CommandLine.IO;
+using System.Runtime.InteropServices;
 
 namespace AutoVersionsDB.ConsoleApp
 {
@@ -11,12 +12,24 @@ namespace AutoVersionsDB.ConsoleApp
         public int BufferHeight
         {
             get => Console.BufferHeight;
-            set => Console.BufferHeight = value;
+            set
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    Console.BufferHeight = value;
+                }
+            }
         }
         public int BufferWidth
         {
             get => Console.BufferWidth;
-            set => Console.BufferWidth = value;
+            set
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    Console.BufferWidth = value;
+                }
+            }
         }
         public int CursorTop
         {
@@ -36,8 +49,25 @@ namespace AutoVersionsDB.ConsoleApp
 
         public bool CursorVisible
         {
-            get => Console.CursorVisible;
-            set => Console.CursorVisible = value;
+            get
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    return Console.CursorVisible;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            set
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    Console.CursorVisible = value;
+                }
+            }
+
         }
 
 

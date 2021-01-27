@@ -20,7 +20,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
     public class ProjectConfigsFactory
     {
-        private List<DBConnectionInfo> _dbConnectionInfos = new List<DBConnectionInfo>()
+        private readonly List<DBConnectionInfo> _dbConnectionInfos = new List<DBConnectionInfo>()
         {
             new DBConnectionInfo(IntegrationTestsConsts.SqlServerDBType,
                                 SqlServerLocalDBConnection.ConnectionStringBuilder.DataSource,
@@ -66,7 +66,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        private ProjectConfigItem CreateBaseProjectConfig()
+        private static ProjectConfigItem CreateBaseProjectConfig()
         {
             return new ProjectConfigItem()
             {
@@ -76,7 +76,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
             };
         }
 
-        public ProjectConfigItem SetFoldersPathByDBType(ref ProjectConfigItem projectConfig, ScriptFilesStateType scriptFilesStateType)
+        public virtual ProjectConfigItem SetFoldersPathByDBType(ref ProjectConfigItem projectConfig, ScriptFilesStateType scriptFilesStateType)
         {
             SetScriptsFoldersPath(ref projectConfig, scriptFilesStateType);
 
@@ -87,7 +87,7 @@ namespace AutoVersionsDB.Core.IntegrationTests
 
 
 
-        private void SetScriptsFoldersPath(ref ProjectConfigItem projectConfig, ScriptFilesStateType scriptFilesStateType)
+        private static void SetScriptsFoldersPath(ref ProjectConfigItem projectConfig, ScriptFilesStateType scriptFilesStateType)
         {
             if (projectConfig.DevEnvironment)
             {
@@ -143,46 +143,17 @@ namespace AutoVersionsDB.Core.IntegrationTests
             }
             else
             {
-                switch (scriptFilesStateType)
+                projectConfig.DeliveryArtifactFolderPath = scriptFilesStateType switch
                 {
-                    case ScriptFilesStateType.ValidScripts:
-
-                        projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_Normal).Replace("[DBType]", projectConfig.DBType);
-                        break;
-
-                    case ScriptFilesStateType.MissingFile:
-
-                        projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_MissingFileh).Replace("[DBType]", projectConfig.DBType);
-                        break;
-
-                    case ScriptFilesStateType.ScriptError:
-
-                        projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ScriptError).Replace("[DBType]", projectConfig.DBType);
-                        break;
-
-                    case ScriptFilesStateType.IncrementalChanged:
-
-                        projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ChangedHistoryFiles_Incremental).Replace("[DBType]", projectConfig.DBType);
-                        break;
-
-                    case ScriptFilesStateType.RepeatableChanged:
-
-                        projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ChangedHistoryFiles_Repeatable).Replace("[DBType]", projectConfig.DBType);
-                        break;
-
-                    case ScriptFilesStateType.WithDevDummyDataFiles:
-
-                        projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_WithDevDummyDataFiles).Replace("[DBType]", projectConfig.DBType);
-                        break;
-
-                    case ScriptFilesStateType.NoScriptFiles:
-
-                        projectConfig.DeliveryArtifactFolderPath = FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_NoScriptFiles).Replace("[DBType]", projectConfig.DBType);
-                        break;
-
-                    default:
-                        throw new Exception($"Invalid ScriptFilesStateType: '{scriptFilesStateType}'");
-                }
+                    ScriptFilesStateType.ValidScripts => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_Normal).Replace("[DBType]", projectConfig.DBType),
+                    ScriptFilesStateType.MissingFile => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_MissingFileh).Replace("[DBType]", projectConfig.DBType),
+                    ScriptFilesStateType.ScriptError => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ScriptError).Replace("[DBType]", projectConfig.DBType),
+                    ScriptFilesStateType.IncrementalChanged => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ChangedHistoryFiles_Incremental).Replace("[DBType]", projectConfig.DBType),
+                    ScriptFilesStateType.RepeatableChanged => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_ChangedHistoryFiles_Repeatable).Replace("[DBType]", projectConfig.DBType),
+                    ScriptFilesStateType.WithDevDummyDataFiles => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_WithDevDummyDataFiles).Replace("[DBType]", projectConfig.DBType),
+                    ScriptFilesStateType.NoScriptFiles => FileSystemPathUtils.ParsePathVaribles(IntegrationTestsConsts.DeliveryArtifactFolderPath_NoScriptFiles).Replace("[DBType]", projectConfig.DBType),
+                    _ => throw new Exception($"Invalid ScriptFilesStateType: '{scriptFilesStateType}'"),
+                };
             }
         }
     }

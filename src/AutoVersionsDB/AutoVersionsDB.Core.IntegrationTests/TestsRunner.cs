@@ -12,9 +12,9 @@ namespace AutoVersionsDB.Core.IntegrationTests
 {
     public static class TestsRunner
     {
-        private static ProjectConfigsFactory _projectConfigsFactory = DIConfig.Kernel.Get<ProjectConfigsFactory>();
+        private static readonly ProjectConfigsFactory _projectConfigsFactory = DIConfig.Kernel.Get<ProjectConfigsFactory>();
 
-        private static object _testRunSync = new object();
+        private static readonly object _testRunSync = new object();
 
         public static void RunTests<T1>()
             where T1 : TestDefinition

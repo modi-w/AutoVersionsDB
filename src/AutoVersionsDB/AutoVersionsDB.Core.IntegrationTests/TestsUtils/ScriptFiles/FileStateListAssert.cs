@@ -15,8 +15,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 {
     public class FileStateListAssert
     {
-        private string _testName;
-        private ScriptFilesComparerBase _scriptFilesComparer;
+        private readonly string _testName;
+        private readonly ScriptFilesComparerBase _scriptFilesComparer;
 
         public FileStateListAssert(string testName, ScriptFilesComparerBase scriptFilesComparer)
         {

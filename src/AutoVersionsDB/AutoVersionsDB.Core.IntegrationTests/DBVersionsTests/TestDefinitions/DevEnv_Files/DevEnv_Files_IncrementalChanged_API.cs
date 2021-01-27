@@ -28,14 +28,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
     public class DevEnv_Files_IncrementalChanged_API : TestDefinition
     {
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
-        private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public DevEnv_Files_IncrementalChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert,
-                                                    ScriptFilesAsserts scriptFilesAsserts)
+        public DevEnv_Files_IncrementalChanged_API(ProjectConfigWithDBArrangeAndAssert projectConfigWithDBArrangeAndAssert)
         {
             _projectConfigWithDBArrangeAndAssert = projectConfigWithDBArrangeAndAssert;
-            _scriptFilesAsserts = scriptFilesAsserts;
         }
 
 

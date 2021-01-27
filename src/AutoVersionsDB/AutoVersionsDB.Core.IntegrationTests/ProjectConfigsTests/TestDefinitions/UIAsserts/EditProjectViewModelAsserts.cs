@@ -20,11 +20,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 {
     public class EditProjectViewModelAsserts
     {
-        private readonly EditProjectViewStateAsserts _editProjectViewStateAsserts;
 
-        public EditProjectViewModelAsserts(EditProjectViewStateAsserts editProjectViewStateAsserts)
+        public EditProjectViewModelAsserts()
         {
-            _editProjectViewStateAsserts = editProjectViewStateAsserts;
         }
 
         //public void AssertCompleteSuccessfullyAllFilesSync(string testName, DBVersionsViewModel dbVersionsViewModel, bool isDevEnv)
@@ -38,7 +36,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.ProjectConfigsTests.TestDefinitio
 
 
 
-        public void AssertViewStateHistory(string testName, IList<EditProjectViewStateType> actualViewStateHistory, IList<EditProjectViewStateType> expectedViewStateHistory)
+        public virtual void AssertViewStateHistory(string testName, IList<EditProjectViewStateType> actualViewStateHistory, IList<EditProjectViewStateType> expectedViewStateHistory)
         {
             Assert.That(actualViewStateHistory.Count == expectedViewStateHistory.Count, $"{testName} >>> Number of process ViewStates should be {expectedViewStateHistory.Count}, but was {actualViewStateHistory.Count}");
             for (int i = 0; i < expectedViewStateHistory.Count; i++)

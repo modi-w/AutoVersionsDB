@@ -25,13 +25,13 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_NewScrtiptFile_DevDummyData_API : TestDefinition
     {
-        private string _relFolder_DevDummyData = "DevDummyData";
+        private readonly string _relFolder_DevDummyData = "DevDummyData";
 
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public string ScriptName1 => "TestDDDScript1";
+        public static string ScriptName1 => "TestDDDScript1";
 
 
 

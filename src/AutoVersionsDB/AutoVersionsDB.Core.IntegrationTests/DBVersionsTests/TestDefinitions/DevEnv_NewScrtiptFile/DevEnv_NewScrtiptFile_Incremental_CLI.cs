@@ -37,8 +37,8 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(CLITestContext testContext)
         {
-            CLIRunner.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_Incremental_API.ScriptName1}");
-            CLIRunner.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_Incremental_API.ScriptName2}");
+            CLIRunner.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={DevEnv_NewScrtiptFile_Incremental_API.ScriptName1}");
+            CLIRunner.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={DevEnv_NewScrtiptFile_Incremental_API.ScriptName2}");
         }
 
 

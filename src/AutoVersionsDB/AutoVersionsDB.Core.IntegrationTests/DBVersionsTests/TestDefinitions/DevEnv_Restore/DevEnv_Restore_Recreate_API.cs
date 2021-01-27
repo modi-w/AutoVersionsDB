@@ -50,7 +50,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
         {
             _projectConfigWithDBArrangeAndAssert.Asserts(GetType().Name, testContext, false);
 
-            _dbAsserts.AssertRestore(GetType().Name, testContext.ProjectConfig.DBConnectionInfo, testContext.DBBackupFileType, testContext.ProcessResults.Trace);
+            _dbAsserts.AssertRestore(GetType().Name, testContext.ProcessResults.Trace);
 
         }
 

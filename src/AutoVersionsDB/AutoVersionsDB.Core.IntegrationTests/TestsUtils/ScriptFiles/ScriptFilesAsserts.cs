@@ -24,9 +24,9 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
 {
     public class ScriptFilesAsserts
     {
-        private ScriptFileTypeBase _incrementalScriptFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
-        private ScriptFileTypeBase _repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
-        private ScriptFileTypeBase _devDummyDataScriptFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
+        private readonly ScriptFileTypeBase _incrementalScriptFileType = ScriptFileTypeBase.Create<IncrementalScriptFileType>();
+        private readonly ScriptFileTypeBase _repeatableScriptFileType = ScriptFileTypeBase.Create<RepeatableScriptFileType>();
+        private readonly ScriptFileTypeBase _devDummyDataScriptFileType = ScriptFileTypeBase.Create<DevDummyDataScriptFileType>();
 
         private readonly FileChecksum _fileChecksum;
         private readonly DBHandler _dbHandler;
@@ -40,7 +40,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
         }
 
 
-        public void AssertScriptFileExsit(string testName, string scriptFilename)
+        public virtual void AssertScriptFileExsit(string testName, string scriptFilename)
         {
             Assert.That(File.Exists(scriptFilename), $"{testName} >>> The file: '{scriptFilename}', is missing");
         }
@@ -273,7 +273,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                     FileInfo fiScriptFile = new FileInfo(scriptFile);
 
                     List<DataRow> executedScriptRows = dbScriptsExecutionHistoryFilesTable.Rows.Cast<DataRow>().Where(row => Convert.ToString(row["Filename"]) == fiScriptFile.Name).ToList();
-                    Assert.That(executedScriptRows.Count, Is.EqualTo(0));
+                    Assert.That(executedScriptRows.Count, Is.EqualTo(0),$"{testName} -> Should not be any DDD files in the delivery environment");
                 }
             }
 
@@ -358,14 +358,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
                 string incrementalTempFolder = Path.Combine(tempFolder, _incrementalScriptFileType.RelativeFolderName);
                 string[] incrementalScriptFilesExtractFolder = Directory.GetFiles(incrementalTempFolder, $"{_incrementalScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
-                compareTwoFoldersFiles(testName, incrementalScriptFilesFromDevFolder, incrementalScriptFilesExtractFolder);
+                CompareTwoFoldersFiles(testName, incrementalScriptFilesFromDevFolder, incrementalScriptFilesExtractFolder);
 
                 string[] repeatableScriptFilesFromDevFolder = Directory.GetFiles(projectConfig.RepeatableScriptsFolderPath, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
                 string repeatableTempFolder = Path.Combine(tempFolder, _repeatableScriptFileType.RelativeFolderName);
                 string[] repeatableScriptFilesExtractFolder = Directory.GetFiles(repeatableTempFolder, $"{_repeatableScriptFileType.Prefix}*.sql", SearchOption.AllDirectories);
 
-                compareTwoFoldersFiles(testName, repeatableScriptFilesFromDevFolder, repeatableScriptFilesExtractFolder);
+                CompareTwoFoldersFiles(testName, repeatableScriptFilesFromDevFolder, repeatableScriptFilesExtractFolder);
 
                 string devDummyDataTempFolder = Path.Combine(tempFolder, _devDummyDataScriptFileType.RelativeFolderName);
                 Assert.That(!Directory.Exists(devDummyDataTempFolder), $"{testName} >>> The folder: '{devDummyDataTempFolder}' should be deleted");
@@ -376,7 +376,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.ScriptFiles
             }
         }
 
-        private void compareTwoFoldersFiles(string testName, string[] scriptFilesFromDevFolder, string[] scriptFilesExtractFolder)
+        private void CompareTwoFoldersFiles(string testName, string[] scriptFilesFromDevFolder, string[] scriptFilesExtractFolder)
         {
             Dictionary<string, FileInfo> devFolderFileInfosDictionary = scriptFilesFromDevFolder.Select(e => new FileInfo(e)).ToDictionary(e => e.Name);
 

@@ -42,7 +42,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(CLITestContext testContext)
         {
-            CLIRunner.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={_deliveryEnv_New_Incremental_API.ScriptName1}");
+            CLIRunner.CLIRun($"new incremental -id={IntegrationTestsConsts.TestProjectId} -sn={DeliveryEnv_NotAllowMethods_New_Incremental_API.ScriptName1}");
         }
 
 

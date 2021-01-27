@@ -39,7 +39,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 
         public override void Act(CLITestContext testContext)
         {
-            CLIRunner.CLIRun($"new ddd -id={IntegrationTestsConsts.TestProjectId} -sn={_devEnv_NewScrtiptFile_DevDummyData_API.ScriptName1}");
+            CLIRunner.CLIRun($"new ddd -id={IntegrationTestsConsts.TestProjectId} -sn={DevEnv_NewScrtiptFile_DevDummyData_API.ScriptName1}");
         }
 
 

@@ -14,7 +14,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
     public class ConsoleProcessMessagesForTests : IConsoleProcessMessages
     {
 
-        private ConsoleProcessMessages _consoleProcessMessages;
+        private readonly ConsoleProcessMessages _consoleProcessMessages;
 
         public ConsoleProcessMessagesForTests(ConsoleProcessMessages consoleProcessMessages)
         {
@@ -81,11 +81,33 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.CLI
         }
 
 
-
+        #region IDisposable
         public void Dispose()
         {
-            _consoleProcessMessages.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        ~ConsoleProcessMessagesForTests()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_consoleProcessMessages != null)
+                {
+                    _consoleProcessMessages.Dispose();
+                }
+            }
+
+            //Comment: delete files is unmanage resource - so it is not in the disposing condition
+
+        }
+
+        #endregion
 
     }
 }

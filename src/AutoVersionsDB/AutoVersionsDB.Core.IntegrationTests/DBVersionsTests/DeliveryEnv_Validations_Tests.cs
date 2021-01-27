@@ -22,13 +22,11 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests
     [TestFixture]
     public class DeliveryEnv_Validations_Tests
     {
-        private ProjectConfigsStorageHelper _projectConfigsStorageHelper;
 
         [SetUp]
         public void Init()
         {
             DIConfig.CreateKernel();
-            _projectConfigsStorageHelper = DIConfig.Kernel.Get<ProjectConfigsStorageHelper>();
         }
 
 

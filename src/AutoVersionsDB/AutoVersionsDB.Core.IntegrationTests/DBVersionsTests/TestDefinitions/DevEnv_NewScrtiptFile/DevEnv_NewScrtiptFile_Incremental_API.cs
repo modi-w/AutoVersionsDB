@@ -25,14 +25,14 @@ namespace AutoVersionsDB.Core.IntegrationTests.DBVersionsTests.TestDefinitions.D
 {
     public class DevEnv_NewScrtiptFile_Incremental_API : TestDefinition
     {
-        private string _relFolder_Incremental = "Incremental";
+        private readonly string _relFolder_Incremental = "Incremental";
 
         private readonly ProjectConfigWithDBArrangeAndAssert _projectConfigWithDBArrangeAndAssert;
         private readonly ScriptFilesAsserts _scriptFilesAsserts;
 
 
-        public string ScriptName1 => "TestIncScript1";
-        public string ScriptName2 => "TestIncScript2";
+        public static string ScriptName1 => "TestIncScript1";
+        public static string ScriptName2 => "TestIncScript2";
 
 
 
