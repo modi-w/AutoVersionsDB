@@ -58,7 +58,7 @@ namespace AutoVersionsDB.WinApp
             this.tabMainLayout.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabMainLayout.Name = "tabMainLayout";
             this.tabMainLayout.SelectedIndex = 0;
-            this.tabMainLayout.Size = new System.Drawing.Size(1090, 599);
+            this.tabMainLayout.Size = new System.Drawing.Size(1047, 615);
             this.tabMainLayout.TabIndex = 1;
             // 
             // tbChooseProject
@@ -70,7 +70,7 @@ namespace AutoVersionsDB.WinApp
             this.tbChooseProject.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbChooseProject.Name = "tbChooseProject";
             this.tbChooseProject.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tbChooseProject.Size = new System.Drawing.Size(1082, 566);
+            this.tbChooseProject.Size = new System.Drawing.Size(1039, 582);
             this.tbChooseProject.TabIndex = 0;
             this.tbChooseProject.Text = "Choose Project";
             // 
@@ -85,7 +85,7 @@ namespace AutoVersionsDB.WinApp
             this.chooseProject1.Location = new System.Drawing.Point(4, 5);
             this.chooseProject1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.chooseProject1.Name = "chooseProject1";
-            this.chooseProject1.Size = new System.Drawing.Size(1082, 548);
+            this.chooseProject1.Size = new System.Drawing.Size(1039, 564);
             this.chooseProject1.TabIndex = 0;
             this.chooseProject1.ViewModel = null;
             // 
@@ -98,7 +98,7 @@ namespace AutoVersionsDB.WinApp
             this.tbEditProjectConfig.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbEditProjectConfig.Name = "tbEditProjectConfig";
             this.tbEditProjectConfig.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tbEditProjectConfig.Size = new System.Drawing.Size(1082, 731);
+            this.tbEditProjectConfig.Size = new System.Drawing.Size(1037, 558);
             this.tbEditProjectConfig.TabIndex = 1;
             this.tbEditProjectConfig.Text = "Edit Project Config";
             // 
@@ -111,7 +111,7 @@ namespace AutoVersionsDB.WinApp
             this.editProjectConfigDetails1.Location = new System.Drawing.Point(4, 5);
             this.editProjectConfigDetails1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.editProjectConfigDetails1.Name = "editProjectConfigDetails1";
-            this.editProjectConfigDetails1.Size = new System.Drawing.Size(1074, 721);
+            this.editProjectConfigDetails1.Size = new System.Drawing.Size(1029, 548);
             this.editProjectConfigDetails1.TabIndex = 0;
             this.editProjectConfigDetails1.ViewModel = null;
             // 
@@ -124,7 +124,7 @@ namespace AutoVersionsDB.WinApp
             this.tbDBVersionsMangement.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tbDBVersionsMangement.Name = "tbDBVersionsMangement";
             this.tbDBVersionsMangement.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tbDBVersionsMangement.Size = new System.Drawing.Size(1082, 731);
+            this.tbDBVersionsMangement.Size = new System.Drawing.Size(1037, 558);
             this.tbDBVersionsMangement.TabIndex = 2;
             this.tbDBVersionsMangement.Text = "DB Versions Mangement";
             // 
@@ -136,7 +136,7 @@ namespace AutoVersionsDB.WinApp
             this.dbVersionsMangement1.Location = new System.Drawing.Point(4, 5);
             this.dbVersionsMangement1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.dbVersionsMangement1.Name = "dbVersionsMangement1";
-            this.dbVersionsMangement1.Size = new System.Drawing.Size(1074, 721);
+            this.dbVersionsMangement1.Size = new System.Drawing.Size(1029, 548);
             this.dbVersionsMangement1.TabIndex = 0;
             this.dbVersionsMangement1.ViewModel = null;
             // 
@@ -170,7 +170,7 @@ namespace AutoVersionsDB.WinApp
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1082, 651);
+            this.ClientSize = new System.Drawing.Size(1039, 667);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lnkBtnChooseProject);
             this.Controls.Add(this.tabMainLayout);
