@@ -34,7 +34,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils.UI
         public void AssertNotificationsViewModelProcessError(string testName, NotificationsViewModelData notificationsViewModelData)
         {
             _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.NotificationStatus), notificationsViewModelData.NotificationStatus.ToString(), NotificationStatus.Error.ToString());
-            _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, "Error occurred during the process.");
+            _propertiesAsserts.AssertPropertyContains(testName, nameof(notificationsViewModelData.ProcessStatusMessage), notificationsViewModelData.ProcessStatusMessage, "Cannot find data type nvarcharaaaa.");
             _propertiesAsserts.AssertProperty(testName, nameof(notificationsViewModelData.StatusImageType), notificationsViewModelData.StatusImageType.ToString(), StatusImageType.Error.ToString());
         }
 

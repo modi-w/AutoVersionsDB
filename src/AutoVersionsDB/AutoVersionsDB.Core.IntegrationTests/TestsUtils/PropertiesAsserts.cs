@@ -9,7 +9,10 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
         {
             Assert.That(actualValue == expectedValue, $"{testName} >>> {propertyName} should be: '{expectedValue}', but was: '{actualValue}'.");
         }
-
+        public virtual void AssertPropertyContains(string testName, string propertyName, string actualValue, string expectedValue)
+        {
+            Assert.That(actualValue.Contains(expectedValue), $"{testName} >>> {propertyName} should be: '{expectedValue}', but was: '{actualValue}'.");
+        }
         public virtual void AssertProperty(string testName, string propertyName, bool actualValue, bool expectedValue)
         {
             Assert.That(actualValue == expectedValue, $"{testName} >>> {propertyName} should be: '{expectedValue}', but was: '{actualValue}'.");
@@ -19,6 +22,7 @@ namespace AutoVersionsDB.Core.IntegrationTests.TestsUtils
         {
             Assert.That(actualValue == expectedValue, $"{testName} >>> {propertyName} should be: '{expectedValue}', but was: '{actualValue}'.");
         }
+
 
 
     }
