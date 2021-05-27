@@ -1,15 +1,17 @@
-﻿using System;
+﻿using AutoVersionsDB.UI;
+using Ninject;
+using System;
 using System.Windows.Forms;
 
 namespace AutoVersionsDB.WinApp
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application . 
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.ThreadException += Application_ThreadException;
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
@@ -19,12 +21,28 @@ namespace AutoVersionsDB.WinApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            NinjectManager.CreateKernel();
+            DIConfig.CreateKernel();
+
+            UIGeneralEvents.OnException += UIGeneralEvents_OnException;
+            UIGeneralEvents.OnConfirm += UIGeneralEvents_OnConfirm;
 
 
+            MainView mainFrame = DIConfig.Kernel.Get<MainView>();
 
-            Application.Run(new Main());
+            Application.Run(mainFrame);
         }
+
+        private static void UIGeneralEvents_OnException(object sender, MessageEventArgs e)
+        {
+            MessageBox.Show(e.Message);
+        }
+
+        private static void UIGeneralEvents_OnConfirm(object sender, ConfirmEventArgs e)
+        {
+            e.IsConfirm = MessageBox.Show(null, e.Message, "Pay Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+        }
+
+
 
 
         private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)

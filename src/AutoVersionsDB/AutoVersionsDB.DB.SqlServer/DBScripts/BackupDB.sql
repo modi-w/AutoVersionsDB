@@ -1,0 +1,1 @@
+﻿BACKUP DATABASE [{dbName}] TO DISK='{filename}'

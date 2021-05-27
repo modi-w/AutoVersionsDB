@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\GitVersion.MsBuild.5.6.4\build\GitVersion.MsBuild.props" Condition="Exists('..\packages\GitVersion.MsBuild.5.6.4\build\GitVersion.MsBuild.props')" />
   <Import Project="..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props" Condition="Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,10 +8,14 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>59dbc11e-0f23-4e5b-becf-a9ff846fb27a</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>AutoVersionsDBSetup</OutputName>
+    <OutputName>AutoVersionsDBUISetup</OutputName>
     <OutputType>Package</OutputType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateGitVersionInformation>false</GenerateGitVersionInformation>
+    <UpdateAssemblyInfo>false</UpdateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -25,6 +30,8 @@
     <DefineConstants>Debug</DefineConstants>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>False</SuppressValidation>
+    <SuppressIces>ICE61</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
@@ -37,8 +44,10 @@
   <ItemGroup>
     <Content Include="AppIcon.ico" />
     <Content Include="AutoVersionsDB.Setup.wax" />
+    <Content Include="bgBanner.bmp" />
     <Content Include="License.rtf" />
     <Content Include="packages.config" />
+    <Content Include="topBanner.bmp" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUtilExtension">
@@ -64,7 +73,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <Target Name="BeforeBuild">
-    <Exec Command="dotnet build $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj" />
+    <Exec Command="dotnet build $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj /p:Platform=$(Platform)" />
     <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
     <Exec Command="dotnet publish $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.WinApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml" />
     <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
@@ -72,7 +81,7 @@
     </GetAssemblyIdentity>
     <PropertyGroup>
       <!-- <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants> -->
-	    <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
+      <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
     </PropertyGroup>
     <!-- Harvest file components from publish folder -->
     <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
@@ -83,14 +92,14 @@
     </GetAssemblyIdentity>
     <Exec Command="if not exist $(ProjectDir)..\..\..\packages mkdir $(ProjectDir)..\..\..\packages" />
     <!-- <Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-%(AssemblyVersion.Version)-$(PlatformName)$(TargetExt)" /> -->
-	<Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-$(GitVersion_SemVer)-$(PlatformName)$(TargetExt)" />
+    <Exec Command="move $(TargetPath) $(ProjectDir)..\..\..\packages\$(TargetName)-$(GitVersion_SemVer)-$(PlatformName)$(TargetExt)" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.5.3.4\build\GitVersionTask.props'))" />
-    <Error Condition="!Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\packages\GitVersion.MsBuild.5.6.4\build\GitVersion.MsBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersion.MsBuild.5.6.4\build\GitVersion.MsBuild.props'))" />
+    <Error Condition="!Exists('..\packages\GitVersion.MsBuild.5.6.4\build\GitVersion.MsBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersion.MsBuild.5.6.4\build\GitVersion.MsBuild.targets'))" />
   </Target>
-  <Import Project="..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.5.3.4\build\GitVersionTask.targets')" />
+  <Import Project="..\packages\GitVersion.MsBuild.5.6.4\build\GitVersion.MsBuild.targets" Condition="Exists('..\packages\GitVersion.MsBuild.5.6.4\build\GitVersion.MsBuild.targets')" />
 </Project>

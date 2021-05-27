@@ -10,15 +10,18 @@ SET errorsLogFile=automationLogs\%me%_%DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2%-%tim
 SET testsLogFileName=%parent%\automationLogs\%me%_%DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.results.trx
 SET testLogParams=trx;LogFileName=%testsLogFileName%
 
+if not exist automationLogs mkdir automationLogs
 
 :: init log file with datetime and input parameters
-ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Start -- %1 %2 %3 %4 %5 %6 %7 %8 %9  > "%logFile%"
+ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Start Process -- %1 %2 %3 %4 %5 %6 %7 %8 %9  > "%logFile%"
 
+::Pay Attention:
+::the dotenet build command write the errors to stdout (instead of stderr) so we write >> "%errorsLogFile%" instead of 2>> "%errorsLogFile%"
 
 :: run tests for: AutoVersionsDB.Core.IntegrationTests.csproj
 CALL :echoExtend start run tests for: AutoVersionsDB.Core.IntegrationTests.csproj
 ::dotnet test src\AutoVersionsDB\AutoVersionsDB.Core.IntegrationTests\AutoVersionsDB.Core.IntegrationTests.csproj -l "console;verbosity=detailed" 2>> "%errorsLogFile%"
-dotnet test src\AutoVersionsDB\AutoVersionsDB.Core.IntegrationTests\AutoVersionsDB.Core.IntegrationTests.csproj -l:%testLogParams% 2>> "%errorsLogFile%"
+dotnet test src\AutoVersionsDB\AutoVersionsDB.Core.IntegrationTests\AutoVersionsDB.Core.IntegrationTests.csproj -l:%testLogParams% >> "%errorsLogFile%"
 CALL :checkError "%errorsLogFile%"
 CALL :echoExtend complete run tests for: AutoVersionsDB.Core.IntegrationTests.csproj
 
@@ -60,8 +63,8 @@ EXIT /B %ERRORLEVEL%
 
 
 :exitProcess
-ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Cmplete  >> "%logFile%"
+ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Complete Process --  >> "%logFile%"
 IF EXIST "%errorsLogFile%" DEL "%errorsLogFile%"
 ENDLOCAL
-EXIT /B %ERRORLEVEL%
+EXIT %ERRORLEVEL%
 

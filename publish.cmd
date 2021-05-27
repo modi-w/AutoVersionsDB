@@ -8,7 +8,11 @@ SET logFile=automationLogs\"%me%"_log_%DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2%-%tim
 SET errorsLogFile=automationLogs\"%me%"_errorsLog_%DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2%-%time:~0,2%-%time:~3,2%-%time:~6,2%.log
 
 :: init log file with datetime and input parameters
-ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Start -- %1 %2 %3 %4 %5 %6 %7 %8 %9  > "%logFile%"
+ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Start Process -- %1 %2 %3 %4 %5 %6 %7 %8 %9  > "%logFile%"
+
+
+::Pay Attention:
+::the dotenet build command write the errors to stdout (instead of stderr) so we write >> "%errorsLogFile%" instead of 2>> "%errorsLogFile%"
 
 ::find msbuild Path
 CALL :echoExtend start find MSBuild Path
@@ -20,16 +24,31 @@ CALL :checkError "%errorsLogFile%"
 CALL :echoExtend complete find MSBuild Path
 
 
-:: create package for x64
+:: create WinApp package for x64
 CALL :echoExtend start create package for x64
-"%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.Setup\AutoVersionsDB.Setup.wixproj /p:Configuration=Debug /p:Platform=x64 2>> "%errorsLogFile%"
+"%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.Setup\AutoVersionsDB.Setup.wixproj /p:Configuration=Debug /p:Platform=x64 >> "%errorsLogFile%"
 CALL :checkError "%errorsLogFile%"
 CALL :echoExtend complete create package for x64
 
 
-:: create package for x86
+:: create WinApp package for x86
 CALL :echoExtend start create package for x86
-"%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.Setup\AutoVersionsDB.Setup.wixproj /p:Configuration=Debug /p:Platform=x86 2>> "%errorsLogFile%"
+"%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.Setup\AutoVersionsDB.Setup.wixproj /p:Configuration=Debug /p:Platform=x86 >> "%errorsLogFile%"
+CALL :checkError "%errorsLogFile%"
+CALL :echoExtend complete create package for x86
+
+
+
+:: create ConsoleApp package for x64
+CALL :echoExtend start create package for x64
+"%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.ConsoleApp.Setup\AutoVersionsDB.ConsoleApp.Setup.wixproj /p:Configuration=Debug /p:Platform=x64 >> "%errorsLogFile%"
+CALL :checkError "%errorsLogFile%"
+CALL :echoExtend complete create package for x64
+
+
+:: create ConsoleApp package for x86
+CALL :echoExtend start create package for x86
+"%msBuildPath%" src\AutoVersionsDB\AutoVersionsDB.ConsoleApp.Setup\AutoVersionsDB.ConsoleApp.Setup.wixproj /p:Configuration=Debug /p:Platform=x86 >> "%errorsLogFile%"
 CALL :checkError "%errorsLogFile%"
 CALL :echoExtend complete create package for x86
 
@@ -74,8 +93,8 @@ EXIT /B %ERRORLEVEL%
 
 
 :exitProcess
-ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Cmplete  >> "%logFile%"
+ECHO %DATE:~-4,4%-%DATE:~-7,2%-%DATE:~0,2% %time:~0,2%:%time:~3,2%:%time:~6,2% -- Complete Process --  >> "%logFile%"
 IF EXIST "%errorsLogFile%" DEL "%errorsLogFile%"
 ENDLOCAL
-EXIT /B %ERRORLEVEL%
+EXIT %ERRORLEVEL%
 

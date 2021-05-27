@@ -1,0 +1,260 @@
+﻿<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=5.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblProcessLog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <assembly alias="System.Drawing.Primitives" name="System.Drawing.Primitives, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lblProcessLog.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>686, 51</value>
+  </data>
+  <data name="lblProcessLog.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>87, 29</value>
+  </data>
+  <assembly alias="System.Private.CoreLib" name="System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e" />
+  <data name="lblProcessLog.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>0</value>
+  </data>
+  <data name="lblProcessLog.Text" xml:space="preserve">
+    <value>Process Log</value>
+  </data>
+  <data name="&gt;&gt;lblProcessLog.Name" xml:space="preserve">
+    <value>lblProcessLog</value>
+  </data>
+  <data name="&gt;&gt;lblProcessLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=5.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblProcessLog.Parent" xml:space="preserve">
+    <value>panel7</value>
+  </data>
+  <data name="&gt;&gt;lblProcessLog.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pbStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="pbStatus.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>2, 1</value>
+  </data>
+  <assembly alias="System.Windows.Forms.Primitives" name="System.Windows.Forms.Primitives, Version=5.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="pbStatus.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms.Primitives">
+    <value>3, 4, 3, 4</value>
+  </data>
+  <data name="pbStatus.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>71, 76</value>
+  </data>
+  <data name="pbStatus.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>CenterImage</value>
+  </data>
+  <data name="pbStatus.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>66</value>
+  </data>
+  <data name="&gt;&gt;pbStatus.Name" xml:space="preserve">
+    <value>pbStatus</value>
+  </data>
+  <data name="&gt;&gt;pbStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=5.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pbStatus.Parent" xml:space="preserve">
+    <value>panel7</value>
+  </data>
+  <data name="&gt;&gt;pbStatus.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnProcessLog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnProcessLog.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="btnProcessLog.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+  <data name="btnProcessLog.Font" type="System.Drawing.Font, System.Drawing.Common">
+    <value>Microsoft Sans Serif, 20pt</value>
+  </data>
+  <data name="btnProcessLog.Image" type="System.Drawing.Bitmap, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAFuSURBVFhH7dctSwRRFMbx8SX5AopFi8GmCJotJj+AwSAINqvbrH4KQfwOYjMKBkEUNYhBi0Gw
+        GNQgKqL+n2FvGe6wc8+5IMI+8AuXZZ45sIednaKScRzhJ4MXLCIpe4iVWT1gCY1zBl24jgWHA4QhnrGC
+        RjmFLpopT/bsQD3X+MY7NtAxYYD58mTPLtSzhk184Atb6EVtwgBz5ako9nGVYBVKGOAe5/hsn2UbtakO
+        cIdwYRMtKGGAmAvUpvoVTGE6wSiUCVQ/W4a6dY/a5NqBWGbxpwOoszvA/xtgAENO6lCSBgi/Ayd4clKH
+        os7kAfRwenVSh5I0QPgKBjHspA7FtAMjGHNSh2LagUu8OalDMe3AMR6d1KGYdqAP/U7qUEw7oKfapJM6
+        FNMO3EBnD3Uoph04xK2TOhTTDvRA/+E81KGYdiBnugMkDeB9MYlFnR0HyPVqFqNOdYenYzS5X05jdI/a
+        5Hw9j1G37tFOUfwCJStiBQjnD2gAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnProcessLog.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing.Common">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="btnProcessLog.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>703, -1</value>
+  </data>
+  <data name="btnProcessLog.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms.Primitives">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="btnProcessLog.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>63, 60</value>
+  </data>
+  <data name="btnProcessLog.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>79</value>
+  </data>
+  <data name="btnProcessLog.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing.Common">
+    <value>TopRight</value>
+  </data>
+  <data name="&gt;&gt;btnProcessLog.Name" xml:space="preserve">
+    <value>btnProcessLog</value>
+  </data>
+  <data name="&gt;&gt;btnProcessLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=5.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnProcessLog.Parent" xml:space="preserve">
+    <value>panel7</value>
+  </data>
+  <data name="&gt;&gt;btnProcessLog.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblProcessStatusMessage.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="lblProcessStatusMessage.Font" type="System.Drawing.Font, System.Drawing.Common">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="lblProcessStatusMessage.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblProcessStatusMessage.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>72, 1</value>
+  </data>
+  <data name="lblProcessStatusMessage.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms.Primitives">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="lblProcessStatusMessage.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>607, 76</value>
+  </data>
+  <data name="lblProcessStatusMessage.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>58</value>
+  </data>
+  <data name="lblProcessStatusMessage.Text" xml:space="preserve">
+    <value>Process Status Message</value>
+  </data>
+  <data name="lblProcessStatusMessage.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing.Common">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblProcessStatusMessage.Name" xml:space="preserve">
+    <value>lblProcessStatusMessage</value>
+  </data>
+  <data name="&gt;&gt;lblProcessStatusMessage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=5.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblProcessStatusMessage.Parent" xml:space="preserve">
+    <value>panel7</value>
+  </data>
+  <data name="&gt;&gt;lblProcessStatusMessage.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="panel7.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panel7.Location" type="System.Drawing.Point, System.Drawing.Primitives">
+    <value>0, 0</value>
+  </data>
+  <data name="panel7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms.Primitives">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="panel7.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>771, 81</value>
+  </data>
+  <data name="panel7.TabIndex" type="System.Int32, System.Private.CoreLib">
+    <value>67</value>
+  </data>
+  <data name="&gt;&gt;panel7.Name" xml:space="preserve">
+    <value>panel7</value>
+  </data>
+  <data name="&gt;&gt;panel7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=5.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel7.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panel7.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing.Primitives">
+    <value>8, 20</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms.Primitives">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing.Primitives">
+    <value>771, 81</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>NotificationsView</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>AutoVersionsDB.WinApp.Utils.UserControlNinjectBase, AutoVersionsDB.WinApp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+</root>

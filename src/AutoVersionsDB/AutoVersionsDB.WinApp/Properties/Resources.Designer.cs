@@ -81,12 +81,12 @@ namespace AutoVersionsDB.WinApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Bitmap AppIcon {
+        internal static System.Drawing.Icon AppIcon {
             get {
                 object obj = ResourceManager.GetObject("AppIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -163,6 +163,16 @@ namespace AutoVersionsDB.WinApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Doc_32 {
+            get {
+                object obj = ResourceManager.GetObject("Doc_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap EditIcon32 {
             get {
                 object obj = ResourceManager.GetObject("EditIcon32", resourceCulture);
@@ -216,6 +226,16 @@ namespace AutoVersionsDB.WinApp.Properties {
         internal static System.Drawing.Bitmap info2_32_32 {
             get {
                 object obj = ResourceManager.GetObject("info2_32_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listIcon_32 {
+            get {
+                object obj = ResourceManager.GetObject("listIcon_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -313,9 +333,39 @@ namespace AutoVersionsDB.WinApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Spinner3_32 {
+            get {
+                object obj = ResourceManager.GetObject("Spinner3_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Spinner3_64 {
+            get {
+                object obj = ResourceManager.GetObject("Spinner3_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap StopIcon_32 {
             get {
                 object obj = ResourceManager.GetObject("StopIcon_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap succeed {
+            get {
+                object obj = ResourceManager.GetObject("succeed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -336,6 +386,16 @@ namespace AutoVersionsDB.WinApp.Properties {
         internal static System.Drawing.Bitmap VirtualExecution2 {
             get {
                 object obj = ResourceManager.GetObject("VirtualExecution2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap warning_32 {
+            get {
+                object obj = ResourceManager.GetObject("warning_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
