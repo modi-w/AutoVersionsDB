@@ -16,7 +16,7 @@
   <?endif ?>
 
 
-  <?define AutoVersionsDB.WinApp_PublishDir=..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(var.Configuration)\win-$(var.Platform)?>
+  <?define AutoVersionsDB.WinApp_PublishDir=..\AutoVersionsDB.WinApp\bin\publish\net5.0-windows\$(var.Configuration)\win-$(var.Platform)?>
 
   <Product Id="*" Name="$(var.ProductDisplayName)" Language="1033"
            Version="$(var.BuildVersion)"

@@ -74,20 +74,20 @@
   </PropertyGroup>
   <Target Name="BeforeBuild">
     <Exec Command="dotnet build $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj /p:Platform=$(Platform)" />
-    <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
+    <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\net5.0-windows\$(Configuration)\win-$(Platform)" />
     <Exec Command="dotnet publish $(ProjectDir)..\AutoVersionsDB.WinApp\AutoVersionsDB.WinApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.WinApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml" />
-    <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
+    <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\net5.0-windows\AutoVersionsDB.WinApp.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     <PropertyGroup>
-      <!-- <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants> -->
-      <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
+      <!-- <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\net5.0-windows\$(Configuration)\win-$(Platform)</DefineConstants> -->
+      <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\net5.0-windows\$(Configuration)\win-$(Platform)</DefineConstants>
     </PropertyGroup>
     <!-- Harvest file components from publish folder -->
-    <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
+    <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\publish\net5.0-windows\$(Configuration)\win-$(Platform)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
   </Target>
   <Target Name="AfterBuild">
-    <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\netcoreapp3.1\AutoVersionsDB.WinApp.dll">
+    <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\AutoVersionsDB.WinApp\bin\$(Platform)\$(Configuration)\net5.0-windows\AutoVersionsDB.WinApp.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     <Exec Command="if not exist $(ProjectDir)..\..\..\packages mkdir $(ProjectDir)..\..\..\packages" />
