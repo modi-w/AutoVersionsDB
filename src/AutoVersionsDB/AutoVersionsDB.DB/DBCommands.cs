@@ -88,7 +88,7 @@ namespace AutoVersionsDB.DB
             // Split by "GO" statements
             var statements = Regex.Split(
                     sqlUnifyScript,
-                    @"^[\t\r\n]*GO[\t\r\n]*\d*[\t\r\n]*(?:--.*)?$",
+                    @"^[\t\r\n\s]*GO[\t\r\n\s]*\d*[\t\r\n\s]*(?:--.*)?$",
                     RegexOptions.Multiline |
                     RegexOptions.IgnorePatternWhitespace |
                     RegexOptions.IgnoreCase);
