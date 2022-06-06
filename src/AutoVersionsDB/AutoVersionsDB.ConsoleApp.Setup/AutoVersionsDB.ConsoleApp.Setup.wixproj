@@ -71,13 +71,13 @@
   </Target>
   <Target Name="BeforeBuild">
     <Exec Command="dotnet build $(ProjectDir)..\AutoVersionsDB.ConsoleApp\AutoVersionsDB.ConsoleApp.csproj /p:Platform=$(Platform)" />
-    <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.ConsoleApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" />
+    <Exec Command="rd /s /q $(ProjectDir)..\AutoVersionsDB.ConsoleApp\bin\publish\net5.0\$(Configuration)\win-$(Platform)" />
     <Exec Command="dotnet publish $(ProjectDir)..\AutoVersionsDB.ConsoleApp\AutoVersionsDB.ConsoleApp.csproj -p:PublishProfile=$(ProjectDir)..\AutoVersionsDB.ConsoleApp\Properties\PublishProfiles\$(Configuration)$(Platform).pubxml" />
     <PropertyGroup>
-      <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.ConsoleApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)</DefineConstants>
+      <DefineConstants>BuildVersion=$(GitVersion_MajorMinorPatch);BasePath=$(ProjectDir)..\AutoVersionsDB.ConsoleApp\bin\publish\net5.0\$(Configuration)\win-$(Platform)</DefineConstants>
     </PropertyGroup>
     <!-- Harvest file components from publish folder -->
-    <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="$(ProjectDir)..\AutoVersionsDB.ConsoleApp\bin\publish\netcoreapp3.1\$(Configuration)\win-$(Platform)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
+    <HeatDirectory OutputFile="ComponentsGenerated.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="PublishedComponents" SuppressCom="true" Directory="$(ProjectDir)..\AutoVersionsDB.ConsoleApp\bin\publish\net5.0\$(Configuration)\win-$(Platform)" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" />
   </Target>
   <Target Name="AfterBuild">
     <Exec Command="if not exist $(ProjectDir)..\..\..\packages mkdir $(ProjectDir)..\..\..\packages" />
