@@ -4,6 +4,7 @@ using AutoVersionsDB.Core.DBVersions.ScriptFiles;
 using AutoVersionsDB.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace AutoVersionsDB.Core.DBVersions.Processes
 {
@@ -24,7 +25,7 @@ namespace AutoVersionsDB.Core.DBVersions.Processes
         public bool IsVirtualExecution => (ProcessDefinition as DBVersionsProcessDefinition).IsVirtualExecution;
 
 
-        public override bool CanRollback => !string.IsNullOrWhiteSpace(DBBackupFileFullPath);
+        public override bool CanRollback => !string.IsNullOrWhiteSpace(DBBackupFileFullPath) && File.Exists(DBBackupFileFullPath);
 
 
 

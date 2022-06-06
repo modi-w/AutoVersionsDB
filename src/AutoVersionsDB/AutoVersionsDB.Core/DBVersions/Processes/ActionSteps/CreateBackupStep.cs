@@ -104,9 +104,12 @@ namespace AutoVersionsDB.Core.DBVersions.Processes.ActionSteps
 
                 ExecuteInternalSteps(internalSteps, false);
 
-
-
                 dbBackupStatusNotifyer.Instance.Stop();
+
+                if (processExpetion != null)
+                {
+                    throw processExpetion; //new Exception("CreateBackupStep", processExpetion);
+                }
 
                 processContext.DBBackupFileFullPath = targetFileFullPath;
             }
